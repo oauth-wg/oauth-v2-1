@@ -437,57 +437,6 @@ RFC 6749                        OAuth 2.0                   October 2012
    passing it through the resource owner's user-agent and potentially
    exposing it to others, including the resource owner.
 
-1.3.2.  Implicit
-
-   The implicit grant is a simplified authorization code flow optimized
-   for clients implemented in a browser using a scripting language such
-   as JavaScript.  In the implicit flow, instead of issuing the client
-   an authorization code, the client is issued an access token directly
-
-
-
-
-Hardt                        Standards Track                    [Page 8]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-   (as the result of the resource owner authorization).  The grant type
-   is implicit, as no intermediate credentials (such as an authorization
-   code) are issued (and later used to obtain an access token).
-
-   When issuing an access token during the implicit grant flow, the
-   authorization server does not authenticate the client.  In some
-   cases, the client identity can be verified via the redirection URI
-   used to deliver the access token to the client.  The access token may
-   be exposed to the resource owner or other applications with access to
-   the resource owner's user-agent.
-
-   Implicit grants improve the responsiveness and efficiency of some
-   clients (such as a client implemented as an in-browser application),
-   since it reduces the number of round trips required to obtain an
-   access token.  However, this convenience should be weighed against
-   the security implications of using implicit grants, such as those
-   described in Sections 10.3 and 10.16, especially when the
-   authorization code grant type is available.
-
-1.3.3.  Resource Owner Password Credentials
-
-   The resource owner password credentials (i.e., username and password)
-   can be used directly as an authorization grant to obtain an access
-   token.  The credentials should only be used when there is a high
-   degree of trust between the resource owner and the client (e.g., the
-   client is part of the device operating system or a highly privileged
-   application), and when other authorization grant types are not
-   available (such as an authorization code).
-
-   Even though this grant type requires direct client access to the
-   resource owner credentials, the resource owner credentials are used
-   for a single request and are exchanged for an access token.  This
-   grant type can eliminate the need for the client to store the
-   resource owner credentials for future use, by exchanging the
-   credentials with a long-lived access token or refresh token.
-
 1.3.4.  Client Credentials
 
    The client credentials (or other forms of client authentication) can
@@ -637,11 +586,8 @@ RFC 6749                        OAuth 2.0                   October 2012
    Whenever Transport Layer Security (TLS) is used by this
    specification, the appropriate version (or versions) of TLS will vary
    over time, based on the widespread deployment and known security
-   vulnerabilities.  At the time of this writing, TLS version 1.2
-   [RFC5246] is the most recent version, but has a very limited
-   deployment base and might not be readily available for
-   implementation.  TLS version 1.0 [RFC2246] is the most widely
-   deployed version and will provide the broadest interoperability.
+   vulnerabilities.  At the time of this writing, TLS version 1.3
+   [RFC8446] is the most recent version.
 
    Implementations MAY also support additional transport-layer security
    mechanisms that meet their security requirements.
@@ -835,6 +781,9 @@ RFC 6749                        OAuth 2.0                   October 2012
    identifier size.  The authorization server SHOULD document the size
    of any identifier it issues.
 
+   Authorization servers SHOULD NOT allow clients to influence their
+   "client_id" or "sub" value or any other claim if that can cause
+   confusion with a genuine resource owner.
 
 
 
@@ -855,6 +804,14 @@ RFC 6749                        OAuth 2.0                   October 2012
    Confidential clients are typically issued (or establish) a set of
    client credentials used for authenticating with the authorization
    server (e.g., password, public/private key pair).
+
+   Authorization servers SHOULD use client authentication if possible.
+
+   It is RECOMMENDED to use asymmetric (public-key based) methods for
+   client authentication such as mTLS [RFC8705] or "private_key_jwt"
+   [OpenID].  When asymmetric methods for client authentication are
+   used, authorization servers do not need to store sensitive symmetric
+   keys, making these methods more robust against a number of attacks.
 
    The authorization server MAY establish a client authentication method
    with public clients.  However, the authorization server MUST NOT rely
@@ -1025,11 +982,9 @@ RFC 6749                        OAuth 2.0                   October 2012
    parameter:
 
    response_type
-         REQUIRED.  The value MUST be one of "code" for requesting an
-         authorization code as described by Section 4.1.1, "token" for
-         requesting an access token (implicit grant) as described by
-         Section 4.2.1, or a registered extension value as described by
-         Section 8.4.
+         REQUIRED.  The value MUST be "code" for requesting an
+         authorization code as described by Section 4.1.1, or a registered 
+         extension value as described by Section 8.4.
 
    Extension response types MAY contain a space-delimited (%x20) list of
    values, where the order of values does not matter (e.g., response
@@ -1046,8 +1001,10 @@ RFC 6749                        OAuth 2.0                   October 2012
    authorization server directs the resource owner's user-agent back to
    the client.  The authorization server redirects the user-agent to the
    client's redirection endpoint previously established with the
-   authorization server during the client registration process or when
-   making the authorization request.
+   authorization server during the client registration process.
+
+   The authorization server MUST compare the two URIs using simple string 
+   comparison as defined in [RFC3986], Section 6.2.1.
 
    The redirection endpoint URI MUST be an absolute URI as defined by
    [RFC3986] Section 4.3.  The endpoint URI MAY include an
@@ -1071,7 +1028,7 @@ RFC 6749                        OAuth 2.0                   October 2012
 3.1.2.1.  Endpoint Request Confidentiality
 
    The redirection endpoint SHOULD require the use of TLS as described
-   in Section 1.6 when the requested response type is "code" or "token",
+   in Section 1.6 when the requested response type is "code",
    or when the redirection request will result in the transmission of
    sensitive credentials over an open network.  This specification does
    not mandate the use of TLS because at the time of this writing,
@@ -1097,17 +1054,12 @@ RFC 6749                        OAuth 2.0                   October 2012
 
    o  Confidential clients utilizing the implicit grant type.
 
-   The authorization server SHOULD require all clients to register their
+   The authorization server MUST require all clients to register their
    redirection endpoint prior to utilizing the authorization endpoint.
 
    The authorization server SHOULD require the client to provide the
    complete redirection URI (the client MAY use the "state" request
-   parameter to achieve per-request customization).  If requiring the
-   registration of the complete redirection URI is not possible, the
-   authorization server SHOULD require the registration of the URI
-   scheme, authority, and path (allowing the client to dynamically vary
-   only the query component of the redirection URI when requesting
-   authorization).
+   parameter to achieve per-request customization).
 
    The authorization server MAY allow the client to register multiple
    redirection endpoints.
@@ -1126,8 +1078,7 @@ RFC 6749                        OAuth 2.0                   October 2012
 
 3.1.2.3.  Dynamic Configuration
 
-   If multiple redirection URIs have been registered, if only part of
-   the redirection URI has been registered, or if no redirection URI has
+   If multiple redirection URIs have been registered, or if no redirection URI has
    been registered, the client MUST include a redirection URI with the
    authorization request using the "redirect_uri" request parameter.
 
@@ -1279,8 +1230,8 @@ RFC 6749                        OAuth 2.0                   October 2012
    To request an access token, the client obtains authorization from the
    resource owner.  The authorization is expressed in the form of an
    authorization grant, which the client uses to request the access
-   token.  OAuth defines four grant types: authorization code, implicit,
-   resource owner password credentials, and client credentials.  It also
+   token.  OAuth defines two grant types: authorization code 
+   and client credentials.  It also
    provides an extension mechanism for defining additional grant types.
 
 
@@ -1295,7 +1246,8 @@ RFC 6749                        OAuth 2.0                   October 2012
 4.1.  Authorization Code Grant
 
    The authorization code grant type is used to obtain both access
-   tokens and refresh tokens and is optimized for confidential clients.
+   tokens and refresh tokens.
+
    Since this is a redirection-based flow, the client must be capable of
    interacting with the resource owner's user-agent (typically a web
    browser) and capable of receiving incoming requests (via redirection)
@@ -1352,7 +1304,7 @@ RFC 6749                        OAuth 2.0                   October 2012
 
    (A)  The client initiates the flow by directing the resource owner's
         user-agent to the authorization endpoint.  The client includes
-        its client identifier, requested scope, local state, and a
+        its client identifier, requested scope, local state, code challenge, and a
         redirection URI to which the authorization server will send the
         user-agent back once access is granted (or denied).
 
@@ -1369,18 +1321,73 @@ RFC 6749                        OAuth 2.0                   October 2012
 
    (D)  The client requests an access token from the authorization
         server's token endpoint by including the authorization code
-        received in the previous step.  When making the request, the
-        client authenticates with the authorization server.  The client
+        received in the previous step, and including its code verifier.  
+        When making the request, the
+        client authenticates with the authorization server if it can.  The client
         includes the redirection URI used to obtain the authorization
         code for verification.
 
-   (E)  The authorization server authenticates the client, validates the
-        authorization code, and ensures that the redirection URI
+   (E)  The authorization server authenticates the client when possible, validates the
+        authorization code, validates the code verifier, and ensures that the redirection URI
         received matches the URI used to redirect the client in
         step (C).  If valid, the authorization server responds back with
         an access token and, optionally, a refresh token.
 
 4.1.1.  Authorization Request
+
+4.1.1.1.  Client Creates a Code Verifier
+
+   The client first creates a code verifier, "code_verifier", for each
+   OAuth 2.0 [RFC6749] Authorization Request, in the following manner:
+
+   code_verifier = high-entropy cryptographic random STRING using the
+   unreserved characters [A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"
+   from Section 2.3 of [RFC3986], with a minimum length of 43 characters
+   and a maximum length of 128 characters.
+
+   ABNF for "code_verifier" is as follows.
+
+   code-verifier = 43*128unreserved
+   unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
+   ALPHA = %x41-5A / %x61-7A
+   DIGIT = %x30-39
+
+   NOTE: The code verifier SHOULD have enough entropy to make it
+   impractical to guess the value.  It is RECOMMENDED that the output of
+   a suitable random number generator be used to create a 32-octet
+   sequence.  The octet sequence is then base64url-encoded to produce a
+   43-octet URL safe string to use as the code verifier.
+
+4.1.1.2.  Client Creates the Code Challenge
+
+   The client then creates a code challenge derived from the code
+   verifier by using one of the following transformations on the code
+   verifier:
+
+   plain
+      code_challenge = code_verifier
+
+   S256
+      code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
+
+   If the client is capable of using "S256", it MUST use "S256", as
+   "S256" is Mandatory To Implement (MTI) on the server.  Clients are
+   permitted to use "plain" only if they cannot support "S256" for some
+   technical reason and know via out-of-band configuration that the
+   server supports "plain".
+
+   The plain transformation is for compatibility with existing
+   deployments and for constrained environments that can't use the S256
+   transformation.
+
+   ABNF for "code_challenge" is as follows.
+
+   code-challenge = 43*128unreserved
+   unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
+   ALPHA = %x41-5A / %x61-7A
+   DIGIT = %x30-39
+
+4.1.1.3.  Client Initiates the Authorization Request
 
    The client constructs the request URI by adding the following
    parameters to the query component of the authorization endpoint URI
@@ -1391,6 +1398,13 @@ RFC 6749                        OAuth 2.0                   October 2012
 
    client_id
          REQUIRED.  The client identifier as described in Section 2.2.
+
+   code_challenge
+      REQUIRED.  Code challenge.
+
+   code_challenge_method
+      OPTIONAL, defaults to "plain" if not present in the request.  Code
+      verifier transformation method is "S256" or "plain".
 
    redirect_uri
          OPTIONAL.  As described in Section 3.1.2.
@@ -1424,7 +1438,9 @@ RFC 6749                        OAuth 2.0                   October 2012
    only):
 
     GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
-        &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
+        &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+        &code_challenge=6fdkQaPm51l13DSukcAH3Mdx7_ntecHYd1vi3n0hMZY
+        &code_challenge_method=S256 HTTP/1.1
     Host: server.example.com
 
    The authorization server validates the request to ensure that all
@@ -1484,6 +1500,21 @@ RFC 6749                        OAuth 2.0                   October 2012
    value sizes.  The authorization server SHOULD document the size of
    any value it issues.
 
+   When the server issues the authorization code in the authorization
+   response, it MUST associate the "code_challenge" and
+   "code_challenge_method" values with the authorization code so it can
+   be verified later.
+
+   Typically, the "code_challenge" and "code_challenge_method" values
+   are stored in encrypted form in the "code" itself but could
+   alternatively be stored on the server associated with the code.  The
+   server MUST NOT include the "code_challenge" value in client requests
+   in a form that other entities can extract.
+
+   The exact method that the server uses to associate the
+   "code_challenge" with the issued "code" is out of scope for this
+   specification.
+
 4.1.2.1.  Error Response
 
    If the request fails due to a missing, invalid, or mismatching
@@ -1491,6 +1522,19 @@ RFC 6749                        OAuth 2.0                   October 2012
    the authorization server SHOULD inform the resource owner of the
    error and MUST NOT automatically redirect the user-agent to the
    invalid redirection URI.
+
+   If the client does not send the "code_challenge" in
+   the request, the authorization endpoint MUST return the authorization
+   error response with the "error" value set to "invalid_request".  The
+   "error_description" or the response of "error_uri" SHOULD explain the
+   nature of error, e.g., code challenge required.
+
+   If the server supporting PKCE does not support the requested
+   transformation, the authorization endpoint MUST return the
+   authorization error response with "error" value set to
+   "invalid_request".  The "error_description" or the response of
+   "error_uri" SHOULD explain the nature of error, e.g., transform
+   algorithm not supported.
 
    If the resource owner denies the access request or if the request
    fails for reasons other than a missing or invalid redirection URI,
@@ -1606,6 +1650,9 @@ RFC 6749                        OAuth 2.0                   October 2012
          REQUIRED, if the client is not authenticating with the
          authorization server as described in Section 3.2.1.
 
+   code_verifier
+      REQUIRED.  Code verifier
+
    If the client type is confidential or the client was issued client
    credentials (or assigned other authentication requirements), the
    client MUST authenticate with the authorization server as described
@@ -1638,6 +1685,7 @@ RFC 6749                        OAuth 2.0                   October 2012
 
      grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
      &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+     &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 
    The authorization server MUST:
 
@@ -1651,7 +1699,12 @@ RFC 6749                        OAuth 2.0                   October 2012
       confidential client, or if the client is public, ensure that the
       code was issued to "client_id" in the request,
 
-   o  verify that the authorization code is valid, and
+   o  verify that the authorization code is valid, 
+
+   o  verify the "code_verifier" by calculating the code challenge from the received
+      "code_verifier" and comparing it with the previously associated
+      "code_challenge", after first transforming it according to the
+      "code_challenge_method" method specified by the client, and
 
    o  ensure that the "redirect_uri" parameter is present if the
       "redirect_uri" parameter was included in the initial authorization
@@ -1699,533 +1752,6 @@ RFC 6749                        OAuth 2.0                   October 2012
        "example_parameter":"example_value"
      }
 
-4.2.  Implicit Grant
-
-   The implicit grant type is used to obtain access tokens (it does not
-   support the issuance of refresh tokens) and is optimized for public
-   clients known to operate a particular redirection URI.  These clients
-   are typically implemented in a browser using a scripting language
-   such as JavaScript.
-
-   Since this is a redirection-based flow, the client must be capable of
-   interacting with the resource owner's user-agent (typically a web
-   browser) and capable of receiving incoming requests (via redirection)
-   from the authorization server.
-
-   Unlike the authorization code grant type, in which the client makes
-   separate requests for authorization and for an access token, the
-   client receives the access token as the result of the authorization
-   request.
-
-   The implicit grant type does not include client authentication, and
-   relies on the presence of the resource owner and the registration of
-   the redirection URI.  Because the access token is encoded into the
-   redirection URI, it may be exposed to the resource owner and other
-   applications residing on the same device.
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hardt                        Standards Track                   [Page 31]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-     +----------+
-     | Resource |
-     |  Owner   |
-     |          |
-     +----------+
-          ^
-          |
-         (B)
-     +----|-----+          Client Identifier     +---------------+
-     |         -+----(A)-- & Redirection URI --->|               |
-     |  User-   |                                | Authorization |
-     |  Agent  -|----(B)-- User authenticates -->|     Server    |
-     |          |                                |               |
-     |          |<---(C)--- Redirection URI ----<|               |
-     |          |          with Access Token     +---------------+
-     |          |            in Fragment
-     |          |                                +---------------+
-     |          |----(D)--- Redirection URI ---->|   Web-Hosted  |
-     |          |          without Fragment      |     Client    |
-     |          |                                |    Resource   |
-     |     (F)  |<---(E)------- Script ---------<|               |
-     |          |                                +---------------+
-     +-|--------+
-       |    |
-      (A)  (G) Access Token
-       |    |
-       ^    v
-     +---------+
-     |         |
-     |  Client |
-     |         |
-     +---------+
-
-   Note: The lines illustrating steps (A) and (B) are broken into two
-   parts as they pass through the user-agent.
-
-                       Figure 4: Implicit Grant Flow
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hardt                        Standards Track                   [Page 32]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-   The flow illustrated in Figure 4 includes the following steps:
-
-   (A)  The client initiates the flow by directing the resource owner's
-        user-agent to the authorization endpoint.  The client includes
-        its client identifier, requested scope, local state, and a
-        redirection URI to which the authorization server will send the
-        user-agent back once access is granted (or denied).
-
-   (B)  The authorization server authenticates the resource owner (via
-        the user-agent) and establishes whether the resource owner
-        grants or denies the client's access request.
-
-   (C)  Assuming the resource owner grants access, the authorization
-        server redirects the user-agent back to the client using the
-        redirection URI provided earlier.  The redirection URI includes
-        the access token in the URI fragment.
-
-   (D)  The user-agent follows the redirection instructions by making a
-        request to the web-hosted client resource (which does not
-        include the fragment per [RFC2616]).  The user-agent retains the
-        fragment information locally.
-
-   (E)  The web-hosted client resource returns a web page (typically an
-        HTML document with an embedded script) capable of accessing the
-        full redirection URI including the fragment retained by the
-        user-agent, and extracting the access token (and other
-        parameters) contained in the fragment.
-
-   (F)  The user-agent executes the script provided by the web-hosted
-        client resource locally, which extracts the access token.
-
-   (G)  The user-agent passes the access token to the client.
-
-   See Sections 1.3.2 and 9 for background on using the implicit grant.
-   See Sections 10.3 and 10.16 for important security considerations
-   when using the implicit grant.
-
-4.2.1.  Authorization Request
-
-   The client constructs the request URI by adding the following
-   parameters to the query component of the authorization endpoint URI
-   using the "application/x-www-form-urlencoded" format, per Appendix B:
-
-   response_type
-         REQUIRED.  Value MUST be set to "token".
-
-   client_id
-         REQUIRED.  The client identifier as described in Section 2.2.
-
-
-
-Hardt                        Standards Track                   [Page 33]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-   redirect_uri
-         OPTIONAL.  As described in Section 3.1.2.
-
-   scope
-         OPTIONAL.  The scope of the access request as described by
-         Section 3.3.
-
-   state
-         RECOMMENDED.  An opaque value used by the client to maintain
-         state between the request and callback.  The authorization
-         server includes this value when redirecting the user-agent back
-         to the client.  The parameter SHOULD be used for preventing
-         cross-site request forgery as described in Section 10.12.
-
-   The client directs the resource owner to the constructed URI using an
-   HTTP redirection response, or by other means available to it via the
-   user-agent.
-
-   For example, the client directs the user-agent to make the following
-   HTTP request using TLS (with extra line breaks for display purposes
-   only):
-
-    GET /authorize?response_type=token&client_id=s6BhdRkqt3&state=xyz
-        &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
-    Host: server.example.com
-
-   The authorization server validates the request to ensure that all
-   required parameters are present and valid.  The authorization server
-   MUST verify that the redirection URI to which it will redirect the
-   access token matches a redirection URI registered by the client as
-   described in Section 3.1.2.
-
-   If the request is valid, the authorization server authenticates the
-   resource owner and obtains an authorization decision (by asking the
-   resource owner or by establishing approval via other means).
-
-   When a decision is established, the authorization server directs the
-   user-agent to the provided client redirection URI using an HTTP
-   redirection response, or by other means available to it via the
-   user-agent.
-
-
-
-
-
-
-
-
-
-
-
-Hardt                        Standards Track                   [Page 34]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-4.2.2.  Access Token Response
-
-   If the resource owner grants the access request, the authorization
-   server issues an access token and delivers it to the client by adding
-   the following parameters to the fragment component of the redirection
-   URI using the "application/x-www-form-urlencoded" format, per
-   Appendix B:
-
-   access_token
-         REQUIRED.  The access token issued by the authorization server.
-
-   token_type
-         REQUIRED.  The type of the token issued as described in
-         Section 7.1.  Value is case insensitive.
-
-   expires_in
-         RECOMMENDED.  The lifetime in seconds of the access token.  For
-         example, the value "3600" denotes that the access token will
-         expire in one hour from the time the response was generated.
-         If omitted, the authorization server SHOULD provide the
-         expiration time via other means or document the default value.
-
-   scope
-         OPTIONAL, if identical to the scope requested by the client;
-         otherwise, REQUIRED.  The scope of the access token as
-         described by Section 3.3.
-
-   state
-         REQUIRED if the "state" parameter was present in the client
-         authorization request.  The exact value received from the
-         client.
-
-   The authorization server MUST NOT issue a refresh token.
-
-   For example, the authorization server redirects the user-agent by
-   sending the following HTTP response (with extra line breaks for
-   display purposes only):
-
-     HTTP/1.1 302 Found
-     Location: http://example.com/cb#access_token=2YotnFZFEjr1zCsicMWpAA
-               &state=xyz&token_type=example&expires_in=3600
-
-   Developers should note that some user-agents do not support the
-   inclusion of a fragment component in the HTTP "Location" response
-   header field.  Such clients will require using other methods for
-   redirecting the client than a 3xx redirection response -- for
-   example, returning an HTML page that includes a 'continue' button
-   with an action linked to the redirection URI.
-
-
-
-Hardt                        Standards Track                   [Page 35]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-   The client MUST ignore unrecognized response parameters.  The access
-   token string size is left undefined by this specification.  The
-   client should avoid making assumptions about value sizes.  The
-   authorization server SHOULD document the size of any value it issues.
-
-4.2.2.1.  Error Response
-
-   If the request fails due to a missing, invalid, or mismatching
-   redirection URI, or if the client identifier is missing or invalid,
-   the authorization server SHOULD inform the resource owner of the
-   error and MUST NOT automatically redirect the user-agent to the
-   invalid redirection URI.
-
-   If the resource owner denies the access request or if the request
-   fails for reasons other than a missing or invalid redirection URI,
-   the authorization server informs the client by adding the following
-   parameters to the fragment component of the redirection URI using the
-   "application/x-www-form-urlencoded" format, per Appendix B:
-
-   error
-         REQUIRED.  A single ASCII [USASCII] error code from the
-         following:
-
-         invalid_request
-               The request is missing a required parameter, includes an
-               invalid parameter value, includes a parameter more than
-               once, or is otherwise malformed.
-
-         unauthorized_client
-               The client is not authorized to request an access token
-               using this method.
-
-         access_denied
-               The resource owner or authorization server denied the
-               request.
-
-         unsupported_response_type
-               The authorization server does not support obtaining an
-               access token using this method.
-
-         invalid_scope
-               The requested scope is invalid, unknown, or malformed.
-
-
-
-
-
-
-
-
-
-Hardt                        Standards Track                   [Page 36]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-         server_error
-               The authorization server encountered an unexpected
-               condition that prevented it from fulfilling the request.
-               (This error code is needed because a 500 Internal Server
-               Error HTTP status code cannot be returned to the client
-               via an HTTP redirect.)
-
-         temporarily_unavailable
-               The authorization server is currently unable to handle
-               the request due to a temporary overloading or maintenance
-               of the server.  (This error code is needed because a 503
-               Service Unavailable HTTP status code cannot be returned
-               to the client via an HTTP redirect.)
-
-         Values for the "error" parameter MUST NOT include characters
-         outside the set %x20-21 / %x23-5B / %x5D-7E.
-
-   error_description
-         OPTIONAL.  Human-readable ASCII [USASCII] text providing
-         additional information, used to assist the client developer in
-         understanding the error that occurred.
-         Values for the "error_description" parameter MUST NOT include
-         characters outside the set %x20-21 / %x23-5B / %x5D-7E.
-
-   error_uri
-         OPTIONAL.  A URI identifying a human-readable web page with
-         information about the error, used to provide the client
-         developer with additional information about the error.
-         Values for the "error_uri" parameter MUST conform to the
-         URI-reference syntax and thus MUST NOT include characters
-         outside the set %x21 / %x23-5B / %x5D-7E.
-
-   state
-         REQUIRED if a "state" parameter was present in the client
-         authorization request.  The exact value received from the
-         client.
-
-   For example, the authorization server redirects the user-agent by
-   sending the following HTTP response:
-
-   HTTP/1.1 302 Found
-   Location: https://client.example.com/cb#error=access_denied&state=xyz
-
-4.3.  Resource Owner Password Credentials Grant
-
-   The resource owner password credentials grant type is suitable in
-   cases where the resource owner has a trust relationship with the
-   client, such as the device operating system or a highly privileged
-
-
-
-Hardt                        Standards Track                   [Page 37]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-   application.  The authorization server should take special care when
-   enabling this grant type and only allow it when other flows are not
-   viable.
-
-   This grant type is suitable for clients capable of obtaining the
-   resource owner's credentials (username and password, typically using
-   an interactive form).  It is also used to migrate existing clients
-   using direct authentication schemes such as HTTP Basic or Digest
-   authentication to OAuth by converting the stored credentials to an
-   access token.
-
-     +----------+
-     | Resource |
-     |  Owner   |
-     |          |
-     +----------+
-          v
-          |    Resource Owner
-         (A) Password Credentials
-          |
-          v
-     +---------+                                  +---------------+
-     |         |>--(B)---- Resource Owner ------->|               |
-     |         |         Password Credentials     | Authorization |
-     | Client  |                                  |     Server    |
-     |         |<--(C)---- Access Token ---------<|               |
-     |         |    (w/ Optional Refresh Token)   |               |
-     +---------+                                  +---------------+
-
-            Figure 5: Resource Owner Password Credentials Flow
-
-   The flow illustrated in Figure 5 includes the following steps:
-
-   (A)  The resource owner provides the client with its username and
-        password.
-
-   (B)  The client requests an access token from the authorization
-        server's token endpoint by including the credentials received
-        from the resource owner.  When making the request, the client
-        authenticates with the authorization server.
-
-   (C)  The authorization server authenticates the client and validates
-        the resource owner credentials, and if valid, issues an access
-        token.
-
-
-
-
-
-
-
-Hardt                        Standards Track                   [Page 38]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-4.3.1.  Authorization Request and Response
-
-   The method through which the client obtains the resource owner
-   credentials is beyond the scope of this specification.  The client
-   MUST discard the credentials once an access token has been obtained.
-
-4.3.2.  Access Token Request
-
-   The client makes a request to the token endpoint by adding the
-   following parameters using the "application/x-www-form-urlencoded"
-   format per Appendix B with a character encoding of UTF-8 in the HTTP
-   request entity-body:
-
-   grant_type
-         REQUIRED.  Value MUST be set to "password".
-
-   username
-         REQUIRED.  The resource owner username.
-
-   password
-         REQUIRED.  The resource owner password.
-
-   scope
-         OPTIONAL.  The scope of the access request as described by
-         Section 3.3.
-
-   If the client type is confidential or the client was issued client
-   credentials (or assigned other authentication requirements), the
-   client MUST authenticate with the authorization server as described
-   in Section 3.2.1.
-
-   For example, the client makes the following HTTP request using
-   transport-layer security (with extra line breaks for display purposes
-   only):
-
-     POST /token HTTP/1.1
-     Host: server.example.com
-     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-     Content-Type: application/x-www-form-urlencoded
-
-     grant_type=password&username=johndoe&password=A3ddj3w
-
-
-
-
-
-
-
-
-
-
-Hardt                        Standards Track                   [Page 39]
-
-RFC 6749                        OAuth 2.0                   October 2012
-
-
-   The authorization server MUST:
-
-   o  require client authentication for confidential clients or for any
-      client that was issued client credentials (or with other
-      authentication requirements),
-
-   o  authenticate the client if client authentication is included, and
-
-   o  validate the resource owner password credentials using its
-      existing password validation algorithm.
-
-   Since this access token request utilizes the resource owner's
-   password, the authorization server MUST protect the endpoint against
-   brute force attacks (e.g., using rate-limitation or generating
-   alerts).
-
-4.3.3.  Access Token Response
-
-   If the access token request is valid and authorized, the
-   authorization server issues an access token and optional refresh
-   token as described in Section 5.1.  If the request failed client
-   authentication or is invalid, the authorization server returns an
-   error response as described in Section 5.2.
-
-   An example successful response:
-
-     HTTP/1.1 200 OK
-     Content-Type: application/json;charset=UTF-8
-     Cache-Control: no-store
-     Pragma: no-cache
-
-     {
-       "access_token":"2YotnFZFEjr1zCsicMWpAA",
-       "token_type":"example",
-       "expires_in":3600,
-       "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
-       "example_parameter":"example_value"
-     }
 
 4.4.  Client Credentials Grant
 
@@ -2582,6 +2108,19 @@ RFC 6749                        OAuth 2.0                   October 2012
 
 6.  Refreshing an Access Token
 
+   Authorization servers SHOULD determine, based on a risk assessment,
+   whether to issue refresh tokens to a certain client.  If the
+   authorization server decides not to issue refresh tokens, the client
+   MAY refresh access tokens by utilizing other grant types, such as the
+   authorization code grant type.  In such a case, the authorization
+   server may utilize cookies and persistent grants to optimize the user
+   experience.
+
+   If refresh tokens are issued, those refresh tokens MUST be bound to
+   the scope and resource servers as consented by the resource owner.
+   This is to prevent privilege escalation by the legitimate client and
+   reduce the impact of refresh token leakage.
+
    If the authorization server issued a refresh token to the client, the
    client makes a refresh request to the token endpoint by adding the
    following parameters using the "application/x-www-form-urlencoded"
@@ -2648,6 +2187,34 @@ RFC 6749                        OAuth 2.0                   October 2012
 
    o  validate the refresh token.
 
+   Authorization server MUST utilize one of these methods to detect
+   refresh token replay by malicious actors for public clients:
+
+   o  *Sender-constrained refresh tokens:* the authorization server
+      cryptographically binds the refresh token to a certain client
+      instance by utilizing [I-D.ietf-oauth-token-binding] or [RFC8705].
+
+   o  *Refresh token rotation:* the authorization server issues a new
+      refresh token with every access token refresh response.  The
+      previous refresh token is invalidated but information about the
+      relationship is retained by the authorization server.  If a
+      refresh token is compromised and subsequently used by both the
+      attacker and the legitimate client, one of them will present an
+      invalidated refresh token, which will inform the authorization
+      server of the breach.  The authorization server cannot determine
+      which party submitted the invalid refresh token, but it will
+      revoke the active refresh token.  This stops the attack at the
+      cost of forcing the legitimate client to obtain a fresh
+      authorization grant.
+
+      Implementation note: the grant to which a refresh token belongs
+      may be encoded into the refresh token itself.  This can enable an
+      authorization server to efficiently determine the grant to which a
+      refresh token belongs, and by extension, all refresh tokens that
+      need to be revoked.  Authorization servers MUST ensure the
+      integrity of the refresh token value in this case, for example,
+      using signatures.
+
    If valid and authorized, the authorization server issues an access
    token as described in Section 5.1.  If the request failed
    verification or is invalid, the authorization server returns an error
@@ -2660,6 +2227,20 @@ RFC 6749                        OAuth 2.0                   October 2012
    new refresh token is issued, the refresh token scope MUST be
    identical to that of the refresh token included by the client in the
    request.
+
+   Authorization servers MAY revoke refresh tokens automatically in case
+   of a security event, such as:
+
+   o  password change
+
+   o  logout at the authorization server
+
+   Refresh tokens SHOULD expire if the client has been inactive for some
+   time, i.e., the refresh token has not been used to obtain fresh
+   access tokens for some time.  The expiration time is at the
+   discretion of the authorization server.  It might be a global value
+   or determined based on the client policy or the grant associated with
+   the refresh token (and its sensitivity).
 
 7.  Accessing Protected Resources
 
@@ -2707,25 +2288,63 @@ RFC 6749                        OAuth 2.0                   October 2012
      Host: example.com
      Authorization: Bearer mF_9.B5f-4.1JqM
 
-   while the "mac" token type defined in [OAuth-HTTP-MAC] is utilized by
-   issuing a Message Authentication Code (MAC) key together with the
-   access token that is used to sign certain components of the HTTP
-   requests:
-
-     GET /resource/1 HTTP/1.1
-     Host: example.com
-     Authorization: MAC id="h480djs93hd8",
-                        nonce="274312:dj83hs9s",
-                        mac="kDZvddkndxvhGRXZhvuDjEWhGeE="
-
-   The above examples are provided for illustration purposes only.
-   Developers are advised to consult the [RFC6750] and [OAuth-HTTP-MAC]
-   specifications before use.
+   The above example is provided for illustration purposes only.
+   Developers are advised to consult the [RFC6750] specification before use.
 
    Each access token type definition specifies the additional attributes
    (if any) sent to the client together with the "access_token" response
    parameter.  It also defines the HTTP authentication method used to
    include the access token when making a protected resource request.
+
+7.1.1.  Token Replay Prevention
+
+   A sender-constrained access token scopes the applicability of an
+   access token to a certain sender.  This sender is obliged to
+   demonstrate knowledge of a certain secret as prerequisite for the
+   acceptance of that token at the recipient (e.g., a resource server).
+
+   Authorization and resource servers SHOULD use mechanisms for sender-
+   constrained access tokens to prevent token replay as described in
+   Section 4.8.1.1.2.  The use of Mutual TLS for OAuth 2.0 [RFC8705] is
+   RECOMMENDED.
+
+   It is RECOMMENDED to use end-to-end TLS.  If TLS traffic needs to be
+   terminated at an intermediary, refer to Security BCP Section 4.11 for further
+   security advice.
+
+7.1.2.  Access Token Privilege Restriction
+
+   The privileges associated with an access token SHOULD be restricted
+   to the minimum required for the particular application or use case.
+   This prevents clients from exceeding the privileges authorized by the
+   resource owner.  It also prevents users from exceeding their
+   privileges authorized by the respective security policy.  Privilege
+   restrictions also help to reduce the impact of access token leakage.
+
+   In particular, access tokens SHOULD be restricted to certain resource
+   servers (audience restriction), preferably to a single resource
+   server.  To put this into effect, the authorization server associates
+   the access token with certain resource servers and every resource
+   server is obliged to verify, for every request, whether the access
+   token sent with that request was meant to be used for that particular
+   resource server.  If not, the resource server MUST refuse to serve
+   the respective request.  Clients and authorization servers MAY
+   utilize the parameters "scope" or "resource" as specified in
+   [RFC6749] and [I-D.ietf-oauth-resource-indicators], respectively, to
+   determine the resource server they want to access.
+
+   Additionally, access tokens SHOULD be restricted to certain resources
+   and actions on resource servers or resources.  To put this into
+   effect, the authorization server associates the access token with the
+   respective resource and actions and every resource server is obliged
+   to verify, for every request, whether the access token sent with that
+   request was meant to be used for that particular action on the
+   particular resource.  If not, the resource server must refuse to
+   serve the respective request.  Clients and authorization servers MAY
+   utilize the parameter "scope" as specified in [RFC6749] and
+   "authorization_details" as specified in [I-D.ietf-oauth-rar] to
+   determine those resources and/or actions.
+
 
 7.2.  Error Response
 
@@ -2883,9 +2502,10 @@ RFC 6749                        OAuth 2.0                   October 2012
    experience.
 
    The authorization endpoint requires interaction between the client
-   and the resource owner's user-agent.  Native applications can invoke
-   an external user-agent or embed a user-agent within the application.
-   For example:
+   and the resource owner's user-agent. The best current practice is to
+   perform the OAuth authorization request in an external user-agent
+   (typically the browser) rather than an embedded user-agent (such as
+   one implemented with web-views).   
 
    o  External user-agent - the native application can capture the
       response from the authorization server using a redirection URI
@@ -2920,9 +2540,6 @@ RFC 6749                        OAuth 2.0                   October 2012
       to assist with authentication (e.g., password manager, 2-factor
       device reader).
 
-   o  An embedded user-agent may offer improved usability, as it removes
-      the need to switch context and open new windows.
-
    o  An embedded user-agent poses a security challenge because resource
       owners are authenticating in an unidentified window without access
       to the visual protections found in most external user-agents.  An
@@ -2930,16 +2547,31 @@ RFC 6749                        OAuth 2.0                   October 2012
       requests for authentication (making phishing attacks easier to
       execute).
 
-   When choosing between the implicit grant type and the authorization
-   code grant type, the following should be considered:
+   Previously, it was common for native apps to use embedded user-agents
+   (commonly implemented with web-views) for OAuth authorization
+   requests.  That approach has many drawbacks, including the host app
+   being able to copy user credentials and cookies as well as the user
+   needing to authenticate from scratch in each app.  See Section ???
+   for a deeper analysis of the drawbacks of using embedded user-agents
+   for OAuth.
 
-   o  Native applications that use the authorization code grant type
-      SHOULD do so without using client credentials, due to the native
-      application's inability to keep client credentials confidential.
+   Native app authorization requests that use the browser are more
+   secure and can take advantage of the user's authentication state.
+   Being able to use the existing authentication session in the browser
+   enables single sign-on, as users don't need to authenticate to the
+   authorization server each time they use a new app (unless required by
+   the authorization server policy).
 
-   o  When using the implicit grant type flow, a refresh token is not
-      returned, which requires repeating the authorization process once
-      the access token expires.
+   Supporting authorization flows between a native app and the browser
+   is possible without changing the OAuth protocol itself, as the OAuth
+   authorization request and response are already defined in terms of
+   URIs.  This encompasses URIs that can be used for inter-app
+   communication.  Some OAuth server implementations that assume all
+   clients are confidential web clients will need to add an
+   understanding of public native app clients and the types of redirect
+   URIs they use to support this best practice.
+
+   TODO: bring in the rest of RFC8252 here?
 
 10.  Security Considerations
 
@@ -2951,7 +2583,7 @@ RFC 6749                        OAuth 2.0                   October 2012
 
    A comprehensive OAuth security model and analysis, as well as
    background for the protocol design, is provided by
-   [OAuth-THREATMODEL].
+   [OAuth-THREATMODEL] and [OAuth Security Best Current Practice].
 
 10.1.  Client Authentication
 
@@ -3038,9 +2670,6 @@ RFC 6749                        OAuth 2.0                   October 2012
    as described in Section 1.6 with server authentication as defined by
    [RFC2818].
 
-   When using the implicit grant type, the access token is transmitted
-   in the URI fragment, which can expose it to unauthorized parties.
-
    The authorization server MUST ensure that access tokens cannot be
    generated, modified, or guessed to produce valid access tokens by
    unauthorized parties.
@@ -3056,8 +2685,7 @@ RFC 6749                        OAuth 2.0                   October 2012
 
 10.4.  Refresh Tokens
 
-   Authorization servers MAY issue refresh tokens to web application
-   clients and native application clients.
+   Authorization servers MAY issue refresh tokens to clients.
 
    Refresh tokens MUST be kept confidential in transit and storage, and
    shared only among the authorization server and the client to whom the
@@ -3166,7 +2794,7 @@ RFC 6749                        OAuth 2.0                   October 2012
 
 10.7.  Resource Owner Password Credentials
 
-   The resource owner password credentials grant type is often used for
+   The OAuth 2.0 resource owner password credentials grant type is often used for
    legacy or migration reasons.  It reduces the overall risk of storing
    usernames and passwords by the client but does not eliminate the need
    to expose highly privileged credentials to the client.
@@ -3184,9 +2812,18 @@ RFC 6749                        OAuth 2.0                   October 2012
    owner.  The authorization server should consider the scope and
    lifetime of access tokens issued via this grant type.
 
-   The authorization server and client SHOULD minimize use of this grant
-   type and utilize other grant types whenever possible.
+   The resource owner password credentials grant MUST NOT be used.  This
+   grant type insecurely exposes the credentials of the resource owner
+   to the client.  Even if the client is benign, this results in an
+   increased attack surface (credentials can leak in more places than
+   just the AS) and users are trained to enter their credentials in
+   places other than the AS.
 
+   Furthermore, adapting the resource owner password credentials grant
+   to two-factor authentication, authentication with cryptographic
+   credentials (cf.  WebCrypto [webcrypto], WebAuthn [webauthn]), and
+   authentication processes that require multiple steps can be hard or
+   impossible.
 
 
 
@@ -3411,7 +3048,7 @@ RFC 6749                        OAuth 2.0                   October 2012
    determine if the access token was issued for its use (e.g., audience-
    restricting the access token).
 
-
+   TODO: Bring in the rest of the Security BCP attack description here
 
 
 
@@ -3706,10 +3343,6 @@ RFC 6749                        OAuth 2.0                   October 2012
    contents are:
 
    o  Response type name: code
-   o  Change controller: IETF
-   o  Specification document(s): RFC 6749
-
-   o  Response type name: token
    o  Change controller: IETF
    o  Specification document(s): RFC 6749
 
@@ -4104,6 +3737,24 @@ A.18.  Endpoint Parameter Syntax
 
      param-name = 1*name-char
      name-char  = "-" / "." / "_" / DIGIT / ALPHA
+
+A.19.  "code_verifier" Syntax
+
+   ABNF for "code_verifier" is as follows.
+
+   code-verifier = 43*128unreserved
+   unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
+   ALPHA = %x41-5A / %x61-7A
+   DIGIT = %x30-39
+
+A.20.  "code_challenge" Syntax
+
+   ABNF for "code_challenge" is as follows.
+
+   code-challenge = 43*128unreserved
+   unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
+   ALPHA = %x41-5A / %x61-7A
+   DIGIT = %x30-39
 
 Appendix B.  Use of application/x-www-form-urlencoded Media Type
 
