@@ -252,7 +252,7 @@ interaction between the four roles and includes the following steps:
 
 2.  The client receives an authorization grant, which is a
     credential representing the resource owner's authorization,
-    expressed using one of four grant types defined in this
+    expressed using one of two grant types defined in this
     specification or using an extension grant type.  The
     authorization grant type depends on the method used by the
     client to request authorization and the types supported by the
@@ -281,9 +281,9 @@ Authorization Grant
 
 An authorization grant is a credential representing the resource
 owner's authorization (to access its protected resources) used by the
-client to obtain an access token.  This specification defines four
-grant types -- authorization code, implicit, resource owner password
-credentials, and client credentials -- as well as an extensibility
+client to obtain an access token.  This specification defines two
+grant types -- authorization code
+and client credentials -- as well as an extensibility
 mechanism for defining additional types.
 
 
@@ -777,8 +777,8 @@ MUST NOT be included more than once.
 
 ### Response Type
 
-The authorization endpoint is used by the authorization code grant
-type and implicit grant type flows.  The client informs the
+The authorization endpoint is used by the authorization code flow.  
+The client informs the
 authorization server of the desired grant type using the following
 parameter:
 
@@ -898,9 +898,7 @@ Token Endpoint
 --------------
 
 The token endpoint is used by the client to obtain an access token by
-presenting its authorization grant or refresh token.  The token
-endpoint is used with every authorization grant except for the
-implicit grant type (since an access token is issued directly).
+presenting its authorization grant or refresh token.
 
 The means through which the client obtains the location of the token
 endpoint are beyond the scope of this specification, but the location
@@ -1872,7 +1870,7 @@ resource request (along with type-specific attributes).  The client
 MUST NOT use an access token if it does not understand the token
 type.
 
-For example, the "bearer" token type defined in {{RFC6750}} is utilized
+For example, the "Bearer" token type defined in {{RFC6750}} is utilized
 by simply including the access token string in the request:
 
     GET /resource/1 HTTP/1.1
@@ -2056,8 +2054,7 @@ Defining Additional Error Codes
 In cases where protocol extensions (i.e., access token types,
 extension parameters, or extension grant types) require additional
 error codes to be used with the authorization code grant error
-response (Section 4.1.2.1), the implicit grant error response
-(Section 4.2.2.1), the token error response (Section 5.2), or the
+response (Section 4.1.2.1), the token error response (Section 5.2), or the
 resource access error response (Section 7.2), such error codes MAY be
 defined.
 
@@ -2234,9 +2231,6 @@ access token is valid for, and the client to whom the access token is
 issued.  Access token credentials MUST only be transmitted using TLS
 as described in Section 1.6 with server authentication as defined by
 [RFC2818].
-
-When using the implicit grant type, the access token is transmitted
-in the URI fragment, which can expose it to unauthorized parties.
 
 The authorization server MUST ensure that access tokens cannot be
 generated, modified, or guessed to produce valid access tokens by
@@ -2552,48 +2546,6 @@ authorization server validation but will send the authorization code
 or access token to an endpoint under the control of the attacker.
 
 
-Misuse of Access Token to Impersonate Resource Owner in Implicit Flow
----------------------------------------------------------------------
-
-For public clients using implicit flows, this specification does not
-provide any method for the client to determine what client an access
-token was issued to.
-
-A resource owner may willingly delegate access to a resource by
-granting an access token to an attacker's malicious client.  This may
-be due to phishing or some other pretext.  An attacker may also steal
-a token via some other mechanism.  An attacker may then attempt to
-impersonate the resource owner by providing the access token to a
-legitimate public client.
-
-In the implicit flow (response_type=token), the attacker can easily
-switch the token in the response from the authorization server,
-replacing the real access token with the one previously issued to the
-attacker.
-
-Servers communicating with native applications that rely on being
-passed an access token in the back channel to identify the user of
-the client may be similarly compromised by an attacker creating a
-compromised application that can inject arbitrary stolen access
-tokens.
-
-Any public client that makes the assumption that only the resource
-owner can present it with a valid access token for the resource is
-vulnerable to this type of attack.
-
-This type of attack may expose information about the resource owner
-at the legitimate client to the attacker (malicious client).  This
-will also allow the attacker to perform operations at the legitimate
-client with the same permissions as the resource owner who originally
-granted the access token or authorization code.
-
-Authenticating resource owners to clients is out of scope for this
-specification.  Any specification that uses the authorization process
-as a form of delegated end-user authentication to the client (e.g.,
-third-party sign-in service) MUST NOT use the implicit flow without
-additional security mechanisms that would enable the client to
-determine if the access token was issued for its use (e.g., audience-
-restricting the access token).
 
 TODO: Bring in the rest of the Security BCP attack description here
 
@@ -2888,8 +2840,7 @@ Error name:
 Error usage location:
 : The location(s) where the error can be used.  The possible
   locations are authorization code grant error response
-  (Section 4.1.2.1), implicit grant error response
-  (Section 4.2.2.1), token error response (Section 5.2), or resource
+  (Section 4.1.2.1), token error response (Section 5.2), or resource
   access error response (Section 7.2).
 
 Related protocol extension:
