@@ -1,5 +1,5 @@
 ---
-title: OAuth 2.0
+title: The OAuth 2.0 Authorization Framework
 docname: rfc6749
 date: 2012-10-01
 
