@@ -45,6 +45,7 @@ normative:
   RFC5246:
   RFC6125:
   RFC8446:
+  RFC5280:
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -72,7 +73,7 @@ informative:
   RFC7522:
   RFC6819:
   RFC5849:
-  RFC6750:
+  RFC6265:
   I-D.ietf-oauth-mtls:
   I-D.ietf-oauth-rar:
   I-D.ietf-oauth-resource-indicators:
@@ -349,9 +350,8 @@ to understand a wide range of authentication methods.
 Access tokens can have different formats, structures, and methods of
 utilization (e.g., cryptographic properties) based on the resource
 server security requirements.  Access token attributes and the
-methods used to access protected resources are beyond the scope of
-this specification and are defined by companion specifications such
-as {{RFC6750}}.
+methods used to access protected resources may be extended beyond
+what is described in this specification.
 
 
 Refresh Token
@@ -1617,7 +1617,7 @@ For example:
 
     {
       "access_token":"2YotnFZFEjr1zCsicMWpAA",
-      "token_type":"example",
+      "token_type":"Bearer",
       "expires_in":3600,
       "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
       "example_parameter":"example_value"
@@ -1858,7 +1858,7 @@ authenticate with the resource server depends on the type of access
 token issued by the authorization server.  Typically, it involves
 using the HTTP "Authorization" request header field [RFC2617] with an
 authentication scheme defined by the specification of the access
-token type used, such as [RFC6750].
+token type used, such as "Bearer", defined below.
 
 
 Access Token Types
@@ -1870,7 +1870,7 @@ resource request (along with type-specific attributes).  The client
 MUST NOT use an access token if it does not understand the token
 type.
 
-For example, the "Bearer" token type defined in {{RFC6750}} is utilized
+For example, the "Bearer" token type defined in this specification is utilized
 by simply including the access token string in the request:
 
     GET /resource/1 HTTP/1.1
@@ -1878,13 +1878,420 @@ by simply including the access token string in the request:
     Authorization: Bearer mF_9.B5f-4.1JqM
 
 The above example is provided for illustration purposes only.
-Developers are advised to consult the {{RFC6750}}
-specification before use.
 
 Each access token type definition specifies the additional attributes
 (if any) sent to the client together with the "access_token" response
 parameter.  It also defines the HTTP authentication method used to
 include the access token when making a protected resource request.
+
+Bearer Tokens
+-------------
+
+A Bearer Token is a security token with the property that any party 
+in possession of the token (a "bearer") can use the token in any way 
+that any other party in possession of it can.  Using a bearer token 
+does not require a bearer to prove possession of cryptographic key material
+(proof-of-possession).
+
+Bearer tokens may be extended to include proof-of-possession techniques
+by other specifications.
+
+
+### Authenticated Requests
+
+This section defines two methods of sending Bearer tokens in resource
+requetss to resource servers. Clients MUST NOT use more than one method
+to transmit the token in each request.
+
+#### Authorization Request Header Field
+
+When sending the access token in the "Authorization" request header
+field defined by HTTP/1.1 {{RFC2617}}, the client uses the "Bearer"
+authentication scheme to transmit the access token.
+
+For example:
+
+     GET /resource HTTP/1.1
+     Host: server.example.com
+     Authorization: Bearer mF_9.B5f-4.1JqM
+
+The syntax of the "Authorization" header field for this scheme
+follows the usage of the Basic scheme defined in Section 2 of
+{{RFC2617}}.  Note that, as with Basic, it does not conform to the
+generic syntax defined in Section 1.2 of {{RFC2617}} but is compatible
+with the general authentication framework being developed for
+HTTP 1.1 {{HTTP-AUTH}}, although it does not follow the preferred
+practice outlined therein in order to reflect existing deployments.
+The syntax for Bearer credentials is as follows:
+
+    b64token    = 1*( ALPHA / DIGIT /
+                     "-" / "." / "_" / "~" / "+" / "/" ) *"="
+    credentials = "Bearer" 1*SP b64token
+
+Clients SHOULD make authenticated requests with a bearer token using
+the "Authorization" request header field with the "Bearer" HTTP
+authorization scheme.  Resource servers MUST support this method.
+
+#### Form-Encoded Body Parameter
+
+When sending the access token in the HTTP request entity-body, the
+client adds the access token to the request-body using the
+"access_token" parameter.  The client MUST NOT use this method unless
+all of the following conditions are met:
+
+* The HTTP request entity-header includes the "Content-Type" header
+  field set to "application/x-www-form-urlencoded".
+
+* The entity-body follows the encoding requirements of the
+  "application/x-www-form-urlencoded" content-type as defined by
+  HTML 4.01 [W3C.REC-html401-19991224].
+
+* The HTTP request entity-body is single-part.
+
+* The content to be encoded in the entity-body MUST consist entirely
+  of ASCII {{USASCII}} characters.
+
+* The HTTP request method is one for which the request-body has
+  defined semantics.  In particular, this means that the "GET"
+  method MUST NOT be used.
+
+The entity-body MAY include other request-specific parameters, in
+which case the "access_token" parameter MUST be properly separated
+from the request-specific parameters using "&" character(s) (ASCII
+code 38).
+
+For example, the client makes the following HTTP request using
+transport-layer security:
+
+    POST /resource HTTP/1.1
+    Host: server.example.com
+    Content-Type: application/x-www-form-urlencoded
+
+    access_token=mF_9.B5f-4.1JqM
+
+The "application/x-www-form-urlencoded" method SHOULD NOT be used
+except in application contexts where participating clients do not
+have access to the "Authorization" request header field.  Resource
+servers MAY support this method.
+
+
+### The WWW-Authenticate Response Header Field
+
+If the protected resource request does not include authentication
+credentials or does not contain an access token that enables access
+to the protected resource, the resource server MUST include the HTTP
+"WWW-Authenticate" response header field; it MAY include it in
+response to other conditions as well.  The "WWW-Authenticate" header
+field uses the framework defined by HTTP/1.1 {{RFC2617}}.
+
+All challenges defined by this specification MUST use the auth-scheme
+value "Bearer".  This scheme MUST be followed by one or more
+auth-param values.  The auth-param attributes used or defined by this
+specification are as follows.  Other auth-param attributes MAY be
+used as well.
+
+A "realm" attribute MAY be included to indicate the scope of
+protection in the manner described in HTTP/1.1 {{RFC2617}}.  The
+"realm" attribute MUST NOT appear more than once.
+
+The "scope" attribute is defined in Section 3.3.  The
+"scope" attribute is a space-delimited list of case-sensitive scope
+values indicating the required scope of the access token for
+accessing the requested resource. "scope" values are implementation
+defined; there is no centralized registry for them; allowed values
+are defined by the authorization server.  The order of "scope" values
+is not significant.  In some cases, the "scope" value will be used
+when requesting a new access token with sufficient scope of access to
+utilize the protected resource.  Use of the "scope" attribute is
+OPTIONAL.  The "scope" attribute MUST NOT appear more than once.  The
+"scope" value is intended for programmatic use and is not meant to be
+displayed to end-users.
+
+Two example scope values follow; these are taken from the OpenID
+Connect [OpenID.Messages] and the Open Authentication Technology
+Committee (OATC) Online Multimedia Authorization Protocol [OMAP]
+OAuth 2.0 use cases, respectively:
+
+    scope="openid profile email"
+    scope="urn:example:channel=HBO&urn:example:rating=G,PG-13"
+
+If the protected resource request included an access token and failed
+authentication, the resource server SHOULD include the "error"
+attribute to provide the client with the reason why the access
+request was declined.  The parameter value is described in
+Section ???.  In addition, the resource server MAY include the
+"error_description" attribute to provide developers a human-readable
+explanation that is not meant to be displayed to end-users.  It also
+MAY include the "error_uri" attribute with an absolute URI
+identifying a human-readable web page explaining the error.  The
+"error", "error_description", and "error_uri" attributes MUST NOT
+appear more than once.
+
+Values for the "scope" attribute (specified in Appendix A.4) 
+MUST NOT include characters outside the set %x21 / %x23-5B
+/ %x5D-7E for representing scope values and %x20 for delimiters
+between scope values.  Values for the "error" and "error_description"
+attributes (specified in Appendixes A.7 and A.8) MUST
+NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+Values for the "error_uri" attribute (specified in Appendix A.9 of) 
+MUST conform to the URI-reference syntax and thus MUST NOT
+include characters outside the set %x21 / %x23-5B / %x5D-7E.
+
+For example, in response to a protected resource request without
+authentication:
+
+    HTTP/1.1 401 Unauthorized
+    WWW-Authenticate: Bearer realm="example"
+
+And in response to a protected resource request with an
+authentication attempt using an expired access token:
+
+    HTTP/1.1 401 Unauthorized
+    WWW-Authenticate: Bearer realm="example",
+                      error="invalid_token",
+                      error_description="The access token expired"
+
+
+Error Response
+--------------
+
+If a resource access request fails, the resource server SHOULD inform
+the client of the error.  While the specifics of such error responses
+are beyond the scope of this specification, this document establishes
+a common registry in Section 11.4 for error values to be shared among
+OAuth token authentication schemes.
+
+New authentication schemes designed primarily for OAuth token
+authentication SHOULD define a mechanism for providing an error
+status code to the client, in which the error values allowed are
+registered in the error registry established by this specification.
+
+Such schemes MAY limit the set of valid error codes to a subset of
+the registered values.  If the error code is returned using a named
+parameter, the parameter name SHOULD be "error".
+
+Other schemes capable of being used for OAuth token authentication,
+but not primarily designed for that purpose, MAY bind their error
+values to the registry in the same manner.
+
+New authentication schemes MAY choose to also specify the use of the
+"error_description" and "error_uri" parameters to return error
+information in a manner parallel to their usage in this
+specification.
+
+
+### Error Codes
+
+When a request fails, the resource server responds using the
+appropriate HTTP status code (typically, 400, 401, 403, or 405) and
+includes one of the following error codes in the response:
+
+"invalid_request":
+:    The request is missing a required parameter, includes an
+     unsupported parameter or parameter value, repeats the same
+     parameter, uses more than one method for including an access
+     token, or is otherwise malformed.  The resource server SHOULD
+     respond with the HTTP 400 (Bad Request) status code.
+
+"invalid_token":
+:    The access token provided is expired, revoked, malformed, or
+     invalid for other reasons.  The resource SHOULD respond with
+     the HTTP 401 (Unauthorized) status code.  The client MAY
+     request a new access token and retry the protected resource
+     request.
+
+"insufficient_scope":
+:    The request requires higher privileges than provided by the
+     access token.  The resource server SHOULD respond with the HTTP
+     403 (Forbidden) status code and MAY include the "scope"
+     attribute with the scope necessary to access the protected
+     resource.
+
+If the request lacks any authentication information (e.g., the client
+was unaware that authentication is necessary or attempted using an
+unsupported authentication method), the resource server SHOULD NOT
+include an error code or other error information.
+
+For example:
+
+    HTTP/1.1 401 Unauthorized
+    WWW-Authenticate: Bearer realm="example"
+
+
+
+Access Token Security Considerations
+------------------------------------
+
+### Security Threats
+
+The following list presents several common threats against protocols
+utilizing some form of tokens.  This list of threats is based on NIST
+Special Publication 800-63 [NIST800-63].
+
+#### Token manufacture/modification
+
+An attacker may generate a bogus
+token or modify the token contents (such as the authentication or
+attribute statements) of an existing token, causing the resource
+server to grant inappropriate access to the client.  For example,
+an attacker may modify the token to extend the validity period; a
+malicious client may modify the assertion to gain access to
+information that they should not be able to view.
+
+#### Token disclosure
+
+Tokens may contain authentication and attribute
+statements that include sensitive information.
+
+#### Token redirect
+
+An attacker uses a token generated for consumption
+by one resource server to gain access to a different resource
+server that mistakenly believes the token to be for it.
+
+#### Token replay
+
+An attacker attempts to use a token that has already
+been used with that resource server in the past.
+
+### Threat Mitigation
+
+A large range of threats can be mitigated by protecting the contents
+of the token by using a digital signature.  
+Alternatively, a bearer token can contain a reference to
+authorization information, rather than encoding the information
+directly.  Such references MUST be infeasible for an attacker to
+guess; using a reference may require an extra interaction between a
+server and the token issuer to resolve the reference to the
+authorization information.  The mechanics of such an interaction are
+not defined by this specification.
+
+This document does not specify the encoding or the contents of the
+token; hence, detailed recommendations about the means of
+guaranteeing token integrity protection are outside the scope of this
+document.  The token integrity protection MUST be sufficient to
+prevent the token from being modified.
+
+To deal with token redirect, it is important for the authorization
+server to include the identity of the intended recipients (the
+audience), typically a single resource server (or a list of resource
+servers), in the token.  Restricting the use of the token to a
+specific scope is also RECOMMENDED.
+
+The authorization server MUST implement TLS.  Which version(s) ought
+to be implemented will vary over time and will depend on the
+widespread deployment and known security vulnerabilities at the time
+of implementation.
+
+To protect against token disclosure, confidentiality protection MUST
+be applied using TLS with a ciphersuite that provides
+confidentiality and integrity protection.  This requires that the
+communication interaction between the client and the authorization
+server, as well as the interaction between the client and the
+resource server, utilize confidentiality and integrity protection.
+Since TLS is mandatory to implement and to use with this
+specification, it is the preferred approach for preventing token
+disclosure via the communication channel.  For those cases where the
+client is prevented from observing the contents of the token, token
+encryption MUST be applied in addition to the usage of TLS
+protection.  As a further defense against token disclosure, the
+client MUST validate the TLS certificate chain when making requests
+to protected resources, including checking the Certificate Revocation
+List (CRL) {{RFC5280}}.
+
+Cookies are typically transmitted in the clear.  Thus, any
+information contained in them is at risk of disclosure.  Therefore,
+Bearer tokens MUST NOT be stored in cookies that can be sent in the
+clear, as any information in them is at risk of disclosure.  
+See "HTTP State Management Mechanism" {{RFC6265}} for security
+considerations about cookies.
+
+In some deployments, including those utilizing load balancers, the
+TLS connection to the resource server terminates prior to the actual
+server that provides the resource.  This could leave the token
+unprotected between the front-end server where the TLS connection
+terminates and the back-end server that provides the resource.  In
+such deployments, sufficient measures MUST be employed to ensure
+confidentiality of the token between the front-end and back-end
+servers; encryption of the token is one such possible measure.
+
+To deal with token capture and replay, the following recommendations
+are made: First, the lifetime of the token MUST be limited; one means
+of achieving this is by putting a validity time field inside the
+protected part of the token.  Note that using short-lived (one hour
+or less) tokens reduces the impact of them being leaked.  Second,
+confidentiality protection of the exchanges between the client and
+the authorization server and between the client and the resource
+server MUST be applied.  As a consequence, no eavesdropper along the
+communication path is able to observe the token exchange.
+Consequently, such an on-path adversary cannot replay the token.
+Furthermore, when presenting the token to a resource server, the
+client MUST verify the identity of that resource server, as per
+Section 3.1 of "HTTP Over TLS" {{RFC2818}}.  Note that the client MUST
+validate the TLS certificate chain when making these requests to
+protected resources.  Presenting the token to an unauthenticated and
+unauthorized resource server or failing to validate the certificate
+chain will allow adversaries to steal the token and gain unauthorized
+access to protected resources.
+
+### Summary of Recommendations
+
+#### Safeguard bearer tokens
+
+Client implementations MUST ensure that
+bearer tokens are not leaked to unintended parties, as they will
+be able to use them to gain access to protected resources.  This
+is the primary security consideration when using bearer tokens and
+underlies all the more specific recommendations that follow.
+
+#### Validate TLS certificate chains
+
+The client MUST validate the TLS
+certificate chain when making requests to protected resources.
+Failing to do so may enable DNS hijacking attacks to steal the
+token and gain unintended access.
+
+#### Always use TLS (https)
+
+Clients MUST always use TLS
+(https) or equivalent transport security when making requests with
+bearer tokens.  Failing to do so exposes the token to numerous
+attacks that could give attackers unintended access.
+
+#### Don't store bearer tokens in HTTP cookies
+
+Implementations MUST NOT store
+bearer tokens within cookies that can be sent in the clear (which
+is the default transmission mode for cookies).  Implementations
+that do store bearer tokens in cookies MUST take precautions
+against cross-site request forgery.
+
+#### Issue short-lived bearer tokens
+
+Token servers SHOULD issue
+short-lived (one hour or less) bearer tokens, particularly when
+issuing tokens to clients that run within a web browser or other
+environments where information leakage may occur.  Using
+short-lived bearer tokens can reduce the impact of them being
+leaked.
+
+#### Issue scoped bearer tokens
+
+Token servers SHOULD issue bearer tokens
+that contain an audience restriction, scoping their use to the
+intended relying party or set of relying parties.
+
+#### Don't pass bearer tokens in page URLs
+
+Bearer tokens MUST NOT be
+passed in page URLs (for example, as query string parameters).
+Instead, bearer tokens SHOULD be passed in HTTP message headers or
+message bodies for which confidentiality measures are taken.
+Browsers, web servers, and other software may not adequately
+secure URLs in the browser history, web server logs, and other
+data structures.  If bearer tokens are passed in page URLs,
+attackers might be able to steal them from the history data, logs,
+or other unsecured locations.
 
 
 ### Token Replay Prevention
@@ -1936,36 +2343,6 @@ utilize the parameter "scope" and
 "authorization_details" as specified in {{I-D.ietf-oauth-rar}} to
 determine those resources and/or actions.
 
-
-
-
-
-Error Response
---------------
-
-If a resource access request fails, the resource server SHOULD inform
-the client of the error.  While the specifics of such error responses
-are beyond the scope of this specification, this document establishes
-a common registry in Section 11.4 for error values to be shared among
-OAuth token authentication schemes.
-
-New authentication schemes designed primarily for OAuth token
-authentication SHOULD define a mechanism for providing an error
-status code to the client, in which the error values allowed are
-registered in the error registry established by this specification.
-
-Such schemes MAY limit the set of valid error codes to a subset of
-the registered values.  If the error code is returned using a named
-parameter, the parameter name SHOULD be "error".
-
-Other schemes capable of being used for OAuth token authentication,
-but not primarily designed for that purpose, MAY bind their error
-values to the registry in the same manner.
-
-New authentication schemes MAY choose to also specify the use of the
-"error_description" and "error_uri" parameters to return error
-information in a manner parallel to their usage in this
-specification.
 
 
 Extensibility
@@ -2230,7 +2607,7 @@ only shared among the authorization server, the resource servers the
 access token is valid for, and the client to whom the access token is
 issued.  Access token credentials MUST only be transmitted using TLS
 as described in Section 1.6 with server authentication as defined by
-[RFC2818].
+{{RFC2818}}.
 
 The authorization server MUST ensure that access tokens cannot be
 generated, modified, or guessed to produce valid access tokens by
@@ -2257,7 +2634,7 @@ refresh tokens were issued.  The authorization server MUST maintain
 the binding between a refresh token and the client to whom it was
 issued.  Refresh tokens MUST only be transmitted using TLS as
 described in Section 1.6 with server authentication as defined by
-[RFC2818].
+{{RFC2818}}.
 
 The authorization server MUST verify the binding between the refresh
 token and client identity whenever the client identity can be
@@ -2398,7 +2775,7 @@ Ensuring Endpoint Authenticity
 
 In order to prevent man-in-the-middle attacks, the authorization
 server MUST require the use of TLS with server authentication as
-defined by [RFC2818] for any request sent to the authorization and
+defined by {{RFC2818}} for any request sent to the authorization and
 token endpoints.  The client MUST validate the authorization server's
 TLS certificate as defined by [RFC6125] and in accordance with its
 requirements for server identity authentication.
@@ -2607,6 +2984,18 @@ Specification document(s):
   preferably including a URI that can be used to retrieve a copy of
   the document(s).  An indication of the relevant sections may also
   be included but is not required.
+
+
+### Initial Registry Contents
+
+The OAuth Access Token Types registry's initial contents are:
+
+* Type name: Bearer
+* Additional Token Endpoint Response Parameters: (none)
+* HTTP Authentication Scheme(s): Bearer
+* Change controller: IETF
+* Specification document(s): OAuth 2.1
+
 
 
 OAuth Parameters Registry
@@ -2858,6 +3247,30 @@ Specification document(s):
   preferably including a URI that can be used to retrieve a copy of
   the document(s).  An indication of the relevant sections may also
   be included but is not required.
+
+
+### Initial Registry Contents
+
+The OAuth Error registry's initial contents are:
+
+* Error name: invalid_request
+* Error usage location: Resource access error response
+* Change controller: IETF
+* Specification document(s): OAuth 2.1
+
+
+* Error name: invalid_token
+* Error usage location: Resource access error response
+* Change controller: IETF
+* Specification document(s): OAuth 2.1
+
+
+* Error name: insufficient_scope
+* Error usage location: Resource access error response
+* Change controller: IETF
+* Specification document(s): OAuth 2.1
+
+
 
 
 --- back
