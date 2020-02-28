@@ -101,7 +101,49 @@ informative:
     url: https://www.w3.org/TR/2017/REC-WebCryptoAPI-20170126/
   OpenID:
     title: "OpenID Connect"
-
+  OMAP:
+    title: "Online Multimedia Authorization Protocol: An Industry Standard for Authorized Access to Internet Multimedia Resources"
+    author:
+      - ins: J. Huff
+      - ins: D. Schlacht
+      - ins: A. Nadalin
+      - ins: J. Simmons
+      - ins: P. Rosenberg
+      - ins: P. Madsen
+      - ins: T. Ace
+      - ins: C. Rickelton-Abdi
+      - ins: B. Boyer
+    date: April 2012
+    url: https://www.oatc.us/Standards/Download-Standards
+  NIST800-63:
+    title: "NIST Special Publication 800-63-1, INFORMATION SECURITY"
+    date: December 2011
+    author:
+      - ins: W. Burr
+      - ins: D. Dodson
+      - ins: E. Newton
+      - ins: R. Perlner
+      - ins: T. Polk
+      - ins: S. Gupta
+      - ins: E. Nabbus
+    url: http://csrc.nist.gov/publications/
+  OpenID.Messages:
+    title: "OpenID Connect Messages 1.0"
+    author:
+      - ins: N. Sakimura
+      - ins: J. Bradley
+      - ins: M. Jones
+      - ins: B. de Medeiros
+      - ins: C. Mortimore
+      - ins: E. Jay
+    date: June 2012
+    url: http://openid.net/specs/openid-connect-messages-1_0.html
+  HTTP-AUTH:
+    title: "Hypertext Transfer Protocol (HTTP/1.1): Authentication"
+    date: October 2012
+    author: 
+      - ins: R. Fielding
+      - ins: J. Reschke
 
 
 --- abstract
