@@ -414,26 +414,26 @@ to resource servers.
 
 
 ~~~~~~~~~~
-  +--------+                                           +---------------+
-  |        |--(1)------- Authorization Grant --------->|               |
-  |        |                                           |               |
-  |        |<-(2)----------- Access Token -------------|               |
-  |        |               & Refresh Token             |               |
-  |        |                                           |               |
-  |        |                            +----------+   |               |
-  |        |--(3)---- Access Token ---->|          |   |               |
-  |        |                            |          |   |               |
-  |        |<-(4)- Protected Resource --| Resource |   | Authorization |
-  | Client |                            |  Server  |   |     Server    |
-  |        |--(5)---- Access Token ---->|          |   |               |
-  |        |                            |          |   |               |
-  |        |<-(6)- Invalid Token Error -|          |   |               |
-  |        |                            +----------+   |               |
-  |        |                                           |               |
-  |        |--(7)----------- Refresh Token ----------->|               |
-  |        |                                           |               |
-  |        |<-(8)----------- Access Token -------------|               |
-  +--------+           & Optional Refresh Token        +---------------+
++--------+                                           +---------------+
+|        |--(1)------- Authorization Grant --------->|               |
+|        |                                           |               |
+|        |<-(2)----------- Access Token -------------|               |
+|        |               & Refresh Token             |               |
+|        |                                           |               |
+|        |                            +----------+   |               |
+|        |--(3)---- Access Token ---->|          |   |               |
+|        |                            |          |   |               |
+|        |<-(4)- Protected Resource --| Resource |   | Authorization |
+| Client |                            |  Server  |   |     Server    |
+|        |--(5)---- Access Token ---->|          |   |               |
+|        |                            |          |   |               |
+|        |<-(6)- Invalid Token Error -|          |   |               |
+|        |                            +----------+   |               |
+|        |                                           |               |
+|        |--(7)----------- Refresh Token ----------->|               |
+|        |                                           |               |
+|        |<-(8)----------- Access Token -------------|               |
++--------+           & Optional Refresh Token        +---------------+
 ~~~~~~~~~~
 {: #fig-refresh-token-flow title="Refreshing an Expired Access Token"}
 
@@ -1050,34 +1050,34 @@ browser) and capable of receiving incoming requests (via redirection)
 from the authorization server.
 
 ~~~~~~~~~~
-     +----------+
-     | Resource |
-     |   Owner  |
-     |          |
-     +----------+
-          ^
-          |
-         (2)
-     +----|-----+          Client Identifier      +---------------+
-     |         -+----(1)-- & Redirection URI ---->|               |
-     |  User-   |                                 | Authorization |
-     |  Agent  -+----(2)-- User authenticates --->|     Server    |
-     |          |                                 |               |
-     |         -+----(3)-- Authorization Code ---<|               |
-     +-|----|---+                                 +---------------+
-       |    |                                         ^      v
-      (1)  (3)                                        |      |
-       |    |                                         |      |
-       ^    v                                         |      |
-     +---------+                                      |      |
-     |         |>---(4)-- Authorization Code ---------'      |
-     |  Client |          & Redirection URI                  |
-     |         |                                             |
-     |         |<---(5)----- Access Token -------------------'
-     +---------+       (w/ Optional Refresh Token)
++----------+
+| Resource |
+|   Owner  |
+|          |
++----------+
+     ^
+     |
+    (2)
++----|-----+          Client Identifier      +---------------+
+|         -+----(1)-- & Redirection URI ---->|               |
+|  User-   |                                 | Authorization |
+|  Agent  -+----(2)-- User authenticates --->|     Server    |
+|          |                                 |               |
+|         -+----(3)-- Authorization Code ---<|               |
++-|----|---+                                 +---------------+
+  |    |                                         ^      v
+ (1)  (3)                                        |      |
+  |    |                                         |      |
+  ^    v                                         |      |
++---------+                                      |      |
+|         |>---(4)-- Authorization Code ---------'      |
+|  Client |          & Redirection URI                  |
+|         |                                             |
+|         |<---(5)----- Access Token -------------------'
++---------+       (w/ Optional Refresh Token)
 
-   Note: The lines illustrating steps (1), (2), and (3) are broken into
-   two parts as they pass through the user-agent.
+Note: The lines illustrating steps (1), (2), and (3) are broken into
+two parts as they pass through the user-agent.
 ~~~~~~~~~~
 {: #fig-authorization-code-flow title="Authorization Code Flow"}
 
@@ -1483,6 +1483,7 @@ the scope of this specification).
 The client credentials grant type MUST only be used by confidential
 clients.
 
+~~~~~~~~~~
      +---------+                                  +---------------+
      |         |                                  |               |
      |         |>--(A)- Client Authentication --->| Authorization |
@@ -1490,10 +1491,10 @@ clients.
      |         |<--(B)---- Access Token ---------<|               |
      |         |                                  |               |
      +---------+                                  +---------------+
+~~~~~~~~~~
+{: #fig-client-credentials-flow title="Client Credentials Flow"}
 
-                     Figure 6: Client Credentials Flow
-
-The flow illustrated in Figure 6 includes the following steps:
+The flow illustrated in {{fig-client-credentials-flow}} includes the following steps:
 
 (A)  The client authenticates with the authorization server and
      requests an access token from the token endpoint.
