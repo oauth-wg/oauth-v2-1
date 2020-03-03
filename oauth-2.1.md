@@ -1461,11 +1461,11 @@ An example successful response:
     Pragma: no-cache
 
     {
-      "access_token":"2YotnFZFEjr1zCsicMWpAA",
-      "token_type":"example",
-      "expires_in":3600,
-      "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
-      "example_parameter":"example_value"
+      "access_token": "2YotnFZFEjr1zCsicMWpAA",
+      "token_type": "Bearer",
+      "expires_in": 3600,
+      "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
+      "example_parameter": "example_value"
     }
 
 
@@ -1555,10 +1555,10 @@ An example successful response:
     Pragma: no-cache
 
     {
-      "access_token":"2YotnFZFEjr1zCsicMWpAA",
-      "token_type":"example",
-      "expires_in":3600,
-      "example_parameter":"example_value"
+      "access_token": "2YotnFZFEjr1zCsicMWpAA",
+      "token_type": "Bearer",
+      "expires_in": 3600,
+      "example_parameter": "example_value"
     }
 
 
