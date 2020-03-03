@@ -74,7 +74,7 @@ informative:
   RFC6819:
   RFC5849:
   RFC6265:
-  I-D.ietf-oauth-mtls:
+  RFC8705:
   I-D.ietf-oauth-rar:
   I-D.ietf-oauth-resource-indicators:
   I-D.ietf-oauth-security-topics:
@@ -2565,8 +2565,7 @@ TODO: bring in the rest of RFC8252 here?
 
 
 
-Security Considerations
-=======================
+# Security Considerations
 
 As a flexible and extensible framework, OAuth's security
 considerations depend on many factors.  The following sections
@@ -2579,22 +2578,20 @@ background for the protocol design, is provided by
 {{RFC6819}} and {{I-D.ietf-oauth-security-topics}}.
 
 
-Client Authentication
----------------------
+## Client Authentication
 
-The authorization server establishes client credentials with web
-application clients for the purpose of client authentication.  The
-authorization server is encouraged to consider stronger client
-authentication means than a client password.  Web application clients
-MUST ensure confidentiality of client passwords and other client
-credentials.
+Authorization servers SHOULD use client authentication if possible.
 
-The authorization server MUST NOT issue client passwords or other
-client credentials to native application or user-agent-based
-application clients for the purpose of client authentication.  The
-authorization server MAY issue a client password or other credentials
-for a specific installation of a native application client on a
-specific device.
+It is RECOMMENDED to use asymmetric (public-key based) methods for
+client authentication such as mTLS {{RFC8705}} or
+`private_key_jwt` {{OpenID}}. When asymmetric methods for client
+authentication are used, authorization servers do not need to store
+sensitive symmetric keys, making these methods more robust against a
+number of attacks.
+
+Authorization server MUST only rely on client authentication if the 
+process of issuance/registration and distribution of the underlying
+credentials ensures their confidentiality.
 
 When client authentication is not possible, the authorization server
 SHOULD employ other means to validate the client's identity -- for
@@ -2610,9 +2607,18 @@ interacting with unauthenticated clients and take measures to limit
 the potential exposure of other credentials (e.g., refresh tokens)
 issued to such clients.
 
+The privileges an authorization server associates with a certain 
+client identity MUST depend on the assessment of the overall process 
+for client identification and client credential lifecycle management. 
+For example, authentication of a dynamically registered client just 
+ensures the authorization server it is talking to the same client again. 
+In contrast, if there is a web application whose developer's identity
+was verified, who signed a contract and is issued a client secret 
+that is only used in a secure backend service, the authorization 
+server might allow this client to access more sensible services
+or use auto-approval for user consents.
 
-Client Impersonation
---------------------
+## Client Impersonation
 
 A malicious client can impersonate another client and obtain access
 to protected resources if the impersonated client fails to, or is
@@ -2640,8 +2646,7 @@ ensure that the repeated request comes from the original client and
 not an impersonator.
 
 
-Access Tokens
--------------
+## Access Tokens
 
 Access token credentials (as well as any confidential access token
 attributes) MUST be kept confidential in transit and storage, and
@@ -2655,18 +2660,55 @@ The authorization server MUST ensure that access tokens cannot be
 generated, modified, or guessed to produce valid access tokens by
 unauthorized parties.
 
+### Access Token Privilege Restriction
+
 The client SHOULD request access tokens with the minimal scope
 necessary.  The authorization server SHOULD take the client identity
 into account when choosing how to honor the requested scope and MAY
 issue an access token with less rights than requested.
 
-This specification does not provide any methods for the resource
-server to ensure that an access token presented to it by a given
-client was issued to that client by the authorization server.
+The privileges associated with an access token SHOULD be restricted to
+the minimum required for the particular application or use case. This
+prevents clients from exceeding the privileges authorized by the
+resource owner. It also prevents users from exceeding their privileges
+authorized by the respective security policy. Privilege restrictions
+also help to reduce the impact of access token leakage.
 
+In particular, access tokens SHOULD be restricted to certain resource
+servers (audience restriction), preferably to a single resource
+server. To put this into effect, the authorization server associates
+the access token with certain resource servers and every resource
+server is obliged to verify, for every request, whether the access
+token sent with that request was meant to be used for that particular
+resource server. If not, the resource server MUST refuse to serve the
+respective request. Clients and authorization servers MAY utilize the
+parameters `scope` or `resource` as specified in 
+{{RFC8707}}, respectively, to determine the
+resource server they want to access.
 
-Refresh Tokens
---------------
+### Access Token Replay Prevention
+
+Additionally, access tokens SHOULD be restricted to certain resources
+and actions on resource servers or resources. To put this into effect,
+the authorization server associates the access token with the
+respective resource and actions and every resource server is obliged
+to verify, for every request, whether the access token sent with that
+request was meant to be used for that particular action on the
+particular resource. If not, the resource server must refuse to serve
+the respective request. Clients and authorization servers MAY utilize
+the parameter `scope` and `authorization_details` as specified in 
+{{I-D.ietf-oauth-rar}} to determine those resources and/or actions.
+
+Authorization and resource servers SHOULD use mechanisms for
+sender-constrained access tokens to prevent token replay as described
+in (#pop_tokens). A sender-constrained access token scopes the applicability 
+of an access
+token to a certain sender. This sender is obliged to demonstrate knowledge
+of a certain secret as prerequisite for the acceptance of that token at
+the recipient (e.g., a resource server). The use of Mutual TLS for OAuth 2.0
+{{RFC8705}} is RECOMMENDED. 
+
+## Refresh Tokens
 
 Authorization servers MAY issue refresh tokens to clients.
 
@@ -2680,140 +2722,109 @@ described in Section 1.6 with server authentication as defined by
 
 The authorization server MUST verify the binding between the refresh
 token and client identity whenever the client identity can be
-authenticated.  When client authentication is not possible, the
-authorization server SHOULD deploy other means to detect refresh
-token abuse.
-
-For example, the authorization server could employ refresh token
-rotation in which a new refresh token is issued with every access
-token refresh response.  The previous refresh token is invalidated
-but retained by the authorization server.  If a refresh token is
-compromised and subsequently used by both the attacker and the
-legitimate client, one of them will present an invalidated refresh
-token, which will inform the authorization server of the breach.
+authenticated.  When client authentication is not possible, the 
+authorization server MUST issue sender-constrained refresh tokens 
+or use refresh token rotation as described in (#refresh_token_protection).
 
 The authorization server MUST ensure that refresh tokens cannot be
 generated, modified, or guessed to produce valid refresh tokens by
 unauthorized parties.
 
+## Protecting Redirect-Based Flows
 
-Authorization Codes
--------------------
+When comparing client redirect URIs against pre-registered URIs,
+authorization servers MUST utilize exact string matching. This measure
+contributes to the prevention of leakage of authorization codes and
+access tokens (see (#insufficient_uri_validation)). It can also help to
+detect mix-up attacks (see (#mix_up)).
 
-The transmission of authorization codes SHOULD be made over a secure
-channel, and the client SHOULD require the use of TLS with its
+Clients MUST NOT expose URLs that forward the user’s browser to
+arbitrary URIs obtained from a query parameter ("open redirector").
+Open redirectors can enable exfiltration of authorization codes and
+access tokens, see (#open_redirector_on_client).
+
+Clients MUST prevent Cross-Site Request Forgery (CSRF). In this
+context, CSRF refers to requests to the redirection endpoint that do
+not originate at the authorization server, but a malicious third party
+(see Section 4.4.1.8. of [@RFC6819] for details). Clients that have
+ensured that the authorization server supports PKCE [@RFC7636] MAY
+rely the CSRF protection provided by PKCE. In OpenID Connect flows,
+the `nonce` parameter provides CSRF protection. Otherwise, one-time
+use CSRF tokens carried in the `state` parameter that are securely
+bound to the user agent MUST be used for CSRF protection (see
+(#csrf_countermeasures)).
+        
+In order to prevent mix-up attacks (see (#mix_up)), clients MUST only process redirect
+responses of the authorization server they sent the respective request
+to and from the same user agent this authorization request was
+initiated with. Clients MUST store the authorization server they sent
+an authorization request to and bind this information to the user
+agent and check that the authorization request was received from the
+correct authorization server. Clients MUST ensure that the subsequent
+token request, if applicable, is sent to the same authorization
+server. Clients SHOULD use distinct redirect URIs for each
+authorization server as a means to identify the authorization server a
+particular response came from.
+
+An AS that redirects a request potentially containing user credentials
+MUST avoid forwarding these user credentials accidentally (see
+(#redirect_307) for details).
+
+## Authorization Codes
+
+The transmission of authorization codes MUST be made over a secure
+channel, and the client MUST require the use of TLS with its
 redirection URI if the URI identifies a network resource.  Since
 authorization codes are transmitted via user-agent redirections, they
 could potentially be disclosed through user-agent history and HTTP
 referrer headers.
 
-Authorization codes operate as plaintext bearer credentials, used to
-verify that the resource owner who granted authorization at the
-authorization server is the same resource owner returning to the
-client to complete the process.  Therefore, if the client relies on
-the authorization code for its own resource owner authentication, the
-client redirection endpoint MUST require the use of TLS.
-
 Authorization codes MUST be short lived and single-use.  If the
 authorization server observes multiple attempts to exchange an
 authorization code for an access token, the authorization server
-SHOULD attempt to revoke all access tokens already granted based on
-the compromised authorization code.
+SHOULD attempt to revoke all refresh and access tokens already granted 
+based on the compromised authorization code.
 
 If the client can be authenticated, the authorization servers MUST
 authenticate the client and ensure that the authorization code was
 issued to the same client.
 
+Clients MUST prevent injection (replay) of authorization codes into
+the authorization response by attackers. The use of PKCE [@!RFC7636]
+is RECOMMENDED to this end. The OpenID Connect `nonce` parameter and
+ID Token Claim [@!OpenID] MAY be used as well. The PKCE challenge or
+OpenID Connect `nonce` MUST be transaction-specific and securely bound
+to the client and the user agent in which the transaction was started.
 
-Authorization Code Redirection URI Manipulation
------------------------------------------------
+Note: although PKCE so far was designed as a mechanism to protect
+native apps, this advice applies to all kinds of OAuth clients,
+including web applications.
 
-When requesting authorization using the authorization code grant
-type, the client can specify a redirection URI via the "redirect_uri"
-parameter.  If an attacker can manipulate the value of the
-redirection URI, it can cause the authorization server to redirect
-the resource owner user-agent to a URI under the control of the
-attacker with the authorization code.
+When using PKCE, clients SHOULD use PKCE code challenge methods that
+do not expose the PKCE verifier in the authorization request.
+Otherwise, attackers that can read the authorization request (cf.
+Attacker A4 in (#secmodel)) can break the security provided
+by PKCE. Currently, `S256` is the only such method.
 
-An attacker can create an account at a legitimate client and initiate
-the authorization flow.  When the attacker's user-agent is sent to
-the authorization server to grant access, the attacker grabs the
-authorization URI provided by the legitimate client and replaces the
-client's redirection URI with a URI under the control of the
-attacker.  The attacker then tricks the victim into following the
-manipulated link to authorize access to the legitimate client.
+Authorization servers MUST support PKCE [@!RFC7636].
 
-Once at the authorization server, the victim is prompted with a
-normal, valid request on behalf of a legitimate and trusted client,
-and authorizes the request.  The victim is then redirected to an
-endpoint under the control of the attacker with the authorization
-code.  The attacker completes the authorization flow by sending the
-authorization code to the client using the original redirection URI
-provided by the client.  The client exchanges the authorization code
-with an access token and links it to the attacker's client account,
-which can now gain access to the protected resources authorized by
-the victim (via the client).
+Authorization servers MUST provide a way to detect their support for
+PKCE. To this end, they MUST either (a) publish the element
+`code_challenge_methods_supported` in their AS metadata ([@!RFC8418])
+containing the supported PKCE challenge methods (which can be used by
+the client to detect PKCE support) or (b) provide a
+deployment-specific way to ensure or determine PKCE support by the AS.
 
-In order to prevent such an attack, the authorization server MUST
-ensure that the redirection URI used to obtain the authorization code
-is identical to the redirection URI provided when exchanging the
-authorization code for an access token.  The authorization server
-MUST require public clients and SHOULD require confidential clients
-to register their redirection URIs.  If a redirection URI is provided
-in the request, the authorization server MUST validate it against the
-registered value.
+## Request Confidentiality
 
-
-Resource Owner Password Credentials
------------------------------------
-
-The OAuth 2.0 resource owner password credentials grant type is often used for
-legacy or migration reasons.  It reduces the overall risk of storing
-usernames and passwords by the client but does not eliminate the need
-to expose highly privileged credentials to the client.
-
-This grant type carries a higher risk than other grant types because
-it maintains the password anti-pattern this protocol seeks to avoid.
-The client could abuse the password, or the password could
-unintentionally be disclosed to an attacker (e.g., via log files or
-other records kept by the client).
-
-Additionally, because the resource owner does not have control over
-the authorization process (the resource owner's involvement ends when
-it hands over its credentials to the client), the client can obtain
-access tokens with a broader scope than desired by the resource
-owner.  The authorization server should consider the scope and
-lifetime of access tokens issued via this grant type.
-
-The resource owner password credentials grant MUST NOT be used.  This
-grant type insecurely exposes the credentials of the resource owner
-to the client.  Even if the client is benign, this results in an
-increased attack surface (credentials can leak in more places than
-just the AS) and users are trained to enter their credentials in
-places other than the AS.
-
-Furthermore, adapting the resource owner password credentials grant
-to two-factor authentication, authentication with cryptographic
-credentials (cf.  WebCrypto {{webcrypto}}, WebAuthn {{webauthn}}), and
-authentication processes that require multiple steps can be hard or
-impossible.
-
-
-
-Request Confidentiality
------------------------
-
-Access tokens, refresh tokens, resource owner passwords, and client
-credentials MUST NOT be transmitted in the clear.  Authorization
-codes SHOULD NOT be transmitted in the clear.
+Access tokens, refresh tokens, authorization codes, and client
+credentials MUST NOT be transmitted in the clear.  
 
 The "state" and "scope" parameters SHOULD NOT include sensitive
 client or resource owner information in plain text, as they can be
 transmitted over insecure channels or stored insecurely.
 
-
-Ensuring Endpoint Authenticity
-------------------------------
+## Ensuring Endpoint Authenticity
 
 In order to prevent man-in-the-middle attacks, the authorization
 server MUST require the use of TLS with server authentication as
@@ -2822,9 +2833,7 @@ token endpoints.  The client MUST validate the authorization server's
 TLS certificate as defined by [RFC6125] and in accordance with its
 requirements for server identity authentication.
 
-
-Credentials-Guessing Attacks
-----------------------------
+## Credentials-Guessing Attacks
 
 The authorization server MUST prevent attackers from guessing access
 tokens, authorization codes, refresh tokens, resource owner
@@ -2838,8 +2847,7 @@ The authorization server MUST utilize other means to protect
 credentials intended for end-user usage.
 
 
-Phishing Attacks
-----------------
+## Phishing Attacks
 
 Wide deployment of this and similar protocols may cause end-users to
 become inured to the practice of being redirected to websites where
@@ -2860,80 +2868,85 @@ To reduce the risk of phishing attacks, the authorization servers
 MUST require the use of TLS on every endpoint used for end-user
 interaction.
 
+## Cross-Site Request Forgery
 
-Cross-Site Request Forgery
---------------------------
+An attacker might attempt to inject a request to the redirect URI of
+the legitimate client on the victim's device, e.g., to cause the
+client to access resources under the attacker's control. This is a
+variant of an attack known as Cross-Site Request Forgery (CSRF).
+ 
+The traditional countermeasure are CSRF tokens that are bound to the
+user agent and passed in the `state` parameter to the authorization
+server as described in [@!RFC6819]. The same protection is provided by
+PKCE or the OpenID Connect `nonce` value.
 
-Cross-site request forgery (CSRF) is an exploit in which an attacker
-causes the user-agent of a victim end-user to follow a malicious URI
-(e.g., provided to the user-agent as a misleading link, image, or
-redirection) to a trusting server (usually established via the
-presence of a valid session cookie).
+When using PKCE instead of `state` or `nonce` for CSRF protection, it is
+important to note that:
 
-A CSRF attack against the client's redirection URI allows an attacker
-to inject its own authorization code or access token, which can
-result in the client using an access token associated with the
-attacker's protected resources rather than the victim's (e.g., save
-the victim's bank account information to a protected resource
-controlled by the attacker).
+ * Clients MUST ensure that the AS supports PKCE before using PKCE for
+   CSRF protection. If an authorization server does not support PKCE,
+   `state` or `nonce` MUST be used for CSRF protection.
 
-The client MUST implement CSRF protection for its redirection URI.
-This is typically accomplished by requiring any request sent to the
-redirection URI endpoint to include a value that binds the request to
-the user-agent's authenticated state (e.g., a hash of the session
-cookie used to authenticate the user-agent).  The client SHOULD
-utilize the "state" request parameter to deliver this value to the
-authorization server when making an authorization request.
+ * If `state` is used for carrying application state, and integrity of
+   its contents is a concern, clients MUST protect `state` against
+   tampering and swapping. This can be achieved by binding the
+   contents of state to the browser session and/or signed/encrypted
+   state values [@I-D.bradley-oauth-jwt-encoded-state].
 
-Once authorization has been obtained from the end-user, the
-authorization server redirects the end-user's user-agent back to the
-client with the required binding value contained in the "state"
-parameter.  The binding value enables the client to verify the
-validity of the request by matching the binding value to the
-user-agent's authenticated state.  The binding value used for CSRF
-protection MUST contain a non-guessable value (as described in
-Section 10.10), and the user-agent's authenticated state (e.g.,
-session cookie, HTML5 local storage) MUST be kept in a location
-accessible only to the client and the user-agent (i.e., protected by
-same-origin policy).
-
-A CSRF attack against the authorization server's authorization
-endpoint can result in an attacker obtaining end-user authorization
-for a malicious client without involving or alerting the end-user.
-
-The authorization server MUST implement CSRF protection for its
-authorization endpoint and ensure that a malicious client cannot
-obtain authorization without the awareness and explicit consent of
-the resource owner.
+AS therefore MUST provide a way to detect their support for PKCE
+either via AS metadata according to [@!RFC8414] or provide a
+deployment-specific way to ensure or determine PKCE support.
 
 
-Clickjacking
-------------
+## Clickjacking
 
-In a clickjacking attack, an attacker registers a legitimate client
-and then constructs a malicious site in which it loads the
-authorization server's authorization endpoint web page in a
-transparent iframe overlaid on top of a set of dummy buttons, which
-are carefully constructed to be placed directly under important
-buttons on the authorization page.  When an end-user clicks a
-misleading visible button, the end-user is actually clicking an
-invisible button on the authorization page (such as an "Authorize"
-button).  This allows an attacker to trick a resource owner into
-granting its client access without the end-user's knowledge.
+As described in Section 4.4.1.9 of [@!RFC6819], the authorization 
+request is susceptible to clickjacking. An attacker can use this 
+vector to obtain the user's authentication credentials, change the 
+scope of access granted to the client, and potentially access the 
+user's resources.
 
-To prevent this form of attack, native applications SHOULD use
-external browsers instead of embedding browsers within the
-application when requesting end-user authorization.  For most newer
-browsers, avoidance of iframes can be enforced by the authorization
-server using the (non-standard) "x-frame-options" header.  This
-header can have two values, "deny" and "sameorigin", which will block
-any framing, or framing by sites with a different origin,
-respectively.  For older browsers, JavaScript frame-busting
-techniques can be used but may not be effective in all browsers.
+Authorization servers MUST prevent clickjacking attacks. Multiple
+countermeasures are described in [@!RFC6819], including the use of the
+X-Frame-Options HTTP response header field and frame-busting
+JavaScript. In addition to those, authorization servers SHOULD also
+use Content Security Policy (CSP) level 2 [@!CSP-2] or greater.
+
+To be effective, CSP must be used on the authorization endpoint and,
+if applicable, other endpoints used to authenticate the user and
+authorize the client (e.g., the device authorization endpoint, login
+pages, error pages, etc.). This prevents framing by unauthorized
+origins in user agents that support CSP. The client MAY permit being
+framed by some other origin than the one used in its redirection
+endpoint. For this reason, authorization servers SHOULD allow
+administrators to configure allowed origins for particular clients
+and/or for clients to register these dynamically.
+
+Using CSP allows authorization servers to specify multiple origins in 
+a single response header field and to constrain these using flexible 
+patterns (see [@CSP-2] for details). Level 2 of this standard provides
+a robust mechanism for protecting against clickjacking by using 
+policies that restrict the origin of frames (using `frame-ancestors`) 
+together with those that restrict the sources of scripts allowed to 
+execute on an HTML page (by using `script-src`). A non-normative 
+example of such a policy is shown in the following listing:
+
+```
+HTTP/1.1 200 OK
+Content-Security-Policy: frame-ancestors https://ext.example.org:8000
+Content-Security-Policy: script-src 'self'
+X-Frame-Options: ALLOW-FROM https://ext.example.org:8000
+...
+```
+
+Because some user agents do not support [@CSP-2], this technique
+SHOULD be combined with others, including those described in
+[@!RFC6819], unless such legacy user agents are explicitly unsupported
+by the authorization server. Even in such cases, additional
+countermeasures SHOULD still be employed.
 
 
-Code Injection and Input Validation
------------------------------------
+## Code Injection and Input Validation
 
 A code injection attack occurs when an input or otherwise external
 variable is used by an application unsanitized and causes
@@ -2946,28 +2959,56 @@ possible) any value received -- in particular, the value of the
 "state" and "redirect_uri" parameters.
 
 
-Open Redirectors
-----------------
+## Open Redirectors
 
-The authorization server, authorization endpoint, and client
-redirection endpoint can be improperly configured and operate as open
-redirectors.  An open redirector is an endpoint using a parameter to
-automatically redirect a user-agent to the location specified by the
-parameter value without any validation.
-
-Open redirectors can be used in phishing attacks, or by an attacker
-to get end-users to visit malicious sites by using the URI authority
-component of a familiar and trusted destination.  In addition, if the
-authorization server allows the client to register only part of the
-redirection URI, an attacker can use an open redirector operated by
-the client to construct a redirection URI that will pass the
-authorization server validation but will send the authorization code
-or access token to an endpoint under the control of the attacker.
+The following attacks can occur when an AS or client has an open
+redirector. An open redirector is an endpoint that forwards a user’s
+browser to an arbitrary URI obtained from a query parameter.
 
 
+### Client as Open Redirector {#open_redirector_on_client}
 
-TODO: Bring in the rest of the Security BCP attack description here
+Clients MUST NOT expose open redirectors. Attackers may use open
+redirectors to produce URLs pointing to the client and utilize them to
+exfiltrate authorization codes and access tokens, as described in
+(#redir_uri_open_redir). Another abuse case is to produce URLs that
+appear to point to the client. This might trick users into trusting the URL
+and follow it in their browser. This can be abused for phishing.
+  
+In order to prevent open redirection, clients should only redirect if
+the target URLs are whitelisted or if the origin and integrity of a
+request can be authenticated. Countermeasures against open redirection
+are described by OWASP [@owasp_redir].
 
+### Authorization Server as Open Redirector
+  
+Just as with clients, attackers could try to utilize a user's trust in
+the authorization server (and its URL in particular) for performing
+phishing attacks. OAuth authorization servers regularly redirect users
+to other web sites (the clients), but must do so in a safe way.
+  
+[@!RFC6749], Section 4.1.2.1, already prevents open redirects by
+stating that the AS MUST NOT automatically redirect the user agent in case
+of an invalid combination of `client_id` and `redirect_uri`.
+  
+However, an attacker could also utilize a correctly registered
+redirect URI to perform phishing attacks. The attacker could, for
+example, register a client via dynamic client registration [@RFC7591]
+and intentionally send an erroneous authorization request, e.g., by
+using an invalid scope value, thus instructing the AS to redirect the
+user agent to its phishing site.
+  
+The AS MUST take precautions to prevent this threat. Based on its risk
+assessment, the AS needs to decide whether it can trust the redirect
+URI and SHOULD only automatically redirect the user agent if it trusts
+the redirect URI. If the URI is not trusted, the AS MAY inform the
+user and rely on the user to make the correct decision.
+
+## Other Recommendations
+
+Authorization servers SHOULD NOT allow clients to influence their
+`client_id` or `sub` value or any other claim if that can cause
+confusion with a genuine resource owner (see (#client_impersonating)).
 
 
 IANA Considerations
