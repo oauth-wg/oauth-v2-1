@@ -3478,18 +3478,6 @@ The "expires_in" element is defined in Sections 4.2.2 and 5.1:
 
      expires-in = 1*DIGIT
 
-## "username" Syntax
-
-The "username" element is defined in Section 4.3.2:
-
-     username = *UNICODECHARNOCRLF
-
-## "password" Syntax
-
-The "password" element is defined in Section 4.3.2:
-
-     password = *UNICODECHARNOCRLF
-
 ## "refresh_token" Syntax
 
 The "refresh_token" element is defined in Sections 5.1 and 6:
