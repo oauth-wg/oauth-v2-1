@@ -2627,8 +2627,8 @@ ensures the authorization server it is talking to the same client again.
 In contrast, if there is a web application whose developer's identity
 was verified, who signed a contract and is issued a client secret 
 that is only used in a secure backend service, the authorization 
-server might allow this client to access more sensible services
-or use auto-approval for user consents.
+server might allow this client to access more sensible services 
+or to use the client credential grant type. 
 
 ## Client Impersonation
 
