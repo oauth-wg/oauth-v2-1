@@ -74,10 +74,16 @@ informative:
   RFC6819:
   RFC5849:
   RFC6265:
+  RFC7591:
+  RFC8707:
+  RFC8414:
+  RFC8418:
+  RFC7591:
   RFC8705:
   I-D.ietf-oauth-rar:
   I-D.ietf-oauth-resource-indicators:
   I-D.ietf-oauth-security-topics:
+  I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   webauthn:
     title: "Web Authentication: An API for accessing Public Key Credentials Level 1"
@@ -144,6 +150,12 @@ informative:
     author: 
       - ins: R. Fielding
       - ins: J. Reschke
+  owasp_redir:
+  	title: "OWASP Cheat Sheet Series - Unvalidated Redirects and Forwards"
+  	url: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+  CSP-2:
+  	title: "Content Security Policy Level 2"
+  	url: https://www.w3.org/TR/CSP2
 
 
 --- abstract
@@ -676,7 +688,7 @@ server (e.g., password, public/private key pair).
 Authorization servers SHOULD use client authentication if possible.
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
-client authentication such as mTLS {{I-D.ietf-oauth-mtls}} or "private_key_jwt"
+client authentication such as mTLS {{RFC8705}} or "private_key_jwt"
 {{OpenID}}.  When asymmetric methods for client authentication are
 used, authorization servers do not need to store sensitive symmetric
 keys, making these methods more robust against a number of attacks.
@@ -1830,7 +1842,7 @@ refresh token replay by malicious actors for public clients:
 
 * *Sender-constrained refresh tokens:* the authorization server
   cryptographically binds the refresh token to a certain client
-  instance by utilizing {{I-D.ietf-oauth-token-binding}} or {{I-D.ietf-oauth-mtls}}.
+  instance by utilizing {{I-D.ietf-oauth-token-binding}} or {{RFC8705}}.
 
 * *Refresh token rotation:* the authorization server issues a new
   refresh token with every access token refresh response.  The
@@ -2345,7 +2357,7 @@ acceptance of that token at the recipient (e.g., a resource server).
 
 Authorization and resource servers SHOULD use mechanisms for sender-
 constrained access tokens to prevent token replay as described in
-Section 4.8.1.1.2.  The use of Mutual TLS for OAuth 2.0 {{I-D.ietf-oauth-mtls}} is
+Section 4.8.1.1.2.  The use of Mutual TLS for OAuth 2.0 {{RFC8705}} is
 RECOMMENDED.
 
 It is RECOMMENDED to use end-to-end TLS.  If TLS traffic needs to be
@@ -2746,8 +2758,8 @@ access tokens, see (#open_redirector_on_client).
 Clients MUST prevent Cross-Site Request Forgery (CSRF). In this
 context, CSRF refers to requests to the redirection endpoint that do
 not originate at the authorization server, but a malicious third party
-(see Section 4.4.1.8. of [@RFC6819] for details). Clients that have
-ensured that the authorization server supports PKCE [@RFC7636] MAY
+(see Section 4.4.1.8. of {{RFC6819}} for details). Clients that have
+ensured that the authorization server supports PKCE MAY
 rely the CSRF protection provided by PKCE. In OpenID Connect flows,
 the `nonce` parameter provides CSRF protection. Otherwise, one-time
 use CSRF tokens carried in the `state` parameter that are securely
@@ -2790,9 +2802,9 @@ authenticate the client and ensure that the authorization code was
 issued to the same client.
 
 Clients MUST prevent injection (replay) of authorization codes into
-the authorization response by attackers. The use of PKCE [@!RFC7636]
+the authorization response by attackers. The use of PKCE 
 is RECOMMENDED to this end. The OpenID Connect `nonce` parameter and
-ID Token Claim [@!OpenID] MAY be used as well. The PKCE challenge or
+ID Token Claim {{OpenID}} MAY be used as well. The PKCE challenge or
 OpenID Connect `nonce` MUST be transaction-specific and securely bound
 to the client and the user agent in which the transaction was started.
 
@@ -2806,11 +2818,11 @@ Otherwise, attackers that can read the authorization request (cf.
 Attacker A4 in (#secmodel)) can break the security provided
 by PKCE. Currently, `S256` is the only such method.
 
-Authorization servers MUST support PKCE [@!RFC7636].
+Authorization servers MUST support PKCE.
 
 Authorization servers MUST provide a way to detect their support for
 PKCE. To this end, they MUST either (a) publish the element
-`code_challenge_methods_supported` in their AS metadata ([@!RFC8418])
+`code_challenge_methods_supported` in their AS metadata ({{RFC8418}})
 containing the supported PKCE challenge methods (which can be used by
 the client to detect PKCE support) or (b) provide a
 deployment-specific way to ensure or determine PKCE support by the AS.
@@ -2868,7 +2880,7 @@ To reduce the risk of phishing attacks, the authorization servers
 MUST require the use of TLS on every endpoint used for end-user
 interaction.
 
-## Cross-Site Request Forgery
+## Cross-Site Request Forgery {#csrf_countermeasures}
 
 An attacker might attempt to inject a request to the redirect URI of
 the legitimate client on the victim's device, e.g., to cause the
@@ -2877,7 +2889,7 @@ variant of an attack known as Cross-Site Request Forgery (CSRF).
  
 The traditional countermeasure are CSRF tokens that are bound to the
 user agent and passed in the `state` parameter to the authorization
-server as described in [@!RFC6819]. The same protection is provided by
+server as described in {{RFC6819}}. The same protection is provided by
 PKCE or the OpenID Connect `nonce` value.
 
 When using PKCE instead of `state` or `nonce` for CSRF protection, it is
@@ -2891,26 +2903,26 @@ important to note that:
    its contents is a concern, clients MUST protect `state` against
    tampering and swapping. This can be achieved by binding the
    contents of state to the browser session and/or signed/encrypted
-   state values [@I-D.bradley-oauth-jwt-encoded-state].
+   state values {{I-D.bradley-oauth-jwt-encoded-state}}.
 
 AS therefore MUST provide a way to detect their support for PKCE
-either via AS metadata according to [@!RFC8414] or provide a
+either via AS metadata according to {{RFC8414}} or provide a
 deployment-specific way to ensure or determine PKCE support.
 
 
 ## Clickjacking
 
-As described in Section 4.4.1.9 of [@!RFC6819], the authorization 
+As described in Section 4.4.1.9 of {{RFC6819}}, the authorization 
 request is susceptible to clickjacking. An attacker can use this 
 vector to obtain the user's authentication credentials, change the 
 scope of access granted to the client, and potentially access the 
 user's resources.
 
 Authorization servers MUST prevent clickjacking attacks. Multiple
-countermeasures are described in [@!RFC6819], including the use of the
+countermeasures are described in {{RFC6819}}, including the use of the
 X-Frame-Options HTTP response header field and frame-busting
 JavaScript. In addition to those, authorization servers SHOULD also
-use Content Security Policy (CSP) level 2 [@!CSP-2] or greater.
+use Content Security Policy (CSP) level 2 {{CSP-2}} or greater.
 
 To be effective, CSP must be used on the authorization endpoint and,
 if applicable, other endpoints used to authenticate the user and
@@ -2924,7 +2936,7 @@ and/or for clients to register these dynamically.
 
 Using CSP allows authorization servers to specify multiple origins in 
 a single response header field and to constrain these using flexible 
-patterns (see [@CSP-2] for details). Level 2 of this standard provides
+patterns (see {{CSP-2}} for details). Level 2 of this standard provides
 a robust mechanism for protecting against clickjacking by using 
 policies that restrict the origin of frames (using `frame-ancestors`) 
 together with those that restrict the sources of scripts allowed to 
@@ -2939,9 +2951,9 @@ X-Frame-Options: ALLOW-FROM https://ext.example.org:8000
 ...
 ```
 
-Because some user agents do not support [@CSP-2], this technique
+Because some user agents do not support {{CSP-2}}, this technique
 SHOULD be combined with others, including those described in
-[@!RFC6819], unless such legacy user agents are explicitly unsupported
+{{RFC6819}}, unless such legacy user agents are explicitly unsupported
 by the authorization server. Even in such cases, additional
 countermeasures SHOULD still be employed.
 
@@ -2978,7 +2990,7 @@ and follow it in their browser. This can be abused for phishing.
 In order to prevent open redirection, clients should only redirect if
 the target URLs are whitelisted or if the origin and integrity of a
 request can be authenticated. Countermeasures against open redirection
-are described by OWASP [@owasp_redir].
+are described by OWASP {{owasp_redir}}.
 
 ### Authorization Server as Open Redirector
   
@@ -2987,13 +2999,13 @@ the authorization server (and its URL in particular) for performing
 phishing attacks. OAuth authorization servers regularly redirect users
 to other web sites (the clients), but must do so in a safe way.
   
-[@!RFC6749], Section 4.1.2.1, already prevents open redirects by
+Section 4.1.2.1 already prevents open redirects by
 stating that the AS MUST NOT automatically redirect the user agent in case
 of an invalid combination of `client_id` and `redirect_uri`.
   
 However, an attacker could also utilize a correctly registered
 redirect URI to perform phishing attacks. The attacker could, for
-example, register a client via dynamic client registration [@RFC7591]
+example, register a client via dynamic client registration {{RFC7591}}
 and intentionally send an erroneous authorization request, e.g., by
 using an invalid scope value, thus instructing the AS to redirect the
 user agent to its phishing site.
