@@ -44,6 +44,7 @@ normative:
   RFC6125:
   RFC8446:
   RFC5280:
+  RFC7595:
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -2612,9 +2613,8 @@ authorization response back to the native app (defined in {{authorization-respon
 ## Initiating the Authorization Request from a Native App {#authorization-request-native-app}
 
 Native apps needing user authorization create an authorization
-request URI with the authorization code grant type per Section 4.1 of
-OAuth 2.0 [RFC6749], using a redirect URI capable of being received
-by the native app.
+request URI with the authorization code grant type per {{authorization-code-grant}}
+using a redirect URI capable of being received by the native app.
 
 The function of the redirect URI for a native app authorization
 request is similar to that of a web-based authorization request.
@@ -2622,13 +2622,8 @@ Rather than returning the authorization response to the OAuth
 client's server, the redirect URI used by a native app returns the
 response to the app.  Several options for a redirect URI that will
 return the authorization response to the native app in different
-platforms are documented in Section 7.  Any redirect URI that allows
+platforms are documented in {{authorization-response-native-app}}.  Any redirect URI that allows
 the app to receive the URI and inspect its parameters is viable.
-
-Public native app clients MUST implement the Proof Key for Code
-Exchange (PKCE [RFC7636]) extension to OAuth, and authorization
-servers MUST support PKCE for such clients, for the reasons detailed
-in Section 8.1.
 
 After constructing the authorization request URI, the app uses
 platform-specific APIs to open the URI in an external user-agent.
@@ -2660,7 +2655,7 @@ There are several redirect URI options available to native apps for
 receiving the authorization response from the browser, the
 availability and user experience of which varies by platform.
 
-To fully support this best practice, authorization servers MUST offer
+To fully support native apps, authorization servers MUST offer
 at least the three redirect URI options described in the following
 subsections to native apps.  Native apps MAY use whichever redirect
 option suits their needs best, taking into account platform-specific
@@ -2671,26 +2666,26 @@ implementation details.
 Many mobile and desktop computing platforms support inter-app
 communication via URIs by allowing apps to register private-use URI
 schemes (sometimes colloquially referred to as "custom URL schemes")
-like "com.example.app".  When the browser or another app attempts to
+like `com.example.app`.  When the browser or another app attempts to
 load a URI with a private-use URI scheme, the app that registered it
 is launched to handle the request.
 
-To perform an OAuth 2.0 authorization request with a private-use URI
+To perform an authorization request with a private-use URI
 scheme redirect, the native app launches the browser with a standard
 authorization request, but one where the redirection URI utilizes a
 private-use URI scheme it registered with the operating system.
 
 When choosing a URI scheme to associate with the app, apps MUST use a
 URI scheme based on a domain name under their control, expressed in
-reverse order, as recommended by Section 3.8 of [RFC7595] for
+reverse order, as recommended by Section 3.8 of {{RFC7595}} for
 private-use URI schemes.
 
-For example, an app that controls the domain name "app.example.com"
-can use "com.example.app" as their scheme.  Some authorization
+For example, an app that controls the domain name `app.example.com`
+can use `com.example.app` as their scheme.  Some authorization
 servers assign client identifiers based on domain names, for example,
-"client1234.usercontent.example.net", which can also be used as the
+`client1234.usercontent.example.net`, which can also be used as the
 domain name for the scheme when reversed in the same manner.  A
-scheme such as "myapp", however, would not meet this requirement, as
+scheme such as `myapp`, however, would not meet this requirement, as
 it is not based on a domain name.
 
 When there are multiple apps by the same publisher, care must be
@@ -2699,9 +2694,9 @@ that use app identifiers based on reverse-order domain names, those
 identifiers can be reused as the private-use URI scheme for the OAuth
 redirect to help avoid this problem.
 
-Following the requirements of Section 3.2 of [RFC3986], as there is
+Following the requirements of Section 3.2 of {{RFC3986}}, as there is
 no naming authority for private-use URI scheme redirects, only a
-single slash ("/") appears after the scheme component.  A complete
+single slash (`/`) appears after the scheme component.  A complete
 example of a redirect URI utilizing a private-use URI scheme is:
 
     com.example.app:/oauth2redirect/example-provider
@@ -2715,7 +2710,7 @@ the authorization response.
 
 ### Claimed "https" Scheme URI Redirection
 
-Some operating systems allow apps to claim "https" scheme [RFC7230]
+Some operating systems allow apps to claim `https` scheme {{RFC7230}}
 URIs in the domains they control.  When the browser encounters a
 claimed URI, instead of the page being loaded in the browser, the
 native app is launched with the URI supplied as a launch parameter.
@@ -2728,11 +2723,11 @@ based client redirect URI.  An example is:
 
 As the redirect URI alone is not enough to distinguish public native
 app clients from confidential web clients, it is REQUIRED in
-Section 8.4 that the client type be recorded during client
+Section ??? that the client type be recorded during client
 registration to enable the server to determine the client type and
 act accordingly.
 
-App-claimed "https" scheme redirect URIs have some advantages
+App-claimed `https` scheme redirect URIs have some advantages
 compared to other native app redirect options in that the identity of
 the destination app is guaranteed to the authorization server by the
 operating system.  For this reason, native apps SHOULD use them over
@@ -2745,11 +2740,11 @@ interface without needing special permissions (typically, those on
 desktop operating systems) can use the loopback interface to receive
 the OAuth redirect.
 
-Loopback redirect URIs use the "http" scheme and are constructed with
+Loopback redirect URIs use the `http` scheme and are constructed with
 the loopback IP literal and whatever port the client is listening on.
 
-That is, "http://127.0.0.1:{port}/{path}" for IPv4, and
-"http://[::1]:{port}/{path}" for IPv6.  An example redirect using the
+That is, `http://127.0.0.1:{port}/{path}` for IPv4, and
+`http://[::1]:{port}/{path}` for IPv6.  An example redirect using the
 IPv4 loopback interface with a randomly assigned port:
 
     http://127.0.0.1:51004/oauth2redirect/example-provider
@@ -2768,8 +2763,6 @@ Clients SHOULD NOT assume that the device supports a particular
 version of the Internet Protocol.  It is RECOMMENDED that clients
 attempt to bind to the loopback interface using both IPv4 and IPv6
 and use whichever is available.
-
-
 
 
 # Security Considerations
