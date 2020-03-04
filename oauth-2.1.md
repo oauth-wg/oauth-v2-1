@@ -1199,7 +1199,7 @@ using the "application/x-www-form-urlencoded" format, per Appendix B:
      state between the request and callback.  The authorization
      server includes this value when redirecting the user-agent back
      to the client.  The parameter SHOULD be used for preventing
-     cross-site request forgery as described in Section 10.12.
+     cross-site request forgery as described in {{csrf_countermeasures}}.
 
 The client directs the resource owner to the constructed URI using an
 HTTP redirection response, or by other means available to it via the
@@ -1393,7 +1393,7 @@ request entity-body:
 
 "redirect_uri":
 :    REQUIRED, if the "redirect_uri" parameter was included in the
-     authorization request as described in Section 4.1.1, and their
+     authorization request as described in {{authorization-request}}, and their
      values MUST be identical.
 
 "client_id":
@@ -1441,7 +1441,7 @@ The authorization server MUST:
 
 *  ensure that the "redirect_uri" parameter is present if the
    "redirect_uri" parameter was included in the initial authorization
-   request as described in Section 4.1.1, and if included ensure that
+   request as described in {{authorization-request}}, and if included ensure that
    their values are identical.
 
 
@@ -1449,9 +1449,9 @@ The authorization server MUST:
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
-token as described in Section 5.1.  If the request client
+token as described in {{access-token-successful-response}}.  If the request client
 authentication failed or is invalid, the authorization server returns
-an error response as described in Section 5.2.
+an error response as described in {{access-token-error-response}}.
 
 An example successful response:
 
@@ -1544,9 +1544,9 @@ The authorization server MUST authenticate the client.
 
 If the access token request is valid and authorized, the
 authorization server issues an access token as described in
-Section 5.1.  A refresh token SHOULD NOT be included.  If the request
+{{access-token-successful-response}}.  A refresh token SHOULD NOT be included.  If the request
 failed client authentication or is invalid, the authorization server
-returns an error response as described in Section 5.2.
+returns an error response as described in {{access-token-error-response}}.
 
 An example successful response:
 
@@ -1586,9 +1586,9 @@ TLS (with extra line breaks for display purposes only):
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
-token as described in Section 5.1.  If the request failed client
+token as described in {{access-token-successful-response}}.  If the request failed client
 authentication or is invalid, the authorization server returns an
-error response as described in Section 5.2.
+error response as described in {{access-token-error-response}}.
 
 
 Issuing an Access Token
@@ -1596,12 +1596,12 @@ Issuing an Access Token
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
-token as described in Section 5.1.  If the request failed client
+token as described in {{access-token-successful-response}}.  If the request failed client
 authentication or is invalid, the authorization server returns an
-error response as described in Section 5.2.
+error response as described in {{access-token-error-response}}.
 
 
-Successful Response
+Successful Response {#access-token-successful-response}
 -------------------
 
 The authorization server issues an access token and optional refresh
@@ -1613,7 +1613,7 @@ to the entity-body of the HTTP response with a 200 (OK) status code:
 
 "token_type":
 :    REQUIRED.  The type of the token issued as described in
-     Section 7.1.  Value is case insensitive.
+     {{access-token-types}}.  Value is case insensitive.
 
 "expires_in":
 :    RECOMMENDED.  The lifetime in seconds of the access token.  For
@@ -1625,7 +1625,7 @@ to the entity-body of the HTTP response with a 200 (OK) status code:
 "refresh_token":
 :    OPTIONAL.  The refresh token, which can be used to obtain new
      access tokens using the same authorization grant as described
-     in Section 6.
+     in {{refreshing-an-access-token}}.
 
 "scope":
 :    OPTIONAL, if identical to the scope requested by the client;
@@ -1668,7 +1668,7 @@ assumptions about value sizes.  The authorization server SHOULD
 document the size of any value it issues.
 
 
-Error Response
+Error Response {#access-token-error-response}
 --------------
 
 The authorization server responds with an HTTP 400 (Bad Request)
@@ -1851,9 +1851,9 @@ refresh token replay by malicious actors for public clients:
 
 
 If valid and authorized, the authorization server issues an access
-token as described in Section 5.1.  If the request failed
+token as described in {{access-token-successful-response}}.  If the request failed
 verification or is invalid, the authorization server returns an error
-response as described in Section 5.2.
+response as described in {{access-token-error-response}}.
 
 The authorization server MAY issue a new refresh token, in which case
 the client MUST discard the old refresh token and replace it with the
@@ -1899,7 +1899,7 @@ authentication scheme defined by the specification of the access
 token type used, such as "Bearer", defined below.
 
 
-Access Token Types
+Access Token Types {#access-token-types}
 ------------------
 
 The access token type provides the client with the information
@@ -2057,7 +2057,7 @@ If the protected resource request included an access token and failed
 authentication, the resource server SHOULD include the "error"
 attribute to provide the client with the reason why the access
 request was declined.  The parameter value is described in
-Section ???.  In addition, the resource server MAY include the
+{{bearer-token-error-codes}}.  In addition, the resource server MAY include the
 "error_description" attribute to provide developers a human-readable
 explanation that is not meant to be displayed to end-users.  It also
 MAY include the "error_uri" attribute with an absolute URI
@@ -2090,13 +2090,13 @@ authentication attempt using an expired access token:
                       error_description="The access token expired"
 
 
-Error Response
+Error Response {#bearer-token-error-response}
 --------------
 
 If a resource access request fails, the resource server SHOULD inform
 the client of the error.  While the specifics of such error responses
 are beyond the scope of this specification, this document establishes
-a common registry in Section 11.4 for error values to be shared among
+a common registry in {{error-registry}} for error values to be shared among
 OAuth token authentication schemes.
 
 New authentication schemes designed primarily for OAuth token
@@ -2118,7 +2118,7 @@ information in a manner parallel to their usage in this
 specification.
 
 
-### Error Codes
+### Error Codes {#bearer-token-error-codes}
 
 When a request fails, the resource server responds using the
 appropriate HTTP status code (typically, 400, 401, 403, or 405) and
@@ -2391,7 +2391,7 @@ Defining Access Token Types
 
 Access token types can be defined in one of two ways: registered in
 the Access Token Types registry (following the procedures in
-Section 11.1), or by using a unique absolute URI as its name.
+{{access-token-registry}}), or by using a unique absolute URI as its name.
 
 Types utilizing a URI name SHOULD be limited to vendor-specific
 implementations that are not commonly applicable, and are specific to
@@ -2413,7 +2413,7 @@ Defining New Endpoint Parameters
 
 New request or response parameters for use with the authorization
 endpoint or the token endpoint are defined and registered in the
-OAuth Parameters registry following the procedure in Section 11.2.
+OAuth Parameters registry following the procedure in {{parameters-registry}}.
 
 Parameter names MUST conform to the param-name ABNF, and parameter
 values syntax MUST be well-defined (e.g., using ABNF, or a reference
@@ -2436,7 +2436,7 @@ New authorization grant types can be defined by assigning them a
 unique absolute URI for use with the "grant_type" parameter.  If the
 extension grant type requires additional token endpoint parameters,
 they MUST be registered in the OAuth Parameters registry as described
-by Section 11.2.
+by {{parameters-registry}}.
 
 
 Defining New Authorization Endpoint Response Types {#new-response-types}
@@ -2444,7 +2444,7 @@ Defining New Authorization Endpoint Response Types {#new-response-types}
 
 New response types for use with the authorization endpoint are
 defined and registered in the Authorization Endpoint Response Types
-registry following the procedure in Section 11.3.  Response type
+registry following the procedure in {{response-types-registry}}.  Response type
 names MUST conform to the response-type ABNF.
 
     response-type  = response-name *( SP response-name )
@@ -2469,12 +2469,12 @@ Defining Additional Error Codes
 In cases where protocol extensions (i.e., access token types,
 extension parameters, or extension grant types) require additional
 error codes to be used with the authorization code grant error
-response ({{authorization-code-error-response}}), the token error response (Section 5.2), or the
+response ({{authorization-code-error-response}}), the token error response ({{access-token-error-response}}), or the
 resource access error response (Section 7.2), such error codes MAY be
 defined.
 
 Extension error codes MUST be registered (following the procedures in
-Section 11.4) if the extension they are used in conjunction with is a
+{{error-registry}}) if the extension they are used in conjunction with is a
 registered access token type, a registered endpoint parameter, or an
 extension grant type.  Error codes used with unregistered extensions
 MAY be registered.
@@ -3010,7 +3010,7 @@ confusion with a genuine resource owner (see (#client_impersonating)).
 IANA Considerations
 ===================
 
-OAuth Access Token Types Registry
+OAuth Access Token Types Registry {#access-token-registry}
 ---------------------------------
 
 This specification establishes the OAuth Access Token Types registry.
@@ -3046,7 +3046,7 @@ Additional Token Endpoint Response Parameters:
 : Additional response parameters returned together with the
   "access_token" parameter.  New parameters MUST be separately
   registered in the OAuth Parameters registry as described by
-  Section 11.2.
+  {{parameters-registry}}.
 
 HTTP Authentication Scheme(s):
 : The HTTP authentication scheme name(s), if any, used to
@@ -3077,7 +3077,7 @@ The OAuth Access Token Types registry's initial contents are:
 
 
 
-OAuth Parameters Registry
+OAuth Parameters Registry {#parameters-registry}
 -------------------------
 
 This specification establishes the OAuth Parameters registry.
@@ -3214,7 +3214,7 @@ The OAuth Parameters registry's initial contents are:
 *  Specification document(s): RFC 6749
 
 
-OAuth Authorization Endpoint Response Types Registry
+OAuth Authorization Endpoint Response Types Registry {#response-types-registry}
 ----------------------------------------------------
 
 This specification establishes the OAuth Authorization Endpoint
@@ -3269,7 +3269,7 @@ contents are:
 *  Specification document(s): RFC 6749
 
 
-OAuth Extensions Error Registry
+OAuth Extensions Error Registry {#error-registry}
 -------------------------------
 
 This specification establishes the OAuth Extensions Error registry.
@@ -3308,7 +3308,7 @@ Error name:
 Error usage location:
 : The location(s) where the error can be used.  The possible
   locations are authorization code grant error response
-  ({{authorization-code-error-response}}), token error response (Section 5.2), or resource
+  ({{authorization-code-error-response}}), token error response ({{access-token-error-response}}), or resource
   access error response (Section 7.2).
 
 Related protocol extension:
