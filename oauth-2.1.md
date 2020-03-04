@@ -2661,7 +2661,7 @@ subsections to native apps.  Native apps MAY use whichever redirect
 option suits their needs best, taking into account platform-specific
 implementation details.
 
-### Private-Use URI Scheme Redirection
+### Private-Use URI Scheme Redirection {#private-use-uri-scheme}
 
 Many mobile and desktop computing platforms support inter-app
 communication via URIs by allowing apps to register private-use URI
@@ -2733,7 +2733,7 @@ the destination app is guaranteed to the authorization server by the
 operating system.  For this reason, native apps SHOULD use them over
 the other options where possible.
 
-### Loopback Interface Redirection
+### Loopback Interface Redirection {#loopback-interface-redirection}
 
 Native apps that are able to open a port on the loopback network
 interface without needing special permissions (typically, those on
@@ -2818,6 +2818,62 @@ that is only used in a secure backend service, the authorization
 server might allow this client to access more sensible services
 or to use the client credential grant type.
 
+### Client Authentication of Native Apps
+
+Secrets that are statically included as part of an app distributed to
+multiple users should not be treated as confidential secrets, as one
+user may inspect their copy and learn the shared secret.  For this
+reason, it is NOT
+RECOMMENDED for authorization servers to require client
+authentication of public native apps clients using a shared secret,
+as this serves little value beyond client identification which is
+already provided by the `client_id` request parameter.
+
+Authorization servers that still require a statically included shared
+secret for native app clients MUST treat the client as a public
+client (as defined in {{client-types}}), and not
+accept the secret as proof of the client's identity.  Without
+additional measures, such clients are subject to client impersonation
+(see {{native-app-client-impersonation}}).
+
+
+## Registration of Native App Clients {#native-app-registration}
+
+Except when using a mechanism like Dynamic Client Registration
+{{RFC7591}} to provision per-instance secrets, native apps are
+classified as public clients, as defined in {{client-types}};
+they MUST be registered with the authorization server as
+such.  Authorization servers MUST record the client type in the
+client registration details in order to identify and process requests
+accordingly.
+
+Authorization servers MUST require clients to register their complete
+redirect URI (including the path component) and reject authorization
+requests that specify a redirect URI that doesn't exactly match the
+one that was registered; the exception is loopback redirects, where
+an exact match is required except for the port URI component.
+
+For private-use URI scheme-based redirects, authorization servers
+SHOULD enforce the requirement in {{private-use-uri-scheme}} that clients use
+schemes that are reverse domain name based.  At a minimum, any
+private-use URI scheme that doesn't contain a period character (`.`)
+SHOULD be rejected.
+
+In addition to the collision-resistant properties, requiring a URI
+scheme based on a domain name that is under the control of the app
+can help to prove ownership in the event of a dispute where two apps
+claim the same private-use URI scheme (where one app is acting
+maliciously).  For example, if two apps claimed `com.example.app`,
+the owner of `example.com` could petition the app store operator to
+remove the counterfeit app.  Such a petition is harder to prove if a
+generic URI scheme was used.
+
+Authorization servers MAY request the inclusion of other platform-
+specific information, such as the app package or bundle name, or
+other information that may be useful for verifying the calling app's
+identity on operating systems that support such functions.
+
+
 ## Client Impersonation
 
 A malicious client can impersonate another client and obtain access
@@ -2844,6 +2900,21 @@ requests automatically (without active resource owner interaction)
 without authenticating the client or relying on other measures to
 ensure that the repeated request comes from the original client and
 not an impersonator.
+
+### Impersonation of Native Apps {#native-app-client-impersonation}
+
+As stated above, the authorization
+server SHOULD NOT process authorization requests automatically
+without user consent or interaction, except when the identity of the
+client can be assured.  This includes the case where the user has
+previously approved an authorization request for a given client id --
+unless the identity of the client can be proven, the request SHOULD
+be processed as if no previous request had been approved.
+
+Measures such as claimed `https` scheme redirects MAY be accepted by
+authorization servers as identity proof.  Some operating systems may
+offer alternative platform-specific identity features that MAY be
+accepted, as appropriate.
 
 
 ## Access Tokens
@@ -2970,6 +3041,28 @@ An AS that redirects a request potentially containing user credentials
 MUST avoid forwarding these user credentials accidentally (see
 (#redirect_307) for details).
 
+### Loopback Redirect Considerations in Native Apps
+
+Loopback interface redirect URIs use the `http` scheme (i.e., without
+Transport Layer Security (TLS)).  This is acceptable for loopback
+interface redirect URIs as the HTTP request never leaves the device.
+
+Clients should open the network port only when starting the
+authorization request and close it once the response is returned.
+
+Clients should listen on the loopback network interface only, in
+order to avoid interference by other network actors.
+
+While redirect URIs using localhost (i.e.,
+`http://localhost:{port}/{path}`) function similarly to loopback IP
+redirects described in {{loopback-interface-redirection}}, the use of `localhost` is NOT
+RECOMMENDED.  Specifying a redirect URI with the loopback IP literal
+rather than `localhost` avoids inadvertently listening on network
+interfaces other than the loopback interface.  It is also less
+susceptible to client-side firewalls and misconfigured host name
+resolution on the user's device.
+
+
 ## Authorization Codes
 
 The transmission of authorization codes MUST be made over a secure
@@ -3067,6 +3160,51 @@ authorization server.
 To reduce the risk of phishing attacks, the authorization servers
 MUST require the use of TLS on every endpoint used for end-user
 interaction.
+
+
+## Fake External User-Agents in Native Apps
+
+The native app that is initiating the authorization request has a
+large degree of control over the user interface and can potentially
+present a fake external user-agent, that is, an embedded user-agent
+made to appear as an external user-agent.
+
+When all good actors are using external user-agents, the advantage is
+that it is possible for security experts to detect bad actors, as
+anyone faking an external user-agent is provably bad.  On the other
+hand, if good and bad actors alike are using embedded user-agents,
+bad actors don't need to fake anything, making them harder to detect.
+Once a malicious app is detected, it may be possible to use this
+knowledge to blacklist the app's signature in malware scanning
+software, take removal action (in the case of apps distributed by app
+stores) and other steps to reduce the impact and spread of the
+malicious app.
+
+Authorization servers can also directly protect against fake external
+user-agents by requiring an authentication factor only available to
+true external user-agents.
+
+Users who are particularly concerned about their security when using
+in-app browser tabs may also take the additional step of opening the
+request in the full browser from the in-app browser tab and complete
+the authorization there, as most implementations of the in-app
+browser tab pattern offer such functionality.
+
+
+## Malicious External User-Agents in Native Apps
+
+If a malicious app is able to configure itself as the default handler
+for `https` scheme URIs in the operating system, it will be able to
+intercept authorization requests that use the default browser and
+abuse this position of trust for malicious ends such as phishing the
+user.
+
+This attack is not confined to OAuth; a malicious app configured in
+this way would present a general and ongoing risk to the user beyond
+OAuth usage by native apps.  Many operating systems mitigate this
+issue by requiring an explicit user action to change the default
+handler for `http` and `https` scheme URIs.
+
 
 ## Cross-Site Request Forgery {#csrf_countermeasures}
 
@@ -3203,6 +3341,60 @@ assessment, the AS needs to decide whether it can trust the redirect
 URI and SHOULD only automatically redirect the user agent if it trusts
 the redirect URI. If the URI is not trusted, the AS MAY inform the
 user and rely on the user to make the correct decision.
+
+## Authorization Server Mix-Up Mitigation in Native Apps
+
+(TODO: merge this with the regular mix-up section when it is brought in)
+
+To protect against a compromised or malicious authorization server
+attacking another authorization server used by the same app, it is
+REQUIRED that a unique redirect URI is used for each authorization
+server used by the app (for example, by varying the path component),
+and that authorization responses are rejected if the redirect URI
+they were received on doesn't match the redirect URI in an outgoing
+authorization request.
+
+The native app MUST store the redirect URI used in the authorization
+request with the authorization session data (i.e., along with "state"
+and other related data) and MUST verify that the URI on which the
+authorization response was received exactly matches it.
+
+The requirement of {{native-app-registration}}, specifically that authorization
+servers reject requests with URIs that don't match what was
+registered, is also required to prevent such attacks.
+
+## Embedded User Agents in Native Apps
+
+Embedded user-agents are a technically possible method for authorizing native
+apps.  These embedded user-agents are unsafe for use by third parties
+to the authorization server by definition, as the app that hosts the
+embedded user-agent can access the user's full authentication
+credential, not just the OAuth authorization grant that was intended
+for the app.
+
+In typical web-view-based implementations of embedded user-agents,
+the host application can record every keystroke entered in the login
+form to capture usernames and passwords, automatically submit forms
+to bypass user consent, and copy session cookies and use them to
+perform authenticated actions as the user.
+
+Even when used by trusted apps belonging to the same party as the
+authorization server, embedded user-agents violate the principle of
+least privilege by having access to more powerful credentials than
+they need, potentially increasing the attack surface.
+
+Encouraging users to enter credentials in an embedded user-agent
+without the usual address bar and visible certificate validation
+features that browsers have makes it impossible for the user to know
+if they are signing in to the legitimate site; even when they are, it
+trains them that it's OK to enter credentials without validating the
+site first.
+
+Aside from the security concerns, embedded user-agents do not share
+the authentication state with other apps or the browser, requiring
+the user to log in for every authorization request, which is often
+considered an inferior user experience.
+
 
 ## Other Recommendations
 
