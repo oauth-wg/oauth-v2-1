@@ -311,7 +311,7 @@ interaction between the four roles and includes the following steps:
 The preferred method for the client to obtain an authorization grant
 from the resource owner (depicted in steps (1) and (2)) is to use the
 authorization server as an intermediary, which is illustrated in
-Figure 3 in Section 4.1.
+{{fig-authorization-code-flow}} in {{obtaining-authorization}}.
 
 
 Authorization Grant
@@ -402,8 +402,8 @@ with identical or narrower scope (access tokens may have a shorter
 lifetime and fewer permissions than authorized by the resource
 owner).  Issuing a refresh token is optional at the discretion of the
 authorization server.  If the authorization server issues a refresh
-token, it is included when issuing an access token (i.e., step (D) in
-Figure 1).
+token, it is included when issuing an access token (i.e., step (4) in
+{{fig-refresh-token-flow}}).
 
 A refresh token is a string representing the authorization granted to
 the client by the resource owner.  The string is usually opaque to
@@ -1027,7 +1027,7 @@ indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
 
 
-Obtaining Authorization
+Obtaining Authorization {#obtaining-authorization}
 =======================
 
 To request an access token, the client obtains authorization from the
@@ -1038,7 +1038,7 @@ and client credentials.  It also
 provides an extension mechanism for defining additional grant types.
 
 
-Authorization Code Grant
+Authorization Code Grant {#authorization-code-grant}
 ------------------------
 
 The authorization code grant type is used to obtain both access
