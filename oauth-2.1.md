@@ -311,7 +311,7 @@ interaction between the four roles and includes the following steps:
 The preferred method for the client to obtain an authorization grant
 from the resource owner (depicted in steps (1) and (2)) is to use the
 authorization server as an intermediary, which is illustrated in
-{{fig-authorization-code-flow}} in {{obtaining-authorization}}.
+{{fig-authorization-code-flow}} in {{authorization-code-grant}}.
 
 
 Authorization Grant
@@ -469,10 +469,10 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
     optionally, a new refresh token).
 
 Steps (3), (4), (5), and (6) are outside the scope of this
-specification, as described in Section 7.
+specification, as described in {{accessing-protected-resources}}.
 
 
-TLS Version
+TLS Version {#tls-version}
 -----------
 
 Whenever Transport Layer Security (TLS) is used by this
@@ -559,9 +559,9 @@ trusted channel.
 
 When registering a client, the client developer SHALL:
 
-*  specify the client type as described in Section 2.1,
+*  specify the client type as described in {{client-types}},
 
-*  provide its client redirection URIs as described in Section 3.1.2,
+*  provide its client redirection URIs as described in {{redirection-endpoint}},
    and
 
 *  include any other information required by the authorization server
@@ -569,7 +569,7 @@ When registering a client, the client developer SHALL:
    acceptance of legal terms).
 
 
-Client Types
+Client Types {#client-types}
 ------------
 
 OAuth defines two client types, based on their ability to
@@ -635,7 +635,7 @@ profiles:
   might be protected from other applications residing on the same
   device.
 
-Client Identifier
+Client Identifier {#client-identifier}
 -----------------
 
 The authorization server issues the registered client a client
@@ -655,7 +655,7 @@ Authorization servers SHOULD NOT allow clients to influence their
 confusion with a genuine resource owner.
 
 
-Client Authentication
+Client Authentication {#client-authentication}
 ---------------------
 
 If the client type is confidential, the client and authorization
@@ -685,7 +685,7 @@ The client MUST NOT use more than one authentication method in each
 request.
 
 
-### Client Password
+### Client Password {#client-password}
 
 Clients in possession of a client password MAY use the HTTP Basic
 authentication scheme as defined in {{RFC2617}} to authenticate with
@@ -707,7 +707,7 @@ parameters:
 
 "client_id":
 :    REQUIRED.  The client identifier issued to the client during
-     the registration process described by Section 2.2.
+     the registration process described by {{client-identifier}}.
 
 "client_secret":
 :    REQUIRED.  The client secret.  The client MAY omit the
@@ -720,7 +720,7 @@ password-based HTTP authentication schemes).  The parameters can only
 be transmitted in the request-body and MUST NOT be included in the
 request URI.
 
-For example, a request to refresh an access token (Section 6) using
+For example, a request to refresh an access token ({{refreshing-an-access-token}}) using
 the body parameters (with extra line breaks for display purposes
 only):
 
@@ -732,7 +732,7 @@ only):
     &client_id=s6BhdRkqt3&client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
 
 The authorization server MUST require the use of TLS as described in
-Section 1.6 when sending requests using password authentication.
+{{tls-version}} when sending requests using password authentication.
 
 Since this client authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
@@ -800,7 +800,7 @@ endpoint URI MUST NOT include a fragment component.
 Since requests to the authorization endpoint result in user
 authentication and the transmission of clear-text credentials (in the
 HTTP response), the authorization server MUST require the use of TLS
-as described in Section 1.6 when sending requests to the
+as described in {{tls-version}} when sending requests to the
 authorization endpoint.
 
 The authorization server MUST support the use of the HTTP "GET"
@@ -821,8 +821,8 @@ parameter:
 
 "response_type":
 :    REQUIRED.  The value MUST be "code" for requesting an
-     authorization code as described by Section 4.1.1, or a registered
-     extension value as described by Section 8.4.
+     authorization code as described by {{authorization-request}}, or a registered
+     extension value as described by {{new-response-types}}.
 
 Extension response types MAY contain a space-delimited (%x20) list of
 values, where the order of values does not matter (e.g., response
@@ -831,9 +831,9 @@ response types is defined by their respective specifications.
 
 If an authorization request is missing the "response_type" parameter,
 or if the response type is not understood, the authorization server
-MUST return an error response as described in Section 4.1.2.1.
+MUST return an error response as described in {{authorization-code-error-response}}.
 
-### Redirection Endpoint
+### Redirection Endpoint {#redirection-endpoint}
 
 After completing its interaction with the resource owner, the
 authorization server directs the resource owner's user-agent back to
@@ -855,7 +855,7 @@ fragment component.
 #### Endpoint Request Confidentiality
 
 The redirection endpoint SHOULD require the use of TLS as described
-in Section 1.6 when the requested response type is "code",
+in {{tls-version}} when the requested response type is "code",
 or when the redirection request will result in the transmission of
 sensitive credentials over an open network.  This specification does
 not mandate the use of TLS because at the time of this writing,
@@ -949,7 +949,7 @@ endpoint URI MUST NOT include a fragment component.
 Since requests to the token endpoint result in the transmission of
 clear-text credentials (in the HTTP request and response), the
 authorization server MUST require the use of TLS as described in
-Section 1.6 when sending requests to the token endpoint.
+{{tls-version}} when sending requests to the token endpoint.
 
 The client MUST use the HTTP "POST" method when making access token
 requests.
@@ -960,11 +960,11 @@ unrecognized request parameters.  Request and response parameters
 MUST NOT be included more than once.
 
 
-### Client Authentication
+### Client Authentication {#token-endpoint-client-authentication}
 
 Confidential clients or other clients issued client credentials MUST
 authenticate with the authorization server as described in
-Section 2.3 when making requests to the token endpoint.  Client
+{{client-authentication}} when making requests to the token endpoint.  Client
 authentication is used for:
 
 *  Enforcing the binding of refresh tokens and authorization codes to
@@ -1114,7 +1114,7 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
      step (C).  If valid, the authorization server responds back with
      an access token and, optionally, a refresh token.
 
-### Authorization Request
+### Authorization Request {#authorization-request}
 
 #### Client Creates a Code Verifier
 
@@ -1281,7 +1281,7 @@ The exact method that the server uses to associate the
 specification.
 
 
-#### Error Response
+#### Error Response {#authorization-code-error-response}
 
 If the request fails due to a missing, invalid, or mismatching
 redirection URI, or if the client identifier is missing or invalid,
@@ -1758,7 +1758,7 @@ For example:
     }
 
 
-Refreshing an Access Token
+Refreshing an Access Token {#refreshing-an-access-token}
 ==========================
 
 Authorization servers SHOULD determine, based on a risk assessment,
@@ -1879,7 +1879,7 @@ the refresh token (and its sensitivity).
 
 
 
-Accessing Protected Resources
+Accessing Protected Resources {#accessing-protected-resources}
 =============================
 
 The client accesses protected resources by presenting the access
@@ -2439,7 +2439,7 @@ they MUST be registered in the OAuth Parameters registry as described
 by Section 11.2.
 
 
-Defining New Authorization Endpoint Response Types
+Defining New Authorization Endpoint Response Types {#new-response-types}
 --------------------------------------------------
 
 New response types for use with the authorization endpoint are
@@ -2469,7 +2469,7 @@ Defining Additional Error Codes
 In cases where protocol extensions (i.e., access token types,
 extension parameters, or extension grant types) require additional
 error codes to be used with the authorization code grant error
-response (Section 4.1.2.1), the token error response (Section 5.2), or the
+response ({{authorization-code-error-response}}), the token error response (Section 5.2), or the
 resource access error response (Section 7.2), such error codes MAY be
 defined.
 
@@ -2574,7 +2574,7 @@ background for the protocol design, is provided by
 {{RFC6819}} and {{I-D.ietf-oauth-security-topics}}.
 
 
-## Client Authentication
+## Client Authentication {#security-client-authentication}
 
 Authorization servers SHOULD use client authentication if possible.
 
@@ -2983,7 +2983,7 @@ the authorization server (and its URL in particular) for performing
 phishing attacks. OAuth authorization servers regularly redirect users
 to other web sites (the clients), but must do so in a safe way.
 
-Section 4.1.2.1 already prevents open redirects by
+{{authorization-code-error-response}} already prevents open redirects by
 stating that the AS MUST NOT automatically redirect the user agent in case
 of an invalid combination of `client_id` and `redirect_uri`.
 
@@ -3308,7 +3308,7 @@ Error name:
 Error usage location:
 : The location(s) where the error can be used.  The possible
   locations are authorization code grant error response
-  (Section 4.1.2.1), token error response (Section 5.2), or resource
+  ({{authorization-code-error-response}}), token error response (Section 5.2), or resource
   access error response (Section 7.2).
 
 Related protocol extension:
@@ -3382,14 +3382,14 @@ Return and Linefeed characters.)
 
 ## "client_id" Syntax
 
-The "client_id" element is defined in Section 2.3.1:
+The "client_id" element is defined in {{client-password}}:
 
     client-id     = *VSCHAR
 
 
 ## "client_secret" Syntax
 
-The "client_secret" element is defined in Section 2.3.1:
+The "client_secret" element is defined in {{client-password}}:
 
     client-secret = *VSCHAR
 
@@ -3411,7 +3411,7 @@ The "scope" element is defined in Section 3.3:
 
 ## "state" Syntax
 
-The "state" element is defined in Sections 4.1.1, 4.1.2, 4.1.2.1,
+The "state" element is defined in Sections 4.1.1, 4.1.2, {{authorization-code-error-response}},
 4.2.1, 4.2.2, and 4.2.2.1:
 
      state      = 1*VSCHAR
@@ -3425,21 +3425,21 @@ and 4.2.1:
 
 ## "error" Syntax
 
-The "error" element is defined in Sections 4.1.2.1, 4.2.2.1, 5.2,
+The "error" element is defined in Sections {{authorization-code-error-response}}, 4.2.2.1, 5.2,
 7.2, and 8.5:
 
      error             = 1*NQSCHAR
 
 ## "error_description" Syntax
 
-The "error_description" element is defined in Sections 4.1.2.1,
+The "error_description" element is defined in Sections {{authorization-code-error-response}},
 4.2.2.1, 5.2, and 7.2:
 
      error-description = 1*NQSCHAR
 
 ## "error_uri" Syntax
 
-The "error_uri" element is defined in Sections 4.1.2.1, 4.2.2.1, 5.2,
+The "error_uri" element is defined in Sections {{authorization-code-error-response}}, 4.2.2.1, 5.2,
 and 7.2:
 
      error-uri         = URI-reference
