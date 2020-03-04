@@ -64,6 +64,7 @@ informative:
   RFC8418:
   RFC7591:
   RFC8705:
+  RFC7230:
   I-D.ietf-oauth-rar:
   I-D.ietf-oauth-resource-indicators:
   I-D.ietf-oauth-security-topics:
