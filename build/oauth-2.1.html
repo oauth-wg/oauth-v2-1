@@ -1103,7 +1103,7 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 <p id="rfc.section.3.1.2.2.p.1">The authorization server MUST require all clients to register their redirection endpoint prior to utilizing the authorization endpoint.</p>
 <p id="rfc.section.3.1.2.2.p.2">The authorization server SHOULD require the client to provide the complete redirection URI (the client MAY use the "state" request parameter to achieve per-request customization).</p>
 <p id="rfc.section.3.1.2.2.p.3">The authorization server MAY allow the client to register multiple redirection endpoints.</p>
-<p id="rfc.section.3.1.2.2.p.4">Lack of a redirection URI registration requirement can enable an attacker to use the authorization endpoint as an open redirector as described in Section 10.15.</p>
+<p id="rfc.section.3.1.2.2.p.4">Lack of a redirection URI registration requirement can enable an attacker to use the authorization endpoint as an open redirector as described in <a href="#open-redirectors" class="xref">Section 10.14</a>.</p>
 <h1 id="rfc.section.3.1.2.3">
 <a href="#rfc.section.3.1.2.3">3.1.2.3.</a> <a href="#dynamic-configuration" id="dynamic-configuration">Dynamic Configuration</a>
 </h1>
@@ -1249,17 +1249,17 @@ DIGIT = %x30-39
 <dt>"response_type":</dt>
 <dd style="margin-left: 8">REQUIRED.  Value MUST be set to "code".</dd>
 <dt>"client_id":</dt>
-<dd style="margin-left: 8">REQUIRED.  The client identifier as described in Section 2.2.</dd>
+<dd style="margin-left: 8">REQUIRED.  The client identifier as described in <a href="#client-identifier" class="xref">Section 2.2</a>.</dd>
 <dt>"code_challenge":</dt>
 <dd style="margin-left: 8">REQUIRED.  Code challenge.</dd>
 <dt>"code_challenge_method":</dt>
 <dd style="margin-left: 8">OPTIONAL, defaults to "plain" if not present in the request.  Code verifier transformation method is "S256" or "plain".</dd>
 <dt>"redirect_uri":</dt>
-<dd style="margin-left: 8">OPTIONAL.  As described in Section 3.1.2.</dd>
+<dd style="margin-left: 8">OPTIONAL.  As described in <a href="#redirection-endpoint" class="xref">Section 3.1.2</a>.</dd>
 <dt>"scope":</dt>
-<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by Section 3.3.</dd>
+<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.</dd>
 <dt>"state":</dt>
-<dd style="margin-left: 8">RECOMMENDED.  An opaque value used by the client to maintain state between the request and callback.  The authorization server includes this value when redirecting the user-agent back to the client.  The parameter SHOULD be used for preventing cross-site request forgery as described in Section 10.12.</dd>
+<dd style="margin-left: 8">RECOMMENDED.  An opaque value used by the client to maintain state between the request and callback.  The authorization server includes this value when redirecting the user-agent back to the client.  The parameter SHOULD be used for preventing cross-site request forgery as described in <a href="#csrf_countermeasures" class="xref">Section 10.11</a>.</dd>
 </dl>
 <p id="rfc.section.4.1.1.3.p.3">The client directs the resource owner to the constructed URI using an HTTP redirection response, or by other means available to it via the user-agent.</p>
 <p id="rfc.section.4.1.1.3.p.4">For example, the client directs the user-agent to make the following HTTP request using TLS (with extra line breaks for display purposes only):</p>
@@ -1347,13 +1347,13 @@ Location: https://client.example.com/cb?error=access_denied&amp;state=xyz
 <dt>"code":</dt>
 <dd style="margin-left: 8">REQUIRED.  The authorization code received from the authorization server.</dd>
 <dt>"redirect_uri":</dt>
-<dd style="margin-left: 8">REQUIRED, if the "redirect_uri" parameter was included in the authorization request as described in Section 4.1.1, and their values MUST be identical.</dd>
+<dd style="margin-left: 8">REQUIRED, if the "redirect_uri" parameter was included in the authorization request as described in <a href="#authorization-request" class="xref">Section 4.1.1</a>, and their values MUST be identical.</dd>
 <dt>"client_id":</dt>
-<dd style="margin-left: 8">REQUIRED, if the client is not authenticating with the authorization server as described in Section 3.2.1.</dd>
+<dd style="margin-left: 8">REQUIRED, if the client is not authenticating with the authorization server as described in <a href="#token-endpoint-client-authentication" class="xref">Section 3.2.1</a>.</dd>
 <dt>"code_verifier":</dt>
 <dd style="margin-left: 8">REQUIRED.  Code verifier</dd>
 </dl>
-<p id="rfc.section.4.1.3.p.3">If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in Section 3.2.1.</p>
+<p id="rfc.section.4.1.3.p.3">If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in <a href="#token-endpoint-client-authentication" class="xref">Section 3.2.1</a>.</p>
 <p id="rfc.section.4.1.3.p.4">For example, the client makes the following HTTP request using TLS (with extra line breaks for display purposes only):</p>
 <pre>
 POST /token HTTP/1.1
@@ -1374,12 +1374,12 @@ grant_type=authorization_code&amp;code=SplxlOBeZQQYbYS6WxSbIA
 <li>ensure that the authorization code was issued to the authenticated confidential client, or if the client is public, ensure that the code was issued to "client_id" in the request,</li>
 <li>verify that the authorization code is valid,</li>
 <li>verify the "code_verifier" by calculating the code challenge from the received "code_verifier" and comparing it with the previously associated "code_challenge", after first transforming it according to the "code_challenge_method" method specified by the client, and</li>
-<li>ensure that the "redirect_uri" parameter is present if the "redirect_uri" parameter was included in the initial authorization request as described in Section 4.1.1, and if included ensure that their values are identical.</li>
+<li>ensure that the "redirect_uri" parameter is present if the "redirect_uri" parameter was included in the initial authorization request as described in <a href="#authorization-request" class="xref">Section 4.1.1</a>, and if included ensure that their values are identical.</li>
 </ul>
 <h1 id="rfc.section.4.1.4">
 <a href="#rfc.section.4.1.4">4.1.4.</a> <a href="#access-token-response" id="access-token-response">Access Token Response</a>
 </h1>
-<p id="rfc.section.4.1.4.p.1">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in Section 5.1.  If the request client authentication failed or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.4.1.4.p.1">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  If the request client authentication failed or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <p id="rfc.section.4.1.4.p.2">An example successful response:</p>
 <pre>
 HTTP/1.1 200 OK
@@ -1429,9 +1429,9 @@ Pragma: no-cache
 <dt>"grant_type":</dt>
 <dd style="margin-left: 8">REQUIRED.  Value MUST be set to "client_credentials".</dd>
 <dt>"scope":</dt>
-<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by Section 3.3.</dd>
+<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.</dd>
 </dl>
-<p id="rfc.section.4.2.2.p.3">The client MUST authenticate with the authorization server as described in Section 3.2.1.</p>
+<p id="rfc.section.4.2.2.p.3">The client MUST authenticate with the authorization server as described in <a href="#token-endpoint-client-authentication" class="xref">Section 3.2.1</a>.</p>
 <p id="rfc.section.4.2.2.p.4">For example, the client makes the following HTTP request using transport-layer security (with extra line breaks for display purposes only):</p>
 <pre>
 POST /token HTTP/1.1
@@ -1445,7 +1445,7 @@ grant_type=client_credentials
 <h1 id="rfc.section.4.2.3">
 <a href="#rfc.section.4.2.3">4.2.3.</a> <a href="#access-token-response-1" id="access-token-response-1">Access Token Response</a>
 </h1>
-<p id="rfc.section.4.2.3.p.1">If the access token request is valid and authorized, the authorization server issues an access token as described in Section 5.1.  A refresh token SHOULD NOT be included.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.4.2.3.p.1">If the access token request is valid and authorized, the authorization server issues an access token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  A refresh token SHOULD NOT be included.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <p id="rfc.section.4.2.3.p.2">An example successful response:</p>
 <pre>
 HTTP/1.1 200 OK
@@ -1474,13 +1474,13 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Asaml2-
 bearer&amp;assertion=PEFzc2VydGlvbiBJc3N1ZUluc3RhbnQ9IjIwMTEtMDU
 [...omitted for brevity...]aG5TdGF0ZW1lbnQ-PC9Bc3NlcnRpb24-
 </pre>
-<p id="rfc.section.4.3.p.3">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in Section 5.1.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.4.3.p.3">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> <a href="#issuing-an-access-token" id="issuing-an-access-token">Issuing an Access Token</a>
 </h1>
-<p id="rfc.section.5.p.1">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in Section 5.1.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.5.p.1">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <h1 id="rfc.section.5.1">
-<a href="#rfc.section.5.1">5.1.</a> <a href="#successful-response" id="successful-response">Successful Response</a>
+<a href="#rfc.section.5.1">5.1.</a> <a href="#access-token-successful-response" id="access-token-successful-response">Successful Response</a>
 </h1>
 <p id="rfc.section.5.1.p.1">The authorization server issues an access token and optional refresh token, and constructs the response by adding the following parameters to the entity-body of the HTTP response with a 200 (OK) status code:</p>
 <p></p>
@@ -1489,13 +1489,13 @@ bearer&amp;assertion=PEFzc2VydGlvbiBJc3N1ZUluc3RhbnQ9IjIwMTEtMDU
 <dt>"access_token":</dt>
 <dd style="margin-left: 8">REQUIRED.  The access token issued by the authorization server.</dd>
 <dt>"token_type":</dt>
-<dd style="margin-left: 8">REQUIRED.  The type of the token issued as described in Section 7.1.  Value is case insensitive.</dd>
+<dd style="margin-left: 8">REQUIRED.  The type of the token issued as described in <a href="#access-token-types" class="xref">Section 7.1</a>.  Value is case insensitive.</dd>
 <dt>"expires_in":</dt>
 <dd style="margin-left: 8">RECOMMENDED.  The lifetime in seconds of the access token.  For example, the value "3600" denotes that the access token will expire in one hour from the time the response was generated.  If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.</dd>
 <dt>"refresh_token":</dt>
-<dd style="margin-left: 8">OPTIONAL.  The refresh token, which can be used to obtain new access tokens using the same authorization grant as described in Section 6.</dd>
+<dd style="margin-left: 8">OPTIONAL.  The refresh token, which can be used to obtain new access tokens using the same authorization grant as described in <a href="#refreshing-an-access-token" class="xref">Section 6</a>.</dd>
 <dt>"scope":</dt>
-<dd style="margin-left: 8">OPTIONAL, if identical to the scope requested by the client; otherwise, REQUIRED.  The scope of the access token as described by Section 3.3.</dd>
+<dd style="margin-left: 8">OPTIONAL, if identical to the scope requested by the client; otherwise, REQUIRED.  The scope of the access token as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.</dd>
 </dl>
 <p id="rfc.section.5.1.p.3">The parameters are included in the entity-body of the HTTP response using the "application/json" media type as defined by <a href="#RFC4627" class="xref">[RFC4627]</a>.  The parameters are serialized into a JavaScript Object Notation (JSON) structure by adding each parameter at the highest structure level.  Parameter names and string values are included as JSON strings.  Numerical values are included as JSON numbers.  The order of parameters does not matter and can vary.</p>
 <p id="rfc.section.5.1.p.4">The authorization server MUST include the HTTP "Cache-Control" response header field <a href="#RFC2616" class="xref">[RFC2616]</a> with a value of "no-store" in any response containing tokens, credentials, or other sensitive information, as well as the "Pragma" response header field <a href="#RFC2616" class="xref">[RFC2616]</a> with a value of "no-cache".</p>
@@ -1516,7 +1516,7 @@ Pragma: no-cache
 </pre>
 <p id="rfc.section.5.1.p.6">The client MUST ignore unrecognized value names in the response.  The sizes of tokens and other values received from the authorization server are left undefined.  The client should avoid making assumptions about value sizes.  The authorization server SHOULD document the size of any value it issues.</p>
 <h1 id="rfc.section.5.2">
-<a href="#rfc.section.5.2">5.2.</a> <a href="#error-response" id="error-response">Error Response</a>
+<a href="#rfc.section.5.2">5.2.</a> <a href="#access-token-error-response" id="access-token-error-response">Error Response</a>
 </h1>
 <p id="rfc.section.5.2.p.1">The authorization server responds with an HTTP 400 (Bad Request) status code (unless specified otherwise) and includes the following parameters with the response:</p>
 <p id="rfc.section.5.2.p.2">The authorization server responds with an HTTP 400 (Bad Request) status code (unless specified otherwise) and includes the following parameters with the response:</p>
@@ -1571,9 +1571,9 @@ Pragma: no-cache
 <dt>"refresh_token":</dt>
 <dd style="margin-left: 8">REQUIRED.  The refresh token issued to the client.</dd>
 <dt>"scope":</dt>
-<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by Section 3.3.  The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner.</dd>
+<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.  The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner.</dd>
 </dl>
-<p id="rfc.section.6.p.5">Because refresh tokens are typically long-lasting credentials used to request additional access tokens, the refresh token is bound to the client to which it was issued.  If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in Section 3.2.1.</p>
+<p id="rfc.section.6.p.5">Because refresh tokens are typically long-lasting credentials used to request additional access tokens, the refresh token is bound to the client to which it was issued.  If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in <a href="#token-endpoint-client-authentication" class="xref">Section 3.2.1</a>.</p>
 <p id="rfc.section.6.p.6">For example, the client makes the following HTTP request using transport-layer security (with extra line breaks for display purposes only):</p>
 <pre>
 POST /token HTTP/1.1
@@ -1600,7 +1600,7 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 <li>
 <em>Refresh token rotation:</em> the authorization server issues a new refresh token with every access token refresh response.  The previous refresh token is invalidated but information about the relationship is retained by the authorization server.  If a refresh token is compromised and subsequently used by both the attacker and the legitimate client, one of them will present an invalidated refresh token, which will inform the authorization server of the breach.  The authorization server cannot determine which party submitted the invalid refresh token, but it will revoke the active refresh token.  This stops the attack at the cost of forcing the legitimate client to obtain a fresh authorization grant.  <br><br> Implementation note: the grant to which a refresh token belongs may be encoded into the refresh token itself.  This can enable an authorization server to efficiently determine the grant to which a refresh token belongs, and by extension, all refresh tokens that need to be revoked.  Authorization servers MUST ensure the integrity of the refresh token value in this case, for example, using signatures.</li>
 </ul>
-<p id="rfc.section.6.p.11">If valid and authorized, the authorization server issues an access token as described in Section 5.1.  If the request failed verification or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.6.p.11">If valid and authorized, the authorization server issues an access token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  If the request failed verification or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <p id="rfc.section.6.p.12">The authorization server MAY issue a new refresh token, in which case the client MUST discard the old refresh token and replace it with the new refresh token.  The authorization server MAY revoke the old refresh token after issuing a new refresh token to the client.  If a new refresh token is issued, the refresh token scope MUST be identical to that of the refresh token included by the client in the request.</p>
 <p id="rfc.section.6.p.13">Authorization servers MAY revoke refresh tokens automatically in case of a security event, such as:</p>
 <p></p>
@@ -1682,13 +1682,13 @@ access_token=mF_9.B5f-4.1JqM
 <p id="rfc.section.7.2.2.p.1">If the protected resource request does not include authentication credentials or does not contain an access token that enables access to the protected resource, the resource server MUST include the HTTP "WWW-Authenticate" response header field; it MAY include it in response to other conditions as well.  The "WWW-Authenticate" header field uses the framework defined by HTTP/1.1 <a href="#RFC2617" class="xref">[RFC2617]</a>.</p>
 <p id="rfc.section.7.2.2.p.2">All challenges defined by this specification MUST use the auth-scheme value "Bearer".  This scheme MUST be followed by one or more auth-param values.  The auth-param attributes used or defined by this specification are as follows.  Other auth-param attributes MAY be used as well.</p>
 <p id="rfc.section.7.2.2.p.3">A "realm" attribute MAY be included to indicate the scope of protection in the manner described in HTTP/1.1 <a href="#RFC2617" class="xref">[RFC2617]</a>.  The "realm" attribute MUST NOT appear more than once.</p>
-<p id="rfc.section.7.2.2.p.4">The "scope" attribute is defined in Section 3.3.  The "scope" attribute is a space-delimited list of case-sensitive scope values indicating the required scope of the access token for accessing the requested resource. "scope" values are implementation defined; there is no centralized registry for them; allowed values are defined by the authorization server.  The order of "scope" values is not significant.  In some cases, the "scope" value will be used when requesting a new access token with sufficient scope of access to utilize the protected resource.  Use of the "scope" attribute is OPTIONAL.  The "scope" attribute MUST NOT appear more than once.  The "scope" value is intended for programmatic use and is not meant to be displayed to end-users.</p>
+<p id="rfc.section.7.2.2.p.4">The "scope" attribute is defined in <a href="#access-token-scope" class="xref">Section 3.3</a>.  The "scope" attribute is a space-delimited list of case-sensitive scope values indicating the required scope of the access token for accessing the requested resource. "scope" values are implementation defined; there is no centralized registry for them; allowed values are defined by the authorization server.  The order of "scope" values is not significant.  In some cases, the "scope" value will be used when requesting a new access token with sufficient scope of access to utilize the protected resource.  Use of the "scope" attribute is OPTIONAL.  The "scope" attribute MUST NOT appear more than once.  The "scope" value is intended for programmatic use and is not meant to be displayed to end-users.</p>
 <p id="rfc.section.7.2.2.p.5">Two example scope values follow; these are taken from the OpenID Connect <a href="#OpenID.Messages" class="xref">[OpenID.Messages]</a> and the Open Authentication Technology Committee (OATC) Online Multimedia Authorization Protocol <a href="#OMAP" class="xref">[OMAP]</a> OAuth 2.0 use cases, respectively:</p>
 <pre>
 scope="openid profile email"
 scope="urn:example:channel=HBO&amp;urn:example:rating=G,PG-13"
 </pre>
-<p id="rfc.section.7.2.2.p.6">If the protected resource request included an access token and failed authentication, the resource server SHOULD include the "error" attribute to provide the client with the reason why the access request was declined.  The parameter value is described in Section ???.  In addition, the resource server MAY include the "error_description" attribute to provide developers a human-readable explanation that is not meant to be displayed to end-users.  It also MAY include the "error_uri" attribute with an absolute URI identifying a human-readable web page explaining the error.  The "error", "error_description", and "error_uri" attributes MUST NOT appear more than once.</p>
+<p id="rfc.section.7.2.2.p.6">If the protected resource request included an access token and failed authentication, the resource server SHOULD include the "error" attribute to provide the client with the reason why the access request was declined.  The parameter value is described in <a href="#bearer-token-error-codes" class="xref">Section 7.3.1</a>.  In addition, the resource server MAY include the "error_description" attribute to provide developers a human-readable explanation that is not meant to be displayed to end-users.  It also MAY include the "error_uri" attribute with an absolute URI identifying a human-readable web page explaining the error.  The "error", "error_description", and "error_uri" attributes MUST NOT appear more than once.</p>
 <p id="rfc.section.7.2.2.p.7">Values for the "scope" attribute (specified in Appendix A.4) MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E for representing scope values and %x20 for delimiters between scope values.  Values for the "error" and "error_description" attributes (specified in Appendixes A.7 and A.8) MUST NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.  Values for the "error_uri" attribute (specified in Appendix A.9 of) MUST conform to the URI-reference syntax and thus MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E.</p>
 <p id="rfc.section.7.2.2.p.8">For example, in response to a protected resource request without authentication:</p>
 <pre>
@@ -1703,15 +1703,15 @@ WWW-Authenticate: Bearer realm="example",
                   error_description="The access token expired"
 </pre>
 <h1 id="rfc.section.7.3">
-<a href="#rfc.section.7.3">7.3.</a> <a href="#error-response-1" id="error-response-1">Error Response</a>
+<a href="#rfc.section.7.3">7.3.</a> <a href="#bearer-token-error-response" id="bearer-token-error-response">Error Response</a>
 </h1>
-<p id="rfc.section.7.3.p.1">If a resource access request fails, the resource server SHOULD inform the client of the error.  While the specifics of such error responses are beyond the scope of this specification, this document establishes a common registry in Section 11.4 for error values to be shared among OAuth token authentication schemes.</p>
+<p id="rfc.section.7.3.p.1">If a resource access request fails, the resource server SHOULD inform the client of the error.  While the specifics of such error responses are beyond the scope of this specification, this document establishes a common registry in <a href="#error-registry" class="xref">Section 11.4</a> for error values to be shared among OAuth token authentication schemes.</p>
 <p id="rfc.section.7.3.p.2">New authentication schemes designed primarily for OAuth token authentication SHOULD define a mechanism for providing an error status code to the client, in which the error values allowed are registered in the error registry established by this specification.</p>
 <p id="rfc.section.7.3.p.3">Such schemes MAY limit the set of valid error codes to a subset of the registered values.  If the error code is returned using a named parameter, the parameter name SHOULD be "error".</p>
 <p id="rfc.section.7.3.p.4">Other schemes capable of being used for OAuth token authentication, but not primarily designed for that purpose, MAY bind their error values to the registry in the same manner.</p>
 <p id="rfc.section.7.3.p.5">New authentication schemes MAY choose to also specify the use of the "error_description" and "error_uri" parameters to return error information in a manner parallel to their usage in this specification.</p>
 <h1 id="rfc.section.7.3.1">
-<a href="#rfc.section.7.3.1">7.3.1.</a> <a href="#error-codes" id="error-codes">Error Codes</a>
+<a href="#rfc.section.7.3.1">7.3.1.</a> <a href="#bearer-token-error-codes" id="bearer-token-error-codes">Error Codes</a>
 </h1>
 <p id="rfc.section.7.3.1.p.1">When a request fails, the resource server responds using the appropriate HTTP status code (typically, 400, 401, 403, or 405) and includes one of the following error codes in the response:</p>
 <p></p>
@@ -1813,7 +1813,7 @@ WWW-Authenticate: Bearer realm="example"
 <h1 id="rfc.section.8.1">
 <a href="#rfc.section.8.1">8.1.</a> <a href="#defining-access-token-types" id="defining-access-token-types">Defining Access Token Types</a>
 </h1>
-<p id="rfc.section.8.1.p.1">Access token types can be defined in one of two ways: registered in the Access Token Types registry (following the procedures in Section 11.1), or by using a unique absolute URI as its name.</p>
+<p id="rfc.section.8.1.p.1">Access token types can be defined in one of two ways: registered in the Access Token Types registry (following the procedures in <a href="#access-token-registry" class="xref">Section 11.1</a>), or by using a unique absolute URI as its name.</p>
 <p id="rfc.section.8.1.p.2">Types utilizing a URI name SHOULD be limited to vendor-specific implementations that are not commonly applicable, and are specific to the implementation details of the resource server where they are used.</p>
 <p id="rfc.section.8.1.p.3">All other types MUST be registered.  Type names MUST conform to the type-name ABNF.  If the type definition includes a new HTTP authentication scheme, the type name SHOULD be identical to the HTTP authentication scheme name (as defined by <a href="#RFC2617" class="xref">[RFC2617]</a>).  The token type "example" is reserved for use in examples.</p>
 <pre>
@@ -1823,7 +1823,7 @@ name-char  = "-" / "." / "_" / DIGIT / ALPHA
 <h1 id="rfc.section.8.2">
 <a href="#rfc.section.8.2">8.2.</a> <a href="#defining-new-endpoint-parameters" id="defining-new-endpoint-parameters">Defining New Endpoint Parameters</a>
 </h1>
-<p id="rfc.section.8.2.p.1">New request or response parameters for use with the authorization endpoint or the token endpoint are defined and registered in the OAuth Parameters registry following the procedure in Section 11.2.</p>
+<p id="rfc.section.8.2.p.1">New request or response parameters for use with the authorization endpoint or the token endpoint are defined and registered in the OAuth Parameters registry following the procedure in <a href="#parameters-registry" class="xref">Section 11.2</a>.</p>
 <p id="rfc.section.8.2.p.2">Parameter names MUST conform to the param-name ABNF, and parameter values syntax MUST be well-defined (e.g., using ABNF, or a reference to the syntax of an existing parameter).</p>
 <pre>
 param-name  = 1*name-char
@@ -1833,11 +1833,11 @@ name-char   = "-" / "." / "_" / DIGIT / ALPHA
 <h1 id="rfc.section.8.3">
 <a href="#rfc.section.8.3">8.3.</a> <a href="#defining-new-authorization-grant-types" id="defining-new-authorization-grant-types">Defining New Authorization Grant Types</a>
 </h1>
-<p id="rfc.section.8.3.p.1">New authorization grant types can be defined by assigning them a unique absolute URI for use with the "grant_type" parameter.  If the extension grant type requires additional token endpoint parameters, they MUST be registered in the OAuth Parameters registry as described by Section 11.2.</p>
+<p id="rfc.section.8.3.p.1">New authorization grant types can be defined by assigning them a unique absolute URI for use with the "grant_type" parameter.  If the extension grant type requires additional token endpoint parameters, they MUST be registered in the OAuth Parameters registry as described by <a href="#parameters-registry" class="xref">Section 11.2</a>.</p>
 <h1 id="rfc.section.8.4">
 <a href="#rfc.section.8.4">8.4.</a> <a href="#new-response-types" id="new-response-types">Defining New Authorization Endpoint Response Types</a>
 </h1>
-<p id="rfc.section.8.4.p.1">New response types for use with the authorization endpoint are defined and registered in the Authorization Endpoint Response Types registry following the procedure in Section 11.3.  Response type names MUST conform to the response-type ABNF.</p>
+<p id="rfc.section.8.4.p.1">New response types for use with the authorization endpoint are defined and registered in the Authorization Endpoint Response Types registry following the procedure in <a href="#response-types-registry" class="xref">Section 11.3</a>.  Response type names MUST conform to the response-type ABNF.</p>
 <pre>
 response-type  = response-name *( SP response-name )
 response-name  = 1*response-char
@@ -1848,8 +1848,8 @@ response-char  = "_" / DIGIT / ALPHA
 <h1 id="rfc.section.8.5">
 <a href="#rfc.section.8.5">8.5.</a> <a href="#defining-additional-error-codes" id="defining-additional-error-codes">Defining Additional Error Codes</a>
 </h1>
-<p id="rfc.section.8.5.p.1">In cases where protocol extensions (i.e., access token types, extension parameters, or extension grant types) require additional error codes to be used with the authorization code grant error response (<a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>), the token error response (Section 5.2), or the resource access error response (Section 7.2), such error codes MAY be defined.</p>
-<p id="rfc.section.8.5.p.2">Extension error codes MUST be registered (following the procedures in Section 11.4) if the extension they are used in conjunction with is a registered access token type, a registered endpoint parameter, or an extension grant type.  Error codes used with unregistered extensions MAY be registered.</p>
+<p id="rfc.section.8.5.p.1">In cases where protocol extensions (i.e., access token types, extension parameters, or extension grant types) require additional error codes to be used with the authorization code grant error response (<a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>), the token error response (<a href="#access-token-error-response" class="xref">Section 5.2</a>), or the resource access error response (Section 7.2), such error codes MAY be defined.</p>
+<p id="rfc.section.8.5.p.2">Extension error codes MUST be registered (following the procedures in <a href="#error-registry" class="xref">Section 11.4</a>) if the extension they are used in conjunction with is a registered access token type, a registered endpoint parameter, or an extension grant type.  Error codes used with unregistered extensions MAY be registered.</p>
 <p id="rfc.section.8.5.p.3">Error codes MUST conform to the error ABNF and SHOULD be prefixed by an identifying name when possible.  For example, an error identifying an invalid value set to the extension parameter "example" SHOULD be named "example_invalid".</p>
 <pre>
 error      = 1*error-char
@@ -2012,7 +2012,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <a href="#rfc.section.11">11.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a>
 </h1>
 <h1 id="rfc.section.11.1">
-<a href="#rfc.section.11.1">11.1.</a> <a href="#oauth-access-token-types-registry" id="oauth-access-token-types-registry">OAuth Access Token Types Registry</a>
+<a href="#rfc.section.11.1">11.1.</a> <a href="#access-token-registry" id="access-token-registry">OAuth Access Token Types Registry</a>
 </h1>
 <p id="rfc.section.11.1.p.1">This specification establishes the OAuth Access Token Types registry.</p>
 <p id="rfc.section.11.1.p.2">Access token types are registered with a Specification Required (<a href="#RFC5226" class="xref">[RFC5226]</a>) after a two-week review period on the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.  However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.</p>
@@ -2028,7 +2028,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <dt>Type name:</dt>
 <dd style="margin-left: 8">The name requested (e.g., "example").</dd>
 <dt>Additional Token Endpoint Response Parameters:</dt>
-<dd style="margin-left: 8">Additional response parameters returned together with the "access_token" parameter.  New parameters MUST be separately registered in the OAuth Parameters registry as described by Section 11.2.</dd>
+<dd style="margin-left: 8">Additional response parameters returned together with the "access_token" parameter.  New parameters MUST be separately registered in the OAuth Parameters registry as described by <a href="#parameters-registry" class="xref">Section 11.2</a>.</dd>
 <dt>HTTP Authentication Scheme(s):</dt>
 <dd style="margin-left: 8">The HTTP authentication scheme name(s), if any, used to authenticate protected resource requests using access tokens of this type.</dd>
 <dt>Change controller:</dt>
@@ -2050,7 +2050,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <li>Specification document(s): OAuth 2.1</li>
 </ul>
 <h1 id="rfc.section.11.2">
-<a href="#rfc.section.11.2">11.2.</a> <a href="#oauth-parameters-registry" id="oauth-parameters-registry">OAuth Parameters Registry</a>
+<a href="#rfc.section.11.2">11.2.</a> <a href="#parameters-registry" id="parameters-registry">OAuth Parameters Registry</a>
 </h1>
 <p id="rfc.section.11.2.p.1">This specification establishes the OAuth Parameters registry.</p>
 <p id="rfc.section.11.2.p.2">Additional parameters for inclusion in the authorization endpoint request, the authorization endpoint response, the token endpoint request, or the token endpoint response are registered with a Specification Required (<a href="#RFC5226" class="xref">[RFC5226]</a>) after a two-week review period on the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.  However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.</p>
@@ -2145,7 +2145,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <li>Specification document(s): RFC 6749</li>
 </ul>
 <h1 id="rfc.section.11.3">
-<a href="#rfc.section.11.3">11.3.</a> <a href="#oauth-authorization-endpoint-response-types-registry" id="oauth-authorization-endpoint-response-types-registry">OAuth Authorization Endpoint Response Types Registry</a>
+<a href="#rfc.section.11.3">11.3.</a> <a href="#response-types-registry" id="response-types-registry">OAuth Authorization Endpoint Response Types Registry</a>
 </h1>
 <p id="rfc.section.11.3.p.1">This specification establishes the OAuth Authorization Endpoint Response Types registry.</p>
 <p id="rfc.section.11.3.p.2">Additional response types for use with the authorization endpoint are registered with a Specification Required (<a href="#RFC5226" class="xref">[RFC5226]</a>) after a two-week review period on the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.  However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.</p>
@@ -2177,7 +2177,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <li>Specification document(s): RFC 6749</li>
 </ul>
 <h1 id="rfc.section.11.4">
-<a href="#rfc.section.11.4">11.4.</a> <a href="#oauth-extensions-error-registry" id="oauth-extensions-error-registry">OAuth Extensions Error Registry</a>
+<a href="#rfc.section.11.4">11.4.</a> <a href="#error-registry" id="error-registry">OAuth Extensions Error Registry</a>
 </h1>
 <p id="rfc.section.11.4.p.1">This specification establishes the OAuth Extensions Error registry.</p>
 <p id="rfc.section.11.4.p.2">Additional error codes used together with other protocol extensions (i.e., extension grant types, access token types, or extension parameters) are registered with a Specification Required (<a href="#RFC5226" class="xref">[RFC5226]</a>) after a two-week review period on the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.  However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.</p>
@@ -2193,7 +2193,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <dt>Error name:</dt>
 <dd style="margin-left: 8">The name requested (e.g., "example").  Values for the error name MUST NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.</dd>
 <dt>Error usage location:</dt>
-<dd style="margin-left: 8">The location(s) where the error can be used.  The possible locations are authorization code grant error response (<a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>), token error response (Section 5.2), or resource access error response (Section 7.2).</dd>
+<dd style="margin-left: 8">The location(s) where the error can be used.  The possible locations are authorization code grant error response (<a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>), token error response (<a href="#access-token-error-response" class="xref">Section 5.2</a>), or resource access error response (Section 7.2).</dd>
 <dt>Related protocol extension:</dt>
 <dd style="margin-left: 8">The name of the extension grant type, access token type, or extension parameter that the error code is used in conjunction with.</dd>
 <dt>Change controller:</dt>
@@ -2463,7 +2463,7 @@ response-char = "_" / DIGIT / ALPHA
 <h1 id="rfc.appendix.A.4">
 <a href="#rfc.appendix.A.4">A.4.</a> <a href="#scope-syntax" id="scope-syntax">"scope" Syntax</a>
 </h1>
-<p id="rfc.section.A.4.p.1">The "scope" element is defined in Section 3.3:</p>
+<p id="rfc.section.A.4.p.1">The "scope" element is defined in <a href="#access-token-scope" class="xref">Section 3.3</a>:</p>
 <pre>
  scope       = scope-token *( SP scope-token )
  scope-token = 1*NQCHAR

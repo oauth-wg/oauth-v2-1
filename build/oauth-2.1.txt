@@ -1019,7 +1019,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework    February 2020
 
    Lack of a redirection URI registration requirement can enable an
    attacker to use the authorization endpoint as an open redirector as
-   described in Section 10.15.
+   described in Section 10.14.
 
 3.1.2.3.  Dynamic Configuration
 
@@ -1360,7 +1360,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework    February 2020
       authorization server includes this value when redirecting the
       user-agent back to the client.  The parameter SHOULD be used for
       preventing cross-site request forgery as described in
-      Section 10.12.
+      Section 10.11.
 
    The client directs the resource owner to the constructed URI using an
    HTTP redirection response, or by other means available to it via the
@@ -2308,7 +2308,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework    February 2020
    authentication, the resource server SHOULD include the "error"
    attribute to provide the client with the reason why the access
    request was declined.  The parameter value is described in
-   Section ???.  In addition, the resource server MAY include the
+   Section 7.3.1.  In addition, the resource server MAY include the
    "error_description" attribute to provide developers a human-readable
    explanation that is not meant to be displayed to end-users.  It also
    MAY include the "error_uri" attribute with an absolute URI
