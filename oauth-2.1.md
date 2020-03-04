@@ -887,7 +887,7 @@ redirection endpoints.
 
 Lack of a redirection URI registration requirement can enable an
 attacker to use the authorization endpoint as an open redirector as
-described in Section 10.15.
+described in {{open-redirectors}}.
 
 
 #### Dynamic Configuration
@@ -994,7 +994,7 @@ the authentication code.  (It provides no additional security for the
 protected resource.)
 
 
-Access Token Scope
+Access Token Scope {#access-token-scope}
 ------------------
 
 The authorization and token endpoints allow the client to specify the
@@ -1178,7 +1178,7 @@ using the "application/x-www-form-urlencoded" format, per Appendix B:
 :    REQUIRED.  Value MUST be set to "code".
 
 "client_id":
-:    REQUIRED.  The client identifier as described in Section 2.2.
+:    REQUIRED.  The client identifier as described in {{client-identifier}}.
 
 "code_challenge":
 :    REQUIRED.  Code challenge.
@@ -1188,11 +1188,11 @@ using the "application/x-www-form-urlencoded" format, per Appendix B:
     verifier transformation method is "S256" or "plain".
 
 "redirect_uri":
-:    OPTIONAL.  As described in Section 3.1.2.
+:    OPTIONAL.  As described in {{redirection-endpoint}}.
 
 "scope":
 :    OPTIONAL.  The scope of the access request as described by
-     Section 3.3.
+     {{access-token-scope}}.
 
 "state":
 :    RECOMMENDED.  An opaque value used by the client to maintain
@@ -1398,7 +1398,7 @@ request entity-body:
 
 "client_id":
 :    REQUIRED, if the client is not authenticating with the
-     authorization server as described in Section 3.2.1.
+     authorization server as described in {{token-endpoint-client-authentication}}.
 
 "code_verifier":
 :    REQUIRED.  Code verifier
@@ -1406,7 +1406,7 @@ request entity-body:
 If the client type is confidential or the client was issued client
 credentials (or assigned other authentication requirements), the
 client MUST authenticate with the authorization server as described
-in Section 3.2.1.
+in {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request using TLS
 (with extra line breaks for display purposes only):
@@ -1521,10 +1521,10 @@ request entity-body:
 
 "scope":
 :    OPTIONAL.  The scope of the access request as described by
-     Section 3.3.
+     {{access-token-scope}}.
 
 The client MUST authenticate with the authorization server as
-described in Section 3.2.1.
+described in {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request using
 transport-layer security (with extra line breaks for display purposes
@@ -1630,7 +1630,7 @@ to the entity-body of the HTTP response with a 200 (OK) status code:
 "scope":
 :    OPTIONAL, if identical to the scope requested by the client;
      otherwise, REQUIRED.  The scope of the access token as
-     described by Section 3.3.
+     described by {{access-token-scope}}.
 
 The parameters are included in the entity-body of the HTTP response
 using the "application/json" media type as defined by {{RFC4627}}.  The
@@ -1788,7 +1788,7 @@ request entity-body:
 
 "scope":
 :    OPTIONAL.  The scope of the access request as described by
-     Section 3.3.  The requested scope MUST NOT include any scope
+     {{access-token-scope}}.  The requested scope MUST NOT include any scope
      not originally granted by the resource owner, and if omitted is
      treated as equal to the scope originally granted by the
      resource owner.
@@ -1798,7 +1798,7 @@ request additional access tokens, the refresh token is bound to the
 client to which it was issued.  If the client type is confidential or
 the client was issued client credentials (or assigned other
 authentication requirements), the client MUST authenticate with the
-authorization server as described in Section 3.2.1.
+authorization server as described in {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request using
 transport-layer security (with extra line breaks for display purposes
@@ -2032,7 +2032,7 @@ A "realm" attribute MAY be included to indicate the scope of
 protection in the manner described in HTTP/1.1 {{RFC2617}}.  The
 "realm" attribute MUST NOT appear more than once.
 
-The "scope" attribute is defined in Section 3.3.  The
+The "scope" attribute is defined in {{access-token-scope}}.  The
 "scope" attribute is a space-delimited list of case-sensitive scope
 values indicating the required scope of the access token for
 accessing the requested resource. "scope" values are implementation
@@ -2955,7 +2955,7 @@ possible) any value received -- in particular, the value of the
 "state" and "redirect_uri" parameters.
 
 
-## Open Redirectors
+## Open Redirectors {#open-redirectors}
 
 The following attacks can occur when an AS or client has an open
 redirector. An open redirector is an endpoint that forwards a user’s
@@ -3404,7 +3404,7 @@ The "response_type" element is defined in Sections 3.1.1 and 8.4:
 
 ## "scope" Syntax
 
-The "scope" element is defined in Section 3.3:
+The "scope" element is defined in {{access-token-scope}}:
 
      scope       = scope-token *( SP scope-token )
      scope-token = 1*NQCHAR
