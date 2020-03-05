@@ -1,6 +1,6 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: oauth-2.1
+docname: draft-parecki-oauth-v2-1
 date: 2020-02-28
 
 ipr: trust200902
@@ -19,7 +19,6 @@ author:
     ins: D. Hardt
     name: Dick Hardt
     email: dick.hardt@gmail.com
-    uri: http://dickhardt.org
   -
     ins: A. Parecki
     name: Aaron Parecki
@@ -42,9 +41,12 @@ normative:
   RFC5226:
   RFC5234:
   RFC6125:
+  RFC6749:
+  RFC6750:
   RFC8446:
   RFC5280:
   RFC7595:
+  RFC8252:
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -150,8 +152,8 @@ application to obtain limited access to an HTTP service, either on
 behalf of a resource owner by orchestrating an approval interaction
 between the resource owner and the HTTP service, or by allowing the
 third-party application to obtain access on its own behalf.  This
-specification replaces and obsoletes the OAuth 1.0 protocol described
-in RFC 5849.
+specification replaces and obsoletes the OAuth 2.0 Authorization 
+Framework described in RFC 6749.
 
 --- middle
 
@@ -210,20 +212,8 @@ specific credentials (access token).
 This specification is designed for use with HTTP ({{RFC2616}}).  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
-The OAuth 1.0 protocol ({{RFC5849}}), published as an informational
-document, was the result of a small ad hoc community effort.  This
-Standards Track specification builds on the OAuth 1.0 deployment
-experience, as well as additional use cases and extensibility
-requirements gathered from the wider IETF community.  The OAuth 2.0
-protocol is not backward compatible with OAuth 1.0.  The two versions
-may co-exist on the network, and implementations may choose to
-support both.  However, it is the intention of this specification
-that new implementations support OAuth 2.0 as specified in this
-document and that OAuth 1.0 is used only to support existing
-deployments.  The OAuth 2.0 protocol shares very few implementation
-details with the OAuth 1.0 protocol.  Implementers familiar with
-OAuth 1.0 should approach this document without any assumptions as to
-its structure and details.
+Since the publication of the OAuth 2.0 Authorization Framework ({{RFC6749}}) 
+in October 2012, it has been updated by OAuth 2.0 for Native Apps ({{RFC8252}}) and OAuth Security Best Current Practice ({{I-D.ietf-oauth-security-topics}}).  The OAuth 2.0 Authorization Framework: Bearer Token Usage ({{RFC6750}}) has also been updated with ({{I-D.ietf-oauth-security-topics}}). This Standards Track specification consolidates the information in all of these documents and removes features that have been found to be insecure in {{I-D.ietf-oauth-security-topics}}.
 
 
 Roles
@@ -282,7 +272,7 @@ Protocol Flow
 ~~~~~~~~~~
 {: #fig-protocol-flow title="Abstract Protocol Flow"}
 
-The abstract OAuth 2.0 flow illustrated in {{fig-protocol-flow}} describes the
+The abstract OAuth 2.1 flow illustrated in {{fig-protocol-flow}} describes the
 interaction between the four roles and includes the following steps:
 
 1.  The client requests authorization from the resource owner.  The
@@ -501,7 +491,7 @@ allowed and is considered to be an implementation detail.
 Interoperability
 ----------------
 
-OAuth 2.0 provides a rich authorization framework with well-defined
+OAuth 2.1 provides a rich authorization framework with well-defined
 security properties.  However, as a rich and highly extensible
 framework with many optional components, on its own, this
 specification is likely to produce a wide range of non-interoperable
@@ -3946,49 +3936,7 @@ and then represented in the payload as:
 Acknowledgements
 ================
 
-The initial OAuth 2.0 protocol specification was edited by David
-Recordon, based on two previous publications: the OAuth 1.0 community
-specification [RFC5849], and OAuth WRAP (OAuth Web Resource
-Authorization Profiles).  Eran Hammer then edited many
-of the intermediate drafts that evolved into this RFC.  The Security
-Considerations section was drafted by Torsten Lodderstedt, Mark
-McGloin, Phil Hunt, Anthony Nadalin, and John Bradley.  The section
-on use of the "application/x-www-form-urlencoded" media type was
-drafted by Julian Reschke.  The ABNF section was drafted by Michael
-B. Jones.
-
-The OAuth 1.0 community specification was edited by Eran Hammer and
-authored by Mark Atwood, Dirk Balfanz, Darren Bounds, Richard M.
-Conlan, Blaine Cook, Leah Culver, Breno de Medeiros, Brian Eaton,
-Kellan Elliott-McCrea, Larry Halff, Eran Hammer, Ben Laurie, Chris
-Messina, John Panzer, Sam Quigley, David Recordon, Eran Sandler,
-Jonathan Sergent, Todd Sieling, Brian Slesinsky, and Andy Smith.
-
-The OAuth WRAP specification was edited by Dick Hardt and authored by
-Brian Eaton, Yaron Y. Goland, Dick Hardt, and Allen Tom.
-
-This specification is the work of the OAuth Working Group, which
-includes dozens of active and dedicated participants.  In particular,
-the following individuals contributed ideas, feedback, and wording
-that shaped and formed the final specification:
-
-Michael Adams, Amanda Anganes, Andrew Arnott, Dirk Balfanz, Aiden
-Bell, John Bradley, Marcos Caceres, Brian Campbell, Scott Cantor,
-Blaine Cook, Roger Crew, Leah Culver, Bill de hOra, Andre DeMarre,
-Brian Eaton, Wesley Eddy, Wolter Eldering, Brian Ellin, Igor
-Faynberg, George Fletcher, Tim Freeman, Luca Frosini, Evan Gilbert,
-Yaron Y. Goland, Brent Goldman, Kristoffer Gronowski, Eran Hammer,
-Dick Hardt, Justin Hart, Craig Heath, Phil Hunt, Michael B. Jones,
-Terry Jones, John Kemp, Mark Kent, Raffi Krikorian, Chasen Le Hara,
-Rasmus Lerdorf, Torsten Lodderstedt, Hui-Lan Lu, Casey Lucas, Paul
-Madsen, Alastair Mair, Eve Maler, James Manger, Mark McGloin,
-Laurence Miao, William Mills, Chuck Mortimore, Anthony Nadalin,
-Julian Reschke, Justin Richer, Peter Saint-Andre, Nat Sakimura, Rob
-Sayre, Marius Scurtescu, Naitik Shah, Luke Shepard, Vlad Skvortsov,
-Justin Smith, Haibin Song, Niv Steingarten, Christian Stuebner,
-Jeremy Suriel, Paul Tarjan, Christopher Thomas, Henry S. Thompson,
-Allen Tom, Franklin Tse, Nick Walker, Shane Weeden, and Skylar
-Woodward.
+TBD
 
 
 
