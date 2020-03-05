@@ -514,10 +514,10 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Hardt, D., Parecki, A., and T. Lodderstedt" />
-  <meta name="dct.identifier" content="urn:ietf:id:oauth-2.1" />
-  <meta name="dct.issued" scheme="ISO8601" content="2020-02-28" />
-  <meta name="dct.abstract" content="The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 1.0 protocol described in RFC 5849. " />
-  <meta name="description" content="The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 1.0 protocol described in RFC 5849. " />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-parecki-oauth-v2-1" />
+  <meta name="dct.issued" scheme="ISO8601" content="2020-03-04" />
+  <meta name="dct.abstract" content="The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 2.0 Authorization Framework described in RFC 6749. " />
+  <meta name="description" content="The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 2.0 Authorization Framework described in RFC 6749. " />
 
 </head>
 
@@ -539,7 +539,7 @@
 <td class="right">A. Parecki</td>
 </tr>
 <tr>
-<td class="left">Expires: August 31, 2020</td>
+<td class="left">Expires: September 5, 2020</td>
 <td class="right"></td>
 </tr>
 <tr>
@@ -548,7 +548,7 @@
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">February 28, 2020</td>
+<td class="right">March 04, 2020</td>
 </tr>
 
     	
@@ -556,15 +556,15 @@
   </table>
 
   <p class="title">The OAuth 2.1 Authorization Framework<br />
-  <span class="filename">oauth-2.1</span></p>
+  <span class="filename">draft-parecki-oauth-v2-1</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
-<p>The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 1.0 protocol described in RFC 5849.</p>
+<p>The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 2.0 Authorization Framework described in RFC 6749.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 31, 2020.</p>
+<p>This Internet-Draft will expire on September 5, 2020.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2020 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -863,7 +863,7 @@
 <p id="rfc.section.1.p.4">Instead of using the resource owner's credentials to access protected resources, the client obtains an access token &#8211; a string denoting a specific scope, lifetime, and other access attributes.  Access tokens are issued to third-party clients by an authorization server with the approval of the resource owner.  The client uses the access token to access the protected resources hosted by the resource server.</p>
 <p id="rfc.section.1.p.5">For example, an end-user (resource owner) can grant a printing service (client) access to her protected photos stored at a photo- sharing service (resource server), without sharing her username and password with the printing service.  Instead, she authenticates directly with a server trusted by the photo-sharing service (authorization server), which issues the printing service delegation- specific credentials (access token).</p>
 <p id="rfc.section.1.p.6">This specification is designed for use with HTTP (<a href="#RFC2616" class="xref">[RFC2616]</a>).  The use of OAuth over any protocol other than HTTP is out of scope.</p>
-<p id="rfc.section.1.p.7">The OAuth 1.0 protocol (<a href="#RFC5849" class="xref">[RFC5849]</a>), published as an informational document, was the result of a small ad hoc community effort.  This Standards Track specification builds on the OAuth 1.0 deployment experience, as well as additional use cases and extensibility requirements gathered from the wider IETF community.  The OAuth 2.0 protocol is not backward compatible with OAuth 1.0.  The two versions may co-exist on the network, and implementations may choose to support both.  However, it is the intention of this specification that new implementations support OAuth 2.0 as specified in this document and that OAuth 1.0 is used only to support existing deployments.  The OAuth 2.0 protocol shares very few implementation details with the OAuth 1.0 protocol.  Implementers familiar with OAuth 1.0 should approach this document without any assumptions as to its structure and details.</p>
+<p id="rfc.section.1.p.7">Since the publication of the OAuth 2.0 Authorization Framework (<a href="#RFC6749" class="xref">[RFC6749]</a>) in October 2012, it has been updated by OAuth 2.0 for Native Apps (<a href="#RFC8252" class="xref">[RFC8252]</a>), OAuth Security Best Current Practice (<a href="#I-D.ietf-oauth-security-topics" class="xref">[I-D.ietf-oauth-security-topics]</a>), and OAuth 2.0 for Browser-Based Apps (<a href="#I-D.ietf-oauth-browser-based-apps" class="xref">[I-D.ietf-oauth-browser-based-apps]</a>).  The OAuth 2.0 Authorization Framework: Bearer Token Usage (<a href="#RFC6750" class="xref">[RFC6750]</a>) has also been updated with (<a href="#I-D.ietf-oauth-security-topics" class="xref">[I-D.ietf-oauth-security-topics]</a>). This Standards Track specification consolidates the information in all of these documents and removes features that have been found to be insecure in <a href="#I-D.ietf-oauth-security-topics" class="xref">[I-D.ietf-oauth-security-topics]</a>.</p>
 <h1 id="rfc.section.1.1">
 <a href="#rfc.section.1.1">1.1.</a> <a href="#roles" id="roles">Roles</a>
 </h1>
@@ -906,7 +906,7 @@
      +--------+                               +---------------+
 </pre>
 <p class="figure">Figure 1: Abstract Protocol Flow</p>
-<p id="rfc.section.1.2.p.1">The abstract OAuth 2.0 flow illustrated in <a href="#fig-protocol-flow" class="xref">Figure 1</a> describes the interaction between the four roles and includes the following steps:</p>
+<p id="rfc.section.1.2.p.1">The abstract OAuth 2.1 flow illustrated in <a href="#fig-protocol-flow" class="xref">Figure 1</a> describes the interaction between the four roles and includes the following steps:</p>
 <p></p>
 
 <ol>
@@ -995,7 +995,7 @@
 <h1 id="rfc.section.1.8">
 <a href="#rfc.section.1.8">1.8.</a> <a href="#interoperability" id="interoperability">Interoperability</a>
 </h1>
-<p id="rfc.section.1.8.p.1">OAuth 2.0 provides a rich authorization framework with well-defined security properties.  However, as a rich and highly extensible framework with many optional components, on its own, this specification is likely to produce a wide range of non-interoperable implementations.</p>
+<p id="rfc.section.1.8.p.1">OAuth 2.1 provides a rich authorization framework with well-defined security properties.  However, as a rich and highly extensible framework with many optional components, on its own, this specification is likely to produce a wide range of non-interoperable implementations.</p>
 <p id="rfc.section.1.8.p.2">In addition, this specification leaves a few required components partially or fully undefined (e.g., client registration, authorization server capabilities, endpoint discovery).  Without these components, clients must be manually and specifically configured against a specific authorization server and resource server in order to interoperate.</p>
 <p id="rfc.section.1.8.p.3">This framework was designed with the clear expectation that future work will define prescriptive profiles and extensions necessary to achieve full web-scale interoperability.</p>
 <h1 id="rfc.section.1.9">
@@ -2471,9 +2471,24 @@ http://[::1]:61023/oauth2redirect/example-provider
 <a>Saint-Andre, P.</a> and <a>J. Hodges</a>, "<a href="https://tools.ietf.org/html/rfc6125">Representation and Verification of Domain-Based Application Service Identity within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the Context of Transport Layer Security (TLS)</a>", RFC 6125, DOI 10.17487/RFC6125, March 2011.</td>
 </tr>
 <tr>
+<td class="reference"><b id="RFC6749">[RFC6749]</b></td>
+<td class="top">
+<a>Hardt, D.</a>, "<a href="https://tools.ietf.org/html/rfc6749">The OAuth 2.0 Authorization Framework</a>", RFC 6749, DOI 10.17487/RFC6749, October 2012.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6750">[RFC6750]</b></td>
+<td class="top">
+<a>Jones, M.</a> and <a>D. Hardt</a>, "<a href="https://tools.ietf.org/html/rfc6750">The OAuth 2.0 Authorization Framework: Bearer Token Usage</a>", RFC 6750, DOI 10.17487/RFC6750, October 2012.</td>
+</tr>
+<tr>
 <td class="reference"><b id="RFC7595">[RFC7595]</b></td>
 <td class="top">
 <a>Thaler, D.</a>, <a>Hansen, T.</a> and <a>T. Hardie</a>, "<a href="https://tools.ietf.org/html/rfc7595">Guidelines and Registration Procedures for URI Schemes</a>", BCP 35, RFC 7595, DOI 10.17487/RFC7595, June 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8252">[RFC8252]</b></td>
+<td class="top">
+<a>Denniss, W.</a> and <a>J. Bradley</a>, "<a href="https://tools.ietf.org/html/rfc8252">OAuth 2.0 for Native Apps</a>", BCP 212, RFC 8252, DOI 10.17487/RFC8252, October 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC8446">[RFC8446]</b></td>
@@ -2512,6 +2527,11 @@ http://[::1]:61023/oauth2redirect/example-provider
 <td class="reference"><b id="I-D.bradley-oauth-jwt-encoded-state">[I-D.bradley-oauth-jwt-encoded-state]</b></td>
 <td class="top">
 <a>Bradley, J.</a>, <a>Lodderstedt, T.</a> and <a>H. Zandbelt</a>, "<a href="https://tools.ietf.org/html/draft-bradley-oauth-jwt-encoded-state-09">Encoding claims in the OAuth 2 state parameter using a JWT</a>", Internet-Draft draft-bradley-oauth-jwt-encoded-state-09, November 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="I-D.ietf-oauth-browser-based-apps">[I-D.ietf-oauth-browser-based-apps]</b></td>
+<td class="top">
+<a>Parecki, A.</a> and <a>D. Waite</a>, "<a href="https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps-05">OAuth 2.0 for Browser-Based Apps</a>", Internet-Draft draft-ietf-oauth-browser-based-apps-05, February 2020.</td>
 </tr>
 <tr>
 <td class="reference"><b id="I-D.ietf-oauth-rar">[I-D.ietf-oauth-rar]</b></td>
@@ -2788,11 +2808,7 @@ DIGIT = %x30-39
 <h1 id="rfc.appendix.C">
 <a href="#rfc.appendix.C">Appendix C.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a>
 </h1>
-<p id="rfc.section.C.p.1">The initial OAuth 2.0 protocol specification was edited by David Recordon, based on two previous publications: the OAuth 1.0 community specification <a href="#RFC5849" class="xref">[RFC5849]</a>, and OAuth WRAP (OAuth Web Resource Authorization Profiles).  Eran Hammer then edited many of the intermediate drafts that evolved into this RFC.  The Security Considerations section was drafted by Torsten Lodderstedt, Mark McGloin, Phil Hunt, Anthony Nadalin, and John Bradley.  The section on use of the "application/x-www-form-urlencoded" media type was drafted by Julian Reschke.  The ABNF section was drafted by Michael B. Jones.</p>
-<p id="rfc.section.C.p.2">The OAuth 1.0 community specification was edited by Eran Hammer and authored by Mark Atwood, Dirk Balfanz, Darren Bounds, Richard M.  Conlan, Blaine Cook, Leah Culver, Breno de Medeiros, Brian Eaton, Kellan Elliott-McCrea, Larry Halff, Eran Hammer, Ben Laurie, Chris Messina, John Panzer, Sam Quigley, David Recordon, Eran Sandler, Jonathan Sergent, Todd Sieling, Brian Slesinsky, and Andy Smith.</p>
-<p id="rfc.section.C.p.3">The OAuth WRAP specification was edited by Dick Hardt and authored by Brian Eaton, Yaron Y. Goland, Dick Hardt, and Allen Tom.</p>
-<p id="rfc.section.C.p.4">This specification is the work of the OAuth Working Group, which includes dozens of active and dedicated participants.  In particular, the following individuals contributed ideas, feedback, and wording that shaped and formed the final specification:</p>
-<p id="rfc.section.C.p.5">Michael Adams, Amanda Anganes, Andrew Arnott, Dirk Balfanz, Aiden Bell, John Bradley, Marcos Caceres, Brian Campbell, Scott Cantor, Blaine Cook, Roger Crew, Leah Culver, Bill de hOra, Andre DeMarre, Brian Eaton, Wesley Eddy, Wolter Eldering, Brian Ellin, Igor Faynberg, George Fletcher, Tim Freeman, Luca Frosini, Evan Gilbert, Yaron Y. Goland, Brent Goldman, Kristoffer Gronowski, Eran Hammer, Dick Hardt, Justin Hart, Craig Heath, Phil Hunt, Michael B. Jones, Terry Jones, John Kemp, Mark Kent, Raffi Krikorian, Chasen Le Hara, Rasmus Lerdorf, Torsten Lodderstedt, Hui-Lan Lu, Casey Lucas, Paul Madsen, Alastair Mair, Eve Maler, James Manger, Mark McGloin, Laurence Miao, William Mills, Chuck Mortimore, Anthony Nadalin, Julian Reschke, Justin Richer, Peter Saint-Andre, Nat Sakimura, Rob Sayre, Marius Scurtescu, Naitik Shah, Luke Shepard, Vlad Skvortsov, Justin Smith, Haibin Song, Niv Steingarten, Christian Stuebner, Jeremy Suriel, Paul Tarjan, Christopher Thomas, Henry S. Thompson, Allen Tom, Franklin Tse, Nick Walker, Shane Weeden, and Skylar Woodward.</p>
+<p id="rfc.section.C.p.1">TBD</p>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
 <div class="avoidbreak">
   <address class="vcard">
@@ -2813,8 +2829,6 @@ DIGIT = %x30-39
 	  <span class="country-name vcardline"></span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:dick.hardt@gmail.com">dick.hardt@gmail.com</a></span>
-
-<span class="vcardline">URI: <a href="http://dickhardt.org">http://dickhardt.org</a></span>
 
   </address>
 </div><div class="avoidbreak">

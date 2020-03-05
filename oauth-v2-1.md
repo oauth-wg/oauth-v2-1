@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-parecki-oauth-v2-1
-date: 2020-02-28
+date: 2020-03-04
 
 ipr: trust200902
 area: OAuth
@@ -72,6 +72,7 @@ informative:
   I-D.ietf-oauth-security-topics:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
+  I-D.ietf-oauth-browser-based-apps:
   webauthn:
     title: "Web Authentication: An API for accessing Public Key Credentials Level 1"
     author:
@@ -138,11 +139,11 @@ informative:
       - ins: R. Fielding
       - ins: J. Reschke
   owasp_redir:
-  	title: "OWASP Cheat Sheet Series - Unvalidated Redirects and Forwards"
-  	url: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+    title: "OWASP Cheat Sheet Series - Unvalidated Redirects and Forwards"
+    url: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
   CSP-2:
-  	title: "Content Security Policy Level 2"
-  	url: https://www.w3.org/TR/CSP2
+    title: "Content Security Policy Level 2"
+    url: https://www.w3.org/TR/CSP2
 
 
 --- abstract
