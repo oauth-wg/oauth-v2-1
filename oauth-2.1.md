@@ -152,7 +152,7 @@ application to obtain limited access to an HTTP service, either on
 behalf of a resource owner by orchestrating an approval interaction
 between the resource owner and the HTTP service, or by allowing the
 third-party application to obtain access on its own behalf.  This
-specification replaces and obsoletes the OAuth 2.0 Authorization 
+specification replaces and obsoletes the OAuth 2.0 Authorization
 Framework described in RFC 6749.
 
 --- middle
@@ -212,8 +212,15 @@ specific credentials (access token).
 This specification is designed for use with HTTP ({{RFC2616}}).  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
-Since the publication of the OAuth 2.0 Authorization Framework ({{RFC6749}}) 
-in October 2012, it has been updated by OAuth 2.0 for Native Apps ({{RFC8252}}) and OAuth Security Best Current Practice ({{I-D.ietf-oauth-security-topics}}).  The OAuth 2.0 Authorization Framework: Bearer Token Usage ({{RFC6750}}) has also been updated with ({{I-D.ietf-oauth-security-topics}}). This Standards Track specification consolidates the information in all of these documents and removes features that have been found to be insecure in {{I-D.ietf-oauth-security-topics}}.
+Since the publication of the OAuth 2.0 Authorization Framework ({{RFC6749}})
+in October 2012, it has been updated by OAuth 2.0 for Native Apps ({{RFC8252}}),
+OAuth Security Best Current Practice ({{I-D.ietf-oauth-security-topics}}),
+and OAuth 2.0 for Browser-Based Apps ({{I-D.ietf-oauth-browser-based-apps}}).
+The OAuth 2.0 Authorization Framework: Bearer Token Usage ({{RFC6750}})
+has also been updated with ({{I-D.ietf-oauth-security-topics}}). This
+Standards Track specification consolidates the information in all of these
+documents and removes features that have been found to be insecure
+in {{I-D.ietf-oauth-security-topics}}.
 
 
 Roles
