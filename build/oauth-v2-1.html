@@ -435,22 +435,41 @@
 <link href="#rfc.section.8.4" rel="Chapter" title="8.4 Defining New Authorization Endpoint Response Types">
 <link href="#rfc.section.8.5" rel="Chapter" title="8.5 Defining Additional Error Codes">
 <link href="#rfc.section.9" rel="Chapter" title="9 Native Applications">
+<link href="#rfc.section.9.1" rel="Chapter" title="9.1 Authorization Flow for Native Apps Using the Browser">
+<link href="#rfc.section.9.2" rel="Chapter" title="9.2 Using Inter-App URI Communication for OAuth in Native Apps">
+<link href="#rfc.section.9.3" rel="Chapter" title="9.3 Initiating the Authorization Request from a Native App">
+<link href="#rfc.section.9.4" rel="Chapter" title="9.4 Receiving the Authorization Response in a Native App">
+<link href="#rfc.section.9.4.1" rel="Chapter" title="9.4.1 Private-Use URI Scheme Redirection">
+<link href="#rfc.section.9.4.2" rel="Chapter" title='9.4.2 Claimed "https" Scheme URI Redirection'>
+<link href="#rfc.section.9.4.3" rel="Chapter" title="9.4.3 Loopback Interface Redirection">
 <link href="#rfc.section.10" rel="Chapter" title="10 Security Considerations">
 <link href="#rfc.section.10.1" rel="Chapter" title="10.1 Client Authentication">
-<link href="#rfc.section.10.2" rel="Chapter" title="10.2 Client Impersonation">
-<link href="#rfc.section.10.3" rel="Chapter" title="10.3 Access Tokens">
-<link href="#rfc.section.10.4" rel="Chapter" title="10.4 Refresh Tokens">
-<link href="#rfc.section.10.5" rel="Chapter" title="10.5 Authorization Codes">
-<link href="#rfc.section.10.6" rel="Chapter" title="10.6 Authorization Code Redirection URI Manipulation">
-<link href="#rfc.section.10.7" rel="Chapter" title="10.7 Resource Owner Password Credentials">
+<link href="#rfc.section.10.1.1" rel="Chapter" title="10.1.1 Client Authentication of Native Apps">
+<link href="#rfc.section.10.2" rel="Chapter" title="10.2 Registration of Native App Clients">
+<link href="#rfc.section.10.3" rel="Chapter" title="10.3 Client Impersonation">
+<link href="#rfc.section.10.3.1" rel="Chapter" title="10.3.1 Impersonation of Native Apps">
+<link href="#rfc.section.10.4" rel="Chapter" title="10.4 Access Tokens">
+<link href="#rfc.section.10.4.1" rel="Chapter" title="10.4.1 Access Token Privilege Restriction">
+<link href="#rfc.section.10.4.2" rel="Chapter" title="10.4.2 Access Token Replay Prevention">
+<link href="#rfc.section.10.5" rel="Chapter" title="10.5 Refresh Tokens">
+<link href="#rfc.section.10.6" rel="Chapter" title="10.6 Protecting Redirect-Based Flows">
+<link href="#rfc.section.10.6.1" rel="Chapter" title="10.6.1 Loopback Redirect Considerations in Native Apps">
+<link href="#rfc.section.10.7" rel="Chapter" title="10.7 Authorization Codes">
 <link href="#rfc.section.10.8" rel="Chapter" title="10.8 Request Confidentiality">
 <link href="#rfc.section.10.9" rel="Chapter" title="10.9 Ensuring Endpoint Authenticity">
 <link href="#rfc.section.10.10" rel="Chapter" title="10.10 Credentials-Guessing Attacks">
 <link href="#rfc.section.10.11" rel="Chapter" title="10.11 Phishing Attacks">
-<link href="#rfc.section.10.12" rel="Chapter" title="10.12 Cross-Site Request Forgery">
-<link href="#rfc.section.10.13" rel="Chapter" title="10.13 Clickjacking">
-<link href="#rfc.section.10.14" rel="Chapter" title="10.14 Code Injection and Input Validation">
-<link href="#rfc.section.10.15" rel="Chapter" title="10.15 Open Redirectors">
+<link href="#rfc.section.10.12" rel="Chapter" title="10.12 Fake External User-Agents in Native Apps">
+<link href="#rfc.section.10.13" rel="Chapter" title="10.13 Malicious External User-Agents in Native Apps">
+<link href="#rfc.section.10.14" rel="Chapter" title="10.14 Cross-Site Request Forgery">
+<link href="#rfc.section.10.15" rel="Chapter" title="10.15 Clickjacking">
+<link href="#rfc.section.10.16" rel="Chapter" title="10.16 Code Injection and Input Validation">
+<link href="#rfc.section.10.17" rel="Chapter" title="10.17 Open Redirectors">
+<link href="#rfc.section.10.17.1" rel="Chapter" title="10.17.1 Client as Open Redirector">
+<link href="#rfc.section.10.17.2" rel="Chapter" title="10.17.2 Authorization Server as Open Redirector">
+<link href="#rfc.section.10.18" rel="Chapter" title="10.18 Authorization Server Mix-Up Mitigation in Native Apps">
+<link href="#rfc.section.10.19" rel="Chapter" title="10.19 Embedded User Agents in Native Apps">
+<link href="#rfc.section.10.20" rel="Chapter" title="10.20 Other Recommendations">
 <link href="#rfc.section.11" rel="Chapter" title="11 IANA Considerations">
 <link href="#rfc.section.11.1" rel="Chapter" title="11.1 OAuth Access Token Types Registry">
 <link href="#rfc.section.11.1.1" rel="Chapter" title="11.1.1 Registration Template">
@@ -482,12 +501,10 @@
 <link href="#rfc.appendix.A.12" rel="Chapter" title='A.12 "access_token" Syntax'>
 <link href="#rfc.appendix.A.13" rel="Chapter" title='A.13 "token_type" Syntax'>
 <link href="#rfc.appendix.A.14" rel="Chapter" title='A.14 "expires_in" Syntax'>
-<link href="#rfc.appendix.A.15" rel="Chapter" title='A.15 "username" Syntax'>
-<link href="#rfc.appendix.A.16" rel="Chapter" title='A.16 "password" Syntax'>
-<link href="#rfc.appendix.A.17" rel="Chapter" title='A.17 "refresh_token" Syntax'>
-<link href="#rfc.appendix.A.18" rel="Chapter" title="A.18 Endpoint Parameter Syntax">
-<link href="#rfc.appendix.A.19" rel="Chapter" title='A.19 "code_verifier" Syntax'>
-<link href="#rfc.appendix.A.20" rel="Chapter" title='A.20 "code_challenge" Syntax'>
+<link href="#rfc.appendix.A.15" rel="Chapter" title='A.15 "refresh_token" Syntax'>
+<link href="#rfc.appendix.A.16" rel="Chapter" title="A.16 Endpoint Parameter Syntax">
+<link href="#rfc.appendix.A.17" rel="Chapter" title='A.17 "code_verifier" Syntax'>
+<link href="#rfc.appendix.A.18" rel="Chapter" title='A.18 "code_challenge" Syntax'>
 <link href="#rfc.appendix.B" rel="Chapter" title="B Use of application/x-www-form-urlencoded Media Type">
 <link href="#rfc.appendix.C" rel="Chapter" title="C Acknowledgements">
 <link href="#rfc.authors" rel="Chapter">
@@ -497,10 +514,10 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Hardt, D., Parecki, A., and T. Lodderstedt" />
-  <meta name="dct.identifier" content="urn:ietf:id:oauth-2.1" />
-  <meta name="dct.issued" scheme="ISO8601" content="2020-02-28" />
-  <meta name="dct.abstract" content="The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 1.0 protocol described in RFC 5849. " />
-  <meta name="description" content="The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 1.0 protocol described in RFC 5849. " />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-parecki-oauth-v2-1" />
+  <meta name="dct.issued" scheme="ISO8601" content="2020-03-04" />
+  <meta name="dct.abstract" content="The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 2.0 Authorization Framework described in RFC 6749. " />
+  <meta name="description" content="The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 2.0 Authorization Framework described in RFC 6749. " />
 
 </head>
 
@@ -522,7 +539,7 @@
 <td class="right">A. Parecki</td>
 </tr>
 <tr>
-<td class="left">Expires: August 31, 2020</td>
+<td class="left">Expires: September 5, 2020</td>
 <td class="right"></td>
 </tr>
 <tr>
@@ -531,7 +548,7 @@
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">February 28, 2020</td>
+<td class="right">March 04, 2020</td>
 </tr>
 
     	
@@ -539,15 +556,15 @@
   </table>
 
   <p class="title">The OAuth 2.1 Authorization Framework<br />
-  <span class="filename">oauth-2.1</span></p>
+  <span class="filename">draft-parecki-oauth-v2-1</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
-<p>The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 1.0 protocol described in RFC 5849.</p>
+<p>The OAuth 2.1 authorization framework enables a third-party application to obtain limited access to an HTTP service, either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP service, or by allowing the third-party application to obtain access on its own behalf.  This specification replaces and obsoletes the OAuth 2.0 Authorization Framework described in RFC 6749.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 31, 2020.</p>
+<p>This Internet-Draft will expire on September 5, 2020.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2020 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -679,21 +696,45 @@
 </li>
 </ul><li>9.   <a href="#rfc.section.9">Native Applications</a>
 </li>
-<li>10.   <a href="#rfc.section.10">Security Considerations</a>
+<ul><li>9.1.   <a href="#rfc.section.9.1">Authorization Flow for Native Apps Using the Browser</a>
+</li>
+<li>9.2.   <a href="#rfc.section.9.2">Using Inter-App URI Communication for OAuth in Native Apps</a>
+</li>
+<li>9.3.   <a href="#rfc.section.9.3">Initiating the Authorization Request from a Native App</a>
+</li>
+<li>9.4.   <a href="#rfc.section.9.4">Receiving the Authorization Response in a Native App</a>
+</li>
+<ul><li>9.4.1.   <a href="#rfc.section.9.4.1">Private-Use URI Scheme Redirection</a>
+</li>
+<li>9.4.2.   <a href="#rfc.section.9.4.2">Claimed "https" Scheme URI Redirection</a>
+</li>
+<li>9.4.3.   <a href="#rfc.section.9.4.3">Loopback Interface Redirection</a>
+</li>
+</ul></ul><li>10.   <a href="#rfc.section.10">Security Considerations</a>
 </li>
 <ul><li>10.1.   <a href="#rfc.section.10.1">Client Authentication</a>
 </li>
-<li>10.2.   <a href="#rfc.section.10.2">Client Impersonation</a>
+<ul><li>10.1.1.   <a href="#rfc.section.10.1.1">Client Authentication of Native Apps</a>
 </li>
-<li>10.3.   <a href="#rfc.section.10.3">Access Tokens</a>
+</ul><li>10.2.   <a href="#rfc.section.10.2">Registration of Native App Clients</a>
 </li>
-<li>10.4.   <a href="#rfc.section.10.4">Refresh Tokens</a>
+<li>10.3.   <a href="#rfc.section.10.3">Client Impersonation</a>
 </li>
-<li>10.5.   <a href="#rfc.section.10.5">Authorization Codes</a>
+<ul><li>10.3.1.   <a href="#rfc.section.10.3.1">Impersonation of Native Apps</a>
 </li>
-<li>10.6.   <a href="#rfc.section.10.6">Authorization Code Redirection URI Manipulation</a>
+</ul><li>10.4.   <a href="#rfc.section.10.4">Access Tokens</a>
 </li>
-<li>10.7.   <a href="#rfc.section.10.7">Resource Owner Password Credentials</a>
+<ul><li>10.4.1.   <a href="#rfc.section.10.4.1">Access Token Privilege Restriction</a>
+</li>
+<li>10.4.2.   <a href="#rfc.section.10.4.2">Access Token Replay Prevention</a>
+</li>
+</ul><li>10.5.   <a href="#rfc.section.10.5">Refresh Tokens</a>
+</li>
+<li>10.6.   <a href="#rfc.section.10.6">Protecting Redirect-Based Flows</a>
+</li>
+<ul><li>10.6.1.   <a href="#rfc.section.10.6.1">Loopback Redirect Considerations in Native Apps</a>
+</li>
+</ul><li>10.7.   <a href="#rfc.section.10.7">Authorization Codes</a>
 </li>
 <li>10.8.   <a href="#rfc.section.10.8">Request Confidentiality</a>
 </li>
@@ -703,13 +744,27 @@
 </li>
 <li>10.11.   <a href="#rfc.section.10.11">Phishing Attacks</a>
 </li>
-<li>10.12.   <a href="#rfc.section.10.12">Cross-Site Request Forgery</a>
+<li>10.12.   <a href="#rfc.section.10.12">Fake External User-Agents in Native Apps</a>
 </li>
-<li>10.13.   <a href="#rfc.section.10.13">Clickjacking</a>
+<li>10.13.   <a href="#rfc.section.10.13">Malicious External User-Agents in Native Apps</a>
 </li>
-<li>10.14.   <a href="#rfc.section.10.14">Code Injection and Input Validation</a>
+<li>10.14.   <a href="#rfc.section.10.14">Cross-Site Request Forgery</a>
 </li>
-<li>10.15.   <a href="#rfc.section.10.15">Open Redirectors</a>
+<li>10.15.   <a href="#rfc.section.10.15">Clickjacking</a>
+</li>
+<li>10.16.   <a href="#rfc.section.10.16">Code Injection and Input Validation</a>
+</li>
+<li>10.17.   <a href="#rfc.section.10.17">Open Redirectors</a>
+</li>
+<ul><li>10.17.1.   <a href="#rfc.section.10.17.1">Client as Open Redirector</a>
+</li>
+<li>10.17.2.   <a href="#rfc.section.10.17.2">Authorization Server as Open Redirector</a>
+</li>
+</ul><li>10.18.   <a href="#rfc.section.10.18">Authorization Server Mix-Up Mitigation in Native Apps</a>
+</li>
+<li>10.19.   <a href="#rfc.section.10.19">Embedded User Agents in Native Apps</a>
+</li>
+<li>10.20.   <a href="#rfc.section.10.20">Other Recommendations</a>
 </li>
 </ul><li>11.   <a href="#rfc.section.11">IANA Considerations</a>
 </li>
@@ -773,17 +828,13 @@
 </li>
 <li>A.14.   <a href="#rfc.appendix.A.14">"expires_in" Syntax</a>
 </li>
-<li>A.15.   <a href="#rfc.appendix.A.15">"username" Syntax</a>
+<li>A.15.   <a href="#rfc.appendix.A.15">"refresh_token" Syntax</a>
 </li>
-<li>A.16.   <a href="#rfc.appendix.A.16">"password" Syntax</a>
+<li>A.16.   <a href="#rfc.appendix.A.16">Endpoint Parameter Syntax</a>
 </li>
-<li>A.17.   <a href="#rfc.appendix.A.17">"refresh_token" Syntax</a>
+<li>A.17.   <a href="#rfc.appendix.A.17">"code_verifier" Syntax</a>
 </li>
-<li>A.18.   <a href="#rfc.appendix.A.18">Endpoint Parameter Syntax</a>
-</li>
-<li>A.19.   <a href="#rfc.appendix.A.19">"code_verifier" Syntax</a>
-</li>
-<li>A.20.   <a href="#rfc.appendix.A.20">"code_challenge" Syntax</a>
+<li>A.18.   <a href="#rfc.appendix.A.18">"code_challenge" Syntax</a>
 </li>
 </ul><li>Appendix B.   <a href="#rfc.appendix.B">Use of application/x-www-form-urlencoded Media Type</a>
 </li>
@@ -812,7 +863,7 @@
 <p id="rfc.section.1.p.4">Instead of using the resource owner's credentials to access protected resources, the client obtains an access token &#8211; a string denoting a specific scope, lifetime, and other access attributes.  Access tokens are issued to third-party clients by an authorization server with the approval of the resource owner.  The client uses the access token to access the protected resources hosted by the resource server.</p>
 <p id="rfc.section.1.p.5">For example, an end-user (resource owner) can grant a printing service (client) access to her protected photos stored at a photo- sharing service (resource server), without sharing her username and password with the printing service.  Instead, she authenticates directly with a server trusted by the photo-sharing service (authorization server), which issues the printing service delegation- specific credentials (access token).</p>
 <p id="rfc.section.1.p.6">This specification is designed for use with HTTP (<a href="#RFC2616" class="xref">[RFC2616]</a>).  The use of OAuth over any protocol other than HTTP is out of scope.</p>
-<p id="rfc.section.1.p.7">The OAuth 1.0 protocol (<a href="#RFC5849" class="xref">[RFC5849]</a>), published as an informational document, was the result of a small ad hoc community effort.  This Standards Track specification builds on the OAuth 1.0 deployment experience, as well as additional use cases and extensibility requirements gathered from the wider IETF community.  The OAuth 2.0 protocol is not backward compatible with OAuth 1.0.  The two versions may co-exist on the network, and implementations may choose to support both.  However, it is the intention of this specification that new implementations support OAuth 2.0 as specified in this document and that OAuth 1.0 is used only to support existing deployments.  The OAuth 2.0 protocol shares very few implementation details with the OAuth 1.0 protocol.  Implementers familiar with OAuth 1.0 should approach this document without any assumptions as to its structure and details.</p>
+<p id="rfc.section.1.p.7">Since the publication of the OAuth 2.0 Authorization Framework (<a href="#RFC6749" class="xref">[RFC6749]</a>) in October 2012, it has been updated by OAuth 2.0 for Native Apps (<a href="#RFC8252" class="xref">[RFC8252]</a>), OAuth Security Best Current Practice (<a href="#I-D.ietf-oauth-security-topics" class="xref">[I-D.ietf-oauth-security-topics]</a>), and OAuth 2.0 for Browser-Based Apps (<a href="#I-D.ietf-oauth-browser-based-apps" class="xref">[I-D.ietf-oauth-browser-based-apps]</a>).  The OAuth 2.0 Authorization Framework: Bearer Token Usage (<a href="#RFC6750" class="xref">[RFC6750]</a>) has also been updated with (<a href="#I-D.ietf-oauth-security-topics" class="xref">[I-D.ietf-oauth-security-topics]</a>). This Standards Track specification consolidates the information in all of these documents and removes features that have been found to be insecure in <a href="#I-D.ietf-oauth-security-topics" class="xref">[I-D.ietf-oauth-security-topics]</a>.</p>
 <h1 id="rfc.section.1.1">
 <a href="#rfc.section.1.1">1.1.</a> <a href="#roles" id="roles">Roles</a>
 </h1>
@@ -855,7 +906,7 @@
      +--------+                               +---------------+
 </pre>
 <p class="figure">Figure 1: Abstract Protocol Flow</p>
-<p id="rfc.section.1.2.p.1">The abstract OAuth 2.0 flow illustrated in <a href="#fig-protocol-flow" class="xref">Figure 1</a> describes the interaction between the four roles and includes the following steps:</p>
+<p id="rfc.section.1.2.p.1">The abstract OAuth 2.1 flow illustrated in <a href="#fig-protocol-flow" class="xref">Figure 1</a> describes the interaction between the four roles and includes the following steps:</p>
 <p></p>
 
 <ol>
@@ -866,7 +917,7 @@
 <li>The client requests the protected resource from the resource server and authenticates by presenting the access token.</li>
 <li>The resource server validates the access token, and if valid, serves the request.</li>
 </ol>
-<p id="rfc.section.1.2.p.3">The preferred method for the client to obtain an authorization grant from the resource owner (depicted in steps (1) and (2)) is to use the authorization server as an intermediary, which is illustrated in Figure 3 in Section 4.1.</p>
+<p id="rfc.section.1.2.p.3">The preferred method for the client to obtain an authorization grant from the resource owner (depicted in steps (1) and (2)) is to use the authorization server as an intermediary, which is illustrated in <a href="#fig-authorization-code-flow" class="xref">Figure 3</a> in <a href="#authorization-code-grant" class="xref">Section 4.1</a>.</p>
 <h1 id="rfc.section.1.3">
 <a href="#rfc.section.1.3">1.3.</a> <a href="#authorization-grant" id="authorization-grant">Authorization Grant</a>
 </h1>
@@ -891,31 +942,31 @@
 <h1 id="rfc.section.1.5">
 <a href="#rfc.section.1.5">1.5.</a> <a href="#refresh-token" id="refresh-token">Refresh Token</a>
 </h1>
-<p id="rfc.section.1.5.p.1">Refresh tokens are credentials used to obtain access tokens.  Refresh tokens are issued to the client by the authorization server and are used to obtain a new access token when the current access token becomes invalid or expires, or to obtain additional access tokens with identical or narrower scope (access tokens may have a shorter lifetime and fewer permissions than authorized by the resource owner).  Issuing a refresh token is optional at the discretion of the authorization server.  If the authorization server issues a refresh token, it is included when issuing an access token (i.e., step (D) in Figure 1).</p>
+<p id="rfc.section.1.5.p.1">Refresh tokens are credentials used to obtain access tokens.  Refresh tokens are issued to the client by the authorization server and are used to obtain a new access token when the current access token becomes invalid or expires, or to obtain additional access tokens with identical or narrower scope (access tokens may have a shorter lifetime and fewer permissions than authorized by the resource owner).  Issuing a refresh token is optional at the discretion of the authorization server.  If the authorization server issues a refresh token, it is included when issuing an access token (i.e., step (4) in <a href="#fig-refresh-token-flow" class="xref">Figure 2</a>).</p>
 <p id="rfc.section.1.5.p.2">A refresh token is a string representing the authorization granted to the client by the resource owner.  The string is usually opaque to the client.  The token denotes an identifier used to retrieve the authorization information.  Unlike access tokens, refresh tokens are intended for use only with authorization servers and are never sent to resource servers.</p>
 <div id="rfc.figure.2"></div>
 <div id="fig-refresh-token-flow"></div>
 <pre>
-    +--------+                                           +---------------+
-    |        |--(1)------- Authorization Grant ---------&gt;|               |
-    |        |                                           |               |
-    |        |&lt;-(2)----------- Access Token -------------|               |
-    |        |               &amp; Refresh Token             |               |
-    |        |                                           |               |
-    |        |                            +----------+   |               |
-    |        |--(3)---- Access Token ----&gt;|          |   |               |
-    |        |                            |          |   |               |
-    |        |&lt;-(4)- Protected Resource --| Resource |   | Authorization |
-    | Client |                            |  Server  |   |     Server    |
-    |        |--(5)---- Access Token ----&gt;|          |   |               |
-    |        |                            |          |   |               |
-    |        |&lt;-(6)- Invalid Token Error -|          |   |               |
-    |        |                            +----------+   |               |
-    |        |                                           |               |
-    |        |--(7)----------- Refresh Token -----------&gt;|               |
-    |        |                                           |               |
-    |        |&lt;-(8)----------- Access Token -------------|               |
-    +--------+           &amp; Optional Refresh Token        +---------------+
++--------+                                           +---------------+
+|        |--(1)------- Authorization Grant ---------&gt;|               |
+|        |                                           |               |
+|        |&lt;-(2)----------- Access Token -------------|               |
+|        |               &amp; Refresh Token             |               |
+|        |                                           |               |
+|        |                            +----------+   |               |
+|        |--(3)---- Access Token ----&gt;|          |   |               |
+|        |                            |          |   |               |
+|        |&lt;-(4)- Protected Resource --| Resource |   | Authorization |
+| Client |                            |  Server  |   |     Server    |
+|        |--(5)---- Access Token ----&gt;|          |   |               |
+|        |                            |          |   |               |
+|        |&lt;-(6)- Invalid Token Error -|          |   |               |
+|        |                            +----------+   |               |
+|        |                                           |               |
+|        |--(7)----------- Refresh Token -----------&gt;|               |
+|        |                                           |               |
+|        |&lt;-(8)----------- Access Token -------------|               |
++--------+           &amp; Optional Refresh Token        +---------------+
 </pre>
 <p class="figure">Figure 2: Refreshing an Expired Access Token</p>
 <p id="rfc.section.1.5.p.3">The flow illustrated in <a href="#fig-refresh-token-flow" class="xref">Figure 2</a> includes the following steps:</p>
@@ -931,7 +982,7 @@
 <li>The client requests a new access token by authenticating with the authorization server and presenting the refresh token.  The client authentication requirements are based on the client type and on the authorization server policies.</li>
 <li>The authorization server authenticates the client and validates the refresh token, and if valid, issues a new access token (and, optionally, a new refresh token).</li>
 </ol>
-<p id="rfc.section.1.5.p.5">Steps (3), (4), (5), and (6) are outside the scope of this specification, as described in Section 7.</p>
+<p id="rfc.section.1.5.p.5">Steps (3), (4), (5), and (6) are outside the scope of this specification, as described in <a href="#accessing-protected-resources" class="xref">Section 7</a>.</p>
 <h1 id="rfc.section.1.6">
 <a href="#rfc.section.1.6">1.6.</a> <a href="#tls-version" id="tls-version">TLS Version</a>
 </h1>
@@ -944,7 +995,7 @@
 <h1 id="rfc.section.1.8">
 <a href="#rfc.section.1.8">1.8.</a> <a href="#interoperability" id="interoperability">Interoperability</a>
 </h1>
-<p id="rfc.section.1.8.p.1">OAuth 2.0 provides a rich authorization framework with well-defined security properties.  However, as a rich and highly extensible framework with many optional components, on its own, this specification is likely to produce a wide range of non-interoperable implementations.</p>
+<p id="rfc.section.1.8.p.1">OAuth 2.1 provides a rich authorization framework with well-defined security properties.  However, as a rich and highly extensible framework with many optional components, on its own, this specification is likely to produce a wide range of non-interoperable implementations.</p>
 <p id="rfc.section.1.8.p.2">In addition, this specification leaves a few required components partially or fully undefined (e.g., client registration, authorization server capabilities, endpoint discovery).  Without these components, clients must be manually and specifically configured against a specific authorization server and resource server in order to interoperate.</p>
 <p id="rfc.section.1.8.p.3">This framework was designed with the clear expectation that future work will define prescriptive profiles and extensions necessary to achieve full web-scale interoperability.</p>
 <h1 id="rfc.section.1.9">
@@ -963,8 +1014,8 @@
 <p></p>
 
 <ul>
-<li>specify the client type as described in Section 2.1,</li>
-<li>provide its client redirection URIs as described in Section 3.1.2, and</li>
+<li>specify the client type as described in <a href="#client-types" class="xref">Section 2.1</a>,</li>
+<li>provide its client redirection URIs as described in <a href="#redirection-endpoint" class="xref">Section 3.1.2</a>, and</li>
 <li>include any other information required by the authorization server (e.g., application name, website, description, logo image, the acceptance of legal terms).</li>
 </ul>
 <h1 id="rfc.section.2.1">
@@ -1004,7 +1055,7 @@
 <p id="rfc.section.2.3.p.1">If the client type is confidential, the client and authorization server establish a client authentication method suitable for the security requirements of the authorization server.  The authorization server MAY accept any form of client authentication meeting its security requirements.</p>
 <p id="rfc.section.2.3.p.2">Confidential clients are typically issued (or establish) a set of client credentials used for authenticating with the authorization server (e.g., password, public/private key pair).</p>
 <p id="rfc.section.2.3.p.3">Authorization servers SHOULD use client authentication if possible.</p>
-<p id="rfc.section.2.3.p.4">It is RECOMMENDED to use asymmetric (public-key based) methods for client authentication such as mTLS <a href="#I-D.ietf-oauth-mtls" class="xref">[I-D.ietf-oauth-mtls]</a> or "private_key_jwt" <a href="#OpenID" class="xref">[OpenID]</a>.  When asymmetric methods for client authentication are used, authorization servers do not need to store sensitive symmetric keys, making these methods more robust against a number of attacks.</p>
+<p id="rfc.section.2.3.p.4">It is RECOMMENDED to use asymmetric (public-key based) methods for client authentication such as mTLS <a href="#RFC8705" class="xref">[RFC8705]</a> or "private_key_jwt" <a href="#OpenID" class="xref">[OpenID]</a>.  When asymmetric methods for client authentication are used, authorization servers do not need to store sensitive symmetric keys, making these methods more robust against a number of attacks.</p>
 <p id="rfc.section.2.3.p.5">The authorization server MAY establish a client authentication method with public clients.  However, the authorization server MUST NOT rely on public client authentication for the purpose of identifying the client.</p>
 <p id="rfc.section.2.3.p.6">The client MUST NOT use more than one authentication method in each request.</p>
 <h1 id="rfc.section.2.3.1">
@@ -1020,12 +1071,12 @@ Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
 
 <dl>
 <dt>"client_id":</dt>
-<dd style="margin-left: 8">REQUIRED.  The client identifier issued to the client during the registration process described by Section 2.2.</dd>
+<dd style="margin-left: 8">REQUIRED.  The client identifier issued to the client during the registration process described by <a href="#client-identifier" class="xref">Section 2.2</a>.</dd>
 <dt>"client_secret":</dt>
 <dd style="margin-left: 8">REQUIRED.  The client secret.  The client MAY omit the parameter if the client secret is an empty string.</dd>
 </dl>
 <p id="rfc.section.2.3.1.p.5">Including the client credentials in the request-body using the two parameters is NOT RECOMMENDED and SHOULD be limited to clients unable to directly utilize the HTTP Basic authentication scheme (or other password-based HTTP authentication schemes).  The parameters can only be transmitted in the request-body and MUST NOT be included in the request URI.</p>
-<p id="rfc.section.2.3.1.p.6">For example, a request to refresh an access token (Section 6) using the body parameters (with extra line breaks for display purposes only):</p>
+<p id="rfc.section.2.3.1.p.6">For example, a request to refresh an access token (<a href="#refreshing-an-access-token" class="xref">Section 6</a>) using the body parameters (with extra line breaks for display purposes only):</p>
 <pre>
 POST /token HTTP/1.1
 Host: server.example.com
@@ -1034,7 +1085,7 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 &amp;client_id=s6BhdRkqt3&amp;client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
 </pre>
-<p id="rfc.section.2.3.1.p.7">The authorization server MUST require the use of TLS as described in Section 1.6 when sending requests using password authentication.</p>
+<p id="rfc.section.2.3.1.p.7">The authorization server MUST require the use of TLS as described in <a href="#tls-version" class="xref">Section 1.6</a> when sending requests using password authentication.</p>
 <p id="rfc.section.2.3.1.p.8">Since this client authentication method involves a password, the authorization server MUST protect any endpoint utilizing it against brute force attacks.</p>
 <h1 id="rfc.section.2.3.2">
 <a href="#rfc.section.2.3.2">2.3.2.</a> <a href="#other-authorization-methods" id="other-authorization-methods">Other Authorization Methods</a>
@@ -1065,21 +1116,21 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 <p id="rfc.section.3.1.p.1">The authorization endpoint is used to interact with the resource owner and obtain an authorization grant.  The authorization server MUST first verify the identity of the resource owner.  The way in which the authorization server authenticates the resource owner (e.g., username and password login, session cookies) is beyond the scope of this specification.</p>
 <p id="rfc.section.3.1.p.2">The means through which the client obtains the location of the authorization endpoint are beyond the scope of this specification, but the location is typically provided in the service documentation.</p>
 <p id="rfc.section.3.1.p.3">The endpoint URI MAY include an "application/x-www-form-urlencoded" formatted (per Appendix B) query component (<a href="#RFC3986" class="xref">[RFC3986]</a> Section 3.4), which MUST be retained when adding additional query parameters.  The endpoint URI MUST NOT include a fragment component.</p>
-<p id="rfc.section.3.1.p.4">Since requests to the authorization endpoint result in user authentication and the transmission of clear-text credentials (in the HTTP response), the authorization server MUST require the use of TLS as described in Section 1.6 when sending requests to the authorization endpoint.</p>
+<p id="rfc.section.3.1.p.4">Since requests to the authorization endpoint result in user authentication and the transmission of clear-text credentials (in the HTTP response), the authorization server MUST require the use of TLS as described in <a href="#tls-version" class="xref">Section 1.6</a> when sending requests to the authorization endpoint.</p>
 <p id="rfc.section.3.1.p.5">The authorization server MUST support the use of the HTTP "GET" method <a href="#RFC2616" class="xref">[RFC2616]</a> for the authorization endpoint and MAY support the use of the "POST" method as well.</p>
 <p id="rfc.section.3.1.p.6">Parameters sent without a value MUST be treated as if they were omitted from the request.  The authorization server MUST ignore unrecognized request parameters.  Request and response parameters MUST NOT be included more than once.</p>
 <h1 id="rfc.section.3.1.1">
 <a href="#rfc.section.3.1.1">3.1.1.</a> <a href="#response-type" id="response-type">Response Type</a>
 </h1>
-<p id="rfc.section.3.1.1.p.1">The authorization endpoint is used by the authorization code flow.<br> The client informs the authorization server of the desired grant type using the following parameter:</p>
+<p id="rfc.section.3.1.1.p.1">The authorization endpoint is used by the authorization code flow.  The client informs the authorization server of the desired grant type using the following parameter:</p>
 <p></p>
 
 <dl>
 <dt>"response_type":</dt>
-<dd style="margin-left: 8">REQUIRED.  The value MUST be "code" for requesting an authorization code as described by Section 4.1.1, or a registered extension value as described by Section 8.4.</dd>
+<dd style="margin-left: 8">REQUIRED.  The value MUST be "code" for requesting an authorization code as described by <a href="#authorization-request" class="xref">Section 4.1.1</a>, or a registered extension value as described by <a href="#new-response-types" class="xref">Section 8.4</a>.</dd>
 </dl>
 <p id="rfc.section.3.1.1.p.3">Extension response types MAY contain a space-delimited (%x20) list of values, where the order of values does not matter (e.g., response type "a b" is the same as "b a").  The meaning of such composite response types is defined by their respective specifications.</p>
-<p id="rfc.section.3.1.1.p.4">If an authorization request is missing the "response_type" parameter, or if the response type is not understood, the authorization server MUST return an error response as described in Section 4.1.2.1.</p>
+<p id="rfc.section.3.1.1.p.4">If an authorization request is missing the "response_type" parameter, or if the response type is not understood, the authorization server MUST return an error response as described in <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>.</p>
 <h1 id="rfc.section.3.1.2">
 <a href="#rfc.section.3.1.2">3.1.2.</a> <a href="#redirection-endpoint" id="redirection-endpoint">Redirection Endpoint</a>
 </h1>
@@ -1089,7 +1140,7 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 <h1 id="rfc.section.3.1.2.1">
 <a href="#rfc.section.3.1.2.1">3.1.2.1.</a> <a href="#endpoint-request-confidentiality" id="endpoint-request-confidentiality">Endpoint Request Confidentiality</a>
 </h1>
-<p id="rfc.section.3.1.2.1.p.1">The redirection endpoint SHOULD require the use of TLS as described in Section 1.6 when the requested response type is "code", or when the redirection request will result in the transmission of sensitive credentials over an open network.  This specification does not mandate the use of TLS because at the time of this writing, requiring clients to deploy TLS is a significant hurdle for many client developers.  If TLS is not available, the authorization server SHOULD warn the resource owner about the insecure endpoint prior to redirection (e.g., display a message during the authorization request).</p>
+<p id="rfc.section.3.1.2.1.p.1">The redirection endpoint SHOULD require the use of TLS as described in <a href="#tls-version" class="xref">Section 1.6</a> when the requested response type is "code", or when the redirection request will result in the transmission of sensitive credentials over an open network.  This specification does not mandate the use of TLS because at the time of this writing, requiring clients to deploy TLS is a significant hurdle for many client developers.  If TLS is not available, the authorization server SHOULD warn the resource owner about the insecure endpoint prior to redirection (e.g., display a message during the authorization request).</p>
 <p id="rfc.section.3.1.2.1.p.2">Lack of transport-layer security can have a severe impact on the security of the client and the protected resources it is authorized to access.  The use of transport-layer security is particularly critical when the authorization process is used as a form of delegated end-user authentication by the client (e.g., third-party sign-in service).</p>
 <h1 id="rfc.section.3.1.2.2">
 <a href="#rfc.section.3.1.2.2">3.1.2.2.</a> <a href="#registration-requirements" id="registration-requirements">Registration Requirements</a>
@@ -1097,7 +1148,7 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 <p id="rfc.section.3.1.2.2.p.1">The authorization server MUST require all clients to register their redirection endpoint prior to utilizing the authorization endpoint.</p>
 <p id="rfc.section.3.1.2.2.p.2">The authorization server SHOULD require the client to provide the complete redirection URI (the client MAY use the "state" request parameter to achieve per-request customization).</p>
 <p id="rfc.section.3.1.2.2.p.3">The authorization server MAY allow the client to register multiple redirection endpoints.</p>
-<p id="rfc.section.3.1.2.2.p.4">Lack of a redirection URI registration requirement can enable an attacker to use the authorization endpoint as an open redirector as described in Section 10.15.</p>
+<p id="rfc.section.3.1.2.2.p.4">Lack of a redirection URI registration requirement can enable an attacker to use the authorization endpoint as an open redirector as described in <a href="#open-redirectors" class="xref">Section 10.17</a>.</p>
 <h1 id="rfc.section.3.1.2.3">
 <a href="#rfc.section.3.1.2.3">3.1.2.3.</a> <a href="#dynamic-configuration" id="dynamic-configuration">Dynamic Configuration</a>
 </h1>
@@ -1118,13 +1169,13 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 <p id="rfc.section.3.2.p.1">The token endpoint is used by the client to obtain an access token by presenting its authorization grant or refresh token.</p>
 <p id="rfc.section.3.2.p.2">The means through which the client obtains the location of the token endpoint are beyond the scope of this specification, but the location is typically provided in the service documentation.</p>
 <p id="rfc.section.3.2.p.3">The endpoint URI MAY include an "application/x-www-form-urlencoded" formatted (per Appendix B) query component (<a href="#RFC3986" class="xref">[RFC3986]</a> Section 3.4), which MUST be retained when adding additional query parameters.  The endpoint URI MUST NOT include a fragment component.</p>
-<p id="rfc.section.3.2.p.4">Since requests to the token endpoint result in the transmission of clear-text credentials (in the HTTP request and response), the authorization server MUST require the use of TLS as described in Section 1.6 when sending requests to the token endpoint.</p>
+<p id="rfc.section.3.2.p.4">Since requests to the token endpoint result in the transmission of clear-text credentials (in the HTTP request and response), the authorization server MUST require the use of TLS as described in <a href="#tls-version" class="xref">Section 1.6</a> when sending requests to the token endpoint.</p>
 <p id="rfc.section.3.2.p.5">The client MUST use the HTTP "POST" method when making access token requests.</p>
 <p id="rfc.section.3.2.p.6">Parameters sent without a value MUST be treated as if they were omitted from the request.  The authorization server MUST ignore unrecognized request parameters.  Request and response parameters MUST NOT be included more than once.</p>
 <h1 id="rfc.section.3.2.1">
-<a href="#rfc.section.3.2.1">3.2.1.</a> <a href="#client-authentication-1" id="client-authentication-1">Client Authentication</a>
+<a href="#rfc.section.3.2.1">3.2.1.</a> <a href="#token-endpoint-client-authentication" id="token-endpoint-client-authentication">Client Authentication</a>
 </h1>
-<p id="rfc.section.3.2.1.p.1">Confidential clients or other clients issued client credentials MUST authenticate with the authorization server as described in Section 2.3 when making requests to the token endpoint.  Client authentication is used for:</p>
+<p id="rfc.section.3.2.1.p.1">Confidential clients or other clients issued client credentials MUST authenticate with the authorization server as described in <a href="#client-authentication" class="xref">Section 2.3</a> when making requests to the token endpoint.  Client authentication is used for:</p>
 <p></p>
 
 <ul>
@@ -1156,34 +1207,34 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 <div id="rfc.figure.3"></div>
 <div id="fig-authorization-code-flow"></div>
 <pre>
-     +----------+
-     | Resource |
-     |   Owner  |
-     |          |
-     +----------+
-          ^
-          |
-         (2)
-     +----|-----+          Client Identifier      +---------------+
-     |         -+----(1)-- &amp; Redirection URI ----&gt;|               |
-     |  User-   |                                 | Authorization |
-     |  Agent  -+----(2)-- User authenticates ---&gt;|     Server    |
-     |          |                                 |               |
-     |         -+----(3)-- Authorization Code ---&lt;|               |
-     +-|----|---+                                 +---------------+
-       |    |                                         ^      v
-      (1)  (3)                                        |      |
-       |    |                                         |      |
-       ^    v                                         |      |
-     +---------+                                      |      |
-     |         |&gt;---(4)-- Authorization Code ---------'      |
-     |  Client |          &amp; Redirection URI                  |
-     |         |                                             |
-     |         |&lt;---(5)----- Access Token -------------------'
-     +---------+       (w/ Optional Refresh Token)
++----------+
+| Resource |
+|   Owner  |
+|          |
++----------+
+     ^
+     |
+    (2)
++----|-----+          Client Identifier      +---------------+
+|         -+----(1)-- &amp; Redirection URI ----&gt;|               |
+|  User-   |                                 | Authorization |
+|  Agent  -+----(2)-- User authenticates ---&gt;|     Server    |
+|          |                                 |               |
+|         -+----(3)-- Authorization Code ---&lt;|               |
++-|----|---+                                 +---------------+
+  |    |                                         ^      v
+ (1)  (3)                                        |      |
+  |    |                                         |      |
+  ^    v                                         |      |
++---------+                                      |      |
+|         |&gt;---(4)-- Authorization Code ---------'      |
+|  Client |          &amp; Redirection URI                  |
+|         |                                             |
+|         |&lt;---(5)----- Access Token -------------------'
++---------+       (w/ Optional Refresh Token)
 
-   Note: The lines illustrating steps (1), (2), and (3) are broken into
-   two parts as they pass through the user-agent.
+Note: The lines illustrating steps (1), (2), and (3) are broken into
+two parts as they pass through the user-agent.
 </pre>
 <p class="figure">Figure 3: Authorization Code Flow</p>
 <p id="rfc.section.4.1.p.3">The flow illustrated in <a href="#fig-authorization-code-flow" class="xref">Figure 3</a> includes the following steps:</p>
@@ -1243,17 +1294,17 @@ DIGIT = %x30-39
 <dt>"response_type":</dt>
 <dd style="margin-left: 8">REQUIRED.  Value MUST be set to "code".</dd>
 <dt>"client_id":</dt>
-<dd style="margin-left: 8">REQUIRED.  The client identifier as described in Section 2.2.</dd>
+<dd style="margin-left: 8">REQUIRED.  The client identifier as described in <a href="#client-identifier" class="xref">Section 2.2</a>.</dd>
 <dt>"code_challenge":</dt>
 <dd style="margin-left: 8">REQUIRED.  Code challenge.</dd>
 <dt>"code_challenge_method":</dt>
 <dd style="margin-left: 8">OPTIONAL, defaults to "plain" if not present in the request.  Code verifier transformation method is "S256" or "plain".</dd>
 <dt>"redirect_uri":</dt>
-<dd style="margin-left: 8">OPTIONAL.  As described in Section 3.1.2.</dd>
+<dd style="margin-left: 8">OPTIONAL.  As described in <a href="#redirection-endpoint" class="xref">Section 3.1.2</a>.</dd>
 <dt>"scope":</dt>
-<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by Section 3.3.</dd>
+<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.</dd>
 <dt>"state":</dt>
-<dd style="margin-left: 8">RECOMMENDED.  An opaque value used by the client to maintain state between the request and callback.  The authorization server includes this value when redirecting the user-agent back to the client.  The parameter SHOULD be used for preventing cross-site request forgery as described in Section 10.12.</dd>
+<dd style="margin-left: 8">RECOMMENDED.  An opaque value used by the client to maintain state between the request and callback.  The authorization server includes this value when redirecting the user-agent back to the client.  The parameter SHOULD be used for preventing cross-site request forgery as described in <a href="#csrf_countermeasures" class="xref">Section 10.14</a>.</dd>
 </dl>
 <p id="rfc.section.4.1.1.3.p.3">The client directs the resource owner to the constructed URI using an HTTP redirection response, or by other means available to it via the user-agent.</p>
 <p id="rfc.section.4.1.1.3.p.4">For example, the client directs the user-agent to make the following HTTP request using TLS (with extra line breaks for display purposes only):</p>
@@ -1289,7 +1340,7 @@ Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA
 <p id="rfc.section.4.1.2.p.6">Typically, the "code_challenge" and "code_challenge_method" values are stored in encrypted form in the "code" itself but could alternatively be stored on the server associated with the code.  The server MUST NOT include the "code_challenge" value in client requests in a form that other entities can extract.</p>
 <p id="rfc.section.4.1.2.p.7">The exact method that the server uses to associate the "code_challenge" with the issued "code" is out of scope for this specification.</p>
 <h1 id="rfc.section.4.1.2.1">
-<a href="#rfc.section.4.1.2.1">4.1.2.1.</a> <a href="#error-response" id="error-response">Error Response</a>
+<a href="#rfc.section.4.1.2.1">4.1.2.1.</a> <a href="#authorization-code-error-response" id="authorization-code-error-response">Error Response</a>
 </h1>
 <p id="rfc.section.4.1.2.1.p.1">If the request fails due to a missing, invalid, or mismatching redirection URI, or if the client identifier is missing or invalid, the authorization server SHOULD inform the resource owner of the error and MUST NOT automatically redirect the user-agent to the invalid redirection URI.</p>
 <p id="rfc.section.4.1.2.1.p.2">If the client does not send the "code_challenge" in the request, the authorization endpoint MUST return the authorization error response with the "error" value set to "invalid_request".  The "error_description" or the response of "error_uri" SHOULD explain the nature of error, e.g., code challenge required.</p>
@@ -1341,13 +1392,13 @@ Location: https://client.example.com/cb?error=access_denied&amp;state=xyz
 <dt>"code":</dt>
 <dd style="margin-left: 8">REQUIRED.  The authorization code received from the authorization server.</dd>
 <dt>"redirect_uri":</dt>
-<dd style="margin-left: 8">REQUIRED, if the "redirect_uri" parameter was included in the authorization request as described in Section 4.1.1, and their values MUST be identical.</dd>
+<dd style="margin-left: 8">REQUIRED, if the "redirect_uri" parameter was included in the authorization request as described in <a href="#authorization-request" class="xref">Section 4.1.1</a>, and their values MUST be identical.</dd>
 <dt>"client_id":</dt>
-<dd style="margin-left: 8">REQUIRED, if the client is not authenticating with the authorization server as described in Section 3.2.1.</dd>
+<dd style="margin-left: 8">REQUIRED, if the client is not authenticating with the authorization server as described in <a href="#token-endpoint-client-authentication" class="xref">Section 3.2.1</a>.</dd>
 <dt>"code_verifier":</dt>
 <dd style="margin-left: 8">REQUIRED.  Code verifier</dd>
 </dl>
-<p id="rfc.section.4.1.3.p.3">If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in Section 3.2.1.</p>
+<p id="rfc.section.4.1.3.p.3">If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in <a href="#token-endpoint-client-authentication" class="xref">Section 3.2.1</a>.</p>
 <p id="rfc.section.4.1.3.p.4">For example, the client makes the following HTTP request using TLS (with extra line breaks for display purposes only):</p>
 <pre>
 POST /token HTTP/1.1
@@ -1368,12 +1419,12 @@ grant_type=authorization_code&amp;code=SplxlOBeZQQYbYS6WxSbIA
 <li>ensure that the authorization code was issued to the authenticated confidential client, or if the client is public, ensure that the code was issued to "client_id" in the request,</li>
 <li>verify that the authorization code is valid,</li>
 <li>verify the "code_verifier" by calculating the code challenge from the received "code_verifier" and comparing it with the previously associated "code_challenge", after first transforming it according to the "code_challenge_method" method specified by the client, and</li>
-<li>ensure that the "redirect_uri" parameter is present if the "redirect_uri" parameter was included in the initial authorization request as described in Section 4.1.1, and if included ensure that their values are identical.</li>
+<li>ensure that the "redirect_uri" parameter is present if the "redirect_uri" parameter was included in the initial authorization request as described in <a href="#authorization-request" class="xref">Section 4.1.1</a>, and if included ensure that their values are identical.</li>
 </ul>
 <h1 id="rfc.section.4.1.4">
 <a href="#rfc.section.4.1.4">4.1.4.</a> <a href="#access-token-response" id="access-token-response">Access Token Response</a>
 </h1>
-<p id="rfc.section.4.1.4.p.1">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in Section 5.1.  If the request client authentication failed or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.4.1.4.p.1">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  If the request client authentication failed or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <p id="rfc.section.4.1.4.p.2">An example successful response:</p>
 <pre>
 HTTP/1.1 200 OK
@@ -1382,11 +1433,11 @@ Cache-Control: no-store
 Pragma: no-cache
 
 {
-  "access_token":"2YotnFZFEjr1zCsicMWpAA",
-  "token_type":"example",
-  "expires_in":3600,
-  "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
-  "example_parameter":"example_value"
+  "access_token": "2YotnFZFEjr1zCsicMWpAA",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
+  "example_parameter": "example_value"
 }
 </pre>
 <h1 id="rfc.section.4.2">
@@ -1394,18 +1445,19 @@ Pragma: no-cache
 </h1>
 <p id="rfc.section.4.2.p.1">The client can request an access token using only its client credentials (or other supported means of authentication) when the client is requesting access to the protected resources under its control, or those of another resource owner that have been previously arranged with the authorization server (the method of which is beyond the scope of this specification).</p>
 <p id="rfc.section.4.2.p.2">The client credentials grant type MUST only be used by confidential clients.</p>
+<div id="rfc.figure.4"></div>
+<div id="fig-client-credentials-flow"></div>
 <pre>
- +---------+                                  +---------------+
- |         |                                  |               |
- |         |&gt;--(A)- Client Authentication ---&gt;| Authorization |
- | Client  |                                  |     Server    |
- |         |&lt;--(B)---- Access Token ---------&lt;|               |
- |         |                                  |               |
- +---------+                                  +---------------+
-
-                 Figure 6: Client Credentials Flow
+     +---------+                                  +---------------+
+     |         |                                  |               |
+     |         |&gt;--(A)- Client Authentication ---&gt;| Authorization |
+     | Client  |                                  |     Server    |
+     |         |&lt;--(B)---- Access Token ---------&lt;|               |
+     |         |                                  |               |
+     +---------+                                  +---------------+
 </pre>
-<p id="rfc.section.4.2.p.3">The flow illustrated in Figure 6 includes the following steps:</p>
+<p class="figure">Figure 4: Client Credentials Flow</p>
+<p id="rfc.section.4.2.p.3">The flow illustrated in <a href="#fig-client-credentials-flow" class="xref">Figure 4</a> includes the following steps:</p>
 <p id="rfc.section.4.2.p.4">(A)  The client authenticates with the authorization server and requests an access token from the token endpoint.</p>
 <p id="rfc.section.4.2.p.5">(B)  The authorization server authenticates the client, and if valid, issues an access token.</p>
 <h1 id="rfc.section.4.2.1">
@@ -1422,9 +1474,9 @@ Pragma: no-cache
 <dt>"grant_type":</dt>
 <dd style="margin-left: 8">REQUIRED.  Value MUST be set to "client_credentials".</dd>
 <dt>"scope":</dt>
-<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by Section 3.3.</dd>
+<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.</dd>
 </dl>
-<p id="rfc.section.4.2.2.p.3">The client MUST authenticate with the authorization server as described in Section 3.2.1.</p>
+<p id="rfc.section.4.2.2.p.3">The client MUST authenticate with the authorization server as described in <a href="#token-endpoint-client-authentication" class="xref">Section 3.2.1</a>.</p>
 <p id="rfc.section.4.2.2.p.4">For example, the client makes the following HTTP request using transport-layer security (with extra line breaks for display purposes only):</p>
 <pre>
 POST /token HTTP/1.1
@@ -1438,7 +1490,7 @@ grant_type=client_credentials
 <h1 id="rfc.section.4.2.3">
 <a href="#rfc.section.4.2.3">4.2.3.</a> <a href="#access-token-response-1" id="access-token-response-1">Access Token Response</a>
 </h1>
-<p id="rfc.section.4.2.3.p.1">If the access token request is valid and authorized, the authorization server issues an access token as described in Section 5.1.  A refresh token SHOULD NOT be included.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.4.2.3.p.1">If the access token request is valid and authorized, the authorization server issues an access token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  A refresh token SHOULD NOT be included.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <p id="rfc.section.4.2.3.p.2">An example successful response:</p>
 <pre>
 HTTP/1.1 200 OK
@@ -1447,10 +1499,10 @@ Cache-Control: no-store
 Pragma: no-cache
 
 {
-  "access_token":"2YotnFZFEjr1zCsicMWpAA",
-  "token_type":"example",
-  "expires_in":3600,
-  "example_parameter":"example_value"
+  "access_token": "2YotnFZFEjr1zCsicMWpAA",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "example_parameter": "example_value"
 }
 </pre>
 <h1 id="rfc.section.4.3">
@@ -1467,13 +1519,13 @@ grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Asaml2-
 bearer&amp;assertion=PEFzc2VydGlvbiBJc3N1ZUluc3RhbnQ9IjIwMTEtMDU
 [...omitted for brevity...]aG5TdGF0ZW1lbnQ-PC9Bc3NlcnRpb24-
 </pre>
-<p id="rfc.section.4.3.p.3">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in Section 5.1.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.4.3.p.3">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> <a href="#issuing-an-access-token" id="issuing-an-access-token">Issuing an Access Token</a>
 </h1>
-<p id="rfc.section.5.p.1">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in Section 5.1.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.5.p.1">If the access token request is valid and authorized, the authorization server issues an access token and optional refresh token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  If the request failed client authentication or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <h1 id="rfc.section.5.1">
-<a href="#rfc.section.5.1">5.1.</a> <a href="#successful-response" id="successful-response">Successful Response</a>
+<a href="#rfc.section.5.1">5.1.</a> <a href="#access-token-successful-response" id="access-token-successful-response">Successful Response</a>
 </h1>
 <p id="rfc.section.5.1.p.1">The authorization server issues an access token and optional refresh token, and constructs the response by adding the following parameters to the entity-body of the HTTP response with a 200 (OK) status code:</p>
 <p></p>
@@ -1482,13 +1534,13 @@ bearer&amp;assertion=PEFzc2VydGlvbiBJc3N1ZUluc3RhbnQ9IjIwMTEtMDU
 <dt>"access_token":</dt>
 <dd style="margin-left: 8">REQUIRED.  The access token issued by the authorization server.</dd>
 <dt>"token_type":</dt>
-<dd style="margin-left: 8">REQUIRED.  The type of the token issued as described in Section 7.1.  Value is case insensitive.</dd>
+<dd style="margin-left: 8">REQUIRED.  The type of the token issued as described in <a href="#access-token-types" class="xref">Section 7.1</a>.  Value is case insensitive.</dd>
 <dt>"expires_in":</dt>
 <dd style="margin-left: 8">RECOMMENDED.  The lifetime in seconds of the access token.  For example, the value "3600" denotes that the access token will expire in one hour from the time the response was generated.  If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.</dd>
 <dt>"refresh_token":</dt>
-<dd style="margin-left: 8">OPTIONAL.  The refresh token, which can be used to obtain new access tokens using the same authorization grant as described in Section 6.</dd>
+<dd style="margin-left: 8">OPTIONAL.  The refresh token, which can be used to obtain new access tokens using the same authorization grant as described in <a href="#refreshing-an-access-token" class="xref">Section 6</a>.</dd>
 <dt>"scope":</dt>
-<dd style="margin-left: 8">OPTIONAL, if identical to the scope requested by the client; otherwise, REQUIRED.  The scope of the access token as described by Section 3.3.</dd>
+<dd style="margin-left: 8">OPTIONAL, if identical to the scope requested by the client; otherwise, REQUIRED.  The scope of the access token as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.</dd>
 </dl>
 <p id="rfc.section.5.1.p.3">The parameters are included in the entity-body of the HTTP response using the "application/json" media type as defined by <a href="#RFC4627" class="xref">[RFC4627]</a>.  The parameters are serialized into a JavaScript Object Notation (JSON) structure by adding each parameter at the highest structure level.  Parameter names and string values are included as JSON strings.  Numerical values are included as JSON numbers.  The order of parameters does not matter and can vary.</p>
 <p id="rfc.section.5.1.p.4">The authorization server MUST include the HTTP "Cache-Control" response header field <a href="#RFC2616" class="xref">[RFC2616]</a> with a value of "no-store" in any response containing tokens, credentials, or other sensitive information, as well as the "Pragma" response header field <a href="#RFC2616" class="xref">[RFC2616]</a> with a value of "no-cache".</p>
@@ -1509,7 +1561,7 @@ Pragma: no-cache
 </pre>
 <p id="rfc.section.5.1.p.6">The client MUST ignore unrecognized value names in the response.  The sizes of tokens and other values received from the authorization server are left undefined.  The client should avoid making assumptions about value sizes.  The authorization server SHOULD document the size of any value it issues.</p>
 <h1 id="rfc.section.5.2">
-<a href="#rfc.section.5.2">5.2.</a> <a href="#error-response-1" id="error-response-1">Error Response</a>
+<a href="#rfc.section.5.2">5.2.</a> <a href="#access-token-error-response" id="access-token-error-response">Error Response</a>
 </h1>
 <p id="rfc.section.5.2.p.1">The authorization server responds with an HTTP 400 (Bad Request) status code (unless specified otherwise) and includes the following parameters with the response:</p>
 <p id="rfc.section.5.2.p.2">The authorization server responds with an HTTP 400 (Bad Request) status code (unless specified otherwise) and includes the following parameters with the response:</p>
@@ -1564,9 +1616,9 @@ Pragma: no-cache
 <dt>"refresh_token":</dt>
 <dd style="margin-left: 8">REQUIRED.  The refresh token issued to the client.</dd>
 <dt>"scope":</dt>
-<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by Section 3.3.  The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner.</dd>
+<dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.  The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner.</dd>
 </dl>
-<p id="rfc.section.6.p.5">Because refresh tokens are typically long-lasting credentials used to request additional access tokens, the refresh token is bound to the client to which it was issued.  If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in Section 3.2.1.</p>
+<p id="rfc.section.6.p.5">Because refresh tokens are typically long-lasting credentials used to request additional access tokens, the refresh token is bound to the client to which it was issued.  If the client type is confidential or the client was issued client credentials (or assigned other authentication requirements), the client MUST authenticate with the authorization server as described in <a href="#token-endpoint-client-authentication" class="xref">Section 3.2.1</a>.</p>
 <p id="rfc.section.6.p.6">For example, the client makes the following HTTP request using transport-layer security (with extra line breaks for display purposes only):</p>
 <pre>
 POST /token HTTP/1.1
@@ -1589,11 +1641,11 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 
 <ul>
 <li>
-<em>Sender-constrained refresh tokens:</em> the authorization server cryptographically binds the refresh token to a certain client instance by utilizing <a href="#I-D.ietf-oauth-token-binding" class="xref">[I-D.ietf-oauth-token-binding]</a> or <a href="#I-D.ietf-oauth-mtls" class="xref">[I-D.ietf-oauth-mtls]</a>.</li>
+<em>Sender-constrained refresh tokens:</em> the authorization server cryptographically binds the refresh token to a certain client instance by utilizing <a href="#I-D.ietf-oauth-token-binding" class="xref">[I-D.ietf-oauth-token-binding]</a> or <a href="#RFC8705" class="xref">[RFC8705]</a>.</li>
 <li>
 <em>Refresh token rotation:</em> the authorization server issues a new refresh token with every access token refresh response.  The previous refresh token is invalidated but information about the relationship is retained by the authorization server.  If a refresh token is compromised and subsequently used by both the attacker and the legitimate client, one of them will present an invalidated refresh token, which will inform the authorization server of the breach.  The authorization server cannot determine which party submitted the invalid refresh token, but it will revoke the active refresh token.  This stops the attack at the cost of forcing the legitimate client to obtain a fresh authorization grant.  <br><br> Implementation note: the grant to which a refresh token belongs may be encoded into the refresh token itself.  This can enable an authorization server to efficiently determine the grant to which a refresh token belongs, and by extension, all refresh tokens that need to be revoked.  Authorization servers MUST ensure the integrity of the refresh token value in this case, for example, using signatures.</li>
 </ul>
-<p id="rfc.section.6.p.11">If valid and authorized, the authorization server issues an access token as described in Section 5.1.  If the request failed verification or is invalid, the authorization server returns an error response as described in Section 5.2.</p>
+<p id="rfc.section.6.p.11">If valid and authorized, the authorization server issues an access token as described in <a href="#access-token-successful-response" class="xref">Section 5.1</a>.  If the request failed verification or is invalid, the authorization server returns an error response as described in <a href="#access-token-error-response" class="xref">Section 5.2</a>.</p>
 <p id="rfc.section.6.p.12">The authorization server MAY issue a new refresh token, in which case the client MUST discard the old refresh token and replace it with the new refresh token.  The authorization server MAY revoke the old refresh token after issuing a new refresh token to the client.  If a new refresh token is issued, the refresh token scope MUST be identical to that of the refresh token included by the client in the request.</p>
 <p id="rfc.section.6.p.13">Authorization servers MAY revoke refresh tokens automatically in case of a security event, such as:</p>
 <p></p>
@@ -1675,13 +1727,13 @@ access_token=mF_9.B5f-4.1JqM
 <p id="rfc.section.7.2.2.p.1">If the protected resource request does not include authentication credentials or does not contain an access token that enables access to the protected resource, the resource server MUST include the HTTP "WWW-Authenticate" response header field; it MAY include it in response to other conditions as well.  The "WWW-Authenticate" header field uses the framework defined by HTTP/1.1 <a href="#RFC2617" class="xref">[RFC2617]</a>.</p>
 <p id="rfc.section.7.2.2.p.2">All challenges defined by this specification MUST use the auth-scheme value "Bearer".  This scheme MUST be followed by one or more auth-param values.  The auth-param attributes used or defined by this specification are as follows.  Other auth-param attributes MAY be used as well.</p>
 <p id="rfc.section.7.2.2.p.3">A "realm" attribute MAY be included to indicate the scope of protection in the manner described in HTTP/1.1 <a href="#RFC2617" class="xref">[RFC2617]</a>.  The "realm" attribute MUST NOT appear more than once.</p>
-<p id="rfc.section.7.2.2.p.4">The "scope" attribute is defined in Section 3.3.  The "scope" attribute is a space-delimited list of case-sensitive scope values indicating the required scope of the access token for accessing the requested resource. "scope" values are implementation defined; there is no centralized registry for them; allowed values are defined by the authorization server.  The order of "scope" values is not significant.  In some cases, the "scope" value will be used when requesting a new access token with sufficient scope of access to utilize the protected resource.  Use of the "scope" attribute is OPTIONAL.  The "scope" attribute MUST NOT appear more than once.  The "scope" value is intended for programmatic use and is not meant to be displayed to end-users.</p>
+<p id="rfc.section.7.2.2.p.4">The "scope" attribute is defined in <a href="#access-token-scope" class="xref">Section 3.3</a>.  The "scope" attribute is a space-delimited list of case-sensitive scope values indicating the required scope of the access token for accessing the requested resource. "scope" values are implementation defined; there is no centralized registry for them; allowed values are defined by the authorization server.  The order of "scope" values is not significant.  In some cases, the "scope" value will be used when requesting a new access token with sufficient scope of access to utilize the protected resource.  Use of the "scope" attribute is OPTIONAL.  The "scope" attribute MUST NOT appear more than once.  The "scope" value is intended for programmatic use and is not meant to be displayed to end-users.</p>
 <p id="rfc.section.7.2.2.p.5">Two example scope values follow; these are taken from the OpenID Connect <a href="#OpenID.Messages" class="xref">[OpenID.Messages]</a> and the Open Authentication Technology Committee (OATC) Online Multimedia Authorization Protocol <a href="#OMAP" class="xref">[OMAP]</a> OAuth 2.0 use cases, respectively:</p>
 <pre>
 scope="openid profile email"
 scope="urn:example:channel=HBO&amp;urn:example:rating=G,PG-13"
 </pre>
-<p id="rfc.section.7.2.2.p.6">If the protected resource request included an access token and failed authentication, the resource server SHOULD include the "error" attribute to provide the client with the reason why the access request was declined.  The parameter value is described in Section ???.  In addition, the resource server MAY include the "error_description" attribute to provide developers a human-readable explanation that is not meant to be displayed to end-users.  It also MAY include the "error_uri" attribute with an absolute URI identifying a human-readable web page explaining the error.  The "error", "error_description", and "error_uri" attributes MUST NOT appear more than once.</p>
+<p id="rfc.section.7.2.2.p.6">If the protected resource request included an access token and failed authentication, the resource server SHOULD include the "error" attribute to provide the client with the reason why the access request was declined.  The parameter value is described in <a href="#bearer-token-error-codes" class="xref">Section 7.3.1</a>.  In addition, the resource server MAY include the "error_description" attribute to provide developers a human-readable explanation that is not meant to be displayed to end-users.  It also MAY include the "error_uri" attribute with an absolute URI identifying a human-readable web page explaining the error.  The "error", "error_description", and "error_uri" attributes MUST NOT appear more than once.</p>
 <p id="rfc.section.7.2.2.p.7">Values for the "scope" attribute (specified in Appendix A.4) MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E for representing scope values and %x20 for delimiters between scope values.  Values for the "error" and "error_description" attributes (specified in Appendixes A.7 and A.8) MUST NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.  Values for the "error_uri" attribute (specified in Appendix A.9 of) MUST conform to the URI-reference syntax and thus MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E.</p>
 <p id="rfc.section.7.2.2.p.8">For example, in response to a protected resource request without authentication:</p>
 <pre>
@@ -1696,15 +1748,15 @@ WWW-Authenticate: Bearer realm="example",
                   error_description="The access token expired"
 </pre>
 <h1 id="rfc.section.7.3">
-<a href="#rfc.section.7.3">7.3.</a> <a href="#error-response-2" id="error-response-2">Error Response</a>
+<a href="#rfc.section.7.3">7.3.</a> <a href="#bearer-token-error-response" id="bearer-token-error-response">Error Response</a>
 </h1>
-<p id="rfc.section.7.3.p.1">If a resource access request fails, the resource server SHOULD inform the client of the error.  While the specifics of such error responses are beyond the scope of this specification, this document establishes a common registry in Section 11.4 for error values to be shared among OAuth token authentication schemes.</p>
+<p id="rfc.section.7.3.p.1">If a resource access request fails, the resource server SHOULD inform the client of the error.  While the specifics of such error responses are beyond the scope of this specification, this document establishes a common registry in <a href="#error-registry" class="xref">Section 11.4</a> for error values to be shared among OAuth token authentication schemes.</p>
 <p id="rfc.section.7.3.p.2">New authentication schemes designed primarily for OAuth token authentication SHOULD define a mechanism for providing an error status code to the client, in which the error values allowed are registered in the error registry established by this specification.</p>
 <p id="rfc.section.7.3.p.3">Such schemes MAY limit the set of valid error codes to a subset of the registered values.  If the error code is returned using a named parameter, the parameter name SHOULD be "error".</p>
 <p id="rfc.section.7.3.p.4">Other schemes capable of being used for OAuth token authentication, but not primarily designed for that purpose, MAY bind their error values to the registry in the same manner.</p>
 <p id="rfc.section.7.3.p.5">New authentication schemes MAY choose to also specify the use of the "error_description" and "error_uri" parameters to return error information in a manner parallel to their usage in this specification.</p>
 <h1 id="rfc.section.7.3.1">
-<a href="#rfc.section.7.3.1">7.3.1.</a> <a href="#error-codes" id="error-codes">Error Codes</a>
+<a href="#rfc.section.7.3.1">7.3.1.</a> <a href="#bearer-token-error-codes" id="bearer-token-error-codes">Error Codes</a>
 </h1>
 <p id="rfc.section.7.3.1.p.1">When a request fails, the resource server responds using the appropriate HTTP status code (typically, 400, 401, 403, or 405) and includes one of the following error codes in the response:</p>
 <p></p>
@@ -1749,12 +1801,12 @@ WWW-Authenticate: Bearer realm="example"
 <h1 id="rfc.section.7.4.2">
 <a href="#rfc.section.7.4.2">7.4.2.</a> <a href="#threat-mitigation" id="threat-mitigation">Threat Mitigation</a>
 </h1>
-<p id="rfc.section.7.4.2.p.1">A large range of threats can be mitigated by protecting the contents of the token by using a digital signature.<br> Alternatively, a bearer token can contain a reference to authorization information, rather than encoding the information directly.  Such references MUST be infeasible for an attacker to guess; using a reference may require an extra interaction between a server and the token issuer to resolve the reference to the authorization information.  The mechanics of such an interaction are not defined by this specification.</p>
+<p id="rfc.section.7.4.2.p.1">A large range of threats can be mitigated by protecting the contents of the token by using a digital signature.  Alternatively, a bearer token can contain a reference to authorization information, rather than encoding the information directly.  Such references MUST be infeasible for an attacker to guess; using a reference may require an extra interaction between a server and the token issuer to resolve the reference to the authorization information.  The mechanics of such an interaction are not defined by this specification.</p>
 <p id="rfc.section.7.4.2.p.2">This document does not specify the encoding or the contents of the token; hence, detailed recommendations about the means of guaranteeing token integrity protection are outside the scope of this document.  The token integrity protection MUST be sufficient to prevent the token from being modified.</p>
 <p id="rfc.section.7.4.2.p.3">To deal with token redirect, it is important for the authorization server to include the identity of the intended recipients (the audience), typically a single resource server (or a list of resource servers), in the token.  Restricting the use of the token to a specific scope is also RECOMMENDED.</p>
 <p id="rfc.section.7.4.2.p.4">The authorization server MUST implement TLS.  Which version(s) ought to be implemented will vary over time and will depend on the widespread deployment and known security vulnerabilities at the time of implementation.</p>
 <p id="rfc.section.7.4.2.p.5">To protect against token disclosure, confidentiality protection MUST be applied using TLS with a ciphersuite that provides confidentiality and integrity protection.  This requires that the communication interaction between the client and the authorization server, as well as the interaction between the client and the resource server, utilize confidentiality and integrity protection.  Since TLS is mandatory to implement and to use with this specification, it is the preferred approach for preventing token disclosure via the communication channel.  For those cases where the client is prevented from observing the contents of the token, token encryption MUST be applied in addition to the usage of TLS protection.  As a further defense against token disclosure, the client MUST validate the TLS certificate chain when making requests to protected resources, including checking the Certificate Revocation List (CRL) <a href="#RFC5280" class="xref">[RFC5280]</a>.</p>
-<p id="rfc.section.7.4.2.p.6">Cookies are typically transmitted in the clear.  Thus, any information contained in them is at risk of disclosure.  Therefore, Bearer tokens MUST NOT be stored in cookies that can be sent in the clear, as any information in them is at risk of disclosure.<br> See "HTTP State Management Mechanism" <a href="#RFC6265" class="xref">[RFC6265]</a> for security considerations about cookies.</p>
+<p id="rfc.section.7.4.2.p.6">Cookies are typically transmitted in the clear.  Thus, any information contained in them is at risk of disclosure.  Therefore, Bearer tokens MUST NOT be stored in cookies that can be sent in the clear, as any information in them is at risk of disclosure.  See "HTTP State Management Mechanism" <a href="#RFC6265" class="xref">[RFC6265]</a> for security considerations about cookies.</p>
 <p id="rfc.section.7.4.2.p.7">In some deployments, including those utilizing load balancers, the TLS connection to the resource server terminates prior to the actual server that provides the resource.  This could leave the token unprotected between the front-end server where the TLS connection terminates and the back-end server that provides the resource.  In such deployments, sufficient measures MUST be employed to ensure confidentiality of the token between the front-end and back-end servers; encryption of the token is one such possible measure.</p>
 <p id="rfc.section.7.4.2.p.8">To deal with token capture and replay, the following recommendations are made: First, the lifetime of the token MUST be limited; one means of achieving this is by putting a validity time field inside the protected part of the token.  Note that using short-lived (one hour or less) tokens reduces the impact of them being leaked.  Second, confidentiality protection of the exchanges between the client and the authorization server and between the client and the resource server MUST be applied.  As a consequence, no eavesdropper along the communication path is able to observe the token exchange.  Consequently, such an on-path adversary cannot replay the token.  Furthermore, when presenting the token to a resource server, the client MUST verify the identity of that resource server, as per Section 3.1 of "HTTP Over TLS" <a href="#RFC2818" class="xref">[RFC2818]</a>.  Note that the client MUST validate the TLS certificate chain when making these requests to protected resources.  Presenting the token to an unauthenticated and unauthorized resource server or failing to validate the certificate chain will allow adversaries to steal the token and gain unauthorized access to protected resources.</p>
 <h1 id="rfc.section.7.4.3">
@@ -1792,7 +1844,7 @@ WWW-Authenticate: Bearer realm="example"
 <a href="#rfc.section.7.4.4">7.4.4.</a> <a href="#token-replay-prevention" id="token-replay-prevention">Token Replay Prevention</a>
 </h1>
 <p id="rfc.section.7.4.4.p.1">A sender-constrained access token scopes the applicability of an access token to a certain sender.  This sender is obliged to demonstrate knowledge of a certain secret as prerequisite for the acceptance of that token at the recipient (e.g., a resource server).</p>
-<p id="rfc.section.7.4.4.p.2">Authorization and resource servers SHOULD use mechanisms for sender- constrained access tokens to prevent token replay as described in Section 4.8.1.1.2.  The use of Mutual TLS for OAuth 2.0 <a href="#I-D.ietf-oauth-mtls" class="xref">[I-D.ietf-oauth-mtls]</a> is RECOMMENDED.</p>
+<p id="rfc.section.7.4.4.p.2">Authorization and resource servers SHOULD use mechanisms for sender- constrained access tokens to prevent token replay as described in Section 4.8.1.1.2.  The use of Mutual TLS for OAuth 2.0 <a href="#RFC8705" class="xref">[RFC8705]</a> is RECOMMENDED.</p>
 <p id="rfc.section.7.4.4.p.3">It is RECOMMENDED to use end-to-end TLS.  If TLS traffic needs to be terminated at an intermediary, refer to Security BCP Section 4.11 for further security advice.</p>
 <h1 id="rfc.section.7.4.5">
 <a href="#rfc.section.7.4.5">7.4.5.</a> <a href="#access-token-privilege-restriction" id="access-token-privilege-restriction">Access Token Privilege Restriction</a>
@@ -1806,7 +1858,7 @@ WWW-Authenticate: Bearer realm="example"
 <h1 id="rfc.section.8.1">
 <a href="#rfc.section.8.1">8.1.</a> <a href="#defining-access-token-types" id="defining-access-token-types">Defining Access Token Types</a>
 </h1>
-<p id="rfc.section.8.1.p.1">Access token types can be defined in one of two ways: registered in the Access Token Types registry (following the procedures in Section 11.1), or by using a unique absolute URI as its name.</p>
+<p id="rfc.section.8.1.p.1">Access token types can be defined in one of two ways: registered in the Access Token Types registry (following the procedures in <a href="#access-token-registry" class="xref">Section 11.1</a>), or by using a unique absolute URI as its name.</p>
 <p id="rfc.section.8.1.p.2">Types utilizing a URI name SHOULD be limited to vendor-specific implementations that are not commonly applicable, and are specific to the implementation details of the resource server where they are used.</p>
 <p id="rfc.section.8.1.p.3">All other types MUST be registered.  Type names MUST conform to the type-name ABNF.  If the type definition includes a new HTTP authentication scheme, the type name SHOULD be identical to the HTTP authentication scheme name (as defined by <a href="#RFC2617" class="xref">[RFC2617]</a>).  The token type "example" is reserved for use in examples.</p>
 <pre>
@@ -1816,7 +1868,7 @@ name-char  = "-" / "." / "_" / DIGIT / ALPHA
 <h1 id="rfc.section.8.2">
 <a href="#rfc.section.8.2">8.2.</a> <a href="#defining-new-endpoint-parameters" id="defining-new-endpoint-parameters">Defining New Endpoint Parameters</a>
 </h1>
-<p id="rfc.section.8.2.p.1">New request or response parameters for use with the authorization endpoint or the token endpoint are defined and registered in the OAuth Parameters registry following the procedure in Section 11.2.</p>
+<p id="rfc.section.8.2.p.1">New request or response parameters for use with the authorization endpoint or the token endpoint are defined and registered in the OAuth Parameters registry following the procedure in <a href="#parameters-registry" class="xref">Section 11.2</a>.</p>
 <p id="rfc.section.8.2.p.2">Parameter names MUST conform to the param-name ABNF, and parameter values syntax MUST be well-defined (e.g., using ABNF, or a reference to the syntax of an existing parameter).</p>
 <pre>
 param-name  = 1*name-char
@@ -1826,11 +1878,11 @@ name-char   = "-" / "." / "_" / DIGIT / ALPHA
 <h1 id="rfc.section.8.3">
 <a href="#rfc.section.8.3">8.3.</a> <a href="#defining-new-authorization-grant-types" id="defining-new-authorization-grant-types">Defining New Authorization Grant Types</a>
 </h1>
-<p id="rfc.section.8.3.p.1">New authorization grant types can be defined by assigning them a unique absolute URI for use with the "grant_type" parameter.  If the extension grant type requires additional token endpoint parameters, they MUST be registered in the OAuth Parameters registry as described by Section 11.2.</p>
+<p id="rfc.section.8.3.p.1">New authorization grant types can be defined by assigning them a unique absolute URI for use with the "grant_type" parameter.  If the extension grant type requires additional token endpoint parameters, they MUST be registered in the OAuth Parameters registry as described by <a href="#parameters-registry" class="xref">Section 11.2</a>.</p>
 <h1 id="rfc.section.8.4">
-<a href="#rfc.section.8.4">8.4.</a> <a href="#defining-new-authorization-endpoint-response-types" id="defining-new-authorization-endpoint-response-types">Defining New Authorization Endpoint Response Types</a>
+<a href="#rfc.section.8.4">8.4.</a> <a href="#new-response-types" id="new-response-types">Defining New Authorization Endpoint Response Types</a>
 </h1>
-<p id="rfc.section.8.4.p.1">New response types for use with the authorization endpoint are defined and registered in the Authorization Endpoint Response Types registry following the procedure in Section 11.3.  Response type names MUST conform to the response-type ABNF.</p>
+<p id="rfc.section.8.4.p.1">New response types for use with the authorization endpoint are defined and registered in the Authorization Endpoint Response Types registry following the procedure in <a href="#response-types-registry" class="xref">Section 11.3</a>.  Response type names MUST conform to the response-type ABNF.</p>
 <pre>
 response-type  = response-name *( SP response-name )
 response-name  = 1*response-char
@@ -1841,8 +1893,8 @@ response-char  = "_" / DIGIT / ALPHA
 <h1 id="rfc.section.8.5">
 <a href="#rfc.section.8.5">8.5.</a> <a href="#defining-additional-error-codes" id="defining-additional-error-codes">Defining Additional Error Codes</a>
 </h1>
-<p id="rfc.section.8.5.p.1">In cases where protocol extensions (i.e., access token types, extension parameters, or extension grant types) require additional error codes to be used with the authorization code grant error response (Section 4.1.2.1), the token error response (Section 5.2), or the resource access error response (Section 7.2), such error codes MAY be defined.</p>
-<p id="rfc.section.8.5.p.2">Extension error codes MUST be registered (following the procedures in Section 11.4) if the extension they are used in conjunction with is a registered access token type, a registered endpoint parameter, or an extension grant type.  Error codes used with unregistered extensions MAY be registered.</p>
+<p id="rfc.section.8.5.p.1">In cases where protocol extensions (i.e., access token types, extension parameters, or extension grant types) require additional error codes to be used with the authorization code grant error response (<a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>), the token error response (<a href="#access-token-error-response" class="xref">Section 5.2</a>), or the resource access error response (Section 7.2), such error codes MAY be defined.</p>
+<p id="rfc.section.8.5.p.2">Extension error codes MUST be registered (following the procedures in <a href="#error-registry" class="xref">Section 11.4</a>) if the extension they are used in conjunction with is a registered access token type, a registered endpoint parameter, or an extension grant type.  Error codes used with unregistered extensions MAY be registered.</p>
 <p id="rfc.section.8.5.p.3">Error codes MUST conform to the error ABNF and SHOULD be prefixed by an identifying name when possible.  For example, an error identifying an invalid value set to the extension parameter "example" SHOULD be named "example_invalid".</p>
 <pre>
 error      = 1*error-char
@@ -1853,83 +1905,202 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 </h1>
 <p id="rfc.section.9.p.1">Native applications are clients installed and executed on the device used by the resource owner (i.e., desktop application, native mobile application).  Native applications require special consideration related to security, platform capabilities, and overall end-user experience.</p>
 <p id="rfc.section.9.p.2">The authorization endpoint requires interaction between the client and the resource owner's user-agent. The best current practice is to perform the OAuth authorization request in an external user-agent (typically the browser) rather than an embedded user-agent (such as one implemented with web-views).</p>
+<p id="rfc.section.9.p.3">The native application can capture the response from the authorization server using a redirection URI with a scheme registered with the operating system to invoke the client as the handler, manual copy-and-paste of the credentials, running a local web server, installing a user-agent extension, or by providing a redirection URI identifying a server-hosted resource under the client's control, which in turn makes the response available to the native application.</p>
+<p id="rfc.section.9.p.4">Previously, it was common for native apps to use embedded user-agents (commonly implemented with web-views) for OAuth authorization requests.  That approach has many drawbacks, including the host app being able to copy user credentials and cookies as well as the user needing to authenticate from scratch in each app.  See Section ??? for a deeper analysis of the drawbacks of using embedded user-agents for OAuth.</p>
+<p id="rfc.section.9.p.5">Native app authorization requests that use the browser are more secure and can take advantage of the user's authentication state.  Being able to use the existing authentication session in the browser enables single sign-on, as users don't need to authenticate to the authorization server each time they use a new app (unless required by the authorization server policy).</p>
+<p id="rfc.section.9.p.6">Supporting authorization flows between a native app and the browser is possible without changing the OAuth protocol itself, as the OAuth authorization request and response are already defined in terms of URIs.  This encompasses URIs that can be used for inter-app communication.  Some OAuth server implementations that assume all clients are confidential web clients will need to add an understanding of public native app clients and the types of redirect URIs they use to support this best practice.</p>
+<h1 id="rfc.section.9.1">
+<a href="#rfc.section.9.1">9.1.</a> <a href="#authorization-flow-for-native-apps-using-the-browser" id="authorization-flow-for-native-apps-using-the-browser">Authorization Flow for Native Apps Using the Browser</a>
+</h1>
+<div id="rfc.figure.5"></div>
+<div id="fig-native-app-authorization-flow"></div>
+<pre>
+  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
+  |          User Device          |
+  |                               |
+  | +--------------------------+  | (5) Authorization  +---------------+
+  | |                          |  |     Code           |               |
+  | |        Client App        |----------------------&gt;|     Token     |
+  | |                          |&lt;----------------------|    Endpoint   |
+  | +--------------------------+  | (6) Access Token,  |               |
+  |   |             ^             |     Refresh Token  +---------------+
+  |   |             |             |
+  |   |             |             |
+  |   | (1)         | (4)         |
+  |   | Authorizat- | Authoriza-  |
+  |   | ion Request | tion Code   |
+  |   |             |             |
+  |   |             |             |
+  |   v             |             |
+  | +---------------------------+ | (2) Authorization  +---------------+
+  | |                           | |     Request        |               |
+  | |          Browser          |---------------------&gt;| Authorization |
+  | |                           |&lt;---------------------|    Endpoint   |
+  | +---------------------------+ | (3) Authorization  |               |
+  |                               |     Code           +---------------+
+  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
+</pre>
+<p class="figure">Figure 5: Native App Authorization via an External User-Agent</p>
+<p><a href="#fig-native-app-authorization-flow" class="xref">Figure 5</a> illustrates the interaction between a native app and the browser to authorize the user.</p>
 <p></p>
 
-<ul>
-<li>External user-agent - the native application can capture the response from the authorization server using a redirection URI with a scheme registered with the operating system to invoke the client as the handler, manual copy-and-paste of the credentials, running a local web server, installing a user-agent extension, or by providing a redirection URI identifying a server-hosted resource under the client's control, which in turn makes the response available to the native application.</li>
-<li>Embedded user-agent - the native application obtains the response by directly communicating with the embedded user-agent by monitoring state changes emitted during the resource load, or accessing the user-agent's cookies storage.</li>
-</ul>
-<p id="rfc.section.9.p.4">When choosing between an external or embedded user-agent, developers should consider the following:</p>
-<p></p>
-
-<ul>
-<li>An external user-agent may improve completion rate, as the resource owner may already have an active session with the authorization server, removing the need to re-authenticate.  It provides a familiar end-user experience and functionality.  The resource owner may also rely on user-agent features or extensions to assist with authentication (e.g., password manager, 2-factor device reader).</li>
-<li>An embedded user-agent poses a security challenge because resource owners are authenticating in an unidentified window without access to the visual protections found in most external user-agents.  An embedded user-agent educates end-users to trust unidentified requests for authentication (making phishing attacks easier to execute).</li>
-</ul>
-<p id="rfc.section.9.p.6">Previously, it was common for native apps to use embedded user-agents (commonly implemented with web-views) for OAuth authorization requests.  That approach has many drawbacks, including the host app being able to copy user credentials and cookies as well as the user needing to authenticate from scratch in each app.  See Section ??? for a deeper analysis of the drawbacks of using embedded user-agents for OAuth.</p>
-<p id="rfc.section.9.p.7">Native app authorization requests that use the browser are more secure and can take advantage of the user's authentication state.  Being able to use the existing authentication session in the browser enables single sign-on, as users don't need to authenticate to the authorization server each time they use a new app (unless required by the authorization server policy).</p>
-<p id="rfc.section.9.p.8">Supporting authorization flows between a native app and the browser is possible without changing the OAuth protocol itself, as the OAuth authorization request and response are already defined in terms of URIs.  This encompasses URIs that can be used for inter-app communication.  Some OAuth server implementations that assume all clients are confidential web clients will need to add an understanding of public native app clients and the types of redirect URIs they use to support this best practice.</p>
-<p id="rfc.section.9.p.9">TODO: bring in the rest of RFC8252 here?</p>
+<ol>
+<li>Client app opens a browser tab with the authorization request.</li>
+<li>Authorization endpoint receives the authorization request, authenticates the user, and obtains authorization.  Authenticating the user may involve chaining to other authentication systems.</li>
+<li>Authorization server issues an authorization code to the redirect URI.</li>
+<li>Client receives the authorization code from the redirect URI.</li>
+<li>Client app presents the authorization code at the token endpoint.</li>
+<li>Token endpoint validates the authorization code and issues the tokens requested.</li>
+</ol>
+<h1 id="rfc.section.9.2">
+<a href="#rfc.section.9.2">9.2.</a> <a href="#using-inter-app-uri-communication-for-oauth-in-native-apps" id="using-inter-app-uri-communication-for-oauth-in-native-apps">Using Inter-App URI Communication for OAuth in Native Apps</a>
+</h1>
+<p id="rfc.section.9.2.p.1">Just as URIs are used for OAuth on the web to initiate the authorization request and return the authorization response to the requesting website, URIs can be used by native apps to initiate the authorization request in the device's browser and return the response to the requesting native app.</p>
+<p id="rfc.section.9.2.p.2">By adopting the same methods used on the web for OAuth, benefits seen in the web context like the usability of a single sign-on session and the security of a separate authentication context are likewise gained in the native app context.  Reusing the same approach also reduces the implementation complexity and increases interoperability by relying on standards-based web flows that are not specific to a particular platform.</p>
+<p id="rfc.section.9.2.p.3">Native apps MUST use an external user-agent to perform OAuth authorization requests.  This is achieved by opening the authorization request in the browser (detailed in <a href="#authorization-request-native-app" class="xref">Section 9.3</a>) and using a redirect URI that will return the authorization response back to the native app (defined in <a href="#authorization-response-native-app" class="xref">Section 9.4</a>).</p>
+<h1 id="rfc.section.9.3">
+<a href="#rfc.section.9.3">9.3.</a> <a href="#authorization-request-native-app" id="authorization-request-native-app">Initiating the Authorization Request from a Native App</a>
+</h1>
+<p id="rfc.section.9.3.p.1">Native apps needing user authorization create an authorization request URI with the authorization code grant type per <a href="#authorization-code-grant" class="xref">Section 4.1</a> using a redirect URI capable of being received by the native app.</p>
+<p id="rfc.section.9.3.p.2">The function of the redirect URI for a native app authorization request is similar to that of a web-based authorization request.  Rather than returning the authorization response to the OAuth client's server, the redirect URI used by a native app returns the response to the app.  Several options for a redirect URI that will return the authorization response to the native app in different platforms are documented in <a href="#authorization-response-native-app" class="xref">Section 9.4</a>.  Any redirect URI that allows the app to receive the URI and inspect its parameters is viable.</p>
+<p id="rfc.section.9.3.p.3">After constructing the authorization request URI, the app uses platform-specific APIs to open the URI in an external user-agent.  Typically, the external user-agent used is the default browser, that is, the application configured for handling "http" and "https" scheme URIs on the system; however, different browser selection criteria and other categories of external user-agents MAY be used.</p>
+<p id="rfc.section.9.3.p.4">This best practice focuses on the browser as the RECOMMENDED external user-agent for native apps.  An external user-agent designed specifically for user authorization and capable of processing authorization requests and responses like a browser MAY also be used.  Other external user-agents, such as a native app provided by the authorization server may meet the criteria set out in this best practice, including using the same redirection URI properties, but their use is out of scope for this specification.</p>
+<p id="rfc.section.9.3.p.5">Some platforms support a browser feature known as "in-app browser tabs", where an app can present a tab of the browser within the app context without switching apps, but still retain key benefits of the browser such as a shared authentication state and security context.  On platforms where they are supported, it is RECOMMENDED, for usability reasons, that apps use in-app browser tabs for the authorization request.</p>
+<h1 id="rfc.section.9.4">
+<a href="#rfc.section.9.4">9.4.</a> <a href="#authorization-response-native-app" id="authorization-response-native-app">Receiving the Authorization Response in a Native App</a>
+</h1>
+<p id="rfc.section.9.4.p.1">There are several redirect URI options available to native apps for receiving the authorization response from the browser, the availability and user experience of which varies by platform.</p>
+<p id="rfc.section.9.4.p.2">To fully support native apps, authorization servers MUST offer at least the three redirect URI options described in the following subsections to native apps.  Native apps MAY use whichever redirect option suits their needs best, taking into account platform-specific implementation details.</p>
+<h1 id="rfc.section.9.4.1">
+<a href="#rfc.section.9.4.1">9.4.1.</a> <a href="#private-use-uri-scheme" id="private-use-uri-scheme">Private-Use URI Scheme Redirection</a>
+</h1>
+<p id="rfc.section.9.4.1.p.1">Many mobile and desktop computing platforms support inter-app communication via URIs by allowing apps to register private-use URI schemes (sometimes colloquially referred to as "custom URL schemes") like <samp>com.example.app</samp>.  When the browser or another app attempts to load a URI with a private-use URI scheme, the app that registered it is launched to handle the request.</p>
+<p id="rfc.section.9.4.1.p.2">To perform an authorization request with a private-use URI scheme redirect, the native app launches the browser with a standard authorization request, but one where the redirection URI utilizes a private-use URI scheme it registered with the operating system.</p>
+<p id="rfc.section.9.4.1.p.3">When choosing a URI scheme to associate with the app, apps MUST use a URI scheme based on a domain name under their control, expressed in reverse order, as recommended by Section 3.8 of <a href="#RFC7595" class="xref">[RFC7595]</a> for private-use URI schemes.</p>
+<p id="rfc.section.9.4.1.p.4">For example, an app that controls the domain name <samp>app.example.com</samp> can use <samp>com.example.app</samp> as their scheme.  Some authorization servers assign client identifiers based on domain names, for example, <samp>client1234.usercontent.example.net</samp>, which can also be used as the domain name for the scheme when reversed in the same manner.  A scheme such as <samp>myapp</samp>, however, would not meet this requirement, as it is not based on a domain name.</p>
+<p id="rfc.section.9.4.1.p.5">When there are multiple apps by the same publisher, care must be taken so that each scheme is unique within that group.  On platforms that use app identifiers based on reverse-order domain names, those identifiers can be reused as the private-use URI scheme for the OAuth redirect to help avoid this problem.</p>
+<p id="rfc.section.9.4.1.p.6">Following the requirements of Section 3.2 of <a href="#RFC3986" class="xref">[RFC3986]</a>, as there is no naming authority for private-use URI scheme redirects, only a single slash (<samp>/</samp>) appears after the scheme component.  A complete example of a redirect URI utilizing a private-use URI scheme is:</p>
+<pre>
+com.example.app:/oauth2redirect/example-provider
+</pre>
+<p id="rfc.section.9.4.1.p.7">When the authorization server completes the request, it redirects to the client's redirection URI as it would normally.  As the redirection URI uses a private-use URI scheme, it results in the operating system launching the native app, passing in the URI as a launch parameter.  Then, the native app uses normal processing for the authorization response.</p>
+<h1 id="rfc.section.9.4.2">
+<a href="#rfc.section.9.4.2">9.4.2.</a> <a href="#claimed-https-scheme-uri-redirection" id="claimed-https-scheme-uri-redirection">Claimed "https" Scheme URI Redirection</a>
+</h1>
+<p id="rfc.section.9.4.2.p.1">Some operating systems allow apps to claim <samp>https</samp> scheme <a href="#RFC7230" class="xref">[RFC7230]</a> URIs in the domains they control.  When the browser encounters a claimed URI, instead of the page being loaded in the browser, the native app is launched with the URI supplied as a launch parameter.</p>
+<p id="rfc.section.9.4.2.p.2">Such URIs can be used as redirect URIs by native apps.  They are indistinguishable to the authorization server from a regular web- based client redirect URI.  An example is:</p>
+<pre>
+https://app.example.com/oauth2redirect/example-provider
+</pre>
+<p id="rfc.section.9.4.2.p.3">As the redirect URI alone is not enough to distinguish public native app clients from confidential web clients, it is REQUIRED in Section ??? that the client type be recorded during client registration to enable the server to determine the client type and act accordingly.</p>
+<p id="rfc.section.9.4.2.p.4">App-claimed <samp>https</samp> scheme redirect URIs have some advantages compared to other native app redirect options in that the identity of the destination app is guaranteed to the authorization server by the operating system.  For this reason, native apps SHOULD use them over the other options where possible.</p>
+<h1 id="rfc.section.9.4.3">
+<a href="#rfc.section.9.4.3">9.4.3.</a> <a href="#loopback-interface-redirection" id="loopback-interface-redirection">Loopback Interface Redirection</a>
+</h1>
+<p id="rfc.section.9.4.3.p.1">Native apps that are able to open a port on the loopback network interface without needing special permissions (typically, those on desktop operating systems) can use the loopback interface to receive the OAuth redirect.</p>
+<p id="rfc.section.9.4.3.p.2">Loopback redirect URIs use the <samp>http</samp> scheme and are constructed with the loopback IP literal and whatever port the client is listening on.</p>
+<p id="rfc.section.9.4.3.p.3">That is, <samp>http://127.0.0.1:{port}/{path}</samp> for IPv4, and <samp>http://[::1]:{port}/{path}</samp> for IPv6.  An example redirect using the IPv4 loopback interface with a randomly assigned port:</p>
+<pre>
+http://127.0.0.1:51004/oauth2redirect/example-provider
+</pre>
+<p id="rfc.section.9.4.3.p.4">An example redirect using the IPv6 loopback interface with a randomly assigned port:</p>
+<pre>
+http://[::1]:61023/oauth2redirect/example-provider
+</pre>
+<p id="rfc.section.9.4.3.p.5">The authorization server MUST allow any port to be specified at the time of the request for loopback IP redirect URIs, to accommodate clients that obtain an available ephemeral port from the operating system at the time of the request.</p>
+<p id="rfc.section.9.4.3.p.6">Clients SHOULD NOT assume that the device supports a particular version of the Internet Protocol.  It is RECOMMENDED that clients attempt to bind to the loopback interface using both IPv4 and IPv6 and use whichever is available.</p>
 <h1 id="rfc.section.10">
 <a href="#rfc.section.10">10.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
 </h1>
 <p id="rfc.section.10.p.1">As a flexible and extensible framework, OAuth's security considerations depend on many factors.  The following sections provide implementers with security guidelines focused on the three client profiles described in Section 2.1: web application, user-agent-based application, and native application.</p>
 <p id="rfc.section.10.p.2">A comprehensive OAuth security model and analysis, as well as background for the protocol design, is provided by <a href="#RFC6819" class="xref">[RFC6819]</a> and <a href="#I-D.ietf-oauth-security-topics" class="xref">[I-D.ietf-oauth-security-topics]</a>.</p>
 <h1 id="rfc.section.10.1">
-<a href="#rfc.section.10.1">10.1.</a> <a href="#client-authentication-2" id="client-authentication-2">Client Authentication</a>
+<a href="#rfc.section.10.1">10.1.</a> <a href="#security-client-authentication" id="security-client-authentication">Client Authentication</a>
 </h1>
-<p id="rfc.section.10.1.p.1">The authorization server establishes client credentials with web application clients for the purpose of client authentication.  The authorization server is encouraged to consider stronger client authentication means than a client password.  Web application clients MUST ensure confidentiality of client passwords and other client credentials.</p>
-<p id="rfc.section.10.1.p.2">The authorization server MUST NOT issue client passwords or other client credentials to native application or user-agent-based application clients for the purpose of client authentication.  The authorization server MAY issue a client password or other credentials for a specific installation of a native application client on a specific device.</p>
-<p id="rfc.section.10.1.p.3">When client authentication is not possible, the authorization server SHOULD employ other means to validate the client's identity &#8211; for example, by requiring the registration of the client redirection URI or enlisting the resource owner to confirm identity.  A valid redirection URI is not sufficient to verify the client's identity when asking for resource owner authorization but can be used to prevent delivering credentials to a counterfeit client after obtaining resource owner authorization.</p>
-<p id="rfc.section.10.1.p.4">The authorization server must consider the security implications of interacting with unauthenticated clients and take measures to limit the potential exposure of other credentials (e.g., refresh tokens) issued to such clients.</p>
+<p id="rfc.section.10.1.p.1">Authorization servers SHOULD use client authentication if possible.</p>
+<p id="rfc.section.10.1.p.2">It is RECOMMENDED to use asymmetric (public-key based) methods for client authentication such as mTLS <a href="#RFC8705" class="xref">[RFC8705]</a> or <samp>private_key_jwt</samp> <a href="#OpenID" class="xref">[OpenID]</a>. When asymmetric methods for client authentication are used, authorization servers do not need to store sensitive symmetric keys, making these methods more robust against a number of attacks.</p>
+<p id="rfc.section.10.1.p.3">Authorization server MUST only rely on client authentication if the process of issuance/registration and distribution of the underlying credentials ensures their confidentiality.</p>
+<p id="rfc.section.10.1.p.4">When client authentication is not possible, the authorization server SHOULD employ other means to validate the client's identity &#8211; for example, by requiring the registration of the client redirection URI or enlisting the resource owner to confirm identity.  A valid redirection URI is not sufficient to verify the client's identity when asking for resource owner authorization but can be used to prevent delivering credentials to a counterfeit client after obtaining resource owner authorization.</p>
+<p id="rfc.section.10.1.p.5">The authorization server must consider the security implications of interacting with unauthenticated clients and take measures to limit the potential exposure of other credentials (e.g., refresh tokens) issued to such clients.</p>
+<p id="rfc.section.10.1.p.6">The privileges an authorization server associates with a certain client identity MUST depend on the assessment of the overall process for client identification and client credential lifecycle management.  For example, authentication of a dynamically registered client just ensures the authorization server it is talking to the same client again.  In contrast, if there is a web application whose developer's identity was verified, who signed a contract and is issued a client secret that is only used in a secure backend service, the authorization server might allow this client to access more sensible services or to use the client credential grant type.</p>
+<h1 id="rfc.section.10.1.1">
+<a href="#rfc.section.10.1.1">10.1.1.</a> <a href="#client-authentication-of-native-apps" id="client-authentication-of-native-apps">Client Authentication of Native Apps</a>
+</h1>
+<p id="rfc.section.10.1.1.p.1">Secrets that are statically included as part of an app distributed to multiple users should not be treated as confidential secrets, as one user may inspect their copy and learn the shared secret.  For this reason, it is NOT RECOMMENDED for authorization servers to require client authentication of public native apps clients using a shared secret, as this serves little value beyond client identification which is already provided by the <samp>client_id</samp> request parameter.</p>
+<p id="rfc.section.10.1.1.p.2">Authorization servers that still require a statically included shared secret for native app clients MUST treat the client as a public client (as defined in <a href="#client-types" class="xref">Section 2.1</a>), and not accept the secret as proof of the client's identity.  Without additional measures, such clients are subject to client impersonation (see <a href="#native-app-client-impersonation" class="xref">Section 10.3.1</a>).</p>
 <h1 id="rfc.section.10.2">
-<a href="#rfc.section.10.2">10.2.</a> <a href="#client-impersonation" id="client-impersonation">Client Impersonation</a>
+<a href="#rfc.section.10.2">10.2.</a> <a href="#native-app-registration" id="native-app-registration">Registration of Native App Clients</a>
 </h1>
-<p id="rfc.section.10.2.p.1">A malicious client can impersonate another client and obtain access to protected resources if the impersonated client fails to, or is unable to, keep its client credentials confidential.</p>
-<p id="rfc.section.10.2.p.2">The authorization server MUST authenticate the client whenever possible.  If the authorization server cannot authenticate the client due to the client's nature, the authorization server MUST require the registration of any redirection URI used for receiving authorization responses and SHOULD utilize other means to protect resource owners from such potentially malicious clients.  For example, the authorization server can engage the resource owner to assist in identifying the client and its origin.</p>
-<p id="rfc.section.10.2.p.3">The authorization server SHOULD enforce explicit resource owner authentication and provide the resource owner with information about the client and the requested authorization scope and lifetime.  It is up to the resource owner to review the information in the context of the current client and to authorize or deny the request.</p>
-<p id="rfc.section.10.2.p.4">The authorization server SHOULD NOT process repeated authorization requests automatically (without active resource owner interaction) without authenticating the client or relying on other measures to ensure that the repeated request comes from the original client and not an impersonator.</p>
+<p id="rfc.section.10.2.p.1">Except when using a mechanism like Dynamic Client Registration <a href="#RFC7591" class="xref">[RFC7591]</a> to provision per-instance secrets, native apps are classified as public clients, as defined in <a href="#client-types" class="xref">Section 2.1</a>; they MUST be registered with the authorization server as such.  Authorization servers MUST record the client type in the client registration details in order to identify and process requests accordingly.</p>
+<p id="rfc.section.10.2.p.2">Authorization servers MUST require clients to register their complete redirect URI (including the path component) and reject authorization requests that specify a redirect URI that doesn't exactly match the one that was registered; the exception is loopback redirects, where an exact match is required except for the port URI component.</p>
+<p id="rfc.section.10.2.p.3">For private-use URI scheme-based redirects, authorization servers SHOULD enforce the requirement in <a href="#private-use-uri-scheme" class="xref">Section 9.4.1</a> that clients use schemes that are reverse domain name based.  At a minimum, any private-use URI scheme that doesn't contain a period character (<samp>.</samp>) SHOULD be rejected.</p>
+<p id="rfc.section.10.2.p.4">In addition to the collision-resistant properties, requiring a URI scheme based on a domain name that is under the control of the app can help to prove ownership in the event of a dispute where two apps claim the same private-use URI scheme (where one app is acting maliciously).  For example, if two apps claimed <samp>com.example.app</samp>, the owner of <samp>example.com</samp> could petition the app store operator to remove the counterfeit app.  Such a petition is harder to prove if a generic URI scheme was used.</p>
+<p id="rfc.section.10.2.p.5">Authorization servers MAY request the inclusion of other platform- specific information, such as the app package or bundle name, or other information that may be useful for verifying the calling app's identity on operating systems that support such functions.</p>
 <h1 id="rfc.section.10.3">
-<a href="#rfc.section.10.3">10.3.</a> <a href="#access-tokens" id="access-tokens">Access Tokens</a>
+<a href="#rfc.section.10.3">10.3.</a> <a href="#client-impersonation" id="client-impersonation">Client Impersonation</a>
 </h1>
-<p id="rfc.section.10.3.p.1">Access token credentials (as well as any confidential access token attributes) MUST be kept confidential in transit and storage, and only shared among the authorization server, the resource servers the access token is valid for, and the client to whom the access token is issued.  Access token credentials MUST only be transmitted using TLS as described in Section 1.6 with server authentication as defined by <a href="#RFC2818" class="xref">[RFC2818]</a>.</p>
-<p id="rfc.section.10.3.p.2">The authorization server MUST ensure that access tokens cannot be generated, modified, or guessed to produce valid access tokens by unauthorized parties.</p>
-<p id="rfc.section.10.3.p.3">The client SHOULD request access tokens with the minimal scope necessary.  The authorization server SHOULD take the client identity into account when choosing how to honor the requested scope and MAY issue an access token with less rights than requested.</p>
-<p id="rfc.section.10.3.p.4">This specification does not provide any methods for the resource server to ensure that an access token presented to it by a given client was issued to that client by the authorization server.</p>
+<p id="rfc.section.10.3.p.1">A malicious client can impersonate another client and obtain access to protected resources if the impersonated client fails to, or is unable to, keep its client credentials confidential.</p>
+<p id="rfc.section.10.3.p.2">The authorization server MUST authenticate the client whenever possible.  If the authorization server cannot authenticate the client due to the client's nature, the authorization server MUST require the registration of any redirection URI used for receiving authorization responses and SHOULD utilize other means to protect resource owners from such potentially malicious clients.  For example, the authorization server can engage the resource owner to assist in identifying the client and its origin.</p>
+<p id="rfc.section.10.3.p.3">The authorization server SHOULD enforce explicit resource owner authentication and provide the resource owner with information about the client and the requested authorization scope and lifetime.  It is up to the resource owner to review the information in the context of the current client and to authorize or deny the request.</p>
+<p id="rfc.section.10.3.p.4">The authorization server SHOULD NOT process repeated authorization requests automatically (without active resource owner interaction) without authenticating the client or relying on other measures to ensure that the repeated request comes from the original client and not an impersonator.</p>
+<h1 id="rfc.section.10.3.1">
+<a href="#rfc.section.10.3.1">10.3.1.</a> <a href="#native-app-client-impersonation" id="native-app-client-impersonation">Impersonation of Native Apps</a>
+</h1>
+<p id="rfc.section.10.3.1.p.1">As stated above, the authorization server SHOULD NOT process authorization requests automatically without user consent or interaction, except when the identity of the client can be assured.  This includes the case where the user has previously approved an authorization request for a given client id &#8211; unless the identity of the client can be proven, the request SHOULD be processed as if no previous request had been approved.</p>
+<p id="rfc.section.10.3.1.p.2">Measures such as claimed <samp>https</samp> scheme redirects MAY be accepted by authorization servers as identity proof.  Some operating systems may offer alternative platform-specific identity features that MAY be accepted, as appropriate.</p>
 <h1 id="rfc.section.10.4">
-<a href="#rfc.section.10.4">10.4.</a> <a href="#refresh-tokens" id="refresh-tokens">Refresh Tokens</a>
+<a href="#rfc.section.10.4">10.4.</a> <a href="#access-tokens" id="access-tokens">Access Tokens</a>
 </h1>
-<p id="rfc.section.10.4.p.1">Authorization servers MAY issue refresh tokens to clients.</p>
-<p id="rfc.section.10.4.p.2">Refresh tokens MUST be kept confidential in transit and storage, and shared only among the authorization server and the client to whom the refresh tokens were issued.  The authorization server MUST maintain the binding between a refresh token and the client to whom it was issued.  Refresh tokens MUST only be transmitted using TLS as described in Section 1.6 with server authentication as defined by <a href="#RFC2818" class="xref">[RFC2818]</a>.</p>
-<p id="rfc.section.10.4.p.3">The authorization server MUST verify the binding between the refresh token and client identity whenever the client identity can be authenticated.  When client authentication is not possible, the authorization server SHOULD deploy other means to detect refresh token abuse.</p>
-<p id="rfc.section.10.4.p.4">For example, the authorization server could employ refresh token rotation in which a new refresh token is issued with every access token refresh response.  The previous refresh token is invalidated but retained by the authorization server.  If a refresh token is compromised and subsequently used by both the attacker and the legitimate client, one of them will present an invalidated refresh token, which will inform the authorization server of the breach.</p>
-<p id="rfc.section.10.4.p.5">The authorization server MUST ensure that refresh tokens cannot be generated, modified, or guessed to produce valid refresh tokens by unauthorized parties.</p>
+<p id="rfc.section.10.4.p.1">Access token credentials (as well as any confidential access token attributes) MUST be kept confidential in transit and storage, and only shared among the authorization server, the resource servers the access token is valid for, and the client to whom the access token is issued.  Access token credentials MUST only be transmitted using TLS as described in Section 1.6 with server authentication as defined by <a href="#RFC2818" class="xref">[RFC2818]</a>.</p>
+<p id="rfc.section.10.4.p.2">The authorization server MUST ensure that access tokens cannot be generated, modified, or guessed to produce valid access tokens by unauthorized parties.</p>
+<h1 id="rfc.section.10.4.1">
+<a href="#rfc.section.10.4.1">10.4.1.</a> <a href="#access-token-privilege-restriction-1" id="access-token-privilege-restriction-1">Access Token Privilege Restriction</a>
+</h1>
+<p id="rfc.section.10.4.1.p.1">The client SHOULD request access tokens with the minimal scope necessary.  The authorization server SHOULD take the client identity into account when choosing how to honor the requested scope and MAY issue an access token with less rights than requested.</p>
+<p id="rfc.section.10.4.1.p.2">The privileges associated with an access token SHOULD be restricted to the minimum required for the particular application or use case. This prevents clients from exceeding the privileges authorized by the resource owner. It also prevents users from exceeding their privileges authorized by the respective security policy. Privilege restrictions also help to reduce the impact of access token leakage.</p>
+<p id="rfc.section.10.4.1.p.3">In particular, access tokens SHOULD be restricted to certain resource servers (audience restriction), preferably to a single resource server. To put this into effect, the authorization server associates the access token with certain resource servers and every resource server is obliged to verify, for every request, whether the access token sent with that request was meant to be used for that particular resource server. If not, the resource server MUST refuse to serve the respective request. Clients and authorization servers MAY utilize the parameters <samp>scope</samp> or <samp>resource</samp> as specified in <a href="#RFC8707" class="xref">[RFC8707]</a>, respectively, to determine the resource server they want to access.</p>
+<h1 id="rfc.section.10.4.2">
+<a href="#rfc.section.10.4.2">10.4.2.</a> <a href="#access-token-replay-prevention" id="access-token-replay-prevention">Access Token Replay Prevention</a>
+</h1>
+<p id="rfc.section.10.4.2.p.1">Additionally, access tokens SHOULD be restricted to certain resources and actions on resource servers or resources. To put this into effect, the authorization server associates the access token with the respective resource and actions and every resource server is obliged to verify, for every request, whether the access token sent with that request was meant to be used for that particular action on the particular resource. If not, the resource server must refuse to serve the respective request. Clients and authorization servers MAY utilize the parameter <samp>scope</samp> and <samp>authorization_details</samp> as specified in <a href="#I-D.ietf-oauth-rar" class="xref">[I-D.ietf-oauth-rar]</a> to determine those resources and/or actions.</p>
+<p id="rfc.section.10.4.2.p.2">Authorization and resource servers SHOULD use mechanisms for sender-constrained access tokens to prevent token replay as described in (#pop_tokens). A sender-constrained access token scopes the applicability of an access token to a certain sender. This sender is obliged to demonstrate knowledge of a certain secret as prerequisite for the acceptance of that token at the recipient (e.g., a resource server). The use of Mutual TLS for OAuth 2.0 <a href="#RFC8705" class="xref">[RFC8705]</a> is RECOMMENDED.</p>
 <h1 id="rfc.section.10.5">
-<a href="#rfc.section.10.5">10.5.</a> <a href="#authorization-codes" id="authorization-codes">Authorization Codes</a>
+<a href="#rfc.section.10.5">10.5.</a> <a href="#refresh-tokens" id="refresh-tokens">Refresh Tokens</a>
 </h1>
-<p id="rfc.section.10.5.p.1">The transmission of authorization codes SHOULD be made over a secure channel, and the client SHOULD require the use of TLS with its redirection URI if the URI identifies a network resource.  Since authorization codes are transmitted via user-agent redirections, they could potentially be disclosed through user-agent history and HTTP referrer headers.</p>
-<p id="rfc.section.10.5.p.2">Authorization codes operate as plaintext bearer credentials, used to verify that the resource owner who granted authorization at the authorization server is the same resource owner returning to the client to complete the process.  Therefore, if the client relies on the authorization code for its own resource owner authentication, the client redirection endpoint MUST require the use of TLS.</p>
-<p id="rfc.section.10.5.p.3">Authorization codes MUST be short lived and single-use.  If the authorization server observes multiple attempts to exchange an authorization code for an access token, the authorization server SHOULD attempt to revoke all access tokens already granted based on the compromised authorization code.</p>
-<p id="rfc.section.10.5.p.4">If the client can be authenticated, the authorization servers MUST authenticate the client and ensure that the authorization code was issued to the same client.</p>
+<p id="rfc.section.10.5.p.1">Authorization servers MAY issue refresh tokens to clients.</p>
+<p id="rfc.section.10.5.p.2">Refresh tokens MUST be kept confidential in transit and storage, and shared only among the authorization server and the client to whom the refresh tokens were issued.  The authorization server MUST maintain the binding between a refresh token and the client to whom it was issued.  Refresh tokens MUST only be transmitted using TLS as described in Section 1.6 with server authentication as defined by <a href="#RFC2818" class="xref">[RFC2818]</a>.</p>
+<p id="rfc.section.10.5.p.3">The authorization server MUST verify the binding between the refresh token and client identity whenever the client identity can be authenticated.  When client authentication is not possible, the authorization server MUST issue sender-constrained refresh tokens or use refresh token rotation as described in (#refresh_token_protection).</p>
+<p id="rfc.section.10.5.p.4">The authorization server MUST ensure that refresh tokens cannot be generated, modified, or guessed to produce valid refresh tokens by unauthorized parties.</p>
 <h1 id="rfc.section.10.6">
-<a href="#rfc.section.10.6">10.6.</a> <a href="#authorization-code-redirection-uri-manipulation" id="authorization-code-redirection-uri-manipulation">Authorization Code Redirection URI Manipulation</a>
+<a href="#rfc.section.10.6">10.6.</a> <a href="#protecting-redirect-based-flows" id="protecting-redirect-based-flows">Protecting Redirect-Based Flows</a>
 </h1>
-<p id="rfc.section.10.6.p.1">When requesting authorization using the authorization code grant type, the client can specify a redirection URI via the "redirect_uri" parameter.  If an attacker can manipulate the value of the redirection URI, it can cause the authorization server to redirect the resource owner user-agent to a URI under the control of the attacker with the authorization code.</p>
-<p id="rfc.section.10.6.p.2">An attacker can create an account at a legitimate client and initiate the authorization flow.  When the attacker's user-agent is sent to the authorization server to grant access, the attacker grabs the authorization URI provided by the legitimate client and replaces the client's redirection URI with a URI under the control of the attacker.  The attacker then tricks the victim into following the manipulated link to authorize access to the legitimate client.</p>
-<p id="rfc.section.10.6.p.3">Once at the authorization server, the victim is prompted with a normal, valid request on behalf of a legitimate and trusted client, and authorizes the request.  The victim is then redirected to an endpoint under the control of the attacker with the authorization code.  The attacker completes the authorization flow by sending the authorization code to the client using the original redirection URI provided by the client.  The client exchanges the authorization code with an access token and links it to the attacker's client account, which can now gain access to the protected resources authorized by the victim (via the client).</p>
-<p id="rfc.section.10.6.p.4">In order to prevent such an attack, the authorization server MUST ensure that the redirection URI used to obtain the authorization code is identical to the redirection URI provided when exchanging the authorization code for an access token.  The authorization server MUST require public clients and SHOULD require confidential clients to register their redirection URIs.  If a redirection URI is provided in the request, the authorization server MUST validate it against the registered value.</p>
+<p id="rfc.section.10.6.p.1">When comparing client redirect URIs against pre-registered URIs, authorization servers MUST utilize exact string matching. This measure contributes to the prevention of leakage of authorization codes and access tokens (see (#insufficient_uri_validation)). It can also help to detect mix-up attacks (see (#mix_up)).</p>
+<p id="rfc.section.10.6.p.2">Clients MUST NOT expose URLs that forward the user's browser to arbitrary URIs obtained from a query parameter ("open redirector").  Open redirectors can enable exfiltration of authorization codes and access tokens, see (#open_redirector_on_client).</p>
+<p id="rfc.section.10.6.p.3">Clients MUST prevent Cross-Site Request Forgery (CSRF). In this context, CSRF refers to requests to the redirection endpoint that do not originate at the authorization server, but a malicious third party (see Section 4.4.1.8. of <a href="#RFC6819" class="xref">[RFC6819]</a> for details). Clients that have ensured that the authorization server supports PKCE MAY rely the CSRF protection provided by PKCE. In OpenID Connect flows, the <samp>nonce</samp> parameter provides CSRF protection. Otherwise, one-time use CSRF tokens carried in the <samp>state</samp> parameter that are securely bound to the user agent MUST be used for CSRF protection (see (#csrf_countermeasures)).</p>
+<p id="rfc.section.10.6.p.4">In order to prevent mix-up attacks (see (#mix_up)), clients MUST only process redirect responses of the authorization server they sent the respective request to and from the same user agent this authorization request was initiated with. Clients MUST store the authorization server they sent an authorization request to and bind this information to the user agent and check that the authorization request was received from the correct authorization server. Clients MUST ensure that the subsequent token request, if applicable, is sent to the same authorization server. Clients SHOULD use distinct redirect URIs for each authorization server as a means to identify the authorization server a particular response came from.</p>
+<p id="rfc.section.10.6.p.5">An AS that redirects a request potentially containing user credentials MUST avoid forwarding these user credentials accidentally (see (#redirect_307) for details).</p>
+<h1 id="rfc.section.10.6.1">
+<a href="#rfc.section.10.6.1">10.6.1.</a> <a href="#loopback-redirect-considerations-in-native-apps" id="loopback-redirect-considerations-in-native-apps">Loopback Redirect Considerations in Native Apps</a>
+</h1>
+<p id="rfc.section.10.6.1.p.1">Loopback interface redirect URIs use the <samp>http</samp> scheme (i.e., without Transport Layer Security (TLS)).  This is acceptable for loopback interface redirect URIs as the HTTP request never leaves the device.</p>
+<p id="rfc.section.10.6.1.p.2">Clients should open the network port only when starting the authorization request and close it once the response is returned.</p>
+<p id="rfc.section.10.6.1.p.3">Clients should listen on the loopback network interface only, in order to avoid interference by other network actors.</p>
+<p id="rfc.section.10.6.1.p.4">While redirect URIs using localhost (i.e., <samp>http://localhost:{port}/{path}</samp>) function similarly to loopback IP redirects described in <a href="#loopback-interface-redirection" class="xref">Section 9.4.3</a>, the use of <samp>localhost</samp> is NOT RECOMMENDED.  Specifying a redirect URI with the loopback IP literal rather than <samp>localhost</samp> avoids inadvertently listening on network interfaces other than the loopback interface.  It is also less susceptible to client-side firewalls and misconfigured host name resolution on the user's device.</p>
 <h1 id="rfc.section.10.7">
-<a href="#rfc.section.10.7">10.7.</a> <a href="#resource-owner-password-credentials" id="resource-owner-password-credentials">Resource Owner Password Credentials</a>
+<a href="#rfc.section.10.7">10.7.</a> <a href="#authorization-codes" id="authorization-codes">Authorization Codes</a>
 </h1>
-<p id="rfc.section.10.7.p.1">The OAuth 2.0 resource owner password credentials grant type is often used for legacy or migration reasons.  It reduces the overall risk of storing usernames and passwords by the client but does not eliminate the need to expose highly privileged credentials to the client.</p>
-<p id="rfc.section.10.7.p.2">This grant type carries a higher risk than other grant types because it maintains the password anti-pattern this protocol seeks to avoid.  The client could abuse the password, or the password could unintentionally be disclosed to an attacker (e.g., via log files or other records kept by the client).</p>
-<p id="rfc.section.10.7.p.3">Additionally, because the resource owner does not have control over the authorization process (the resource owner's involvement ends when it hands over its credentials to the client), the client can obtain access tokens with a broader scope than desired by the resource owner.  The authorization server should consider the scope and lifetime of access tokens issued via this grant type.</p>
-<p id="rfc.section.10.7.p.4">The resource owner password credentials grant MUST NOT be used.  This grant type insecurely exposes the credentials of the resource owner to the client.  Even if the client is benign, this results in an increased attack surface (credentials can leak in more places than just the AS) and users are trained to enter their credentials in places other than the AS.</p>
-<p id="rfc.section.10.7.p.5">Furthermore, adapting the resource owner password credentials grant to two-factor authentication, authentication with cryptographic credentials (cf.  WebCrypto <a href="#webcrypto" class="xref">[webcrypto]</a>, WebAuthn <a href="#webauthn" class="xref">[webauthn]</a>), and authentication processes that require multiple steps can be hard or impossible.</p>
+<p id="rfc.section.10.7.p.1">The transmission of authorization codes MUST be made over a secure channel, and the client MUST require the use of TLS with its redirection URI if the URI identifies a network resource.  Since authorization codes are transmitted via user-agent redirections, they could potentially be disclosed through user-agent history and HTTP referrer headers.</p>
+<p id="rfc.section.10.7.p.2">Authorization codes MUST be short lived and single-use.  If the authorization server observes multiple attempts to exchange an authorization code for an access token, the authorization server SHOULD attempt to revoke all refresh and access tokens already granted based on the compromised authorization code.</p>
+<p id="rfc.section.10.7.p.3">If the client can be authenticated, the authorization servers MUST authenticate the client and ensure that the authorization code was issued to the same client.</p>
+<p id="rfc.section.10.7.p.4">Clients MUST prevent injection (replay) of authorization codes into the authorization response by attackers. The use of PKCE is RECOMMENDED to this end. The OpenID Connect <samp>nonce</samp> parameter and ID Token Claim <a href="#OpenID" class="xref">[OpenID]</a> MAY be used as well. The PKCE challenge or OpenID Connect <samp>nonce</samp> MUST be transaction-specific and securely bound to the client and the user agent in which the transaction was started.</p>
+<p id="rfc.section.10.7.p.5">Note: although PKCE so far was designed as a mechanism to protect native apps, this advice applies to all kinds of OAuth clients, including web applications.</p>
+<p id="rfc.section.10.7.p.6">When using PKCE, clients SHOULD use PKCE code challenge methods that do not expose the PKCE verifier in the authorization request.  Otherwise, attackers that can read the authorization request (cf.  Attacker A4 in (#secmodel)) can break the security provided by PKCE. Currently, <samp>S256</samp> is the only such method.</p>
+<p id="rfc.section.10.7.p.7">Authorization servers MUST support PKCE.</p>
+<p id="rfc.section.10.7.p.8">Authorization servers MUST provide a way to detect their support for PKCE. To this end, they MUST either (a) publish the element <samp>code_challenge_methods_supported</samp> in their AS metadata (<a href="#RFC8418" class="xref">[RFC8418]</a>) containing the supported PKCE challenge methods (which can be used by the client to detect PKCE support) or (b) provide a deployment-specific way to ensure or determine PKCE support by the AS.</p>
 <h1 id="rfc.section.10.8">
 <a href="#rfc.section.10.8">10.8.</a> <a href="#request-confidentiality" id="request-confidentiality">Request Confidentiality</a>
 </h1>
-<p id="rfc.section.10.8.p.1">Access tokens, refresh tokens, resource owner passwords, and client credentials MUST NOT be transmitted in the clear.  Authorization codes SHOULD NOT be transmitted in the clear.</p>
+<p id="rfc.section.10.8.p.1">Access tokens, refresh tokens, authorization codes, and client credentials MUST NOT be transmitted in the clear.</p>
 <p id="rfc.section.10.8.p.2">The "state" and "scope" parameters SHOULD NOT include sensitive client or resource owner information in plain text, as they can be transmitted over insecure channels or stored insecurely.</p>
 <h1 id="rfc.section.10.9">
 <a href="#rfc.section.10.9">10.9.</a> <a href="#ensuring-endpoint-authenticity" id="ensuring-endpoint-authenticity">Ensuring Endpoint Authenticity</a>
@@ -1948,35 +2119,84 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <p id="rfc.section.10.11.p.2">Service providers should attempt to educate end-users about the risks phishing attacks pose and should provide mechanisms that make it easy for end-users to confirm the authenticity of their sites.  Client developers should consider the security implications of how they interact with the user-agent (e.g., external, embedded), and the ability of the end-user to verify the authenticity of the authorization server.</p>
 <p id="rfc.section.10.11.p.3">To reduce the risk of phishing attacks, the authorization servers MUST require the use of TLS on every endpoint used for end-user interaction.</p>
 <h1 id="rfc.section.10.12">
-<a href="#rfc.section.10.12">10.12.</a> <a href="#cross-site-request-forgery" id="cross-site-request-forgery">Cross-Site Request Forgery</a>
+<a href="#rfc.section.10.12">10.12.</a> <a href="#fake-external-user-agents-in-native-apps" id="fake-external-user-agents-in-native-apps">Fake External User-Agents in Native Apps</a>
 </h1>
-<p id="rfc.section.10.12.p.1">Cross-site request forgery (CSRF) is an exploit in which an attacker causes the user-agent of a victim end-user to follow a malicious URI (e.g., provided to the user-agent as a misleading link, image, or redirection) to a trusting server (usually established via the presence of a valid session cookie).</p>
-<p id="rfc.section.10.12.p.2">A CSRF attack against the client's redirection URI allows an attacker to inject its own authorization code or access token, which can result in the client using an access token associated with the attacker's protected resources rather than the victim's (e.g., save the victim's bank account information to a protected resource controlled by the attacker).</p>
-<p id="rfc.section.10.12.p.3">The client MUST implement CSRF protection for its redirection URI.  This is typically accomplished by requiring any request sent to the redirection URI endpoint to include a value that binds the request to the user-agent's authenticated state (e.g., a hash of the session cookie used to authenticate the user-agent).  The client SHOULD utilize the "state" request parameter to deliver this value to the authorization server when making an authorization request.</p>
-<p id="rfc.section.10.12.p.4">Once authorization has been obtained from the end-user, the authorization server redirects the end-user's user-agent back to the client with the required binding value contained in the "state" parameter.  The binding value enables the client to verify the validity of the request by matching the binding value to the user-agent's authenticated state.  The binding value used for CSRF protection MUST contain a non-guessable value (as described in Section 10.10), and the user-agent's authenticated state (e.g., session cookie, HTML5 local storage) MUST be kept in a location accessible only to the client and the user-agent (i.e., protected by same-origin policy).</p>
-<p id="rfc.section.10.12.p.5">A CSRF attack against the authorization server's authorization endpoint can result in an attacker obtaining end-user authorization for a malicious client without involving or alerting the end-user.</p>
-<p id="rfc.section.10.12.p.6">The authorization server MUST implement CSRF protection for its authorization endpoint and ensure that a malicious client cannot obtain authorization without the awareness and explicit consent of the resource owner.</p>
+<p id="rfc.section.10.12.p.1">The native app that is initiating the authorization request has a large degree of control over the user interface and can potentially present a fake external user-agent, that is, an embedded user-agent made to appear as an external user-agent.</p>
+<p id="rfc.section.10.12.p.2">When all good actors are using external user-agents, the advantage is that it is possible for security experts to detect bad actors, as anyone faking an external user-agent is provably bad.  On the other hand, if good and bad actors alike are using embedded user-agents, bad actors don't need to fake anything, making them harder to detect.  Once a malicious app is detected, it may be possible to use this knowledge to blacklist the app's signature in malware scanning software, take removal action (in the case of apps distributed by app stores) and other steps to reduce the impact and spread of the malicious app.</p>
+<p id="rfc.section.10.12.p.3">Authorization servers can also directly protect against fake external user-agents by requiring an authentication factor only available to true external user-agents.</p>
+<p id="rfc.section.10.12.p.4">Users who are particularly concerned about their security when using in-app browser tabs may also take the additional step of opening the request in the full browser from the in-app browser tab and complete the authorization there, as most implementations of the in-app browser tab pattern offer such functionality.</p>
 <h1 id="rfc.section.10.13">
-<a href="#rfc.section.10.13">10.13.</a> <a href="#clickjacking" id="clickjacking">Clickjacking</a>
+<a href="#rfc.section.10.13">10.13.</a> <a href="#malicious-external-user-agents-in-native-apps" id="malicious-external-user-agents-in-native-apps">Malicious External User-Agents in Native Apps</a>
 </h1>
-<p id="rfc.section.10.13.p.1">In a clickjacking attack, an attacker registers a legitimate client and then constructs a malicious site in which it loads the authorization server's authorization endpoint web page in a transparent iframe overlaid on top of a set of dummy buttons, which are carefully constructed to be placed directly under important buttons on the authorization page.  When an end-user clicks a misleading visible button, the end-user is actually clicking an invisible button on the authorization page (such as an "Authorize" button).  This allows an attacker to trick a resource owner into granting its client access without the end-user's knowledge.</p>
-<p id="rfc.section.10.13.p.2">To prevent this form of attack, native applications SHOULD use external browsers instead of embedding browsers within the application when requesting end-user authorization.  For most newer browsers, avoidance of iframes can be enforced by the authorization server using the (non-standard) "x-frame-options" header.  This header can have two values, "deny" and "sameorigin", which will block any framing, or framing by sites with a different origin, respectively.  For older browsers, JavaScript frame-busting techniques can be used but may not be effective in all browsers.</p>
+<p id="rfc.section.10.13.p.1">If a malicious app is able to configure itself as the default handler for <samp>https</samp> scheme URIs in the operating system, it will be able to intercept authorization requests that use the default browser and abuse this position of trust for malicious ends such as phishing the user.</p>
+<p id="rfc.section.10.13.p.2">This attack is not confined to OAuth; a malicious app configured in this way would present a general and ongoing risk to the user beyond OAuth usage by native apps.  Many operating systems mitigate this issue by requiring an explicit user action to change the default handler for <samp>http</samp> and <samp>https</samp> scheme URIs.</p>
 <h1 id="rfc.section.10.14">
-<a href="#rfc.section.10.14">10.14.</a> <a href="#code-injection-and-input-validation" id="code-injection-and-input-validation">Code Injection and Input Validation</a>
+<a href="#rfc.section.10.14">10.14.</a> <a href="#csrf_countermeasures" id="csrf_countermeasures">Cross-Site Request Forgery</a>
 </h1>
-<p id="rfc.section.10.14.p.1">A code injection attack occurs when an input or otherwise external variable is used by an application unsanitized and causes modification to the application logic.  This may allow an attacker to gain access to the application device or its data, cause denial of service, or introduce a wide range of malicious side-effects.</p>
-<p id="rfc.section.10.14.p.2">The authorization server and client MUST sanitize (and validate when possible) any value received &#8211; in particular, the value of the "state" and "redirect_uri" parameters.</p>
+<p id="rfc.section.10.14.p.1">An attacker might attempt to inject a request to the redirect URI of the legitimate client on the victim's device, e.g., to cause the client to access resources under the attacker's control. This is a variant of an attack known as Cross-Site Request Forgery (CSRF).</p>
+<p id="rfc.section.10.14.p.2">The traditional countermeasure are CSRF tokens that are bound to the user agent and passed in the <samp>state</samp> parameter to the authorization server as described in <a href="#RFC6819" class="xref">[RFC6819]</a>. The same protection is provided by PKCE or the OpenID Connect <samp>nonce</samp> value.</p>
+<p id="rfc.section.10.14.p.3">When using PKCE instead of <samp>state</samp> or <samp>nonce</samp> for CSRF protection, it is important to note that:</p>
+<p></p>
+
+<ul>
+<li>Clients MUST ensure that the AS supports PKCE before using PKCE for CSRF protection. If an authorization server does not support PKCE, <samp>state</samp> or <samp>nonce</samp> MUST be used for CSRF protection.</li>
+<li>If <samp>state</samp> is used for carrying application state, and integrity of its contents is a concern, clients MUST protect <samp>state</samp> against tampering and swapping. This can be achieved by binding the contents of state to the browser session and/or signed/encrypted state values <a href="#I-D.bradley-oauth-jwt-encoded-state" class="xref">[I-D.bradley-oauth-jwt-encoded-state]</a>.</li>
+</ul>
+<p id="rfc.section.10.14.p.5">AS therefore MUST provide a way to detect their support for PKCE either via AS metadata according to <a href="#RFC8414" class="xref">[RFC8414]</a> or provide a deployment-specific way to ensure or determine PKCE support.</p>
 <h1 id="rfc.section.10.15">
-<a href="#rfc.section.10.15">10.15.</a> <a href="#open-redirectors" id="open-redirectors">Open Redirectors</a>
+<a href="#rfc.section.10.15">10.15.</a> <a href="#clickjacking" id="clickjacking">Clickjacking</a>
 </h1>
-<p id="rfc.section.10.15.p.1">The authorization server, authorization endpoint, and client redirection endpoint can be improperly configured and operate as open redirectors.  An open redirector is an endpoint using a parameter to automatically redirect a user-agent to the location specified by the parameter value without any validation.</p>
-<p id="rfc.section.10.15.p.2">Open redirectors can be used in phishing attacks, or by an attacker to get end-users to visit malicious sites by using the URI authority component of a familiar and trusted destination.  In addition, if the authorization server allows the client to register only part of the redirection URI, an attacker can use an open redirector operated by the client to construct a redirection URI that will pass the authorization server validation but will send the authorization code or access token to an endpoint under the control of the attacker.</p>
-<p id="rfc.section.10.15.p.3">TODO: Bring in the rest of the Security BCP attack description here</p>
+<p id="rfc.section.10.15.p.1">As described in Section 4.4.1.9 of <a href="#RFC6819" class="xref">[RFC6819]</a>, the authorization request is susceptible to clickjacking. An attacker can use this vector to obtain the user's authentication credentials, change the scope of access granted to the client, and potentially access the user's resources.</p>
+<p id="rfc.section.10.15.p.2">Authorization servers MUST prevent clickjacking attacks. Multiple countermeasures are described in <a href="#RFC6819" class="xref">[RFC6819]</a>, including the use of the X-Frame-Options HTTP response header field and frame-busting JavaScript. In addition to those, authorization servers SHOULD also use Content Security Policy (CSP) level 2 <a href="#CSP-2" class="xref">[CSP-2]</a> or greater.</p>
+<p id="rfc.section.10.15.p.3">To be effective, CSP must be used on the authorization endpoint and, if applicable, other endpoints used to authenticate the user and authorize the client (e.g., the device authorization endpoint, login pages, error pages, etc.). This prevents framing by unauthorized origins in user agents that support CSP. The client MAY permit being framed by some other origin than the one used in its redirection endpoint. For this reason, authorization servers SHOULD allow administrators to configure allowed origins for particular clients and/or for clients to register these dynamically.</p>
+<p id="rfc.section.10.15.p.4">Using CSP allows authorization servers to specify multiple origins in a single response header field and to constrain these using flexible patterns (see <a href="#CSP-2" class="xref">[CSP-2]</a> for details). Level 2 of this standard provides a robust mechanism for protecting against clickjacking by using policies that restrict the origin of frames (using <samp>frame-ancestors</samp>) together with those that restrict the sources of scripts allowed to execute on an HTML page (by using <samp>script-src</samp>). A non-normative example of such a policy is shown in the following listing:</p>
+<p><samp>HTTP/1.1 200 OK Content-Security-Policy: frame-ancestors https://ext.example.org:8000 Content-Security-Policy: script-src 'self' X-Frame-Options: ALLOW-FROM https://ext.example.org:8000 ...  </samp></p>
+<p id="rfc.section.10.15.p.6">Because some user agents do not support <a href="#CSP-2" class="xref">[CSP-2]</a>, this technique SHOULD be combined with others, including those described in <a href="#RFC6819" class="xref">[RFC6819]</a>, unless such legacy user agents are explicitly unsupported by the authorization server. Even in such cases, additional countermeasures SHOULD still be employed.</p>
+<h1 id="rfc.section.10.16">
+<a href="#rfc.section.10.16">10.16.</a> <a href="#code-injection-and-input-validation" id="code-injection-and-input-validation">Code Injection and Input Validation</a>
+</h1>
+<p id="rfc.section.10.16.p.1">A code injection attack occurs when an input or otherwise external variable is used by an application unsanitized and causes modification to the application logic.  This may allow an attacker to gain access to the application device or its data, cause denial of service, or introduce a wide range of malicious side-effects.</p>
+<p id="rfc.section.10.16.p.2">The authorization server and client MUST sanitize (and validate when possible) any value received &#8211; in particular, the value of the "state" and "redirect_uri" parameters.</p>
+<h1 id="rfc.section.10.17">
+<a href="#rfc.section.10.17">10.17.</a> <a href="#open-redirectors" id="open-redirectors">Open Redirectors</a>
+</h1>
+<p id="rfc.section.10.17.p.1">The following attacks can occur when an AS or client has an open redirector. An open redirector is an endpoint that forwards a user's browser to an arbitrary URI obtained from a query parameter.</p>
+<h1 id="rfc.section.10.17.1">
+<a href="#rfc.section.10.17.1">10.17.1.</a> <a href="#open_redirector_on_client" id="open_redirector_on_client">Client as Open Redirector</a>
+</h1>
+<p id="rfc.section.10.17.1.p.1">Clients MUST NOT expose open redirectors. Attackers may use open redirectors to produce URLs pointing to the client and utilize them to exfiltrate authorization codes and access tokens, as described in (#redir_uri_open_redir). Another abuse case is to produce URLs that appear to point to the client. This might trick users into trusting the URL and follow it in their browser. This can be abused for phishing.</p>
+<p id="rfc.section.10.17.1.p.2">In order to prevent open redirection, clients should only redirect if the target URLs are whitelisted or if the origin and integrity of a request can be authenticated. Countermeasures against open redirection are described by OWASP <a href="#owasp_redir" class="xref">[owasp_redir]</a>.</p>
+<h1 id="rfc.section.10.17.2">
+<a href="#rfc.section.10.17.2">10.17.2.</a> <a href="#authorization-server-as-open-redirector" id="authorization-server-as-open-redirector">Authorization Server as Open Redirector</a>
+</h1>
+<p id="rfc.section.10.17.2.p.1">Just as with clients, attackers could try to utilize a user's trust in the authorization server (and its URL in particular) for performing phishing attacks. OAuth authorization servers regularly redirect users to other web sites (the clients), but must do so in a safe way.</p>
+<p><a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a> already prevents open redirects by stating that the AS MUST NOT automatically redirect the user agent in case of an invalid combination of <samp>client_id</samp> and <samp>redirect_uri</samp>.</p>
+<p id="rfc.section.10.17.2.p.3">However, an attacker could also utilize a correctly registered redirect URI to perform phishing attacks. The attacker could, for example, register a client via dynamic client registration <a href="#RFC7591" class="xref">[RFC7591]</a> and intentionally send an erroneous authorization request, e.g., by using an invalid scope value, thus instructing the AS to redirect the user agent to its phishing site.</p>
+<p id="rfc.section.10.17.2.p.4">The AS MUST take precautions to prevent this threat. Based on its risk assessment, the AS needs to decide whether it can trust the redirect URI and SHOULD only automatically redirect the user agent if it trusts the redirect URI. If the URI is not trusted, the AS MAY inform the user and rely on the user to make the correct decision.</p>
+<h1 id="rfc.section.10.18">
+<a href="#rfc.section.10.18">10.18.</a> <a href="#authorization-server-mix-up-mitigation-in-native-apps" id="authorization-server-mix-up-mitigation-in-native-apps">Authorization Server Mix-Up Mitigation in Native Apps</a>
+</h1>
+<p id="rfc.section.10.18.p.1">(TODO: merge this with the regular mix-up section when it is brought in)</p>
+<p id="rfc.section.10.18.p.2">To protect against a compromised or malicious authorization server attacking another authorization server used by the same app, it is REQUIRED that a unique redirect URI is used for each authorization server used by the app (for example, by varying the path component), and that authorization responses are rejected if the redirect URI they were received on doesn't match the redirect URI in an outgoing authorization request.</p>
+<p id="rfc.section.10.18.p.3">The native app MUST store the redirect URI used in the authorization request with the authorization session data (i.e., along with "state" and other related data) and MUST verify that the URI on which the authorization response was received exactly matches it.</p>
+<p id="rfc.section.10.18.p.4">The requirement of <a href="#native-app-registration" class="xref">Section 10.2</a>, specifically that authorization servers reject requests with URIs that don't match what was registered, is also required to prevent such attacks.</p>
+<h1 id="rfc.section.10.19">
+<a href="#rfc.section.10.19">10.19.</a> <a href="#embedded-user-agents-in-native-apps" id="embedded-user-agents-in-native-apps">Embedded User Agents in Native Apps</a>
+</h1>
+<p id="rfc.section.10.19.p.1">Embedded user-agents are a technically possible method for authorizing native apps.  These embedded user-agents are unsafe for use by third parties to the authorization server by definition, as the app that hosts the embedded user-agent can access the user's full authentication credential, not just the OAuth authorization grant that was intended for the app.</p>
+<p id="rfc.section.10.19.p.2">In typical web-view-based implementations of embedded user-agents, the host application can record every keystroke entered in the login form to capture usernames and passwords, automatically submit forms to bypass user consent, and copy session cookies and use them to perform authenticated actions as the user.</p>
+<p id="rfc.section.10.19.p.3">Even when used by trusted apps belonging to the same party as the authorization server, embedded user-agents violate the principle of least privilege by having access to more powerful credentials than they need, potentially increasing the attack surface.</p>
+<p id="rfc.section.10.19.p.4">Encouraging users to enter credentials in an embedded user-agent without the usual address bar and visible certificate validation features that browsers have makes it impossible for the user to know if they are signing in to the legitimate site; even when they are, it trains them that it's OK to enter credentials without validating the site first.</p>
+<p id="rfc.section.10.19.p.5">Aside from the security concerns, embedded user-agents do not share the authentication state with other apps or the browser, requiring the user to log in for every authorization request, which is often considered an inferior user experience.</p>
+<h1 id="rfc.section.10.20">
+<a href="#rfc.section.10.20">10.20.</a> <a href="#other-recommendations" id="other-recommendations">Other Recommendations</a>
+</h1>
+<p id="rfc.section.10.20.p.1">Authorization servers SHOULD NOT allow clients to influence their <samp>client_id</samp> or <samp>sub</samp> value or any other claim if that can cause confusion with a genuine resource owner (see (#client_impersonating)).</p>
 <h1 id="rfc.section.11">
 <a href="#rfc.section.11">11.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a>
 </h1>
 <h1 id="rfc.section.11.1">
-<a href="#rfc.section.11.1">11.1.</a> <a href="#oauth-access-token-types-registry" id="oauth-access-token-types-registry">OAuth Access Token Types Registry</a>
+<a href="#rfc.section.11.1">11.1.</a> <a href="#access-token-registry" id="access-token-registry">OAuth Access Token Types Registry</a>
 </h1>
 <p id="rfc.section.11.1.p.1">This specification establishes the OAuth Access Token Types registry.</p>
 <p id="rfc.section.11.1.p.2">Access token types are registered with a Specification Required (<a href="#RFC5226" class="xref">[RFC5226]</a>) after a two-week review period on the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.  However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.</p>
@@ -1992,7 +2212,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <dt>Type name:</dt>
 <dd style="margin-left: 8">The name requested (e.g., "example").</dd>
 <dt>Additional Token Endpoint Response Parameters:</dt>
-<dd style="margin-left: 8">Additional response parameters returned together with the "access_token" parameter.  New parameters MUST be separately registered in the OAuth Parameters registry as described by Section 11.2.</dd>
+<dd style="margin-left: 8">Additional response parameters returned together with the "access_token" parameter.  New parameters MUST be separately registered in the OAuth Parameters registry as described by <a href="#parameters-registry" class="xref">Section 11.2</a>.</dd>
 <dt>HTTP Authentication Scheme(s):</dt>
 <dd style="margin-left: 8">The HTTP authentication scheme name(s), if any, used to authenticate protected resource requests using access tokens of this type.</dd>
 <dt>Change controller:</dt>
@@ -2014,7 +2234,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <li>Specification document(s): OAuth 2.1</li>
 </ul>
 <h1 id="rfc.section.11.2">
-<a href="#rfc.section.11.2">11.2.</a> <a href="#oauth-parameters-registry" id="oauth-parameters-registry">OAuth Parameters Registry</a>
+<a href="#rfc.section.11.2">11.2.</a> <a href="#parameters-registry" id="parameters-registry">OAuth Parameters Registry</a>
 </h1>
 <p id="rfc.section.11.2.p.1">This specification establishes the OAuth Parameters registry.</p>
 <p id="rfc.section.11.2.p.2">Additional parameters for inclusion in the authorization endpoint request, the authorization endpoint response, the token endpoint request, or the token endpoint response are registered with a Specification Required (<a href="#RFC5226" class="xref">[RFC5226]</a>) after a two-week review period on the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.  However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.</p>
@@ -2109,7 +2329,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <li>Specification document(s): RFC 6749</li>
 </ul>
 <h1 id="rfc.section.11.3">
-<a href="#rfc.section.11.3">11.3.</a> <a href="#oauth-authorization-endpoint-response-types-registry" id="oauth-authorization-endpoint-response-types-registry">OAuth Authorization Endpoint Response Types Registry</a>
+<a href="#rfc.section.11.3">11.3.</a> <a href="#response-types-registry" id="response-types-registry">OAuth Authorization Endpoint Response Types Registry</a>
 </h1>
 <p id="rfc.section.11.3.p.1">This specification establishes the OAuth Authorization Endpoint Response Types registry.</p>
 <p id="rfc.section.11.3.p.2">Additional response types for use with the authorization endpoint are registered with a Specification Required (<a href="#RFC5226" class="xref">[RFC5226]</a>) after a two-week review period on the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.  However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.</p>
@@ -2141,7 +2361,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <li>Specification document(s): RFC 6749</li>
 </ul>
 <h1 id="rfc.section.11.4">
-<a href="#rfc.section.11.4">11.4.</a> <a href="#oauth-extensions-error-registry" id="oauth-extensions-error-registry">OAuth Extensions Error Registry</a>
+<a href="#rfc.section.11.4">11.4.</a> <a href="#error-registry" id="error-registry">OAuth Extensions Error Registry</a>
 </h1>
 <p id="rfc.section.11.4.p.1">This specification establishes the OAuth Extensions Error registry.</p>
 <p id="rfc.section.11.4.p.2">Additional error codes used together with other protocol extensions (i.e., extension grant types, access token types, or extension parameters) are registered with a Specification Required (<a href="#RFC5226" class="xref">[RFC5226]</a>) after a two-week review period on the oauth-ext-review@ietf.org mailing list, on the advice of one or more Designated Experts.  However, to allow for the allocation of values prior to publication, the Designated Expert(s) may approve registration once they are satisfied that such a specification will be published.</p>
@@ -2157,7 +2377,7 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <dt>Error name:</dt>
 <dd style="margin-left: 8">The name requested (e.g., "example").  Values for the error name MUST NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.</dd>
 <dt>Error usage location:</dt>
-<dd style="margin-left: 8">The location(s) where the error can be used.  The possible locations are authorization code grant error response (Section 4.1.2.1), token error response (Section 5.2), or resource access error response (Section 7.2).</dd>
+<dd style="margin-left: 8">The location(s) where the error can be used.  The possible locations are authorization code grant error response (<a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>), token error response (<a href="#access-token-error-response" class="xref">Section 5.2</a>), or resource access error response (Section 7.2).</dd>
 <dt>Related protocol extension:</dt>
 <dd style="margin-left: 8">The name of the extension grant type, access token type, or extension parameter that the error code is used in conjunction with.</dd>
 <dt>Change controller:</dt>
@@ -2194,11 +2414,6 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <td class="reference"><b id="RFC2119">[RFC2119]</b></td>
 <td class="top">
 <a>Bradner, S.</a>, "<a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
-</tr>
-<tr>
-<td class="reference"><b id="RFC2246">[RFC2246]</b></td>
-<td class="top">
-<a>Dierks, T.</a> and <a>C. Allen</a>, "<a href="https://tools.ietf.org/html/rfc2246">The TLS Protocol Version 1.0</a>", RFC 2246, DOI 10.17487/RFC2246, January 1999.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC2616">[RFC2616]</b></td>
@@ -2246,11 +2461,6 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <a>Crocker, D.</a> and <a>P. Overell</a>, "<a href="https://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>", STD 68, RFC 5234, DOI 10.17487/RFC5234, January 2008.</td>
 </tr>
 <tr>
-<td class="reference"><b id="RFC5246">[RFC5246]</b></td>
-<td class="top">
-<a>Dierks, T.</a> and <a>E. Rescorla</a>, "<a href="https://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>", RFC 5246, DOI 10.17487/RFC5246, August 2008.</td>
-</tr>
-<tr>
 <td class="reference"><b id="RFC5280">[RFC5280]</b></td>
 <td class="top">
 <a>Cooper, D.</a>, <a>Santesson, S.</a>, <a>Farrell, S.</a>, <a>Boeyen, S.</a>, <a>Housley, R.</a> and <a>W. Polk</a>, "<a href="https://tools.ietf.org/html/rfc5280">Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</a>", RFC 5280, DOI 10.17487/RFC5280, May 2008.</td>
@@ -2259,6 +2469,26 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <td class="reference"><b id="RFC6125">[RFC6125]</b></td>
 <td class="top">
 <a>Saint-Andre, P.</a> and <a>J. Hodges</a>, "<a href="https://tools.ietf.org/html/rfc6125">Representation and Verification of Domain-Based Application Service Identity within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the Context of Transport Layer Security (TLS)</a>", RFC 6125, DOI 10.17487/RFC6125, March 2011.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6749">[RFC6749]</b></td>
+<td class="top">
+<a>Hardt, D.</a>, "<a href="https://tools.ietf.org/html/rfc6749">The OAuth 2.0 Authorization Framework</a>", RFC 6749, DOI 10.17487/RFC6749, October 2012.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6750">[RFC6750]</b></td>
+<td class="top">
+<a>Jones, M.</a> and <a>D. Hardt</a>, "<a href="https://tools.ietf.org/html/rfc6750">The OAuth 2.0 Authorization Framework: Bearer Token Usage</a>", RFC 6750, DOI 10.17487/RFC6750, October 2012.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7595">[RFC7595]</b></td>
+<td class="top">
+<a>Thaler, D.</a>, <a>Hansen, T.</a> and <a>T. Hardie</a>, "<a href="https://tools.ietf.org/html/rfc7595">Guidelines and Registration Procedures for URI Schemes</a>", BCP 35, RFC 7595, DOI 10.17487/RFC7595, June 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8252">[RFC8252]</b></td>
+<td class="top">
+<a>Denniss, W.</a> and <a>J. Bradley</a>, "<a href="https://tools.ietf.org/html/rfc8252">OAuth 2.0 for Native Apps</a>", BCP 212, RFC 8252, DOI 10.17487/RFC8252, October 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC8446">[RFC8446]</b></td>
@@ -2285,14 +2515,23 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <a href="#rfc.references.2">12.2.</a> Informative References</h1>
 <table><tbody>
 <tr>
+<td class="reference"><b id="CSP-2">[CSP-2]</b></td>
+<td class="top">"<a>Content Security Policy Level 2</a>", n.d..</td>
+</tr>
+<tr>
 <td class="reference"><b id="HTTP-AUTH">[HTTP-AUTH]</b></td>
 <td class="top">
 <a>Fielding, R.</a> and <a>J. Reschke</a>, "<a>Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>", October 2012.</td>
 </tr>
 <tr>
-<td class="reference"><b id="I-D.ietf-oauth-mtls">[I-D.ietf-oauth-mtls]</b></td>
+<td class="reference"><b id="I-D.bradley-oauth-jwt-encoded-state">[I-D.bradley-oauth-jwt-encoded-state]</b></td>
 <td class="top">
-<a>Campbell, B.</a>, <a>Bradley, J.</a>, <a>Sakimura, N.</a> and <a>T. Lodderstedt</a>, "<a href="https://tools.ietf.org/html/draft-ietf-oauth-mtls-17">OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens</a>", Internet-Draft draft-ietf-oauth-mtls-17, August 2019.</td>
+<a>Bradley, J.</a>, <a>Lodderstedt, T.</a> and <a>H. Zandbelt</a>, "<a href="https://tools.ietf.org/html/draft-bradley-oauth-jwt-encoded-state-09">Encoding claims in the OAuth 2 state parameter using a JWT</a>", Internet-Draft draft-bradley-oauth-jwt-encoded-state-09, November 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="I-D.ietf-oauth-browser-based-apps">[I-D.ietf-oauth-browser-based-apps]</b></td>
+<td class="top">
+<a>Parecki, A.</a> and <a>D. Waite</a>, "<a href="https://tools.ietf.org/html/draft-ietf-oauth-browser-based-apps-05">OAuth 2.0 for Browser-Based Apps</a>", Internet-Draft draft-ietf-oauth-browser-based-apps-05, February 2020.</td>
 </tr>
 <tr>
 <td class="reference"><b id="I-D.ietf-oauth-rar">[I-D.ietf-oauth-rar]</b></td>
@@ -2320,11 +2559,6 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <a>Burr, W.</a>, <a>Dodson, D.</a>, <a>Newton, E.</a>, <a>Perlner, R.</a>, <a>Polk, T.</a>, <a>Gupta, S.</a> and <a>E. Nabbus</a>, "<a>NIST Special Publication 800-63-1, INFORMATION SECURITY</a>", December 2011.</td>
 </tr>
 <tr>
-<td class="reference"><b id="OAuth-HTTP-MAC">[OAuth-HTTP-MAC]</b></td>
-<td class="top">
-<a title="The MITRE Corporation">Richer, J.</a>, <a title="Yahoo! Inc.">Mills, W.</a>, <a>Tschofenig, H.</a> and <a title="Oracle Corporation">P. Hunt</a>, "<a>Message Authentication Code (MAC) Tokens</a>", January 2014.</td>
-</tr>
-<tr>
 <td class="reference"><b id="OMAP">[OMAP]</b></td>
 <td class="top">
 <a>Huff, J.</a>, <a>Schlacht, D.</a>, <a>Nadalin, A.</a>, <a>Simmons, J.</a>, <a>Rosenberg, P.</a>, <a>Madsen, P.</a>, <a>Ace, T.</a>, <a>Rickelton-Abdi, C.</a> and <a>B. Boyer</a>, "<a>Online Multimedia Authorization Protocol: An Industry Standard for Authorized Access to Internet Multimedia Resources</a>", April 2012.</td>
@@ -2337,6 +2571,10 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <td class="reference"><b id="OpenID.Messages">[OpenID.Messages]</b></td>
 <td class="top">
 <a>Sakimura, N.</a>, <a>Bradley, J.</a>, <a>Jones, M.</a>, <a>de Medeiros, B.</a>, <a>Mortimore, C.</a> and <a>E. Jay</a>, "<a>OpenID Connect Messages 1.0</a>", June 2012.</td>
+</tr>
+<tr>
+<td class="reference"><b id="owasp_redir">[owasp_redir]</b></td>
+<td class="top">"<a>OWASP Cheat Sheet Series - Unvalidated Redirects and Forwards</a>", n.d..</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC5849">[RFC5849]</b></td>
@@ -2354,9 +2592,39 @@ error-char = %x20-21 / %x23-5B / %x5D-7E
 <a>Lodderstedt, T.</a>, <a>McGloin, M.</a> and <a>P. Hunt</a>, "<a href="https://tools.ietf.org/html/rfc6819">OAuth 2.0 Threat Model and Security Considerations</a>", RFC 6819, DOI 10.17487/RFC6819, January 2013.</td>
 </tr>
 <tr>
+<td class="reference"><b id="RFC7230">[RFC7230]</b></td>
+<td class="top">
+<a>Fielding, R.</a> and <a>J. Reschke</a>, "<a href="https://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>", RFC 7230, DOI 10.17487/RFC7230, June 2014.</td>
+</tr>
+<tr>
 <td class="reference"><b id="RFC7522">[RFC7522]</b></td>
 <td class="top">
 <a>Campbell, B.</a>, <a>Mortimore, C.</a> and <a>M. Jones</a>, "<a href="https://tools.ietf.org/html/rfc7522">Security Assertion Markup Language (SAML) 2.0 Profile for OAuth 2.0 Client Authentication and Authorization Grants</a>", RFC 7522, DOI 10.17487/RFC7522, May 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7591">[RFC7591]</b></td>
+<td class="top">
+<a>Richer, J.</a>, <a>Jones, M.</a>, <a>Bradley, J.</a>, <a>Machulak, M.</a> and <a>P. Hunt</a>, "<a href="https://tools.ietf.org/html/rfc7591">OAuth 2.0 Dynamic Client Registration Protocol</a>", RFC 7591, DOI 10.17487/RFC7591, July 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8414">[RFC8414]</b></td>
+<td class="top">
+<a>Jones, M.</a>, <a>Sakimura, N.</a> and <a>J. Bradley</a>, "<a href="https://tools.ietf.org/html/rfc8414">OAuth 2.0 Authorization Server Metadata</a>", RFC 8414, DOI 10.17487/RFC8414, June 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8418">[RFC8418]</b></td>
+<td class="top">
+<a>Housley, R.</a>, "<a href="https://tools.ietf.org/html/rfc8418">Use of the Elliptic Curve Diffie-Hellman Key Agreement Algorithm with X25519 and X448 in the Cryptographic Message Syntax (CMS)</a>", RFC 8418, DOI 10.17487/RFC8418, August 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8705">[RFC8705]</b></td>
+<td class="top">
+<a>Campbell, B.</a>, <a>Bradley, J.</a>, <a>Sakimura, N.</a> and <a>T. Lodderstedt</a>, "<a href="https://tools.ietf.org/html/rfc8705">OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens</a>", RFC 8705, DOI 10.17487/RFC8705, February 2020.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8707">[RFC8707]</b></td>
+<td class="top">
+<a>Campbell, B.</a>, <a>Bradley, J.</a> and <a>H. Tschofenig</a>, "<a href="https://tools.ietf.org/html/rfc8707">Resource Indicators for OAuth 2.0</a>", RFC 8707, DOI 10.17487/RFC8707, February 2020.</td>
 </tr>
 <tr>
 <td class="reference"><b id="webauthn">[webauthn]</b></td>
@@ -2386,14 +2654,14 @@ UNICODECHARNOCRLF = %x09 /%x20-7E / %x80-D7FF /
 <h1 id="rfc.appendix.A.1">
 <a href="#rfc.appendix.A.1">A.1.</a> <a href="#clientid-syntax" id="clientid-syntax">"client_id" Syntax</a>
 </h1>
-<p id="rfc.section.A.1.p.1">The "client_id" element is defined in Section 2.3.1:</p>
+<p id="rfc.section.A.1.p.1">The "client_id" element is defined in <a href="#client-password" class="xref">Section 2.3.1</a>:</p>
 <pre>
 client-id     = *VSCHAR
 </pre>
 <h1 id="rfc.appendix.A.2">
 <a href="#rfc.appendix.A.2">A.2.</a> <a href="#clientsecret-syntax" id="clientsecret-syntax">"client_secret" Syntax</a>
 </h1>
-<p id="rfc.section.A.2.p.1">The "client_secret" element is defined in Section 2.3.1:</p>
+<p id="rfc.section.A.2.p.1">The "client_secret" element is defined in <a href="#client-password" class="xref">Section 2.3.1</a>:</p>
 <pre>
 client-secret = *VSCHAR
 </pre>
@@ -2409,7 +2677,7 @@ response-char = "_" / DIGIT / ALPHA
 <h1 id="rfc.appendix.A.4">
 <a href="#rfc.appendix.A.4">A.4.</a> <a href="#scope-syntax" id="scope-syntax">"scope" Syntax</a>
 </h1>
-<p id="rfc.section.A.4.p.1">The "scope" element is defined in Section 3.3:</p>
+<p id="rfc.section.A.4.p.1">The "scope" element is defined in <a href="#access-token-scope" class="xref">Section 3.3</a>:</p>
 <pre>
  scope       = scope-token *( SP scope-token )
  scope-token = 1*NQCHAR
@@ -2417,7 +2685,7 @@ response-char = "_" / DIGIT / ALPHA
 <h1 id="rfc.appendix.A.5">
 <a href="#rfc.appendix.A.5">A.5.</a> <a href="#state-syntax" id="state-syntax">"state" Syntax</a>
 </h1>
-<p id="rfc.section.A.5.p.1">The "state" element is defined in Sections 4.1.1, 4.1.2, 4.1.2.1, 4.2.1, 4.2.2, and 4.2.2.1:</p>
+<p id="rfc.section.A.5.p.1">The "state" element is defined in Sections 4.1.1, 4.1.2, <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>, 4.2.1, 4.2.2, and 4.2.2.1:</p>
 <pre>
  state      = 1*VSCHAR
 </pre>
@@ -2431,21 +2699,21 @@ response-char = "_" / DIGIT / ALPHA
 <h1 id="rfc.appendix.A.7">
 <a href="#rfc.appendix.A.7">A.7.</a> <a href="#error-syntax" id="error-syntax">"error" Syntax</a>
 </h1>
-<p id="rfc.section.A.7.p.1">The "error" element is defined in Sections 4.1.2.1, 4.2.2.1, 5.2, 7.2, and 8.5:</p>
+<p id="rfc.section.A.7.p.1">The "error" element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>, 4.2.2.1, 5.2, 7.2, and 8.5:</p>
 <pre>
  error             = 1*NQSCHAR
 </pre>
 <h1 id="rfc.appendix.A.8">
 <a href="#rfc.appendix.A.8">A.8.</a> <a href="#errordescription-syntax" id="errordescription-syntax">"error_description" Syntax</a>
 </h1>
-<p id="rfc.section.A.8.p.1">The "error_description" element is defined in Sections 4.1.2.1, 4.2.2.1, 5.2, and 7.2:</p>
+<p id="rfc.section.A.8.p.1">The "error_description" element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>, 4.2.2.1, 5.2, and 7.2:</p>
 <pre>
  error-description = 1*NQSCHAR
 </pre>
 <h1 id="rfc.appendix.A.9">
 <a href="#rfc.appendix.A.9">A.9.</a> <a href="#erroruri-syntax" id="erroruri-syntax">"error_uri" Syntax</a>
 </h1>
-<p id="rfc.section.A.9.p.1">The "error_uri" element is defined in Sections 4.1.2.1, 4.2.2.1, 5.2, and 7.2:</p>
+<p id="rfc.section.A.9.p.1">The "error_uri" element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>, 4.2.2.1, 5.2, and 7.2:</p>
 <pre>
  error-uri         = URI-reference
 </pre>
@@ -2489,48 +2757,34 @@ response-char = "_" / DIGIT / ALPHA
  expires-in = 1*DIGIT
 </pre>
 <h1 id="rfc.appendix.A.15">
-<a href="#rfc.appendix.A.15">A.15.</a> <a href="#username-syntax" id="username-syntax">"username" Syntax</a>
+<a href="#rfc.appendix.A.15">A.15.</a> <a href="#refreshtoken-syntax" id="refreshtoken-syntax">"refresh_token" Syntax</a>
 </h1>
-<p id="rfc.section.A.15.p.1">The "username" element is defined in Section 4.3.2:</p>
-<pre>
- username = *UNICODECHARNOCRLF
-</pre>
-<h1 id="rfc.appendix.A.16">
-<a href="#rfc.appendix.A.16">A.16.</a> <a href="#password-syntax" id="password-syntax">"password" Syntax</a>
-</h1>
-<p id="rfc.section.A.16.p.1">The "password" element is defined in Section 4.3.2:</p>
-<pre>
- password = *UNICODECHARNOCRLF
-</pre>
-<h1 id="rfc.appendix.A.17">
-<a href="#rfc.appendix.A.17">A.17.</a> <a href="#refreshtoken-syntax" id="refreshtoken-syntax">"refresh_token" Syntax</a>
-</h1>
-<p id="rfc.section.A.17.p.1">The "refresh_token" element is defined in Sections 5.1 and 6:</p>
+<p id="rfc.section.A.15.p.1">The "refresh_token" element is defined in Sections 5.1 and 6:</p>
 <pre>
  refresh-token = 1*VSCHAR
 </pre>
-<h1 id="rfc.appendix.A.18">
-<a href="#rfc.appendix.A.18">A.18.</a> <a href="#endpoint-parameter-syntax" id="endpoint-parameter-syntax">Endpoint Parameter Syntax</a>
+<h1 id="rfc.appendix.A.16">
+<a href="#rfc.appendix.A.16">A.16.</a> <a href="#endpoint-parameter-syntax" id="endpoint-parameter-syntax">Endpoint Parameter Syntax</a>
 </h1>
-<p id="rfc.section.A.18.p.1">The syntax for new endpoint parameters is defined in Section 8.2:</p>
+<p id="rfc.section.A.16.p.1">The syntax for new endpoint parameters is defined in Section 8.2:</p>
 <pre>
  param-name = 1*name-char
  name-char  = "-" / "." / "_" / DIGIT / ALPHA
 </pre>
-<h1 id="rfc.appendix.A.19">
-<a href="#rfc.appendix.A.19">A.19.</a> <a href="#codeverifier-syntax" id="codeverifier-syntax">"code_verifier" Syntax</a>
+<h1 id="rfc.appendix.A.17">
+<a href="#rfc.appendix.A.17">A.17.</a> <a href="#codeverifier-syntax" id="codeverifier-syntax">"code_verifier" Syntax</a>
 </h1>
-<p id="rfc.section.A.19.p.1">ABNF for "code_verifier" is as follows.</p>
+<p id="rfc.section.A.17.p.1">ABNF for "code_verifier" is as follows.</p>
 <pre>
 code-verifier = 43*128unreserved
 unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
 ALPHA = %x41-5A / %x61-7A
 DIGIT = %x30-39
 </pre>
-<h1 id="rfc.appendix.A.20">
-<a href="#rfc.appendix.A.20">A.20.</a> <a href="#codechallenge-syntax" id="codechallenge-syntax">"code_challenge" Syntax</a>
+<h1 id="rfc.appendix.A.18">
+<a href="#rfc.appendix.A.18">A.18.</a> <a href="#codechallenge-syntax" id="codechallenge-syntax">"code_challenge" Syntax</a>
 </h1>
-<p id="rfc.section.A.20.p.1">ABNF for "code_challenge" is as follows.</p>
+<p id="rfc.section.A.18.p.1">ABNF for "code_challenge" is as follows.</p>
 <pre>
 code-challenge = 43*128unreserved
 unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -2554,11 +2808,7 @@ DIGIT = %x30-39
 <h1 id="rfc.appendix.C">
 <a href="#rfc.appendix.C">Appendix C.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a>
 </h1>
-<p id="rfc.section.C.p.1">The initial OAuth 2.0 protocol specification was edited by David Recordon, based on two previous publications: the OAuth 1.0 community specification <a href="#RFC5849" class="xref">[RFC5849]</a>, and OAuth WRAP (OAuth Web Resource Authorization Profiles).  Eran Hammer then edited many of the intermediate drafts that evolved into this RFC.  The Security Considerations section was drafted by Torsten Lodderstedt, Mark McGloin, Phil Hunt, Anthony Nadalin, and John Bradley.  The section on use of the "application/x-www-form-urlencoded" media type was drafted by Julian Reschke.  The ABNF section was drafted by Michael B. Jones.</p>
-<p id="rfc.section.C.p.2">The OAuth 1.0 community specification was edited by Eran Hammer and authored by Mark Atwood, Dirk Balfanz, Darren Bounds, Richard M.  Conlan, Blaine Cook, Leah Culver, Breno de Medeiros, Brian Eaton, Kellan Elliott-McCrea, Larry Halff, Eran Hammer, Ben Laurie, Chris Messina, John Panzer, Sam Quigley, David Recordon, Eran Sandler, Jonathan Sergent, Todd Sieling, Brian Slesinsky, and Andy Smith.</p>
-<p id="rfc.section.C.p.3">The OAuth WRAP specification was edited by Dick Hardt and authored by Brian Eaton, Yaron Y. Goland, Dick Hardt, and Allen Tom.</p>
-<p id="rfc.section.C.p.4">This specification is the work of the OAuth Working Group, which includes dozens of active and dedicated participants.  In particular, the following individuals contributed ideas, feedback, and wording that shaped and formed the final specification:</p>
-<p id="rfc.section.C.p.5">Michael Adams, Amanda Anganes, Andrew Arnott, Dirk Balfanz, Aiden Bell, John Bradley, Marcos Caceres, Brian Campbell, Scott Cantor, Blaine Cook, Roger Crew, Leah Culver, Bill de hOra, Andre DeMarre, Brian Eaton, Wesley Eddy, Wolter Eldering, Brian Ellin, Igor Faynberg, George Fletcher, Tim Freeman, Luca Frosini, Evan Gilbert, Yaron Y. Goland, Brent Goldman, Kristoffer Gronowski, Eran Hammer, Dick Hardt, Justin Hart, Craig Heath, Phil Hunt, Michael B. Jones, Terry Jones, John Kemp, Mark Kent, Raffi Krikorian, Chasen Le Hara, Rasmus Lerdorf, Torsten Lodderstedt, Hui-Lan Lu, Casey Lucas, Paul Madsen, Alastair Mair, Eve Maler, James Manger, Mark McGloin, Laurence Miao, William Mills, Chuck Mortimore, Anthony Nadalin, Julian Reschke, Justin Richer, Peter Saint-Andre, Nat Sakimura, Rob Sayre, Marius Scurtescu, Naitik Shah, Luke Shepard, Vlad Skvortsov, Justin Smith, Haibin Song, Niv Steingarten, Christian Stuebner, Jeremy Suriel, Paul Tarjan, Christopher Thomas, Henry S. Thompson, Allen Tom, Franklin Tse, Nick Walker, Shane Weeden, and Skylar Woodward.</p>
+<p id="rfc.section.C.p.1">TBD</p>
 <h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
 <div class="avoidbreak">
   <address class="vcard">
@@ -2579,8 +2829,6 @@ DIGIT = %x30-39
 	  <span class="country-name vcardline"></span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:dick.hardt@gmail.com">dick.hardt@gmail.com</a></span>
-
-<span class="vcardline">URI: <a href="http://dickhardt.org">http://dickhardt.org</a></span>
 
   </address>
 </div><div class="avoidbreak">
