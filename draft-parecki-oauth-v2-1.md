@@ -15,17 +15,14 @@ pi:
   symrefs: yes
 
 author:
-  -
-    ins: D. Hardt
-    name: Dick Hardt
-    email: dick.hardt@gmail.com
-  -
-    ins: A. Parecki
+  - ins: A. Parecki
     name: Aaron Parecki
     email: aaron@parecki.com
     uri: https://aaronparecki.com
-  -
-    ins: T. Lodderstedt
+  - ins: D. Hardt
+    name: Dick Hardt
+    email: dick.hardt@gmail.com
+  - ins: T. Lodderstedt
     name: Torsten Lodderstedt
     email: torsten@lodderstedt.net
 

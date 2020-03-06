@@ -2,9 +2,9 @@
 
 
 
-Network Working Group                                           D. Hardt
+Network Working Group                                         A. Parecki
 Internet-Draft
-Intended status: Standards Track                              A. Parecki
+Intended status: Standards Track                                D. Hardt
 Expires: September 5, 2020
                                                           T. Lodderstedt
                                                           March 04, 2020
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 1]
+Parecki, et al.         Expires September 5, 2020               [Page 1]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 2]
+Parecki, et al.         Expires September 5, 2020               [Page 2]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -165,7 +165,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 3]
+Parecki, et al.         Expires September 5, 2020               [Page 3]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -221,7 +221,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 4]
+Parecki, et al.         Expires September 5, 2020               [Page 4]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -277,7 +277,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 5]
+Parecki, et al.         Expires September 5, 2020               [Page 5]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -333,7 +333,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 6]
+Parecki, et al.         Expires September 5, 2020               [Page 6]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -389,7 +389,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 7]
+Parecki, et al.         Expires September 5, 2020               [Page 7]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 8]
+Parecki, et al.         Expires September 5, 2020               [Page 8]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -501,7 +501,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020               [Page 9]
+Parecki, et al.         Expires September 5, 2020               [Page 9]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 10]
+Parecki, et al.         Expires September 5, 2020              [Page 10]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 11]
+Parecki, et al.         Expires September 5, 2020              [Page 11]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -669,7 +669,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 12]
+Parecki, et al.         Expires September 5, 2020              [Page 12]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -725,7 +725,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 13]
+Parecki, et al.         Expires September 5, 2020              [Page 13]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -781,7 +781,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 14]
+Parecki, et al.         Expires September 5, 2020              [Page 14]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -837,7 +837,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 15]
+Parecki, et al.         Expires September 5, 2020              [Page 15]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -893,7 +893,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 16]
+Parecki, et al.         Expires September 5, 2020              [Page 16]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -949,7 +949,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 17]
+Parecki, et al.         Expires September 5, 2020              [Page 17]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 18]
+Parecki, et al.         Expires September 5, 2020              [Page 18]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 19]
+Parecki, et al.         Expires September 5, 2020              [Page 19]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 20]
+Parecki, et al.         Expires September 5, 2020              [Page 20]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1173,7 +1173,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 21]
+Parecki, et al.         Expires September 5, 2020              [Page 21]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 22]
+Parecki, et al.         Expires September 5, 2020              [Page 22]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 23]
+Parecki, et al.         Expires September 5, 2020              [Page 23]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1341,7 +1341,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 24]
+Parecki, et al.         Expires September 5, 2020              [Page 24]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1397,7 +1397,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 25]
+Parecki, et al.         Expires September 5, 2020              [Page 25]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1453,7 +1453,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 26]
+Parecki, et al.         Expires September 5, 2020              [Page 26]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1509,7 +1509,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 27]
+Parecki, et al.         Expires September 5, 2020              [Page 27]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1565,7 +1565,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 28]
+Parecki, et al.         Expires September 5, 2020              [Page 28]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1621,7 +1621,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 29]
+Parecki, et al.         Expires September 5, 2020              [Page 29]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1677,7 +1677,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 30]
+Parecki, et al.         Expires September 5, 2020              [Page 30]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1733,7 +1733,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 31]
+Parecki, et al.         Expires September 5, 2020              [Page 31]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1789,7 +1789,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 32]
+Parecki, et al.         Expires September 5, 2020              [Page 32]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1845,7 +1845,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 33]
+Parecki, et al.         Expires September 5, 2020              [Page 33]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1901,7 +1901,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 34]
+Parecki, et al.         Expires September 5, 2020              [Page 34]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1957,7 +1957,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 35]
+Parecki, et al.         Expires September 5, 2020              [Page 35]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2013,7 +2013,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 36]
+Parecki, et al.         Expires September 5, 2020              [Page 36]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2069,7 +2069,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 37]
+Parecki, et al.         Expires September 5, 2020              [Page 37]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2125,7 +2125,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 38]
+Parecki, et al.         Expires September 5, 2020              [Page 38]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2181,7 +2181,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 39]
+Parecki, et al.         Expires September 5, 2020              [Page 39]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2237,7 +2237,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 40]
+Parecki, et al.         Expires September 5, 2020              [Page 40]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2293,7 +2293,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 41]
+Parecki, et al.         Expires September 5, 2020              [Page 41]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2349,7 +2349,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 42]
+Parecki, et al.         Expires September 5, 2020              [Page 42]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2405,7 +2405,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 43]
+Parecki, et al.         Expires September 5, 2020              [Page 43]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2461,7 +2461,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 44]
+Parecki, et al.         Expires September 5, 2020              [Page 44]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2517,7 +2517,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 45]
+Parecki, et al.         Expires September 5, 2020              [Page 45]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2573,7 +2573,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 46]
+Parecki, et al.         Expires September 5, 2020              [Page 46]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2629,7 +2629,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 47]
+Parecki, et al.         Expires September 5, 2020              [Page 47]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2685,7 +2685,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 48]
+Parecki, et al.         Expires September 5, 2020              [Page 48]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2741,7 +2741,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 49]
+Parecki, et al.         Expires September 5, 2020              [Page 49]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2797,7 +2797,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 50]
+Parecki, et al.         Expires September 5, 2020              [Page 50]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2853,7 +2853,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 51]
+Parecki, et al.         Expires September 5, 2020              [Page 51]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2909,7 +2909,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 52]
+Parecki, et al.         Expires September 5, 2020              [Page 52]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2965,7 +2965,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 53]
+Parecki, et al.         Expires September 5, 2020              [Page 53]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3021,7 +3021,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 54]
+Parecki, et al.         Expires September 5, 2020              [Page 54]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3077,7 +3077,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 55]
+Parecki, et al.         Expires September 5, 2020              [Page 55]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3133,7 +3133,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 56]
+Parecki, et al.         Expires September 5, 2020              [Page 56]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3189,7 +3189,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 57]
+Parecki, et al.         Expires September 5, 2020              [Page 57]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3245,7 +3245,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 58]
+Parecki, et al.         Expires September 5, 2020              [Page 58]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3301,7 +3301,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 59]
+Parecki, et al.         Expires September 5, 2020              [Page 59]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3357,7 +3357,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 60]
+Parecki, et al.         Expires September 5, 2020              [Page 60]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3413,7 +3413,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 61]
+Parecki, et al.         Expires September 5, 2020              [Page 61]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3469,7 +3469,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 62]
+Parecki, et al.         Expires September 5, 2020              [Page 62]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3525,7 +3525,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 63]
+Parecki, et al.         Expires September 5, 2020              [Page 63]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3581,7 +3581,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 64]
+Parecki, et al.         Expires September 5, 2020              [Page 64]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3637,7 +3637,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 65]
+Parecki, et al.         Expires September 5, 2020              [Page 65]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3693,7 +3693,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 66]
+Parecki, et al.         Expires September 5, 2020              [Page 66]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3749,7 +3749,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 67]
+Parecki, et al.         Expires September 5, 2020              [Page 67]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3805,7 +3805,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 68]
+Parecki, et al.         Expires September 5, 2020              [Page 68]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3861,7 +3861,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 69]
+Parecki, et al.         Expires September 5, 2020              [Page 69]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3917,7 +3917,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 70]
+Parecki, et al.         Expires September 5, 2020              [Page 70]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3973,7 +3973,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 71]
+Parecki, et al.         Expires September 5, 2020              [Page 71]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4029,7 +4029,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 72]
+Parecki, et al.         Expires September 5, 2020              [Page 72]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4085,7 +4085,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 73]
+Parecki, et al.         Expires September 5, 2020              [Page 73]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4141,7 +4141,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 74]
+Parecki, et al.         Expires September 5, 2020              [Page 74]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4197,7 +4197,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 75]
+Parecki, et al.         Expires September 5, 2020              [Page 75]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4253,7 +4253,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 76]
+Parecki, et al.         Expires September 5, 2020              [Page 76]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4309,7 +4309,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 77]
+Parecki, et al.         Expires September 5, 2020              [Page 77]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4365,7 +4365,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 78]
+Parecki, et al.         Expires September 5, 2020              [Page 78]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4421,7 +4421,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 79]
+Parecki, et al.         Expires September 5, 2020              [Page 79]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4477,7 +4477,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 80]
+Parecki, et al.         Expires September 5, 2020              [Page 80]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4533,7 +4533,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 81]
+Parecki, et al.         Expires September 5, 2020              [Page 81]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4589,7 +4589,7 @@ Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 82]
+Parecki, et al.         Expires September 5, 2020              [Page 82]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4645,7 +4645,7 @@ A.5.  "state" Syntax
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 83]
+Parecki, et al.         Expires September 5, 2020              [Page 83]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4701,7 +4701,7 @@ A.12.  "access_token" Syntax
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 84]
+Parecki, et al.         Expires September 5, 2020              [Page 84]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4757,7 +4757,7 @@ A.18.  "code_challenge" Syntax
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 85]
+Parecki, et al.         Expires September 5, 2020              [Page 85]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4800,20 +4800,20 @@ Appendix C.  Acknowledgements
 
 Authors' Addresses
 
-   Dick Hardt
-
-   Email: dick.hardt@gmail.com
-
-
    Aaron Parecki
 
    Email: aaron@parecki.com
    URI:   https://aaronparecki.com
 
 
+   Dick Hardt
+
+   Email: dick.hardt@gmail.com
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 86]
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 86]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4869,4 +4869,4 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Hardt, et al.           Expires September 5, 2020              [Page 87]
+Parecki, et al.         Expires September 5, 2020              [Page 87]
