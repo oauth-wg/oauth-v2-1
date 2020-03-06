@@ -44,6 +44,7 @@ normative:
   RFC5280:
   RFC7595:
   RFC8252:
+  I-D.ietf-oauth-security-topics:
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -66,7 +67,6 @@ informative:
   RFC7230:
   I-D.ietf-oauth-rar:
   I-D.ietf-oauth-resource-indicators:
-  I-D.ietf-oauth-security-topics:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
@@ -808,7 +808,7 @@ omitted from the request.  The authorization server MUST ignore
 unrecognized request parameters.  Request and response parameters
 MUST NOT be included more than once.
 
-### Response Type
+### Response Type {#response-type}
 
 The authorization endpoint is used by the authorization code flow.
 The client informs the
@@ -1223,7 +1223,7 @@ redirection response, or by other means available to it via the
 user-agent.
 
 
-### Authorization Response
+### Authorization Response {#authorization-response}
 
 If the resource owner grants the access request, the authorization
 server issues an authorization code and delivers it to the client by
@@ -1373,7 +1373,7 @@ sending the following HTTP response:
     Location: https://client.example.com/cb?error=access_denied&state=xyz
 
 
-### Access Token Request
+### Access Token Request {#access-token-request}
 
 The client makes a request to the token endpoint by sending the
 following parameters using the "application/x-www-form-urlencoded"
@@ -1441,7 +1441,7 @@ The authorization server MUST:
    their values are identical.
 
 
-### Access Token Response
+### Access Token Response {#authorization-code-access-token-response}
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
@@ -1505,7 +1505,7 @@ Since the client authentication is used as the authorization grant,
 no additional authorization request is needed.
 
 
-### Access Token Request
+### Access Token Request {#client-credentials-access-token-request}
 
 The client makes a request to the token endpoint by adding the
 following parameters using the "application/x-www-form-urlencoded"
@@ -1559,7 +1559,7 @@ An example successful response:
     }
 
 
-Extension Grants
+Extension Grants {#extension-grants}
 ----------------
 
 The client uses an extension grant type by specifying the grant type
@@ -2337,12 +2337,12 @@ acceptance of that token at the recipient (e.g., a resource server).
 
 Authorization and resource servers SHOULD use mechanisms for sender-
 constrained access tokens to prevent token replay as described in
-Section 4.8.1.1.2.  The use of Mutual TLS for OAuth 2.0 {{RFC8705}} is
-RECOMMENDED.
+Section 4.8.1.1.2 of {{I-D.ietf-oauth-security-topics}}.
+The use of Mutual TLS for OAuth 2.0 {{RFC8705}} is RECOMMENDED.
 
 It is RECOMMENDED to use end-to-end TLS.  If TLS traffic needs to be
-terminated at an intermediary, refer to Security BCP Section 4.11 for further
-security advice.
+terminated at an intermediary, refer to Section 4.11 of {{I-D.ietf-oauth-security-topics}}
+for further security advice.
 
 ### Access Token Privilege Restriction
 
@@ -2382,7 +2382,7 @@ determine those resources and/or actions.
 Extensibility
 =============
 
-Defining Access Token Types
+Defining Access Token Types {#defining-access-token-types}
 ---------------------------
 
 Access token types can be defined in one of two ways: registered in
@@ -2404,7 +2404,7 @@ authentication scheme name (as defined by [RFC2617]).  The token type
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
 
 
-Defining New Endpoint Parameters
+Defining New Endpoint Parameters {#defining-new-endpoint-parameters}
 --------------------------------
 
 New request or response parameters for use with the authorization
@@ -2466,7 +2466,7 @@ In cases where protocol extensions (i.e., access token types,
 extension parameters, or extension grant types) require additional
 error codes to be used with the authorization code grant error
 response ({{authorization-code-error-response}}), the token error response ({{access-token-error-response}}), or the
-resource access error response (Section 7.2), such error codes MAY be
+resource access error response ({{bearer-token-error-response}}), such error codes MAY be
 defined.
 
 Extension error codes MUST be registered (following the procedures in
@@ -2512,7 +2512,7 @@ Previously, it was common for native apps to use embedded user-agents
 (commonly implemented with web-views) for OAuth authorization
 requests.  That approach has many drawbacks, including the host app
 being able to copy user credentials and cookies as well as the user
-needing to authenticate from scratch in each app.  See Section ???
+needing to authenticate from scratch in each app.  See {{native-apps-embedded-user-agents}}
 for a deeper analysis of the drawbacks of using embedded user-agents
 for OAuth.
 
@@ -2718,7 +2718,7 @@ based client redirect URI.  An example is:
 
 As the redirect URI alone is not enough to distinguish public native
 app clients from confidential web clients, it is REQUIRED in
-Section ??? that the client type be recorded during client
+{{native-app-registration}} that the client type be recorded during client
 registration to enable the server to determine the client type and
 act accordingly.
 
@@ -2765,8 +2765,8 @@ and use whichever is available.
 As a flexible and extensible framework, OAuth's security
 considerations depend on many factors.  The following sections
 provide implementers with security guidelines focused on the three
-client profiles described in Section 2.1: web application,
-user-agent-based application, and native application.
+client profiles described in {{client-types}}: web application,
+browser-based application, and native application.
 
 A comprehensive OAuth security model and analysis, as well as
 background for the protocol design, is provided by
@@ -2919,7 +2919,7 @@ attributes) MUST be kept confidential in transit and storage, and
 only shared among the authorization server, the resource servers the
 access token is valid for, and the client to whom the access token is
 issued.  Access token credentials MUST only be transmitted using TLS
-as described in Section 1.6 with server authentication as defined by
+as described in {{tls-version}} with server authentication as defined by
 {{RFC2818}}.
 
 The authorization server MUST ensure that access tokens cannot be
@@ -2983,7 +2983,7 @@ shared only among the authorization server and the client to whom the
 refresh tokens were issued.  The authorization server MUST maintain
 the binding between a refresh token and the client to whom it was
 issued.  Refresh tokens MUST only be transmitted using TLS as
-described in Section 1.6 with server authentication as defined by
+described in {{tls-version}} with server authentication as defined by
 {{RFC2818}}.
 
 The authorization server MUST verify the binding between the refresh
@@ -3358,7 +3358,7 @@ The requirement of {{native-app-registration}}, specifically that authorization
 servers reject requests with URIs that don't match what was
 registered, is also required to prevent such attacks.
 
-## Embedded User Agents in Native Apps
+## Embedded User Agents in Native Apps {#native-apps-embedded-user-agents}
 
 Embedded user-agents are a technically possible method for authorizing native
 apps.  These embedded user-agents are unsafe for use by third parties
@@ -3700,7 +3700,7 @@ Error usage location:
 : The location(s) where the error can be used.  The possible
   locations are authorization code grant error response
   ({{authorization-code-error-response}}), token error response ({{access-token-error-response}}), or resource
-  access error response (Section 7.2).
+  access error response ({{bearer-token-error-response}}).
 
 Related protocol extension:
 : The name of the extension grant type, access token type, or
@@ -3787,7 +3787,7 @@ The "client_secret" element is defined in {{client-password}}:
 
 ## "response_type" Syntax
 
-The "response_type" element is defined in Sections 3.1.1 and 8.4:
+The "response_type" element is defined in {{response-type}} and {{new-response-types}}:
 
     response-type = response-name *( SP response-name )
     response-name = 1*response-char
@@ -3802,21 +3802,19 @@ The "scope" element is defined in {{access-token-scope}}:
 
 ## "state" Syntax
 
-The "state" element is defined in Sections 4.1.1, 4.1.2, {{authorization-code-error-response}},
-4.2.1, 4.2.2, and 4.2.2.1:
+The "state" element is defined in {{authorization-request}}, {{authorization-response}}, and {{authorization-code-error-response}}:
 
      state      = 1*VSCHAR
 
 ## "redirect_uri" Syntax
 
-The "redirect_uri" element is defined in Sections 4.1.1, 4.1.3,
-and 4.2.1:
+The "redirect_uri" element is defined in {{authorization-request}}, and {{access-token-request}}:
 
      redirect-uri      = URI-reference
 
 ## "error" Syntax
 
-The "error" element is defined in Sections {{authorization-code-error-response}}, 4.2.2.1, 5.2,
+The "error" element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
 7.2, and 8.5:
 
      error             = 1*NQSCHAR
@@ -3824,21 +3822,21 @@ The "error" element is defined in Sections {{authorization-code-error-response}}
 ## "error_description" Syntax
 
 The "error_description" element is defined in Sections {{authorization-code-error-response}},
-4.2.2.1, 5.2, and 7.2:
+{{access-token-error-response}}, and {{bearer-token-error-response}}:
 
      error-description = 1*NQSCHAR
 
 ## "error_uri" Syntax
 
-The "error_uri" element is defined in Sections {{authorization-code-error-response}}, 4.2.2.1, 5.2,
+The "error_uri" element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
 and 7.2:
 
      error-uri         = URI-reference
 
 ## "grant_type" Syntax
 
-The "grant_type" element is defined in Sections 4.1.3, 4.3.2, 4.4.2,
-4.5, and 6:
+The "grant_type" element is defined in Sections {{access-token-request}}, {{access-token-response}}, {{client-credentials-access-token-request}},
+{{extension-grants}}, and {{refreshing-an-access-token}}:
 
      grant-type = grant-name / URI-reference
      grant-name = 1*name-char
@@ -3846,19 +3844,19 @@ The "grant_type" element is defined in Sections 4.1.3, 4.3.2, 4.4.2,
 
 ## "code" Syntax
 
-The "code" element is defined in Section 4.1.3:
+The "code" element is defined in {{access-token-request}}:
 
      code       = 1*VSCHAR
 
 ## "access_token" Syntax
 
-The "access_token" element is defined in Sections 4.2.2 and 5.1:
+The "access_token" element is defined in {{access-token-response}} and {{access-token-successful-response}}:
 
      access-token = 1*VSCHAR
 
 ## "token_type" Syntax
 
-The "token_type" element is defined in Sections 4.2.2, 5.1, and 8.1:
+The "token_type" element is defined in {{access-token-successful-response}}, and {{defining-access-token-types}}:
 
      token-type = type-name / URI-reference
      type-name  = 1*name-char
@@ -3866,19 +3864,19 @@ The "token_type" element is defined in Sections 4.2.2, 5.1, and 8.1:
 
 ## "expires_in" Syntax
 
-The "expires_in" element is defined in Sections 4.2.2 and 5.1:
+The "expires_in" element is defined in {{access-token-successful-response}}:
 
      expires-in = 1*DIGIT
 
 ## "refresh_token" Syntax
 
-The "refresh_token" element is defined in Sections 5.1 and 6:
+The "refresh_token" element is defined in {{access-token-successful-response}} and {{refreshing-an-access-token}}:
 
      refresh-token = 1*VSCHAR
 
 ## Endpoint Parameter Syntax
 
-The syntax for new endpoint parameters is defined in Section 8.2:
+The syntax for new endpoint parameters is defined in {{defining-new-endpoint-parameters}}:
 
      param-name = 1*name-char
      name-char  = "-" / "." / "_" / DIGIT / ALPHA
