@@ -1021,7 +1021,7 @@
 <h1 id="rfc.section.2.1">
 <a href="#rfc.section.2.1">2.1.</a> <a href="#client-types" id="client-types">Client Types</a>
 </h1>
-<p id="rfc.section.2.1.p.1">OAuth defines two client types, based on their ability to authenticate securely with the authorization server (i.e., ability to maintain the confidentiality of their client credentials):</p>
+<p id="rfc.section.2.1.p.1">OAuth defines two client types, based on whether they can be issued credentials that they can use to authenticate at the authorization server:</p>
 <p></p>
 
 <dl>
@@ -1038,8 +1038,8 @@
 <dl>
 <dt>"web application":</dt>
 <dd style="margin-left: 8">A web application is a confidential client running on a web server.  Resource owners access the client via an HTML user interface rendered in a user-agent on the device used by the resource owner.  The client credentials as well as any access token issued to the client are stored on the web server and are not exposed to or accessible by the resource owner.</dd>
-<dt>"user-agent-based application":</dt>
-<dd style="margin-left: 8">A user-agent-based application is a public client in which the client code is downloaded from a web server and executes within a user-agent (e.g., web browser) on the device used by the resource owner.  Protocol data and credentials are easily accessible (and often visible) to the resource owner.  Since such applications reside within the user-agent, they can make seamless use of the user-agent capabilities when requesting authorization.</dd>
+<dt>"browser-based application":</dt>
+<dd style="margin-left: 8">A browser-based application is a public client in which the client code is downloaded from a web server and executes within a user-agent (e.g., web browser) on the device used by the resource owner.  Protocol data and credentials are easily accessible (and often visible) to the resource owner.  Since such applications reside within the user-agent, they can make seamless use of the user-agent capabilities when requesting authorization.</dd>
 <dt>"native application":</dt>
 <dd style="margin-left: 8">A native application is a public client installed and executed on the device used by the resource owner.  Protocol data and credentials are accessible to the resource owner.  It is assumed that any client authentication credentials included in the application can be extracted.  On the other hand, dynamically issued credentials such as access tokens or refresh tokens can receive an acceptable level of protection.  At a minimum, these credentials are protected from hostile servers with which the application may interact.  On some platforms, these credentials might be protected from other applications residing on the same device.</dd>
 </dl>

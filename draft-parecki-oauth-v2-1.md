@@ -569,9 +569,8 @@ When registering a client, the client developer SHALL:
 Client Types {#client-types}
 ------------
 
-OAuth defines two client types, based on their ability to
-authenticate securely with the authorization server (i.e., ability to
-maintain the confidentiality of their client credentials):
+OAuth defines two client types, based on whether they can be issued
+credentials that they can use to authenticate at the authorization server:
 
 "confidential":
 : Clients capable of maintaining the confidentiality of their
@@ -610,8 +609,8 @@ profiles:
   token issued to the client are stored on the web server and are
   not exposed to or accessible by the resource owner.
 
-"user-agent-based application":
-: A user-agent-based application is a public client in which the
+"browser-based application":
+: A browser-based application is a public client in which the
   client code is downloaded from a web server and executes within a
   user-agent (e.g., web browser) on the device used by the resource
   owner.  Protocol data and credentials are easily accessible (and
