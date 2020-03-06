@@ -1238,7 +1238,7 @@ two parts as they pass through the user-agent.
 </pre>
 <p class="figure">Figure 3: Authorization Code Flow</p>
 <p id="rfc.section.4.1.p.3">The flow illustrated in <a href="#fig-authorization-code-flow" class="xref">Figure 3</a> includes the following steps:</p>
-<p id="rfc.section.4.1.p.4">(1)  The client initiates the flow by directing the resource owner's user-agent to the authorization endpoint.  The client includes its client identifier, requested scope, local state, code challenge, and a redirection URI to which the authorization server will send the user-agent back once access is granted (or denied).</p>
+<p id="rfc.section.4.1.p.4">(1)  The client initiates the flow by directing the resource owner's user-agent to the authorization endpoint.  The client includes its client identifier, requested scope, local state, PKCE code challenge, and a redirection URI to which the authorization server will send the user-agent back once access is granted (or denied).</p>
 <p id="rfc.section.4.1.p.5">(2)  The authorization server authenticates the resource owner (via the user-agent) and establishes whether the resource owner grants or denies the client's access request.</p>
 <p id="rfc.section.4.1.p.6">(3)  Assuming the resource owner grants access, the authorization server redirects the user-agent back to the client using the redirection URI provided earlier (in the request or during client registration).  The redirection URI includes an authorization code and any local state provided by the client earlier.</p>
 <p id="rfc.section.4.1.p.7">(4)  The client requests an access token from the authorization server's token endpoint by including the authorization code received in the previous step, and including its code verifier.  When making the request, the client authenticates with the authorization server if it can.  The client includes the redirection URI used to obtain the authorization code for verification.</p>
@@ -1246,28 +1246,30 @@ two parts as they pass through the user-agent.
 <h1 id="rfc.section.4.1.1">
 <a href="#rfc.section.4.1.1">4.1.1.</a> <a href="#authorization-request" id="authorization-request">Authorization Request</a>
 </h1>
+<p id="rfc.section.4.1.1.p.1">To begin the authorization request, the client builds the authorization request URI by adding parameters to the authorization server's authorization endpoint URI.</p>
+<p id="rfc.section.4.1.1.p.2">Without a client secret, public clients would be susceptible to an authorization code interception attack, where an attacker is able to intercept the authorization response through various means and use the authorization code to obtain an access token.  To protect against this attack, as well as to protect against CSRF attacks, the client first generates a unique secret per authorization request, which it can later use along with the authorization code to prove that the application using the authorization code is the same application that requested it. This practice is known as "Proof-Key for Code Exchange", or PKCE, after the OAuth 2.0 extension (<a href="#RFC7636" class="xref">[RFC7636]</a>) where it was originally developed.</p>
 <h1 id="rfc.section.4.1.1.1">
-<a href="#rfc.section.4.1.1.1">4.1.1.1.</a> <a href="#client-creates-a-code-verifier" id="client-creates-a-code-verifier">Client Creates a Code Verifier</a>
+<a href="#rfc.section.4.1.1.1">4.1.1.1.</a> <a href="#client-creates-a-pkce-code-verifier" id="client-creates-a-pkce-code-verifier">Client Creates a PKCE Code Verifier</a>
 </h1>
-<p id="rfc.section.4.1.1.1.p.1">The client first creates a code verifier, "code_verifier", for each Authorization Request, in the following manner:</p>
+<p id="rfc.section.4.1.1.1.p.1">The client first creates a PKCE code verifier, <samp>code_verifier</samp>, for each Authorization Request, in the following manner:</p>
 <pre>
 code_verifier = high-entropy cryptographic random STRING using the
 unreserved characters `[A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"`
 from Section 2.3 of {{RFC3986}}, with a minimum length of 43 characters
 and a maximum length of 128 characters.
 </pre>
-<p id="rfc.section.4.1.1.1.p.2">ABNF for "code_verifier" is as follows.</p>
+<p id="rfc.section.4.1.1.1.p.2">ABNF for <samp>code_verifier</samp> is as follows.</p>
 <pre>
 code-verifier = 43*128unreserved
 unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
 ALPHA = %x41-5A / %x61-7A
 DIGIT = %x30-39
 </pre>
-<p id="rfc.section.4.1.1.1.p.3">NOTE: The code verifier SHOULD have enough entropy to make it impractical to guess the value.  It is RECOMMENDED that the output of a suitable random number generator be used to create a 32-octet sequence.  The octet sequence is then base64url-encoded to produce a 43-octet URL safe string to use as the code verifier.</p>
+<p id="rfc.section.4.1.1.1.p.3">NOTE: The code verifier SHOULD have enough entropy to make it impractical to guess the value.  It is RECOMMENDED that the output of a suitable random number generator be used to create a 32-octet sequence.  The octet sequence is then base64url-encoded to produce a 43-octet URL-safe string to use as the code verifier.</p>
 <h1 id="rfc.section.4.1.1.2">
-<a href="#rfc.section.4.1.1.2">4.1.1.2.</a> <a href="#client-creates-the-code-challenge" id="client-creates-the-code-challenge">Client Creates the Code Challenge</a>
+<a href="#rfc.section.4.1.1.2">4.1.1.2.</a> <a href="#client-creates-the-pkce-code-challenge" id="client-creates-the-pkce-code-challenge">Client Creates the PKCE Code Challenge</a>
 </h1>
-<p id="rfc.section.4.1.1.2.p.1">The client then creates a code challenge derived from the code verifier by using one of the following transformations on the code verifier:</p>
+<p id="rfc.section.4.1.1.2.p.1">The client then creates a PKCE code challenge derived from the code verifier by using one of the following transformations on the code verifier:</p>
 <pre>
 plain
   code_challenge = code_verifier
@@ -1275,7 +1277,7 @@ plain
 S256
   code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
 </pre>
-<p id="rfc.section.4.1.1.2.p.2">If the client is capable of using "S256", it MUST use "S256", as "S256" is Mandatory To Implement (MTI) on the server.  Clients are permitted to use "plain" only if they cannot support "S256" for some technical reason and know via out-of-band configuration that the server supports "plain".</p>
+<p id="rfc.section.4.1.1.2.p.2">If the client is capable of using <samp>S256</samp>, it MUST use <samp>S256</samp>, as <samp>S256</samp> is Mandatory To Implement (MTI) on the server.  Clients are permitted to use <samp>plain</samp> only if they cannot support <samp>S256</samp> for some technical reason and know via out-of-band configuration that the server supports <samp>plain</samp>.</p>
 <p id="rfc.section.4.1.1.2.p.3">The plain transformation is for compatibility with existing deployments and for constrained environments that can't use the S256 transformation.</p>
 <p id="rfc.section.4.1.1.2.p.4">ABNF for "code_challenge" is as follows.</p>
 <pre>
@@ -1292,19 +1294,19 @@ DIGIT = %x30-39
 
 <dl>
 <dt>"response_type":</dt>
-<dd style="margin-left: 8">REQUIRED.  Value MUST be set to "code".</dd>
+<dd style="margin-left: 8">REQUIRED.  Value MUST be set to <samp>code</samp>.</dd>
 <dt>"client_id":</dt>
 <dd style="margin-left: 8">REQUIRED.  The client identifier as described in <a href="#client-identifier" class="xref">Section 2.2</a>.</dd>
 <dt>"code_challenge":</dt>
 <dd style="margin-left: 8">REQUIRED.  Code challenge.</dd>
 <dt>"code_challenge_method":</dt>
-<dd style="margin-left: 8">OPTIONAL, defaults to "plain" if not present in the request.  Code verifier transformation method is "S256" or "plain".</dd>
+<dd style="margin-left: 8">OPTIONAL, defaults to <samp>plain</samp> if not present in the request.  Code nverifier transformation method is <samp>S256</samp> or <samp>plain</samp>.</dd>
 <dt>"redirect_uri":</dt>
 <dd style="margin-left: 8">OPTIONAL.  As described in <a href="#redirection-endpoint" class="xref">Section 3.1.2</a>.</dd>
 <dt>"scope":</dt>
 <dd style="margin-left: 8">OPTIONAL.  The scope of the access request as described by <a href="#access-token-scope" class="xref">Section 3.3</a>.</dd>
 <dt>"state":</dt>
-<dd style="margin-left: 8">RECOMMENDED.  An opaque value used by the client to maintain state between the request and callback.  The authorization server includes this value when redirecting the user-agent back to the client.  The parameter SHOULD be used for preventing cross-site request forgery as described in <a href="#csrf_countermeasures" class="xref">Section 10.14</a>.</dd>
+<dd style="margin-left: 8">OPTIONAL.  An opaque value used by the client to maintain state between the request and callback.  The authorization server includes this value when redirecting the user-agent back to the client.</dd>
 </dl>
 <p id="rfc.section.4.1.1.3.p.3">The client directs the resource owner to the constructed URI using an HTTP redirection response, or by other means available to it via the user-agent.</p>
 <p id="rfc.section.4.1.1.3.p.4">For example, the client directs the user-agent to make the following HTTP request using TLS (with extra line breaks for display purposes only):</p>
@@ -2605,6 +2607,11 @@ http://[::1]:61023/oauth2redirect/example-provider
 <td class="reference"><b id="RFC7591">[RFC7591]</b></td>
 <td class="top">
 <a>Richer, J.</a>, <a>Jones, M.</a>, <a>Bradley, J.</a>, <a>Machulak, M.</a> and <a>P. Hunt</a>, "<a href="https://tools.ietf.org/html/rfc7591">OAuth 2.0 Dynamic Client Registration Protocol</a>", RFC 7591, DOI 10.17487/RFC7591, July 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7636">[RFC7636]</b></td>
+<td class="top">
+<a>Sakimura, N.</a>, <a>Bradley, J.</a> and <a>N. Agarwal</a>, "<a href="https://tools.ietf.org/html/rfc7636">Proof Key for Code Exchange by OAuth Public Clients</a>", RFC 7636, DOI 10.17487/RFC7636, September 2015.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC8414">[RFC8414]</b></td>

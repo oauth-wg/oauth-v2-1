@@ -65,6 +65,7 @@ informative:
   RFC7591:
   RFC8705:
   RFC7230:
+  RFC7636:
   I-D.ietf-oauth-rar:
   I-D.ietf-oauth-resource-indicators:
   I-D.bradley-oauth-jwt-encoded-state:
@@ -1081,7 +1082,7 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 (1)  The client initiates the flow by directing the resource owner's
      user-agent to the authorization endpoint.  The client includes
-     its client identifier, requested scope, local state, code challenge, and a
+     its client identifier, requested scope, local state, PKCE code challenge, and a
      redirection URI to which the authorization server will send the
      user-agent back once access is granted (or denied).
 
@@ -1112,9 +1113,23 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 ### Authorization Request {#authorization-request}
 
-#### Client Creates a Code Verifier
+To begin the authorization request, the client builds the authorization
+request URI by adding parameters to the authorization server's
+authorization endpoint URI.
 
-The client first creates a code verifier, "code_verifier", for each
+Without a client secret, public clients would be susceptible to an authorization code
+interception attack, where an attacker is able to intercept the authorization
+response through various means and use the authorization code to obtain an access token.
+To protect against this attack, as well as to protect against CSRF attacks,
+the client first generates a unique secret per authorization request, which it can
+later use along with the authorization code to prove that the application using the
+authorization code is the same application that requested it. This practice is known
+as "Proof-Key for Code Exchange", or PKCE, after the OAuth 2.0 extension ({{RFC7636}})
+where it was originally developed.
+
+#### Client Creates a PKCE Code Verifier
+
+The client first creates a PKCE code verifier, `code_verifier`, for each
 Authorization Request, in the following manner:
 
     code_verifier = high-entropy cryptographic random STRING using the
@@ -1122,7 +1137,7 @@ Authorization Request, in the following manner:
     from Section 2.3 of {{RFC3986}}, with a minimum length of 43 characters
     and a maximum length of 128 characters.
 
-ABNF for "code_verifier" is as follows.
+ABNF for `code_verifier` is as follows.
 
     code-verifier = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -1133,11 +1148,11 @@ NOTE: The code verifier SHOULD have enough entropy to make it
 impractical to guess the value.  It is RECOMMENDED that the output of
 a suitable random number generator be used to create a 32-octet
 sequence.  The octet sequence is then base64url-encoded to produce a
-43-octet URL safe string to use as the code verifier.
+43-octet URL-safe string to use as the code verifier.
 
-#### Client Creates the Code Challenge
+#### Client Creates the PKCE Code Challenge
 
-The client then creates a code challenge derived from the code
+The client then creates a PKCE code challenge derived from the code
 verifier by using one of the following transformations on the code
 verifier:
 
@@ -1147,11 +1162,11 @@ verifier:
     S256
       code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
 
-If the client is capable of using "S256", it MUST use "S256", as
-"S256" is Mandatory To Implement (MTI) on the server.  Clients are
-permitted to use "plain" only if they cannot support "S256" for some
+If the client is capable of using `S256`, it MUST use `S256`, as
+`S256` is Mandatory To Implement (MTI) on the server.  Clients are
+permitted to use `plain` only if they cannot support `S256` for some
 technical reason and know via out-of-band configuration that the
-server supports "plain".
+server supports `plain`.
 
 The plain transformation is for compatibility with existing
 deployments and for constrained environments that can't use the S256
@@ -1171,7 +1186,7 @@ parameters to the query component of the authorization endpoint URI
 using the "application/x-www-form-urlencoded" format, per Appendix B:
 
 "response_type":
-:    REQUIRED.  Value MUST be set to "code".
+:    REQUIRED.  Value MUST be set to `code`.
 
 "client_id":
 :    REQUIRED.  The client identifier as described in {{client-identifier}}.
@@ -1180,8 +1195,8 @@ using the "application/x-www-form-urlencoded" format, per Appendix B:
 :    REQUIRED.  Code challenge.
 
 "code_challenge_method":
-:    OPTIONAL, defaults to "plain" if not present in the request.  Code
-    verifier transformation method is "S256" or "plain".
+:    OPTIONAL, defaults to `plain` if not present in the request.  Code
+    nverifier transformation method is `S256` or `plain`.
 
 "redirect_uri":
 :    OPTIONAL.  As described in {{redirection-endpoint}}.
@@ -1191,11 +1206,10 @@ using the "application/x-www-form-urlencoded" format, per Appendix B:
      {{access-token-scope}}.
 
 "state":
-:    RECOMMENDED.  An opaque value used by the client to maintain
+:    OPTIONAL.  An opaque value used by the client to maintain
      state between the request and callback.  The authorization
      server includes this value when redirecting the user-agent back
-     to the client.  The parameter SHOULD be used for preventing
-     cross-site request forgery as described in {{csrf_countermeasures}}.
+     to the client.
 
 The client directs the resource owner to the constructed URI using an
 HTTP redirection response, or by other means available to it via the
