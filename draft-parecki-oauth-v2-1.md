@@ -3361,6 +3361,16 @@ attempt to bind to the loopback interface using both IPv4 and IPv6
 and use whichever is available.
 
 
+Browser-Based Apps
+==================
+
+Browser-based apps are are clients that run in a web browser, typically
+written in JavaScript, also known as "single-page apps". These types of apps
+have particular security considerations similar to native apps.
+
+TODO: Bring in the normative text of the browser-based apps BCP when it is finalized.
+
+
 
 IANA Considerations
 ===================

@@ -177,45 +177,45 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
        10.3.1.  Private-Use URI Scheme Redirection . . . . . . . . .  66
        10.3.2.  Claimed "https" Scheme URI Redirection . . . . . . .  67
        10.3.3.  Loopback Interface Redirection . . . . . . . . . . .  68
-   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  68
-     11.1.  OAuth Access Token Types Registry  . . . . . . . . . . .  68
-       11.1.1.  Registration Template  . . . . . . . . . . . . . . .  69
-       11.1.2.  Initial Registry Contents  . . . . . . . . . . . . .  69
-     11.2.  OAuth Parameters Registry  . . . . . . . . . . . . . . .  70
-       11.2.1.  Registration Template  . . . . . . . . . . . . . . .  70
-       11.2.2.  Initial Registry Contents  . . . . . . . . . . . . .  71
-     11.3.  OAuth Authorization Endpoint Response Types Registry . .  73
-       11.3.1.  Registration Template  . . . . . . . . . . . . . . .  74
-       11.3.2.  Initial Registry Contents  . . . . . . . . . . . . .  74
-     11.4.  OAuth Extensions Error Registry  . . . . . . . . . . . .  74
-       11.4.1.  Registration Template  . . . . . . . . . . . . . . .  75
-       11.4.2.  Initial Registry Contents  . . . . . . . . . . . . .  76
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  76
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  76
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  79
-   Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax . . . . . .  81
+   11. Browser-Based Apps  . . . . . . . . . . . . . . . . . . . . .  68
+   12. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  69
+     12.1.  OAuth Access Token Types Registry  . . . . . . . . . . .  69
+       12.1.1.  Registration Template  . . . . . . . . . . . . . . .  69
+       12.1.2.  Initial Registry Contents  . . . . . . . . . . . . .  70
+     12.2.  OAuth Parameters Registry  . . . . . . . . . . . . . . .  70
+       12.2.1.  Registration Template  . . . . . . . . . . . . . . .  71
+       12.2.2.  Initial Registry Contents  . . . . . . . . . . . . .  71
+     12.3.  OAuth Authorization Endpoint Response Types Registry . .  74
+       12.3.1.  Registration Template  . . . . . . . . . . . . . . .  74
+       12.3.2.  Initial Registry Contents  . . . . . . . . . . . . .  75
+     12.4.  OAuth Extensions Error Registry  . . . . . . . . . . . .  75
+       12.4.1.  Registration Template  . . . . . . . . . . . . . . .  75
+       12.4.2.  Initial Registry Contents  . . . . . . . . . . . . .  76
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  76
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .  77
+     13.2.  Informative References . . . . . . . . . . . . . . . . .  79
+   Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax . . . . . .  82
      A.1.  "client_id" Syntax  . . . . . . . . . . . . . . . . . . .  82
      A.2.  "client_secret" Syntax  . . . . . . . . . . . . . . . . .  82
      A.3.  "response_type" Syntax  . . . . . . . . . . . . . . . . .  82
-     A.4.  "scope" Syntax  . . . . . . . . . . . . . . . . . . . . .  82
-     A.5.  "state" Syntax  . . . . . . . . . . . . . . . . . . . . .  82
-     A.6.  "redirect_uri" Syntax . . . . . . . . . . . . . . . . . .  82
+     A.4.  "scope" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
+     A.5.  "state" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
+     A.6.  "redirect_uri" Syntax . . . . . . . . . . . . . . . . . .  83
      A.7.  "error" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
      A.8.  "error_description" Syntax  . . . . . . . . . . . . . . .  83
      A.9.  "error_uri" Syntax  . . . . . . . . . . . . . . . . . . .  83
      A.10. "grant_type" Syntax . . . . . . . . . . . . . . . . . . .  83
-     A.11. "code" Syntax . . . . . . . . . . . . . . . . . . . . . .  83
-     A.12. "access_token" Syntax . . . . . . . . . . . . . . . . . .  83
-     A.13. "token_type" Syntax . . . . . . . . . . . . . . . . . . .  83
+     A.11. "code" Syntax . . . . . . . . . . . . . . . . . . . . . .  84
+     A.12. "access_token" Syntax . . . . . . . . . . . . . . . . . .  84
+     A.13. "token_type" Syntax . . . . . . . . . . . . . . . . . . .  84
      A.14. "expires_in" Syntax . . . . . . . . . . . . . . . . . . .  84
      A.15. "refresh_token" Syntax  . . . . . . . . . . . . . . . . .  84
      A.16. Endpoint Parameter Syntax . . . . . . . . . . . . . . . .  84
-     A.17. "code_verifier" Syntax  . . . . . . . . . . . . . . . . .  84
-     A.18. "code_challenge" Syntax . . . . . . . . . . . . . . . . .  84
-   Appendix B.  Use of application/x-www-form-urlencoded Media Type   84
-   Appendix C.  Acknowledgements . . . . . . . . . . . . . . . . . .  85
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  85
-
+     A.17. "code_verifier" Syntax  . . . . . . . . . . . . . . . . .  85
+     A.18. "code_challenge" Syntax . . . . . . . . . . . . . . . . .  85
+   Appendix B.  Use of application/x-www-form-urlencoded Media Type   85
+   Appendix C.  Acknowledgements . . . . . . . . . . . . . . . . . .  86
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  86
 
 
 
@@ -2364,7 +2364,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    If a resource access request fails, the resource server SHOULD inform
    the client of the error.  While the specifics of such error responses
    are beyond the scope of this specification, this document establishes
-   a common registry in Section 11.4 for error values to be shared among
+   a common registry in Section 12.4 for error values to be shared among
    OAuth token authentication schemes.
 
    New authentication schemes designed primarily for OAuth token
@@ -2696,7 +2696,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    Access token types can be defined in one of two ways: registered in
    the Access Token Types registry (following the procedures in
-   Section 11.1), or by using a unique absolute URI as its name.
+   Section 12.1), or by using a unique absolute URI as its name.
 
    Types utilizing a URI name SHOULD be limited to vendor-specific
    implementations that are not commonly applicable, and are specific to
@@ -2716,7 +2716,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    New request or response parameters for use with the authorization
    endpoint or the token endpoint are defined and registered in the
-   OAuth Parameters registry following the procedure in Section 11.2.
+   OAuth Parameters registry following the procedure in Section 12.2.
 
    Parameter names MUST conform to the param-name ABNF, and parameter
    values syntax MUST be well-defined (e.g., using ABNF, or a reference
@@ -2737,7 +2737,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    unique absolute URI for use with the "grant_type" parameter.  If the
    extension grant type requires additional token endpoint parameters,
    they MUST be registered in the OAuth Parameters registry as described
-   by Section 11.2.
+   by Section 12.2.
 
 
 
@@ -2750,7 +2750,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    New response types for use with the authorization endpoint are
    defined and registered in the Authorization Endpoint Response Types
-   registry following the procedure in Section 11.3.  Response type
+   registry following the procedure in Section 12.3.  Response type
    names MUST conform to the response-type ABNF.
 
    response-type  = response-name *( SP response-name )
@@ -2778,7 +2778,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    MAY be defined.
 
    Extension error codes MUST be registered (following the procedures in
-   Section 11.4) if the extension they are used in conjunction with is a
+   Section 12.4) if the extension they are used in conjunction with is a
    registered access token type, a registered endpoint parameter, or an
    extension grant type.  Error codes used with unregistered extensions
    MAY be registered.
@@ -3788,18 +3788,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    attempt to bind to the loopback interface using both IPv4 and IPv6
    and use whichever is available.
 
-11.  IANA Considerations
+11.  Browser-Based Apps
 
-11.1.  OAuth Access Token Types Registry
+   Browser-based apps are are clients that run in a web browser,
+   typically written in JavaScript, also known as "single-page apps".
+   These types of apps have particular security considerations similar
+   to native apps.
 
-   This specification establishes the OAuth Access Token Types registry.
+   TODO: Bring in the normative text of the browser-based apps BCP when
+   it is finalized.
 
-   Access token types are registered with a Specification Required
-   ([RFC5226]) after a two-week review period on the oauth-ext-
-   review@ietf.org mailing list, on the advice of one or more Designated
-   Experts.  However, to allow for the allocation of values prior to
-   publication, the Designated Expert(s) may approve registration once
-   they are satisfied that such a specification will be published.
+
+
 
 
 
@@ -3809,6 +3809,19 @@ Parecki, et al.         Expires September 5, 2020              [Page 68]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
+
+12.  IANA Considerations
+
+12.1.  OAuth Access Token Types Registry
+
+   This specification establishes the OAuth Access Token Types registry.
+
+   Access token types are registered with a Specification Required
+   ([RFC5226]) after a two-week review period on the oauth-ext-
+   review@ietf.org mailing list, on the advice of one or more Designated
+   Experts.  However, to allow for the allocation of values prior to
+   publication, the Designated Expert(s) may approve registration once
+   they are satisfied that such a specification will be published.
 
    Registration requests must be sent to the oauth-ext-review@ietf.org
    mailing list for review and comment, with an appropriate subject
@@ -3824,14 +3837,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    and should direct all requests for registration to the review mailing
    list.
 
-11.1.1.  Registration Template
+12.1.1.  Registration Template
 
    Type name:  The name requested (e.g., "example").
 
    Additional Token Endpoint Response Parameters:  Additional response
       parameters returned together with the "access_token" parameter.
       New parameters MUST be separately registered in the OAuth
-      Parameters registry as described by Section 11.2.
+      Parameters registry as described by Section 12.2.
 
    HTTP Authentication Scheme(s):  The HTTP authentication scheme
       name(s), if any, used to authenticate protected resource requests
@@ -3844,10 +3857,19 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    Specification document(s):  Reference to the document(s) that specify
       the parameter, preferably including a URI that can be used to
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 69]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
       retrieve a copy of the document(s).  An indication of the relevant
       sections may also be included but is not required.
 
-11.1.2.  Initial Registry Contents
+12.1.2.  Initial Registry Contents
 
    The OAuth Access Token Types registry's initial contents are:
 
@@ -3859,16 +3881,9 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Change controller: IETF
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 69]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    o  Specification document(s): OAuth 2.1
 
-11.2.  OAuth Parameters Registry
+12.2.  OAuth Parameters Registry
 
    This specification establishes the OAuth Parameters registry.
 
@@ -3896,7 +3911,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    and should direct all requests for registration to the review mailing
    list.
 
-11.2.1.  Registration Template
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 70]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+12.2.1.  Registration Template
 
    Parameter name:  The name requested (e.g., "example").
 
@@ -3914,15 +3940,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
       retrieve a copy of the document(s).  An indication of the relevant
       sections may also be included but is not required.
 
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 70]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-11.2.2.  Initial Registry Contents
+12.2.2.  Initial Registry Contents
 
    The OAuth Parameters registry's initial contents are:
 
@@ -3952,6 +3970,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Parameter name: redirect_uri
 
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 71]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    o  Parameter usage location: authorization request, token request
 
    o  Change controller: IETF
@@ -3968,15 +3994,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    o  Specification document(s): RFC 6749
 
    o  Parameter name: state
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 71]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    o  Parameter usage location: authorization request, authorization
       response
@@ -4009,6 +4026,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Specification document(s): RFC 6749
 
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 72]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    o  Parameter name: grant_type
 
    o  Parameter usage location: token request
@@ -4026,13 +4051,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    o  Specification document(s): RFC 6749
 
    o  Parameter name: token_type
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 72]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    o  Parameter usage location: authorization response, token response
 
@@ -4064,6 +4082,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Specification document(s): RFC 6749
 
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 73]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    o  Parameter name: refresh_token
 
    o  Parameter usage location: token request, token response
@@ -4072,7 +4098,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Specification document(s): RFC 6749
 
-11.3.  OAuth Authorization Endpoint Response Types Registry
+12.3.  OAuth Authorization Endpoint Response Types Registry
 
    This specification establishes the OAuth Authorization Endpoint
    Response Types registry.
@@ -4082,14 +4108,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    review period on the oauth-ext-review@ietf.org mailing list, on the
    advice of one or more Designated Experts.  However, to allow for the
    allocation of values prior to publication, the Designated Expert(s)
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 73]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    may approve registration once they are satisfied that such a
    specification will be published.
 
@@ -4107,7 +4125,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    and should direct all requests for registration to the review mailing
    list.
 
-11.3.1.  Registration Template
+12.3.1.  Registration Template
 
    Response type name:  The name requested (e.g., "example").
 
@@ -4121,7 +4139,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
       a copy of the document(s).  An indication of the relevant sections
       may also be included but is not required.
 
-11.3.2.  Initial Registry Contents
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 74]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+12.3.2.  Initial Registry Contents
 
    The OAuth Authorization Endpoint Response Types registry's initial
    contents are:
@@ -4132,20 +4157,12 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Specification document(s): RFC 6749
 
-11.4.  OAuth Extensions Error Registry
+12.4.  OAuth Extensions Error Registry
 
    This specification establishes the OAuth Extensions Error registry.
 
    Additional error codes used together with other protocol extensions
    (i.e., extension grant types, access token types, or extension
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 74]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    parameters) are registered with a Specification Required ([RFC5226])
    after a two-week review period on the oauth-ext-review@ietf.org
    mailing list, on the advice of one or more Designated Experts.
@@ -4167,7 +4184,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    and should direct all requests for registration to the review mailing
    list.
 
-11.4.1.  Registration Template
+12.4.1.  Registration Template
 
    Error name:  The name requested (e.g., "example").  Values for the
       error name MUST NOT include characters outside the set %x20-21 /
@@ -4177,6 +4194,13 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
       The possible locations are authorization code grant error response
       (Section 4.1.2.1), token error response (Section 5.2), or resource
       access error response (Section 7.3).
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 75]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    Related protocol extension:  The name of the extension grant type,
       access token type, or extension parameter that the error code is
@@ -4192,17 +4216,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
       retrieve a copy of the document(s).  An indication of the relevant
       sections may also be included but is not required.
 
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 75]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-11.4.2.  Initial Registry Contents
+12.4.2.  Initial Registry Contents
 
    The OAuth Error registry's initial contents are:
 
@@ -4230,9 +4244,21 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Specification document(s): OAuth 2.1
 
-12.  References
+13.  References
 
-12.1.  Normative References
+
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 76]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+13.1.  Normative References
 
    [I-D.ietf-oauth-security-topics]
               Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,
@@ -4250,13 +4276,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Transfer Protocol -- HTTP/1.1", RFC 2616,
               DOI 10.17487/RFC2616, June 1999,
               <https://www.rfc-editor.org/info/rfc2616>.
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 76]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    [RFC2617]  Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S.,
               Leach, P., Luotonen, A., and L. Stewart, "HTTP
@@ -4286,6 +4305,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               FYI 36, RFC 4949, DOI 10.17487/RFC4949, August 2007,
               <https://www.rfc-editor.org/info/rfc4949>.
 
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 77]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", RFC 5226,
               DOI 10.17487/RFC5226, May 2008,
@@ -4301,18 +4329,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Infrastructure Certificate and Certificate Revocation List
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <https://www.rfc-editor.org/info/rfc5280>.
-
-
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 77]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
@@ -4347,6 +4363,13 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Standard Code for Information Interchange, ANSI X3.4",
               1986.
 
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 78]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    [W3C.REC-html401-19991224]
               Raggett, D., Hors, A., and I. Jacobs, "HTML 4.01
               Specification", World Wide Web Consortium Recommendation
@@ -4360,17 +4383,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               xml-20081126, November 2008,
               <http://www.w3.org/TR/2008/REC-xml-20081126>.
 
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 78]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-12.2.  Informative References
+13.2.  Informative References
 
    [CSP-2]    "Content Security Policy Level 2", n.d..
 
@@ -4404,6 +4417,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               "OAuth 2.0 Token Binding", draft-ietf-oauth-token-
               binding-08 (work in progress), October 2018.
 
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 79]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
               Gupta, S., and E. Nabbus, "NIST Special Publication
@@ -4416,15 +4438,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Multimedia Resources", April 2012.
 
    [OpenID]   "OpenID Connect", n.d..
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 79]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    [OpenID.Messages]
               Sakimura, N., Bradley, J., Jones, M., de Medeiros, B.,
@@ -4459,6 +4472,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               DOI 10.17487/RFC7522, May 2015,
               <https://www.rfc-editor.org/info/rfc7522>.
 
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 80]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    [RFC7591]  Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and
               P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol",
               RFC 7591, DOI 10.17487/RFC7591, July 2015,
@@ -4473,14 +4496,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Authorization Server Metadata", RFC 8414,
               DOI 10.17487/RFC8414, June 2018,
               <https://www.rfc-editor.org/info/rfc8414>.
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 80]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    [RFC8418]  Housley, R., "Use of the Elliptic Curve Diffie-Hellman Key
               Agreement Algorithm with X25519 and X448 in the
@@ -4507,9 +4522,21 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    [webcrypto]
               Watson, M., "Web Cryptography API", January 2017.
 
-12.3.  URIs
+13.3.  URIs
 
    [1] http://www.iana.org/assignments/media-types
+
+
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 81]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax
 
@@ -4529,14 +4556,6 @@ Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax
    NQSCHAR    = %x20-21 / %x23-5B / %x5D-7E
    UNICODECHARNOCRLF = %x09 /%x20-7E / %x80-D7FF /
                        %xE000-FFFD / %x10000-10FFFF
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 81]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    (The UNICODECHARNOCRLF definition is based upon the Char definition
    in Section 2.2 of [W3C.REC-xml-20081126], but omitting the Carriage
@@ -4563,6 +4582,18 @@ A.3.  "response_type" Syntax
    response-name = 1*response-char
    response-char = "_" / DIGIT / ALPHA
 
+
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 82]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
 A.4.  "scope" Syntax
 
    The "scope" element is defined in Section 3.3:
@@ -4583,16 +4614,6 @@ A.6.  "redirect_uri" Syntax
    Section 4.1.3:
 
     redirect-uri      = URI-reference
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 82]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
 A.7.  "error" Syntax
 
@@ -4620,6 +4641,15 @@ A.10.  "grant_type" Syntax
    The "grant_type" element is defined in Sections Section 4.1.3,
    Section 4.2.3, Section 4.2.2, Section 4.3, and Section 6:
 
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 83]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
     grant-type = grant-name / URI-reference
     grant-name = 1*name-char
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
@@ -4640,15 +4670,6 @@ A.12.  "access_token" Syntax
 A.13.  "token_type" Syntax
 
    The "token_type" element is defined in Section 5.1, and Section 8.1:
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 83]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
     token-type = type-name / URI-reference
     type-name  = 1*name-char
@@ -4672,6 +4693,18 @@ A.16.  Endpoint Parameter Syntax
 
     param-name = 1*name-char
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
+
+
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 84]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 A.17.  "code_verifier" Syntax
 
@@ -4697,15 +4730,6 @@ Appendix B.  Use of application/x-www-form-urlencoded Media Type
    www-form-urlencoded" media type was defined in Section 17.13.4 of
    [W3C.REC-html401-19991224] but not registered in the IANA MIME Media
    Types registry (http://www.iana.org/assignments/media-types [1]).
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 84]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Furthermore, that definition is incomplete, as it does not consider
    non-US-ASCII characters.
 
@@ -4729,6 +4753,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    20 25 26 2B C2 A3 E2 82 AC
 
    and then represented in the payload as:
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 85]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    +%25%26%2B%C2%A3%E2%82%AC
 
@@ -4757,4 +4789,28 @@ Authors' Addresses
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 85]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 86]
