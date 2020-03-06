@@ -133,35 +133,35 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
      8.3.  Defining New Authorization Grant Types  . . . . . . . . .  49
      8.4.  Defining New Authorization Endpoint Response Types  . . .  50
      8.5.  Defining Additional Error Codes . . . . . . . . . . . . .  50
-   9.  Native Applications . . . . . . . . . . . . . . . . . . . . .  51
-     9.1.  Authorization Flow for Native Apps Using the Browser  . .  52
-     9.2.  Using Inter-App URI Communication for OAuth in Native
-           Apps  . . . . . . . . . . . . . . . . . . . . . . . . . .  53
-     9.3.  Initiating the Authorization Request from a Native App  .  53
-     9.4.  Receiving the Authorization Response in a Native App  . .  54
-       9.4.1.  Private-Use URI Scheme Redirection  . . . . . . . . .  54
-       9.4.2.  Claimed "https" Scheme URI Redirection  . . . . . . .  55
-       9.4.3.  Loopback Interface Redirection  . . . . . . . . . . .  56
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  56
-     10.1.  Client Authentication  . . . . . . . . . . . . . . . . .  57
-       10.1.1.  Client Authentication of Native Apps . . . . . . . .  57
-     10.2.  Registration of Native App Clients . . . . . . . . . . .  58
-     10.3.  Client Impersonation . . . . . . . . . . . . . . . . . .  58
-       10.3.1.  Impersonation of Native Apps . . . . . . . . . . . .  59
-     10.4.  Access Tokens  . . . . . . . . . . . . . . . . . . . . .  59
-       10.4.1.  Access Token Privilege Restriction . . . . . . . . .  60
-       10.4.2.  Access Token Replay Prevention . . . . . . . . . . .  60
-     10.5.  Refresh Tokens . . . . . . . . . . . . . . . . . . . . .  61
-     10.6.  Protecting Redirect-Based Flows  . . . . . . . . . . . .  61
-       10.6.1.  Loopback Redirect Considerations in Native Apps  . .  62
-     10.7.  Authorization Codes  . . . . . . . . . . . . . . . . . .  62
-     10.8.  Request Confidentiality  . . . . . . . . . . . . . . . .  63
-     10.9.  Ensuring Endpoint Authenticity . . . . . . . . . . . . .  64
-     10.10. Credentials-Guessing Attacks . . . . . . . . . . . . . .  64
-     10.11. Phishing Attacks . . . . . . . . . . . . . . . . . . . .  64
-     10.12. Fake External User-Agents in Native Apps . . . . . . . .  64
-     10.13. Malicious External User-Agents in Native Apps  . . . . .  65
-     10.14. Cross-Site Request Forgery . . . . . . . . . . . . . . .  65
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  51
+     9.1.  Client Authentication . . . . . . . . . . . . . . . . . .  51
+       9.1.1.  Client Authentication of Native Apps  . . . . . . . .  52
+     9.2.  Registration of Native App Clients  . . . . . . . . . . .  52
+     9.3.  Client Impersonation  . . . . . . . . . . . . . . . . . .  53
+       9.3.1.  Impersonation of Native Apps  . . . . . . . . . . . .  53
+     9.4.  Access Tokens . . . . . . . . . . . . . . . . . . . . . .  54
+       9.4.1.  Access Token Privilege Restriction  . . . . . . . . .  54
+       9.4.2.  Access Token Replay Prevention  . . . . . . . . . . .  54
+     9.5.  Refresh Tokens  . . . . . . . . . . . . . . . . . . . . .  55
+     9.6.  Protecting Redirect-Based Flows . . . . . . . . . . . . .  55
+       9.6.1.  Loopback Redirect Considerations in Native Apps . . .  56
+     9.7.  Authorization Codes . . . . . . . . . . . . . . . . . . .  57
+     9.8.  Request Confidentiality . . . . . . . . . . . . . . . . .  58
+     9.9.  Ensuring Endpoint Authenticity  . . . . . . . . . . . . .  58
+     9.10. Credentials-Guessing Attacks  . . . . . . . . . . . . . .  58
+     9.11. Phishing Attacks  . . . . . . . . . . . . . . . . . . . .  58
+     9.12. Fake External User-Agents in Native Apps  . . . . . . . .  59
+     9.13. Malicious External User-Agents in Native Apps . . . . . .  59
+     9.14. Cross-Site Request Forgery  . . . . . . . . . . . . . . .  60
+     9.15. Clickjacking  . . . . . . . . . . . . . . . . . . . . . .  60
+     9.16. Code Injection and Input Validation . . . . . . . . . . .  61
+     9.17. Open Redirectors  . . . . . . . . . . . . . . . . . . . .  61
+       9.17.1.  Client as Open Redirector  . . . . . . . . . . . . .  61
+       9.17.2.  Authorization Server as Open Redirector  . . . . . .  62
+     9.18. Authorization Server Mix-Up Mitigation in Native Apps . .  62
+     9.19. Embedded User Agents in Native Apps . . . . . . . . . . .  63
+     9.20. Other Recommendations . . . . . . . . . . . . . . . . . .  63
+   10. Native Applications . . . . . . . . . . . . . . . . . . . . .  64
 
 
 
@@ -170,52 +170,52 @@ Parecki, et al.         Expires September 5, 2020               [Page 3]
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-     10.15. Clickjacking . . . . . . . . . . . . . . . . . . . . . .  66
-     10.16. Code Injection and Input Validation  . . . . . . . . . .  67
-     10.17. Open Redirectors . . . . . . . . . . . . . . . . . . . .  67
-       10.17.1.  Client as Open Redirector . . . . . . . . . . . . .  67
-       10.17.2.  Authorization Server as Open Redirector . . . . . .  68
-     10.18. Authorization Server Mix-Up Mitigation in Native Apps  .  68
-     10.19. Embedded User Agents in Native Apps  . . . . . . . . . .  69
-     10.20. Other Recommendations  . . . . . . . . . . . . . . . . .  69
-   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  69
-     11.1.  OAuth Access Token Types Registry  . . . . . . . . . . .  69
-       11.1.1.  Registration Template  . . . . . . . . . . . . . . .  70
-       11.1.2.  Initial Registry Contents  . . . . . . . . . . . . .  70
-     11.2.  OAuth Parameters Registry  . . . . . . . . . . . . . . .  71
-       11.2.1.  Registration Template  . . . . . . . . . . . . . . .  71
-       11.2.2.  Initial Registry Contents  . . . . . . . . . . . . .  72
-     11.3.  OAuth Authorization Endpoint Response Types Registry . .  74
-       11.3.1.  Registration Template  . . . . . . . . . . . . . . .  75
-       11.3.2.  Initial Registry Contents  . . . . . . . . . . . . .  75
-     11.4.  OAuth Extensions Error Registry  . . . . . . . . . . . .  76
-       11.4.1.  Registration Template  . . . . . . . . . . . . . . .  76
-       11.4.2.  Initial Registry Contents  . . . . . . . . . . . . .  77
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  77
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  77
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  80
-   Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax . . . . . .  82
-     A.1.  "client_id" Syntax  . . . . . . . . . . . . . . . . . . .  83
-     A.2.  "client_secret" Syntax  . . . . . . . . . . . . . . . . .  83
-     A.3.  "response_type" Syntax  . . . . . . . . . . . . . . . . .  83
-     A.4.  "scope" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
-     A.5.  "state" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
-     A.6.  "redirect_uri" Syntax . . . . . . . . . . . . . . . . . .  84
-     A.7.  "error" Syntax  . . . . . . . . . . . . . . . . . . . . .  84
-     A.8.  "error_description" Syntax  . . . . . . . . . . . . . . .  84
-     A.9.  "error_uri" Syntax  . . . . . . . . . . . . . . . . . . .  84
-     A.10. "grant_type" Syntax . . . . . . . . . . . . . . . . . . .  84
-     A.11. "code" Syntax . . . . . . . . . . . . . . . . . . . . . .  84
-     A.12. "access_token" Syntax . . . . . . . . . . . . . . . . . .  85
-     A.13. "token_type" Syntax . . . . . . . . . . . . . . . . . . .  85
-     A.14. "expires_in" Syntax . . . . . . . . . . . . . . . . . . .  85
-     A.15. "refresh_token" Syntax  . . . . . . . . . . . . . . . . .  85
-     A.16. Endpoint Parameter Syntax . . . . . . . . . . . . . . . .  85
-     A.17. "code_verifier" Syntax  . . . . . . . . . . . . . . . . .  85
-     A.18. "code_challenge" Syntax . . . . . . . . . . . . . . . . .  85
-   Appendix B.  Use of application/x-www-form-urlencoded Media Type   86
-   Appendix C.  Acknowledgements . . . . . . . . . . . . . . . . . .  86
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  86
+     10.1.  Using Inter-App URI Communication for OAuth in Native
+            Apps . . . . . . . . . . . . . . . . . . . . . . . . . .  65
+     10.2.  Initiating the Authorization Request from a Native App .  65
+     10.3.  Receiving the Authorization Response in a Native App . .  66
+       10.3.1.  Private-Use URI Scheme Redirection . . . . . . . . .  66
+       10.3.2.  Claimed "https" Scheme URI Redirection . . . . . . .  67
+       10.3.3.  Loopback Interface Redirection . . . . . . . . . . .  68
+   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  68
+     11.1.  OAuth Access Token Types Registry  . . . . . . . . . . .  68
+       11.1.1.  Registration Template  . . . . . . . . . . . . . . .  69
+       11.1.2.  Initial Registry Contents  . . . . . . . . . . . . .  69
+     11.2.  OAuth Parameters Registry  . . . . . . . . . . . . . . .  70
+       11.2.1.  Registration Template  . . . . . . . . . . . . . . .  70
+       11.2.2.  Initial Registry Contents  . . . . . . . . . . . . .  71
+     11.3.  OAuth Authorization Endpoint Response Types Registry . .  73
+       11.3.1.  Registration Template  . . . . . . . . . . . . . . .  74
+       11.3.2.  Initial Registry Contents  . . . . . . . . . . . . .  74
+     11.4.  OAuth Extensions Error Registry  . . . . . . . . . . . .  74
+       11.4.1.  Registration Template  . . . . . . . . . . . . . . .  75
+       11.4.2.  Initial Registry Contents  . . . . . . . . . . . . .  76
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  76
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  76
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  79
+   Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax . . . . . .  81
+     A.1.  "client_id" Syntax  . . . . . . . . . . . . . . . . . . .  82
+     A.2.  "client_secret" Syntax  . . . . . . . . . . . . . . . . .  82
+     A.3.  "response_type" Syntax  . . . . . . . . . . . . . . . . .  82
+     A.4.  "scope" Syntax  . . . . . . . . . . . . . . . . . . . . .  82
+     A.5.  "state" Syntax  . . . . . . . . . . . . . . . . . . . . .  82
+     A.6.  "redirect_uri" Syntax . . . . . . . . . . . . . . . . . .  82
+     A.7.  "error" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
+     A.8.  "error_description" Syntax  . . . . . . . . . . . . . . .  83
+     A.9.  "error_uri" Syntax  . . . . . . . . . . . . . . . . . . .  83
+     A.10. "grant_type" Syntax . . . . . . . . . . . . . . . . . . .  83
+     A.11. "code" Syntax . . . . . . . . . . . . . . . . . . . . . .  83
+     A.12. "access_token" Syntax . . . . . . . . . . . . . . . . . .  83
+     A.13. "token_type" Syntax . . . . . . . . . . . . . . . . . . .  83
+     A.14. "expires_in" Syntax . . . . . . . . . . . . . . . . . . .  84
+     A.15. "refresh_token" Syntax  . . . . . . . . . . . . . . . . .  84
+     A.16. Endpoint Parameter Syntax . . . . . . . . . . . . . . . .  84
+     A.17. "code_verifier" Syntax  . . . . . . . . . . . . . . . . .  84
+     A.18. "code_challenge" Syntax . . . . . . . . . . . . . . . . .  84
+   Appendix B.  Use of application/x-www-form-urlencoded Media Type   84
+   Appendix C.  Acknowledgements . . . . . . . . . . . . . . . . . .  85
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  85
+
 
 
 
@@ -1019,7 +1019,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    Lack of a redirection URI registration requirement can enable an
    attacker to use the authorization endpoint as an open redirector as
-   described in Section 10.17.
+   described in Section 9.17.
 
 3.1.2.3.  Dynamic Configuration
 
@@ -2802,321 +2802,7 @@ Parecki, et al.         Expires September 5, 2020              [Page 50]
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-9.  Native Applications
-
-   Native applications are clients installed and executed on the device
-   used by the resource owner (i.e., desktop application, native mobile
-   application).  Native applications require special consideration
-   related to security, platform capabilities, and overall end-user
-   experience.
-
-   The authorization endpoint requires interaction between the client
-   and the resource owner's user-agent.  The best current practice is to
-   perform the OAuth authorization request in an external user-agent
-   (typically the browser) rather than an embedded user-agent (such as
-   one implemented with web-views).
-
-   The native application can capture the response from the
-   authorization server using a redirection URI with a scheme registered
-   with the operating system to invoke the client as the handler, manual
-   copy-and-paste of the credentials, running a local web server,
-   installing a user-agent extension, or by providing a redirection URI
-   identifying a server-hosted resource under the client's control,
-   which in turn makes the response available to the native application.
-
-   Previously, it was common for native apps to use embedded user-agents
-   (commonly implemented with web-views) for OAuth authorization
-   requests.  That approach has many drawbacks, including the host app
-   being able to copy user credentials and cookies as well as the user
-   needing to authenticate from scratch in each app.  See Section 10.19
-   for a deeper analysis of the drawbacks of using embedded user-agents
-   for OAuth.
-
-   Native app authorization requests that use the browser are more
-   secure and can take advantage of the user's authentication state.
-   Being able to use the existing authentication session in the browser
-   enables single sign-on, as users don't need to authenticate to the
-   authorization server each time they use a new app (unless required by
-   the authorization server policy).
-
-   Supporting authorization flows between a native app and the browser
-   is possible without changing the OAuth protocol itself, as the OAuth
-   authorization request and response are already defined in terms of
-   URIs.  This encompasses URIs that can be used for inter-app
-   communication.  Some OAuth server implementations that assume all
-   clients are confidential web clients will need to add an
-   understanding of public native app clients and the types of redirect
-   URIs they use to support this best practice.
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 51]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-9.1.  Authorization Flow for Native Apps Using the Browser
-
-  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-  |          User Device          |
-  |                               |
-  | +--------------------------+  | (5) Authorization  +---------------+
-  | |                          |  |     Code           |               |
-  | |        Client App        |---------------------->|     Token     |
-  | |                          |<----------------------|    Endpoint   |
-  | +--------------------------+  | (6) Access Token,  |               |
-  |   |             ^             |     Refresh Token  +---------------+
-  |   |             |             |
-  |   |             |             |
-  |   | (1)         | (4)         |
-  |   | Authorizat- | Authoriza-  |
-  |   | ion Request | tion Code   |
-  |   |             |             |
-  |   |             |             |
-  |   v             |             |
-  | +---------------------------+ | (2) Authorization  +---------------+
-  | |                           | |     Request        |               |
-  | |          Browser          |--------------------->| Authorization |
-  | |                           |<---------------------|    Endpoint   |
-  | +---------------------------+ | (3) Authorization  |               |
-  |                               |     Code           +---------------+
-  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-
-       Figure 5: Native App Authorization via an External User-Agent
-
-   Figure 5 illustrates the interaction between a native app and the
-   browser to authorize the user.
-
-   1.  Client app opens a browser tab with the authorization request.
-
-   2.  Authorization endpoint receives the authorization request,
-       authenticates the user, and obtains authorization.
-       Authenticating the user may involve chaining to other
-       authentication systems.
-
-   3.  Authorization server issues an authorization code to the redirect
-       URI.
-
-   4.  Client receives the authorization code from the redirect URI.
-
-   5.  Client app presents the authorization code at the token endpoint.
-
-   6.  Token endpoint validates the authorization code and issues the
-       tokens requested.
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 52]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-9.2.  Using Inter-App URI Communication for OAuth in Native Apps
-
-   Just as URIs are used for OAuth on the web to initiate the
-   authorization request and return the authorization response to the
-   requesting website, URIs can be used by native apps to initiate the
-   authorization request in the device's browser and return the response
-   to the requesting native app.
-
-   By adopting the same methods used on the web for OAuth, benefits seen
-   in the web context like the usability of a single sign-on session and
-   the security of a separate authentication context are likewise gained
-   in the native app context.  Reusing the same approach also reduces
-   the implementation complexity and increases interoperability by
-   relying on standards-based web flows that are not specific to a
-   particular platform.
-
-   Native apps MUST use an external user-agent to perform OAuth
-   authorization requests.  This is achieved by opening the
-   authorization request in the browser (detailed in Section 9.3) and
-   using a redirect URI that will return the authorization response back
-   to the native app (defined in Section 9.4).
-
-9.3.  Initiating the Authorization Request from a Native App
-
-   Native apps needing user authorization create an authorization
-   request URI with the authorization code grant type per Section 4.1
-   using a redirect URI capable of being received by the native app.
-
-   The function of the redirect URI for a native app authorization
-   request is similar to that of a web-based authorization request.
-   Rather than returning the authorization response to the OAuth
-   client's server, the redirect URI used by a native app returns the
-   response to the app.  Several options for a redirect URI that will
-   return the authorization response to the native app in different
-   platforms are documented in Section 9.4.  Any redirect URI that
-   allows the app to receive the URI and inspect its parameters is
-   viable.
-
-   After constructing the authorization request URI, the app uses
-   platform-specific APIs to open the URI in an external user-agent.
-   Typically, the external user-agent used is the default browser, that
-   is, the application configured for handling "http" and "https" scheme
-   URIs on the system; however, different browser selection criteria and
-   other categories of external user-agents MAY be used.
-
-   This best practice focuses on the browser as the RECOMMENDED external
-   user-agent for native apps.  An external user-agent designed
-   specifically for user authorization and capable of processing
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 53]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-   authorization requests and responses like a browser MAY also be used.
-   Other external user-agents, such as a native app provided by the
-   authorization server may meet the criteria set out in this best
-   practice, including using the same redirection URI properties, but
-   their use is out of scope for this specification.
-
-   Some platforms support a browser feature known as "in-app browser
-   tabs", where an app can present a tab of the browser within the app
-   context without switching apps, but still retain key benefits of the
-   browser such as a shared authentication state and security context.
-   On platforms where they are supported, it is RECOMMENDED, for
-   usability reasons, that apps use in-app browser tabs for the
-   authorization request.
-
-9.4.  Receiving the Authorization Response in a Native App
-
-   There are several redirect URI options available to native apps for
-   receiving the authorization response from the browser, the
-   availability and user experience of which varies by platform.
-
-   To fully support native apps, authorization servers MUST offer at
-   least the three redirect URI options described in the following
-   subsections to native apps.  Native apps MAY use whichever redirect
-   option suits their needs best, taking into account platform-specific
-   implementation details.
-
-9.4.1.  Private-Use URI Scheme Redirection
-
-   Many mobile and desktop computing platforms support inter-app
-   communication via URIs by allowing apps to register private-use URI
-   schemes (sometimes colloquially referred to as "custom URL schemes")
-   like "com.example.app".  When the browser or another app attempts to
-   load a URI with a private-use URI scheme, the app that registered it
-   is launched to handle the request.
-
-   To perform an authorization request with a private-use URI scheme
-   redirect, the native app launches the browser with a standard
-   authorization request, but one where the redirection URI utilizes a
-   private-use URI scheme it registered with the operating system.
-
-   When choosing a URI scheme to associate with the app, apps MUST use a
-   URI scheme based on a domain name under their control, expressed in
-   reverse order, as recommended by Section 3.8 of [RFC7595] for
-   private-use URI schemes.
-
-   For example, an app that controls the domain name "app.example.com"
-   can use "com.example.app" as their scheme.  Some authorization
-   servers assign client identifiers based on domain names, for example,
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 54]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-   "client1234.usercontent.example.net", which can also be used as the
-   domain name for the scheme when reversed in the same manner.  A
-   scheme such as "myapp", however, would not meet this requirement, as
-   it is not based on a domain name.
-
-   When there are multiple apps by the same publisher, care must be
-   taken so that each scheme is unique within that group.  On platforms
-   that use app identifiers based on reverse-order domain names, those
-   identifiers can be reused as the private-use URI scheme for the OAuth
-   redirect to help avoid this problem.
-
-   Following the requirements of Section 3.2 of [RFC3986], as there is
-   no naming authority for private-use URI scheme redirects, only a
-   single slash ("/") appears after the scheme component.  A complete
-   example of a redirect URI utilizing a private-use URI scheme is:
-
-   com.example.app:/oauth2redirect/example-provider
-
-   When the authorization server completes the request, it redirects to
-   the client's redirection URI as it would normally.  As the
-   redirection URI uses a private-use URI scheme, it results in the
-   operating system launching the native app, passing in the URI as a
-   launch parameter.  Then, the native app uses normal processing for
-   the authorization response.
-
-9.4.2.  Claimed "https" Scheme URI Redirection
-
-   Some operating systems allow apps to claim "https" scheme [RFC7230]
-   URIs in the domains they control.  When the browser encounters a
-   claimed URI, instead of the page being loaded in the browser, the
-   native app is launched with the URI supplied as a launch parameter.
-
-   Such URIs can be used as redirect URIs by native apps.  They are
-   indistinguishable to the authorization server from a regular web-
-   based client redirect URI.  An example is:
-
-   https://app.example.com/oauth2redirect/example-provider
-
-   As the redirect URI alone is not enough to distinguish public native
-   app clients from confidential web clients, it is REQUIRED in
-   Section 10.2 that the client type be recorded during client
-   registration to enable the server to determine the client type and
-   act accordingly.
-
-   App-claimed "https" scheme redirect URIs have some advantages
-   compared to other native app redirect options in that the identity of
-   the destination app is guaranteed to the authorization server by the
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 55]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-   operating system.  For this reason, native apps SHOULD use them over
-   the other options where possible.
-
-9.4.3.  Loopback Interface Redirection
-
-   Native apps that are able to open a port on the loopback network
-   interface without needing special permissions (typically, those on
-   desktop operating systems) can use the loopback interface to receive
-   the OAuth redirect.
-
-   Loopback redirect URIs use the "http" scheme and are constructed with
-   the loopback IP literal and whatever port the client is listening on.
-
-   That is, "http://127.0.0.1:{port}/{path}" for IPv4, and
-   "http://[::1]:{port}/{path}" for IPv6.  An example redirect using the
-   IPv4 loopback interface with a randomly assigned port:
-
-   http://127.0.0.1:51004/oauth2redirect/example-provider
-
-   An example redirect using the IPv6 loopback interface with a randomly
-   assigned port:
-
-   http://[::1]:61023/oauth2redirect/example-provider
-
-   The authorization server MUST allow any port to be specified at the
-   time of the request for loopback IP redirect URIs, to accommodate
-   clients that obtain an available ephemeral port from the operating
-   system at the time of the request.
-
-   Clients SHOULD NOT assume that the device supports a particular
-   version of the Internet Protocol.  It is RECOMMENDED that clients
-   attempt to bind to the loopback interface using both IPv4 and IPv6
-   and use whichever is available.
-
-10.  Security Considerations
+9.  Security Considerations
 
    As a flexible and extensible framework, OAuth's security
    considerations depend on many factors.  The following sections
@@ -3128,17 +2814,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    background for the protocol design, is provided by [RFC6819] and
    [I-D.ietf-oauth-security-topics].
 
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 56]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-10.1.  Client Authentication
+9.1.  Client Authentication
 
    Authorization servers SHOULD use client authentication if possible.
 
@@ -3174,10 +2850,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    again.  In contrast, if there is a web application whose developer's
    identity was verified, who signed a contract and is issued a client
    secret that is only used in a secure backend service, the
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 51]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    authorization server might allow this client to access more sensible
    services or to use the client credential grant type.
 
-10.1.1.  Client Authentication of Native Apps
+9.1.1.  Client Authentication of Native Apps
 
    Secrets that are statically included as part of an app distributed to
    multiple users should not be treated as confidential secrets, as one
@@ -3187,20 +2871,13 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    secret, as this serves little value beyond client identification
    which is already provided by the "client_id" request parameter.
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 57]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Authorization servers that still require a statically included shared
    secret for native app clients MUST treat the client as a public
    client (as defined in Section 2.1), and not accept the secret as
    proof of the client's identity.  Without additional measures, such
-   clients are subject to client impersonation (see Section 10.3.1).
+   clients are subject to client impersonation (see Section 9.3.1).
 
-10.2.  Registration of Native App Clients
+9.2.  Registration of Native App Clients
 
    Except when using a mechanism like Dynamic Client Registration
    [RFC7591] to provision per-instance secrets, native apps are
@@ -3216,7 +2893,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    an exact match is required except for the port URI component.
 
    For private-use URI scheme-based redirects, authorization servers
-   SHOULD enforce the requirement in Section 9.4.1 that clients use
+   SHOULD enforce the requirement in Section 10.3.1 that clients use
    schemes that are reverse domain name based.  At a minimum, any
    private-use URI scheme that doesn't contain a period character (".")
    SHOULD be rejected.
@@ -3230,25 +2907,23 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    remove the counterfeit app.  Such a petition is harder to prove if a
    generic URI scheme was used.
 
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 52]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    Authorization servers MAY request the inclusion of other platform-
    specific information, such as the app package or bundle name, or
    other information that may be useful for verifying the calling app's
    identity on operating systems that support such functions.
 
-10.3.  Client Impersonation
+9.3.  Client Impersonation
 
    A malicious client can impersonate another client and obtain access
    to protected resources if the impersonated client fails to, or is
    unable to, keep its client credentials confidential.
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 58]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    The authorization server MUST authenticate the client whenever
    possible.  If the authorization server cannot authenticate the client
@@ -3271,7 +2946,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    ensure that the repeated request comes from the original client and
    not an impersonator.
 
-10.3.1.  Impersonation of Native Apps
+9.3.1.  Impersonation of Native Apps
 
    As stated above, the authorization server SHOULD NOT process
    authorization requests automatically without user consent or
@@ -3286,7 +2961,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    offer alternative platform-specific identity features that MAY be
    accepted, as appropriate.
 
-10.4.  Access Tokens
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 53]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+9.4.  Access Tokens
 
    Access token credentials (as well as any confidential access token
    attributes) MUST be kept confidential in transit and storage, and
@@ -3296,21 +2980,11 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    as described in Section 1.6 with server authentication as defined by
    [RFC2818].
 
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 59]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    The authorization server MUST ensure that access tokens cannot be
    generated, modified, or guessed to produce valid access tokens by
    unauthorized parties.
 
-10.4.1.  Access Token Privilege Restriction
+9.4.1.  Access Token Privilege Restriction
 
    The client SHOULD request access tokens with the minimal scope
    necessary.  The authorization server SHOULD take the client identity
@@ -3336,7 +3010,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    [RFC8707], respectively, to determine the resource server they want
    to access.
 
-10.4.2.  Access Token Replay Prevention
+9.4.2.  Access Token Replay Prevention
 
    Additionally, access tokens SHOULD be restricted to certain resources
    and actions on resource servers or resources.  To put this into
@@ -3344,6 +3018,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    respective resource and actions and every resource server is obliged
    to verify, for every request, whether the access token sent with that
    request was meant to be used for that particular action on the
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 54]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    particular resource.  If not, the resource server must refuse to
    serve the respective request.  Clients and authorization servers MAY
    utilize the parameter "scope" and "authorization_details" as
@@ -3354,20 +3036,12 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    constrained access tokens to prevent token replay as described in
    (#pop_tokens).  A sender-constrained access token scopes the
    applicability of an access token to a certain sender.  This sender is
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 60]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    obliged to demonstrate knowledge of a certain secret as prerequisite
    for the acceptance of that token at the recipient (e.g., a resource
    server).  The use of Mutual TLS for OAuth 2.0 [RFC8705] is
    RECOMMENDED.
 
-10.5.  Refresh Tokens
+9.5.  Refresh Tokens
 
    Authorization servers MAY issue refresh tokens to clients.
 
@@ -3390,7 +3064,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    generated, modified, or guessed to produce valid refresh tokens by
    unauthorized parties.
 
-10.6.  Protecting Redirect-Based Flows
+9.6.  Protecting Redirect-Based Flows
 
    When comparing client redirect URIs against pre-registered URIs,
    authorization servers MUST utilize exact string matching.  This
@@ -3400,6 +3074,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    Clients MUST NOT expose URLs that forward the user's browser to
    arbitrary URIs obtained from a query parameter ("open redirector").
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 55]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    Open redirectors can enable exfiltration of authorization codes and
    access tokens, see (#open_redirector_on_client).
 
@@ -3410,14 +3092,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    have ensured that the authorization server supports PKCE MAY rely the
    CSRF protection provided by PKCE.  In OpenID Connect flows, the
    "nonce" parameter provides CSRF protection.  Otherwise, one-time use
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 61]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    CSRF tokens carried in the "state" parameter that are securely bound
    to the user agent MUST be used for CSRF protection (see
    (#csrf_countermeasures)).
@@ -3438,7 +3112,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    credentials MUST avoid forwarding these user credentials accidentally
    (see (#redirect_307) for details).
 
-10.6.1.  Loopback Redirect Considerations in Native Apps
+9.6.1.  Loopback Redirect Considerations in Native Apps
 
    Loopback interface redirect URIs use the "http" scheme (i.e., without
    Transport Layer Security (TLS)).  This is acceptable for loopback
@@ -3452,28 +3126,27 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    While redirect URIs using localhost (i.e.,
    "http://localhost:{port}/{path}") function similarly to loopback IP
-   redirects described in Section 9.4.3, the use of "localhost" is NOT
+   redirects described in Section 10.3.3, the use of "localhost" is NOT
    RECOMMENDED.  Specifying a redirect URI with the loopback IP literal
    rather than "localhost" avoids inadvertently listening on network
    interfaces other than the loopback interface.  It is also less
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 56]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    susceptible to client-side firewalls and misconfigured host name
    resolution on the user's device.
 
-10.7.  Authorization Codes
+9.7.  Authorization Codes
 
    The transmission of authorization codes MUST be made over a secure
    channel, and the client MUST require the use of TLS with its
    redirection URI if the URI identifies a network resource.  Since
    authorization codes are transmitted via user-agent redirections, they
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 62]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    could potentially be disclosed through user-agent history and HTTP
    referrer headers.
 
@@ -3514,7 +3187,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    the client to detect PKCE support) or (b) provide a deployment-
    specific way to ensure or determine PKCE support by the AS.
 
-10.8.  Request Confidentiality
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 57]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+9.8.  Request Confidentiality
 
    Access tokens, refresh tokens, authorization codes, and client
    credentials MUST NOT be transmitted in the clear.
@@ -3523,14 +3203,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    client or resource owner information in plain text, as they can be
    transmitted over insecure channels or stored insecurely.
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 63]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-10.9.  Ensuring Endpoint Authenticity
+9.9.  Ensuring Endpoint Authenticity
 
    In order to prevent man-in-the-middle attacks, the authorization
    server MUST require the use of TLS with server authentication as
@@ -3539,7 +3212,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    TLS certificate as defined by [RFC6125] and in accordance with its
    requirements for server identity authentication.
 
-10.10.  Credentials-Guessing Attacks
+9.10.  Credentials-Guessing Attacks
 
    The authorization server MUST prevent attackers from guessing access
    tokens, authorization codes, refresh tokens, resource owner
@@ -3552,7 +3225,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    The authorization server MUST utilize other means to protect
    credentials intended for end-user usage.
 
-10.11.  Phishing Attacks
+9.11.  Phishing Attacks
 
    Wide deployment of this and similar protocols may cause end-users to
    become inured to the practice of being redirected to websites where
@@ -3569,23 +3242,22 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    ability of the end-user to verify the authenticity of the
    authorization server.
 
-   To reduce the risk of phishing attacks, the authorization servers
-   MUST require the use of TLS on every endpoint used for end-user
-   interaction.
-
-10.12.  Fake External User-Agents in Native Apps
-
-   The native app that is initiating the authorization request has a
-   large degree of control over the user interface and can potentially
 
 
 
-
-Parecki, et al.         Expires September 5, 2020              [Page 64]
+Parecki, et al.         Expires September 5, 2020              [Page 58]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
+   To reduce the risk of phishing attacks, the authorization servers
+   MUST require the use of TLS on every endpoint used for end-user
+   interaction.
+
+9.12.  Fake External User-Agents in Native Apps
+
+   The native app that is initiating the authorization request has a
+   large degree of control over the user interface and can potentially
    present a fake external user-agent, that is, an embedded user-agent
    made to appear as an external user-agent.
 
@@ -3610,7 +3282,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    the authorization there, as most implementations of the in-app
    browser tab pattern offer such functionality.
 
-10.13.  Malicious External User-Agents in Native Apps
+9.13.  Malicious External User-Agents in Native Apps
 
    If a malicious app is able to configure itself as the default handler
    for "https" scheme URIs in the operating system, it will be able to
@@ -3624,7 +3296,17 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    issue by requiring an explicit user action to change the default
    handler for "http" and "https" scheme URIs.
 
-10.14.  Cross-Site Request Forgery
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 59]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+9.14.  Cross-Site Request Forgery
 
    An attacker might attempt to inject a request to the redirect URI of
    the legitimate client on the victim's device, e.g., to cause the
@@ -3633,15 +3315,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    The traditional countermeasure are CSRF tokens that are bound to the
    user agent and passed in the "state" parameter to the authorization
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 65]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    server as described in [RFC6819].  The same protection is provided by
    PKCE or the OpenID Connect "nonce" value.
 
@@ -3662,7 +3335,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    either via AS metadata according to [RFC8414] or provide a
    deployment-specific way to ensure or determine PKCE support.
 
-10.15.  Clickjacking
+9.15.  Clickjacking
 
    As described in Section 4.4.1.9 of [RFC6819], the authorization
    request is susceptible to clickjacking.  An attacker can use this
@@ -3681,6 +3354,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    authorize the client (e.g., the device authorization endpoint, login
    pages, error pages, etc.).  This prevents framing by unauthorized
    origins in user agents that support CSP.  The client MAY permit being
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 60]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    framed by some other origin than the one used in its redirection
    endpoint.  For this reason, authorization servers SHOULD allow
    administrators to configure allowed origins for particular clients
@@ -3690,14 +3371,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    a single response header field and to constrain these using flexible
    patterns (see [CSP-2] for details).  Level 2 of this standard
    provides a robust mechanism for protecting against clickjacking by
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 66]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    using policies that restrict the origin of frames (using "frame-
    ancestors") together with those that restrict the sources of scripts
    allowed to execute on an HTML page (by using "script-src").  A non-
@@ -3714,7 +3387,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    by the authorization server.  Even in such cases, additional
    countermeasures SHOULD still be employed.
 
-10.16.  Code Injection and Input Validation
+9.16.  Code Injection and Input Validation
 
    A code injection attack occurs when an input or otherwise external
    variable is used by an application unsanitized and causes
@@ -3726,17 +3399,25 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    possible) any value received - in particular, the value of the
    "state" and "redirect_uri" parameters.
 
-10.17.  Open Redirectors
+9.17.  Open Redirectors
 
    The following attacks can occur when an AS or client has an open
    redirector.  An open redirector is an endpoint that forwards a user's
    browser to an arbitrary URI obtained from a query parameter.
 
-10.17.1.  Client as Open Redirector
+9.17.1.  Client as Open Redirector
 
    Clients MUST NOT expose open redirectors.  Attackers may use open
    redirectors to produce URLs pointing to the client and utilize them
    to exfiltrate authorization codes and access tokens, as described in
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 61]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    (#redir_uri_open_redir).  Another abuse case is to produce URLs that
    appear to point to the client.  This might trick users into trusting
    the URL and follow it in their browser.  This can be abused for
@@ -3747,14 +3428,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    request can be authenticated.  Countermeasures against open
    redirection are described by OWASP [owasp_redir].
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 67]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-10.17.2.  Authorization Server as Open Redirector
+9.17.2.  Authorization Server as Open Redirector
 
    Just as with clients, attackers could try to utilize a user's trust
    in the authorization server (and its URL in particular) for
@@ -3779,7 +3453,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    it trusts the redirect URI.  If the URI is not trusted, the AS MAY
    inform the user and rely on the user to make the correct decision.
 
-10.18.  Authorization Server Mix-Up Mitigation in Native Apps
+9.18.  Authorization Server Mix-Up Mitigation in Native Apps
 
    (TODO: merge this with the regular mix-up section when it is brought
    in)
@@ -3792,25 +3466,24 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    they were received on doesn't match the redirect URI in an outgoing
    authorization request.
 
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 62]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    The native app MUST store the redirect URI used in the authorization
    request with the authorization session data (i.e., along with "state"
    and other related data) and MUST verify that the URI on which the
    authorization response was received exactly matches it.
 
-   The requirement of Section 10.2, specifically that authorization
+   The requirement of Section 9.2, specifically that authorization
    servers reject requests with URIs that don't match what was
    registered, is also required to prevent such attacks.
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 68]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
-10.19.  Embedded User Agents in Native Apps
+9.19.  Embedded User Agents in Native Apps
 
    Embedded user-agents are a technically possible method for
    authorizing native apps.  These embedded user-agents are unsafe for
@@ -3842,12 +3515,278 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    the user to log in for every authorization request, which is often
    considered an inferior user experience.
 
-10.20.  Other Recommendations
+9.20.  Other Recommendations
 
    Authorization servers SHOULD NOT allow clients to influence their
    "client_id" or "sub" value or any other claim if that can cause
    confusion with a genuine resource owner (see
    (#client_impersonating)).
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 63]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+10.  Native Applications
+
+   Native applications are clients installed and executed on the device
+   used by the resource owner (i.e., desktop application, native mobile
+   application).  Native applications require special consideration
+   related to security, platform capabilities, and overall end-user
+   experience.
+
+   The authorization endpoint requires interaction between the client
+   and the resource owner's user-agent.  The best current practice is to
+   perform the OAuth authorization request in an external user-agent
+   (typically the browser) rather than an embedded user-agent (such as
+   one implemented with web-views).
+
+   The native application can capture the response from the
+   authorization server using a redirection URI with a scheme registered
+   with the operating system to invoke the client as the handler, manual
+   copy-and-paste of the credentials, running a local web server,
+   installing a user-agent extension, or by providing a redirection URI
+   identifying a server-hosted resource under the client's control,
+   which in turn makes the response available to the native application.
+
+   Previously, it was common for native apps to use embedded user-agents
+   (commonly implemented with web-views) for OAuth authorization
+   requests.  That approach has many drawbacks, including the host app
+   being able to copy user credentials and cookies as well as the user
+   needing to authenticate from scratch in each app.  See Section 9.19
+   for a deeper analysis of the drawbacks of using embedded user-agents
+   for OAuth.
+
+   Native app authorization requests that use the browser are more
+   secure and can take advantage of the user's authentication state.
+   Being able to use the existing authentication session in the browser
+   enables single sign-on, as users don't need to authenticate to the
+   authorization server each time they use a new app (unless required by
+   the authorization server policy).
+
+   Supporting authorization flows between a native app and the browser
+   is possible without changing the OAuth protocol itself, as the OAuth
+   authorization request and response are already defined in terms of
+   URIs.  This encompasses URIs that can be used for inter-app
+   communication.  Some OAuth server implementations that assume all
+   clients are confidential web clients will need to add an
+   understanding of public native app clients and the types of redirect
+   URIs they use to support this best practice.
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 64]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+10.1.  Using Inter-App URI Communication for OAuth in Native Apps
+
+   Just as URIs are used for OAuth on the web to initiate the
+   authorization request and return the authorization response to the
+   requesting website, URIs can be used by native apps to initiate the
+   authorization request in the device's browser and return the response
+   to the requesting native app.
+
+   By adopting the same methods used on the web for OAuth, benefits seen
+   in the web context like the usability of a single sign-on session and
+   the security of a separate authentication context are likewise gained
+   in the native app context.  Reusing the same approach also reduces
+   the implementation complexity and increases interoperability by
+   relying on standards-based web flows that are not specific to a
+   particular platform.
+
+   Native apps MUST use an external user-agent to perform OAuth
+   authorization requests.  This is achieved by opening the
+   authorization request in the browser (detailed in Section 10.2) and
+   using a redirect URI that will return the authorization response back
+   to the native app (defined in Section 10.3).
+
+10.2.  Initiating the Authorization Request from a Native App
+
+   Native apps needing user authorization create an authorization
+   request URI with the authorization code grant type per Section 4.1
+   using a redirect URI capable of being received by the native app.
+
+   The function of the redirect URI for a native app authorization
+   request is similar to that of a web-based authorization request.
+   Rather than returning the authorization response to the OAuth
+   client's server, the redirect URI used by a native app returns the
+   response to the app.  Several options for a redirect URI that will
+   return the authorization response to the native app in different
+   platforms are documented in Section 10.3.  Any redirect URI that
+   allows the app to receive the URI and inspect its parameters is
+   viable.
+
+   After constructing the authorization request URI, the app uses
+   platform-specific APIs to open the URI in an external user-agent.
+   Typically, the external user-agent used is the default browser, that
+   is, the application configured for handling "http" and "https" scheme
+   URIs on the system; however, different browser selection criteria and
+   other categories of external user-agents MAY be used.
+
+   This best practice focuses on the browser as the RECOMMENDED external
+   user-agent for native apps.  An external user-agent designed
+   specifically for user authorization and capable of processing
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 65]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+   authorization requests and responses like a browser MAY also be used.
+   Other external user-agents, such as a native app provided by the
+   authorization server may meet the criteria set out in this best
+   practice, including using the same redirection URI properties, but
+   their use is out of scope for this specification.
+
+   Some platforms support a browser feature known as "in-app browser
+   tabs", where an app can present a tab of the browser within the app
+   context without switching apps, but still retain key benefits of the
+   browser such as a shared authentication state and security context.
+   On platforms where they are supported, it is RECOMMENDED, for
+   usability reasons, that apps use in-app browser tabs for the
+   authorization request.
+
+10.3.  Receiving the Authorization Response in a Native App
+
+   There are several redirect URI options available to native apps for
+   receiving the authorization response from the browser, the
+   availability and user experience of which varies by platform.
+
+   To fully support native apps, authorization servers MUST offer at
+   least the three redirect URI options described in the following
+   subsections to native apps.  Native apps MAY use whichever redirect
+   option suits their needs best, taking into account platform-specific
+   implementation details.
+
+10.3.1.  Private-Use URI Scheme Redirection
+
+   Many mobile and desktop computing platforms support inter-app
+   communication via URIs by allowing apps to register private-use URI
+   schemes (sometimes colloquially referred to as "custom URL schemes")
+   like "com.example.app".  When the browser or another app attempts to
+   load a URI with a private-use URI scheme, the app that registered it
+   is launched to handle the request.
+
+   To perform an authorization request with a private-use URI scheme
+   redirect, the native app launches the browser with a standard
+   authorization request, but one where the redirection URI utilizes a
+   private-use URI scheme it registered with the operating system.
+
+   When choosing a URI scheme to associate with the app, apps MUST use a
+   URI scheme based on a domain name under their control, expressed in
+   reverse order, as recommended by Section 3.8 of [RFC7595] for
+   private-use URI schemes.
+
+   For example, an app that controls the domain name "app.example.com"
+   can use "com.example.app" as their scheme.  Some authorization
+   servers assign client identifiers based on domain names, for example,
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 66]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+   "client1234.usercontent.example.net", which can also be used as the
+   domain name for the scheme when reversed in the same manner.  A
+   scheme such as "myapp", however, would not meet this requirement, as
+   it is not based on a domain name.
+
+   When there are multiple apps by the same publisher, care must be
+   taken so that each scheme is unique within that group.  On platforms
+   that use app identifiers based on reverse-order domain names, those
+   identifiers can be reused as the private-use URI scheme for the OAuth
+   redirect to help avoid this problem.
+
+   Following the requirements of Section 3.2 of [RFC3986], as there is
+   no naming authority for private-use URI scheme redirects, only a
+   single slash ("/") appears after the scheme component.  A complete
+   example of a redirect URI utilizing a private-use URI scheme is:
+
+   com.example.app:/oauth2redirect/example-provider
+
+   When the authorization server completes the request, it redirects to
+   the client's redirection URI as it would normally.  As the
+   redirection URI uses a private-use URI scheme, it results in the
+   operating system launching the native app, passing in the URI as a
+   launch parameter.  Then, the native app uses normal processing for
+   the authorization response.
+
+10.3.2.  Claimed "https" Scheme URI Redirection
+
+   Some operating systems allow apps to claim "https" scheme [RFC7230]
+   URIs in the domains they control.  When the browser encounters a
+   claimed URI, instead of the page being loaded in the browser, the
+   native app is launched with the URI supplied as a launch parameter.
+
+   Such URIs can be used as redirect URIs by native apps.  They are
+   indistinguishable to the authorization server from a regular web-
+   based client redirect URI.  An example is:
+
+   https://app.example.com/oauth2redirect/example-provider
+
+   As the redirect URI alone is not enough to distinguish public native
+   app clients from confidential web clients, it is REQUIRED in
+   Section 9.2 that the client type be recorded during client
+   registration to enable the server to determine the client type and
+   act accordingly.
+
+   App-claimed "https" scheme redirect URIs have some advantages
+   compared to other native app redirect options in that the identity of
+   the destination app is guaranteed to the authorization server by the
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 67]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+   operating system.  For this reason, native apps SHOULD use them over
+   the other options where possible.
+
+10.3.3.  Loopback Interface Redirection
+
+   Native apps that are able to open a port on the loopback network
+   interface without needing special permissions (typically, those on
+   desktop operating systems) can use the loopback interface to receive
+   the OAuth redirect.
+
+   Loopback redirect URIs use the "http" scheme and are constructed with
+   the loopback IP literal and whatever port the client is listening on.
+
+   That is, "http://127.0.0.1:{port}/{path}" for IPv4, and
+   "http://[::1]:{port}/{path}" for IPv6.  An example redirect using the
+   IPv4 loopback interface with a randomly assigned port:
+
+   http://127.0.0.1:51004/oauth2redirect/example-provider
+
+   An example redirect using the IPv6 loopback interface with a randomly
+   assigned port:
+
+   http://[::1]:61023/oauth2redirect/example-provider
+
+   The authorization server MUST allow any port to be specified at the
+   time of the request for loopback IP redirect URIs, to accommodate
+   clients that obtain an available ephemeral port from the operating
+   system at the time of the request.
+
+   Clients SHOULD NOT assume that the device supports a particular
+   version of the Internet Protocol.  It is RECOMMENDED that clients
+   attempt to bind to the loopback interface using both IPv4 and IPv6
+   and use whichever is available.
 
 11.  IANA Considerations
 
@@ -3858,17 +3797,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    Access token types are registered with a Specification Required
    ([RFC5226]) after a two-week review period on the oauth-ext-
    review@ietf.org mailing list, on the advice of one or more Designated
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 69]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Experts.  However, to allow for the allocation of values prior to
    publication, the Designated Expert(s) may approve registration once
    they are satisfied that such a specification will be published.
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 68]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    Registration requests must be sent to the oauth-ext-review@ietf.org
    mailing list for review and comment, with an appropriate subject
@@ -3915,16 +3855,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Additional Token Endpoint Response Parameters: (none)
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 70]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    o  HTTP Authentication Scheme(s): Bearer
 
    o  Change controller: IETF
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 69]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    o  Specification document(s): OAuth 2.1
 
@@ -3969,19 +3909,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
       (e.g., postal address, email address, home page URI) may also be
       included.
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 71]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Specification document(s):  Reference to the document(s) that specify
       the parameter, preferably including a URI that can be used to
       retrieve a copy of the document(s).  An indication of the relevant
       sections may also be included but is not required.
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 70]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 11.2.2.  Initial Registry Contents
 
@@ -4026,17 +3965,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Change controller: IETF
 
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 72]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    o  Specification document(s): RFC 6749
 
    o  Parameter name: state
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 71]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    o  Parameter usage location: authorization request, authorization
       response
@@ -4083,16 +4023,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Change controller: IETF
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 73]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    o  Specification document(s): RFC 6749
 
    o  Parameter name: token_type
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 72]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    o  Parameter usage location: authorization response, token response
 
@@ -4137,20 +4077,19 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    This specification establishes the OAuth Authorization Endpoint
    Response Types registry.
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 74]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Additional response types for use with the authorization endpoint are
    registered with a Specification Required ([RFC5226]) after a two-week
    review period on the oauth-ext-review@ietf.org mailing list, on the
    advice of one or more Designated Experts.  However, to allow for the
    allocation of values prior to publication, the Designated Expert(s)
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 73]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    may approve registration once they are satisfied that such a
    specification will be published.
 
@@ -4193,21 +4132,20 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    o  Specification document(s): RFC 6749
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 75]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 11.4.  OAuth Extensions Error Registry
 
    This specification establishes the OAuth Extensions Error registry.
 
    Additional error codes used together with other protocol extensions
    (i.e., extension grant types, access token types, or extension
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 74]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    parameters) are registered with a Specification Required ([RFC5226])
    after a two-week review period on the oauth-ext-review@ietf.org
    mailing list, on the advice of one or more Designated Experts.
@@ -4249,19 +4187,20 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
       (e.g., postal address, email address, home page URI) may also be
       included.
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 76]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Specification document(s):  Reference to the document(s) that specify
       the error code, preferably including a URI that can be used to
       retrieve a copy of the document(s).  An indication of the relevant
       sections may also be included but is not required.
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 75]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 11.4.2.  Initial Registry Contents
 
@@ -4306,19 +4245,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 77]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
               Transfer Protocol -- HTTP/1.1", RFC 2616,
               DOI 10.17487/RFC2616, June 1999,
               <https://www.rfc-editor.org/info/rfc2616>.
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 76]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    [RFC2617]  Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S.,
               Leach, P., Luotonen, A., and L. Stewart, "HTTP
@@ -4358,23 +4296,23 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
 
-
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 78]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
               Housley, R., and W. Polk, "Internet X.509 Public Key
               Infrastructure Certificate and Certificate Revocation List
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <https://www.rfc-editor.org/info/rfc5280>.
+
+
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 77]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    [RFC6125]  Saint-Andre, P. and J. Hodges, "Representation and
               Verification of Domain-Based Application Service Identity
@@ -4415,23 +4353,22 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               REC-html401-19991224, December 1999,
               <http://www.w3.org/TR/1999/REC-html401-19991224>.
 
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 79]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    [W3C.REC-xml-20081126]
               Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and
               F. Yergeau, "Extensible Markup Language (XML) 1.0 (Fifth
               Edition)", World Wide Web Consortium Recommendation REC-
               xml-20081126, November 2008,
               <http://www.w3.org/TR/2008/REC-xml-20081126>.
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 78]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 12.2.  Informative References
 
@@ -4472,16 +4409,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Gupta, S., and E. Nabbus, "NIST Special Publication
               800-63-1, INFORMATION SECURITY", December 2011.
 
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 80]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    [OMAP]     Huff, J., Schlacht, D., Nadalin, A., Simmons, J.,
               Rosenberg, P., Madsen, P., Ace, T., Rickelton-Abdi, C.,
               and B. Boyer, "Online Multimedia Authorization Protocol:
@@ -4489,6 +4416,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Multimedia Resources", April 2012.
 
    [OpenID]   "OpenID Connect", n.d..
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 79]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    [OpenID.Messages]
               Sakimura, N., Bradley, J., Jones, M., de Medeiros, B.,
@@ -4528,16 +4464,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               RFC 7591, DOI 10.17487/RFC7591, July 2015,
               <https://www.rfc-editor.org/info/rfc7591>.
 
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 81]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    [RFC7636]  Sakimura, N., Ed., Bradley, J., and N. Agarwal, "Proof Key
               for Code Exchange by OAuth Public Clients", RFC 7636,
               DOI 10.17487/RFC7636, September 2015,
@@ -4547,6 +4473,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Authorization Server Metadata", RFC 8414,
               DOI 10.17487/RFC8414, June 2018,
               <https://www.rfc-editor.org/info/rfc8414>.
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 80]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    [RFC8418]  Housley, R., "Use of the Elliptic Curve Diffie-Hellman Key
               Agreement Algorithm with X25519 and X448 in the
@@ -4585,15 +4519,6 @@ Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax
    code points [W3C.REC-xml-20081126]; these characters are typically
    encoded in UTF-8.  Elements are presented in the order first defined.
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 82]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Some of the definitions that follow use the "URI-reference"
    definition from [RFC3986].
 
@@ -4604,6 +4529,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    NQSCHAR    = %x20-21 / %x23-5B / %x5D-7E
    UNICODECHARNOCRLF = %x09 /%x20-7E / %x80-D7FF /
                        %xE000-FFFD / %x10000-10FFFF
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 81]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    (The UNICODECHARNOCRLF definition is based upon the Char definition
    in Section 2.2 of [W3C.REC-xml-20081126], but omitting the Carriage
@@ -4642,14 +4575,6 @@ A.5.  "state" Syntax
    The "state" element is defined in Section 4.1.1, Section 4.1.2, and
    Section 4.1.2.1:
 
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 83]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
     state      = 1*VSCHAR
 
 A.6.  "redirect_uri" Syntax
@@ -4658,6 +4583,16 @@ A.6.  "redirect_uri" Syntax
    Section 4.1.3:
 
     redirect-uri      = URI-reference
+
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 82]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 A.7.  "error" Syntax
 
@@ -4695,17 +4630,6 @@ A.11.  "code" Syntax
 
     code       = 1*VSCHAR
 
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 84]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 A.12.  "access_token" Syntax
 
    The "access_token" element is defined in Section 4.2.3 and
@@ -4716,6 +4640,15 @@ A.12.  "access_token" Syntax
 A.13.  "token_type" Syntax
 
    The "token_type" element is defined in Section 5.1, and Section 8.1:
+
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 83]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
     token-type = type-name / URI-reference
     type-name  = 1*name-char
@@ -4753,15 +4686,6 @@ A.18.  "code_challenge" Syntax
 
    ABNF for "code_challenge" is as follows.
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 85]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    code-challenge = 43*128unreserved
    unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
    ALPHA = %x41-5A / %x61-7A
@@ -4773,6 +4697,15 @@ Appendix B.  Use of application/x-www-form-urlencoded Media Type
    www-form-urlencoded" media type was defined in Section 17.13.4 of
    [W3C.REC-html401-19991224] but not registered in the IANA MIME Media
    Types registry (http://www.iana.org/assignments/media-types [1]).
+
+
+
+
+Parecki, et al.         Expires September 5, 2020              [Page 84]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    Furthermore, that definition is incomplete, as it does not consider
    non-US-ASCII characters.
 
@@ -4811,13 +4744,6 @@ Authors' Addresses
    URI:   https://aaronparecki.com
 
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 86]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Dick Hardt
 
    Email: dick.hardt@gmail.com
@@ -4831,42 +4757,4 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 87]
+Parecki, et al.         Expires September 5, 2020              [Page 85]
