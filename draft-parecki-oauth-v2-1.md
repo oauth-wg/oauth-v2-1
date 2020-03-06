@@ -1,6 +1,6 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: draft-parecki-oauth-v2-1
+docname: draft-parecki-oauth-v2-1-00
 date: 2020-03-04
 
 ipr: trust200902
@@ -15,17 +15,14 @@ pi:
   symrefs: yes
 
 author:
-  -
-    ins: D. Hardt
-    name: Dick Hardt
-    email: dick.hardt@gmail.com
-  -
-    ins: A. Parecki
+  - ins: A. Parecki
     name: Aaron Parecki
     email: aaron@parecki.com
     uri: https://aaronparecki.com
-  -
-    ins: T. Lodderstedt
+  - ins: D. Hardt
+    name: Dick Hardt
+    email: dick.hardt@gmail.com
+  - ins: T. Lodderstedt
     name: Torsten Lodderstedt
     email: torsten@lodderstedt.net
 
@@ -47,6 +44,7 @@ normative:
   RFC5280:
   RFC7595:
   RFC8252:
+  I-D.ietf-oauth-security-topics:
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -67,9 +65,9 @@ informative:
   RFC7591:
   RFC8705:
   RFC7230:
+  RFC7636:
   I-D.ietf-oauth-rar:
   I-D.ietf-oauth-resource-indicators:
-  I-D.ietf-oauth-security-topics:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
@@ -572,9 +570,8 @@ When registering a client, the client developer SHALL:
 Client Types {#client-types}
 ------------
 
-OAuth defines two client types, based on their ability to
-authenticate securely with the authorization server (i.e., ability to
-maintain the confidentiality of their client credentials):
+OAuth defines two client types, based on whether they can be issued
+credentials that they can use to authenticate at the authorization server:
 
 "confidential":
 : Clients capable of maintaining the confidentiality of their
@@ -613,8 +610,8 @@ profiles:
   token issued to the client are stored on the web server and are
   not exposed to or accessible by the resource owner.
 
-"user-agent-based application":
-: A user-agent-based application is a public client in which the
+"browser-based application":
+: A browser-based application is a public client in which the
   client code is downloaded from a web server and executes within a
   user-agent (e.g., web browser) on the device used by the resource
   owner.  Protocol data and credentials are easily accessible (and
@@ -812,7 +809,7 @@ omitted from the request.  The authorization server MUST ignore
 unrecognized request parameters.  Request and response parameters
 MUST NOT be included more than once.
 
-### Response Type
+### Response Type {#response-type}
 
 The authorization endpoint is used by the authorization code flow.
 The client informs the
@@ -1085,7 +1082,7 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 (1)  The client initiates the flow by directing the resource owner's
      user-agent to the authorization endpoint.  The client includes
-     its client identifier, requested scope, local state, code challenge, and a
+     its client identifier, requested scope, local state, PKCE code challenge, and a
      redirection URI to which the authorization server will send the
      user-agent back once access is granted (or denied).
 
@@ -1116,9 +1113,23 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 ### Authorization Request {#authorization-request}
 
-#### Client Creates a Code Verifier
+To begin the authorization request, the client builds the authorization
+request URI by adding parameters to the authorization server's
+authorization endpoint URI.
 
-The client first creates a code verifier, "code_verifier", for each
+Without a client secret, public clients would be susceptible to an authorization code
+interception attack, where an attacker is able to intercept the authorization
+response through various means and use the authorization code to obtain an access token.
+To protect against this attack, as well as to protect against CSRF attacks,
+the client first generates a unique secret per authorization request, which it can
+later use along with the authorization code to prove that the application using the
+authorization code is the same application that requested it. This practice is known
+as "Proof-Key for Code Exchange", or PKCE, after the OAuth 2.0 extension ({{RFC7636}})
+where it was originally developed.
+
+#### Client Creates a PKCE Code Verifier
+
+The client first creates a PKCE code verifier, `code_verifier`, for each
 Authorization Request, in the following manner:
 
     code_verifier = high-entropy cryptographic random STRING using the
@@ -1126,7 +1137,7 @@ Authorization Request, in the following manner:
     from Section 2.3 of {{RFC3986}}, with a minimum length of 43 characters
     and a maximum length of 128 characters.
 
-ABNF for "code_verifier" is as follows.
+ABNF for `code_verifier` is as follows.
 
     code-verifier = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -1137,11 +1148,11 @@ NOTE: The code verifier SHOULD have enough entropy to make it
 impractical to guess the value.  It is RECOMMENDED that the output of
 a suitable random number generator be used to create a 32-octet
 sequence.  The octet sequence is then base64url-encoded to produce a
-43-octet URL safe string to use as the code verifier.
+43-octet URL-safe string to use as the code verifier.
 
-#### Client Creates the Code Challenge
+#### Client Creates the PKCE Code Challenge
 
-The client then creates a code challenge derived from the code
+The client then creates a PKCE code challenge derived from the code
 verifier by using one of the following transformations on the code
 verifier:
 
@@ -1151,11 +1162,11 @@ verifier:
     S256
       code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
 
-If the client is capable of using "S256", it MUST use "S256", as
-"S256" is Mandatory To Implement (MTI) on the server.  Clients are
-permitted to use "plain" only if they cannot support "S256" for some
+If the client is capable of using `S256`, it MUST use `S256`, as
+`S256` is Mandatory To Implement (MTI) on the server.  Clients are
+permitted to use `plain` only if they cannot support `S256` for some
 technical reason and know via out-of-band configuration that the
-server supports "plain".
+server supports `plain`.
 
 The plain transformation is for compatibility with existing
 deployments and for constrained environments that can't use the S256
@@ -1175,7 +1186,7 @@ parameters to the query component of the authorization endpoint URI
 using the "application/x-www-form-urlencoded" format, per Appendix B:
 
 "response_type":
-:    REQUIRED.  Value MUST be set to "code".
+:    REQUIRED.  Value MUST be set to `code`.
 
 "client_id":
 :    REQUIRED.  The client identifier as described in {{client-identifier}}.
@@ -1184,8 +1195,8 @@ using the "application/x-www-form-urlencoded" format, per Appendix B:
 :    REQUIRED.  Code challenge.
 
 "code_challenge_method":
-:    OPTIONAL, defaults to "plain" if not present in the request.  Code
-    verifier transformation method is "S256" or "plain".
+:    OPTIONAL, defaults to `plain` if not present in the request.  Code
+    nverifier transformation method is `S256` or `plain`.
 
 "redirect_uri":
 :    OPTIONAL.  As described in {{redirection-endpoint}}.
@@ -1195,11 +1206,10 @@ using the "application/x-www-form-urlencoded" format, per Appendix B:
      {{access-token-scope}}.
 
 "state":
-:    RECOMMENDED.  An opaque value used by the client to maintain
+:    OPTIONAL.  An opaque value used by the client to maintain
      state between the request and callback.  The authorization
      server includes this value when redirecting the user-agent back
-     to the client.  The parameter SHOULD be used for preventing
-     cross-site request forgery as described in {{csrf_countermeasures}}.
+     to the client.
 
 The client directs the resource owner to the constructed URI using an
 HTTP redirection response, or by other means available to it via the
@@ -1227,7 +1237,7 @@ redirection response, or by other means available to it via the
 user-agent.
 
 
-### Authorization Response
+### Authorization Response {#authorization-response}
 
 If the resource owner grants the access request, the authorization
 server issues an authorization code and delivers it to the client by
@@ -1377,7 +1387,7 @@ sending the following HTTP response:
     Location: https://client.example.com/cb?error=access_denied&state=xyz
 
 
-### Access Token Request
+### Access Token Request {#access-token-request}
 
 The client makes a request to the token endpoint by sending the
 following parameters using the "application/x-www-form-urlencoded"
@@ -1445,7 +1455,7 @@ The authorization server MUST:
    their values are identical.
 
 
-### Access Token Response
+### Access Token Response {#authorization-code-access-token-response}
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
@@ -1509,7 +1519,7 @@ Since the client authentication is used as the authorization grant,
 no additional authorization request is needed.
 
 
-### Access Token Request
+### Access Token Request {#client-credentials-access-token-request}
 
 The client makes a request to the token endpoint by adding the
 following parameters using the "application/x-www-form-urlencoded"
@@ -1563,7 +1573,7 @@ An example successful response:
     }
 
 
-Extension Grants
+Extension Grants {#extension-grants}
 ----------------
 
 The client uses an extension grant type by specifying the grant type
@@ -2341,12 +2351,12 @@ acceptance of that token at the recipient (e.g., a resource server).
 
 Authorization and resource servers SHOULD use mechanisms for sender-
 constrained access tokens to prevent token replay as described in
-Section 4.8.1.1.2.  The use of Mutual TLS for OAuth 2.0 {{RFC8705}} is
-RECOMMENDED.
+Section 4.8.1.1.2 of {{I-D.ietf-oauth-security-topics}}.
+The use of Mutual TLS for OAuth 2.0 {{RFC8705}} is RECOMMENDED.
 
 It is RECOMMENDED to use end-to-end TLS.  If TLS traffic needs to be
-terminated at an intermediary, refer to Security BCP Section 4.11 for further
-security advice.
+terminated at an intermediary, refer to Section 4.11 of {{I-D.ietf-oauth-security-topics}}
+for further security advice.
 
 ### Access Token Privilege Restriction
 
@@ -2386,7 +2396,7 @@ determine those resources and/or actions.
 Extensibility
 =============
 
-Defining Access Token Types
+Defining Access Token Types {#defining-access-token-types}
 ---------------------------
 
 Access token types can be defined in one of two ways: registered in
@@ -2408,7 +2418,7 @@ authentication scheme name (as defined by [RFC2617]).  The token type
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
 
 
-Defining New Endpoint Parameters
+Defining New Endpoint Parameters {#defining-new-endpoint-parameters}
 --------------------------------
 
 New request or response parameters for use with the authorization
@@ -2470,7 +2480,7 @@ In cases where protocol extensions (i.e., access token types,
 extension parameters, or extension grant types) require additional
 error codes to be used with the authorization code grant error
 response ({{authorization-code-error-response}}), the token error response ({{access-token-error-response}}), or the
-resource access error response (Section 7.2), such error codes MAY be
+resource access error response ({{bearer-token-error-response}}), such error codes MAY be
 defined.
 
 Extension error codes MUST be registered (following the procedures in
@@ -2488,289 +2498,13 @@ named "example_invalid".
     error-char = %x20-21 / %x23-5B / %x5D-7E
 
 
-Native Applications {#native-applications}
-===================
-
-Native applications are clients installed and executed on the device
-used by the resource owner (i.e., desktop application, native mobile
-application).  Native applications require special consideration
-related to security, platform capabilities, and overall end-user
-experience.
-
-The authorization endpoint requires interaction between the client
-and the resource owner's user-agent. The best current practice is to
-perform the OAuth authorization request in an external user-agent
-(typically the browser) rather than an embedded user-agent (such as
-one implemented with web-views).
-
-The native application can capture the
-response from the authorization server using a redirection URI
-with a scheme registered with the operating system to invoke the
-client as the handler, manual copy-and-paste of the credentials,
-running a local web server, installing a user-agent extension, or
-by providing a redirection URI identifying a server-hosted
-resource under the client's control, which in turn makes the
-response available to the native application.
-
-Previously, it was common for native apps to use embedded user-agents
-(commonly implemented with web-views) for OAuth authorization
-requests.  That approach has many drawbacks, including the host app
-being able to copy user credentials and cookies as well as the user
-needing to authenticate from scratch in each app.  See Section ???
-for a deeper analysis of the drawbacks of using embedded user-agents
-for OAuth.
-
-Native app authorization requests that use the browser are more
-secure and can take advantage of the user's authentication state.
-Being able to use the existing authentication session in the browser
-enables single sign-on, as users don't need to authenticate to the
-authorization server each time they use a new app (unless required by
-the authorization server policy).
-
-Supporting authorization flows between a native app and the browser
-is possible without changing the OAuth protocol itself, as the OAuth
-authorization request and response are already defined in terms of
-URIs.  This encompasses URIs that can be used for inter-app
-communication.  Some OAuth server implementations that assume all
-clients are confidential web clients will need to add an
-understanding of public native app clients and the types of redirect
-URIs they use to support this best practice.
-
-## Authorization Flow for Native Apps Using the Browser
-
-~~~~~~~~~~
-  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-  |          User Device          |
-  |                               |
-  | +--------------------------+  | (5) Authorization  +---------------+
-  | |                          |  |     Code           |               |
-  | |        Client App        |---------------------->|     Token     |
-  | |                          |<----------------------|    Endpoint   |
-  | +--------------------------+  | (6) Access Token,  |               |
-  |   |             ^             |     Refresh Token  +---------------+
-  |   |             |             |
-  |   |             |             |
-  |   | (1)         | (4)         |
-  |   | Authorizat- | Authoriza-  |
-  |   | ion Request | tion Code   |
-  |   |             |             |
-  |   |             |             |
-  |   v             |             |
-  | +---------------------------+ | (2) Authorization  +---------------+
-  | |                           | |     Request        |               |
-  | |          Browser          |--------------------->| Authorization |
-  | |                           |<---------------------|    Endpoint   |
-  | +---------------------------+ | (3) Authorization  |               |
-  |                               |     Code           +---------------+
-  +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-~~~~~~~~~~
-{: #fig-native-app-authorization-flow title="Native App Authorization via an External User-Agent"}
-
-{{fig-native-app-authorization-flow}} illustrates the interaction between a native app and the
-browser to authorize the user.
-
-1. Client app opens a browser tab with the authorization request.
-
-2. Authorization endpoint receives the authorization request,
-   authenticates the user, and obtains authorization.
-   Authenticating the user may involve chaining to other
-   authentication systems.
-
-3. Authorization server issues an authorization code to the
-   redirect URI.
-
-4. Client receives the authorization code from the redirect URI.
-
-5. Client app presents the authorization code at the token
-   endpoint.
-
-6. Token endpoint validates the authorization code and issues the
-   tokens requested.
-
-## Using Inter-App URI Communication for OAuth in Native Apps
-
-Just as URIs are used for OAuth on the web to initiate
-the authorization request and return the authorization response to
-the requesting website, URIs can be used by native apps to initiate
-the authorization request in the device's browser and return the
-response to the requesting native app.
-
-By adopting the same methods used on the web for OAuth, benefits seen
-in the web context like the usability of a single sign-on session and
-the security of a separate authentication context are likewise gained
-in the native app context.  Reusing the same approach also reduces
-the implementation complexity and increases interoperability by
-relying on standards-based web flows that are not specific to a
-particular platform.
-
-Native apps MUST use an external
-user-agent to perform OAuth authorization requests.  This is achieved
-by opening the authorization request in the browser (detailed in
-{{authorization-request-native-app}}) and using a redirect URI that will return the
-authorization response back to the native app (defined in {{authorization-response-native-app}}).
-
-## Initiating the Authorization Request from a Native App {#authorization-request-native-app}
-
-Native apps needing user authorization create an authorization
-request URI with the authorization code grant type per {{authorization-code-grant}}
-using a redirect URI capable of being received by the native app.
-
-The function of the redirect URI for a native app authorization
-request is similar to that of a web-based authorization request.
-Rather than returning the authorization response to the OAuth
-client's server, the redirect URI used by a native app returns the
-response to the app.  Several options for a redirect URI that will
-return the authorization response to the native app in different
-platforms are documented in {{authorization-response-native-app}}.  Any redirect URI that allows
-the app to receive the URI and inspect its parameters is viable.
-
-After constructing the authorization request URI, the app uses
-platform-specific APIs to open the URI in an external user-agent.
-Typically, the external user-agent used is the default browser, that
-is, the application configured for handling "http" and "https" scheme
-URIs on the system; however, different browser selection criteria and
-other categories of external user-agents MAY be used.
-
-This best practice focuses on the browser as the RECOMMENDED external
-user-agent for native apps.  An external user-agent designed
-specifically for user authorization and capable of processing
-authorization requests and responses like a browser MAY also be used.
-Other external user-agents, such as a native app provided by the
-authorization server may meet the criteria set out in this best
-practice, including using the same redirection URI properties, but
-their use is out of scope for this specification.
-
-Some platforms support a browser feature known as "in-app browser
-tabs", where an app can present a tab of the browser within the app
-context without switching apps, but still retain key benefits of the
-browser such as a shared authentication state and security context.
-On platforms where they are supported, it is RECOMMENDED, for
-usability reasons, that apps use in-app browser tabs for the
-authorization request.
-
-## Receiving the Authorization Response in a Native App {#authorization-response-native-app}
-
-There are several redirect URI options available to native apps for
-receiving the authorization response from the browser, the
-availability and user experience of which varies by platform.
-
-To fully support native apps, authorization servers MUST offer
-at least the three redirect URI options described in the following
-subsections to native apps.  Native apps MAY use whichever redirect
-option suits their needs best, taking into account platform-specific
-implementation details.
-
-### Private-Use URI Scheme Redirection {#private-use-uri-scheme}
-
-Many mobile and desktop computing platforms support inter-app
-communication via URIs by allowing apps to register private-use URI
-schemes (sometimes colloquially referred to as "custom URL schemes")
-like `com.example.app`.  When the browser or another app attempts to
-load a URI with a private-use URI scheme, the app that registered it
-is launched to handle the request.
-
-To perform an authorization request with a private-use URI
-scheme redirect, the native app launches the browser with a standard
-authorization request, but one where the redirection URI utilizes a
-private-use URI scheme it registered with the operating system.
-
-When choosing a URI scheme to associate with the app, apps MUST use a
-URI scheme based on a domain name under their control, expressed in
-reverse order, as recommended by Section 3.8 of {{RFC7595}} for
-private-use URI schemes.
-
-For example, an app that controls the domain name `app.example.com`
-can use `com.example.app` as their scheme.  Some authorization
-servers assign client identifiers based on domain names, for example,
-`client1234.usercontent.example.net`, which can also be used as the
-domain name for the scheme when reversed in the same manner.  A
-scheme such as `myapp`, however, would not meet this requirement, as
-it is not based on a domain name.
-
-When there are multiple apps by the same publisher, care must be
-taken so that each scheme is unique within that group.  On platforms
-that use app identifiers based on reverse-order domain names, those
-identifiers can be reused as the private-use URI scheme for the OAuth
-redirect to help avoid this problem.
-
-Following the requirements of Section 3.2 of {{RFC3986}}, as there is
-no naming authority for private-use URI scheme redirects, only a
-single slash (`/`) appears after the scheme component.  A complete
-example of a redirect URI utilizing a private-use URI scheme is:
-
-    com.example.app:/oauth2redirect/example-provider
-
-When the authorization server completes the request, it redirects to
-the client's redirection URI as it would normally.  As the
-redirection URI uses a private-use URI scheme, it results in the
-operating system launching the native app, passing in the URI as a
-launch parameter.  Then, the native app uses normal processing for
-the authorization response.
-
-### Claimed "https" Scheme URI Redirection
-
-Some operating systems allow apps to claim `https` scheme {{RFC7230}}
-URIs in the domains they control.  When the browser encounters a
-claimed URI, instead of the page being loaded in the browser, the
-native app is launched with the URI supplied as a launch parameter.
-
-Such URIs can be used as redirect URIs by native apps.  They are
-indistinguishable to the authorization server from a regular web-
-based client redirect URI.  An example is:
-
-    https://app.example.com/oauth2redirect/example-provider
-
-As the redirect URI alone is not enough to distinguish public native
-app clients from confidential web clients, it is REQUIRED in
-Section ??? that the client type be recorded during client
-registration to enable the server to determine the client type and
-act accordingly.
-
-App-claimed `https` scheme redirect URIs have some advantages
-compared to other native app redirect options in that the identity of
-the destination app is guaranteed to the authorization server by the
-operating system.  For this reason, native apps SHOULD use them over
-the other options where possible.
-
-### Loopback Interface Redirection {#loopback-interface-redirection}
-
-Native apps that are able to open a port on the loopback network
-interface without needing special permissions (typically, those on
-desktop operating systems) can use the loopback interface to receive
-the OAuth redirect.
-
-Loopback redirect URIs use the `http` scheme and are constructed with
-the loopback IP literal and whatever port the client is listening on.
-
-That is, `http://127.0.0.1:{port}/{path}` for IPv4, and
-`http://[::1]:{port}/{path}` for IPv6.  An example redirect using the
-IPv4 loopback interface with a randomly assigned port:
-
-    http://127.0.0.1:51004/oauth2redirect/example-provider
-
-An example redirect using the IPv6 loopback interface with a randomly
-assigned port:
-
-    http://[::1]:61023/oauth2redirect/example-provider
-
-The authorization server MUST allow any port to be specified at the
-time of the request for loopback IP redirect URIs, to accommodate
-clients that obtain an available ephemeral port from the operating
-system at the time of the request.
-
-Clients SHOULD NOT assume that the device supports a particular
-version of the Internet Protocol.  It is RECOMMENDED that clients
-attempt to bind to the loopback interface using both IPv4 and IPv6
-and use whichever is available.
-
-
 # Security Considerations
 
 As a flexible and extensible framework, OAuth's security
 considerations depend on many factors.  The following sections
 provide implementers with security guidelines focused on the three
-client profiles described in Section 2.1: web application,
-user-agent-based application, and native application.
+client profiles described in {{client-types}}: web application,
+browser-based application, and native application.
 
 A comprehensive OAuth security model and analysis, as well as
 background for the protocol design, is provided by
@@ -2923,7 +2657,7 @@ attributes) MUST be kept confidential in transit and storage, and
 only shared among the authorization server, the resource servers the
 access token is valid for, and the client to whom the access token is
 issued.  Access token credentials MUST only be transmitted using TLS
-as described in Section 1.6 with server authentication as defined by
+as described in {{tls-version}} with server authentication as defined by
 {{RFC2818}}.
 
 The authorization server MUST ensure that access tokens cannot be
@@ -2987,7 +2721,7 @@ shared only among the authorization server and the client to whom the
 refresh tokens were issued.  The authorization server MUST maintain
 the binding between a refresh token and the client to whom it was
 issued.  Refresh tokens MUST only be transmitted using TLS as
-described in Section 1.6 with server authentication as defined by
+described in {{tls-version}} with server authentication as defined by
 {{RFC2818}}.
 
 The authorization server MUST verify the binding between the refresh
@@ -3362,7 +3096,7 @@ The requirement of {{native-app-registration}}, specifically that authorization
 servers reject requests with URIs that don't match what was
 registered, is also required to prevent such attacks.
 
-## Embedded User Agents in Native Apps
+## Embedded User Agents in Native Apps {#native-apps-embedded-user-agents}
 
 Embedded user-agents are a technically possible method for authorizing native
 apps.  These embedded user-agents are unsafe for use by third parties
@@ -3400,6 +3134,242 @@ considered an inferior user experience.
 Authorization servers SHOULD NOT allow clients to influence their
 `client_id` or `sub` value or any other claim if that can cause
 confusion with a genuine resource owner (see (#client_impersonating)).
+
+
+Native Applications {#native-applications}
+===================
+
+Native applications are clients installed and executed on the device
+used by the resource owner (i.e., desktop application, native mobile
+application).  Native applications require special consideration
+related to security, platform capabilities, and overall end-user
+experience.
+
+The authorization endpoint requires interaction between the client
+and the resource owner's user-agent. The best current practice is to
+perform the OAuth authorization request in an external user-agent
+(typically the browser) rather than an embedded user-agent (such as
+one implemented with web-views).
+
+The native application can capture the
+response from the authorization server using a redirection URI
+with a scheme registered with the operating system to invoke the
+client as the handler, manual copy-and-paste of the credentials,
+running a local web server, installing a user-agent extension, or
+by providing a redirection URI identifying a server-hosted
+resource under the client's control, which in turn makes the
+response available to the native application.
+
+Previously, it was common for native apps to use embedded user-agents
+(commonly implemented with web-views) for OAuth authorization
+requests.  That approach has many drawbacks, including the host app
+being able to copy user credentials and cookies as well as the user
+needing to authenticate from scratch in each app.  See {{native-apps-embedded-user-agents}}
+for a deeper analysis of the drawbacks of using embedded user-agents
+for OAuth.
+
+Native app authorization requests that use the browser are more
+secure and can take advantage of the user's authentication state.
+Being able to use the existing authentication session in the browser
+enables single sign-on, as users don't need to authenticate to the
+authorization server each time they use a new app (unless required by
+the authorization server policy).
+
+Supporting authorization flows between a native app and the browser
+is possible without changing the OAuth protocol itself, as the OAuth
+authorization request and response are already defined in terms of
+URIs.  This encompasses URIs that can be used for inter-app
+communication.  Some OAuth server implementations that assume all
+clients are confidential web clients will need to add an
+understanding of public native app clients and the types of redirect
+URIs they use to support this best practice.
+
+## Using Inter-App URI Communication for OAuth in Native Apps
+
+Just as URIs are used for OAuth on the web to initiate
+the authorization request and return the authorization response to
+the requesting website, URIs can be used by native apps to initiate
+the authorization request in the device's browser and return the
+response to the requesting native app.
+
+By adopting the same methods used on the web for OAuth, benefits seen
+in the web context like the usability of a single sign-on session and
+the security of a separate authentication context are likewise gained
+in the native app context.  Reusing the same approach also reduces
+the implementation complexity and increases interoperability by
+relying on standards-based web flows that are not specific to a
+particular platform.
+
+Native apps MUST use an external
+user-agent to perform OAuth authorization requests.  This is achieved
+by opening the authorization request in the browser (detailed in
+{{authorization-request-native-app}}) and using a redirect URI that will return the
+authorization response back to the native app (defined in {{authorization-response-native-app}}).
+
+## Initiating the Authorization Request from a Native App {#authorization-request-native-app}
+
+Native apps needing user authorization create an authorization
+request URI with the authorization code grant type per {{authorization-code-grant}}
+using a redirect URI capable of being received by the native app.
+
+The function of the redirect URI for a native app authorization
+request is similar to that of a web-based authorization request.
+Rather than returning the authorization response to the OAuth
+client's server, the redirect URI used by a native app returns the
+response to the app.  Several options for a redirect URI that will
+return the authorization response to the native app in different
+platforms are documented in {{authorization-response-native-app}}.  Any redirect URI that allows
+the app to receive the URI and inspect its parameters is viable.
+
+After constructing the authorization request URI, the app uses
+platform-specific APIs to open the URI in an external user-agent.
+Typically, the external user-agent used is the default browser, that
+is, the application configured for handling "http" and "https" scheme
+URIs on the system; however, different browser selection criteria and
+other categories of external user-agents MAY be used.
+
+This best practice focuses on the browser as the RECOMMENDED external
+user-agent for native apps.  An external user-agent designed
+specifically for user authorization and capable of processing
+authorization requests and responses like a browser MAY also be used.
+Other external user-agents, such as a native app provided by the
+authorization server may meet the criteria set out in this best
+practice, including using the same redirection URI properties, but
+their use is out of scope for this specification.
+
+Some platforms support a browser feature known as "in-app browser
+tabs", where an app can present a tab of the browser within the app
+context without switching apps, but still retain key benefits of the
+browser such as a shared authentication state and security context.
+On platforms where they are supported, it is RECOMMENDED, for
+usability reasons, that apps use in-app browser tabs for the
+authorization request.
+
+## Receiving the Authorization Response in a Native App {#authorization-response-native-app}
+
+There are several redirect URI options available to native apps for
+receiving the authorization response from the browser, the
+availability and user experience of which varies by platform.
+
+To fully support native apps, authorization servers MUST offer
+at least the three redirect URI options described in the following
+subsections to native apps.  Native apps MAY use whichever redirect
+option suits their needs best, taking into account platform-specific
+implementation details.
+
+### Private-Use URI Scheme Redirection {#private-use-uri-scheme}
+
+Many mobile and desktop computing platforms support inter-app
+communication via URIs by allowing apps to register private-use URI
+schemes (sometimes colloquially referred to as "custom URL schemes")
+like `com.example.app`.  When the browser or another app attempts to
+load a URI with a private-use URI scheme, the app that registered it
+is launched to handle the request.
+
+To perform an authorization request with a private-use URI
+scheme redirect, the native app launches the browser with a standard
+authorization request, but one where the redirection URI utilizes a
+private-use URI scheme it registered with the operating system.
+
+When choosing a URI scheme to associate with the app, apps MUST use a
+URI scheme based on a domain name under their control, expressed in
+reverse order, as recommended by Section 3.8 of {{RFC7595}} for
+private-use URI schemes.
+
+For example, an app that controls the domain name `app.example.com`
+can use `com.example.app` as their scheme.  Some authorization
+servers assign client identifiers based on domain names, for example,
+`client1234.usercontent.example.net`, which can also be used as the
+domain name for the scheme when reversed in the same manner.  A
+scheme such as `myapp`, however, would not meet this requirement, as
+it is not based on a domain name.
+
+When there are multiple apps by the same publisher, care must be
+taken so that each scheme is unique within that group.  On platforms
+that use app identifiers based on reverse-order domain names, those
+identifiers can be reused as the private-use URI scheme for the OAuth
+redirect to help avoid this problem.
+
+Following the requirements of Section 3.2 of {{RFC3986}}, as there is
+no naming authority for private-use URI scheme redirects, only a
+single slash (`/`) appears after the scheme component.  A complete
+example of a redirect URI utilizing a private-use URI scheme is:
+
+    com.example.app:/oauth2redirect/example-provider
+
+When the authorization server completes the request, it redirects to
+the client's redirection URI as it would normally.  As the
+redirection URI uses a private-use URI scheme, it results in the
+operating system launching the native app, passing in the URI as a
+launch parameter.  Then, the native app uses normal processing for
+the authorization response.
+
+### Claimed "https" Scheme URI Redirection
+
+Some operating systems allow apps to claim `https` scheme {{RFC7230}}
+URIs in the domains they control.  When the browser encounters a
+claimed URI, instead of the page being loaded in the browser, the
+native app is launched with the URI supplied as a launch parameter.
+
+Such URIs can be used as redirect URIs by native apps.  They are
+indistinguishable to the authorization server from a regular web-
+based client redirect URI.  An example is:
+
+    https://app.example.com/oauth2redirect/example-provider
+
+As the redirect URI alone is not enough to distinguish public native
+app clients from confidential web clients, it is REQUIRED in
+{{native-app-registration}} that the client type be recorded during client
+registration to enable the server to determine the client type and
+act accordingly.
+
+App-claimed `https` scheme redirect URIs have some advantages
+compared to other native app redirect options in that the identity of
+the destination app is guaranteed to the authorization server by the
+operating system.  For this reason, native apps SHOULD use them over
+the other options where possible.
+
+### Loopback Interface Redirection {#loopback-interface-redirection}
+
+Native apps that are able to open a port on the loopback network
+interface without needing special permissions (typically, those on
+desktop operating systems) can use the loopback interface to receive
+the OAuth redirect.
+
+Loopback redirect URIs use the `http` scheme and are constructed with
+the loopback IP literal and whatever port the client is listening on.
+
+That is, `http://127.0.0.1:{port}/{path}` for IPv4, and
+`http://[::1]:{port}/{path}` for IPv6.  An example redirect using the
+IPv4 loopback interface with a randomly assigned port:
+
+    http://127.0.0.1:51004/oauth2redirect/example-provider
+
+An example redirect using the IPv6 loopback interface with a randomly
+assigned port:
+
+    http://[::1]:61023/oauth2redirect/example-provider
+
+The authorization server MUST allow any port to be specified at the
+time of the request for loopback IP redirect URIs, to accommodate
+clients that obtain an available ephemeral port from the operating
+system at the time of the request.
+
+Clients SHOULD NOT assume that the device supports a particular
+version of the Internet Protocol.  It is RECOMMENDED that clients
+attempt to bind to the loopback interface using both IPv4 and IPv6
+and use whichever is available.
+
+
+Browser-Based Apps
+==================
+
+Browser-based apps are are clients that run in a web browser, typically
+written in JavaScript, also known as "single-page apps". These types of apps
+have particular security considerations similar to native apps.
+
+TODO: Bring in the normative text of the browser-based apps BCP when it is finalized.
+
 
 
 IANA Considerations
@@ -3704,7 +3674,7 @@ Error usage location:
 : The location(s) where the error can be used.  The possible
   locations are authorization code grant error response
   ({{authorization-code-error-response}}), token error response ({{access-token-error-response}}), or resource
-  access error response (Section 7.2).
+  access error response ({{bearer-token-error-response}}).
 
 Related protocol extension:
 : The name of the extension grant type, access token type, or
@@ -3791,7 +3761,7 @@ The "client_secret" element is defined in {{client-password}}:
 
 ## "response_type" Syntax
 
-The "response_type" element is defined in Sections 3.1.1 and 8.4:
+The "response_type" element is defined in {{response-type}} and {{new-response-types}}:
 
     response-type = response-name *( SP response-name )
     response-name = 1*response-char
@@ -3806,21 +3776,19 @@ The "scope" element is defined in {{access-token-scope}}:
 
 ## "state" Syntax
 
-The "state" element is defined in Sections 4.1.1, 4.1.2, {{authorization-code-error-response}},
-4.2.1, 4.2.2, and 4.2.2.1:
+The "state" element is defined in {{authorization-request}}, {{authorization-response}}, and {{authorization-code-error-response}}:
 
      state      = 1*VSCHAR
 
 ## "redirect_uri" Syntax
 
-The "redirect_uri" element is defined in Sections 4.1.1, 4.1.3,
-and 4.2.1:
+The "redirect_uri" element is defined in {{authorization-request}}, and {{access-token-request}}:
 
      redirect-uri      = URI-reference
 
 ## "error" Syntax
 
-The "error" element is defined in Sections {{authorization-code-error-response}}, 4.2.2.1, 5.2,
+The "error" element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
 7.2, and 8.5:
 
      error             = 1*NQSCHAR
@@ -3828,21 +3796,21 @@ The "error" element is defined in Sections {{authorization-code-error-response}}
 ## "error_description" Syntax
 
 The "error_description" element is defined in Sections {{authorization-code-error-response}},
-4.2.2.1, 5.2, and 7.2:
+{{access-token-error-response}}, and {{bearer-token-error-response}}:
 
      error-description = 1*NQSCHAR
 
 ## "error_uri" Syntax
 
-The "error_uri" element is defined in Sections {{authorization-code-error-response}}, 4.2.2.1, 5.2,
+The "error_uri" element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
 and 7.2:
 
      error-uri         = URI-reference
 
 ## "grant_type" Syntax
 
-The "grant_type" element is defined in Sections 4.1.3, 4.3.2, 4.4.2,
-4.5, and 6:
+The "grant_type" element is defined in Sections {{access-token-request}}, {{access-token-response}}, {{client-credentials-access-token-request}},
+{{extension-grants}}, and {{refreshing-an-access-token}}:
 
      grant-type = grant-name / URI-reference
      grant-name = 1*name-char
@@ -3850,19 +3818,19 @@ The "grant_type" element is defined in Sections 4.1.3, 4.3.2, 4.4.2,
 
 ## "code" Syntax
 
-The "code" element is defined in Section 4.1.3:
+The "code" element is defined in {{access-token-request}}:
 
      code       = 1*VSCHAR
 
 ## "access_token" Syntax
 
-The "access_token" element is defined in Sections 4.2.2 and 5.1:
+The "access_token" element is defined in {{access-token-response}} and {{access-token-successful-response}}:
 
      access-token = 1*VSCHAR
 
 ## "token_type" Syntax
 
-The "token_type" element is defined in Sections 4.2.2, 5.1, and 8.1:
+The "token_type" element is defined in {{access-token-successful-response}}, and {{defining-access-token-types}}:
 
      token-type = type-name / URI-reference
      type-name  = 1*name-char
@@ -3870,19 +3838,19 @@ The "token_type" element is defined in Sections 4.2.2, 5.1, and 8.1:
 
 ## "expires_in" Syntax
 
-The "expires_in" element is defined in Sections 4.2.2 and 5.1:
+The "expires_in" element is defined in {{access-token-successful-response}}:
 
      expires-in = 1*DIGIT
 
 ## "refresh_token" Syntax
 
-The "refresh_token" element is defined in Sections 5.1 and 6:
+The "refresh_token" element is defined in {{access-token-successful-response}} and {{refreshing-an-access-token}}:
 
      refresh-token = 1*VSCHAR
 
 ## Endpoint Parameter Syntax
 
-The syntax for new endpoint parameters is defined in Section 8.2:
+The syntax for new endpoint parameters is defined in {{defining-new-endpoint-parameters}}:
 
      param-name = 1*name-char
      name-char  = "-" / "." / "_" / DIGIT / ALPHA
