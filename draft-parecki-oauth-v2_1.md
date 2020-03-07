@@ -1,12 +1,14 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: draft-parecki-oauth-v2-1-00
-date: 2020-03-04
+docname: draft-parecki-oauth-v2_1-00
+date: 2020-03-05
 
 ipr: trust200902
 area: OAuth
 kw: Internet-Draft
 cat: std
+consensus: true
+area: Security
 
 coding: us-ascii
 pi:
@@ -15,16 +17,22 @@ pi:
   symrefs: yes
 
 author:
+  - ins: D. Hardt
+    organization: SignIn.Org
+    name: Dick Hardt
+    email: dick.hardt@gmail.com
+    country: United States
   - ins: A. Parecki
     name: Aaron Parecki
     email: aaron@parecki.com
+    organization: Okta
     uri: https://aaronparecki.com
-  - ins: D. Hardt
-    name: Dick Hardt
-    email: dick.hardt@gmail.com
+    country: United States
   - ins: T. Lodderstedt
     name: Torsten Lodderstedt
     email: torsten@lodderstedt.net
+    organization: Yes.com
+    country: Germany
 
 normative:
   RFC2119:
@@ -56,7 +64,6 @@ normative:
 informative:
   RFC7522:
   RFC6819:
-  RFC5849:
   RFC6265:
   RFC7591:
   RFC8707:
@@ -65,34 +72,25 @@ informative:
   RFC7591:
   RFC8705:
   RFC7230:
+  RFC7235:
   RFC7636:
   I-D.ietf-oauth-rar:
   I-D.ietf-oauth-resource-indicators:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
-  webauthn:
-    title: "Web Authentication: An API for accessing Public Key Credentials Level 1"
-    author:
-      - ins: D. Balfanz
-      - ins: A. Czeskis
-      - ins: J. Hodges
-      - ins: J. Jones
-      - ins: M. Jones
-      - ins: A. Kumar
-      - ins: A. Liao
-      - ins: R. Lindemann
-      - ins: E. Lundberg
-    date: March 2019
-    url: https://www.w3.org/TR/2019/REC-webauthn-1-20190304/
-  webcrypto:
-    title: "Web Cryptography API"
-    date: January 2017
-    author:
-      - ins: M. Watson
-    url: https://www.w3.org/TR/2017/REC-WebCryptoAPI-20170126/
+
   OpenID:
-    title: "OpenID Connect"
+    title: OpenID Connect Core 1.0
+    target: https://openiD.net/specs/openiD-connect-core-1_0.html
+    date: November 8, 2014
+    author:
+      - ins: N. Sakimora
+      - ins: J. Bradley
+      - ins: M. Jones
+      - ins: B. de Medeiros
+      - ins: C. Mortimore
+
   OMAP:
     title: "Online Multimedia Authorization Protocol: An Industry Standard for Authorized Access to Internet Multimedia Resources"
     author:
@@ -105,11 +103,12 @@ informative:
       - ins: T. Ace
       - ins: C. Rickelton-Abdi
       - ins: B. Boyer
-    date: April 2012
-    url: https://www.oatc.us/Standards/Download-Standards
+    date: April, 2012
+    target: https://www.oatc.us/Standards/Download-Standards
+
   NIST800-63:
     title: "NIST Special Publication 800-63-1, INFORMATION SECURITY"
-    date: December 2011
+    date: December, 2011
     author:
       - ins: W. Burr
       - ins: D. Dodson
@@ -118,7 +117,8 @@ informative:
       - ins: T. Polk
       - ins: S. Gupta
       - ins: E. Nabbus
-    url: http://csrc.nist.gov/publications/
+    target: http://csrc.nist.gov/publications/
+
   OpenID.Messages:
     title: "OpenID Connect Messages 1.0"
     author:
@@ -129,20 +129,17 @@ informative:
       - ins: C. Mortimore
       - ins: E. Jay
     date: June 2012
-    url: http://openid.net/specs/openid-connect-messages-1_0.html
-  HTTP-AUTH:
-    title: "Hypertext Transfer Protocol (HTTP/1.1): Authentication"
-    date: October 2012
-    author:
-      - ins: R. Fielding
-      - ins: J. Reschke
+    target: http://openid.net/specs/openid-connect-messages-1_0.html
+
   owasp_redir:
     title: "OWASP Cheat Sheet Series - Unvalidated Redirects and Forwards"
-    url: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+    target: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+    date: 2020
+
   CSP-2:
     title: "Content Security Policy Level 2"
-    url: https://www.w3.org/TR/CSP2
-
+    target: https://www.w3.org/TR/CSP2
+    date: December 15, 2016
 
 --- abstract
 
@@ -1967,8 +1964,8 @@ The syntax of the "Authorization" header field for this scheme
 follows the usage of the Basic scheme defined in Section 2 of
 {{RFC2617}}.  Note that, as with Basic, it does not conform to the
 generic syntax defined in Section 1.2 of {{RFC2617}} but is compatible
-with the general authentication framework being developed for
-HTTP 1.1 {{HTTP-AUTH}}, although it does not follow the preferred
+with the general authentication framework in HTTP 1.1 Authentication 
+{{RFC7235}}, although it does not follow the preferred
 practice outlined therein in order to reflect existing deployments.
 The syntax for Bearer credentials is as follows:
 

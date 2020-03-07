@@ -2,16 +2,17 @@
 
 
 
-Network Working Group                                         A. Parecki
-Internet-Draft
-Intended status: Standards Track                                D. Hardt
-Expires: September 5, 2020
+Network Working Group                                           D. Hardt
+Internet-Draft                                                SignIn.Org
+Intended status: Standards Track                              A. Parecki
+Expires: 6 September 2020                                           Okta
                                                           T. Lodderstedt
-                                                          March 04, 2020
+                                                                 Yes.com
+                                                            5 March 2020
 
 
                  The OAuth 2.1 Authorization Framework
-                      draft-parecki-oauth-v2-1-00
+                      draft-parecki-oauth-v2_1-00
 
 Abstract
 
@@ -38,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 5, 2020.
+   This Internet-Draft will expire on 6 September 2020.
 
 Copyright Notice
 
@@ -46,28 +47,27 @@ Copyright Notice
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (https://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
 
 
 
-Parecki, et al.         Expires September 5, 2020               [Page 1]
+Hardt, et al.           Expires 6 September 2020                [Page 1]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Simplified BSD License text
+   as described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Simplified BSD License.
 
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   5
      1.1.  Roles . . . . . . . . . . . . . . . . . . . . . . . . . .   6
-     1.2.  Protocol Flow . . . . . . . . . . . . . . . . . . . . . .   7
+     1.2.  Protocol Flow . . . . . . . . . . . . . . . . . . . . . .   6
      1.3.  Authorization Grant . . . . . . . . . . . . . . . . . . .   8
        1.3.1.  Authorization Code  . . . . . . . . . . . . . . . . .   8
        1.3.2.  Client Credentials  . . . . . . . . . . . . . . . . .   8
@@ -91,7 +91,7 @@ Table of Contents
      3.2.  Token Endpoint  . . . . . . . . . . . . . . . . . . . . .  20
        3.2.1.  Client Authentication . . . . . . . . . . . . . . . .  20
      3.3.  Access Token Scope  . . . . . . . . . . . . . . . . . . .  21
-   4.  Obtaining Authorization . . . . . . . . . . . . . . . . . . .  21
+   4.  Obtaining Authorization . . . . . . . . . . . . . . . . . . .  22
      4.1.  Authorization Code Grant  . . . . . . . . . . . . . . . .  22
        4.1.1.  Authorization Request . . . . . . . . . . . . . . . .  23
        4.1.2.  Authorization Response  . . . . . . . . . . . . . . .  26
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Parecki, et al.         Expires September 5, 2020               [Page 2]
+Hardt, et al.           Expires 6 September 2020                [Page 2]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -125,15 +125,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
        7.4.1.  Security Threats  . . . . . . . . . . . . . . . . . .  44
        7.4.2.  Threat Mitigation . . . . . . . . . . . . . . . . . .  45
        7.4.3.  Summary of Recommendations  . . . . . . . . . . . . .  46
-       7.4.4.  Token Replay Prevention . . . . . . . . . . . . . . .  48
+       7.4.4.  Token Replay Prevention . . . . . . . . . . . . . . .  47
        7.4.5.  Access Token Privilege Restriction  . . . . . . . . .  48
-   8.  Extensibility . . . . . . . . . . . . . . . . . . . . . . . .  49
-     8.1.  Defining Access Token Types . . . . . . . . . . . . . . .  49
+   8.  Extensibility . . . . . . . . . . . . . . . . . . . . . . . .  48
+     8.1.  Defining Access Token Types . . . . . . . . . . . . . . .  48
      8.2.  Defining New Endpoint Parameters  . . . . . . . . . . . .  49
      8.3.  Defining New Authorization Grant Types  . . . . . . . . .  49
-     8.4.  Defining New Authorization Endpoint Response Types  . . .  50
+     8.4.  Defining New Authorization Endpoint Response Types  . . .  49
      8.5.  Defining Additional Error Codes . . . . . . . . . . . . .  50
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  51
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  50
      9.1.  Client Authentication . . . . . . . . . . . . . . . . . .  51
        9.1.1.  Client Authentication of Native Apps  . . . . . . . .  52
      9.2.  Registration of Native App Clients  . . . . . . . . . . .  52
@@ -156,23 +156,24 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
      9.15. Clickjacking  . . . . . . . . . . . . . . . . . . . . . .  60
      9.16. Code Injection and Input Validation . . . . . . . . . . .  61
      9.17. Open Redirectors  . . . . . . . . . . . . . . . . . . . .  61
-       9.17.1.  Client as Open Redirector  . . . . . . . . . . . . .  61
+       9.17.1.  Client as Open Redirector  . . . . . . . . . . . . .  62
        9.17.2.  Authorization Server as Open Redirector  . . . . . .  62
      9.18. Authorization Server Mix-Up Mitigation in Native Apps . .  62
      9.19. Embedded User Agents in Native Apps . . . . . . . . . . .  63
-     9.20. Other Recommendations . . . . . . . . . . . . . . . . . .  63
+     9.20. Other Recommendations . . . . . . . . . . . . . . . . . .  64
    10. Native Applications . . . . . . . . . . . . . . . . . . . . .  64
 
 
 
-Parecki, et al.         Expires September 5, 2020               [Page 3]
+Hardt, et al.           Expires 6 September 2020                [Page 3]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
      10.1.  Using Inter-App URI Communication for OAuth in Native
             Apps . . . . . . . . . . . . . . . . . . . . . . . . . .  65
-     10.2.  Initiating the Authorization Request from a Native App .  65
+     10.2.  Initiating the Authorization Request from a Native
+            App  . . . . . . . . . . . . . . . . . . . . . . . . . .  65
      10.3.  Receiving the Authorization Response in a Native App . .  66
        10.3.1.  Private-Use URI Scheme Redirection . . . . . . . . .  66
        10.3.2.  Claimed "https" Scheme URI Redirection . . . . . . .  67
@@ -192,36 +193,35 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
        12.4.1.  Registration Template  . . . . . . . . . . . . . . .  75
        12.4.2.  Initial Registry Contents  . . . . . . . . . . . . .  76
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  76
-     13.1.  Normative References . . . . . . . . . . . . . . . . . .  77
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .  76
      13.2.  Informative References . . . . . . . . . . . . . . . . .  79
-   Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax . . . . . .  82
+   Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax . . . . . .  81
      A.1.  "client_id" Syntax  . . . . . . . . . . . . . . . . . . .  82
      A.2.  "client_secret" Syntax  . . . . . . . . . . . . . . . . .  82
      A.3.  "response_type" Syntax  . . . . . . . . . . . . . . . . .  82
-     A.4.  "scope" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
-     A.5.  "state" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
+     A.4.  "scope" Syntax  . . . . . . . . . . . . . . . . . . . . .  82
+     A.5.  "state" Syntax  . . . . . . . . . . . . . . . . . . . . .  82
      A.6.  "redirect_uri" Syntax . . . . . . . . . . . . . . . . . .  83
      A.7.  "error" Syntax  . . . . . . . . . . . . . . . . . . . . .  83
      A.8.  "error_description" Syntax  . . . . . . . . . . . . . . .  83
      A.9.  "error_uri" Syntax  . . . . . . . . . . . . . . . . . . .  83
      A.10. "grant_type" Syntax . . . . . . . . . . . . . . . . . . .  83
-     A.11. "code" Syntax . . . . . . . . . . . . . . . . . . . . . .  84
+     A.11. "code" Syntax . . . . . . . . . . . . . . . . . . . . . .  83
      A.12. "access_token" Syntax . . . . . . . . . . . . . . . . . .  84
      A.13. "token_type" Syntax . . . . . . . . . . . . . . . . . . .  84
      A.14. "expires_in" Syntax . . . . . . . . . . . . . . . . . . .  84
      A.15. "refresh_token" Syntax  . . . . . . . . . . . . . . . . .  84
      A.16. Endpoint Parameter Syntax . . . . . . . . . . . . . . . .  84
-     A.17. "code_verifier" Syntax  . . . . . . . . . . . . . . . . .  85
-     A.18. "code_challenge" Syntax . . . . . . . . . . . . . . . . .  85
-   Appendix B.  Use of application/x-www-form-urlencoded Media Type   85
-   Appendix C.  Acknowledgements . . . . . . . . . . . . . . . . . .  86
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  86
+     A.17. "code_verifier" Syntax  . . . . . . . . . . . . . . . . .  84
+     A.18. "code_challenge" Syntax . . . . . . . . . . . . . . . . .  84
+   Appendix B.  Use of application/x-www-form-urlencoded Media
+           Type  . . . . . . . . . . . . . . . . . . . . . . . . . .  85
+   Appendix C.  Acknowledgements . . . . . . . . . . . . . . . . . .  85
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  85
 
 
 
-
-
-Parecki, et al.         Expires September 5, 2020               [Page 4]
+Hardt, et al.           Expires 6 September 2020                [Page 4]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -235,23 +235,23 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    restricted resources, the resource owner shares its credentials with
    the third party.  This creates several problems and limitations:
 
-   o  Third-party applications are required to store the resource
+   *  Third-party applications are required to store the resource
       owner's credentials for future use, typically a password in clear-
       text.
 
-   o  Servers are required to support password authentication, despite
+   *  Servers are required to support password authentication, despite
       the security weaknesses inherent in passwords.
 
-   o  Third-party applications gain overly broad access to the resource
+   *  Third-party applications gain overly broad access to the resource
       owner's protected resources, leaving resource owners without any
       ability to restrict duration or access to a limited subset of
       resources.
 
-   o  Resource owners cannot revoke access to an individual third party
+   *  Resource owners cannot revoke access to an individual third party
       without revoking access to all third parties, and must do so by
       changing the third party's password.
 
-   o  Compromise of any third-party application results in compromise of
+   *  Compromise of any third-party application results in compromise of
       the end-user's password and all of the data protected by that
       password.
 
@@ -277,7 +277,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020               [Page 5]
+Hardt, et al.           Expires 6 September 2020                [Page 5]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -327,18 +327,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    A single authorization server may issue access tokens accepted by
    multiple resource servers.
 
+1.2.  Protocol Flow
 
 
 
 
 
-
-Parecki, et al.         Expires September 5, 2020               [Page 6]
+Hardt, et al.           Expires 6 September 2020                [Page 6]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
-
-1.2.  Protocol Flow
 
         +--------+                               +---------------+
         |        |--(1)- Authorization Request ->|   Resource    |
@@ -358,7 +356,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
         |        |<-(6)--- Protected Resource ---|               |
         +--------+                               +---------------+
 
-                     Figure 1: Abstract Protocol Flow
+                      Figure 1: Abstract Protocol Flow
 
    The abstract OAuth 2.1 flow illustrated in Figure 1 describes the
    interaction between the four roles and includes the following steps:
@@ -389,7 +387,9 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020               [Page 7]
+
+
+Hardt, et al.           Expires 6 September 2020                [Page 7]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020               [Page 8]
+Hardt, et al.           Expires 6 September 2020                [Page 8]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -501,33 +501,33 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020               [Page 9]
+Hardt, et al.           Expires 6 September 2020                [Page 9]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-  +--------+                                           +---------------+
-  |        |--(1)------- Authorization Grant --------->|               |
-  |        |                                           |               |
-  |        |<-(2)----------- Access Token -------------|               |
-  |        |               & Refresh Token             |               |
-  |        |                                           |               |
-  |        |                            +----------+   |               |
-  |        |--(3)---- Access Token ---->|          |   |               |
-  |        |                            |          |   |               |
-  |        |<-(4)- Protected Resource --| Resource |   | Authorization |
-  | Client |                            |  Server  |   |     Server    |
-  |        |--(5)---- Access Token ---->|          |   |               |
-  |        |                            |          |   |               |
-  |        |<-(6)- Invalid Token Error -|          |   |               |
-  |        |                            +----------+   |               |
-  |        |                                           |               |
-  |        |--(7)----------- Refresh Token ----------->|               |
-  |        |                                           |               |
-  |        |<-(8)----------- Access Token -------------|               |
-  +--------+           & Optional Refresh Token        +---------------+
+   +--------+                                           +---------------+
+   |        |--(1)------- Authorization Grant --------->|               |
+   |        |                                           |               |
+   |        |<-(2)----------- Access Token -------------|               |
+   |        |               & Refresh Token             |               |
+   |        |                                           |               |
+   |        |                            +----------+   |               |
+   |        |--(3)---- Access Token ---->|          |   |               |
+   |        |                            |          |   |               |
+   |        |<-(4)- Protected Resource --| Resource |   | Authorization |
+   | Client |                            |  Server  |   |     Server    |
+   |        |--(5)---- Access Token ---->|          |   |               |
+   |        |                            |          |   |               |
+   |        |<-(6)- Invalid Token Error -|          |   |               |
+   |        |                            +----------+   |               |
+   |        |                                           |               |
+   |        |--(7)----------- Refresh Token ----------->|               |
+   |        |                                           |               |
+   |        |<-(8)----------- Access Token -------------|               |
+   +--------+           & Optional Refresh Token        +---------------+
 
-               Figure 2: Refreshing an Expired Access Token
+                Figure 2: Refreshing an Expired Access Token
 
    The flow illustrated in Figure 2 includes the following steps:
 
@@ -557,7 +557,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 10]
+Hardt, et al.           Expires 6 September 2020               [Page 10]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 11]
+Hardt, et al.           Expires 6 September 2020               [Page 11]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -657,19 +657,19 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    When registering a client, the client developer SHALL:
 
-   o  specify the client type as described in Section 2.1,
+   *  specify the client type as described in Section 2.1,
 
-   o  provide its client redirection URIs as described in Section 3.1.2,
+   *  provide its client redirection URIs as described in Section 3.1.2,
       and
 
-   o  include any other information required by the authorization server
+   *  include any other information required by the authorization server
       (e.g., application name, website, description, logo image, the
       acceptance of legal terms).
 
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 12]
+Hardt, et al.           Expires 6 September 2020               [Page 12]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -725,7 +725,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 13]
+Hardt, et al.           Expires 6 September 2020               [Page 13]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -781,7 +781,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 14]
+Hardt, et al.           Expires 6 September 2020               [Page 14]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -837,7 +837,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 15]
+Hardt, et al.           Expires 6 September 2020               [Page 15]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -876,15 +876,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    The authorization process utilizes two authorization server endpoints
    (HTTP resources):
 
-   o  Authorization endpoint - used by the client to obtain
+   *  Authorization endpoint - used by the client to obtain
       authorization from the resource owner via user-agent redirection.
 
-   o  Token endpoint - used by the client to exchange an authorization
+   *  Token endpoint - used by the client to exchange an authorization
       grant for an access token, typically with client authentication.
 
    As well as one client endpoint:
 
-   o  Redirection endpoint - used by the authorization server to return
+   *  Redirection endpoint - used by the authorization server to return
       responses containing authorization credentials to the client via
       the resource owner user-agent.
 
@@ -893,7 +893,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 16]
+Hardt, et al.           Expires 6 September 2020               [Page 16]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -949,7 +949,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 17]
+Hardt, et al.           Expires 6 September 2020               [Page 17]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 18]
+Hardt, et al.           Expires 6 September 2020               [Page 18]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 19]
+Hardt, et al.           Expires 6 September 2020               [Page 19]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1100,24 +1100,24 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    Section 2.3 when making requests to the token endpoint.  Client
    authentication is used for:
 
-   o  Enforcing the binding of refresh tokens and authorization codes to
+   *  Enforcing the binding of refresh tokens and authorization codes to
       the client they were issued to.  Client authentication is critical
       when an authorization code is transmitted to the redirection
       endpoint over an insecure channel or when the redirection URI has
       not been registered in full.
 
-   o  Recovering from a compromised client by disabling the client or
+   *  Recovering from a compromised client by disabling the client or
       changing its credentials, thus preventing an attacker from abusing
       stolen refresh tokens.  Changing a single set of client
       credentials is significantly faster than revoking an entire set of
       refresh tokens.
 
-   o  Implementing authentication management best practices, which
+   *  Implementing authentication management best practices, which
       require periodic credential rotation.  Rotation of an entire set
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 20]
+Hardt, et al.           Expires 6 September 2020               [Page 20]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1163,21 +1163,27 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    indicating an invalid scope.  The authorization server SHOULD
    document its scope requirements and default value (if defined).
 
+
+
+
+
+
+
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 21]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
 4.  Obtaining Authorization
 
    To request an access token, the client obtains authorization from the
    resource owner.  The authorization is expressed in the form of an
    authorization grant, which the client uses to request the access
    token.  OAuth defines two grant types: authorization code and client
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 21]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    credentials.  It also provides an extension mechanism for defining
    additional grant types.
 
@@ -1220,20 +1226,20 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    Note: The lines illustrating steps (1), (2), and (3) are broken into
    two parts as they pass through the user-agent.
 
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 22]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
                      Figure 3: Authorization Code Flow
 
    The flow illustrated in Figure 3 includes the following steps:
 
    (1) The client initiates the flow by directing the resource owner's
    user-agent to the authorization endpoint.  The client includes its
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 22]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    client identifier, requested scope, local state, PKCE code challenge,
    and a redirection URI to which the authorization server will send the
    user-agent back once access is granted (or denied).
@@ -1276,29 +1282,26 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    can later use along with the authorization code to prove that the
    application using the authorization code is the same application that
    requested it.  This practice is known as "Proof-Key for Code
-   Exchange", or PKCE, after the OAuth 2.0 extension ([RFC7636]) where
-   it was originally developed.
 
 
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 23]
+Hardt, et al.           Expires 6 September 2020               [Page 23]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
+
+   Exchange", or PKCE, after the OAuth 2.0 extension ([RFC7636]) where
+   it was originally developed.
 
 4.1.1.1.  Client Creates a PKCE Code Verifier
 
    The client first creates a PKCE code verifier, "code_verifier", for
    each Authorization Request, in the following manner:
 
- code_verifier = high-entropy cryptographic random STRING using the
- unreserved characters `[A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"`
- from Section 2.3 of {{RFC3986}}, with a minimum length of 43 characters
- and a maximum length of 128 characters.
+   code_verifier = high-entropy cryptographic random STRING using the
+   unreserved characters `[A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"`
+   from Section 2.3 of {{RFC3986}}, with a minimum length of 43 characters
+   and a maximum length of 128 characters.
 
    ABNF for "code_verifier" is as follows.
 
@@ -1335,16 +1338,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    deployments and for constrained environments that can't use the S256
    transformation.
 
-   ABNF for "code_challenge" is as follows.
 
 
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 24]
+Hardt, et al.           Expires 6 September 2020               [Page 24]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
+
+   ABNF for "code_challenge" is as follows.
 
    code-challenge = 43*128unreserved
    unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -1392,16 +1394,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
        &code_challenge_method=S256 HTTP/1.1
    Host: server.example.com
 
-   The authorization server validates the request to ensure that all
-   required parameters are present and valid.  If the request is valid,
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 25]
+Hardt, et al.           Expires 6 September 2020               [Page 25]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
+   The authorization server validates the request to ensure that all
+   required parameters are present and valid.  If the request is valid,
    the authorization server authenticates the resource owner and obtains
    an authorization decision (by asking the resource owner or by
    establishing approval via other means).
@@ -1448,15 +1450,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    When the server issues the authorization code in the authorization
    response, it MUST associate the "code_challenge" and
-   "code_challenge_method" values with the authorization code so it can
-   be verified later.
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 26]
+Hardt, et al.           Expires 6 September 2020               [Page 26]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
+
+   "code_challenge_method" values with the authorization code so it can
+   be verified later.
 
    Typically, the "code_challenge" and "code_challenge_method" values
    are stored in encrypted form in the "code" itself but could
@@ -1503,16 +1506,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
          than once, or is otherwise malformed.
 
       "unauthorized_client":  The client is not authorized to request an
-         authorization code using this method.
 
 
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 27]
+Hardt, et al.           Expires 6 September 2020               [Page 27]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
+
+         authorization code using this method.
 
       "access_denied":  The resource owner or authorization server
          denied the request.
@@ -1563,9 +1565,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 28]
+Hardt, et al.           Expires 6 September 2020               [Page 28]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1599,45 +1599,44 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    For example, the client makes the following HTTP request using TLS
    (with extra line breaks for display purposes only):
 
- POST /token HTTP/1.1
- Host: server.example.com
- Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
- Content-Type: application/x-www-form-urlencoded
+   POST /token HTTP/1.1
+   Host: server.example.com
+   Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+   Content-Type: application/x-www-form-urlencoded
 
- grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
- &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
- &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
+   grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+   &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+   &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 
    The authorization server MUST:
 
-   o  require client authentication for confidential clients or for any
+   *  require client authentication for confidential clients or for any
       client that was issued client credentials (or with other
       authentication requirements),
 
-   o  authenticate the client if client authentication is included,
+   *  authenticate the client if client authentication is included,
+
+   *  ensure that the authorization code was issued to the authenticated
 
 
 
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 29]
+Hardt, et al.           Expires 6 September 2020               [Page 29]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-   o  ensure that the authorization code was issued to the authenticated
       confidential client, or if the client is public, ensure that the
       code was issued to "client_id" in the request,
 
-   o  verify that the authorization code is valid,
+   *  verify that the authorization code is valid,
 
-   o  verify the "code_verifier" by calculating the code challenge from
+   *  verify the "code_verifier" by calculating the code challenge from
       the received "code_verifier" and comparing it with the previously
       associated "code_challenge", after first transforming it according
       to the "code_challenge_method" method specified by the client, and
 
-   o  ensure that the "redirect_uri" parameter is present if the
+   *  ensure that the "redirect_uri" parameter is present if the
       "redirect_uri" parameter was included in the initial authorization
       request as described in Section 4.1.1, and if included ensure that
       their values are identical.
@@ -1677,7 +1676,8 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 30]
+
+Hardt, et al.           Expires 6 September 2020               [Page 30]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1733,7 +1733,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 31]
+Hardt, et al.           Expires 6 September 2020               [Page 31]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1789,7 +1789,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 32]
+Hardt, et al.           Expires 6 September 2020               [Page 32]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1845,7 +1845,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 33]
+Hardt, et al.           Expires 6 September 2020               [Page 33]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1901,7 +1901,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 34]
+Hardt, et al.           Expires 6 September 2020               [Page 34]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -1957,7 +1957,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 35]
+Hardt, et al.           Expires 6 September 2020               [Page 35]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2013,7 +2013,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 36]
+Hardt, et al.           Expires 6 September 2020               [Page 36]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2041,24 +2041,24 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    The authorization server MUST:
 
-   o  require client authentication for confidential clients or for any
+   *  require client authentication for confidential clients or for any
       client that was issued client credentials (or with other
       authentication requirements),
 
-   o  authenticate the client if client authentication is included and
+   *  authenticate the client if client authentication is included and
       ensure that the refresh token was issued to the authenticated
       client, and
 
-   o  validate the refresh token.
+   *  validate the refresh token.
 
    Authorization server MUST utilize one of these methods to detect
    refresh token replay by malicious actors for public clients:
 
-   o  _Sender-constrained refresh tokens:_ the authorization server
+   *  _Sender-constrained refresh tokens:_ the authorization server
       cryptographically binds the refresh token to a certain client
       instance by utilizing [I-D.ietf-oauth-token-binding] or [RFC8705].
 
-   o  _Refresh token rotation:_ the authorization server issues a new
+   *  _Refresh token rotation:_ the authorization server issues a new
       refresh token with every access token refresh response.  The
       previous refresh token is invalidated but information about the
       relationship is retained by the authorization server.  If a
@@ -2069,7 +2069,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 37]
+Hardt, et al.           Expires 6 September 2020               [Page 37]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2103,9 +2103,9 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    Authorization servers MAY revoke refresh tokens automatically in case
    of a security event, such as:
 
-   o  password change
+   *  password change
 
-   o  logout at the authorization server
+   *  logout at the authorization server
 
    Refresh tokens SHOULD expire if the client has been inactive for some
    time, i.e., the refresh token has not been used to obtain fresh
@@ -2125,7 +2125,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 38]
+Hardt, et al.           Expires 6 September 2020               [Page 38]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2181,7 +2181,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 39]
+Hardt, et al.           Expires 6 September 2020               [Page 39]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2202,8 +2202,8 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    follows the usage of the Basic scheme defined in Section 2 of
    [RFC2617].  Note that, as with Basic, it does not conform to the
    generic syntax defined in Section 1.2 of [RFC2617] but is compatible
-   with the general authentication framework being developed for HTTP
-   1.1 [HTTP-AUTH], although it does not follow the preferred practice
+   with the general authentication framework in HTTP 1.1 Authentication
+   [RFC7235], although it does not follow the preferred practice
    outlined therein in order to reflect existing deployments.  The
    syntax for Bearer credentials is as follows:
 
@@ -2222,27 +2222,27 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    "access_token" parameter.  The client MUST NOT use this method unless
    all of the following conditions are met:
 
-   o  The HTTP request entity-header includes the "Content-Type" header
+   *  The HTTP request entity-header includes the "Content-Type" header
       field set to "application/x-www-form-urlencoded".
 
-   o  The entity-body follows the encoding requirements of the
+   *  The entity-body follows the encoding requirements of the
       "application/x-www-form-urlencoded" content-type as defined by
       HTML 4.01 [W3C.REC-html401-19991224].
 
-   o  The HTTP request entity-body is single-part.
+   *  The HTTP request entity-body is single-part.
 
-   o  The content to be encoded in the entity-body MUST consist entirely
+   *  The content to be encoded in the entity-body MUST consist entirely
       of ASCII [USASCII] characters.
 
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 40]
+Hardt, et al.           Expires 6 September 2020               [Page 40]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-   o  The HTTP request method is one for which the request-body has
+   *  The HTTP request method is one for which the request-body has
       defined semantics.  In particular, this means that the "GET"
       method MUST NOT be used.
 
@@ -2293,7 +2293,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 41]
+Hardt, et al.           Expires 6 September 2020               [Page 41]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2349,7 +2349,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 42]
+Hardt, et al.           Expires 6 September 2020               [Page 42]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2405,7 +2405,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 43]
+Hardt, et al.           Expires 6 September 2020               [Page 43]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -2454,22 +2454,17 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    server to gain access to a different resource server that mistakenly
    believes the token to be for it.
 
-
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 44]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 7.4.1.4.  Token replay
 
    An attacker attempts to use a token that has already been used with
    that resource server in the past.
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 44]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 7.4.2.  Threat Mitigation
 
@@ -2514,18 +2509,19 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    certificate chain when making requests to protected resources,
    including checking the Certificate Revocation List (CRL) [RFC5280].
 
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 45]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    Cookies are typically transmitted in the clear.  Thus, any
    information contained in them is at risk of disclosure.  Therefore,
    Bearer tokens MUST NOT be stored in cookies that can be sent in the
    clear, as any information in them is at risk of disclosure.  See
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 45]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    "HTTP State Management Mechanism" [RFC6265] for security
    considerations about cookies.
 
@@ -2567,22 +2563,20 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    consideration when using bearer tokens and underlies all the more
    specific recommendations that follow.
 
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 46]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 7.4.3.2.  Validate TLS certificate chains
 
    The client MUST validate the TLS certificate chain when making
    requests to protected resources.  Failing to do so may enable DNS
    hijacking attacks to steal the token and gain unintended access.
+
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 46]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 7.4.3.3.  Always use TLS (https)
 
@@ -2623,17 +2617,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    attackers might be able to steal them from the history data, logs, or
    other unsecured locations.
 
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 47]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 7.4.4.  Token Replay Prevention
 
    A sender-constrained access token scopes the applicability of an
@@ -2643,6 +2626,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    Authorization and resource servers SHOULD use mechanisms for sender-
    constrained access tokens to prevent token replay as described in
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 47]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    Section 4.8.1.1.2 of [I-D.ietf-oauth-security-topics].  The use of
    Mutual TLS for OAuth 2.0 [RFC8705] is RECOMMENDED.
 
@@ -2683,13 +2674,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    specified in [I-D.ietf-oauth-rar] to determine those resources and/or
    actions.
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 48]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 8.  Extensibility
 
 8.1.  Defining Access Token Types
@@ -2697,6 +2681,14 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    Access token types can be defined in one of two ways: registered in
    the Access Token Types registry (following the procedures in
    Section 12.1), or by using a unique absolute URI as its name.
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 48]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    Types utilizing a URI name SHOULD be limited to vendor-specific
    implementations that are not commonly applicable, and are specific to
@@ -2739,19 +2731,20 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    they MUST be registered in the OAuth Parameters registry as described
    by Section 12.2.
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 49]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 8.4.  Defining New Authorization Endpoint Response Types
 
    New response types for use with the authorization endpoint are
    defined and registered in the Authorization Endpoint Response Types
    registry following the procedure in Section 12.3.  Response type
    names MUST conform to the response-type ABNF.
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 49]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    response-type  = response-name *( SP response-name )
    response-name  = 1*response-char
@@ -2791,17 +2784,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    error      = 1*error-char
    error-char = %x20-21 / %x23-5B / %x5D-7E
 
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 50]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 9.  Security Considerations
 
    As a flexible and extensible framework, OAuth's security
@@ -2811,6 +2793,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    based application, and native application.
 
    A comprehensive OAuth security model and analysis, as well as
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 50]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    background for the protocol design, is provided by [RFC6819] and
    [I-D.ietf-oauth-security-topics].
 
@@ -2850,16 +2841,22 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    again.  In contrast, if there is a web application whose developer's
    identity was verified, who signed a contract and is issued a client
    secret that is only used in a secure backend service, the
+   authorization server might allow this client to access more sensible
+   services or to use the client credential grant type.
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 51]
+
+
+
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 51]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
-
-   authorization server might allow this client to access more sensible
-   services or to use the client credential grant type.
 
 9.1.1.  Client Authentication of Native Apps
 
@@ -2907,15 +2904,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    remove the counterfeit app.  Such a petition is harder to prove if a
    generic URI scheme was used.
 
+   Authorization servers MAY request the inclusion of other platform-
+   specific information, such as the app package or bundle name, or
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 52]
+
+Hardt, et al.           Expires 6 September 2020               [Page 52]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-   Authorization servers MAY request the inclusion of other platform-
-   specific information, such as the app package or bundle name, or
    other information that may be useful for verifying the calling app's
    identity on operating systems that support such functions.
 
@@ -2965,7 +2963,9 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 53]
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 53]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3021,7 +3021,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 54]
+Hardt, et al.           Expires 6 September 2020               [Page 54]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3077,7 +3077,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 55]
+Hardt, et al.           Expires 6 September 2020               [Page 55]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3133,7 +3133,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 56]
+Hardt, et al.           Expires 6 September 2020               [Page 56]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3189,7 +3189,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 57]
+Hardt, et al.           Expires 6 September 2020               [Page 57]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3245,7 +3245,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 58]
+Hardt, et al.           Expires 6 September 2020               [Page 58]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3301,7 +3301,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 59]
+Hardt, et al.           Expires 6 September 2020               [Page 59]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3321,11 +3321,11 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    When using PKCE instead of "state" or "nonce" for CSRF protection, it
    is important to note that:
 
-   o  Clients MUST ensure that the AS supports PKCE before using PKCE
+   *  Clients MUST ensure that the AS supports PKCE before using PKCE
       for CSRF protection.  If an authorization server does not support
       PKCE, "state" or "nonce" MUST be used for CSRF protection.
 
-   o  If "state" is used for carrying application state, and integrity
+   *  If "state" is used for carrying application state, and integrity
       of its contents is a concern, clients MUST protect "state" against
       tampering and swapping.  This can be achieved by binding the
       contents of state to the browser session and/or signed/encrypted
@@ -3357,7 +3357,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 60]
+Hardt, et al.           Expires 6 September 2020               [Page 60]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3378,8 +3378,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    "HTTP/1.1 200 OK Content-Security-Policy: frame-ancestors
    https://ext.example.org:8000 Content-Security-Policy: script-src
-   'self' X-Frame-Options: ALLOW-FROM https://ext.example.org:8000 ...
-   "
+   'self' X-Frame-Options: ALLOW-FROM https://ext.example.org:8000 ..."
 
    Because some user agents do not support [CSP-2], this technique
    SHOULD be combined with others, including those described in
@@ -3405,19 +3404,25 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    redirector.  An open redirector is an endpoint that forwards a user's
    browser to an arbitrary URI obtained from a query parameter.
 
+
+
+
+
+
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 61]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
 9.17.1.  Client as Open Redirector
 
    Clients MUST NOT expose open redirectors.  Attackers may use open
    redirectors to produce URLs pointing to the client and utilize them
    to exfiltrate authorization codes and access tokens, as described in
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 61]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    (#redir_uri_open_redir).  Another abuse case is to produce URLs that
    appear to point to the client.  This might trick users into trusting
    the URL and follow it in their browser.  This can be abused for
@@ -3461,18 +3466,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    To protect against a compromised or malicious authorization server
    attacking another authorization server used by the same app, it is
    REQUIRED that a unique redirect URI is used for each authorization
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 62]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    server used by the app (for example, by varying the path component),
    and that authorization responses are rejected if the redirect URI
    they were received on doesn't match the redirect URI in an outgoing
    authorization request.
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 62]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    The native app MUST store the redirect URI used in the authorization
    request with the authorization session data (i.e., along with "state"
@@ -3515,20 +3520,22 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    the user to log in for every authorization request, which is often
    considered an inferior user experience.
 
+
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 63]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
 9.20.  Other Recommendations
 
    Authorization servers SHOULD NOT allow clients to influence their
    "client_id" or "sub" value or any other claim if that can cause
    confusion with a genuine resource owner (see
    (#client_impersonating)).
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 63]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
 10.  Native Applications
 
@@ -3571,20 +3578,18 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    is possible without changing the OAuth protocol itself, as the OAuth
    authorization request and response are already defined in terms of
    URIs.  This encompasses URIs that can be used for inter-app
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 64]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    communication.  Some OAuth server implementations that assume all
    clients are confidential web clients will need to add an
    understanding of public native app clients and the types of redirect
    URIs they use to support this best practice.
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 64]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
 10.1.  Using Inter-App URI Communication for OAuth in Native Apps
 
@@ -3628,20 +3633,21 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    platform-specific APIs to open the URI in an external user-agent.
    Typically, the external user-agent used is the default browser, that
    is, the application configured for handling "http" and "https" scheme
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 65]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    URIs on the system; however, different browser selection criteria and
    other categories of external user-agents MAY be used.
 
    This best practice focuses on the browser as the RECOMMENDED external
    user-agent for native apps.  An external user-agent designed
    specifically for user authorization and capable of processing
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 65]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    authorization requests and responses like a browser MAY also be used.
    Other external user-agents, such as a native app provided by the
    authorization server may meet the criteria set out in this best
@@ -3684,20 +3690,20 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    When choosing a URI scheme to associate with the app, apps MUST use a
    URI scheme based on a domain name under their control, expressed in
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 66]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    reverse order, as recommended by Section 3.8 of [RFC7595] for
    private-use URI schemes.
 
    For example, an app that controls the domain name "app.example.com"
    can use "com.example.app" as their scheme.  Some authorization
    servers assign client identifiers based on domain names, for example,
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 66]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    "client1234.usercontent.example.net", which can also be used as the
    domain name for the scheme when reversed in the same manner.  A
    scheme such as "myapp", however, would not meet this requirement, as
@@ -3739,21 +3745,21 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    As the redirect URI alone is not enough to distinguish public native
    app clients from confidential web clients, it is REQUIRED in
    Section 9.2 that the client type be recorded during client
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 67]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    registration to enable the server to determine the client type and
    act accordingly.
 
    App-claimed "https" scheme redirect URIs have some advantages
    compared to other native app redirect options in that the identity of
    the destination app is guaranteed to the authorization server by the
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 67]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    operating system.  For this reason, native apps SHOULD use them over
    the other options where possible.
 
@@ -3795,20 +3801,17 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    These types of apps have particular security considerations similar
    to native apps.
 
-   TODO: Bring in the normative text of the browser-based apps BCP when
-   it is finalized.
 
 
 
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 68]
+Hardt, et al.           Expires 6 September 2020               [Page 68]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
+
+   TODO: Bring in the normative text of the browser-based apps BCP when
+   it is finalized.
 
 12.  IANA Considerations
 
@@ -3855,17 +3858,16 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
       (e.g., postal address, email address, home page URI) may also be
       included.
 
-   Specification document(s):  Reference to the document(s) that specify
-      the parameter, preferably including a URI that can be used to
 
 
 
-
-Parecki, et al.         Expires September 5, 2020              [Page 69]
+Hardt, et al.           Expires 6 September 2020               [Page 69]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
+   Specification document(s):  Reference to the document(s) that specify
+      the parameter, preferably including a URI that can be used to
       retrieve a copy of the document(s).  An indication of the relevant
       sections may also be included but is not required.
 
@@ -3873,15 +3875,15 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    The OAuth Access Token Types registry's initial contents are:
 
-   o  Type name: Bearer
+   *  Type name: Bearer
 
-   o  Additional Token Endpoint Response Parameters: (none)
+   *  Additional Token Endpoint Response Parameters: (none)
 
-   o  HTTP Authentication Scheme(s): Bearer
+   *  HTTP Authentication Scheme(s): Bearer
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): OAuth 2.1
+   *  Specification document(s): OAuth 2.1
 
 12.2.  OAuth Parameters Registry
 
@@ -3915,9 +3917,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 70]
+Hardt, et al.           Expires 6 September 2020               [Page 70]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -3944,159 +3944,159 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    The OAuth Parameters registry's initial contents are:
 
-   o  Parameter name: client_id
+   *  Parameter name: client_id
 
-   o  Parameter usage location: authorization request, token request
+   *  Parameter usage location: authorization request, token request
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: client_secret
+   *  Parameter name: client_secret
 
-   o  Parameter usage location: token request
+   *  Parameter usage location: token request
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: response_type
+   *  Parameter name: response_type
 
-   o  Parameter usage location: authorization request
+   *  Parameter usage location: authorization request
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: redirect_uri
-
-
+   *  Parameter name: redirect_uri
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 71]
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 71]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-   o  Parameter usage location: authorization request, token request
+   *  Parameter usage location: authorization request, token request
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: scope
+   *  Parameter name: scope
 
-   o  Parameter usage location: authorization request, authorization
+   *  Parameter usage location: authorization request, authorization
       response, token request, token response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: state
+   *  Parameter name: state
 
-   o  Parameter usage location: authorization request, authorization
+   *  Parameter usage location: authorization request, authorization
       response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: code
+   *  Parameter name: code
 
-   o  Parameter usage location: authorization response, token request
+   *  Parameter usage location: authorization response, token request
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: error_description
+   *  Parameter name: error_description
 
-   o  Parameter usage location: authorization response, token response
+   *  Parameter usage location: authorization response, token response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: error_uri
+   *  Parameter name: error_uri
 
-   o  Parameter usage location: authorization response, token response
+   *  Parameter usage location: authorization response, token response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
-
-
+   *  Specification document(s): RFC 6749
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 72]
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 72]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-   o  Parameter name: grant_type
+   *  Parameter name: grant_type
 
-   o  Parameter usage location: token request
+   *  Parameter usage location: token request
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: access_token
+   *  Parameter name: access_token
 
-   o  Parameter usage location: authorization response, token response
+   *  Parameter usage location: authorization response, token response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: token_type
+   *  Parameter name: token_type
 
-   o  Parameter usage location: authorization response, token response
+   *  Parameter usage location: authorization response, token response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: expires_in
+   *  Parameter name: expires_in
 
-   o  Parameter usage location: authorization response, token response
+   *  Parameter usage location: authorization response, token response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: username
+   *  Parameter name: username
 
-   o  Parameter usage location: token request
+   *  Parameter usage location: token request
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
-   o  Parameter name: password
+   *  Parameter name: password
 
-   o  Parameter usage location: token request
+   *  Parameter usage location: token request
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
-
-
+   *  Specification document(s): RFC 6749
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 73]
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 73]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-   o  Parameter name: refresh_token
+   *  Parameter name: refresh_token
 
-   o  Parameter usage location: token request, token response
+   *  Parameter usage location: token request, token response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
 12.3.  OAuth Authorization Endpoint Response Types Registry
 
@@ -4141,7 +4141,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 74]
+Hardt, et al.           Expires 6 September 2020               [Page 74]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4151,11 +4151,11 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    The OAuth Authorization Endpoint Response Types registry's initial
    contents are:
 
-   o  Response type name: code
+   *  Response type name: code
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): RFC 6749
+   *  Specification document(s): RFC 6749
 
 12.4.  OAuth Extensions Error Registry
 
@@ -4197,7 +4197,7 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 75]
+Hardt, et al.           Expires 6 September 2020               [Page 75]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
@@ -4220,51 +4220,48 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    The OAuth Error registry's initial contents are:
 
-   o  Error name: invalid_request
+   *  Error name: invalid_request
 
-   o  Error usage location: Resource access error response
+   *  Error usage location: Resource access error response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): OAuth 2.1
+   *  Specification document(s): OAuth 2.1
 
-   o  Error name: invalid_token
+   *  Error name: invalid_token
 
-   o  Error usage location: Resource access error response
+   *  Error usage location: Resource access error response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): OAuth 2.1
+   *  Specification document(s): OAuth 2.1
 
-   o  Error name: insufficient_scope
+   *  Error name: insufficient_scope
 
-   o  Error usage location: Resource access error response
+   *  Error usage location: Resource access error response
 
-   o  Change controller: IETF
+   *  Change controller: IETF
 
-   o  Specification document(s): OAuth 2.1
+   *  Specification document(s): OAuth 2.1
 
 13.  References
-
-
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 76]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
 13.1.  Normative References
 
    [I-D.ietf-oauth-security-topics]
               Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,
-              "OAuth 2.0 Security Best Current Practice", draft-ietf-
-              oauth-security-topics-14 (work in progress), February
-              2020.
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 76]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+              "OAuth 2.0 Security Best Current Practice", Work in
+              Progress, Internet-Draft, draft-ietf-oauth-security-
+              topics-14, 10 February 2020, <http://www.ietf.org/
+              internet-drafts/draft-ietf-oauth-security-topics-14.txt>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -4305,19 +4302,17 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               FYI 36, RFC 4949, DOI 10.17487/RFC4949, August 2007,
               <https://www.rfc-editor.org/info/rfc4949>.
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 77]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", RFC 5226,
               DOI 10.17487/RFC5226, May 2008,
               <https://www.rfc-editor.org/info/rfc5226>.
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 77]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
@@ -4359,98 +4354,109 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
 
-   [USASCII]  Institute, A., "Coded Character Set -- 7-bit American
+   [USASCII]  Institute, A.N.S., "Coded Character Set -- 7-bit American
               Standard Code for Information Interchange, ANSI X3.4",
               1986.
 
+   [W3C.REC-html401-19991224]
+              Raggett, D., Hors, A., and I. Jacobs, "HTML 4.01
+              Specification", World Wide Web Consortium Recommendation 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 78]
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 78]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
-   [W3C.REC-html401-19991224]
-              Raggett, D., Hors, A., and I. Jacobs, "HTML 4.01
-              Specification", World Wide Web Consortium Recommendation
-              REC-html401-19991224, December 1999,
+              REC-html401-19991224, 24 December 1999,
               <http://www.w3.org/TR/1999/REC-html401-19991224>.
 
    [W3C.REC-xml-20081126]
               Bray, T., Paoli, J., Sperberg-McQueen, M., Maler, E., and
               F. Yergeau, "Extensible Markup Language (XML) 1.0 (Fifth
               Edition)", World Wide Web Consortium Recommendation REC-
-              xml-20081126, November 2008,
+              xml-20081126, 26 November 2008,
               <http://www.w3.org/TR/2008/REC-xml-20081126>.
 
 13.2.  Informative References
 
-   [CSP-2]    "Content Security Policy Level 2", n.d..
-
-   [HTTP-AUTH]
-              Fielding, R. and J. Reschke, "Hypertext Transfer Protocol
-              (HTTP/1.1): Authentication", October 2012.
+   [CSP-2]    "Content Security Policy Level 2", December 2016,
+              <https://www.w3.org/TR/CSP2>.
 
    [I-D.bradley-oauth-jwt-encoded-state]
               Bradley, J., Lodderstedt, T., and H. Zandbelt, "Encoding
-              claims in the OAuth 2 state parameter using a JWT", draft-
-              bradley-oauth-jwt-encoded-state-09 (work in progress),
-              November 2018.
+              claims in the OAuth 2 state parameter using a JWT", Work
+              in Progress, Internet-Draft, draft-bradley-oauth-jwt-
+              encoded-state-09, 4 November 2018, <http://www.ietf.org/
+              internet-drafts/draft-bradley-oauth-jwt-encoded-state-
+              09.txt>.
 
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A. and D. Waite, "OAuth 2.0 for Browser-Based
-              Apps", draft-ietf-oauth-browser-based-apps-05 (work in
-              progress), February 2020.
+              Apps", Work in Progress, Internet-Draft, draft-ietf-oauth-
+              browser-based-apps-05, 28 February 2020,
+              <http://www.ietf.org/internet-drafts/draft-ietf-oauth-
+              browser-based-apps-05.txt>.
 
    [I-D.ietf-oauth-rar]
               Lodderstedt, T., Richer, J., and B. Campbell, "OAuth 2.0
-              Rich Authorization Requests", draft-ietf-oauth-rar-01
-              (work in progress), February 2020.
+              Rich Authorization Requests", Work in Progress, Internet-
+              Draft, draft-ietf-oauth-rar-01, 19 February 2020,
+              <http://www.ietf.org/internet-drafts/draft-ietf-oauth-rar-
+              01.txt>.
 
    [I-D.ietf-oauth-resource-indicators]
               Campbell, B., Bradley, J., and H. Tschofenig, "Resource
-              Indicators for OAuth 2.0", draft-ietf-oauth-resource-
-              indicators-08 (work in progress), September 2019.
+              Indicators for OAuth 2.0", Work in Progress, Internet-
+              Draft, draft-ietf-oauth-resource-indicators-08, 11
+              September 2019, <http://www.ietf.org/internet-drafts/
+              draft-ietf-oauth-resource-indicators-08.txt>.
 
    [I-D.ietf-oauth-token-binding]
               Jones, M., Campbell, B., Bradley, J., and W. Denniss,
-              "OAuth 2.0 Token Binding", draft-ietf-oauth-token-
-              binding-08 (work in progress), October 2018.
+              "OAuth 2.0 Token Binding", Work in Progress, Internet-
+              Draft, draft-ietf-oauth-token-binding-08, 19 October 2018,
 
 
 
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 79]
+Hardt, et al.           Expires 6 September 2020               [Page 79]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
+              <http://www.ietf.org/internet-drafts/draft-ietf-oauth-
+              token-binding-08.txt>.
+
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
               Gupta, S., and E. Nabbus, "NIST Special Publication
-              800-63-1, INFORMATION SECURITY", December 2011.
+              800-63-1, INFORMATION SECURITY", December 2011,
+              <http://csrc.nist.gov/publications/>.
 
    [OMAP]     Huff, J., Schlacht, D., Nadalin, A., Simmons, J.,
               Rosenberg, P., Madsen, P., Ace, T., Rickelton-Abdi, C.,
               and B. Boyer, "Online Multimedia Authorization Protocol:
               An Industry Standard for Authorized Access to Internet
-              Multimedia Resources", April 2012.
+              Multimedia Resources", April 2012,
+              <https://www.oatc.us/Standards/Download-Standards>.
 
-   [OpenID]   "OpenID Connect", n.d..
+   [OpenID]   Sakimora, N., Bradley, J., Jones, M., de Medeiros, B., and
+              C. Mortimore, "OpenID Connect Core 1.0", November 2014,
+              <https://openiD.net/specs/openiD-connect-core-1_0.html>.
 
    [OpenID.Messages]
               Sakimura, N., Bradley, J., Jones, M., de Medeiros, B.,
               Mortimore, C., and E. Jay, "OpenID Connect Messages 1.0",
-              June 2012.
+              June 2012, <http://openid.net/specs/openid-connect-
+              messages-1_0.html>.
 
    [owasp_redir]
               "OWASP Cheat Sheet Series - Unvalidated Redirects and
-              Forwards", n.d..
-
-   [RFC5849]  Hammer-Lahav, E., Ed., "The OAuth 1.0 Protocol", RFC 5849,
-              DOI 10.17487/RFC5849, April 2010,
-              <https://www.rfc-editor.org/info/rfc5849>.
+              Forwards", 2020,
+              <https://cheatsheetseries.owasp.org/cheatsheets/
+              Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html>.
 
    [RFC6265]  Barth, A., "HTTP State Management Mechanism", RFC 6265,
               DOI 10.17487/RFC6265, April 2011,
@@ -4466,21 +4472,24 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
               <https://www.rfc-editor.org/info/rfc7230>.
 
+   [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Authentication", RFC 7235,
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 80]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+              DOI 10.17487/RFC7235, June 2014,
+              <https://www.rfc-editor.org/info/rfc7235>.
+
    [RFC7522]  Campbell, B., Mortimore, C., and M. Jones, "Security
               Assertion Markup Language (SAML) 2.0 Profile for OAuth 2.0
               Client Authentication and Authorization Grants", RFC 7522,
               DOI 10.17487/RFC7522, May 2015,
               <https://www.rfc-editor.org/info/rfc7522>.
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 80]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
 
    [RFC7591]  Richer, J., Ed., Jones, M., Bradley, J., Machulak, M., and
               P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol",
@@ -4513,31 +4522,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
               Indicators for OAuth 2.0", RFC 8707, DOI 10.17487/RFC8707,
               February 2020, <https://www.rfc-editor.org/info/rfc8707>.
 
-   [webauthn]
-              Balfanz, D., Czeskis, A., Hodges, J., Jones, J., Jones,
-              M., Kumar, A., Liao, A., Lindemann, R., and E. Lundberg,
-              "Web Authentication: An API for accessing Public Key
-              Credentials Level 1", March 2019.
-
-   [webcrypto]
-              Watson, M., "Web Cryptography API", January 2017.
-
-13.3.  URIs
-
-   [1] http://www.iana.org/assignments/media-types
-
-
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 81]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax
 
    This section provides Augmented Backus-Naur Form (ABNF) syntax
@@ -4545,6 +4529,14 @@ Appendix A.  Augmented Backus-Naur Form (ABNF) Syntax
    notation of [RFC5234].  The ABNF below is defined in terms of Unicode
    code points [W3C.REC-xml-20081126]; these characters are typically
    encoded in UTF-8.  Elements are presented in the order first defined.
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 81]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
    Some of the definitions that follow use the "URI-reference"
    definition from [RFC3986].
@@ -4582,18 +4574,6 @@ A.3.  "response_type" Syntax
    response-name = 1*response-char
    response-char = "_" / DIGIT / ALPHA
 
-
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 82]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 A.4.  "scope" Syntax
 
    The "scope" element is defined in Section 3.3:
@@ -4605,6 +4585,14 @@ A.5.  "state" Syntax
 
    The "state" element is defined in Section 4.1.1, Section 4.1.2, and
    Section 4.1.2.1:
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 82]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
     state      = 1*VSCHAR
 
@@ -4641,15 +4629,6 @@ A.10.  "grant_type" Syntax
    The "grant_type" element is defined in Sections Section 4.1.3,
    Section 4.2.3, Section 4.2.2, Section 4.3, and Section 6:
 
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 83]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
     grant-type = grant-name / URI-reference
     grant-name = 1*name-char
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
@@ -4659,6 +4638,17 @@ A.11.  "code" Syntax
    The "code" element is defined in Section 4.1.3:
 
     code       = 1*VSCHAR
+
+
+
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 83]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
 
 A.12.  "access_token" Syntax
 
@@ -4694,18 +4684,6 @@ A.16.  Endpoint Parameter Syntax
     param-name = 1*name-char
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
 
-
-
-
-
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 84]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
 A.17.  "code_verifier" Syntax
 
    ABNF for "code_verifier" is as follows.
@@ -4719,6 +4697,15 @@ A.18.  "code_challenge" Syntax
 
    ABNF for "code_challenge" is as follows.
 
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 84]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
    code-challenge = 43*128unreserved
    unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
    ALPHA = %x41-5A / %x61-7A
@@ -4729,9 +4716,10 @@ Appendix B.  Use of application/x-www-form-urlencoded Media Type
    At the time of publication of this specification, the "application/x-
    www-form-urlencoded" media type was defined in Section 17.13.4 of
    [W3C.REC-html401-19991224] but not registered in the IANA MIME Media
-   Types registry (http://www.iana.org/assignments/media-types [1]).
-   Furthermore, that definition is incomplete, as it does not consider
-   non-US-ASCII characters.
+   Types registry (http://www.iana.org/assignments/media-types
+   (http://www.iana.org/assignments/media-types)).  Furthermore, that
+   definition is incomplete, as it does not consider non-US-ASCII
+   characters.
 
    To address this shortcoming when generating payloads using this media
    type, names and values MUST be encoded using the UTF-8 character
@@ -4754,14 +4742,6 @@ Appendix B.  Use of application/x-www-form-urlencoded Media Type
 
    and then represented in the payload as:
 
-
-
-
-Parecki, et al.         Expires September 5, 2020              [Page 85]
-
-Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
-
-
    +%25%26%2B%C2%A3%E2%82%AC
 
 Appendix C.  Acknowledgements
@@ -4770,18 +4750,32 @@ Appendix C.  Acknowledgements
 
 Authors' Addresses
 
+   Dick Hardt
+   SignIn.Org
+   United States
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 85]
+
+Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
+
+
+   Email: dick.hardt@gmail.com
+
+
    Aaron Parecki
+   Okta
+   United States
 
    Email: aaron@parecki.com
    URI:   https://aaronparecki.com
 
 
-   Dick Hardt
-
-   Email: dick.hardt@gmail.com
-
-
    Torsten Lodderstedt
+   Yes.com
+   Germany
 
    Email: torsten@lodderstedt.net
 
@@ -4813,4 +4807,10 @@ Authors' Addresses
 
 
 
-Parecki, et al.         Expires September 5, 2020              [Page 86]
+
+
+
+
+
+
+Hardt, et al.           Expires 6 September 2020               [Page 86]
