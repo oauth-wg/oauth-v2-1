@@ -2110,9 +2110,11 @@ extension value as described by <a href="#new-response-types" class="xref">Secti
 values, where the order of values does not matter (e.g., response
 type "a b" is the same as "b a").  The meaning of such composite
 response types is defined by their respective specifications.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-4">If an authorization request is missing the "response_type" parameter,
+<p id="section-3.1.1-4">For example, OpenID Connect defines <code>response_type=id_token</code> as well as a few
+other combinations which include additional security features for those flows.<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-5">If an authorization request is missing the "response_type" parameter,
 or if the response type is not understood, the authorization server
-MUST return an error response as described in <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>.<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+MUST return an error response as described in <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>.<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="redirection-endpoint">

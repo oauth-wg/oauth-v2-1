@@ -954,6 +954,10 @@ Hardt, et al.           Expires 8 September 2020               [Page 17]
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
+   For example, OpenID Connect defines "response_type=id_token" as well
+   as a few other combinations which include additional security
+   features for those flows.
+
    If an authorization request is missing the "response_type" parameter,
    or if the response type is not understood, the authorization server
    MUST return an error response as described in Section 4.1.2.1.
@@ -996,10 +1000,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    delegated end-user authentication by the client (e.g., third-party
    sign-in service).
 
-3.1.2.2.  Registration Requirements
-
-   The authorization server MUST require all clients to register their
-   redirection endpoint prior to utilizing the authorization endpoint.
 
 
 
@@ -1009,6 +1009,11 @@ Hardt, et al.           Expires 8 September 2020               [Page 18]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
+
+3.1.2.2.  Registration Requirements
+
+   The authorization server MUST require all clients to register their
+   redirection endpoint prior to utilizing the authorization endpoint.
 
    The authorization server SHOULD require the client to provide the
    complete redirection URI (the client MAY use the "state" request
@@ -1053,11 +1058,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    The client SHOULD NOT include any third-party scripts (e.g., third-
    party analytics, social plug-ins, ad networks) in the redirection
    endpoint response.  Instead, it SHOULD extract the credentials from
-   the URI and redirect the user-agent again to another endpoint without
-   exposing the credentials (in the URI or elsewhere).  If third-party
-   scripts are included, the client MUST ensure that its own scripts
-   (used to extract and remove the credentials from the URI) will
-   execute first.
 
 
 
@@ -1065,6 +1065,12 @@ Hardt, et al.           Expires 8 September 2020               [Page 19]
 
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
+
+   the URI and redirect the user-agent again to another endpoint without
+   exposing the credentials (in the URI or elsewhere).  If third-party
+   scripts are included, the client MUST ensure that its own scripts
+   (used to extract and remove the credentials from the URI) will
+   execute first.
 
 3.2.  Token Endpoint
 
@@ -1108,12 +1114,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
    *  Recovering from a compromised client by disabling the client or
       changing its credentials, thus preventing an attacker from abusing
-      stolen refresh tokens.  Changing a single set of client
-      credentials is significantly faster than revoking an entire set of
-      refresh tokens.
-
-   *  Implementing authentication management best practices, which
-      require periodic credential rotation.  Rotation of an entire set
 
 
 
@@ -1122,6 +1122,12 @@ Hardt, et al.           Expires 8 September 2020               [Page 20]
 Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
 
 
+      stolen refresh tokens.  Changing a single set of client
+      credentials is significantly faster than revoking an entire set of
+      refresh tokens.
+
+   *  Implementing authentication management best practices, which
+      require periodic credential rotation.  Rotation of an entire set
       of refresh tokens can be challenging, while rotation of a single
       set of client credentials is significantly easier.
 
@@ -1162,12 +1168,6 @@ Internet-Draft    The OAuth 2.1 Authorization Framework       March 2020
    request using a pre-defined default value or fail the request
    indicating an invalid scope.  The authorization server SHOULD
    document its scope requirements and default value (if defined).
-
-
-
-
-
-
 
 
 

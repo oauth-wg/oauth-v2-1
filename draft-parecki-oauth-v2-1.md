@@ -804,6 +804,9 @@ values, where the order of values does not matter (e.g., response
 type "a b" is the same as "b a").  The meaning of such composite
 response types is defined by their respective specifications.
 
+For example, OpenID Connect defines `response_type=id_token` as well as a few
+other combinations which include additional security features for those flows.
+
 If an authorization request is missing the "response_type" parameter,
 or if the response type is not understood, the authorization server
 MUST return an error response as described in {{authorization-code-error-response}}.
