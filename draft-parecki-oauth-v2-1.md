@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: draft-parecki-oauth-v2_1-00
-date: 2020-03-05
+docname: draft-parecki-oauth-v2-1-00
+date: 2020-03-07
 
 ipr: trust200902
 area: OAuth
@@ -152,8 +152,7 @@ Framework described in RFC 6749.
 
 --- middle
 
-Introduction {#introduction}
-============
+# Introduction {#introduction}
 
 In the traditional client-server authentication model, the client
 requests an access-restricted resource (protected resource) on the
@@ -218,8 +217,7 @@ documents and removes features that have been found to be insecure
 in {{I-D.ietf-oauth-security-topics}}.
 
 
-Roles
------
+## Roles
 
 OAuth defines four roles:
 
@@ -250,8 +248,7 @@ A single authorization server may issue access tokens accepted by
 multiple resource servers.
 
 
-Protocol Flow
--------------
+## Protocol Flow
 
 ~~~~~~~~~~
      +--------+                               +---------------+
@@ -308,8 +305,7 @@ authorization server as an intermediary, which is illustrated in
 {{fig-authorization-code-flow}} in {{authorization-code-grant}}.
 
 
-Authorization Grant
--------------------
+## Authorization Grant
 
 An authorization grant is a credential representing the resource
 owner's authorization (to access its protected resources) used by the
@@ -354,8 +350,7 @@ resources based on an authorization previously arranged with the
 authorization server.
 
 
-Access Token
-------------
+## Access Token
 
 Access tokens are credentials used to access protected resources.  An
 access token is a string representing an authorization issued to the
@@ -385,8 +380,7 @@ methods used to access protected resources may be extended beyond
 what is described in this specification.
 
 
-Refresh Token
--------------
+## Refresh Token
 
 Refresh tokens are credentials used to obtain access tokens.  Refresh
 tokens are issued to the client by the authorization server and are
@@ -466,8 +460,7 @@ Steps (3), (4), (5), and (6) are outside the scope of this
 specification, as described in {{accessing-protected-resources}}.
 
 
-TLS Version {#tls-version}
------------
+## TLS Version {#tls-version}
 
 Whenever Transport Layer Security (TLS) is used by this
 specification, the appropriate version (or versions) of TLS will vary
@@ -479,8 +472,7 @@ Implementations MAY also support additional transport-layer security
 mechanisms that meet their security requirements.
 
 
-HTTP Redirections
------------------
+## HTTP Redirections
 
 This specification makes extensive use of HTTP redirections, in which
 the client or the authorization server directs the resource owner's
@@ -490,8 +482,7 @@ method available via the user-agent to accomplish this redirection is
 allowed and is considered to be an implementation detail.
 
 
-Interoperability
-----------------
+## Interoperability
 
 OAuth 2.1 provides a rich authorization framework with well-defined
 security properties.  However, as a rich and highly extensible
@@ -511,8 +502,7 @@ work will define prescriptive profiles and extensions necessary to
 achieve full web-scale interoperability.
 
 
-Notational Conventions
-----------------------
+## Notational Conventions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
@@ -533,8 +523,7 @@ Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.
 
 
-Client Registration
-===================
+# Client Registration
 
 Before initiating the protocol, the client registers with the
 authorization server.  The means through which the client registers
@@ -563,8 +552,7 @@ When registering a client, the client developer SHALL:
    acceptance of legal terms).
 
 
-Client Types {#client-types}
-------------
+## Client Types {#client-types}
 
 OAuth defines two client types, based on whether they can be issued
 credentials that they can use to authenticate at the authorization server:
@@ -628,8 +616,7 @@ profiles:
   might be protected from other applications residing on the same
   device.
 
-Client Identifier {#client-identifier}
------------------
+## Client Identifier {#client-identifier}
 
 The authorization server issues the registered client a client
 identifier -- a unique string representing the registration
@@ -648,8 +635,7 @@ Authorization servers SHOULD NOT allow clients to influence their
 confusion with a genuine resource owner.
 
 
-Client Authentication {#client-authentication}
----------------------
+## Client Authentication {#client-authentication}
 
 If the client type is confidential, the client and authorization
 server establish a client authentication method suitable for the
@@ -740,8 +726,7 @@ mapping between the client identifier (registration record) and
 authentication scheme.
 
 
-Unregistered Clients
---------------------
+## Unregistered Clients
 
 This specification does not exclude the use of unregistered clients.
 However, the use of such clients is beyond the scope of this
@@ -749,8 +734,7 @@ specification and requires additional security analysis and review of
 its interoperability impact.
 
 
-Protocol Endpoints
-==================
+# Protocol Endpoints
 
 The authorization process utilizes two authorization server endpoints
 (HTTP resources):
@@ -771,8 +755,7 @@ Not every authorization grant type utilizes both endpoints.
 Extension grant types MAY define additional endpoints as needed.
 
 
-Authorization Endpoint
-----------------------
+## Authorization Endpoint
 
 The authorization endpoint is used to interact with the resource
 owner and obtain an authorization grant.  The authorization server
@@ -808,9 +791,8 @@ MUST NOT be included more than once.
 ### Response Type {#response-type}
 
 The authorization endpoint is used by the authorization code flow.
-The client informs the
-authorization server of the desired grant type using the following
-parameter:
+The client informs the authorization server of the desired grant type
+using the following parameter:
 
 "response_type":
 :    REQUIRED.  The value MUST be "code" for requesting an
@@ -825,6 +807,7 @@ response types is defined by their respective specifications.
 If an authorization request is missing the "response_type" parameter,
 or if the response type is not understood, the authorization server
 MUST return an error response as described in {{authorization-code-error-response}}.
+
 
 ### Redirection Endpoint {#redirection-endpoint}
 
@@ -924,8 +907,7 @@ scripts are included, the client MUST ensure that its own scripts
 execute first.
 
 
-Token Endpoint
---------------
+## Token Endpoint
 
 The token endpoint is used by the client to obtain an access token by
 presenting its authorization grant or refresh token.
@@ -987,8 +969,7 @@ the authentication code.  (It provides no additional security for the
 protected resource.)
 
 
-Access Token Scope {#access-token-scope}
-------------------
+## Access Token Scope {#access-token-scope}
 
 The authorization and token endpoints allow the client to specify the
 scope of the access request using the "scope" request parameter.  In
@@ -1020,8 +1001,7 @@ indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
 
 
-Obtaining Authorization {#obtaining-authorization}
-=======================
+# Obtaining Authorization {#obtaining-authorization}
 
 To request an access token, the client obtains authorization from the
 resource owner.  The authorization is expressed in the form of an
@@ -1031,8 +1011,7 @@ and client credentials.  It also
 provides an extension mechanism for defining additional grant types.
 
 
-Authorization Code Grant {#authorization-code-grant}
-------------------------
+## Authorization Code Grant {#authorization-code-grant}
 
 The authorization code grant type is used to obtain both access
 tokens and refresh tokens.
@@ -1476,8 +1455,7 @@ An example successful response:
 
 
 
-Client Credentials Grant
-------------------------
+## Client Credentials Grant
 
 The client can request an access token using only its client
 credentials (or other supported means of authentication) when the
@@ -1569,8 +1547,7 @@ An example successful response:
     }
 
 
-Extension Grants {#extension-grants}
-----------------
+## Extension Grants {#extension-grants}
 
 The client uses an extension grant type by specifying the grant type
 using an absolute URI (defined by the authorization server) as the
@@ -1597,8 +1574,7 @@ authentication or is invalid, the authorization server returns an
 error response as described in {{access-token-error-response}}.
 
 
-Issuing an Access Token
-=======================
+# Issuing an Access Token
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
@@ -1607,8 +1583,7 @@ authentication or is invalid, the authorization server returns an
 error response as described in {{access-token-error-response}}.
 
 
-Successful Response {#access-token-successful-response}
--------------------
+## Successful Response {#access-token-successful-response}
 
 The authorization server issues an access token and optional refresh
 token, and constructs the response by adding the following parameters
@@ -1674,8 +1649,7 @@ assumptions about value sizes.  The authorization server SHOULD
 document the size of any value it issues.
 
 
-Error Response {#access-token-error-response}
---------------
+## Error Response {#access-token-error-response}
 
 The authorization server responds with an HTTP 400 (Bad Request)
 status code (unless specified otherwise) and includes the following
@@ -1764,8 +1738,7 @@ For example:
     }
 
 
-Refreshing an Access Token {#refreshing-an-access-token}
-==========================
+# Refreshing an Access Token {#refreshing-an-access-token}
 
 Authorization servers SHOULD determine, based on a risk assessment,
 whether to issue refresh tokens to a certain client.  If the
@@ -1885,8 +1858,7 @@ the refresh token (and its sensitivity).
 
 
 
-Accessing Protected Resources {#accessing-protected-resources}
-=============================
+# Accessing Protected Resources {#accessing-protected-resources}
 
 The client accesses protected resources by presenting the access
 token to the resource server.  The resource server MUST validate the
@@ -1905,8 +1877,7 @@ authentication scheme defined by the specification of the access
 token type used, such as "Bearer", defined below.
 
 
-Access Token Types {#access-token-types}
-------------------
+## Access Token Types {#access-token-types}
 
 The access token type provides the client with the information
 required to successfully utilize the access token to make a protected
@@ -1928,8 +1899,7 @@ Each access token type definition specifies the additional attributes
 parameter.  It also defines the HTTP authentication method used to
 include the access token when making a protected resource request.
 
-Bearer Tokens
--------------
+## Bearer Tokens
 
 A Bearer Token is a security token with the property that any party
 in possession of the token (a "bearer") can use the token in any way
@@ -1963,7 +1933,7 @@ The syntax of the "Authorization" header field for this scheme
 follows the usage of the Basic scheme defined in Section 2 of
 {{RFC2617}}.  Note that, as with Basic, it does not conform to the
 generic syntax defined in Section 1.2 of {{RFC2617}} but is compatible
-with the general authentication framework in HTTP 1.1 Authentication 
+with the general authentication framework in HTTP 1.1 Authentication
 {{RFC7235}}, although it does not follow the preferred
 practice outlined therein in order to reflect existing deployments.
 The syntax for Bearer credentials is as follows:
@@ -2096,8 +2066,7 @@ authentication attempt using an expired access token:
                       error_description="The access token expired"
 
 
-Error Response {#bearer-token-error-response}
---------------
+## Error Response {#bearer-token-error-response}
 
 If a resource access request fails, the resource server SHOULD inform
 the client of the error.  While the specifics of such error responses
@@ -2163,8 +2132,7 @@ For example:
 
 
 
-Access Token Security Considerations
-------------------------------------
+## Access Token Security Considerations
 
 ### Security Threats
 
@@ -2389,11 +2357,9 @@ determine those resources and/or actions.
 
 
 
-Extensibility
-=============
+# Extensibility
 
-Defining Access Token Types {#defining-access-token-types}
----------------------------
+## Defining Access Token Types {#defining-access-token-types}
 
 Access token types can be defined in one of two ways: registered in
 the Access Token Types registry (following the procedures in
@@ -2414,8 +2380,7 @@ authentication scheme name (as defined by [RFC2617]).  The token type
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
 
 
-Defining New Endpoint Parameters {#defining-new-endpoint-parameters}
---------------------------------
+## Defining New Endpoint Parameters {#defining-new-endpoint-parameters}
 
 New request or response parameters for use with the authorization
 endpoint or the token endpoint are defined and registered in the
@@ -2435,8 +2400,7 @@ utilize a vendor-specific prefix that is not likely to conflict with
 other registered values (e.g., begin with 'companyname_').
 
 
-Defining New Authorization Grant Types
---------------------------------------
+## Defining New Authorization Grant Types
 
 New authorization grant types can be defined by assigning them a
 unique absolute URI for use with the "grant_type" parameter.  If the
@@ -2445,8 +2409,7 @@ they MUST be registered in the OAuth Parameters registry as described
 by {{parameters-registry}}.
 
 
-Defining New Authorization Endpoint Response Types {#new-response-types}
---------------------------------------------------
+## Defining New Authorization Endpoint Response Types {#new-response-types}
 
 New response types for use with the authorization endpoint are
 defined and registered in the Authorization Endpoint Response Types
@@ -2469,8 +2432,7 @@ cannot be registered as "code token", but both values can be used to
 denote the same response type.
 
 
-Defining Additional Error Codes
--------------------------------
+## Defining Additional Error Codes
 
 In cases where protocol extensions (i.e., access token types,
 extension parameters, or extension grant types) require additional
@@ -3132,8 +3094,7 @@ Authorization servers SHOULD NOT allow clients to influence their
 confusion with a genuine resource owner (see (#client_impersonating)).
 
 
-Native Applications {#native-applications}
-===================
+# Native Applications {#native-applications}
 
 Native applications are clients installed and executed on the device
 used by the resource owner (i.e., desktop application, native mobile
@@ -3357,8 +3318,7 @@ attempt to bind to the loopback interface using both IPv4 and IPv6
 and use whichever is available.
 
 
-Browser-Based Apps
-==================
+# Browser-Based Apps
 
 Browser-based apps are are clients that run in a web browser, typically
 written in JavaScript, also known as "single-page apps". These types of apps
@@ -3368,11 +3328,9 @@ TODO: Bring in the normative text of the browser-based apps BCP when it is final
 
 
 
-IANA Considerations
-===================
+# IANA Considerations
 
-OAuth Access Token Types Registry {#access-token-registry}
----------------------------------
+## OAuth Access Token Types Registry {#access-token-registry}
 
 This specification establishes the OAuth Access Token Types registry.
 
@@ -3438,8 +3396,7 @@ The OAuth Access Token Types registry's initial contents are:
 
 
 
-OAuth Parameters Registry {#parameters-registry}
--------------------------
+## OAuth Parameters Registry {#parameters-registry}
 
 This specification establishes the OAuth Parameters registry.
 
@@ -3575,8 +3532,7 @@ The OAuth Parameters registry's initial contents are:
 *  Specification document(s): RFC 6749
 
 
-OAuth Authorization Endpoint Response Types Registry {#response-types-registry}
-----------------------------------------------------
+## OAuth Authorization Endpoint Response Types Registry {#response-types-registry}
 
 This specification establishes the OAuth Authorization Endpoint
 Response Types registry.
@@ -3630,8 +3586,7 @@ contents are:
 *  Specification document(s): RFC 6749
 
 
-OAuth Extensions Error Registry {#error-registry}
--------------------------------
+## OAuth Extensions Error Registry {#error-registry}
 
 This specification establishes the OAuth Extensions Error registry.
 
@@ -3716,8 +3671,7 @@ The OAuth Error registry's initial contents are:
 --- back
 
 
-Augmented Backus-Naur Form (ABNF) Syntax
-========================================
+# Augmented Backus-Naur Form (ABNF) Syntax
 
 This section provides Augmented Backus-Naur Form (ABNF) syntax
 descriptions for the elements defined in this specification using the
@@ -3870,8 +3824,7 @@ ABNF for "code_challenge" is as follows.
     DIGIT = %x30-39
 
 
-Use of application/x-www-form-urlencoded Media Type
-===================================================
+# Use of application/x-www-form-urlencoded Media Type
 
 At the time of publication of this specification, the
 "application/x-www-form-urlencoded" media type was defined in
@@ -3905,8 +3858,7 @@ and then represented in the payload as:
     +%25%26%2B%C2%A3%E2%82%AC
 
 
-Acknowledgements
-================
+# Acknowledgements
 
 TBD
 
