@@ -31,8 +31,7 @@ author:
   - ins: T. Lodderstedt
     name: Torsten Lodderstedt
     email: torsten@lodderstedt.net
-    organization: Yes.com
-    country: Germany
+    organization: yes.com
 
 normative:
   RFC2119:
