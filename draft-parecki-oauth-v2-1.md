@@ -4,7 +4,7 @@ docname: draft-parecki-oauth-v2-1-01
 date: 2020-03-08
 
 ipr: trust200902
-wg: OAuth
+wg: OAuth Working Group
 kw: Internet-Draft
 cat: std
 consensus: "true"
