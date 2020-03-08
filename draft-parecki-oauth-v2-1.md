@@ -793,8 +793,8 @@ The client informs the authorization server of the desired response type
 using the following parameter:
 
 "response_type":
-:    REQUIRED.  The value MUST be `code` for requesting an authorization 
-code as described by {{authorization-request}}, or a registered extension 
+:    REQUIRED.  The value MUST be `code` for requesting an authorization
+code as described by {{authorization-request}}, or a registered extension
 value as described by {{new-response-types}}.
 
 Extension response types MAY contain a space-delimited (%x20) list of
@@ -2423,8 +2423,8 @@ is compared as a space-delimited list of values in which the order of
 values does not matter.  Only one order of values can be registered,
 which covers all other arrangements of the same set of values.
 
-For example, an extension can define and register the `code other_token` 
-response type.  Once registered, the same combination cannot be registered 
+For example, an extension can define and register the `code other_token`
+response type.  Once registered, the same combination cannot be registered
 as `other_token code`, but both values can be used to
 denote the same response type.
 
@@ -3323,6 +3323,33 @@ have particular security considerations similar to native apps.
 
 TODO: Bring in the normative text of the browser-based apps BCP when it is finalized.
 
+
+# Differences from OAuth 2.0
+
+This draft consolidates the functionality in OAuth 2.0 {{RFC6749}},
+OAuth 2.0 for Native Apps ({{RFC8252}}),
+Proof Key for Code Exchange ({{RFC7636}}),
+OAuth 2.0 for Browser-Based Apps ({{I-D.ietf-oauth-browser-based-apps}}),
+OAuth Security Best Current Practice ({{I-D.ietf-oauth-security-topics}}),
+and Bearer Token Usage ({{RFC6750}}).
+
+Where a later draft updates or obsoletes functionality found in the original
+{{RFC6749}}, that functionality in this draft is updated with the normative
+changes described in a later draft, or removed entirely.
+
+A non-normative list of changes from OAuth 2.0 is listed below:
+
+* The authorization code grant is extended with the functionality from PKCE ({{RFC7636}})
+  such that the only method of using the authorization code grant according
+  to this specification requires the addition of the PKCE mechanism
+* The Implicit grant (`response_type=token`) is omitted from this specification
+  as per Section 2.1.2 of {{I-D.ietf-oauth-security-topics}}
+* The Resource Owner Password Credentials grant is omitted from this specification
+  as per Section 2.4 of {{I-D.ietf-oauth-security-topics}}
+* Bearer token usage omits the use of bearer tokens in the query string of URIs
+  as per Section 4.3.2 of {{I-D.ietf-oauth-security-topics}}
+* Refresh tokens must either be sender-constrained or one-time use
+  as per Section 4.12.2 of {{I-D.ietf-oauth-security-topics}}
 
 
 # IANA Considerations
