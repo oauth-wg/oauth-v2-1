@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: draft-parecki-oauth-v2-1-00
-date: 2020-03-07
+docname: draft-parecki-oauth-v2-1-01
+date: 2020-03-08
 
 ipr: trust200902
 area: OAuth
@@ -1094,7 +1094,7 @@ To begin the authorization request, the client builds the authorization
 request URI by adding parameters to the authorization server's
 authorization endpoint URI.
 
-Clients use a unique secret per authorization request to protect against code 
+Clients use a unique secret per authorization request to protect against code
 injection and CSRF attacks. The client first generates this secret, which it can
 later use along with the authorization code to prove that the application using the
 authorization code is the same application that requested it. This practice is known
