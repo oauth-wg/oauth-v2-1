@@ -7,7 +7,6 @@ ipr: trust200902
 area: OAuth
 kw: Internet-Draft
 cat: std
-consensus: true
 area: Security
 
 coding: us-ascii
@@ -21,13 +20,11 @@ author:
     organization: SignIn.Org
     name: Dick Hardt
     email: dick.hardt@gmail.com
-    country: United States
   - ins: A. Parecki
     name: Aaron Parecki
     email: aaron@parecki.com
     organization: Okta
     uri: https://aaronparecki.com
-    country: United States
   - ins: T. Lodderstedt
     name: Torsten Lodderstedt
     email: torsten@lodderstedt.net
@@ -791,21 +788,17 @@ MUST NOT be included more than once.
 ### Response Type {#response-type}
 
 The authorization endpoint is used by the authorization code flow.
-The client informs the authorization server of the desired grant type
+The client informs the authorization server of the desired response type
 using the following parameter:
 
 "response_type":
 :    REQUIRED.  The value MUST be `code` for requesting an
-     authorization code as described by {{authorization-request}}, or a registered
-     extension value as described by {{new-response-types}}.
+     authorization code as described by {{authorization-request}}, or a registered extension value as described by {{new-response-types}}.
 
 Extension response types MAY contain a space-delimited (%x20) list of
 values, where the order of values does not matter (e.g., response
 type `a b` is the same as `b a`).  The meaning of such composite
 response types is defined by their respective specifications.
-
-For example, OpenID Connect defines `response_type=id_token` as well as a few
-other combinations which include additional security features for those flows.
 
 If an authorization request is missing the "response_type" parameter,
 or if the response type is not understood, the authorization server
@@ -2428,10 +2421,9 @@ is compared as a space-delimited list of values in which the order of
 values does not matter.  Only one order of values can be registered,
 which covers all other arrangements of the same set of values.
 
-For example, the response type `token code` is left undefined by this
-specification.  However, an extension can define and register the
-`token code` response type.  Once registered, the same combination
-cannot be registered as `code token`, but both values can be used to
+For example, an extension can define and register the `code other_token` 
+response type.  Once registered, the same combination cannot be registered 
+as `other_token code`, but both values can be used to
 denote the same response type.
 
 
