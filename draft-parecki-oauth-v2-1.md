@@ -222,11 +222,12 @@ OAuth defines four roles:
 "resource owner":
 :   An entity capable of granting access to a protected resource.
     When the resource owner is a person, it is referred to as an
-    end-user.
+    end-user. This is sometimes abbreviated as "RO".
 
 "resource server":
 :   The server hosting the protected resources, capable of accepting
     and responding to protected resource requests using access tokens.
+    This is sometimes abbreviated as "RS".
 
 "client":
 :   An application making protected resource requests on behalf of the
@@ -238,6 +239,7 @@ OAuth defines four roles:
 "authorization server":
 :   The server issuing access tokens to the client after successfully
     authenticating the resource owner and obtaining authorization.
+    This is sometimes abbreviated as "AS".
 
 The interaction between the authorization server and resource server
 is beyond the scope of this specification.  The authorization server
@@ -552,21 +554,28 @@ When registering a client, the client developer SHALL:
 
 ## Client Types {#client-types}
 
-OAuth defines two client types, based on whether they can be issued
-credentials that they can use to authenticate at the authorization server:
+Clients are identified at the authorization server by a `client_id`.
+It is, for example, used by the authorization server to determine the set of
+redirect URIs this client can use.
+
+Clients requiring a higher level of confidence in their identity by the
+authorization server use credentials to authenticate with the authorization server.
+Such credentials are either issued by the authorization server or registered
+by the developer of the client with the authorization server.
+
+OAuth 2.1 defines two client types:
 
 "confidential":
-: Clients capable of maintaining the confidentiality of their
-  credentials (e.g., client implemented on a secure server with
-  restricted access to the client credentials), or capable of secure
-  client authentication using other means.
+: Clients that have credentials are designated as "confidential clients"
 
 "public":
-: Clients incapable of maintaining the confidentiality of their
-  credentials (e.g., clients executing on the device used by the
-  resource owner, such as an installed native application or a web
-  browser-based application), and incapable of secure client
-  authentication via any other means.
+: Clients without credentials are called "public clients"
+
+Confidential clients MUST take precautions to prevent leakage and abuse of their credentials.
+
+Authorization servers SHOULD consider the level of confidence in a client’s identity
+when deciding whether they allow such a client access to more critical functions,
+such as the client credentials grant type.
 
 The client type designation is based on the authorization server's
 definition of secure authentication and its acceptable exposure
@@ -793,8 +802,8 @@ The client informs the authorization server of the desired response type
 using the following parameter:
 
 "response_type":
-:    REQUIRED.  The value MUST be `code` for requesting an authorization 
-code as described by {{authorization-request}}, or a registered extension 
+:    REQUIRED.  The value MUST be `code` for requesting an authorization
+code as described by {{authorization-request}}, or a registered extension
 value as described by {{new-response-types}}.
 
 Extension response types MAY contain a space-delimited (%x20) list of
@@ -2423,8 +2432,8 @@ is compared as a space-delimited list of values in which the order of
 values does not matter.  Only one order of values can be registered,
 which covers all other arrangements of the same set of values.
 
-For example, an extension can define and register the `code other_token` 
-response type.  Once registered, the same combination cannot be registered 
+For example, an extension can define and register the `code other_token`
+response type.  Once registered, the same combination cannot be registered
 as `other_token code`, but both values can be used to
 denote the same response type.
 
@@ -3323,6 +3332,35 @@ have particular security considerations similar to native apps.
 
 TODO: Bring in the normative text of the browser-based apps BCP when it is finalized.
 
+
+# Differences from OAuth 2.0
+
+This draft consolidates the functionality in OAuth 2.0 {{RFC6749}},
+OAuth 2.0 for Native Apps ({{RFC8252}}),
+Proof Key for Code Exchange ({{RFC7636}}),
+OAuth 2.0 for Browser-Based Apps ({{I-D.ietf-oauth-browser-based-apps}}),
+OAuth Security Best Current Practice ({{I-D.ietf-oauth-security-topics}}),
+and Bearer Token Usage ({{RFC6750}}).
+
+Where a later draft updates or obsoletes functionality found in the original
+{{RFC6749}}, that functionality in this draft is updated with the normative
+changes described in a later draft, or removed entirely.
+
+A non-normative list of changes from OAuth 2.0 is listed below:
+
+* The authorization code grant is extended with the functionality from PKCE ({{RFC7636}})
+  such that the only method of using the authorization code grant according
+  to this specification requires the addition of the PKCE mechanism
+* Redirect URIs must be compared using exact string matching
+  as per Section 4.1.3 of {{I-D.ietf-oauth-security-topics}}
+* The Implicit grant (`response_type=token`) is omitted from this specification
+  as per Section 2.1.2 of {{I-D.ietf-oauth-security-topics}}
+* The Resource Owner Password Credentials grant is omitted from this specification
+  as per Section 2.4 of {{I-D.ietf-oauth-security-topics}}
+* Bearer token usage omits the use of bearer tokens in the query string of URIs
+  as per Section 4.3.2 of {{I-D.ietf-oauth-security-topics}}
+* Refresh tokens must either be sender-constrained or one-time use
+  as per Section 4.12.2 of {{I-D.ietf-oauth-security-topics}}
 
 
 # IANA Considerations
