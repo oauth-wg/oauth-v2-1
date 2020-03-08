@@ -552,21 +552,28 @@ When registering a client, the client developer SHALL:
 
 ## Client Types {#client-types}
 
-OAuth defines two client types, based on whether they can be issued
-credentials that they can use to authenticate at the authorization server:
+Clients are identified at the authorization server by a `client_id`.
+It is, for example, used by the authorization server to determine the set of
+redirect URIs this client can use.
+
+Clients requiring a higher level of confidence in their identity by the
+authorization server use credentials to authenticate with the authorization server.
+Such credentials are either issued by the authorization server or registered
+by the developer of the client with the authorization server.
+
+OAuth 2.1 defines two client types:
 
 "confidential":
-: Clients capable of maintaining the confidentiality of their
-  credentials (e.g., client implemented on a secure server with
-  restricted access to the client credentials), or capable of secure
-  client authentication using other means.
+: Clients that have credentials are designated as "confidential clients"
 
 "public":
-: Clients incapable of maintaining the confidentiality of their
-  credentials (e.g., clients executing on the device used by the
-  resource owner, such as an installed native application or a web
-  browser-based application), and incapable of secure client
-  authentication via any other means.
+: Clients without credentials are called "public clients"
+
+Confidential clients MUST take precautions to prevent leakage and abuse of their credentials.
+
+Authorization servers SHOULD consider the level of confidence in a client’s identity
+when deciding whether they allow such a client access to more critical functions,
+such as the client credentials grant type.
 
 The client type designation is based on the authorization server's
 definition of secure authentication and its acceptable exposure
