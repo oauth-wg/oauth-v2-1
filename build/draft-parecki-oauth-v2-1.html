@@ -19,8 +19,8 @@ Framework described in RFC 6749.
     " name="description">
 <meta content="xml2rfc 2.40.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
-<meta content="draft-parecki-oauth-v2_1-00" name="ietf.draft">
-<link href="build/draft-parecki-oauth-v2_1.xml" rel="alternate" type="application/rfc+xml">
+<meta content="draft-parecki-oauth-v2-1-00" name="ietf.draft">
+<link href="build/draft-parecki-oauth-v2-1.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
 
@@ -827,7 +827,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hardt, et al.</td>
-<td class="center">Expires 6 September 2020</td>
+<td class="center">Expires 8 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -837,15 +837,15 @@ table.left {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-parecki-oauth-v2_1-00</dd>
+<dd class="internet-draft">draft-parecki-oauth-v2-1-00</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-05" class="published">5 March 2020</time>
+<time datetime="2020-03-07" class="published">7 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-06">6 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-08">8 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -858,7 +858,7 @@ table.left {
 </div>
 <div class="author">
       <div class="author-name">T. Lodderstedt</div>
-<div class="org">Yes.com</div>
+<div class="org">yes.com</div>
 </div>
 </dd>
 </dl>
@@ -893,7 +893,7 @@ Framework described in RFC 6749.<a href="#section-abstract-1" class="pilcrow">¶
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1919,7 +1919,7 @@ specification.  The client should avoid making assumptions about the
 identifier size.  The authorization server SHOULD document the size
 of any identifier it issues.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">Authorization servers SHOULD NOT allow clients to influence their
-"client_id" or "sub" value or any other claim if that can cause
+<code>client_id</code> or <code>sub</code> value or any other claim if that can cause
 confusion with a genuine resource owner.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2083,9 +2083,9 @@ authentication and the transmission of clear-text credentials (in the
 HTTP response), the authorization server MUST require the use of TLS
 as described in <a href="#tls-version" class="xref">Section 1.6</a> when sending requests to the
 authorization endpoint.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">The authorization server MUST support the use of the HTTP "GET"
+<p id="section-3.1-5">The authorization server MUST support the use of the HTTP <code>GET</code>
 method <span>[<a href="#RFC2616" class="xref">RFC2616</a>]</span> for the authorization endpoint and MAY support the
-use of the "POST" method as well.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+use of the <code>POST</code> method as well.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.1-6">Parameters sent without a value MUST be treated as if they were
 omitted from the request.  The authorization server MUST ignore
 unrecognized request parameters.  Request and response parameters
@@ -2096,24 +2096,25 @@ MUST NOT be included more than once.<a href="#section-3.1-6" class="pilcrow">¶<
 <a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-response-type" class="section-name selfRef">Response Type</a>
           </h4>
 <p id="section-3.1.1-1">The authorization endpoint is used by the authorization code flow.
-The client informs the
-authorization server of the desired grant type using the following
-parameter:<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+The client informs the authorization server of the desired grant type
+using the following parameter:<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-3.1.1-2">
             <dt id="section-3.1.1-2.1">"response_type":</dt>
 <dd id="section-3.1.1-2.2">
-  REQUIRED.  The value MUST be "code" for requesting an
+  REQUIRED.  The value MUST be <code>code</code> for requesting an
 authorization code as described by <a href="#authorization-request" class="xref">Section 4.1.1</a>, or a registered
 extension value as described by <a href="#new-response-types" class="xref">Section 8.4</a>.<a href="#section-3.1.1-2.2" class="pilcrow">¶</a>
 </dd>
 </dl>
 <p id="section-3.1.1-3">Extension response types MAY contain a space-delimited (%x20) list of
 values, where the order of values does not matter (e.g., response
-type "a b" is the same as "b a").  The meaning of such composite
+type <code>a b</code> is the same as <code>b a</code>).  The meaning of such composite
 response types is defined by their respective specifications.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-4">If an authorization request is missing the "response_type" parameter,
+<p id="section-3.1.1-4">For example, OpenID Connect defines <code>response_type=id_token</code> as well as a few
+other combinations which include additional security features for those flows.<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-5">If an authorization request is missing the "response_type" parameter,
 or if the response type is not understood, the authorization server
-MUST return an error response as described in <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>.<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+MUST return an error response as described in <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>.<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="redirection-endpoint">
@@ -2140,7 +2141,7 @@ fragment component.<a href="#section-3.1.2-3" class="pilcrow">¶</a></p>
 <a href="#section-3.1.2.1" class="section-number selfRef">3.1.2.1. </a><a href="#name-endpoint-request-confidenti" class="section-name selfRef">Endpoint Request Confidentiality</a>
             </h5>
 <p id="section-3.1.2.1-1">The redirection endpoint SHOULD require the use of TLS as described
-in <a href="#tls-version" class="xref">Section 1.6</a> when the requested response type is "code",
+in <a href="#tls-version" class="xref">Section 1.6</a> when the requested response type is <code>code</code>,
 or when the redirection request will result in the transmission of
 sensitive credentials over an open network.  This specification does
 not mandate the use of TLS because at the time of this writing,
@@ -2165,7 +2166,7 @@ sign-in service).<a href="#section-3.1.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2-1">The authorization server MUST require all clients to register their
 redirection endpoint prior to utilizing the authorization endpoint.<a href="#section-3.1.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2-2">The authorization server SHOULD require the client to provide the
-complete redirection URI (the client MAY use the "state" request
+complete redirection URI (the client MAY use the <code>state</code> request
 parameter to achieve per-request customization).<a href="#section-3.1.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2-3">The authorization server MAY allow the client to register multiple
 redirection endpoints.<a href="#section-3.1.2.2-3" class="pilcrow">¶</a></p>
@@ -2181,7 +2182,7 @@ described in <a href="#open-redirectors" class="xref">Section 9.17</a>.<a href="
             </h5>
 <p id="section-3.1.2.3-1">If multiple redirection URIs have been registered the client MUST
 include a redirection URI with the authorization request using the
-"redirect_uri" request parameter.<a href="#section-3.1.2.3-1" class="pilcrow">¶</a></p>
+<code>redirect_uri</code> request parameter.<a href="#section-3.1.2.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.3-2">When a redirection URI is included in an authorization request, the
 authorization server MUST compare and match the value received
 against at least one of the registered redirection URIs (or URI
@@ -2236,7 +2237,7 @@ presenting its authorization grant or refresh token.<a href="#section-3.2-1" cla
 <p id="section-3.2-2">The means through which the client obtains the location of the token
 endpoint are beyond the scope of this specification, but the location
 is typically provided in the service documentation.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">The endpoint URI MAY include an "application/x-www-form-urlencoded"
+<p id="section-3.2-3">The endpoint URI MAY include an <code>application/x-www-form-urlencoded</code>
 formatted (per Appendix B) query component (<span>[<a href="#RFC3986" class="xref">RFC3986</a>]</span> Section 3.4),
 which MUST be retained when adding additional query parameters.  The
 endpoint URI MUST NOT include a fragment component.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
@@ -2244,7 +2245,7 @@ endpoint URI MUST NOT include a fragment component.<a href="#section-3.2-3" clas
 clear-text credentials (in the HTTP request and response), the
 authorization server MUST require the use of TLS as described in
 <a href="#tls-version" class="xref">Section 1.6</a> when sending requests to the token endpoint.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<p id="section-3.2-5">The client MUST use the HTTP "POST" method when making access token
+<p id="section-3.2-5">The client MUST use the HTTP <code>POST</code> method when making access token
 requests.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
 <p id="section-3.2-6">Parameters sent without a value MUST be treated as if they were
 omitted from the request.  The authorization server MUST ignore
@@ -2278,12 +2279,12 @@ of refresh tokens can be challenging, while rotation of a single
 set of client credentials is significantly easier.<a href="#section-3.2.1-2.3" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-3.2.1-3">A client MAY use the "client_id" request parameter to identify itself
+<p id="section-3.2.1-3">A client MAY use the <code>client_id</code> request parameter to identify itself
 when sending requests to the token endpoint.  In the
-"authorization_code" "grant_type" request to the token endpoint, an
-unauthenticated client MUST send its "client_id" to prevent itself
+<code>authorization_code</code> <code>grant_type</code> request to the token endpoint, an
+unauthenticated client MUST send its <code>client_id</code> to prevent itself
 from inadvertently accepting a code intended for a client with a
-different "client_id".  This protects the client from substitution of
+different <code>client_id</code>.  This protects the client from substitution of
 the authentication code.  (It provides no additional security for the
 protected resource.)<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
 </section>
@@ -2296,8 +2297,8 @@ protected resource.)<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-access-token-scope" class="section-name selfRef">Access Token Scope</a>
         </h3>
 <p id="section-3.3-1">The authorization and token endpoints allow the client to specify the
-scope of the access request using the "scope" request parameter.  In
-turn, the authorization server uses the "scope" response parameter to
+scope of the access request using the <code>scope</code> request parameter.  In
+turn, the authorization server uses the <code>scope</code> response parameter to
 inform the client of the scope of the access token issued.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.3-2">The value of the scope parameter is expressed as a list of space-
 delimited, case-sensitive strings.  The strings are defined by the
@@ -2314,7 +2315,7 @@ additional access range to the requested scope.<a href="#section-3.3-2" class="p
 requested by the client, based on the authorization server policy or
 the resource owner's instructions.  If the issued access token scope
 is different from the one requested by the client, the authorization
-server MUST include the "scope" response parameter to inform the
+server MUST include the <code>scope</code> response parameter to inform the
 client of the actual scope granted.<a href="#section-3.3-4" class="pilcrow">¶</a></p>
 <p id="section-3.3-5">If the client omits the scope parameter when requesting
 authorization, the authorization server MUST either process the
@@ -2485,7 +2486,7 @@ server supports <code>plain</code>.<a href="#section-4.1.1.2-3" class="pilcrow">
 <p id="section-4.1.1.2-4">The plain transformation is for compatibility with existing
 deployments and for constrained environments that can't use the S256
 transformation.<a href="#section-4.1.1.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.1.1.2-5">ABNF for "code_challenge" is as follows.<a href="#section-4.1.1.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.1.1.2-5">ABNF for <code>code_challenge</code> is as follows.<a href="#section-4.1.1.2-5" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-4.1.1.2-6">
 <pre>
 code-challenge = 43*128unreserved
@@ -2503,7 +2504,7 @@ DIGIT = %x30-39
             </h5>
 <p id="section-4.1.1.3-1">The client constructs the request URI by adding the following
 parameters to the query component of the authorization endpoint URI
-using the "application/x-www-form-urlencoded" format, per Appendix B:<a href="#section-4.1.1.3-1" class="pilcrow">¶</a></p>
+using the <code>application/x-www-form-urlencoded</code> format, per Appendix B:<a href="#section-4.1.1.3-1" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-4.1.1.3-2">
               <dt id="section-4.1.1.3-2.1">"response_type":</dt>
 <dd id="section-4.1.1.3-2.2">
@@ -2575,7 +2576,7 @@ user-agent.<a href="#section-4.1.1.3-7" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-1">If the resource owner grants the access request, the authorization
 server issues an authorization code and delivers it to the client by
 adding the following parameters to the query component of the
-redirection URI using the "application/x-www-form-urlencoded" format,
+redirection URI using the <code>application/x-www-form-urlencoded</code> format,
 per Appendix B:<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-4.1.2-2">
             <dt id="section-4.1.2-2.1">"code":</dt>
@@ -2593,7 +2594,7 @@ the client identifier and redirection URI.<a href="#section-4.1.2-2.2" class="pi
 </dd>
 <dt id="section-4.1.2-2.3">"state":</dt>
 <dd id="section-4.1.2-2.4">
-  REQUIRED if the "state" parameter was present in the client
+  REQUIRED if the <code>state</code> parameter was present in the client
 authorization request.  The exact value received from the
 client.<a href="#section-4.1.2-2.4" class="pilcrow">¶</a>
 </dd>
@@ -2613,16 +2614,16 @@ specification.  The client should avoid making assumptions about code
 value sizes.  The authorization server SHOULD document the size of
 any value it issues.<a href="#section-4.1.2-5" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-6">When the server issues the authorization code in the authorization
-response, it MUST associate the "code_challenge" and
-"code_challenge_method" values with the authorization code so it can
+response, it MUST associate the <code>code_challenge</code> and
+<code>code_challenge_method</code> values with the authorization code so it can
 be verified later.<a href="#section-4.1.2-6" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-7">Typically, the "code_challenge" and "code_challenge_method" values
-are stored in encrypted form in the "code" itself but could
+<p id="section-4.1.2-7">Typically, the <code>code_challenge</code> and <code>code_challenge_method</code> values
+are stored in encrypted form in the <code>code</code> itself but could
 alternatively be stored on the server associated with the code.  The
-server MUST NOT include the "code_challenge" value in client requests
+server MUST NOT include the <code>code_challenge</code> value in client requests
 in a form that other entities can extract.<a href="#section-4.1.2-7" class="pilcrow">¶</a></p>
 <p id="section-4.1.2-8">The exact method that the server uses to associate the
-"code_challenge" with the issued "code" is out of scope for this
+<code>code_challenge</code> with the issued <code>code</code> is out of scope for this
 specification.<a href="#section-4.1.2-8" class="pilcrow">¶</a></p>
 <div id="authorization-code-error-response">
 <section id="section-4.1.2.1">
@@ -2634,22 +2635,22 @@ redirection URI, or if the client identifier is missing or invalid,
 the authorization server SHOULD inform the resource owner of the
 error and MUST NOT automatically redirect the user-agent to the
 invalid redirection URI.<a href="#section-4.1.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.2.1-2">If the client does not send the "code_challenge" in
+<p id="section-4.1.2.1-2">If the client does not send the <code>code_challenge</code> in
 the request, the authorization endpoint MUST return the authorization
-error response with the "error" value set to "invalid_request".  The
-"error_description" or the response of "error_uri" SHOULD explain the
+error response with the <code>error</code> value set to <code>invalid_request</code>.  The
+<code>error_description</code> or the response of <code>error_uri</code> SHOULD explain the
 nature of error, e.g., code challenge required.<a href="#section-4.1.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.1.2.1-3">If the server supporting PKCE does not support the requested
 transformation, the authorization endpoint MUST return the
-authorization error response with "error" value set to
-"invalid_request".  The "error_description" or the response of
-"error_uri" SHOULD explain the nature of error, e.g., transform
+authorization error response with <code>error</code> value set to
+<code>invalid_request</code>.  The <code>error_description</code> or the response of
+<code>error_uri</code> SHOULD explain the nature of error, e.g., transform
 algorithm not supported.<a href="#section-4.1.2.1-3" class="pilcrow">¶</a></p>
 <p id="section-4.1.2.1-4">If the resource owner denies the access request or if the request
 fails for reasons other than a missing or invalid redirection URI,
 the authorization server informs the client by adding the following
 parameters to the query component of the redirection URI using the
-"application/x-www-form-urlencoded" format, per Appendix B:<a href="#section-4.1.2.1-4" class="pilcrow">¶</a></p>
+<code>application/x-www-form-urlencoded</code> format, per Appendix B:<a href="#section-4.1.2.1-4" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-4.1.2.1-5">
               <dt id="section-4.1.2.1-5.1">"error":</dt>
 <dd id="section-4.1.2.1-5.2">
@@ -2701,7 +2702,7 @@ to the client via an HTTP redirect.)<a href="#section-4.1.2.1-5.2.2.14" class="p
 </dl>
 <p id="section-4.1.2.1-5.2.3">
 
-Values for the "error" parameter MUST NOT include characters
+Values for the <code>error</code> parameter MUST NOT include characters
 outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-5.2.3" class="pilcrow">¶</a></p>
 </dd>
 <dt id="section-4.1.2.1-5.3">"error_description":</dt>
@@ -2709,7 +2710,7 @@ outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-5.2.3" cla
   OPTIONAL.  Human-readable ASCII <span>[<a href="#USASCII" class="xref">USASCII</a>]</span> text providing
 additional information, used to assist the client developer in
 understanding the error that occurred.
-Values for the "error_description" parameter MUST NOT include
+Values for the <code>error_description</code> parameter MUST NOT include
 characters outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-5.4" class="pilcrow">¶</a>
 </dd>
 <dt id="section-4.1.2.1-5.5">"error_uri":</dt>
@@ -2717,13 +2718,13 @@ characters outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1
   OPTIONAL.  A URI identifying a human-readable web page with
 information about the error, used to provide the client
 developer with additional information about the error.
-Values for the "error_uri" parameter MUST conform to the
+Values for the <code>error_uri</code> parameter MUST conform to the
 URI-reference syntax and thus MUST NOT include characters
 outside the set %x21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-5.6" class="pilcrow">¶</a>
 </dd>
 <dt id="section-4.1.2.1-5.7">"state":</dt>
 <dd id="section-4.1.2.1-5.8">
-  REQUIRED if a "state" parameter was present in the client
+  REQUIRED if a <code>state</code> parameter was present in the client
 authorization request.  The exact value received from the
 client.<a href="#section-4.1.2.1-5.8" class="pilcrow">¶</a>
 </dd>
@@ -2746,13 +2747,13 @@ Location: https://client.example.com/cb?error=access_denied&amp;state=xyz
 <a href="#section-4.1.3" class="section-number selfRef">4.1.3. </a><a href="#name-access-token-request" class="section-name selfRef">Access Token Request</a>
           </h4>
 <p id="section-4.1.3-1">The client makes a request to the token endpoint by sending the
-following parameters using the "application/x-www-form-urlencoded"
+following parameters using the <code>application/x-www-form-urlencoded</code>
 format per Appendix B with a character encoding of UTF-8 in the HTTP
 request entity-body:<a href="#section-4.1.3-1" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-4.1.3-2">
             <dt id="section-4.1.3-2.1">"grant_type":</dt>
 <dd id="section-4.1.3-2.2">
-  REQUIRED.  Value MUST be set to "authorization_code".<a href="#section-4.1.3-2.2" class="pilcrow">¶</a>
+  REQUIRED.  Value MUST be set to <code>authorization_code</code>.<a href="#section-4.1.3-2.2" class="pilcrow">¶</a>
 </dd>
 <dt id="section-4.1.3-2.3">"code":</dt>
 <dd id="section-4.1.3-2.4">
@@ -2761,7 +2762,7 @@ authorization server.<a href="#section-4.1.3-2.4" class="pilcrow">¶</a>
 </dd>
 <dt id="section-4.1.3-2.5">"redirect_uri":</dt>
 <dd id="section-4.1.3-2.6">
-  REQUIRED, if the "redirect_uri" parameter was included in the
+  REQUIRED, if the <code>redirect_uri</code> parameter was included in the
 authorization request as described in <a href="#authorization-request" class="xref">Section 4.1.1</a>, and their
 values MUST be identical.<a href="#section-4.1.3-2.6" class="pilcrow">¶</a>
 </dd>
@@ -2803,17 +2804,17 @@ authentication requirements),<a href="#section-4.1.3-7.1" class="pilcrow">¶</a>
 </li>
 <li id="section-4.1.3-7.3">ensure that the authorization code was issued to the authenticated
 confidential client, or if the client is public, ensure that the
-code was issued to "client_id" in the request,<a href="#section-4.1.3-7.3" class="pilcrow">¶</a>
+code was issued to <code>client_id</code> in the request,<a href="#section-4.1.3-7.3" class="pilcrow">¶</a>
 </li>
 <li id="section-4.1.3-7.4">verify that the authorization code is valid,<a href="#section-4.1.3-7.4" class="pilcrow">¶</a>
 </li>
-<li id="section-4.1.3-7.5">verify the "code_verifier" by calculating the code challenge from the received
-"code_verifier" and comparing it with the previously associated
-"code_challenge", after first transforming it according to the
-"code_challenge_method" method specified by the client, and<a href="#section-4.1.3-7.5" class="pilcrow">¶</a>
+<li id="section-4.1.3-7.5">verify the <code>code_verifier</code> by calculating the code challenge from the received
+<code>code_verifier</code> and comparing it with the previously associated
+<code>code_challenge</code>, after first transforming it according to the
+<code>code_challenge_method</code> method specified by the client, and<a href="#section-4.1.3-7.5" class="pilcrow">¶</a>
 </li>
-<li id="section-4.1.3-7.6">ensure that the "redirect_uri" parameter is present if the
-"redirect_uri" parameter was included in the initial authorization
+<li id="section-4.1.3-7.6">ensure that the <code>redirect_uri</code> parameter is present if the
+<code>redirect_uri</code> parameter was included in the initial authorization
 request as described in <a href="#authorization-request" class="xref">Section 4.1.1</a>, and if included ensure that
 their values are identical.<a href="#section-4.1.3-7.6" class="pilcrow">¶</a>
 </li>
@@ -2901,13 +2902,13 @@ no additional authorization request is needed.<a href="#section-4.2.1-1" class="
 <a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-access-token-request-2" class="section-name selfRef">Access Token Request</a>
           </h4>
 <p id="section-4.2.2-1">The client makes a request to the token endpoint by adding the
-following parameters using the "application/x-www-form-urlencoded"
+following parameters using the <code>application/x-www-form-urlencoded</code>
 format per Appendix B with a character encoding of UTF-8 in the HTTP
 request entity-body:<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-4.2.2-2">
             <dt id="section-4.2.2-2.1">"grant_type":</dt>
 <dd id="section-4.2.2-2.2">
-  REQUIRED.  Value MUST be set to "client_credentials".<a href="#section-4.2.2-2.2" class="pilcrow">¶</a>
+  REQUIRED.  Value MUST be set to <code>client_credentials</code>.<a href="#section-4.2.2-2.2" class="pilcrow">¶</a>
 </dd>
 <dt id="section-4.2.2-2.3">"scope":</dt>
 <dd id="section-4.2.2-2.4">
@@ -2970,7 +2971,7 @@ Pragma: no-cache
         </h3>
 <p id="section-4.3-1">The client uses an extension grant type by specifying the grant type
 using an absolute URI (defined by the authorization server) as the
-value of the "grant_type" parameter of the token endpoint, and by
+value of the <code>grant_type</code> parameter of the token endpoint, and by
 adding any additional parameters necessary.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <p id="section-4.3-2">For example, to request an access token using a Security Assertion
 Markup Language (SAML) 2.0 assertion grant type as defined by
@@ -3027,7 +3028,7 @@ to the entity-body of the HTTP response with a 200 (OK) status code:<a href="#se
 <dt id="section-5.1-2.5">"expires_in":</dt>
 <dd id="section-5.1-2.6">
   RECOMMENDED.  The lifetime in seconds of the access token.  For
-example, the value "3600" denotes that the access token will
+example, the value <code>3600</code> denotes that the access token will
 expire in one hour from the time the response was generated.
 If omitted, the authorization server SHOULD provide the
 expiration time via other means or document the default value.<a href="#section-5.1-2.6" class="pilcrow">¶</a>
@@ -3046,17 +3047,17 @@ described by <a href="#access-token-scope" class="xref">Section 3.3</a>.<a href=
 </dd>
 </dl>
 <p id="section-5.1-3">The parameters are included in the entity-body of the HTTP response
-using the "application/json" media type as defined by <span>[<a href="#RFC4627" class="xref">RFC4627</a>]</span>.  The
+using the <code>application/json</code> media type as defined by <span>[<a href="#RFC4627" class="xref">RFC4627</a>]</span>.  The
 parameters are serialized into a JavaScript Object Notation (JSON)
 structure by adding each parameter at the highest structure level.
 Parameter names and string values are included as JSON strings.
 Numerical values are included as JSON numbers.  The order of
 parameters does not matter and can vary.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.1-4">The authorization server MUST include the HTTP "Cache-Control"
-response header field <span>[<a href="#RFC2616" class="xref">RFC2616</a>]</span> with a value of "no-store" in any
+<p id="section-5.1-4">The authorization server MUST include the HTTP <code>Cache-Control</code>
+response header field <span>[<a href="#RFC2616" class="xref">RFC2616</a>]</span> with a value of <code>no-store</code> in any
 response containing tokens, credentials, or other sensitive
-information, as well as the "Pragma" response header field <span>[<a href="#RFC2616" class="xref">RFC2616</a>]</span>
-with a value of "no-cache".<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+information, as well as the <code>Pragma</code> response header field <span>[<a href="#RFC2616" class="xref">RFC2616</a>]</span>
+with a value of <code>no-cache</code>.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <p id="section-5.1-5">For example:<a href="#section-5.1-5" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-5.1-6">
 <pre>
@@ -3113,10 +3114,10 @@ client authentication included, or unsupported
 authentication method).  The authorization server MAY
 return an HTTP 401 (Unauthorized) status code to indicate
 which HTTP authentication schemes are supported.  If the
-client attempted to authenticate via the "Authorization"
+client attempted to authenticate via the <code>Authorization</code>
 request header field, the authorization server MUST
 respond with an HTTP 401 (Unauthorized) status code and
-include the "WWW-Authenticate" response header field
+include the <code>WWW-Authenticate</code> response header field
 matching the authentication scheme used by the client.<a href="#section-5.2-3.2.2.4" class="pilcrow">¶</a>
 </dd>
 <dt id="section-5.2-3.2.2.5">"invalid_grant":</dt>
@@ -3145,7 +3146,7 @@ exceeds the scope granted by the resource owner.<a href="#section-5.2-3.2.2.12" 
 </dl>
 <p id="section-5.2-3.2.3">
 
-Values for the "error" parameter MUST NOT include characters
+Values for the <code>error</code> parameter MUST NOT include characters
 outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-5.2-3.2.3" class="pilcrow">¶</a></p>
 </dd>
 <dt id="section-5.2-3.3">"error_description":</dt>
@@ -3153,7 +3154,7 @@ outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-5.2-3.2.3" class="
   OPTIONAL.  Human-readable ASCII <span>[<a href="#USASCII" class="xref">USASCII</a>]</span> text providing
 additional information, used to assist the client developer in
 understanding the error that occurred.
-Values for the "error_description" parameter MUST NOT include
+Values for the <code>error_description</code> parameter MUST NOT include
 characters outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-5.2-3.4" class="pilcrow">¶</a>
 </dd>
 <dt id="section-5.2-3.5">"error_uri":</dt>
@@ -3161,13 +3162,13 @@ characters outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-5.2-3.4
   OPTIONAL.  A URI identifying a human-readable web page with
 information about the error, used to provide the client
 developer with additional information about the error.
-Values for the "error_uri" parameter MUST conform to the
+Values for the <code>error_uri</code> parameter MUST conform to the
 URI-reference syntax and thus MUST NOT include characters
 outside the set %x21 / %x23-5B / %x5D-7E.<a href="#section-5.2-3.6" class="pilcrow">¶</a>
 </dd>
 </dl>
 <p id="section-5.2-4">The parameters are included in the entity-body of the HTTP response
-using the "application/json" media type as defined by <span>[<a href="#RFC4627" class="xref">RFC4627</a>]</span>.  The
+using the <code>application/json</code> media type as defined by <span>[<a href="#RFC4627" class="xref">RFC4627</a>]</span>.  The
 parameters are serialized into a JSON structure by adding each
 parameter at the highest structure level.  Parameter names and string
 values are included as JSON strings.  Numerical values are included
@@ -3208,13 +3209,13 @@ This is to prevent privilege escalation by the legitimate client and
 reduce the impact of refresh token leakage.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">If the authorization server issued a refresh token to the client, the
 client makes a refresh request to the token endpoint by adding the
-following parameters using the "application/x-www-form-urlencoded"
+following parameters using the <code>application/x-www-form-urlencoded</code>
 format per Appendix B with a character encoding of UTF-8 in the HTTP
 request entity-body:<a href="#section-6-3" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-6-4">
         <dt id="section-6-4.1">"grant_type":</dt>
 <dd id="section-6-4.2">
-  REQUIRED.  Value MUST be set to "refresh_token".<a href="#section-6-4.2" class="pilcrow">¶</a>
+  REQUIRED.  Value MUST be set to <code>refresh_token</code>.<a href="#section-6-4.2" class="pilcrow">¶</a>
 </dd>
 <dt id="section-6-4.3">"refresh_token":</dt>
 <dd id="section-6-4.4">
@@ -3335,9 +3336,9 @@ authorization server.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">The method in which the client utilizes the access token to
 authenticate with the resource server depends on the type of access
 token issued by the authorization server.  Typically, it involves
-using the HTTP "Authorization" request header field <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span> with an
+using the HTTP <code>Authorization</code> request header field <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span> with an
 authentication scheme defined by the specification of the access
-token type used, such as "Bearer", defined below.<a href="#section-7-2" class="pilcrow">¶</a></p>
+token type used, such as <code>Bearer</code>, defined below.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <div id="access-token-types">
 <section id="section-7.1">
         <h3 id="name-access-token-types">
@@ -3348,7 +3349,7 @@ required to successfully utilize the access token to make a protected
 resource request (along with type-specific attributes).  The client
 MUST NOT use an access token if it does not understand the token
 type.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
-<p id="section-7.1-2">For example, the "Bearer" token type defined in this specification is utilized
+<p id="section-7.1-2">For example, the <code>Bearer</code> token type defined in this specification is utilized
 by simply including the access token string in the request:<a href="#section-7.1-2" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-7.1-3">
 <pre>
@@ -3359,7 +3360,7 @@ Authorization: Bearer mF_9.B5f-4.1JqM
 </div>
 <p id="section-7.1-4">The above example is provided for illustration purposes only.<a href="#section-7.1-4" class="pilcrow">¶</a></p>
 <p id="section-7.1-5">Each access token type definition specifies the additional attributes
-(if any) sent to the client together with the "access_token" response
+(if any) sent to the client together with the <code>access_token</code> response
 parameter.  It also defines the HTTP authentication method used to
 include the access token when making a protected resource request.<a href="#section-7.1-5" class="pilcrow">¶</a></p>
 </section>
@@ -3389,8 +3390,8 @@ to transmit the token in each request.<a href="#section-7.2.1-1" class="pilcrow"
             <h5 id="name-authorization-request-heade">
 <a href="#section-7.2.1.1" class="section-number selfRef">7.2.1.1. </a><a href="#name-authorization-request-heade" class="section-name selfRef">Authorization Request Header Field</a>
             </h5>
-<p id="section-7.2.1.1-1">When sending the access token in the "Authorization" request header
-field defined by HTTP/1.1 <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span>, the client uses the "Bearer"
+<p id="section-7.2.1.1-1">When sending the access token in the <code>Authorization</code> request header
+field defined by HTTP/1.1 <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span>, the client uses the <code>Bearer</code>
 authentication scheme to transmit the access token.<a href="#section-7.2.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.2.1.1-2">For example:<a href="#section-7.2.1.1-2" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-7.2.1.1-3">
@@ -3400,11 +3401,11 @@ authentication scheme to transmit the access token.<a href="#section-7.2.1.1-1" 
  Authorization: Bearer mF_9.B5f-4.1JqM
 </pre><a href="#section-7.2.1.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-7.2.1.1-4">The syntax of the "Authorization" header field for this scheme
+<p id="section-7.2.1.1-4">The syntax of the <code>Authorization</code> header field for this scheme
 follows the usage of the Basic scheme defined in Section 2 of
 <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span>.  Note that, as with Basic, it does not conform to the
 generic syntax defined in Section 1.2 of <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span> but is compatible
-with the general authentication framework in HTTP 1.1 Authentication 
+with the general authentication framework in HTTP 1.1 Authentication
 <span>[<a href="#RFC7235" class="xref">RFC7235</a>]</span>, although it does not follow the preferred
 practice outlined therein in order to reflect existing deployments.
 The syntax for Bearer credentials is as follows:<a href="#section-7.2.1.1-4" class="pilcrow">¶</a></p>
@@ -3416,7 +3417,7 @@ credentials = "Bearer" 1*SP b64token
 </pre><a href="#section-7.2.1.1-5" class="pilcrow">¶</a>
 </div>
 <p id="section-7.2.1.1-6">Clients SHOULD make authenticated requests with a bearer token using
-the "Authorization" request header field with the "Bearer" HTTP
+the <code>Authorization</code> request header field with the <code>Bearer</code> HTTP
 authorization scheme.  Resource servers MUST support this method.<a href="#section-7.2.1.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3427,14 +3428,14 @@ authorization scheme.  Resource servers MUST support this method.<a href="#secti
             </h5>
 <p id="section-7.2.1.2-1">When sending the access token in the HTTP request entity-body, the
 client adds the access token to the request-body using the
-"access_token" parameter.  The client MUST NOT use this method unless
+<code>access_token</code> parameter.  The client MUST NOT use this method unless
 all of the following conditions are met:<a href="#section-7.2.1.2-1" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-7.2.1.2-2.1">The HTTP request entity-header includes the "Content-Type" header
-field set to "application/x-www-form-urlencoded".<a href="#section-7.2.1.2-2.1" class="pilcrow">¶</a>
+<li id="section-7.2.1.2-2.1">The HTTP request entity-header includes the <code>Content-Type</code> header
+field set to <code>application/x-www-form-urlencoded</code>.<a href="#section-7.2.1.2-2.1" class="pilcrow">¶</a>
 </li>
 <li id="section-7.2.1.2-2.2">The entity-body follows the encoding requirements of the
-"application/x-www-form-urlencoded" content-type as defined by
+<code>application/x-www-form-urlencoded</code> content-type as defined by
 HTML 4.01 <span>[<a href="#W3C.REC-html401-19991224" class="xref">W3C.REC-html401-19991224</a>]</span>.<a href="#section-7.2.1.2-2.2" class="pilcrow">¶</a>
 </li>
 <li id="section-7.2.1.2-2.3">The HTTP request entity-body is single-part.<a href="#section-7.2.1.2-2.3" class="pilcrow">¶</a>
@@ -3443,13 +3444,13 @@ HTML 4.01 <span>[<a href="#W3C.REC-html401-19991224" class="xref">W3C.REC-html40
 of ASCII <span>[<a href="#USASCII" class="xref">USASCII</a>]</span> characters.<a href="#section-7.2.1.2-2.4" class="pilcrow">¶</a>
 </li>
 <li id="section-7.2.1.2-2.5">The HTTP request method is one for which the request-body has
-defined semantics.  In particular, this means that the "GET"
+defined semantics.  In particular, this means that the <code>GET</code>
 method MUST NOT be used.<a href="#section-7.2.1.2-2.5" class="pilcrow">¶</a>
 </li>
 </ul>
 <p id="section-7.2.1.2-3">The entity-body MAY include other request-specific parameters, in
-which case the "access_token" parameter MUST be properly separated
-from the request-specific parameters using "&amp;" character(s) (ASCII
+which case the <code>access_token</code> parameter MUST be properly separated
+from the request-specific parameters using <code>&amp;</code> character(s) (ASCII
 code 38).<a href="#section-7.2.1.2-3" class="pilcrow">¶</a></p>
 <p id="section-7.2.1.2-4">For example, the client makes the following HTTP request using
 transport-layer security:<a href="#section-7.2.1.2-4" class="pilcrow">¶</a></p>
@@ -3462,9 +3463,9 @@ Content-Type: application/x-www-form-urlencoded
 access_token=mF_9.B5f-4.1JqM
 </pre><a href="#section-7.2.1.2-5" class="pilcrow">¶</a>
 </div>
-<p id="section-7.2.1.2-6">The "application/x-www-form-urlencoded" method SHOULD NOT be used
+<p id="section-7.2.1.2-6">The <code>application/x-www-form-urlencoded</code> method SHOULD NOT be used
 except in application contexts where participating clients do not
-have access to the "Authorization" request header field.  Resource
+have access to the <code>Authorization</code> request header field.  Resource
 servers MAY support this method.<a href="#section-7.2.1.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3478,28 +3479,28 @@ servers MAY support this method.<a href="#section-7.2.1.2-6" class="pilcrow">¶<
 <p id="section-7.2.2-1">If the protected resource request does not include authentication
 credentials or does not contain an access token that enables access
 to the protected resource, the resource server MUST include the HTTP
-"WWW-Authenticate" response header field; it MAY include it in
-response to other conditions as well.  The "WWW-Authenticate" header
+<code>WWW-Authenticate</code> response header field; it MAY include it in
+response to other conditions as well.  The <code>WWW-Authenticate</code> header
 field uses the framework defined by HTTP/1.1 <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span>.<a href="#section-7.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-7.2.2-2">All challenges defined by this specification MUST use the auth-scheme
-value "Bearer".  This scheme MUST be followed by one or more
+value <code>Bearer</code>.  This scheme MUST be followed by one or more
 auth-param values.  The auth-param attributes used or defined by this
 specification are as follows.  Other auth-param attributes MAY be
 used as well.<a href="#section-7.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-7.2.2-3">A "realm" attribute MAY be included to indicate the scope of
+<p id="section-7.2.2-3">A <code>realm</code> attribute MAY be included to indicate the scope of
 protection in the manner described in HTTP/1.1 <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span>.  The
-"realm" attribute MUST NOT appear more than once.<a href="#section-7.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-7.2.2-4">The "scope" attribute is defined in <a href="#access-token-scope" class="xref">Section 3.3</a>.  The
-"scope" attribute is a space-delimited list of case-sensitive scope
+<code>realm</code> attribute MUST NOT appear more than once.<a href="#section-7.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-7.2.2-4">The <code>scope</code> attribute is defined in <a href="#access-token-scope" class="xref">Section 3.3</a>.  The
+<code>scope</code> attribute is a space-delimited list of case-sensitive scope
 values indicating the required scope of the access token for
-accessing the requested resource. "scope" values are implementation
+accessing the requested resource. <code>scope</code> values are implementation
 defined; there is no centralized registry for them; allowed values
-are defined by the authorization server.  The order of "scope" values
-is not significant.  In some cases, the "scope" value will be used
+are defined by the authorization server.  The order of <code>scope</code> values
+is not significant.  In some cases, the <code>scope</code> value will be used
 when requesting a new access token with sufficient scope of access to
-utilize the protected resource.  Use of the "scope" attribute is
-OPTIONAL.  The "scope" attribute MUST NOT appear more than once.  The
-"scope" value is intended for programmatic use and is not meant to be
+utilize the protected resource.  Use of the <code>scope</code> attribute is
+OPTIONAL.  The <code>scope</code> attribute MUST NOT appear more than once.  The
+<code>scope</code> value is intended for programmatic use and is not meant to be
 displayed to end-users.<a href="#section-7.2.2-4" class="pilcrow">¶</a></p>
 <p id="section-7.2.2-5">Two example scope values follow; these are taken from the OpenID
 Connect <span>[<a href="#OpenID.Messages" class="xref">OpenID.Messages</a>]</span> and the Open Authentication Technology
@@ -3512,23 +3513,23 @@ scope="urn:example:channel=HBO&amp;urn:example:rating=G,PG-13"
 </pre><a href="#section-7.2.2-6" class="pilcrow">¶</a>
 </div>
 <p id="section-7.2.2-7">If the protected resource request included an access token and failed
-authentication, the resource server SHOULD include the "error"
+authentication, the resource server SHOULD include the <code>error</code>
 attribute to provide the client with the reason why the access
 request was declined.  The parameter value is described in
 <a href="#bearer-token-error-codes" class="xref">Section 7.3.1</a>.  In addition, the resource server MAY include the
-"error_description" attribute to provide developers a human-readable
+<code>error_description</code> attribute to provide developers a human-readable
 explanation that is not meant to be displayed to end-users.  It also
-MAY include the "error_uri" attribute with an absolute URI
+MAY include the <code>error_uri</code> attribute with an absolute URI
 identifying a human-readable web page explaining the error.  The
-"error", "error_description", and "error_uri" attributes MUST NOT
+<code>error</code>, <code>error_description</code>, and <code>error_uri</code> attributes MUST NOT
 appear more than once.<a href="#section-7.2.2-7" class="pilcrow">¶</a></p>
-<p id="section-7.2.2-8">Values for the "scope" attribute (specified in Appendix A.4)
+<p id="section-7.2.2-8">Values for the <code>scope</code> attribute (specified in Appendix A.4)
 MUST NOT include characters outside the set %x21 / %x23-5B
 / %x5D-7E for representing scope values and %x20 for delimiters
-between scope values.  Values for the "error" and "error_description"
+between scope values.  Values for the <code>error</code> and <code>error_description</code>
 attributes (specified in Appendixes A.7 and A.8) MUST
 NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.
-Values for the "error_uri" attribute (specified in Appendix A.9 of)
+Values for the <code>error_uri</code> attribute (specified in Appendix A.9 of)
 MUST conform to the URI-reference syntax and thus MUST NOT
 include characters outside the set %x21 / %x23-5B / %x5D-7E.<a href="#section-7.2.2-8" class="pilcrow">¶</a></p>
 <p id="section-7.2.2-9">For example, in response to a protected resource request without
@@ -3569,12 +3570,12 @@ status code to the client, in which the error values allowed are
 registered in the error registry established by this specification.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
 <p id="section-7.3-3">Such schemes MAY limit the set of valid error codes to a subset of
 the registered values.  If the error code is returned using a named
-parameter, the parameter name SHOULD be "error".<a href="#section-7.3-3" class="pilcrow">¶</a></p>
+parameter, the parameter name SHOULD be <code>error</code>.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
 <p id="section-7.3-4">Other schemes capable of being used for OAuth token authentication,
 but not primarily designed for that purpose, MAY bind their error
 values to the registry in the same manner.<a href="#section-7.3-4" class="pilcrow">¶</a></p>
 <p id="section-7.3-5">New authentication schemes MAY choose to also specify the use of the
-"error_description" and "error_uri" parameters to return error
+<code>error_description</code> and <code>error_uri</code> parameters to return error
 information in a manner parallel to their usage in this
 specification.<a href="#section-7.3-5" class="pilcrow">¶</a></p>
 <div id="bearer-token-error-codes">
@@ -3606,7 +3607,7 @@ request.<a href="#section-7.3.1-2.4" class="pilcrow">¶</a>
 <dd id="section-7.3.1-2.6">
   The request requires higher privileges than provided by the
 access token.  The resource server SHOULD respond with the HTTP
-403 (Forbidden) status code and MAY include the "scope"
+403 (Forbidden) status code and MAY include the <code>scope</code>
 attribute with the scope necessary to access the protected
 resource.<a href="#section-7.3.1-2.6" class="pilcrow">¶</a>
 </dd>
@@ -3889,7 +3890,7 @@ server is obliged to verify, for every request, whether the access
 token sent with that request was meant to be used for that particular
 resource server.  If not, the resource server MUST refuse to serve
 the respective request.  Clients and authorization servers MAY
-utilize the parameters "scope" or "resource" as specified in
+utilize the parameters <code>scope</code> or <code>resource</code> as specified in
 this document and <span>[<a href="#I-D.ietf-oauth-resource-indicators" class="xref">I-D.ietf-oauth-resource-indicators</a>]</span>, respectively, to
 determine the resource server they want to access.<a href="#section-7.4.5-2" class="pilcrow">¶</a></p>
 <p id="section-7.4.5-3">Additionally, access tokens SHOULD be restricted to certain resources
@@ -3900,8 +3901,8 @@ to verify, for every request, whether the access token sent with that
 request was meant to be used for that particular action on the
 particular resource.  If not, the resource server must refuse to
 serve the respective request.  Clients and authorization servers MAY
-utilize the parameter "scope" and
-"authorization_details" as specified in <span>[<a href="#I-D.ietf-oauth-rar" class="xref">I-D.ietf-oauth-rar</a>]</span> to
+utilize the parameter <code>scope</code> and
+<code>authorization_details</code> as specified in <span>[<a href="#I-D.ietf-oauth-rar" class="xref">I-D.ietf-oauth-rar</a>]</span> to
 determine those resources and/or actions.<a href="#section-7.4.5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3930,7 +3931,7 @@ used.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
 type-name ABNF.  If the type definition includes a new HTTP
 authentication scheme, the type name SHOULD be identical to the HTTP
 authentication scheme name (as defined by <span>[<a href="#RFC2617" class="xref">RFC2617</a>]</span>).  The token type
-"example" is reserved for use in examples.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<code>example</code> is reserved for use in examples.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-8.1-4">
 <pre>
 type-name  = 1*name-char
@@ -3969,7 +3970,7 @@ other registered values (e.g., begin with 'companyname_').<a href="#section-8.2-
 <a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-defining-new-authorization-" class="section-name selfRef">Defining New Authorization Grant Types</a>
         </h3>
 <p id="section-8.3-1">New authorization grant types can be defined by assigning them a
-unique absolute URI for use with the "grant_type" parameter.  If the
+unique absolute URI for use with the <code>grant_type</code> parameter.  If the
 extension grant type requires additional token endpoint parameters,
 they MUST be registered in the OAuth Parameters registry as described
 by <a href="#parameters-registry" class="xref">Section 12.2</a>.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
@@ -3995,10 +3996,10 @@ response-char  = "_" / DIGIT / ALPHA
 is compared as a space-delimited list of values in which the order of
 values does not matter.  Only one order of values can be registered,
 which covers all other arrangements of the same set of values.<a href="#section-8.4-3" class="pilcrow">¶</a></p>
-<p id="section-8.4-4">For example, the response type "token code" is left undefined by this
+<p id="section-8.4-4">For example, the response type <code>token code</code> is left undefined by this
 specification.  However, an extension can define and register the
-"token code" response type.  Once registered, the same combination
-cannot be registered as "code token", but both values can be used to
+<code>token code</code> response type.  Once registered, the same combination
+cannot be registered as <code>code token</code>, but both values can be used to
 denote the same response type.<a href="#section-8.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -4020,8 +4021,8 @@ extension grant type.  Error codes used with unregistered extensions
 MAY be registered.<a href="#section-8.5-2" class="pilcrow">¶</a></p>
 <p id="section-8.5-3">Error codes MUST conform to the error ABNF and SHOULD be prefixed by
 an identifying name when possible.  For example, an error identifying
-an invalid value set to the extension parameter "example" SHOULD be
-named "example_invalid".<a href="#section-8.5-3" class="pilcrow">¶</a></p>
+an invalid value set to the extension parameter <code>example</code> SHOULD be
+named <code>example_invalid</code>.<a href="#section-8.5-3" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-8.5-4">
 <pre>
 error      = 1*error-char
@@ -4391,7 +4392,7 @@ deployment-specific way to ensure or determine PKCE support by the AS.<a href="#
         </h3>
 <p id="section-9.8-1">Access tokens, refresh tokens, authorization codes, and client
 credentials MUST NOT be transmitted in the clear.<a href="#section-9.8-1" class="pilcrow">¶</a></p>
-<p id="section-9.8-2">The "state" and "scope" parameters SHOULD NOT include sensitive
+<p id="section-9.8-2">The <code>state</code> and <code>scope</code> parameters SHOULD NOT include sensitive
 client or resource owner information in plain text, as they can be
 transmitted over insecure channels or stored insecurely.<a href="#section-9.8-2" class="pilcrow">¶</a></p>
 </section>
@@ -4583,7 +4584,7 @@ gain access to the application device or its data, cause denial of
 service, or introduce a wide range of malicious side-effects.<a href="#section-9.16-1" class="pilcrow">¶</a></p>
 <p id="section-9.16-2">The authorization server and client MUST sanitize (and validate when
 possible) any value received - in particular, the value of the
-"state" and "redirect_uri" parameters.<a href="#section-9.16-2" class="pilcrow">¶</a></p>
+<code>state</code> and <code>redirect_uri</code> parameters.<a href="#section-9.16-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="open-redirectors">
@@ -4652,7 +4653,7 @@ and that authorization responses are rejected if the redirect URI
 they were received on doesn't match the redirect URI in an outgoing
 authorization request.<a href="#section-9.18-2" class="pilcrow">¶</a></p>
 <p id="section-9.18-3">The native app MUST store the redirect URI used in the authorization
-request with the authorization session data (i.e., along with "state"
+request with the authorization session data (i.e., along with <code>state</code>
 and other related data) and MUST verify that the URI on which the
 authorization response was received exactly matches it.<a href="#section-9.18-3" class="pilcrow">¶</a></p>
 <p id="section-9.18-4">The requirement of <a href="#native-app-registration" class="xref">Section 9.2</a>, specifically that authorization
@@ -4791,7 +4792,7 @@ the app to receive the URI and inspect its parameters is viable.<a href="#sectio
 <p id="section-10.2-3">After constructing the authorization request URI, the app uses
 platform-specific APIs to open the URI in an external user-agent.
 Typically, the external user-agent used is the default browser, that
-is, the application configured for handling "http" and "https" scheme
+is, the application configured for handling <code>http</code> and <code>https</code> scheme
 URIs on the system; however, different browser selection criteria and
 other categories of external user-agents MAY be used.<a href="#section-10.2-3" class="pilcrow">¶</a></p>
 <p id="section-10.2-4">This best practice focuses on the browser as the RECOMMENDED external
@@ -4994,7 +4995,7 @@ list.<a href="#section-12.1-5" class="pilcrow">¶</a></p>
 <dt id="section-12.1.1-1.3">Additional Token Endpoint Response Parameters:</dt>
 <dd id="section-12.1.1-1.4">
   Additional response parameters returned together with the
-"access_token" parameter.  New parameters MUST be separately
+<code>access_token</code> parameter.  New parameters MUST be separately
 registered in the OAuth Parameters registry as described by
 <a href="#parameters-registry" class="xref">Section 12.2</a>.<a href="#section-12.1.1-1.4" class="pilcrow">¶</a>
 </dd>
@@ -5594,7 +5595,7 @@ Return and Linefeed characters.)<a href="#section-appendix.a-5" class="pilcrow">
         <h2 id="name-client_id-syntax">
 <a href="#section-a.1" class="section-number selfRef">A.1. </a><a href="#name-client_id-syntax" class="section-name selfRef">"client_id" Syntax</a>
         </h2>
-<p id="section-a.1-1">The "client_id" element is defined in <a href="#client-password" class="xref">Section 2.3.1</a>:<a href="#section-a.1-1" class="pilcrow">¶</a></p>
+<p id="section-a.1-1">The <code>client_id</code> element is defined in <a href="#client-password" class="xref">Section 2.3.1</a>:<a href="#section-a.1-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.1-2">
 <pre>
 client-id     = *VSCHAR
@@ -5607,7 +5608,7 @@ client-id     = *VSCHAR
         <h2 id="name-client_secret-syntax">
 <a href="#section-a.2" class="section-number selfRef">A.2. </a><a href="#name-client_secret-syntax" class="section-name selfRef">"client_secret" Syntax</a>
         </h2>
-<p id="section-a.2-1">The "client_secret" element is defined in <a href="#client-password" class="xref">Section 2.3.1</a>:<a href="#section-a.2-1" class="pilcrow">¶</a></p>
+<p id="section-a.2-1">The <code>client_secret</code> element is defined in <a href="#client-password" class="xref">Section 2.3.1</a>:<a href="#section-a.2-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.2-2">
 <pre>
 client-secret = *VSCHAR
@@ -5620,7 +5621,7 @@ client-secret = *VSCHAR
         <h2 id="name-response_type-syntax">
 <a href="#section-a.3" class="section-number selfRef">A.3. </a><a href="#name-response_type-syntax" class="section-name selfRef">"response_type" Syntax</a>
         </h2>
-<p id="section-a.3-1">The "response_type" element is defined in <a href="#response-type" class="xref">Section 3.1.1</a> and <a href="#new-response-types" class="xref">Section 8.4</a>:<a href="#section-a.3-1" class="pilcrow">¶</a></p>
+<p id="section-a.3-1">The <code>response_type</code> element is defined in <a href="#response-type" class="xref">Section 3.1.1</a> and <a href="#new-response-types" class="xref">Section 8.4</a>:<a href="#section-a.3-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.3-2">
 <pre>
 response-type = response-name *( SP response-name )
@@ -5635,7 +5636,7 @@ response-char = "_" / DIGIT / ALPHA
         <h2 id="name-scope-syntax">
 <a href="#section-a.4" class="section-number selfRef">A.4. </a><a href="#name-scope-syntax" class="section-name selfRef">"scope" Syntax</a>
         </h2>
-<p id="section-a.4-1">The "scope" element is defined in <a href="#access-token-scope" class="xref">Section 3.3</a>:<a href="#section-a.4-1" class="pilcrow">¶</a></p>
+<p id="section-a.4-1">The <code>scope</code> element is defined in <a href="#access-token-scope" class="xref">Section 3.3</a>:<a href="#section-a.4-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.4-2">
 <pre>
  scope       = scope-token *( SP scope-token )
@@ -5649,7 +5650,7 @@ response-char = "_" / DIGIT / ALPHA
         <h2 id="name-state-syntax">
 <a href="#section-a.5" class="section-number selfRef">A.5. </a><a href="#name-state-syntax" class="section-name selfRef">"state" Syntax</a>
         </h2>
-<p id="section-a.5-1">The "state" element is defined in <a href="#authorization-request" class="xref">Section 4.1.1</a>, <a href="#authorization-response" class="xref">Section 4.1.2</a>, and <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>:<a href="#section-a.5-1" class="pilcrow">¶</a></p>
+<p id="section-a.5-1">The <code>state</code> element is defined in <a href="#authorization-request" class="xref">Section 4.1.1</a>, <a href="#authorization-response" class="xref">Section 4.1.2</a>, and <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>:<a href="#section-a.5-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.5-2">
 <pre>
  state      = 1*VSCHAR
@@ -5662,7 +5663,7 @@ response-char = "_" / DIGIT / ALPHA
         <h2 id="name-redirect_uri-syntax">
 <a href="#section-a.6" class="section-number selfRef">A.6. </a><a href="#name-redirect_uri-syntax" class="section-name selfRef">"redirect_uri" Syntax</a>
         </h2>
-<p id="section-a.6-1">The "redirect_uri" element is defined in <a href="#authorization-request" class="xref">Section 4.1.1</a>, and <a href="#access-token-request" class="xref">Section 4.1.3</a>:<a href="#section-a.6-1" class="pilcrow">¶</a></p>
+<p id="section-a.6-1">The <code>redirect_uri</code> element is defined in <a href="#authorization-request" class="xref">Section 4.1.1</a>, and <a href="#access-token-request" class="xref">Section 4.1.3</a>:<a href="#section-a.6-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.6-2">
 <pre>
  redirect-uri      = URI-reference
@@ -5675,7 +5676,7 @@ response-char = "_" / DIGIT / ALPHA
         <h2 id="name-error-syntax">
 <a href="#section-a.7" class="section-number selfRef">A.7. </a><a href="#name-error-syntax" class="section-name selfRef">"error" Syntax</a>
         </h2>
-<p id="section-a.7-1">The "error" element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>, <a href="#access-token-error-response" class="xref">Section 5.2</a>,
+<p id="section-a.7-1">The <code>error</code> element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>, <a href="#access-token-error-response" class="xref">Section 5.2</a>,
 7.2, and 8.5:<a href="#section-a.7-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.7-2">
 <pre>
@@ -5689,7 +5690,7 @@ response-char = "_" / DIGIT / ALPHA
         <h2 id="name-error_description-syntax">
 <a href="#section-a.8" class="section-number selfRef">A.8. </a><a href="#name-error_description-syntax" class="section-name selfRef">"error_description" Syntax</a>
         </h2>
-<p id="section-a.8-1">The "error_description" element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>,
+<p id="section-a.8-1">The <code>error_description</code> element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>,
 <a href="#access-token-error-response" class="xref">Section 5.2</a>, and <a href="#bearer-token-error-response" class="xref">Section 7.3</a>:<a href="#section-a.8-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.8-2">
 <pre>
@@ -5703,7 +5704,7 @@ response-char = "_" / DIGIT / ALPHA
         <h2 id="name-error_uri-syntax">
 <a href="#section-a.9" class="section-number selfRef">A.9. </a><a href="#name-error_uri-syntax" class="section-name selfRef">"error_uri" Syntax</a>
         </h2>
-<p id="section-a.9-1">The "error_uri" element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>, <a href="#access-token-error-response" class="xref">Section 5.2</a>,
+<p id="section-a.9-1">The <code>error_uri</code> element is defined in Sections <a href="#authorization-code-error-response" class="xref">Section 4.1.2.1</a>, <a href="#access-token-error-response" class="xref">Section 5.2</a>,
 and 7.2:<a href="#section-a.9-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.9-2">
 <pre>
@@ -5717,7 +5718,7 @@ and 7.2:<a href="#section-a.9-1" class="pilcrow">¶</a></p>
         <h2 id="name-grant_type-syntax">
 <a href="#section-a.10" class="section-number selfRef">A.10. </a><a href="#name-grant_type-syntax" class="section-name selfRef">"grant_type" Syntax</a>
         </h2>
-<p id="section-a.10-1">The "grant_type" element is defined in Sections <a href="#access-token-request" class="xref">Section 4.1.3</a>, <a href="#access-token-response" class="xref">Section 4.2.3</a>, <a href="#client-credentials-access-token-request" class="xref">Section 4.2.2</a>,
+<p id="section-a.10-1">The <code>grant_type</code> element is defined in Sections <a href="#access-token-request" class="xref">Section 4.1.3</a>, <a href="#access-token-response" class="xref">Section 4.2.3</a>, <a href="#client-credentials-access-token-request" class="xref">Section 4.2.2</a>,
 <a href="#extension-grants" class="xref">Section 4.3</a>, and <a href="#refreshing-an-access-token" class="xref">Section 6</a>:<a href="#section-a.10-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.10-2">
 <pre>
@@ -5733,7 +5734,7 @@ and 7.2:<a href="#section-a.9-1" class="pilcrow">¶</a></p>
         <h2 id="name-code-syntax">
 <a href="#section-a.11" class="section-number selfRef">A.11. </a><a href="#name-code-syntax" class="section-name selfRef">"code" Syntax</a>
         </h2>
-<p id="section-a.11-1">The "code" element is defined in <a href="#access-token-request" class="xref">Section 4.1.3</a>:<a href="#section-a.11-1" class="pilcrow">¶</a></p>
+<p id="section-a.11-1">The <code>code</code> element is defined in <a href="#access-token-request" class="xref">Section 4.1.3</a>:<a href="#section-a.11-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.11-2">
 <pre>
  code       = 1*VSCHAR
@@ -5746,7 +5747,7 @@ and 7.2:<a href="#section-a.9-1" class="pilcrow">¶</a></p>
         <h2 id="name-access_token-syntax">
 <a href="#section-a.12" class="section-number selfRef">A.12. </a><a href="#name-access_token-syntax" class="section-name selfRef">"access_token" Syntax</a>
         </h2>
-<p id="section-a.12-1">The "access_token" element is defined in <a href="#access-token-response" class="xref">Section 4.2.3</a> and <a href="#access-token-successful-response" class="xref">Section 5.1</a>:<a href="#section-a.12-1" class="pilcrow">¶</a></p>
+<p id="section-a.12-1">The <code>access_token</code> element is defined in <a href="#access-token-response" class="xref">Section 4.2.3</a> and <a href="#access-token-successful-response" class="xref">Section 5.1</a>:<a href="#section-a.12-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.12-2">
 <pre>
  access-token = 1*VSCHAR
@@ -5759,7 +5760,7 @@ and 7.2:<a href="#section-a.9-1" class="pilcrow">¶</a></p>
         <h2 id="name-token_type-syntax">
 <a href="#section-a.13" class="section-number selfRef">A.13. </a><a href="#name-token_type-syntax" class="section-name selfRef">"token_type" Syntax</a>
         </h2>
-<p id="section-a.13-1">The "token_type" element is defined in <a href="#access-token-successful-response" class="xref">Section 5.1</a>, and <a href="#defining-access-token-types" class="xref">Section 8.1</a>:<a href="#section-a.13-1" class="pilcrow">¶</a></p>
+<p id="section-a.13-1">The <code>token_type</code> element is defined in <a href="#access-token-successful-response" class="xref">Section 5.1</a>, and <a href="#defining-access-token-types" class="xref">Section 8.1</a>:<a href="#section-a.13-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.13-2">
 <pre>
  token-type = type-name / URI-reference
@@ -5774,7 +5775,7 @@ and 7.2:<a href="#section-a.9-1" class="pilcrow">¶</a></p>
         <h2 id="name-expires_in-syntax">
 <a href="#section-a.14" class="section-number selfRef">A.14. </a><a href="#name-expires_in-syntax" class="section-name selfRef">"expires_in" Syntax</a>
         </h2>
-<p id="section-a.14-1">The "expires_in" element is defined in <a href="#access-token-successful-response" class="xref">Section 5.1</a>:<a href="#section-a.14-1" class="pilcrow">¶</a></p>
+<p id="section-a.14-1">The <code>expires_in</code> element is defined in <a href="#access-token-successful-response" class="xref">Section 5.1</a>:<a href="#section-a.14-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.14-2">
 <pre>
  expires-in = 1*DIGIT
@@ -5787,7 +5788,7 @@ and 7.2:<a href="#section-a.9-1" class="pilcrow">¶</a></p>
         <h2 id="name-refresh_token-syntax">
 <a href="#section-a.15" class="section-number selfRef">A.15. </a><a href="#name-refresh_token-syntax" class="section-name selfRef">"refresh_token" Syntax</a>
         </h2>
-<p id="section-a.15-1">The "refresh_token" element is defined in <a href="#access-token-successful-response" class="xref">Section 5.1</a> and <a href="#refreshing-an-access-token" class="xref">Section 6</a>:<a href="#section-a.15-1" class="pilcrow">¶</a></p>
+<p id="section-a.15-1">The <code>refresh_token</code> element is defined in <a href="#access-token-successful-response" class="xref">Section 5.1</a> and <a href="#refreshing-an-access-token" class="xref">Section 6</a>:<a href="#section-a.15-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.15-2">
 <pre>
  refresh-token = 1*VSCHAR
@@ -5814,7 +5815,7 @@ and 7.2:<a href="#section-a.9-1" class="pilcrow">¶</a></p>
         <h2 id="name-code_verifier-syntax">
 <a href="#section-a.17" class="section-number selfRef">A.17. </a><a href="#name-code_verifier-syntax" class="section-name selfRef">"code_verifier" Syntax</a>
         </h2>
-<p id="section-a.17-1">ABNF for "code_verifier" is as follows.<a href="#section-a.17-1" class="pilcrow">¶</a></p>
+<p id="section-a.17-1">ABNF for <code>code_verifier</code> is as follows.<a href="#section-a.17-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.17-2">
 <pre>
 code-verifier = 43*128unreserved
@@ -5830,7 +5831,7 @@ DIGIT = %x30-39
         <h2 id="name-code_challenge-syntax">
 <a href="#section-a.18" class="section-number selfRef">A.18. </a><a href="#name-code_challenge-syntax" class="section-name selfRef">"code_challenge" Syntax</a>
         </h2>
-<p id="section-a.18-1">ABNF for "code_challenge" is as follows.<a href="#section-a.18-1" class="pilcrow">¶</a></p>
+<p id="section-a.18-1">ABNF for <code>code_challenge</code> is as follows.<a href="#section-a.18-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-a.18-2">
 <pre>
 code-challenge = 43*128unreserved
@@ -5849,7 +5850,7 @@ DIGIT = %x30-39
 <a href="#section-appendix.b" class="section-number selfRef">Appendix B. </a><a href="#name-use-of-application-x-www-fo" class="section-name selfRef">Use of application/x-www-form-urlencoded Media Type</a>
       </h2>
 <p id="section-appendix.b-1">At the time of publication of this specification, the
-"application/x-www-form-urlencoded" media type was defined in
+<code>application/x-www-form-urlencoded</code> media type was defined in
 Section 17.13.4 of <span>[<a href="#W3C.REC-html401-19991224" class="xref">W3C.REC-html401-19991224</a>]</span> but not registered in
 the IANA MIME Media Types registry
 (<a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>).  Furthermore, that
@@ -5919,8 +5920,7 @@ into the octet sequence below (using hexadecimal notation):<a href="#section-app
 </address>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Torsten Lodderstedt</span></div>
-<div dir="auto" class="left"><span class="org">Yes.com</span></div>
-<div dir="auto" class="left"><span class="country-name">Germany</span></div>
+<div dir="auto" class="left"><span class="org">yes.com</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:torsten@lodderstedt.net" class="email">torsten@lodderstedt.net</a>
