@@ -7,6 +7,7 @@ ipr: trust200902
 area: OAuth
 kw: Internet-Draft
 cat: std
+consensus: "true"
 area: Security
 
 coding: us-ascii
@@ -792,8 +793,9 @@ The client informs the authorization server of the desired response type
 using the following parameter:
 
 "response_type":
-:    REQUIRED.  The value MUST be `code` for requesting an
-     authorization code as described by {{authorization-request}}, or a registered extension value as described by {{new-response-types}}.
+:    REQUIRED.  The value MUST be `code` for requesting an authorization 
+code as described by {{authorization-request}}, or a registered extension 
+value as described by {{new-response-types}}.
 
 Extension response types MAY contain a space-delimited (%x20) list of
 values, where the order of values does not matter (e.g., response
