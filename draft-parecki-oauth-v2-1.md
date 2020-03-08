@@ -631,7 +631,7 @@ identifier size.  The authorization server SHOULD document the size
 of any identifier it issues.
 
 Authorization servers SHOULD NOT allow clients to influence their
-"client_id" or "sub" value or any other claim if that can cause
+`client_id` or `sub` value or any other claim if that can cause
 confusion with a genuine resource owner.
 
 
@@ -779,9 +779,9 @@ HTTP response), the authorization server MUST require the use of TLS
 as described in {{tls-version}} when sending requests to the
 authorization endpoint.
 
-The authorization server MUST support the use of the HTTP "GET"
+The authorization server MUST support the use of the HTTP `GET`
 method {{RFC2616}} for the authorization endpoint and MAY support the
-use of the "POST" method as well.
+use of the `POST` method as well.
 
 Parameters sent without a value MUST be treated as if they were
 omitted from the request.  The authorization server MUST ignore
@@ -795,13 +795,13 @@ The client informs the authorization server of the desired grant type
 using the following parameter:
 
 "response_type":
-:    REQUIRED.  The value MUST be "code" for requesting an
+:    REQUIRED.  The value MUST be `code` for requesting an
      authorization code as described by {{authorization-request}}, or a registered
      extension value as described by {{new-response-types}}.
 
 Extension response types MAY contain a space-delimited (%x20) list of
 values, where the order of values does not matter (e.g., response
-type "a b" is the same as "b a").  The meaning of such composite
+type `a b` is the same as `b a`).  The meaning of such composite
 response types is defined by their respective specifications.
 
 For example, OpenID Connect defines `response_type=id_token` as well as a few
@@ -834,7 +834,7 @@ fragment component.
 #### Endpoint Request Confidentiality
 
 The redirection endpoint SHOULD require the use of TLS as described
-in {{tls-version}} when the requested response type is "code",
+in {{tls-version}} when the requested response type is `code`,
 or when the redirection request will result in the transmission of
 sensitive credentials over an open network.  This specification does
 not mandate the use of TLS because at the time of this writing,
@@ -858,7 +858,7 @@ The authorization server MUST require all clients to register their
 redirection endpoint prior to utilizing the authorization endpoint.
 
 The authorization server SHOULD require the client to provide the
-complete redirection URI (the client MAY use the "state" request
+complete redirection URI (the client MAY use the `state` request
 parameter to achieve per-request customization).
 
 The authorization server MAY allow the client to register multiple
@@ -873,7 +873,7 @@ described in {{open-redirectors}}.
 
 If multiple redirection URIs have been registered the client MUST
 include a redirection URI with the authorization request using the
-"redirect_uri" request parameter.
+`redirect_uri` request parameter.
 
 When a redirection URI is included in an authorization request, the
 authorization server MUST compare and match the value received
@@ -919,7 +919,7 @@ The means through which the client obtains the location of the token
 endpoint are beyond the scope of this specification, but the location
 is typically provided in the service documentation.
 
-The endpoint URI MAY include an "application/x-www-form-urlencoded"
+The endpoint URI MAY include an `application/x-www-form-urlencoded`
 formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
 which MUST be retained when adding additional query parameters.  The
 endpoint URI MUST NOT include a fragment component.
@@ -929,7 +929,7 @@ clear-text credentials (in the HTTP request and response), the
 authorization server MUST require the use of TLS as described in
 {{tls-version}} when sending requests to the token endpoint.
 
-The client MUST use the HTTP "POST" method when making access token
+The client MUST use the HTTP `POST` method when making access token
 requests.
 
 Parameters sent without a value MUST be treated as if they were
@@ -962,12 +962,12 @@ authentication is used for:
    of refresh tokens can be challenging, while rotation of a single
    set of client credentials is significantly easier.
 
-A client MAY use the "client_id" request parameter to identify itself
+A client MAY use the `client_id` request parameter to identify itself
 when sending requests to the token endpoint.  In the
-"authorization_code" "grant_type" request to the token endpoint, an
-unauthenticated client MUST send its "client_id" to prevent itself
+`authorization_code` `grant_type` request to the token endpoint, an
+unauthenticated client MUST send its `client_id` to prevent itself
 from inadvertently accepting a code intended for a client with a
-different "client_id".  This protects the client from substitution of
+different `client_id`.  This protects the client from substitution of
 the authentication code.  (It provides no additional security for the
 protected resource.)
 
@@ -975,8 +975,8 @@ protected resource.)
 ## Access Token Scope {#access-token-scope}
 
 The authorization and token endpoints allow the client to specify the
-scope of the access request using the "scope" request parameter.  In
-turn, the authorization server uses the "scope" response parameter to
+scope of the access request using the `scope` request parameter.  In
+turn, the authorization server uses the `scope` response parameter to
 inform the client of the scope of the access token issued.
 
 The value of the scope parameter is expressed as a list of space-
@@ -994,7 +994,7 @@ The authorization server MAY fully or partially ignore the scope
 requested by the client, based on the authorization server policy or
 the resource owner's instructions.  If the issued access token scope
 is different from the one requested by the client, the authorization
-server MUST include the "scope" response parameter to inform the
+server MUST include the `scope` response parameter to inform the
 client of the actual scope granted.
 
 If the client omits the scope parameter when requesting
@@ -1150,7 +1150,7 @@ The plain transformation is for compatibility with existing
 deployments and for constrained environments that can't use the S256
 transformation.
 
-ABNF for "code_challenge" is as follows.
+ABNF for `code_challenge` is as follows.
 
     code-challenge = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -1161,7 +1161,7 @@ ABNF for "code_challenge" is as follows.
 
 The client constructs the request URI by adding the following
 parameters to the query component of the authorization endpoint URI
-using the "application/x-www-form-urlencoded" format, per Appendix B:
+using the `application/x-www-form-urlencoded` format, per Appendix B:
 
 "response_type":
 :    REQUIRED.  Value MUST be set to `code`.
@@ -1220,7 +1220,7 @@ user-agent.
 If the resource owner grants the access request, the authorization
 server issues an authorization code and delivers it to the client by
 adding the following parameters to the query component of the
-redirection URI using the "application/x-www-form-urlencoded" format,
+redirection URI using the `application/x-www-form-urlencoded` format,
 per Appendix B:
 
 "code":
@@ -1236,7 +1236,7 @@ per Appendix B:
      the client identifier and redirection URI.
 
 "state":
-:    REQUIRED if the "state" parameter was present in the client
+:    REQUIRED if the `state` parameter was present in the client
      authorization request.  The exact value received from the
      client.
 
@@ -1254,18 +1254,18 @@ value sizes.  The authorization server SHOULD document the size of
 any value it issues.
 
 When the server issues the authorization code in the authorization
-response, it MUST associate the "code_challenge" and
-"code_challenge_method" values with the authorization code so it can
+response, it MUST associate the `code_challenge` and
+`code_challenge_method` values with the authorization code so it can
 be verified later.
 
-Typically, the "code_challenge" and "code_challenge_method" values
-are stored in encrypted form in the "code" itself but could
+Typically, the `code_challenge` and `code_challenge_method` values
+are stored in encrypted form in the `code` itself but could
 alternatively be stored on the server associated with the code.  The
-server MUST NOT include the "code_challenge" value in client requests
+server MUST NOT include the `code_challenge` value in client requests
 in a form that other entities can extract.
 
 The exact method that the server uses to associate the
-"code_challenge" with the issued "code" is out of scope for this
+`code_challenge` with the issued `code` is out of scope for this
 specification.
 
 
@@ -1277,24 +1277,24 @@ the authorization server SHOULD inform the resource owner of the
 error and MUST NOT automatically redirect the user-agent to the
 invalid redirection URI.
 
-If the client does not send the "code_challenge" in
+If the client does not send the `code_challenge` in
 the request, the authorization endpoint MUST return the authorization
-error response with the "error" value set to "invalid_request".  The
-"error_description" or the response of "error_uri" SHOULD explain the
+error response with the `error` value set to `invalid_request`.  The
+`error_description` or the response of `error_uri` SHOULD explain the
 nature of error, e.g., code challenge required.
 
 If the server supporting PKCE does not support the requested
 transformation, the authorization endpoint MUST return the
-authorization error response with "error" value set to
-"invalid_request".  The "error_description" or the response of
-"error_uri" SHOULD explain the nature of error, e.g., transform
+authorization error response with `error` value set to
+`invalid_request`.  The `error_description` or the response of
+`error_uri` SHOULD explain the nature of error, e.g., transform
 algorithm not supported.
 
 If the resource owner denies the access request or if the request
 fails for reasons other than a missing or invalid redirection URI,
 the authorization server informs the client by adding the following
 parameters to the query component of the redirection URI using the
-"application/x-www-form-urlencoded" format, per Appendix B:
+`application/x-www-form-urlencoded` format, per Appendix B:
 
 "error":
 :    REQUIRED.  A single ASCII [USASCII] error code from the
@@ -1334,7 +1334,7 @@ parameters to the query component of the redirection URI using the
            Service Unavailable HTTP status code cannot be returned
            to the client via an HTTP redirect.)
 
-     Values for the "error" parameter MUST NOT include characters
+     Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
 
 
@@ -1342,19 +1342,19 @@ parameters to the query component of the redirection URI using the
 :    OPTIONAL.  Human-readable ASCII [USASCII] text providing
      additional information, used to assist the client developer in
      understanding the error that occurred.
-     Values for the "error_description" parameter MUST NOT include
+     Values for the `error_description` parameter MUST NOT include
      characters outside the set %x20-21 / %x23-5B / %x5D-7E.
 
 "error_uri":
 :    OPTIONAL.  A URI identifying a human-readable web page with
      information about the error, used to provide the client
      developer with additional information about the error.
-     Values for the "error_uri" parameter MUST conform to the
+     Values for the `error_uri` parameter MUST conform to the
      URI-reference syntax and thus MUST NOT include characters
      outside the set %x21 / %x23-5B / %x5D-7E.
 
 "state":
-:    REQUIRED if a "state" parameter was present in the client
+:    REQUIRED if a `state` parameter was present in the client
      authorization request.  The exact value received from the
      client.
 
@@ -1368,19 +1368,19 @@ sending the following HTTP response:
 ### Access Token Request {#access-token-request}
 
 The client makes a request to the token endpoint by sending the
-following parameters using the "application/x-www-form-urlencoded"
+following parameters using the `application/x-www-form-urlencoded`
 format per Appendix B with a character encoding of UTF-8 in the HTTP
 request entity-body:
 
 "grant_type":
-:    REQUIRED.  Value MUST be set to "authorization_code".
+:    REQUIRED.  Value MUST be set to `authorization_code`.
 
 "code":
 :    REQUIRED.  The authorization code received from the
      authorization server.
 
 "redirect_uri":
-:    REQUIRED, if the "redirect_uri" parameter was included in the
+:    REQUIRED, if the `redirect_uri` parameter was included in the
      authorization request as described in {{authorization-request}}, and their
      values MUST be identical.
 
@@ -1418,17 +1418,17 @@ The authorization server MUST:
 
 *  ensure that the authorization code was issued to the authenticated
    confidential client, or if the client is public, ensure that the
-   code was issued to "client_id" in the request,
+   code was issued to `client_id` in the request,
 
 *  verify that the authorization code is valid,
 
-*  verify the "code_verifier" by calculating the code challenge from the received
-   "code_verifier" and comparing it with the previously associated
-   "code_challenge", after first transforming it according to the
-   "code_challenge_method" method specified by the client, and
+*  verify the `code_verifier` by calculating the code challenge from the received
+   `code_verifier` and comparing it with the previously associated
+   `code_challenge`, after first transforming it according to the
+   `code_challenge_method` method specified by the client, and
 
-*  ensure that the "redirect_uri" parameter is present if the
-   "redirect_uri" parameter was included in the initial authorization
+*  ensure that the `redirect_uri` parameter is present if the
+   `redirect_uri` parameter was included in the initial authorization
    request as described in {{authorization-request}}, and if included ensure that
    their values are identical.
 
@@ -1499,12 +1499,12 @@ no additional authorization request is needed.
 ### Access Token Request {#client-credentials-access-token-request}
 
 The client makes a request to the token endpoint by adding the
-following parameters using the "application/x-www-form-urlencoded"
+following parameters using the `application/x-www-form-urlencoded`
 format per Appendix B with a character encoding of UTF-8 in the HTTP
 request entity-body:
 
 "grant_type":
-:    REQUIRED.  Value MUST be set to "client_credentials".
+:    REQUIRED.  Value MUST be set to `client_credentials`.
 
 "scope":
 :    OPTIONAL.  The scope of the access request as described by
@@ -1554,7 +1554,7 @@ An example successful response:
 
 The client uses an extension grant type by specifying the grant type
 using an absolute URI (defined by the authorization server) as the
-value of the "grant_type" parameter of the token endpoint, and by
+value of the `grant_type` parameter of the token endpoint, and by
 adding any additional parameters necessary.
 
 For example, to request an access token using a Security Assertion
@@ -1601,7 +1601,7 @@ to the entity-body of the HTTP response with a 200 (OK) status code:
 
 "expires_in":
 :    RECOMMENDED.  The lifetime in seconds of the access token.  For
-     example, the value "3600" denotes that the access token will
+     example, the value `3600` denotes that the access token will
      expire in one hour from the time the response was generated.
      If omitted, the authorization server SHOULD provide the
      expiration time via other means or document the default value.
@@ -1617,18 +1617,18 @@ to the entity-body of the HTTP response with a 200 (OK) status code:
      described by {{access-token-scope}}.
 
 The parameters are included in the entity-body of the HTTP response
-using the "application/json" media type as defined by {{RFC4627}}.  The
+using the `application/json` media type as defined by {{RFC4627}}.  The
 parameters are serialized into a JavaScript Object Notation (JSON)
 structure by adding each parameter at the highest structure level.
 Parameter names and string values are included as JSON strings.
 Numerical values are included as JSON numbers.  The order of
 parameters does not matter and can vary.
 
-The authorization server MUST include the HTTP "Cache-Control"
-response header field {{RFC2616}} with a value of "no-store" in any
+The authorization server MUST include the HTTP `Cache-Control`
+response header field {{RFC2616}} with a value of `no-store` in any
 response containing tokens, credentials, or other sensitive
-information, as well as the "Pragma" response header field {{RFC2616}}
-with a value of "no-cache".
+information, as well as the `Pragma` response header field {{RFC2616}}
+with a value of `no-cache`.
 
 For example:
 
@@ -1678,10 +1678,10 @@ parameters with the response:
            authentication method).  The authorization server MAY
            return an HTTP 401 (Unauthorized) status code to indicate
            which HTTP authentication schemes are supported.  If the
-           client attempted to authenticate via the "Authorization"
+           client attempted to authenticate via the `Authorization`
            request header field, the authorization server MUST
            respond with an HTTP 401 (Unauthorized) status code and
-           include the "WWW-Authenticate" response header field
+           include the `WWW-Authenticate` response header field
            matching the authentication scheme used by the client.
 
      "invalid_grant":
@@ -1703,26 +1703,26 @@ parameters with the response:
      :     The requested scope is invalid, unknown, malformed, or
            exceeds the scope granted by the resource owner.
 
-     Values for the "error" parameter MUST NOT include characters
+     Values for the `error` parameter MUST NOT include characters
      outside the set %x20-21 / %x23-5B / %x5D-7E.
 
 "error_description":
 :    OPTIONAL.  Human-readable ASCII [USASCII] text providing
      additional information, used to assist the client developer in
      understanding the error that occurred.
-     Values for the "error_description" parameter MUST NOT include
+     Values for the `error_description` parameter MUST NOT include
      characters outside the set %x20-21 / %x23-5B / %x5D-7E.
 
 "error_uri":
 :    OPTIONAL.  A URI identifying a human-readable web page with
      information about the error, used to provide the client
      developer with additional information about the error.
-     Values for the "error_uri" parameter MUST conform to the
+     Values for the `error_uri` parameter MUST conform to the
      URI-reference syntax and thus MUST NOT include characters
      outside the set %x21 / %x23-5B / %x5D-7E.
 
 The parameters are included in the entity-body of the HTTP response
-using the "application/json" media type as defined by [RFC4627].  The
+using the `application/json` media type as defined by [RFC4627].  The
 parameters are serialized into a JSON structure by adding each
 parameter at the highest structure level.  Parameter names and string
 values are included as JSON strings.  Numerical values are included
@@ -1758,12 +1758,12 @@ reduce the impact of refresh token leakage.
 
 If the authorization server issued a refresh token to the client, the
 client makes a refresh request to the token endpoint by adding the
-following parameters using the "application/x-www-form-urlencoded"
+following parameters using the `application/x-www-form-urlencoded`
 format per Appendix B with a character encoding of UTF-8 in the HTTP
 request entity-body:
 
 "grant_type":
-:    REQUIRED.  Value MUST be set to "refresh_token".
+:    REQUIRED.  Value MUST be set to `refresh_token`.
 
 "refresh_token":
 :    REQUIRED.  The refresh token issued to the client.
@@ -1875,9 +1875,9 @@ authorization server.
 The method in which the client utilizes the access token to
 authenticate with the resource server depends on the type of access
 token issued by the authorization server.  Typically, it involves
-using the HTTP "Authorization" request header field [RFC2617] with an
+using the HTTP `Authorization` request header field [RFC2617] with an
 authentication scheme defined by the specification of the access
-token type used, such as "Bearer", defined below.
+token type used, such as `Bearer`, defined below.
 
 
 ## Access Token Types {#access-token-types}
@@ -1888,7 +1888,7 @@ resource request (along with type-specific attributes).  The client
 MUST NOT use an access token if it does not understand the token
 type.
 
-For example, the "Bearer" token type defined in this specification is utilized
+For example, the `Bearer` token type defined in this specification is utilized
 by simply including the access token string in the request:
 
     GET /resource/1 HTTP/1.1
@@ -1898,7 +1898,7 @@ by simply including the access token string in the request:
 The above example is provided for illustration purposes only.
 
 Each access token type definition specifies the additional attributes
-(if any) sent to the client together with the "access_token" response
+(if any) sent to the client together with the `access_token` response
 parameter.  It also defines the HTTP authentication method used to
 include the access token when making a protected resource request.
 
@@ -1922,8 +1922,8 @@ to transmit the token in each request.
 
 #### Authorization Request Header Field
 
-When sending the access token in the "Authorization" request header
-field defined by HTTP/1.1 {{RFC2617}}, the client uses the "Bearer"
+When sending the access token in the `Authorization` request header
+field defined by HTTP/1.1 {{RFC2617}}, the client uses the `Bearer`
 authentication scheme to transmit the access token.
 
 For example:
@@ -1932,7 +1932,7 @@ For example:
      Host: server.example.com
      Authorization: Bearer mF_9.B5f-4.1JqM
 
-The syntax of the "Authorization" header field for this scheme
+The syntax of the `Authorization` header field for this scheme
 follows the usage of the Basic scheme defined in Section 2 of
 {{RFC2617}}.  Note that, as with Basic, it does not conform to the
 generic syntax defined in Section 1.2 of {{RFC2617}} but is compatible
@@ -1946,21 +1946,21 @@ The syntax for Bearer credentials is as follows:
     credentials = "Bearer" 1*SP b64token
 
 Clients SHOULD make authenticated requests with a bearer token using
-the "Authorization" request header field with the "Bearer" HTTP
+the `Authorization` request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
 #### Form-Encoded Body Parameter
 
 When sending the access token in the HTTP request entity-body, the
 client adds the access token to the request-body using the
-"access_token" parameter.  The client MUST NOT use this method unless
+`access_token` parameter.  The client MUST NOT use this method unless
 all of the following conditions are met:
 
-* The HTTP request entity-header includes the "Content-Type" header
-  field set to "application/x-www-form-urlencoded".
+* The HTTP request entity-header includes the `Content-Type` header
+  field set to `application/x-www-form-urlencoded`.
 
 * The entity-body follows the encoding requirements of the
-  "application/x-www-form-urlencoded" content-type as defined by
+  `application/x-www-form-urlencoded` content-type as defined by
   HTML 4.01 [W3C.REC-html401-19991224].
 
 * The HTTP request entity-body is single-part.
@@ -1969,12 +1969,12 @@ all of the following conditions are met:
   of ASCII {{USASCII}} characters.
 
 * The HTTP request method is one for which the request-body has
-  defined semantics.  In particular, this means that the "GET"
+  defined semantics.  In particular, this means that the `GET`
   method MUST NOT be used.
 
 The entity-body MAY include other request-specific parameters, in
-which case the "access_token" parameter MUST be properly separated
-from the request-specific parameters using "&" character(s) (ASCII
+which case the `access_token` parameter MUST be properly separated
+from the request-specific parameters using `&` character(s) (ASCII
 code 38).
 
 For example, the client makes the following HTTP request using
@@ -1986,9 +1986,9 @@ transport-layer security:
 
     access_token=mF_9.B5f-4.1JqM
 
-The "application/x-www-form-urlencoded" method SHOULD NOT be used
+The `application/x-www-form-urlencoded` method SHOULD NOT be used
 except in application contexts where participating clients do not
-have access to the "Authorization" request header field.  Resource
+have access to the `Authorization` request header field.  Resource
 servers MAY support this method.
 
 
@@ -1997,31 +1997,31 @@ servers MAY support this method.
 If the protected resource request does not include authentication
 credentials or does not contain an access token that enables access
 to the protected resource, the resource server MUST include the HTTP
-"WWW-Authenticate" response header field; it MAY include it in
-response to other conditions as well.  The "WWW-Authenticate" header
+`WWW-Authenticate` response header field; it MAY include it in
+response to other conditions as well.  The `WWW-Authenticate` header
 field uses the framework defined by HTTP/1.1 {{RFC2617}}.
 
 All challenges defined by this specification MUST use the auth-scheme
-value "Bearer".  This scheme MUST be followed by one or more
+value `Bearer`.  This scheme MUST be followed by one or more
 auth-param values.  The auth-param attributes used or defined by this
 specification are as follows.  Other auth-param attributes MAY be
 used as well.
 
-A "realm" attribute MAY be included to indicate the scope of
+A `realm` attribute MAY be included to indicate the scope of
 protection in the manner described in HTTP/1.1 {{RFC2617}}.  The
-"realm" attribute MUST NOT appear more than once.
+`realm` attribute MUST NOT appear more than once.
 
-The "scope" attribute is defined in {{access-token-scope}}.  The
-"scope" attribute is a space-delimited list of case-sensitive scope
+The `scope` attribute is defined in {{access-token-scope}}.  The
+`scope` attribute is a space-delimited list of case-sensitive scope
 values indicating the required scope of the access token for
-accessing the requested resource. "scope" values are implementation
+accessing the requested resource. `scope` values are implementation
 defined; there is no centralized registry for them; allowed values
-are defined by the authorization server.  The order of "scope" values
-is not significant.  In some cases, the "scope" value will be used
+are defined by the authorization server.  The order of `scope` values
+is not significant.  In some cases, the `scope` value will be used
 when requesting a new access token with sufficient scope of access to
-utilize the protected resource.  Use of the "scope" attribute is
-OPTIONAL.  The "scope" attribute MUST NOT appear more than once.  The
-"scope" value is intended for programmatic use and is not meant to be
+utilize the protected resource.  Use of the `scope` attribute is
+OPTIONAL.  The `scope` attribute MUST NOT appear more than once.  The
+`scope` value is intended for programmatic use and is not meant to be
 displayed to end-users.
 
 Two example scope values follow; these are taken from the OpenID
@@ -2033,24 +2033,24 @@ OAuth 2.0 use cases, respectively:
     scope="urn:example:channel=HBO&urn:example:rating=G,PG-13"
 
 If the protected resource request included an access token and failed
-authentication, the resource server SHOULD include the "error"
+authentication, the resource server SHOULD include the `error`
 attribute to provide the client with the reason why the access
 request was declined.  The parameter value is described in
 {{bearer-token-error-codes}}.  In addition, the resource server MAY include the
-"error_description" attribute to provide developers a human-readable
+`error_description` attribute to provide developers a human-readable
 explanation that is not meant to be displayed to end-users.  It also
-MAY include the "error_uri" attribute with an absolute URI
+MAY include the `error_uri` attribute with an absolute URI
 identifying a human-readable web page explaining the error.  The
-"error", "error_description", and "error_uri" attributes MUST NOT
+`error`, `error_description`, and `error_uri` attributes MUST NOT
 appear more than once.
 
-Values for the "scope" attribute (specified in Appendix A.4)
+Values for the `scope` attribute (specified in Appendix A.4)
 MUST NOT include characters outside the set %x21 / %x23-5B
 / %x5D-7E for representing scope values and %x20 for delimiters
-between scope values.  Values for the "error" and "error_description"
+between scope values.  Values for the `error` and `error_description`
 attributes (specified in Appendixes A.7 and A.8) MUST
 NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.
-Values for the "error_uri" attribute (specified in Appendix A.9 of)
+Values for the `error_uri` attribute (specified in Appendix A.9 of)
 MUST conform to the URI-reference syntax and thus MUST NOT
 include characters outside the set %x21 / %x23-5B / %x5D-7E.
 
@@ -2084,14 +2084,14 @@ registered in the error registry established by this specification.
 
 Such schemes MAY limit the set of valid error codes to a subset of
 the registered values.  If the error code is returned using a named
-parameter, the parameter name SHOULD be "error".
+parameter, the parameter name SHOULD be `error`.
 
 Other schemes capable of being used for OAuth token authentication,
 but not primarily designed for that purpose, MAY bind their error
 values to the registry in the same manner.
 
 New authentication schemes MAY choose to also specify the use of the
-"error_description" and "error_uri" parameters to return error
+`error_description` and `error_uri` parameters to return error
 information in a manner parallel to their usage in this
 specification.
 
@@ -2119,7 +2119,7 @@ includes one of the following error codes in the response:
 "insufficient_scope":
 :    The request requires higher privileges than provided by the
      access token.  The resource server SHOULD respond with the HTTP
-     403 (Forbidden) status code and MAY include the "scope"
+     403 (Forbidden) status code and MAY include the `scope`
      attribute with the scope necessary to access the protected
      resource.
 
@@ -2342,7 +2342,7 @@ server is obliged to verify, for every request, whether the access
 token sent with that request was meant to be used for that particular
 resource server.  If not, the resource server MUST refuse to serve
 the respective request.  Clients and authorization servers MAY
-utilize the parameters "scope" or "resource" as specified in
+utilize the parameters `scope` or `resource` as specified in
 this document and {{I-D.ietf-oauth-resource-indicators}}, respectively, to
 determine the resource server they want to access.
 
@@ -2354,8 +2354,8 @@ to verify, for every request, whether the access token sent with that
 request was meant to be used for that particular action on the
 particular resource.  If not, the resource server must refuse to
 serve the respective request.  Clients and authorization servers MAY
-utilize the parameter "scope" and
-"authorization_details" as specified in {{I-D.ietf-oauth-rar}} to
+utilize the parameter `scope` and
+`authorization_details` as specified in {{I-D.ietf-oauth-rar}} to
 determine those resources and/or actions.
 
 
@@ -2377,7 +2377,7 @@ All other types MUST be registered.  Type names MUST conform to the
 type-name ABNF.  If the type definition includes a new HTTP
 authentication scheme, the type name SHOULD be identical to the HTTP
 authentication scheme name (as defined by [RFC2617]).  The token type
-"example" is reserved for use in examples.
+`example` is reserved for use in examples.
 
     type-name  = 1*name-char
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
@@ -2406,7 +2406,7 @@ other registered values (e.g., begin with 'companyname_').
 ## Defining New Authorization Grant Types
 
 New authorization grant types can be defined by assigning them a
-unique absolute URI for use with the "grant_type" parameter.  If the
+unique absolute URI for use with the `grant_type` parameter.  If the
 extension grant type requires additional token endpoint parameters,
 they MUST be registered in the OAuth Parameters registry as described
 by {{parameters-registry}}.
@@ -2428,10 +2428,10 @@ is compared as a space-delimited list of values in which the order of
 values does not matter.  Only one order of values can be registered,
 which covers all other arrangements of the same set of values.
 
-For example, the response type "token code" is left undefined by this
+For example, the response type `token code` is left undefined by this
 specification.  However, an extension can define and register the
-"token code" response type.  Once registered, the same combination
-cannot be registered as "code token", but both values can be used to
+`token code` response type.  Once registered, the same combination
+cannot be registered as `code token`, but both values can be used to
 denote the same response type.
 
 
@@ -2452,8 +2452,8 @@ MAY be registered.
 
 Error codes MUST conform to the error ABNF and SHOULD be prefixed by
 an identifying name when possible.  For example, an error identifying
-an invalid value set to the extension parameter "example" SHOULD be
-named "example_invalid".
+an invalid value set to the extension parameter `example` SHOULD be
+named `example_invalid`.
 
     error      = 1*error-char
     error-char = %x20-21 / %x23-5B / %x5D-7E
@@ -2807,7 +2807,7 @@ deployment-specific way to ensure or determine PKCE support by the AS.
 Access tokens, refresh tokens, authorization codes, and client
 credentials MUST NOT be transmitted in the clear.
 
-The "state" and "scope" parameters SHOULD NOT include sensitive
+The `state` and `scope` parameters SHOULD NOT include sensitive
 client or resource owner information in plain text, as they can be
 transmitted over insecure channels or stored insecurely.
 
@@ -2988,7 +2988,7 @@ service, or introduce a wide range of malicious side-effects.
 
 The authorization server and client MUST sanitize (and validate when
 possible) any value received -- in particular, the value of the
-"state" and "redirect_uri" parameters.
+`state` and `redirect_uri` parameters.
 
 
 ## Open Redirectors {#open-redirectors}
@@ -3049,7 +3049,7 @@ they were received on doesn't match the redirect URI in an outgoing
 authorization request.
 
 The native app MUST store the redirect URI used in the authorization
-request with the authorization session data (i.e., along with "state"
+request with the authorization session data (i.e., along with `state`
 and other related data) and MUST verify that the URI on which the
 authorization response was received exactly matches it.
 
@@ -3184,7 +3184,7 @@ the app to receive the URI and inspect its parameters is viable.
 After constructing the authorization request URI, the app uses
 platform-specific APIs to open the URI in an external user-agent.
 Typically, the external user-agent used is the default browser, that
-is, the application configured for handling "http" and "https" scheme
+is, the application configured for handling `http` and `https` scheme
 URIs on the system; however, different browser selection criteria and
 other categories of external user-agents MAY be used.
 
@@ -3366,7 +3366,7 @@ Type name:
 
 Additional Token Endpoint Response Parameters:
 : Additional response parameters returned together with the
-  "access_token" parameter.  New parameters MUST be separately
+  `access_token` parameter.  New parameters MUST be separately
   registered in the OAuth Parameters registry as described by
   {{parameters-registry}}.
 
@@ -3700,21 +3700,21 @@ Return and Linefeed characters.)
 
 ## "client_id" Syntax
 
-The "client_id" element is defined in {{client-password}}:
+The `client_id` element is defined in {{client-password}}:
 
     client-id     = *VSCHAR
 
 
 ## "client_secret" Syntax
 
-The "client_secret" element is defined in {{client-password}}:
+The `client_secret` element is defined in {{client-password}}:
 
     client-secret = *VSCHAR
 
 
 ## "response_type" Syntax
 
-The "response_type" element is defined in {{response-type}} and {{new-response-types}}:
+The `response_type` element is defined in {{response-type}} and {{new-response-types}}:
 
     response-type = response-name *( SP response-name )
     response-name = 1*response-char
@@ -3722,47 +3722,47 @@ The "response_type" element is defined in {{response-type}} and {{new-response-t
 
 ## "scope" Syntax
 
-The "scope" element is defined in {{access-token-scope}}:
+The `scope` element is defined in {{access-token-scope}}:
 
      scope       = scope-token *( SP scope-token )
      scope-token = 1*NQCHAR
 
 ## "state" Syntax
 
-The "state" element is defined in {{authorization-request}}, {{authorization-response}}, and {{authorization-code-error-response}}:
+The `state` element is defined in {{authorization-request}}, {{authorization-response}}, and {{authorization-code-error-response}}:
 
      state      = 1*VSCHAR
 
 ## "redirect_uri" Syntax
 
-The "redirect_uri" element is defined in {{authorization-request}}, and {{access-token-request}}:
+The `redirect_uri` element is defined in {{authorization-request}}, and {{access-token-request}}:
 
      redirect-uri      = URI-reference
 
 ## "error" Syntax
 
-The "error" element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
+The `error` element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
 7.2, and 8.5:
 
      error             = 1*NQSCHAR
 
 ## "error_description" Syntax
 
-The "error_description" element is defined in Sections {{authorization-code-error-response}},
+The `error_description` element is defined in Sections {{authorization-code-error-response}},
 {{access-token-error-response}}, and {{bearer-token-error-response}}:
 
      error-description = 1*NQSCHAR
 
 ## "error_uri" Syntax
 
-The "error_uri" element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
+The `error_uri` element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
 and 7.2:
 
      error-uri         = URI-reference
 
 ## "grant_type" Syntax
 
-The "grant_type" element is defined in Sections {{access-token-request}}, {{access-token-response}}, {{client-credentials-access-token-request}},
+The `grant_type` element is defined in Sections {{access-token-request}}, {{access-token-response}}, {{client-credentials-access-token-request}},
 {{extension-grants}}, and {{refreshing-an-access-token}}:
 
      grant-type = grant-name / URI-reference
@@ -3771,19 +3771,19 @@ The "grant_type" element is defined in Sections {{access-token-request}}, {{acce
 
 ## "code" Syntax
 
-The "code" element is defined in {{access-token-request}}:
+The `code` element is defined in {{access-token-request}}:
 
      code       = 1*VSCHAR
 
 ## "access_token" Syntax
 
-The "access_token" element is defined in {{access-token-response}} and {{access-token-successful-response}}:
+The `access_token` element is defined in {{access-token-response}} and {{access-token-successful-response}}:
 
      access-token = 1*VSCHAR
 
 ## "token_type" Syntax
 
-The "token_type" element is defined in {{access-token-successful-response}}, and {{defining-access-token-types}}:
+The `token_type` element is defined in {{access-token-successful-response}}, and {{defining-access-token-types}}:
 
      token-type = type-name / URI-reference
      type-name  = 1*name-char
@@ -3791,13 +3791,13 @@ The "token_type" element is defined in {{access-token-successful-response}}, and
 
 ## "expires_in" Syntax
 
-The "expires_in" element is defined in {{access-token-successful-response}}:
+The `expires_in` element is defined in {{access-token-successful-response}}:
 
      expires-in = 1*DIGIT
 
 ## "refresh_token" Syntax
 
-The "refresh_token" element is defined in {{access-token-successful-response}} and {{refreshing-an-access-token}}:
+The `refresh_token` element is defined in {{access-token-successful-response}} and {{refreshing-an-access-token}}:
 
      refresh-token = 1*VSCHAR
 
@@ -3810,7 +3810,7 @@ The syntax for new endpoint parameters is defined in {{defining-new-endpoint-par
 
 ## "code_verifier" Syntax
 
-ABNF for "code_verifier" is as follows.
+ABNF for `code_verifier` is as follows.
 
     code-verifier = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -3819,7 +3819,7 @@ ABNF for "code_verifier" is as follows.
 
 ## "code_challenge" Syntax
 
-ABNF for "code_challenge" is as follows.
+ABNF for `code_challenge` is as follows.
 
     code-challenge = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -3830,7 +3830,7 @@ ABNF for "code_challenge" is as follows.
 # Use of application/x-www-form-urlencoded Media Type
 
 At the time of publication of this specification, the
-"application/x-www-form-urlencoded" media type was defined in
+`application/x-www-form-urlencoded` media type was defined in
 Section 17.13.4 of [W3C.REC-html401-19991224] but not registered in
 the IANA MIME Media Types registry
 (<http://www.iana.org/assignments/media-types>).  Furthermore, that
