@@ -577,11 +577,6 @@ Authorization servers SHOULD consider the level of confidence in a client’s id
 when deciding whether they allow such a client access to more critical functions,
 such as the client credentials grant type.
 
-The client type designation is based on the authorization server's
-definition of secure authentication and its acceptable exposure
-levels of client credentials.  The authorization server SHOULD NOT
-make assumptions about the client type.
-
 A client may be implemented as a distributed set of components, each
 with a different client type and security context (e.g., a
 distributed client with both a confidential server-based component
@@ -1099,11 +1094,8 @@ To begin the authorization request, the client builds the authorization
 request URI by adding parameters to the authorization server's
 authorization endpoint URI.
 
-Without a client secret, public clients would be susceptible to an authorization code
-interception attack, where an attacker is able to intercept the authorization
-response through various means and use the authorization code to obtain an access token.
-To protect against this attack, as well as to protect against CSRF attacks,
-the client first generates a unique secret per authorization request, which it can
+Clients use a unique secret per authorization request to protect against code 
+injection and CSRF attacks. The client first generates this secret, which it can
 later use along with the authorization code to prove that the application using the
 authorization code is the same application that requested it. This practice is known
 as "Proof-Key for Code Exchange", or PKCE, after the OAuth 2.0 extension ({{RFC7636}})
@@ -1178,7 +1170,7 @@ using the `application/x-www-form-urlencoded` format, per Appendix B:
 
 "code_challenge_method":
 :    OPTIONAL, defaults to `plain` if not present in the request.  Code
-    nverifier transformation method is `S256` or `plain`.
+    verifier transformation method is `S256` or `plain`.
 
 "redirect_uri":
 :    OPTIONAL.  As described in {{redirection-endpoint}}.
