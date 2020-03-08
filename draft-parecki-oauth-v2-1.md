@@ -3349,6 +3349,8 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 * The authorization code grant is extended with the functionality from PKCE ({{RFC7636}})
   such that the only method of using the authorization code grant according
   to this specification requires the addition of the PKCE mechanism
+* Redirect URIs must be compared using exact string matching
+  as per Section 4.1.3 of {{I-D.ietf-oauth-security-topics}}
 * The Implicit grant (`response_type=token`) is omitted from this specification
   as per Section 2.1.2 of {{I-D.ietf-oauth-security-topics}}
 * The Resource Owner Password Credentials grant is omitted from this specification
