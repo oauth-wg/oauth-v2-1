@@ -49,6 +49,7 @@ normative:
   RFC7234:
   RFC7595:
   RFC8126:
+  RFC8174:
   RFC8252:
   I-D.ietf-oauth-security-topics:
   USASCII:
@@ -456,9 +457,6 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
     the refresh token, and if valid, issues a new access token (and,
     optionally, a new refresh token).
 
-Steps (3), (4), (5), and (6) are outside the scope of this
-specification, as described in {{accessing-protected-resources}}.
-
 
 ## TLS Version {#tls-version}
 
@@ -506,8 +504,10 @@ achieve full web-scale interoperability.
 ## Notational Conventions
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-specification are to be interpreted as described in {{RFC2119}}.
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in
+BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
+capitals, as shown here.
 
 This specification uses the Augmented Backus-Naur Form (ABNF)
 notation of {{RFC5234}}.  Additionally, the rule URI-reference is
@@ -530,7 +530,7 @@ Before initiating the protocol, the client registers with the
 authorization server.  The means through which the client registers
 with the authorization server are beyond the scope of this
 specification but typically involve end-user interaction with an HTML
-registration form.
+registration form, or by using Dynamic Client Registration ({{RFC7591}}).
 
 Client registration does not require a direct interaction between the
 client and the authorization server.  When supported by the
@@ -551,6 +551,9 @@ When registering a client, the client developer SHALL:
 *  include any other information required by the authorization server
    (e.g., application name, website, description, logo image, the
    acceptance of legal terms).
+
+Dynamic Client Registration ({{RFC7591}}) defines a common general data model
+for clients that may be used even with manual client registration.
 
 
 ## Client Types {#client-types}
@@ -634,8 +637,9 @@ identifier size.  The authorization server SHOULD document the size
 of any identifier it issues.
 
 Authorization servers SHOULD NOT allow clients to influence their
-`client_id` or `sub` value or any other claim if that can cause
-confusion with a genuine resource owner.
+`client_id` value in such a way that it may be confused with the 
+identifier of a genuine resource owner during subsequent protocol 
+interactions.
 
 
 ## Client Authentication {#client-authentication}
@@ -720,13 +724,18 @@ Since this client authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
 brute force attacks.
 
-### Other Authorization Methods
+### Other Authentication Methods
 
 The authorization server MAY support any suitable authentication
 scheme matching its security requirements.  When using other
 authentication methods, the authorization server MUST define a
 mapping between the client identifier (registration record) and
 authentication scheme.
+
+Some additional authentication methods are defined in the 
+"[OAuth Token Endpoint Authentication Methods](https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#token-endpoint-auth-method)" registry,
+and may be useful as generic client authentication methods beyond 
+the specific use of protecting the token endpoint.
 
 
 ## Unregistered Clients
@@ -769,7 +778,8 @@ scope of this specification.
 
 The means through which the client obtains the location of the
 authorization endpoint are beyond the scope of this specification,
-but the location is typically provided in the service documentation.
+but the location is typically provided in the service documentation,
+or in the authorization server's metadata document ({{RFC8414}}).
 
 The endpoint URI MAY include an "application/x-www-form-urlencoded"
 formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
@@ -789,7 +799,8 @@ use of the `POST` method as well.
 Parameters sent without a value MUST be treated as if they were
 omitted from the request.  The authorization server MUST ignore
 unrecognized request parameters.  Request and response parameters
-MUST NOT be included more than once.
+defined by this specification MUST NOT be included more than once.
+
 
 ### Response Type {#response-type}
 
@@ -907,7 +918,8 @@ presenting its authorization grant or refresh token.
 
 The means through which the client obtains the location of the token
 endpoint are beyond the scope of this specification, but the location
-is typically provided in the service documentation.
+is typically provided in the service documentation, 
+or in the authorization server's metadata document ({{RFC8414}}).
 
 The endpoint URI MAY include an `application/x-www-form-urlencoded`
 formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
@@ -925,7 +937,7 @@ requests.
 Parameters sent without a value MUST be treated as if they were
 omitted from the request.  The authorization server MUST ignore
 unrecognized request parameters.  Request and response parameters
-MUST NOT be included more than once.
+defined by this specification MUST NOT be included more than once.
 
 
 ### Client Authentication {#token-endpoint-client-authentication}
@@ -938,8 +950,7 @@ authentication is used for:
 *  Enforcing the binding of refresh tokens and authorization codes to
    the client they were issued to.  Client authentication is critical
    when an authorization code is transmitted to the redirection
-   endpoint over an insecure channel or when the redirection URI has
-   not been registered in full.
+   endpoint over an insecure channel.
 
 *  Recovering from a compromised client by disabling the client or
    changing its credentials, thus preventing an attacker from abusing
@@ -1122,8 +1133,8 @@ verifier:
 If the client is capable of using `S256`, it MUST use `S256`, as
 `S256` is Mandatory To Implement (MTI) on the server.  Clients are
 permitted to use `plain` only if they cannot support `S256` for some
-technical reason and know via out-of-band configuration that the
-server supports `plain`.
+technical reason and know via out-of-band configuration or via 
+Authorization Server Metadata ({{RFC8414}}) that the server supports `plain`.
 
 The plain transformation is for compatibility with existing
 deployments and for constrained environments that can't use the S256
@@ -1136,7 +1147,7 @@ ABNF for `code_challenge` is as follows.
     ALPHA = %x41-5A / %x61-7A
     DIGIT = %x30-39
 
-#### Client Initiates the Authorization Request
+#### Client Initiates the Authorization Request {#initiate-authorization-request}
 
 The client constructs the request URI by adding the following
 parameters to the query component of the authorization endpoint URI
@@ -1153,7 +1164,7 @@ using the `application/x-www-form-urlencoded` format, per Appendix B:
 
 "code_challenge_method":
 :    OPTIONAL, defaults to `plain` if not present in the request.  Code
-    verifier transformation method is `S256` or `plain`.
+     verifier transformation method is `S256` or `plain`.
 
 "redirect_uri":
 :    OPTIONAL.  As described in {{redirection-endpoint}}.
@@ -1237,8 +1248,8 @@ response, it MUST associate the `code_challenge` and
 `code_challenge_method` values with the authorization code so it can
 be verified later.
 
-Typically, the `code_challenge` and `code_challenge_method` values
-are stored in encrypted form in the `code` itself but could
+The `code_challenge` and `code_challenge_method` values
+may be stored in encrypted form in the `code` itself, but could
 alternatively be stored on the server associated with the code.  The
 server MUST NOT include the `code_challenge` value in client requests
 in a form that other entities can extract.
@@ -1408,7 +1419,7 @@ The authorization server MUST:
 
 *  ensure that the `redirect_uri` parameter is present if the
    `redirect_uri` parameter was included in the initial authorization
-   request as described in {{authorization-request}}, and if included ensure that
+   request as described in {{initiate-authorization-request}}, and if included ensure that
    their values are identical.
 
 
@@ -1423,7 +1434,7 @@ an error response as described in {{access-token-error-response}}.
 An example successful response:
 
     HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
     Cache-Control: no-store
     Pragma: no-cache
 
@@ -1517,7 +1528,7 @@ returns an error response as described in {{access-token-error-response}}.
 An example successful response:
 
     HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
     Cache-Control: no-store
     Pragma: no-cache
 
@@ -1612,7 +1623,7 @@ with a value of `no-cache`.
 For example:
 
     HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
     Cache-Control: no-store
     Pragma: no-cache
 
@@ -1711,7 +1722,7 @@ vary.
 For example:
 
     HTTP/1.1 400 Bad Request
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
     Cache-Control: no-store
     Pragma: no-cache
 
