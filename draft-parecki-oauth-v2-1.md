@@ -33,21 +33,22 @@ author:
 
 normative:
   RFC2119:
-  RFC2616:
   RFC2617:
   RFC2818:
   RFC3629:
   RFC3986:
-  RFC4627:
   RFC4949:
-  RFC5226:
   RFC5234:
   RFC6125:
   RFC6749:
   RFC6750:
   RFC8446:
   RFC5280:
+  RFC7159:
+  RFC7231:
+  RFC7234:
   RFC7595:
+  RFC8126:
   RFC8252:
   I-D.ietf-oauth-security-topics:
   USASCII:
@@ -70,8 +71,8 @@ informative:
   RFC7230:
   RFC7235:
   RFC7636:
+  RFC8707:
   I-D.ietf-oauth-rar:
-  I-D.ietf-oauth-resource-indicators:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
@@ -200,7 +201,7 @@ directly with a server trusted by the photo-sharing service
 (authorization server), which issues the printing service delegation-
 specific credentials (access token).
 
-This specification is designed for use with HTTP ({{RFC2616}}).  The
+This specification is designed for use with HTTP ({{RFC7230}}).  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
 Since the publication of the OAuth 2.0 Authorization Framework ({{RFC6749}})
@@ -320,7 +321,7 @@ The authorization code is obtained by using an authorization server
 as an intermediary between the client and resource owner.  Instead of
 requesting authorization directly from the resource owner, the client
 directs the resource owner to an authorization server (via its
-user-agent as defined in {{RFC2616}}), which in turn directs the
+user-agent as defined in {{RFC7231}}), which in turn directs the
 resource owner back to the client with the authorization code.
 
 Before directing the resource owner back to the client with the
@@ -782,7 +783,7 @@ as described in {{tls-version}} when sending requests to the
 authorization endpoint.
 
 The authorization server MUST support the use of the HTTP `GET`
-method {{RFC2616}} for the authorization endpoint and MAY support the
+method {{RFC7231}} for the authorization endpoint and MAY support the
 use of the `POST` method as well.
 
 Parameters sent without a value MUST be treated as if they were
@@ -1595,7 +1596,7 @@ to the entity-body of the HTTP response with a 200 (OK) status code:
      described by {{access-token-scope}}.
 
 The parameters are included in the entity-body of the HTTP response
-using the `application/json` media type as defined by {{RFC4627}}.  The
+using the `application/json` media type as defined by {{RFC7159}}.  The
 parameters are serialized into a JavaScript Object Notation (JSON)
 structure by adding each parameter at the highest structure level.
 Parameter names and string values are included as JSON strings.
@@ -1603,9 +1604,9 @@ Numerical values are included as JSON numbers.  The order of
 parameters does not matter and can vary.
 
 The authorization server MUST include the HTTP `Cache-Control`
-response header field {{RFC2616}} with a value of `no-store` in any
+response header field {{RFC7234}} with a value of `no-store` in any
 response containing tokens, credentials, or other sensitive
-information, as well as the `Pragma` response header field {{RFC2616}}
+information, as well as the `Pragma` response header field {{RFC7234}}
 with a value of `no-cache`.
 
 For example:
@@ -1700,7 +1701,7 @@ parameters with the response:
      outside the set %x21 / %x23-5B / %x5D-7E.
 
 The parameters are included in the entity-body of the HTTP response
-using the `application/json` media type as defined by [RFC4627].  The
+using the `application/json` media type as defined by [RFC7159].  The
 parameters are serialized into a JSON structure by adding each
 parameter at the highest structure level.  Parameter names and string
 values are included as JSON strings.  Numerical values are included
@@ -2321,7 +2322,7 @@ token sent with that request was meant to be used for that particular
 resource server.  If not, the resource server MUST refuse to serve
 the respective request.  Clients and authorization servers MAY
 utilize the parameters `scope` or `resource` as specified in
-this document and {{I-D.ietf-oauth-resource-indicators}}, respectively, to
+this document and {{RFC8707}}, respectively, to
 determine the resource server they want to access.
 
 Additionally, access tokens SHOULD be restricted to certain resources
@@ -3379,7 +3380,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 This specification establishes the OAuth Access Token Types registry.
 
 Access token types are registered with a Specification Required
-([RFC5226]) after a two-week review period on the
+([RFC8126]) after a two-week review period on the
 oauth-ext-review@ietf.org mailing list, on the advice of one or more
 Designated Experts.  However, to allow for the allocation of values
 prior to publication, the Designated Expert(s) may approve
@@ -3447,7 +3448,7 @@ This specification establishes the OAuth Parameters registry.
 Additional parameters for inclusion in the authorization endpoint
 request, the authorization endpoint response, the token endpoint
 request, or the token endpoint response are registered with a
-Specification Required ([RFC5226]) after a two-week review period on
+Specification Required ([RFC8126]) after a two-week review period on
 the oauth-ext-review@ietf.org mailing list, on the advice of one or
 more Designated Experts.  However, to allow for the allocation of
 values prior to publication, the Designated Expert(s) may approve
@@ -3582,7 +3583,7 @@ This specification establishes the OAuth Authorization Endpoint
 Response Types registry.
 
 Additional response types for use with the authorization endpoint are
-registered with a Specification Required ([RFC5226]) after a two-week
+registered with a Specification Required ([RFC8126]) after a two-week
 review period on the oauth-ext-review@ietf.org mailing list, on the
 advice of one or more Designated Experts.  However, to allow for the
 allocation of values prior to publication, the Designated Expert(s)
@@ -3636,7 +3637,7 @@ This specification establishes the OAuth Extensions Error registry.
 
 Additional error codes used together with other protocol extensions
 (i.e., extension grant types, access token types, or extension
-parameters) are registered with a Specification Required ([RFC5226])
+parameters) are registered with a Specification Required ([RFC8126])
 after a two-week review period on the oauth-ext-review@ietf.org
 mailing list, on the advice of one or more Designated Experts.
 However, to allow for the allocation of values prior to publication,
