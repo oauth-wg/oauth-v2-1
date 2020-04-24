@@ -65,7 +65,6 @@ informative:
   RFC7591:
   RFC8707:
   RFC8414:
-  RFC8418:
   RFC7591:
   RFC8705:
   RFC7230:
@@ -465,7 +464,7 @@ specification, as described in {{accessing-protected-resources}}.
 Whenever Transport Layer Security (TLS) is used by this
 specification, the appropriate version (or versions) of TLS will vary
 over time, based on the widespread deployment and known security
-vulnerabilities.  At the time of this writing, At the time of this writing,
+vulnerabilities.  At the time of this writing,
 TLS version 1.3 {{RFC8446}} is the most recent version.
 
 Implementations MAY also support additional transport-layer security
@@ -478,8 +477,9 @@ This specification makes extensive use of HTTP redirections, in which
 the client or the authorization server directs the resource owner's
 user-agent to another destination.  While the examples in this
 specification show the use of the HTTP 302 status code, any other
-method available via the user-agent to accomplish this redirection is
-allowed and is considered to be an implementation detail.
+method available via the user-agent to accomplish this redirection, 
+with the exception of HTTP 307, is allowed and is considered to be an 
+implementation detail. See {{redirect_307}} for details.
 
 
 ## Interoperability
@@ -668,15 +668,16 @@ request.
 
 ### Client Password {#client-password}
 
-Clients in possession of a client password MAY use the HTTP Basic
+Clients in possession of a client password, also known as a client secret,
+MAY use the HTTP Basic
 authentication scheme as defined in {{RFC2617}} to authenticate with
 the authorization server.  The client identifier is encoded using the
-"application/x-www-form-urlencoded" encoding algorithm per
+`application/x-www-form-urlencoded` encoding algorithm per
 Appendix B, and the encoded value is used as the username; the client
-password is encoded using the same algorithm and used as the
+secret is encoded using the same algorithm and used as the
 password.  The authorization server MUST support the HTTP Basic
 authentication scheme for authenticating clients that were issued a
-client password.
+client secret.
 
 For example (with extra line breaks for display purposes only):
 
@@ -691,8 +692,7 @@ parameters:
      the registration process described by {{client-identifier}}.
 
 "client_secret":
-:    REQUIRED.  The client secret.  The client MAY omit the
-     parameter if the client secret is an empty string.
+:    REQUIRED.  The client secret.
 
 Including the client credentials in the request-body using the two
 parameters is NOT RECOMMENDED and SHOULD be limited to clients unable
@@ -721,7 +721,7 @@ brute force attacks.
 
 ### Other Authorization Methods
 
-The authorization server MAY support any suitable HTTP authentication
+The authorization server MAY support any suitable authentication
 scheme matching its security requirements.  When using other
 authentication methods, the authorization server MUST define a
 mapping between the client identifier (registration record) and
@@ -806,7 +806,7 @@ values, where the order of values does not matter (e.g., response
 type `a b` is the same as `b a`).  The meaning of such composite
 response types is defined by their respective specifications.
 
-If an authorization request is missing the "response_type" parameter,
+If an authorization request is missing the `response_type` parameter,
 or if the response type is not understood, the authorization server
 MUST return an error response as described in {{authorization-code-error-response}}.
 
@@ -835,10 +835,8 @@ fragment component.
 The redirection endpoint SHOULD require the use of TLS as described
 in {{tls-version}} when the requested response type is `code`,
 or when the redirection request will result in the transmission of
-sensitive credentials over an open network.  This specification does
-not mandate the use of TLS because at the time of this writing,
-requiring clients to deploy TLS is a significant hurdle for many
-client developers.  If TLS is not available, the authorization server
+sensitive credentials over an open network.
+If TLS is not available, the authorization server
 SHOULD warn the resource owner about the insecure endpoint prior to
 redirection (e.g., display a message during the authorization
 request).
@@ -856,9 +854,9 @@ sign-in service).
 The authorization server MUST require all clients to register their
 redirection endpoint prior to utilizing the authorization endpoint.
 
-The authorization server SHOULD require the client to provide the
-complete redirection URI (the client MAY use the `state` request
-parameter to achieve per-request customization).
+The authorization server MUST require the client to provide one or more
+complete redirection URIs. The client MAY use the `state` request
+parameter to achieve per-request customization if needed.
 
 The authorization server MAY allow the client to register multiple
 redirection endpoints.
@@ -873,14 +871,6 @@ described in {{open-redirectors}}.
 If multiple redirection URIs have been registered the client MUST
 include a redirection URI with the authorization request using the
 `redirect_uri` request parameter.
-
-When a redirection URI is included in an authorization request, the
-authorization server MUST compare and match the value received
-against at least one of the registered redirection URIs (or URI
-components) as defined in {{RFC3986}} Section 6, if any redirection
-URIs were registered.  If the client registration included the full
-redirection URI, the authorization server MUST compare the two URIs
-using simple string comparison as defined in {{RFC3986}} Section 6.2.1.
 
 
 #### Invalid Endpoint
@@ -960,15 +950,6 @@ authentication is used for:
    require periodic credential rotation.  Rotation of an entire set
    of refresh tokens can be challenging, while rotation of a single
    set of client credentials is significantly easier.
-
-A client MAY use the `client_id` request parameter to identify itself
-when sending requests to the token endpoint.  In the
-`authorization_code` `grant_type` request to the token endpoint, an
-unauthenticated client MUST send its `client_id` to prevent itself
-from inadvertently accepting a code intended for a client with a
-different `client_id`.  This protects the client from substitution of
-the authentication code.  (It provides no additional security for the
-protected resource.)
 
 
 ## Access Token Scope {#access-token-scope}
@@ -1059,7 +1040,8 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 (1)  The client initiates the flow by directing the resource owner's
      user-agent to the authorization endpoint.  The client includes
-     its client identifier, requested scope, local state, PKCE code challenge, and a
+     its client identifier, PKCE code challenge, optional requested scope, 
+     optional local state, and a
      redirection URI to which the authorization server will send the
      user-agent back once access is granted (or denied).
 
@@ -2728,7 +2710,7 @@ particular response came from.
 
 An AS that redirects a request potentially containing user credentials
 MUST avoid forwarding these user credentials accidentally (see
-(#redirect_307) for details).
+{{redirect_307}} for details).
 
 ### Loopback Redirect Considerations in Native Apps
 
@@ -2750,6 +2732,41 @@ rather than `localhost` avoids inadvertently listening on network
 interfaces other than the loopback interface.  It is also less
 susceptible to client-side firewalls and misconfigured host name
 resolution on the user's device.
+
+### HTTP 307 Redirect {#redirect_307}
+
+An AS which redirects a request that potentially contains user
+credentials MUST NOT use the HTTP 307 status code for
+redirection.  If an HTTP redirection (and not, for example,
+JavaScript) is used for such a request, AS SHOULD use HTTP status
+code 303 "See Other".
+
+At the authorization endpoint, a typical protocol flow is that the AS
+prompts the user to enter her credentials in a form that is then
+submitted (using the HTTP POST method) back to the authorization
+server.  The AS checks the credentials and, if successful, redirects
+the user agent to the client's redirection endpoint.
+
+If the status code 307 were used for redirection, the user agent 
+would send the user credentials via HTTP POST to the client.
+
+This discloses the sensitive credentials to the client.  If the
+relying party is malicious, it can use the credentials to impersonate
+the user at the AS.
+
+The behavior might be unexpected for developers, but is defined in
+{{RFC7231}}, Section 6.4.7.  This status code does not require the user
+agent to rewrite the POST request to a GET request and thereby drop
+the form data in the POST request body.
+
+In the HTTP standard {{RFC7231}}, only the status code 303
+unambigiously enforces rewriting the HTTP POST request to an HTTP GET
+request.  For all other status codes, including the popular 302, user
+agents can opt not to rewrite POST to GET requests and therefore to
+reveal the user credentials to the client.  (In practice, however,
+most user agents will only show this behaviour for 307 redirects.)
+
+Therefore, the RECOMMENDED status code for HTTP redirects is 303.
 
 
 ## Authorization Codes
@@ -2792,7 +2809,7 @@ Authorization servers MUST support PKCE.
 
 Authorization servers MUST provide a way to detect their support for
 PKCE. To this end, they MUST either (a) publish the element
-`code_challenge_methods_supported` in their AS metadata ({{RFC8418}})
+`code_challenge_methods_supported` in their AS metadata ({{RFC8414}})
 containing the supported PKCE challenge methods (which can be used by
 the client to detect PKCE support) or (b) provide a
 deployment-specific way to ensure or determine PKCE support by the AS.
