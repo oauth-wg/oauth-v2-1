@@ -433,7 +433,7 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 
 2.  The authorization server authenticates the client and validates
     the authorization grant, and if valid, issues an access token
-    and a refresh token.
+    and optionally a refresh token.
 
 3.  The client makes a protected resource request to the resource
     server by presenting the access token.
@@ -448,8 +448,8 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 6.  Since the access token is invalid, the resource server returns
     an invalid token error.
 
-7.  The client requests a new access token by authenticating with
-    the authorization server and presenting the refresh token.  The
+7.  The client requests a new access token by presenting the refresh token
+    and providing client authentication if it has been issued credentials. The
     client authentication requirements are based on the client type
     and on the authorization server policies.
 
