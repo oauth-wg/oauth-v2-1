@@ -2060,8 +2060,8 @@ authentication attempt using an expired access token:
 
 If a resource access request fails, the resource server SHOULD inform
 the client of the error.  While the specifics of such error responses
-are beyond the scope of this specification, this document establishes
-a common registry in {{error-registry}} for error values to be shared among
+are beyond the scope of this specification, {{RFC6750}} establishes
+a common registry in [Section 11.4](https://tools.ietf.org/html/rfc6749#section-11.4) for error values to be shared among
 OAuth token authentication schemes.
 
 New authentication schemes designed primarily for OAuth token
@@ -2353,7 +2353,7 @@ determine those resources and/or actions.
 
 Access token types can be defined in one of two ways: registered in
 the Access Token Types registry (following the procedures in
-{{access-token-registry}}), or by using a unique absolute URI as its name.
+Section 11.1 of {{RFC6749}}), or by using a unique absolute URI as its name.
 
 Types utilizing a URI name SHOULD be limited to vendor-specific
 implementations that are not commonly applicable, and are specific to
@@ -2374,7 +2374,7 @@ authentication scheme name (as defined by [RFC2617]).  The token type
 
 New request or response parameters for use with the authorization
 endpoint or the token endpoint are defined and registered in the
-OAuth Parameters registry following the procedure in {{parameters-registry}}.
+OAuth Parameters registry following the procedure in Section 11.2 of {{RFC6749}}.
 
 Parameter names MUST conform to the param-name ABNF, and parameter
 values syntax MUST be well-defined (e.g., using ABNF, or a reference
@@ -2396,14 +2396,14 @@ New authorization grant types can be defined by assigning them a
 unique absolute URI for use with the `grant_type` parameter.  If the
 extension grant type requires additional token endpoint parameters,
 they MUST be registered in the OAuth Parameters registry as described
-by {{parameters-registry}}.
+by Section 11.2 of {{RFC6749}}.
 
 
 ## Defining New Authorization Endpoint Response Types {#new-response-types}
 
 New response types for use with the authorization endpoint are
 defined and registered in the Authorization Endpoint Response Types
-registry following the procedure in {{response-types-registry}}.  Response type
+registry following the procedure in Section 11.3 of {{RFC6749}}.  Response type
 names MUST conform to the response-type ABNF.
 
     response-type  = response-name *( SP response-name )
@@ -2431,7 +2431,7 @@ resource access error response ({{bearer-token-error-response}}), such error cod
 defined.
 
 Extension error codes MUST be registered (following the procedures in
-{{error-registry}}) if the extension they are used in conjunction with is a
+Section 11.4 of {{RFC6749}}) if the extension they are used in conjunction with is a
 registered access token type, a registered endpoint parameter, or an
 extension grant type.  Error codes used with unregistered extensions
 MAY be registered.
