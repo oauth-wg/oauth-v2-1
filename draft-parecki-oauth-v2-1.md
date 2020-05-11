@@ -48,7 +48,6 @@ normative:
   RFC7231:
   RFC7234:
   RFC7595:
-  RFC8126:
   RFC8174:
   RFC8252:
   I-D.ietf-oauth-security-topics:
