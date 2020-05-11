@@ -1267,11 +1267,10 @@ the authorization server SHOULD inform the resource owner of the
 error and MUST NOT automatically redirect the user-agent to the
 invalid redirection URI.
 
-If the client does not send the `code_challenge` in
-the request, the authorization endpoint MUST return the authorization
-error response with the `error` value set to `invalid_request`.  The
-`error_description` or the response of `error_uri` SHOULD explain the
-nature of error, e.g., code challenge required.
+An AS MUST reject requests without a `code_challenge` from public clients, 
+and MUST reject such requests from other clients unless there is 
+reasonable assurance that the client mitigates authorization code injection 
+in other ways. See {{authorization_codes}} for details.
 
 If the server does not support the requested `code_challenge_method` transformation, 
 the authorization endpoint MUST return the
@@ -2777,7 +2776,7 @@ most user agents will only show this behaviour for 307 redirects.)
 Therefore, the RECOMMENDED status code for HTTP redirects is 303.
 
 
-## Authorization Codes
+## Authorization Codes {#authorization_codes}
 
 The transmission of authorization codes MUST be made over a secure
 channel, and the client MUST require the use of TLS with its
