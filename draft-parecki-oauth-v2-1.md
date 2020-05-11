@@ -1648,10 +1648,6 @@ The authorization server responds with an HTTP 400 (Bad Request)
 status code (unless specified otherwise) and includes the following
 parameters with the response:
 
-The authorization server responds with an HTTP 400 (Bad Request)
-status code (unless specified otherwise) and includes the following
-parameters with the response:
-
 "error":
 :    REQUIRED.  A single ASCII [USASCII] error code from the following:
 
