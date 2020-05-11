@@ -1079,7 +1079,7 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 (5)  The authorization server authenticates the client when possible, validates the
      authorization code, validates the code verifier, and ensures that the redirection URI
      received matches the URI used to redirect the client in
-     step (C).  If valid, the authorization server responds back with
+     step (3).  If valid, the authorization server responds back with
      an access token and, optionally, a refresh token.
 
 ### Authorization Request {#authorization-request}
@@ -1463,9 +1463,9 @@ clients.
 ~~~~~~~~~~
      +---------+                                  +---------------+
      |         |                                  |               |
-     |         |>--(A)- Client Authentication --->| Authorization |
+     |         |>--(1)- Client Authentication --->| Authorization |
      | Client  |                                  |     Server    |
-     |         |<--(B)---- Access Token ---------<|               |
+     |         |<--(2)---- Access Token ---------<|               |
      |         |                                  |               |
      +---------+                                  +---------------+
 ~~~~~~~~~~
@@ -1473,10 +1473,10 @@ clients.
 
 The flow illustrated in {{fig-client-credentials-flow}} includes the following steps:
 
-(A)  The client authenticates with the authorization server and
+(1)  The client authenticates with the authorization server and
      requests an access token from the token endpoint.
 
-(B)  The authorization server authenticates the client, and if valid,
+(2)  The authorization server authenticates the client, and if valid,
      issues an access token.
 
 
