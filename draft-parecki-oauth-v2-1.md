@@ -1052,8 +1052,8 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 (1)  The client initiates the flow by directing the resource owner's
      user-agent to the authorization endpoint.  The client includes
-     its client identifier, PKCE code challenge, optional requested scope, 
-     optional local state, and a
+     its client identifier, code challenge (derived from a generated code verifier), 
+     optional requested scope, optional local state, and a
      redirection URI to which the authorization server will send the
      user-agent back once access is granted (or denied).
 
@@ -1091,13 +1091,14 @@ authorization endpoint URI.
 Clients use a unique secret per authorization request to protect against code
 injection and CSRF attacks. The client first generates this secret, which it can
 later use along with the authorization code to prove that the application using the
-authorization code is the same application that requested it. This practice is known
-as "Proof-Key for Code Exchange", or PKCE, after the OAuth 2.0 extension ({{RFC7636}})
-where it was originally developed.
+authorization code is the same application that requested it. The properties 
+`code_challenge` and `code_verifier` are adopted from the OAuth 2.0 extension
+known as "Proof-Key for Code Exchange", or PKCE ({{RFC7636}}) where this technique
+was originally developed.
 
-#### Client Creates a PKCE Code Verifier
+#### Client Creates a Code Verifier
 
-The client first creates a PKCE code verifier, `code_verifier`, for each
+The client first creates a code verifier, `code_verifier`, for each
 Authorization Request, in the following manner:
 
     code_verifier = high-entropy cryptographic random STRING using the
@@ -1118,9 +1119,9 @@ a suitable random number generator be used to create a 32-octet
 sequence.  The octet sequence is then base64url-encoded to produce a
 43-octet URL-safe string to use as the code verifier.
 
-#### Client Creates the PKCE Code Challenge
+#### Client Creates the Code Challenge
 
-The client then creates a PKCE code challenge derived from the code
+The client then creates a code challenge derived from the code
 verifier by using one of the following transformations on the code
 verifier:
 
@@ -1273,8 +1274,8 @@ error response with the `error` value set to `invalid_request`.  The
 `error_description` or the response of `error_uri` SHOULD explain the
 nature of error, e.g., code challenge required.
 
-If the server supporting PKCE does not support the requested
-transformation, the authorization endpoint MUST return the
+If the server does not support the requested `code_challenge_method` transformation, 
+the authorization endpoint MUST return the
 authorization error response with `error` value set to
 `invalid_request`.  The `error_description` or the response of
 `error_uri` SHOULD explain the nature of error, e.g., transform
@@ -2697,8 +2698,8 @@ Clients MUST prevent Cross-Site Request Forgery (CSRF). In this
 context, CSRF refers to requests to the redirection endpoint that do
 not originate at the authorization server, but a malicious third party
 (see Section 4.4.1.8. of {{RFC6819}} for details). Clients that have
-ensured that the authorization server supports PKCE MAY
-rely the CSRF protection provided by PKCE. In OpenID Connect flows,
+ensured that the authorization server supports the `code_challenge` parameter MAY
+rely the CSRF protection provided by that mechanism. In OpenID Connect flows,
 the `nonce` parameter provides CSRF protection. Otherwise, one-time
 use CSRF tokens carried in the `state` parameter that are securely
 bound to the user agent MUST be used for CSRF protection (see
@@ -2797,30 +2798,30 @@ authenticate the client and ensure that the authorization code was
 issued to the same client.
 
 Clients MUST prevent injection (replay) of authorization codes into
-the authorization response by attackers. The use of PKCE
-is RECOMMENDED to this end. The OpenID Connect `nonce` parameter and
-ID Token Claim {{OpenID}} MAY be used as well. The PKCE challenge or
+the authorization response by attackers. The use of the `code_challenge`
+paremeter is RECOMMENDED to this end. The OpenID Connect `nonce` parameter and
+ID Token Claim {{OpenID}} MAY be used as well. The `code_challenge` or
 OpenID Connect `nonce` MUST be transaction-specific and securely bound
 to the client and the user agent in which the transaction was started.
 
-Note: although PKCE so far was designed as a mechanism to protect
+Historic note: although PKCE {{RFC7636}} was originally designed as a mechanism to protect
 native apps, this advice applies to all kinds of OAuth clients,
-including web applications.
+including web applications and other confidential clients.
 
-When using PKCE, clients SHOULD use PKCE code challenge methods that
-do not expose the PKCE verifier in the authorization request.
+Clients SHOULD use code challenge methods that
+do not expose the `code_verifier` in the authorization request.
 Otherwise, attackers that can read the authorization request (cf.
 Attacker A4 in (#secmodel)) can break the security provided
-by PKCE. Currently, `S256` is the only such method.
+by this mechanism. Currently, `S256` is the only such method.
 
-Authorization servers MUST support PKCE.
+Authorization servers MUST support the `code_challenge` and `code_verifier` parameters.
 
 Authorization servers MUST provide a way to detect their support for
-PKCE. To this end, they MUST either (a) publish the element
+the `code_challenge` mechanism. To this end, they MUST either (a) publish the element
 `code_challenge_methods_supported` in their AS metadata ({{RFC8414}})
-containing the supported PKCE challenge methods (which can be used by
-the client to detect PKCE support) or (b) provide a
-deployment-specific way to ensure or determine PKCE support by the AS.
+containing the supported `code_challenge_method`s (which can be used by
+the client to detect support) or (b) provide a
+deployment-specific way to ensure or determine support by the AS.
 
 ## Request Confidentiality
 
@@ -2930,14 +2931,14 @@ variant of an attack known as Cross-Site Request Forgery (CSRF).
 The traditional countermeasure are CSRF tokens that are bound to the
 user agent and passed in the `state` parameter to the authorization
 server as described in {{RFC6819}}. The same protection is provided by
-PKCE or the OpenID Connect `nonce` value.
+the `code_verifier` parameter or the OpenID Connect `nonce` value.
 
-When using PKCE instead of `state` or `nonce` for CSRF protection, it is
+When using `code_verifier` instead of `state` or `nonce` for CSRF protection, it is
 important to note that:
 
- * Clients MUST ensure that the AS supports PKCE before using PKCE for
-   CSRF protection. If an authorization server does not support PKCE,
-   `state` or `nonce` MUST be used for CSRF protection.
+ * Clients MUST ensure that the AS supports the `code_challenge_method` 
+   intended to be used by the client. If an authorization server does not support the requested method,
+   `state` or `nonce` MUST be used for CSRF protection instead.
 
  * If `state` is used for carrying application state, and integrity of
    its contents is a concern, clients MUST protect `state` against
@@ -2945,9 +2946,9 @@ important to note that:
    contents of state to the browser session and/or signed/encrypted
    state values {{I-D.bradley-oauth-jwt-encoded-state}}.
 
-AS therefore MUST provide a way to detect their support for PKCE
+AS therefore MUST provide a way to detect their supported code challenge methods
 either via AS metadata according to {{RFC8414}} or provide a
-deployment-specific way to ensure or determine PKCE support.
+deployment-specific way to ensure or determine support.
 
 
 ## Clickjacking
@@ -3367,7 +3368,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 
 * The authorization code grant is extended with the functionality from PKCE ({{RFC7636}})
   such that the only method of using the authorization code grant according
-  to this specification requires the addition of the PKCE mechanism
+  to this specification requires the addition of the PKCE parameters
 * Redirect URIs must be compared using exact string matching
   as per Section 4.1.3 of {{I-D.ietf-oauth-security-topics}}
 * The Implicit grant (`response_type=token`) is omitted from this specification
