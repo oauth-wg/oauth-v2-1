@@ -2795,12 +2795,14 @@ If the client can be authenticated, the authorization servers MUST
 authenticate the client and ensure that the authorization code was
 issued to the same client.
 
-Clients MUST prevent injection (replay) of authorization codes into
-the authorization response by attackers. The use of the `code_challenge`
-paremeter is RECOMMENDED to this end. The OpenID Connect `nonce` parameter and
-ID Token Claim {{OpenID}} MAY be used as well. The `code_challenge` or
-OpenID Connect `nonce` MUST be transaction-specific and securely bound
-to the client and the user agent in which the transaction was started.
+Clients MUST prevent injection (replay) of authorization codes into the 
+authorization response by attackers. The use of the `code_challenge`
+parameter is RECOMMENDED to this end. For confidential clients, the 
+OpenID Connect `nonce` parameter and ID Token Claim {{OpenID}} MAY be used 
+instead of or in addition to the `code_challenge` parameter for this 
+purpose. The `code_challenge` or OpenID Connect `nonce` value MUST be
+transaction-specific and securely bound to the client and the user agent 
+in which the transaction was started.
 
 Historic note: although PKCE {{RFC7636}} was originally designed as a mechanism to protect
 native apps, this advice applies to all kinds of OAuth clients,
