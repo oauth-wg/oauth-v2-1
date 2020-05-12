@@ -60,19 +60,24 @@ normative:
   W3C.REC-xml-20081126:
 
 informative:
-  RFC7522:
-  RFC6819:
   RFC6265:
-  RFC7591:
-  RFC8707:
-  RFC8414:
-  RFC7591:
-  RFC8705:
+  RFC6819:
+  RFC7009:
   RFC7230:
   RFC7235:
+  RFC7522:
+  RFC7519:
+  RFC7591:
+  RFC7592:
   RFC7636:
+  RFC7662:
+  RFC8414:
+  RFC8628:
+  RFC8705:
   RFC8707:
+  I-D.ietf-oauth-access-token-jwt:
   I-D.ietf-oauth-rar:
+  I-D.ietf-oauth-par:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
@@ -242,7 +247,9 @@ OAuth defines four roles:
     This is sometimes abbreviated as "AS".
 
 The interaction between the authorization server and resource server
-is beyond the scope of this specification.  The authorization server
+is beyond the scope of this specification, however several extension have
+been defined to provide an option for interoperability between resource
+servers and authorization servers.  The authorization server
 may be the same server as the resource server or a separate entity.
 A single authorization server may issue access tokens accepted by
 multiple resource servers.
@@ -354,17 +361,22 @@ authorization server.
 
 Access tokens are credentials used to access protected resources.  An
 access token is a string representing an authorization issued to the
-client.  The string is usually opaque to the client.  Tokens
-represent specific scopes and durations of access, granted by the
-resource owner, and enforced by the resource server and authorization
-server.
+client.  The string is opaque to the client, but depending on the 
+authorization server, may be parseable by the resource server.  
+
+Tokens represent specific scopes and durations of access, granted by the
+resource owner, and enforced by the resource server and authorization server.
 
 The token may denote an identifier used to retrieve the authorization
 information or may self-contain the authorization information in a
 verifiable manner (i.e., a token string consisting of some data and a
-signature).  Additional authentication credentials, which are beyond
+signature).  One example of a structured token format is {{I-D.ietf-oauth-access-token-jwt}}, 
+a method of encoding access token data as a JSON Web Token {{RFC7519}}.
+
+Additional authentication credentials, which are beyond
 the scope of this specification, may be required in order for the
-client to use a token.
+client to use a token. This is typically referred to as a sender-constrained
+access token, such as Mutual TLS Access Tokens {{RFC8705}}.
 
 The access token provides an abstraction layer, replacing different
 authorization constructs (e.g., username and password) with a single
@@ -483,21 +495,15 @@ implementation detail. See {{redirect_307}} for details.
 ## Interoperability
 
 OAuth 2.1 provides a rich authorization framework with well-defined
-security properties.  However, as a rich and highly extensible
-framework with many optional components, on its own, this
-specification is likely to produce a wide range of non-interoperable
-implementations.
+security properties.
 
-In addition, this specification leaves a few required components
-partially or fully undefined (e.g., client registration,
-authorization server capabilities, endpoint discovery).  Without
-these components, clients must be manually and specifically
-configured against a specific authorization server and resource
-server in order to interoperate.
+This specification leaves a few required components partially or fully 
+undefined (e.g., client registration, authorization server capabilities, 
+endpoint discovery).  Some of these behaviors are defined in optional 
+extensions which implementations can choose to use.
 
-This framework was designed with the clear expectation that future
-work will define prescriptive profiles and extensions necessary to
-achieve full web-scale interoperability.
+Please refer to {{extensions}} for a list of current known extensions at 
+the time of this publication.
 
 
 ## Notational Conventions
@@ -1853,14 +1859,15 @@ token to the resource server.  The resource server MUST validate the
 access token and ensure that it has not expired and that its scope
 covers the requested resource.  The methods used by the resource
 server to validate the access token (as well as any error responses)
-are beyond the scope of this specification but generally involve an
+are beyond the scope of this specification, but generally involve an
 interaction or coordination between the resource server and the
-authorization server.
+authorization server, such as using Token Introspection {{RFC7662}}
+or a structured access token format such as a JWT {{I-D.ietf-oauth-access-token-jwt}}.
 
 The method in which the client utilizes the access token to
 authenticate with the resource server depends on the type of access
 token issued by the authorization server.  Typically, it involves
-using the HTTP `Authorization` request header field [RFC2617] with an
+using the HTTP `Authorization` request header field {{RFC2617}} with an
 authentication scheme defined by the specification of the access
 token type used, such as `Bearer`, defined below.
 
@@ -2059,7 +2066,8 @@ authentication attempt using an expired access token:
 If a resource access request fails, the resource server SHOULD inform
 the client of the error.  While the specifics of such error responses
 are beyond the scope of this specification, {{RFC6750}} establishes
-a common registry in [Section 11.4](https://tools.ietf.org/html/rfc6749#section-11.4) for error values to be shared among
+a common registry in [Section 11.4](https://tools.ietf.org/html/rfc6749#section-11.4) 
+for error values to be shared among
 OAuth token authentication schemes.
 
 New authentication schemes designed primarily for OAuth token
@@ -3577,6 +3585,46 @@ into the octet sequence below (using hexadecimal notation):
 and then represented in the payload as:
 
     +%25%26%2B%C2%A3%E2%82%AC
+
+
+# Extensions {#extensions}
+
+Below is a list of well-established extensions at the time of publication:
+
+* {{RFC8628}}: OAuth 2.0 Device Authorization Grant
+  * The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps, or devices like hardware video encoders that can stream video to a streaming video service.
+
+* {{RFC8414}}: Authorization Server Metadata
+  * Authorization Server Metadata (also known as OAuth Discovery) defines an endpoint clients can use to look up the information needed to interact with a particular OAuth server, such as the location of the authorization and token endpoints and the supported grant types.
+
+* {{RFC8707}}: Resource Indicators
+  * Provides a way for the client to explicitly signal to the authorization server where it intends to use the access token it is requesting.
+
+* {{RFC7591}}: Dynamic Client Registration
+  * Dynamic Client Registration provides a mechanism for programmatically registering clients with an authorization server.
+
+* {{RFC7592}}: Dynamic Client Management
+  * Dynamic Client Management provides a mechanism for updating dynamically registered client information.
+
+* {{I-D.ietf-oauth-access-token-jwt}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
+  * This specification defines a profile for issuing OAuth access tokens in JSON web token (JWT) format.
+
+* {{RFC8705}}: Mutual TLS
+  * Mutual TLS describes a mechanism of binding access tokens and refresh tokens to the clients they were issued to, as well as a client authentication mechanism, via TLS certificate authentication.
+
+* {{RFC7662}}: Token Introspection
+  * The Token Introspection extension defines a mechanism for resource servers to obtain information about access tokens.
+
+* {{RFC7009}}: Token Revocation
+  * The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.
+
+* {{I-D.ietf-oauth-par}}: Pushed Authorization Requests
+  * The Pushed Authorization Requsts extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.
+
+* {{I-D.ietf-oauth-rar}}: Rich Authorization Requests
+  * Rich Authorization Requests specifies a new parameter `authorization_details` that is used to carry fine-grained authorization data in the OAuth authorization request.
+
+
 
 
 # Acknowledgements
