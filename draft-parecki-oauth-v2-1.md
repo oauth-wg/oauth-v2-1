@@ -65,7 +65,6 @@ informative:
   RFC7009:
   RFC7230:
   RFC7235:
-  RFC7522:
   RFC7519:
   RFC7591:
   RFC7592:
@@ -1553,7 +1552,7 @@ value of the `grant_type` parameter of the token endpoint, and by
 adding any additional parameters necessary.
 
 For example, to request an access token using the Device Authorization Grant
-as defined by {{RFC8626}} after the user has authorized the client on a separate device,
+as defined by {{RFC8628}} after the user has authorized the client on a separate device,
 the client makes the following HTTP request using
 TLS (with extra line breaks for display purposes only):
 
