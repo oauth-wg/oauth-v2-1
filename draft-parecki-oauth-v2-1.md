@@ -1552,18 +1552,18 @@ using an absolute URI (defined by the authorization server) as the
 value of the `grant_type` parameter of the token endpoint, and by
 adding any additional parameters necessary.
 
-For example, to request an access token using a Security Assertion
-Markup Language (SAML) 2.0 assertion grant type as defined by
-[RFC7522], the client could make the following HTTP request using
+For example, to request an access token using the Device Authorization Grant
+as defined by {{RFC8626}} after the user has authorized the client on a separate device,
+the client makes the following HTTP request using
 TLS (with extra line breaks for display purposes only):
 
-    POST /token HTTP/1.1
-    Host: server.example.com
-    Content-Type: application/x-www-form-urlencoded
+      POST /token HTTP/1.1
+      Host: server.example.com
+      Content-Type: application/x-www-form-urlencoded
 
-    grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Asaml2-
-    bearer&assertion=PEFzc2VydGlvbiBJc3N1ZUluc3RhbnQ9IjIwMTEtMDU
-    [...omitted for brevity...]aG5TdGF0ZW1lbnQ-PC9Bc3NlcnRpb24-
+      grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code
+      &device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS
+      &client_id=C409020731
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
