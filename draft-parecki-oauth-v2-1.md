@@ -1908,7 +1908,7 @@ by other specifications.
 ### Authenticated Requests
 
 This section defines two methods of sending Bearer tokens in resource
-requetss to resource servers. Clients MUST NOT use more than one method
+requests to resource servers. Clients MUST NOT use more than one method
 to transmit the token in each request.
 
 #### Authorization Request Header Field
@@ -2060,34 +2060,6 @@ authentication attempt using an expired access token:
                       error_description="The access token expired"
 
 
-## Error Response {#bearer-token-error-response}
-
-If a resource access request fails, the resource server SHOULD inform
-the client of the error.  While the specifics of such error responses
-are beyond the scope of this specification, {{RFC6750}} establishes
-a common registry in [Section 11.4](https://tools.ietf.org/html/rfc6749#section-11.4) 
-for error values to be shared among
-OAuth token authentication schemes.
-
-New authentication schemes designed primarily for OAuth token
-authentication SHOULD define a mechanism for providing an error
-status code to the client, in which the error values allowed are
-registered in the error registry established by this specification.
-
-Such schemes MAY limit the set of valid error codes to a subset of
-the registered values.  If the error code is returned using a named
-parameter, the parameter name SHOULD be `error`.
-
-Other schemes capable of being used for OAuth token authentication,
-but not primarily designed for that purpose, MAY bind their error
-values to the registry in the same manner.
-
-New authentication schemes MAY choose to also specify the use of the
-`error_description` and `error_uri` parameters to return error
-information in a manner parallel to their usage in this
-specification.
-
-
 ### Error Codes {#bearer-token-error-codes}
 
 When a request fails, the resource server responds using the
@@ -2125,6 +2097,35 @@ For example:
     HTTP/1.1 401 Unauthorized
     WWW-Authenticate: Bearer realm="example"
 
+## Error Response {#bearererror-response}
+
+If a resource access request fails, the resource server SHOULD inform
+the client of the error. The method by which the resource server
+does this is determined by the particular token type, such as the 
+description of Bearer tokens in {{bearer-token-error-codes}}.
+
+### Extension Token Types
+
+{{RFC6750}} establishes a common registry in [Section 11.4](https://tools.ietf.org/html/rfc6749#section-11.4) 
+for error values to be shared among OAuth token authentication schemes.
+
+New authentication schemes designed primarily for OAuth token
+authentication SHOULD define a mechanism for providing an error
+status code to the client, in which the error values allowed are
+registered in the error registry established by this specification.
+
+Such schemes MAY limit the set of valid error codes to a subset of
+the registered values.  If the error code is returned using a named
+parameter, the parameter name SHOULD be `error`.
+
+Other schemes capable of being used for OAuth token authentication,
+but not primarily designed for that purpose, MAY bind their error
+values to the registry in the same manner.
+
+New authentication schemes MAY choose to also specify the use of the
+`error_description` and `error_uri` parameters to return error
+information in a manner parallel to their usage in this
+specification.
 
 
 ## Access Token Security Considerations
@@ -2432,7 +2433,7 @@ In cases where protocol extensions (i.e., access token types,
 extension parameters, or extension grant types) require additional
 error codes to be used with the authorization code grant error
 response ({{authorization-code-error-response}}), the token error response ({{access-token-error-response}}), or the
-resource access error response ({{bearer-token-error-response}}), such error codes MAY be
+resource access error response ({{error-response}}), such error codes MAY be
 defined.
 
 Extension error codes MUST be registered (following the procedures in
@@ -3474,7 +3475,7 @@ The `error` element is defined in Sections {{authorization-code-error-response}}
 ## "error_description" Syntax
 
 The `error_description` element is defined in Sections {{authorization-code-error-response}},
-{{access-token-error-response}}, and {{bearer-token-error-response}}:
+{{access-token-error-response}}, and {{error-response}}:
 
      error-description = 1*NQSCHAR
 
