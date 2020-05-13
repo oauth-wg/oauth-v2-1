@@ -2097,7 +2097,7 @@ For example:
     HTTP/1.1 401 Unauthorized
     WWW-Authenticate: Bearer realm="example"
 
-## Error Response {#bearererror-response}
+## Error Response {#error-response}
 
 If a resource access request fails, the resource server SHOULD inform
 the client of the error. The method by which the resource server
