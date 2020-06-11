@@ -80,6 +80,7 @@ informative:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
+  I-D.ietf-oauth-dpop:
 
   OpenID:
     title: OpenID Connect Core 1.0
@@ -1793,12 +1794,15 @@ The authorization server MUST:
   client, and
 * validate the refresh token.
 
-Authorization server MUST utilize one of these methods to detect
+## Refresh Token Protection {#refresh_token_protection}
+
+Authorization servers SHOULD utilize one of these methods to detect
 refresh token replay by malicious actors for public clients:
 
 * *Sender-constrained refresh tokens:* the authorization server
   cryptographically binds the refresh token to a certain client
-  instance by utilizing {{I-D.ietf-oauth-token-binding}} or {{RFC8705}}.
+  instance by utilizing {{I-D.ietf-oauth-token-binding}}, {{RFC8705}},
+  {{I-D.ietf-oauth-dpop}}, or another suitable method.
 
 * *Refresh token rotation:* the authorization server issues a new
   refresh token with every access token refresh response.  The
@@ -1813,14 +1817,13 @@ refresh token replay by malicious actors for public clients:
   cost of forcing the legitimate client to obtain a fresh
   authorization grant.
 
-  Implementation note: the grant to which a refresh token belongs
-  may be encoded into the refresh token itself.  This can enable an
-  authorization server to efficiently determine the grant to which a
-  refresh token belongs, and by extension, all refresh tokens that
-  need to be revoked.  Authorization servers MUST ensure the
-  integrity of the refresh token value in this case, for example,
-  using signatures.
-
+Implementation note: the grant to which a refresh token belongs
+may be encoded into the refresh token itself.  This can enable an
+authorization server to efficiently determine the grant to which a
+refresh token belongs, and by extension, all refresh tokens that
+need to be revoked.  Authorization servers MUST ensure the
+integrity of the refresh token value in this case, for example,
+using signatures.
 
 If valid and authorized, the authorization server issues an access
 token as described in {{access-token-successful-response}}.  If the request failed
@@ -3396,7 +3399,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
   as per Section 2.4 of {{I-D.ietf-oauth-security-topics}}
 * Bearer token usage omits the use of bearer tokens in the query string of URIs
   as per Section 4.3.2 of {{I-D.ietf-oauth-security-topics}}
-* Refresh tokens must either be sender-constrained or one-time use
+* Refresh tokens should either be sender-constrained or one-time use
   as per Section 4.12.2 of {{I-D.ietf-oauth-security-topics}}
 
 
