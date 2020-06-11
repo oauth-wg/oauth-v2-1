@@ -2822,6 +2822,17 @@ Otherwise, attackers that can read the authorization request (cf.
 Attacker A4 in (#secmodel)) can break the security provided
 by this mechanism. Currently, `S256` is the only such method.
 
+When an authorization code arrives at the token endpoint, the 
+authorization server MUST do the following check:
+
+1. If there was a `code_challenge` in the authorization request for which this 
+code was issued, there must be a `code_verifier` in the token request, and it 
+MUST be verified according to the steps in {{access-token-request}}.
+(This is no change from the current behavior in {{RFC7636}}.)
+
+2. If there was no `code_challenge` in the authorization request, any request to 
+the token endpoint containing a `code_verifier` MUST be rejected.
+
 Authorization servers MUST support the `code_challenge` and `code_verifier` parameters.
 
 Authorization servers MUST provide a way to detect their support for
