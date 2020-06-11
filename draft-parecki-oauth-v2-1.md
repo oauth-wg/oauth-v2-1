@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-parecki-oauth-v2-1-03
-date: 2020-05-11
+date: 2020-06-11
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -1143,7 +1143,7 @@ technical reason and know via out-of-band configuration or via
 Authorization Server Metadata ({{RFC8414}}) that the server supports `plain`.
 
 The plain transformation is for compatibility with existing
-deployments and for constrained environments that can't use the S256
+deployments and for constrained environments that can't use the `S256`
 transformation.
 
 ABNF for `code_challenge` is as follows.
