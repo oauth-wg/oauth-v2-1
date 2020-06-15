@@ -2835,7 +2835,7 @@ transaction-specific and securely bound to the client and the user agent in
 which the transaction was started. If a transaction leads to an error, fresh
 values for `code_challenge` or `nonce` MUST be chosen.
 
-Historic note: although PKCE {{RFC7636}} was originally designed as a mechanism
+Historic note: Although PKCE {{RFC7636}} was originally designed as a mechanism
 to protect native apps, this advice applies to all kinds of OAuth clients,
 including web applications and other confidential clients.
 
@@ -3409,7 +3409,7 @@ changes described in a later draft, or removed entirely.
 A non-normative list of changes from OAuth 2.0 is listed below:
 
 * The authorization code grant is extended with the functionality from PKCE ({{RFC7636}})
-  such that the only method of using the authorization code grant according
+  such that the default method of using the authorization code grant according
   to this specification requires the addition of the PKCE parameters
 * Redirect URIs must be compared using exact string matching
   as per Section 4.1.3 of {{I-D.ietf-oauth-security-topics}}
