@@ -1101,6 +1101,12 @@ authorization code is the same application that requested it. The properties
 known as "Proof-Key for Code Exchange", or PKCE ({{RFC7636}}) where this technique
 was originally developed.
 
+Clients MUST use `code_challenge` and `code_verifier` and
+authorization servers MUST enforce their use except under the conditions
+described in {{authorization_codes}}. In this case, using and enforcing
+`code_challenge` and `code_verifier` as described in the following is still
+RECOMMENDED.
+
 #### Client Creates a Code Verifier
 
 The client first creates a code verifier, `code_verifier`, for each
@@ -1166,7 +1172,7 @@ using the `application/x-www-form-urlencoded` format, per Appendix B:
 :    REQUIRED.  The client identifier as described in {{client-identifier}}.
 
 "code_challenge":
-:    REQUIRED.  Code challenge.
+:    REQUIRED or RECOMMENDED (see {{authorization_codes}}).  Code challenge.
 
 "code_challenge_method":
 :    OPTIONAL, defaults to `plain` if not present in the request.  Code
@@ -1384,7 +1390,8 @@ request entity-body:
      authorization server as described in {{token-endpoint-client-authentication}}.
 
 "code_verifier":
-:    REQUIRED.  Code verifier
+:    REQUIRED, if the `code_challenge` parameter was included in the authorization 
+     request. MUST NOT be used otherwise. Code verifier.
 
 If the client type is confidential or the client was issued client
 credentials (or assigned other authentication requirements), the
@@ -1417,10 +1424,13 @@ The authorization server MUST:
 
 *  verify that the authorization code is valid,
 
-*  verify the `code_verifier` by calculating the code challenge from the received
-   `code_verifier` and comparing it with the previously associated
-   `code_challenge`, after first transforming it according to the
-   `code_challenge_method` method specified by the client, and
+*  verify that the `code_verifier` parameter is present if and only if a
+   `code_challenge` parameter was present in the authorization request,
+
+*  if a `code_verifier` is present, verify the `code_verifier` by calculating
+   the code challenge from the received `code_verifier` and comparing it with
+   the previously associated `code_challenge`, after first transforming it
+   according to the `code_challenge_method` method specified by the client, and
 
 *  ensure that the `redirect_uri` parameter is present if the
    `redirect_uri` parameter was included in the initial authorization
@@ -2806,17 +2816,25 @@ If the client can be authenticated, the authorization servers MUST
 authenticate the client and ensure that the authorization code was
 issued to the same client.
 
-Clients MUST prevent injection (replay) of authorization codes into the 
-authorization response by attackers. The use of the `code_challenge`
-parameter is RECOMMENDED to this end. For confidential clients, the 
-OpenID Connect `nonce` parameter and ID Token Claim {{OpenID}} MAY be used 
-instead of or in addition to the `code_challenge` parameter for this 
-purpose. The `code_challenge` or OpenID Connect `nonce` value MUST be
-transaction-specific and securely bound to the client and the user agent 
-in which the transaction was started.
+Clients MUST prevent injection (replay) of authorization codes into the
+authorization response by attackers. To this end, using `code_challenge` and
+`code_verifier` is REQUIRED for clients and authorization servers MUST enforce
+their use, unless both of the following criteria are met:
 
-Historic note: although PKCE {{RFC7636}} was originally designed as a mechanism to protect
-native apps, this advice applies to all kinds of OAuth clients,
+* The client is a confidential client.
+* In the specific deployment and the specific request, there is reasonable
+  assurance for authorization server that the client implements the OpenID
+  Connect `nonce` mechanism properly.
+
+In this case, using and enforcing `code_challenge` and `code_verifier` is still RECOMMENDED.
+
+The `code_challenge` or OpenID Connect `nonce` value MUST be
+transaction-specific and securely bound to the client and the user agent in
+which the transaction was started. If a transaction leads to an error, fresh
+values for `code_challenge` or `nonce` MUST be chosen.
+
+Historic note: although PKCE {{RFC7636}} was originally designed as a mechanism
+to protect native apps, this advice applies to all kinds of OAuth clients,
 including web applications and other confidential clients.
 
 Clients SHOULD use code challenge methods that
