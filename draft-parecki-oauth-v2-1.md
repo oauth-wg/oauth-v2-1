@@ -1671,7 +1671,9 @@ parameters with the response:
            unsupported parameter value (other than grant type),
            repeats a parameter, includes multiple credentials,
            utilizes more than one mechanism for authenticating the
-           client, or is otherwise malformed.
+           client, contains a `code_verifier` although no 
+           `code_challenge` was sent in the authorization request, 
+           or is otherwise malformed.
 
      "invalid_client":
      :     Client authentication failed (e.g., unknown client, no
