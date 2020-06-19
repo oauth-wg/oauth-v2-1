@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-parecki-oauth-v2-1-03
-date: 2020-06-11
+date: 2020-06-19
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -1391,7 +1391,7 @@ request entity-body:
 
 "code_verifier":
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
-     request. MUST NOT be used otherwise. Code verifier.
+     request. MUST NOT be used otherwise. The original code verifier string.
 
 If the client type is confidential or the client was issued client
 credentials (or assigned other authentication requirements), the
@@ -2695,7 +2695,7 @@ described in {{tls-version}} with server authentication as defined by
 The authorization server MUST verify the binding between the refresh
 token and client identity whenever the client identity can be
 authenticated.  When client authentication is not possible, the
-authorization server MUST issue sender-constrained refresh tokens
+authorization server SHOULD issue sender-constrained refresh tokens
 or use refresh token rotation as described in (#refresh_token_protection).
 
 The authorization server MUST ensure that refresh tokens cannot be
