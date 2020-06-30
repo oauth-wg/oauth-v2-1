@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-parecki-oauth-v2-1-03
-date: 2020-06-11
+date: 2020-06-29
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -582,7 +582,6 @@ OAuth 2.1 defines two client types:
 "public":
 : Clients without credentials are called "public clients"
 
-
 Confidential clients MUST take precautions to prevent leakage and abuse of their credentials.
 
 Authorization servers SHOULD consider the level of confidence in a client’s identity
@@ -749,7 +748,6 @@ Some additional authentication methods are defined in the
 and may be useful as generic client authentication methods beyond 
 the specific use of protecting the token endpoint.
 
-
 ## Unregistered Clients
 
 This specification does not exclude the use of unregistered clients.
@@ -884,7 +882,6 @@ parameter to achieve per-request customization if needed.
 
 \[Dick: this paragraph is almost the same as the previous paragraph]
 
-
 The authorization server MAY allow the client to register multiple
 redirection endpoints.
 
@@ -892,13 +889,11 @@ Lack of a redirection URI registration requirement can enable an
 attacker to use the authorization endpoint as an open redirector as
 described in {{open-redirectors}}.
 
-
 #### Dynamic Configuration
 
 If multiple redirection URIs have been registered the client MUST
 include a redirection URI with the authorization request using the
 `redirect_uri` request parameter.
-
 
 \[Dick: redirection URI or redirection endpoint URI? = both are used]
 
@@ -1403,7 +1398,7 @@ request entity-body:
 
 "code_verifier":
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
-     request. MUST NOT be used otherwise. Code verifier.
+     request. MUST NOT be used otherwise. The original code verifier string.
 
 If the client type is confidential or the client was issued client
 credentials (or assigned other authentication requirements), the
@@ -2707,7 +2702,7 @@ described in {{tls-version}} with server authentication as defined by
 The authorization server MUST verify the binding between the refresh
 token and client identity whenever the client identity can be
 authenticated.  When client authentication is not possible, the
-authorization server MUST issue sender-constrained refresh tokens
+authorization server SHOULD issue sender-constrained refresh tokens
 or use refresh token rotation as described in (#refresh_token_protection).
 
 The authorization server MUST ensure that refresh tokens cannot be
