@@ -1,13 +1,12 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-parecki-oauth-v2-1-03
-date: 2020-06-19
+date: 2020-06-29
 
 ipr: trust200902
 wg: OAuth Working Group
 kw: Internet-Draft
 cat: std
-consensus: "true"
 area: Security
 
 coding: us-ascii
@@ -575,7 +574,10 @@ by the developer of the client with the authorization server.
 OAuth 2.1 defines two client types:
 
 "confidential":
-: Clients that have credentials are designated as "confidential clients"
+: Clients that have credentials and their identity has been confirmed by the AS are designated as "confidential clients"
+
+"need_a_name_for_this_type": \[Dick: "credentialed" client ???]
+: Clients that have credentials and their identity has been not been confirmed by the AS are designated as "need_a_name_for_this_type clients"
 
 "public":
 : Clients without credentials are called "public clients"
@@ -593,6 +595,8 @@ and a public browser-based component).  If the authorization server
 does not provide support for such clients or does not provide
 guidance with regard to their registration, the client SHOULD
 register each component as a separate client.
+
+\[Dick: this is confusing. Are there two different clients, or is it a web app for a server? One could read it as the latter. Change to browser-based application to fit in with definitions below]
 
 This specification has been designed around the following client
 profiles:
@@ -646,6 +650,7 @@ Authorization servers SHOULD NOT allow clients to influence their
 identifier of a genuine resource owner during subsequent protocol 
 interactions.
 
+\[Dick: what is issue with being confused with genuine resource owner?]
 
 ## Client Authentication {#client-authentication}
 
@@ -668,9 +673,10 @@ used, authorization servers do not need to store sensitive symmetric
 keys, making these methods more robust against a number of attacks.
 
 The authorization server MAY establish a client authentication method
-with public clients.  However, the authorization server MUST NOT rely
-on public client authentication for the purpose of identifying the
-client.
+with public clients, which converts them to need_a_name_for_this_type 
+clients.  However, the authorization server MUST NOT rely on 
+need_a_name_for_this_type client authentication for the purpose of 
+identifying the client.
 
 The client MUST NOT use more than one authentication method in each
 request.
@@ -875,6 +881,8 @@ The authorization server MUST require the client to provide one or more
 complete redirection URIs. The client MAY use the `state` request
 parameter to achieve per-request customization if needed.
 
+\[Dick: this paragraph is almost the same as the previous paragraph]
+
 The authorization server MAY allow the client to register multiple
 redirection endpoints.
 
@@ -882,13 +890,13 @@ Lack of a redirection URI registration requirement can enable an
 attacker to use the authorization endpoint as an open redirector as
 described in {{open-redirectors}}.
 
-
 #### Dynamic Configuration
 
 If multiple redirection URIs have been registered the client MUST
 include a redirection URI with the authorization request using the
 `redirect_uri` request parameter.
 
+\[Dick: redirection URI or redirection endpoint URI? = both are used]
 
 #### Invalid Endpoint
 
