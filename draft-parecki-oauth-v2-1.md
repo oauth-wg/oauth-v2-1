@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-parecki-oauth-v2-1-03
-date: 2020-06-29
+date: 2020-07-02
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -540,7 +540,7 @@ Client registration does not require a direct interaction between the
 client and the authorization server.  When supported by the
 authorization server, registration can rely on other means for
 establishing trust and obtaining the required client properties
-(e.g., redirection URI, client type).  For example, registration can
+(e.g., redirect URI, client type).  For example, registration can
 be accomplished using a self-issued or third-party-issued assertion,
 or by the authorization server performing client discovery using a
 trusted channel.
@@ -549,7 +549,7 @@ When registering a client, the client developer SHALL:
 
 *  specify the client type as described in {{client-types}},
 
-*  provide its client redirection URIs as described in {{redirection-endpoint}},
+*  provide its client redirect URIs as described in {{redirection-endpoint}},
    and
 
 *  include any other information required by the authorization server
@@ -571,35 +571,27 @@ authorization server use credentials to authenticate with the authorization serv
 Such credentials are either issued by the authorization server or registered
 by the developer of the client with the authorization server.
 
-OAuth 2.1 defines two client types:
+OAuth 2.1 defines three client types:
 
 "confidential":
 : Clients that have credentials and their identity has been confirmed by the AS are designated as "confidential clients"
 
-"need_a_name_for_this_type": \[Dick: "credentialed" client ???]
-: Clients that have credentials and their identity has been not been confirmed by the AS are designated as "need_a_name_for_this_type clients"
+"credentialed":
+: Clients that have credentials and their identity has been not been confirmed by the AS are designated as "credentialed clients"
 
 "public":
 : Clients without credentials are called "public clients"
 
-Confidential clients MUST take precautions to prevent leakage and abuse of their credentials.
+Any clients with credentials MUST take precautions to prevent leakage and abuse of their credentials.
 
 Authorization servers SHOULD consider the level of confidence in a client’s identity
 when deciding whether they allow such a client access to more critical functions,
-such as the client credentials grant type.
+such as the Client Credentials grant type.
 
-A client may be implemented as a distributed set of components, each
-with a different client type and security context (e.g., a
-distributed client with both a confidential server-based component
-and a public browser-based component).  If the authorization server
-does not provide support for such clients or does not provide
-guidance with regard to their registration, the client SHOULD
-register each component as a separate client.
+A single `client_id` MUST NOT be treated as more than one type of client.
 
-\[Dick: this is confusing. Are there two different clients, or is it a web app for a server? One could read it as the latter. Change to browser-based application to fit in with definitions below]
 
-This specification has been designed around the following client
-profiles:
+This specification has been designed around the following client profiles:
 
 "web application":
 : A web application is a confidential client running on a web
@@ -631,6 +623,7 @@ profiles:
   might be protected from other applications residing on the same
   device.
 
+
 ## Client Identifier {#client-identifier}
 
 The authorization server issues the registered client a client
@@ -645,12 +638,8 @@ specification.  The client should avoid making assumptions about the
 identifier size.  The authorization server SHOULD document the size
 of any identifier it issues.
 
-Authorization servers SHOULD NOT allow clients to influence their
-`client_id` value in such a way that it may be confused with the 
-identifier of a genuine resource owner during subsequent protocol 
-interactions.
-
-\[Dick: what is issue with being confused with genuine resource owner?]
+Authorization servers SHOULD NOT allow clients to choose or influence their
+`client_id` value. See {{client-impersonating-resource-owner}} for details.
 
 ## Client Authentication {#client-authentication}
 
@@ -673,9 +662,9 @@ used, authorization servers do not need to store sensitive symmetric
 keys, making these methods more robust against a number of attacks.
 
 The authorization server MAY establish a client authentication method
-with public clients, which converts them to need_a_name_for_this_type 
+with public clients, which converts them to credentialed 
 clients.  However, the authorization server MUST NOT rely on 
-need_a_name_for_this_type client authentication for the purpose of 
+credentialed client authentication for the purpose of 
 identifying the client.
 
 The client MUST NOT use more than one authentication method in each
@@ -845,7 +834,7 @@ authorization server during the client registration process.
 The authorization server MUST compare the two URIs using simple string
 comparison as defined in {{RFC3986}}, Section 6.2.1.
 
-The redirection endpoint URI MUST be an absolute URI as defined by
+The redirect URI MUST be an absolute URI as defined by
 {{RFC3986}} Section 4.3.  The endpoint URI MAY include an
 "application/x-www-form-urlencoded" formatted (per Appendix B) query
 component ({{RFC3986}} Section 3.4), which MUST be retained when adding
@@ -874,36 +863,30 @@ sign-in service).
 
 #### Registration Requirements
 
-The authorization server MUST require all clients to register their
-redirection endpoint prior to utilizing the authorization endpoint.
-
-The authorization server MUST require the client to provide one or more
-complete redirection URIs. The client MAY use the `state` request
-parameter to achieve per-request customization if needed.
-
-\[Dick: this paragraph is almost the same as the previous paragraph]
+The authorization server MUST require all clients to register one or more
+complete redirect URIs prior to utilizing the authorization endpoint.
+The client MAY use the `state` request parameter to achieve per-request 
+customization if needed.
 
 The authorization server MAY allow the client to register multiple
-redirection endpoints.
+redirect URIs.
 
-Lack of a redirection URI registration requirement can enable an
+Lack of requiring registration of redirect URIs enables an
 attacker to use the authorization endpoint as an open redirector as
 described in {{open-redirectors}}.
 
 #### Dynamic Configuration
 
-If multiple redirection URIs have been registered the client MUST
-include a redirection URI with the authorization request using the
+If multiple redirect URIs have been registered the client MUST
+include a redirect URI with the authorization request using the
 `redirect_uri` request parameter.
-
-\[Dick: redirection URI or redirection endpoint URI? = both are used]
 
 #### Invalid Endpoint
 
 If an authorization request fails validation due to a missing,
-invalid, or mismatching redirection URI, the authorization server
+invalid, or mismatching redirect URI, the authorization server
 SHOULD inform the resource owner of the error and MUST NOT
-automatically redirect the user-agent to the invalid redirection URI.
+automatically redirect the user-agent to the invalid redirect URI.
 
 
 #### Endpoint Content
@@ -912,7 +895,8 @@ The redirection request to the client's endpoint typically results in
 an HTML document response, processed by the user-agent.  If the HTML
 response is served directly as the result of the redirection request,
 any script included in the HTML document will execute with full
-access to the redirection URI and the credentials it contains.
+access to the redirect URI and the credentials (e.g. authorization code) 
+it contains.
 
 The client SHOULD NOT include any third-party scripts (e.g., third-
 party analytics, social plug-ins, ad networks) in the redirection
@@ -1024,7 +1008,7 @@ provides an extension mechanism for defining additional grant types.
 The authorization code grant type is used to obtain both access
 tokens and refresh tokens.
 
-Since this is a redirection-based flow, the client must be capable of
+Since this is a redirect-based flow, the client must be capable of
 interacting with the resource owner's user-agent (typically a web
 browser) and capable of receiving incoming requests (via redirection)
 from the authorization server.
@@ -1039,7 +1023,7 @@ from the authorization server.
      |
     (2)
 +----|-----+          Client Identifier      +---------------+
-|         -+----(1)-- & Redirection URI ---->|               |
+|         -+----(1)-- & Redirect URI    ---->|               |
 |  User-   |                                 | Authorization |
 |  Agent  -+----(2)-- User authenticates --->|     Server    |
 |          |                                 |               |
@@ -1051,7 +1035,7 @@ from the authorization server.
   ^    v                                         |      |
 +---------+                                      |      |
 |         |>---(4)-- Authorization Code ---------'      |
-|  Client |          & Redirection URI                  |
+|  Client |          & Redirect URI                     |
 |         |                                             |
 |         |<---(5)----- Access Token -------------------'
 +---------+       (w/ Optional Refresh Token)
@@ -1067,7 +1051,7 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
      user-agent to the authorization endpoint.  The client includes
      its client identifier, code challenge (derived from a generated code verifier), 
      optional requested scope, optional local state, and a
-     redirection URI to which the authorization server will send the
+     redirect URI to which the authorization server will send the
      user-agent back once access is granted (or denied).
 
 (2)  The authorization server authenticates the resource owner (via
@@ -1076,8 +1060,8 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 (3)  Assuming the resource owner grants access, the authorization
      server redirects the user-agent back to the client using the
-     redirection URI provided earlier (in the request or during
-     client registration).  The redirection URI includes an
+     redirect URI provided earlier (in the request or during
+     client registration).  The redirect URI includes an
      authorization code and any local state provided by the client
      earlier.
 
@@ -1086,11 +1070,11 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
      received in the previous step, and including its code verifier.
      When making the request, the
      client authenticates with the authorization server if it can.  The client
-     includes the redirection URI used to obtain the authorization
+     includes the redirect URI used to obtain the authorization
      code for verification.
 
 (5)  The authorization server authenticates the client when possible, validates the
-     authorization code, validates the code verifier, and ensures that the redirection URI
+     authorization code, validates the code verifier, and ensures that the redirect URI
      received matches the URI used to redirect the client in
      step (3).  If valid, the authorization server responds back with
      an access token and, optionally, a refresh token.
@@ -1220,7 +1204,7 @@ an authorization decision (by asking the resource owner or by
 establishing approval via other means).
 
 When a decision is established, the authorization server directs the
-user-agent to the provided client redirection URI using an HTTP
+user-agent to the provided client redirect URI using an HTTP
 redirection response, or by other means available to it via the
 user-agent.
 
@@ -1230,7 +1214,7 @@ user-agent.
 If the resource owner grants the access request, the authorization
 server issues an authorization code and delivers it to the client by
 adding the following parameters to the query component of the
-redirection URI using the `application/x-www-form-urlencoded` format,
+redirect URI using the `application/x-www-form-urlencoded` format,
 per Appendix B:
 
 "code":
@@ -1243,7 +1227,7 @@ per Appendix B:
      once, the authorization server MUST deny the request and SHOULD
      revoke (when possible) all tokens previously issued based on
      that authorization code.  The authorization code is bound to
-     the client identifier and redirection URI.
+     the client identifier and redirect URI.
 
 "state":
 :    REQUIRED if the `state` parameter was present in the client
@@ -1282,10 +1266,10 @@ specification.
 #### Error Response {#authorization-code-error-response}
 
 If the request fails due to a missing, invalid, or mismatching
-redirection URI, or if the client identifier is missing or invalid,
+redirect URI, or if the client identifier is missing or invalid,
 the authorization server SHOULD inform the resource owner of the
 error and MUST NOT automatically redirect the user-agent to the
-invalid redirection URI.
+invalid redirect URI.
 
 An AS MUST reject requests without a `code_challenge` from public clients, 
 and MUST reject such requests from other clients unless there is 
@@ -1300,9 +1284,9 @@ authorization error response with `error` value set to
 algorithm not supported.
 
 If the resource owner denies the access request or if the request
-fails for reasons other than a missing or invalid redirection URI,
+fails for reasons other than a missing or invalid redirect URI,
 the authorization server informs the client by adding the following
-parameters to the query component of the redirection URI using the
+parameters to the query component of the redirect URI using the
 `application/x-www-form-urlencoded` format, per Appendix B:
 
 "error":
@@ -1698,7 +1682,7 @@ parameters with the response:
      "invalid_grant":
      :     The provided authorization grant (e.g., authorization
            code, resource owner credentials) or refresh token is
-           invalid, expired, revoked, does not match the redirection
+           invalid, expired, revoked, does not match the redirect
            URI used in the authorization request, or was issued to
            another client.
 
@@ -2504,9 +2488,9 @@ credentials ensures their confidentiality.
 
 When client authentication is not possible, the authorization server
 SHOULD employ other means to validate the client's identity -- for
-example, by requiring the registration of the client redirection URI
+example, by requiring the registration of the client redirect URI
 or enlisting the resource owner to confirm identity.  A valid
-redirection URI is not sufficient to verify the client's identity
+redirect URI is not sufficient to verify the client's identity
 when asking for resource owner authorization but can be used to
 prevent delivering credentials to a counterfeit client after
 obtaining resource owner authorization.
@@ -2592,7 +2576,7 @@ unable to, keep its client credentials confidential.
 The authorization server MUST authenticate the client whenever
 possible.  If the authorization server cannot authenticate the client
 due to the client's nature, the authorization server MUST require the
-registration of any redirection URI used for receiving authorization
+registration of any redirect URI used for receiving authorization
 responses and SHOULD utilize other means to protect resource owners
 from such potentially malicious clients.  For example, the
 authorization server can engage the resource owner to assist in
@@ -2710,6 +2694,27 @@ The authorization server MUST ensure that refresh tokens cannot be
 generated, modified, or guessed to produce valid refresh tokens by
 unauthorized parties.
 
+## Client Impersonating Resource Owner {#client-impersonating-resource-owner}
+
+Resource servers may make access control decisions based on the
+identity of the resource owner as communicated in the `sub` claim
+returned by the authorization server in a token introspection
+response [RFC7662] or other mechanisms.  If a client is able to
+choose its own `client_id` during registration with the authorization
+server, then there is a risk that it can register with the same `sub`
+value as a privileged user.  A subsequent access token obtained under
+the client credentials grant may be mistaken for an access token
+authorized by the privileged user if the resource server does not
+perform additional checks.
+
+Authorization servers SHOULD NOT allow clients to influence their
+`client_id` or `sub` value or any other claim if that can cause
+confusion with a genuine resource owner.  Where this cannot be
+avoided, authorization servers MUST provide other means for the
+resource server to distinguish between access tokens authorized by a
+resource owner from access tokens authorized by the client itself.
+
+
 ## Protecting Redirect-Based Flows
 
 When comparing client redirect URIs against pre-registered URIs,
@@ -2783,7 +2788,7 @@ At the authorization endpoint, a typical protocol flow is that the AS
 prompts the user to enter her credentials in a form that is then
 submitted (using the HTTP POST method) back to the authorization
 server.  The AS checks the credentials and, if successful, redirects
-the user agent to the client's redirection endpoint.
+the user agent to the client's redirect URI.
 
 If the status code 307 were used for redirection, the user agent 
 would send the user credentials via HTTP POST to the client.
@@ -2811,7 +2816,7 @@ Therefore, the RECOMMENDED status code for HTTP redirects is 303.
 
 The transmission of authorization codes MUST be made over a secure
 channel, and the client MUST require the use of TLS with its
-redirection URI if the URI identifies a network resource.  Since
+redirect URI if the URI identifies a network resource.  Since
 authorization codes are transmitted via user-agent redirections, they
 could potentially be disclosed through user-agent history and HTTP
 referrer headers.
@@ -3183,11 +3188,11 @@ perform the OAuth authorization request in an external user-agent
 one implemented with web-views).
 
 The native application can capture the
-response from the authorization server using a redirection URI
+response from the authorization server using a redirect URI
 with a scheme registered with the operating system to invoke the
 client as the handler, manual copy-and-paste of the credentials,
 running a local web server, installing a user-agent extension, or
-by providing a redirection URI identifying a server-hosted
+by providing a redirect URI identifying a server-hosted
 resource under the client's control, which in turn makes the
 response available to the native application.
 
@@ -3265,7 +3270,7 @@ specifically for user authorization and capable of processing
 authorization requests and responses like a browser MAY also be used.
 Other external user-agents, such as a native app provided by the
 authorization server may meet the criteria set out in this best
-practice, including using the same redirection URI properties, but
+practice, including using the same redirect URI properties, but
 their use is out of scope for this specification.
 
 Some platforms support a browser feature known as "in-app browser
@@ -3299,7 +3304,7 @@ is launched to handle the request.
 
 To perform an authorization request with a private-use URI
 scheme redirect, the native app launches the browser with a standard
-authorization request, but one where the redirection URI utilizes a
+authorization request, but one where the redirect URI utilizes a
 private-use URI scheme it registered with the operating system.
 
 When choosing a URI scheme to associate with the app, apps MUST use a
@@ -3329,8 +3334,8 @@ example of a redirect URI utilizing a private-use URI scheme is:
     com.example.app:/oauth2redirect/example-provider
 
 When the authorization server completes the request, it redirects to
-the client's redirection URI as it would normally.  As the
-redirection URI uses a private-use URI scheme, it results in the
+the client's redirect URI as it would normally.  As the
+redirect URI uses a private-use URI scheme, it results in the
 operating system launching the native app, passing in the URI as a
 launch parameter.  Then, the native app uses normal processing for
 the authorization response.
