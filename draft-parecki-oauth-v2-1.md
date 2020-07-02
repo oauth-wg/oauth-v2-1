@@ -737,7 +737,6 @@ Some additional authentication methods are defined in the
 and may be useful as generic client authentication methods beyond 
 the specific use of protecting the token endpoint.
 
-
 ## Unregistered Clients
 
 This specification does not exclude the use of unregistered clients.
