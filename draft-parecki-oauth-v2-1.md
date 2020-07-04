@@ -643,13 +643,13 @@ Authorization servers SHOULD NOT allow clients to choose or influence their
 
 ## Client Authentication {#client-authentication}
 
-If the client type is confidential, the client and authorization
-server establish a client authentication method suitable for the
-security requirements of the authorization server.  The authorization
-server MAY accept any form of client authentication meeting its
+If the client has credentials, (is a confidential or credentialed client), 
+the client and authorization server establish a client authentication method 
+suitable for the security requirements of the authorization server.  
+The authorization server MAY accept any form of client authentication meeting its
 security requirements.
 
-Confidential clients are typically issued (or establish) a set of
+Confidential and credentialed clients are typically issued (or establish) a set of
 client credentials used for authenticating with the authorization
 server (e.g., password, public/private key pair).
 
@@ -938,7 +938,7 @@ defined by this specification MUST NOT be included more than once.
 
 ### Client Authentication {#token-endpoint-client-authentication}
 
-Confidential clients or other clients issued client credentials MUST
+Confidential or credentialed clients client MUST
 authenticate with the authorization server as described in
 {{client-authentication}} when making requests to the token endpoint.  Client
 authentication is used for:
@@ -1384,10 +1384,8 @@ request entity-body:
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
      request. MUST NOT be used otherwise. The original code verifier string.
 
-If the client type is confidential or the client was issued client
-credentials (or assigned other authentication requirements), the
-client MUST authenticate with the authorization server as described
-in {{token-endpoint-client-authentication}}.
+Confidential or credentialed clients MUST authenticate with the authorization 
+server as described in {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request using TLS
 (with extra line breaks for display purposes only):
@@ -1403,14 +1401,13 @@ For example, the client makes the following HTTP request using TLS
 
 The authorization server MUST:
 
-*  require client authentication for confidential clients or for any
-   client that was issued client credentials (or with other
-   authentication requirements),
+*  require client authentication for confidential and credentialed clients
+   (or clients with other authentication requirements),
 
 *  authenticate the client if client authentication is included,
 
 *  ensure that the authorization code was issued to the authenticated
-   confidential client, or if the client is public, ensure that the
+   confidential or credentialed client, or if the client is public, ensure that the
    code was issued to `client_id` in the request,
 
 *  verify that the authorization code is valid,
@@ -1464,7 +1461,7 @@ arranged with the authorization server (the method of which is beyond
 the scope of this specification).
 
 The client credentials grant type MUST only be used by confidential
-clients.
+or credentialed clients.
 
 ~~~~~~~~~~
      +---------+                                  +---------------+
@@ -1771,9 +1768,8 @@ request entity-body:
 
 Because refresh tokens are typically long-lasting credentials used to
 request additional access tokens, the refresh token is bound to the
-client to which it was issued.  If the client type is confidential or
-the client was issued client credentials (or assigned other
-authentication requirements), the client MUST authenticate with the
+client to which it was issued.  Confidential or credentialed clients 
+MUST authenticate with the
 authorization server as described in {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request using
@@ -1789,9 +1785,7 @@ only):
 
 The authorization server MUST:
 
-* require client authentication for confidential clients or for any
-  client that was issued client credentials (or with other
-  authentication requirements),
+* require client authentication for confidential or credentialed clients
 * authenticate the client if client authentication is included and
   ensure that the refresh token was issued to the authenticated
   client, and
@@ -2515,8 +2509,7 @@ or to use the client credential grant type.
 Secrets that are statically included as part of an app distributed to
 multiple users should not be treated as confidential secrets, as one
 user may inspect their copy and learn the shared secret.  For this
-reason, it is NOT
-RECOMMENDED for authorization servers to require client
+reason, it is NOT RECOMMENDED for authorization servers to require client
 authentication of public native apps clients using a shared secret,
 as this serves little value beyond client identification which is
 already provided by the `client_id` request parameter.
@@ -2835,7 +2828,7 @@ authorization response by attackers. To this end, using `code_challenge` and
 `code_verifier` is REQUIRED for clients and authorization servers MUST enforce
 their use, unless both of the following criteria are met:
 
-* The client is a confidential client.
+* The client is a confidential or credentialed client.
 * In the specific deployment and the specific request, there is reasonable
   assurance for authorization server that the client implements the OpenID
   Connect `nonce` mechanism properly.
