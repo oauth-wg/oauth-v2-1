@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-parecki-oauth-v2-1-03
-date: 2020-07-02
+date: 2020-07-05
 
 ipr: trust200902
 wg: OAuth Working Group
