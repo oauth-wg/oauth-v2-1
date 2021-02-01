@@ -524,6 +524,8 @@ defined in {{RFC4949}}.  These terms include, but are not limited to,
 "confidentiality", "credential", "encryption", "identity", "sign",
 "signature", "trust", "validate", and "verify".
 
+The term "payload" is to be interpreted as described in Section 3.3 of [RFC7231].
+
 Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.
 
@@ -1362,7 +1364,7 @@ sending the following HTTP response:
 The client makes a request to the token endpoint by sending the
 following parameters using the `application/x-www-form-urlencoded`
 format per Appendix B with a character encoding of UTF-8 in the HTTP
-request entity-body:
+request payload:
 
 "grant_type":
 :    REQUIRED.  Value MUST be set to `authorization_code`.
@@ -1497,7 +1499,7 @@ no additional authorization request is needed.
 The client makes a request to the token endpoint by adding the
 following parameters using the `application/x-www-form-urlencoded`
 format per Appendix B with a character encoding of UTF-8 in the HTTP
-request entity-body:
+request payload:
 
 "grant_type":
 :    REQUIRED.  Value MUST be set to `client_credentials`.
@@ -1586,7 +1588,7 @@ error response as described in {{access-token-error-response}}.
 
 The authorization server issues an access token and optional refresh
 token, and constructs the response by adding the following parameters
-to the entity-body of the HTTP response with a 200 (OK) status code:
+to the payload of the HTTP response with a 200 (OK) status code:
 
 "access_token":
 :    REQUIRED.  The access token issued by the authorization server.
@@ -1612,7 +1614,7 @@ to the entity-body of the HTTP response with a 200 (OK) status code:
      otherwise, REQUIRED.  The scope of the access token as
      described by {{access-token-scope}}.
 
-The parameters are included in the entity-body of the HTTP response
+The parameters are included in the payload of the HTTP response
 using the `application/json` media type as defined by {{RFC7159}}.  The
 parameters are serialized into a JavaScript Object Notation (JSON)
 structure by adding each parameter at the highest structure level.
@@ -1715,7 +1717,7 @@ parameters with the response:
      URI-reference syntax and thus MUST NOT include characters
      outside the set %x21 / %x23-5B / %x5D-7E.
 
-The parameters are included in the entity-body of the HTTP response
+The parameters are included in the payload of the HTTP response
 using the `application/json` media type as defined by [RFC7159].  The
 parameters are serialized into a JSON structure by adding each
 parameter at the highest structure level.  Parameter names and string
@@ -1754,7 +1756,7 @@ If the authorization server issued a refresh token to the client, the
 client makes a refresh request to the token endpoint by adding the
 following parameters using the `application/x-www-form-urlencoded`
 format per Appendix B with a character encoding of UTF-8 in the HTTP
-request entity-body:
+request payload:
 
 "grant_type":
 :    REQUIRED.  Value MUST be set to `refresh_token`.
@@ -1948,7 +1950,7 @@ authorization scheme.  Resource servers MUST support this method.
 
 #### Form-Encoded Body Parameter
 
-When sending the access token in the HTTP request entity-body, the
+When sending the access token in the HTTP request payload, the
 client adds the access token to the request-body using the
 `access_token` parameter.  The client MUST NOT use this method unless
 all of the following conditions are met:
@@ -1956,20 +1958,20 @@ all of the following conditions are met:
 * The HTTP request entity-header includes the `Content-Type` header
   field set to `application/x-www-form-urlencoded`.
 
-* The entity-body follows the encoding requirements of the
+* The payload follows the encoding requirements of the
   `application/x-www-form-urlencoded` content-type as defined by
   HTML 4.01 [W3C.REC-html401-19991224].
 
-* The HTTP request entity-body is single-part.
+* The HTTP request payload is single-part.
 
-* The content to be encoded in the entity-body MUST consist entirely
+* The content to be encoded in the payload MUST consist entirely
   of ASCII {{USASCII}} characters.
 
 * The HTTP request method is one for which the request-body has
   defined semantics.  In particular, this means that the `GET`
   method MUST NOT be used.
 
-The entity-body MAY include other request-specific parameters, in
+The payload MAY include other request-specific parameters, in
 which case the `access_token` parameter MUST be properly separated
 from the request-specific parameters using `&` character(s) (ASCII
 code 38).
