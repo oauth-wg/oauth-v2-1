@@ -533,11 +533,12 @@ are case sensitive.
 
 # Client Registration
 
-Before initiating the protocol, the client registers with the
+Before initiating the protocol, the client must establish its registration with the
 authorization server.  The means through which the client registers
 with the authorization server are beyond the scope of this
-specification but typically involve end-user interaction with an HTML
-registration form, or by using Dynamic Client Registration ({{RFC7591}}).
+specification but typically involve the client developer manually registering
+the client at the authorization server's website after creating an account and agreeing
+to the service's Terms of Service, or by using Dynamic Client Registration ({{RFC7591}}).
 
 Client registration does not require a direct interaction between the
 client and the authorization server.  When supported by the
