@@ -364,18 +364,18 @@ access token is a string representing an authorization issued to the
 client.  The string is opaque to the client, but depending on the 
 authorization server, may be parseable by the resource server.  
 
-Tokens represent specific scopes and durations of access, granted by the
+Access tokens represent specific scopes and durations of access, granted by the
 resource owner, and enforced by the resource server and authorization server.
 
-The token may denote an identifier used to retrieve the authorization
+The access token may denote an identifier used to retrieve the authorization
 information or may self-contain the authorization information in a
-verifiable manner (i.e., a token string consisting of some data and a
+verifiable manner (i.e., an access token string consisting of some data and a
 signature).  One example of a structured token format is {{I-D.ietf-oauth-access-token-jwt}}, 
 a method of encoding access token data as a JSON Web Token {{RFC7519}}.
 
 Additional authentication credentials, which are beyond
 the scope of this specification, may be required in order for the
-client to use a token. This is typically referred to as a sender-constrained
+client to use an access token. This is typically referred to as a sender-constrained
 access token, such as Mutual TLS Access Tokens {{RFC8705}}.
 
 The access token provides an abstraction layer, replacing different
@@ -1227,7 +1227,7 @@ per Appendix B:
      RECOMMENDED.  The client MUST NOT use the authorization code
      more than once.  If an authorization code is used more than
      once, the authorization server MUST deny the request and SHOULD
-     revoke (when possible) all tokens previously issued based on
+     revoke (when possible) all access tokens and refresh tokens previously issued based on
      that authorization code.  The authorization code is bound to
      the client identifier and redirect URI.
 
@@ -1595,7 +1595,7 @@ to the payload of the HTTP response with a 200 (OK) status code:
 :    REQUIRED.  The access token issued by the authorization server.
 
 "token_type":
-:    REQUIRED.  The type of the token issued as described in
+:    REQUIRED.  The type of the access token issued as described in
      {{access-token-types}}.  Value is case insensitive.
 
 "expires_in":
@@ -2285,7 +2285,7 @@ against cross-site request forgery.
 
 #### Issue short-lived bearer tokens
 
-Token servers SHOULD issue
+Authorization servers SHOULD issue
 short-lived (one hour or less) bearer tokens, particularly when
 issuing tokens to clients that run within a web browser or other
 environments where information leakage may occur.  Using
@@ -2294,7 +2294,7 @@ leaked.
 
 #### Issue scoped bearer tokens
 
-Token servers SHOULD issue bearer tokens
+Authorization servers SHOULD issue bearer tokens
 that contain an audience restriction, scoping their use to the
 intended relying party or set of relying parties.
 
@@ -2316,7 +2316,7 @@ or other unsecured locations.
 A sender-constrained access token scopes the applicability of an
 access token to a certain sender.  This sender is obliged to
 demonstrate knowledge of a certain secret as prerequisite for the
-acceptance of that token at the recipient (e.g., a resource server).
+acceptance of that access token at the recipient (e.g., a resource server).
 
 Authorization and resource servers SHOULD use mechanisms for sender-
 constrained access tokens to prevent token replay as described in
@@ -2670,7 +2670,7 @@ sender-constrained access tokens to prevent token replay as described
 in (#pop_tokens). A sender-constrained access token scopes the applicability
 of an access
 token to a certain sender. This sender is obliged to demonstrate knowledge
-of a certain secret as prerequisite for the acceptance of that token at
+of a certain secret as prerequisite for the acceptance of that access token at
 the recipient (e.g., a resource server). The use of Mutual TLS for OAuth 2.0
 {{RFC8705}} is RECOMMENDED.
 
@@ -2748,7 +2748,7 @@ initiated with. Clients MUST store the authorization server they sent
 an authorization request to and bind this information to the user
 agent and check that the authorization request was received from the
 correct authorization server. Clients MUST ensure that the subsequent
-token request, if applicable, is sent to the same authorization
+access token request, if applicable, is sent to the same authorization
 server. Clients SHOULD use distinct redirect URIs for each
 authorization server as a means to identify the authorization server a
 particular response came from.
@@ -3656,7 +3656,7 @@ Below is a list of well-established extensions at the time of publication:
   * Dynamic Client Management provides a mechanism for updating dynamically registered client information.
 
 * {{I-D.ietf-oauth-access-token-jwt}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
-  * This specification defines a profile for issuing OAuth access tokens in JSON web token (JWT) format.
+  * This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.
 
 * {{RFC8705}}: Mutual TLS
   * Mutual TLS describes a mechanism of binding access tokens and refresh tokens to the clients they were issued to, as well as a client authentication mechanism, via TLS certificate authentication.
