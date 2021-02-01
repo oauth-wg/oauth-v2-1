@@ -288,7 +288,7 @@ interaction between the four roles and includes the following steps:
 
 2.  The client receives an authorization grant, which is a
     credential representing the resource owner's authorization,
-    expressed using one of two grant types defined in this
+    expressed using one of two authorization grant types defined in this
     specification or using an extension grant type.  The
     authorization grant type depends on the method used by the
     client to request authorization and the types supported by the
@@ -1000,7 +1000,7 @@ document its scope requirements and default value (if defined).
 To request an access token, the client obtains authorization from the
 resource owner.  The authorization is expressed in the form of an
 authorization grant, which the client uses to request the access
-token.  OAuth defines two grant types: authorization code
+token.  OAuth defines two authorization grant types: authorization code
 and client credentials.  It also
 provides an extension mechanism for defining additional grant types.
 
