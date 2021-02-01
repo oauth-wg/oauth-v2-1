@@ -3,3 +3,4 @@ vendor/
 .bundle
 build/*.html
 build/*.txt
+build/*.xml
