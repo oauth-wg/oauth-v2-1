@@ -231,6 +231,7 @@ OAuth defines four roles:
 "resource server":
 :   The server hosting the protected resources, capable of accepting
     and responding to protected resource requests using access tokens.
+    The resource server is often accessible via an API.
     This is sometimes abbreviated as "RS".
 
 "client":
