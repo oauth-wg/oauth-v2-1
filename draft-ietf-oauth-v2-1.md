@@ -683,13 +683,14 @@ Authorization servers SHOULD NOT allow clients to choose or influence their
 
 ## Client Authentication {#client-authentication}
 
-If the client type is confidential, the client and authorization
+If the client has credentials (is a confidential or credentialed client),
+the client and authorization
 server establish a client authentication method suitable for the
 security requirements of the authorization server.  The authorization
 server MAY accept any form of client authentication meeting its
 security requirements.
 
-Confidential clients are typically issued (or establish) a set of
+Confidential and credentialed clients are typically issued (or establish) a set of
 client credentials used for authenticating with the authorization
 server (e.g., password, public/private key pair).
 
