@@ -50,6 +50,12 @@ normative:
   RFC8174:
   RFC8252:
   I-D.ietf-oauth-security-topics:
+  BCP195:
+    title: "Recommendations for Secure Use of Transport Layer Security (TLS)"
+    author:
+      - ins: Y. Sheffer
+      - ins: R. Holz
+      - ins: P. Saint-Andre
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -147,7 +153,7 @@ informative:
 The OAuth 2.1 authorization framework enables a third-party
 application to obtain limited access to an HTTP service, either on
 behalf of a resource owner by orchestrating an approval interaction
-between the resource owner and the HTTP service, or by allowing the
+between the resource owner and an authorization service, or by allowing the
 third-party application to obtain access on its own behalf.  This
 specification replaces and obsoletes the OAuth 2.0 Authorization
 Framework described in RFC 6749.
@@ -175,6 +181,11 @@ the third party.  This creates several problems and limitations:
    ability to restrict duration or access to a limited subset of
    resources.
 
+*  Resource owners often reuse passwords with other unrelated 
+   services, despite best security practices. This password reuse means
+   a vulnerability or exposure in one service may have security 
+   implications in completely unrelated services.
+
 *  Resource owners cannot revoke access to an individual third party
    without revoking access to all third parties, and must do so by
    changing the third party's password.
@@ -183,24 +194,21 @@ the third party.  This creates several problems and limitations:
    the end-user's password and all of the data protected by that
    password.
 
-OAuth addresses these issues by introducing an authorization layer
-and separating the role of the client from that of the resource
-owner.  In OAuth, the client requests access to resources controlled
-by the resource owner and hosted by the resource server, and is
-issued a different set of credentials than those of the resource
-owner.
-
-Instead of using the resource owner's credentials to access protected
-resources, the client obtains an access token -- a string denoting a
-specific scope, lifetime, and other access attributes.  Access tokens
-are issued to third-party clients by an authorization server with the
-approval of the resource owner.  The client uses the access token to
-access the protected resources hosted by the resource server.
+OAuth addresses these issues by introducing an authorization layer 
+and separating the role of the client from that of the resource 
+owner. In OAuth, the client requests access to resources controlled 
+by the resource owner and hosted by the resource server. 
+Instead of using the resource owner's credentials to access protected 
+resources, the client obtains an access token - a credential representing 
+a specific set of access attributes such as scope and lifetime. Access 
+tokens are issued to clients by an authorization server with the approval 
+of the resource owner. The client uses the access token to access the 
+protected resources hosted by the resource server.
 
 For example, an end-user (resource owner) can grant a printing
-service (client) access to her protected photos stored at a photo-
-sharing service (resource server), without sharing her username and
-password with the printing service.  Instead, she authenticates
+service (client) access to their protected photos stored at a photo-
+sharing service (resource server), without sharing their username and
+password with the printing service.  Instead, they authenticates
 directly with a server trusted by the photo-sharing service
 (authorization server), which issues the printing service delegation-
 specific credentials (access token).
@@ -373,10 +381,12 @@ string may be parseable by the resource server.
 Access tokens represent specific scopes and durations of access, granted by the
 resource owner, and enforced by the resource server and authorization server.
 
-The access token may denote an identifier used to retrieve the authorization
-information or may self-contain the authorization information in a
-verifiable manner (i.e., an access token string consisting of some data and a
-signature).  One example of a structured token format is {{I-D.ietf-oauth-access-token-jwt}}, 
+The token may be used by the RS to retrieve the authorization information, 
+or the token may self-contain the authorization information in a verifiable 
+manner (i.e., a token string consisting of a signed data payload). One example 
+of a token retrieval mechanism is Token Introspection {{RFC7662}}, in which the 
+RS calls an endpoint on the AS to validate the token presented by the client. 
+One example of a structured token format is {{I-D.ietf-oauth-access-token-jwt}}, 
 a method of encoding access token data as a JSON Web Token {{RFC7519}}.
 
 Additional authentication credentials, which are beyond
@@ -483,8 +493,8 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 Whenever Transport Layer Security (TLS) is used by this
 specification, the appropriate version (or versions) of TLS will vary
 over time, based on the widespread deployment and known security
-vulnerabilities.  At the time of this writing,
-TLS version 1.3 {{RFC8446}} is the most recent version.
+vulnerabilities.  Refer to {{BCP195}} for up to date recommendations on
+transport layer security.
 
 Implementations MAY also support additional transport-layer security
 mechanisms that meet their security requirements.
@@ -509,11 +519,28 @@ security properties.
 This specification leaves a few required components partially or fully 
 undefined (e.g., client registration, authorization server capabilities, 
 endpoint discovery).  Some of these behaviors are defined in optional 
-extensions which implementations can choose to use.
+extensions which implementations can choose to use, such as:
+
+* {{RFC8414}}: Authorization Server Metadata, defining an endpoint clients can use to look up the information needed to interact with a particular OAuth server
+* {{RFC7591}}: Dynamic Client Registration, providing a mechanism for programmatically registering clients with an authorization server
+* {{RFC7592}}: Dynamic Client Management, providing a mechanism for updating dynamically registered client information
+* {{RFC7662}}: Token Introspection, defining a mechanism for resource servers to obtain information about access tokens
 
 Please refer to {{extensions}} for a list of current known extensions at 
 the time of this publication.
 
+
+## Compatibility with OAuth 2.0
+
+OAuth 2.1 is compatible with OAuth 2.0 with the extensions and restrictions 
+from known best current practices applied. Specifically, features not specified
+in OAuth 2.0 core, such as PKCE, are required in OAuth 2.1. Additionally, 
+some features available in OAuth 2.0, such as the Implicit or Resource Owner Credentials 
+grant types, are not specified in OAuth 2.1. Furthermore, some behaviors 
+allowed in OAuth 2.0 are restricted in OAuth 2.1, such as the strict string 
+matching of redirect URIs required by OAuth 2.1.
+
+See {{oauth-2-0-differences}} for more details on the differences from OAuth 2.0.
 
 ## Notational Conventions
 
@@ -2797,7 +2824,7 @@ JavaScript) is used for such a request, AS SHOULD use HTTP status
 code 303 "See Other".
 
 At the authorization endpoint, a typical protocol flow is that the AS
-prompts the user to enter her credentials in a form that is then
+prompts the user to enter their credentials in a form that is then
 submitted (using the HTTP POST method) back to the authorization
 server.  The AS checks the credentials and, if successful, redirects
 the user agent to the client's redirect URI.
@@ -3418,7 +3445,7 @@ have particular security considerations similar to native apps.
 TODO: Bring in the normative text of the browser-based apps BCP when it is finalized.
 
 
-# Differences from OAuth 2.0
+# Differences from OAuth 2.0 {#oauth-2-0-differences}
 
 This draft consolidates the functionality in OAuth 2.0 {{RFC6749}},
 OAuth 2.0 for Native Apps ({{RFC8252}}),
