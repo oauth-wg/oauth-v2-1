@@ -1425,10 +1425,8 @@ request payload:
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
      request. MUST NOT be used otherwise. The original code verifier string.
 
-If the client type is confidential or the client was issued client
-credentials (or assigned other authentication requirements), the
-client MUST authenticate with the authorization server as described
-in {{token-endpoint-client-authentication}}.
+Confidential or credentialed clients MUST authenticate with the authorization 
+server as described in {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request using TLS
 (with extra line breaks for display purposes only):
@@ -1444,14 +1442,13 @@ For example, the client makes the following HTTP request using TLS
 
 The authorization server MUST:
 
-*  require client authentication for confidential clients or for any
-   client that was issued client credentials (or with other
-   authentication requirements),
+*  require client authentication for confidential and credentialed clients
+   (or clients with other authentication requirements),
 
 *  authenticate the client if client authentication is included,
 
 *  ensure that the authorization code was issued to the authenticated
-   confidential client, or if the client is public, ensure that the
+   confidential or credentialed client, or if the client is public, ensure that the
    code was issued to `client_id` in the request,
 
 *  verify that the authorization code is valid,
@@ -1505,7 +1502,7 @@ arranged with the authorization server (the method of which is beyond
 the scope of this specification).
 
 The client credentials grant type MUST only be used by confidential
-clients.
+or credentialed clients.
 
 ~~~~~~~~~~
      +---------+                                  +---------------+
@@ -1812,10 +1809,9 @@ request payload:
 
 Because refresh tokens are typically long-lasting credentials used to
 request additional access tokens, the refresh token is bound to the
-client to which it was issued.  If the client type is confidential or
-the client was issued client credentials (or assigned other
-authentication requirements), the client MUST authenticate with the
-authorization server as described in {{token-endpoint-client-authentication}}.
+client to which it was issued. Confidential or credentialed clients
+MUST authenticate with the authorization server as described in
+{{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request using
 transport-layer security (with extra line breaks for display purposes
