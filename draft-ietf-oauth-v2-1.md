@@ -324,18 +324,22 @@ mechanism for defining additional types.
 
 ### Authorization Code
 
-The authorization code is obtained by using an authorization server
-as an intermediary between the client and resource owner.  Instead of
+An authorization code is a temporary credential used to obtain an access token.
+Instead of the client
 requesting authorization directly from the resource owner, the client
 directs the resource owner to an authorization server (via its
 user-agent as defined in {{RFC7231}}), which in turn directs the
 resource owner back to the client with the authorization code.
+The client can then exchange the authorization code for an access token.
 
 Before directing the resource owner back to the client with the
 authorization code, the authorization server authenticates the
-resource owner and obtains authorization.  Because the resource owner
+resource owner, and may request the resource owner's consent or otherwise
+inform them of the client's request. Because the resource owner
 only authenticates with the authorization server, the resource
-owner's credentials are never shared with the client.
+owner's credentials are never shared with the client, and the client
+does not need to have knowledge of any additional authentication steps
+such as multi-factor authentication or delegated accounts.
 
 The authorization code provides a few important security benefits,
 such as the ability to authenticate the client, as well as the
@@ -346,8 +350,9 @@ exposing it to others, including the resource owner.
 
 ### Client Credentials
 
-The client credentials (or other forms of client authentication) can
-be used as an authorization grant when the authorization scope is
+The client credentials or other forms of client authentication
+(e.g. a `client_secret` or a private key used to sign a JWT)
+can be used as an authorization grant when the authorization scope is
 limited to the protected resources under the control of the client,
 or to protected resources previously arranged with the authorization
 server.  Client credentials are used as an authorization grant
@@ -361,8 +366,9 @@ authorization server.
 
 Access tokens are credentials used to access protected resources.  An
 access token is a string representing an authorization issued to the
-client.  The string is opaque to the client, but depending on the 
-authorization server, may be parseable by the resource server.  
+client.  The string is considered opaque to the client, even if it has
+a structure. Depending on the authorization server, the access token 
+string may be parseable by the resource server.
 
 Access tokens represent specific scopes and durations of access, granted by the
 resource owner, and enforced by the resource server and authorization server.
@@ -401,14 +407,17 @@ becomes invalid or expires, or to obtain additional access tokens
 with identical or narrower scope (access tokens may have a shorter
 lifetime and fewer permissions than authorized by the resource
 owner).  Issuing a refresh token is optional at the discretion of the
-authorization server.  If the authorization server issues a refresh
-token, it is included when issuing an access token (i.e., step (4) in
+authorization server, and may be issued based on properties of the client,
+properties of the request, policies within the authorization server, or 
+any other criteria.  If the authorization server issues a refresh
+token, it is included when issuing an access token (i.e., step (2) in
 {{fig-refresh-token-flow}}).
 
 A refresh token is a string representing the authorization granted to
-the client by the resource owner.  The string is usually opaque to
-the client.  The token denotes an identifier used to retrieve the
-authorization information.  Unlike access tokens, refresh tokens are
+the client by the resource owner.  The string is considered opaque to
+the client. The refresh token may be an identifier used to retrieve the
+authorization information or may encode this information into the 
+string itself. Unlike access tokens, refresh tokens are
 intended for use only with authorization servers and are never sent
 to resource servers.
 
