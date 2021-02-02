@@ -1826,9 +1826,7 @@ only):
 
 The authorization server MUST:
 
-* require client authentication for confidential clients or for any
-  client that was issued client credentials (or with other
-  authentication requirements),
+* require client authentication for confidential or credentialed clients
 * authenticate the client if client authentication is included and
   ensure that the refresh token was issued to the authenticated
   client, and
