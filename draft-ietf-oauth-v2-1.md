@@ -1480,7 +1480,6 @@ An example successful response:
     HTTP/1.1 200 OK
     Content-Type: application/json
     Cache-Control: no-store
-    Pragma: no-cache
 
     {
       "access_token": "2YotnFZFEjr1zCsicMWpAA",
@@ -1574,7 +1573,6 @@ An example successful response:
     HTTP/1.1 200 OK
     Content-Type: application/json
     Cache-Control: no-store
-    Pragma: no-cache
 
     {
       "access_token": "2YotnFZFEjr1zCsicMWpAA",
@@ -1661,15 +1659,13 @@ parameters does not matter and can vary.
 The authorization server MUST include the HTTP `Cache-Control`
 response header field {{RFC7234}} with a value of `no-store` in any
 response containing tokens, credentials, or other sensitive
-information, as well as the `Pragma` response header field {{RFC7234}}
-with a value of `no-cache`.
+information.
 
 For example:
 
     HTTP/1.1 200 OK
     Content-Type: application/json
     Cache-Control: no-store
-    Pragma: no-cache
 
     {
       "access_token":"2YotnFZFEjr1zCsicMWpAA",
@@ -1766,7 +1762,6 @@ For example:
     HTTP/1.1 400 Bad Request
     Content-Type: application/json
     Cache-Control: no-store
-    Pragma: no-cache
 
     {
      "error":"invalid_request"
