@@ -567,7 +567,7 @@ Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.
 
 
-# Client Registration
+# Client Registration {#client-registration}
 
 Before initiating the protocol, the client must establish its registration with the
 authorization server.  The means through which the client registers
@@ -589,8 +589,8 @@ When registering a client, the client developer SHALL:
 
 *  specify the client type as described in {{client-types}},
 
-*  provide its client redirect URIs as described in {{redirection-endpoint}},
-   and
+*  provide client details needed by the grant type in use, 
+   such as redirect URIs as described in {{redirection-endpoint}}, and
 
 *  include any other information required by the authorization server
    (e.g., application name, website, description, logo image, the
@@ -602,16 +602,9 @@ for clients that may be used even with manual client registration.
 
 ## Client Types {#client-types}
 
-Clients are identified at the authorization server by a `client_id`.
-It is, for example, used by the authorization server to determine the set of
-redirect URIs this client can use.
-
-Clients requiring a higher level of confidence in their identity by the
-authorization server use credentials to authenticate with the authorization server.
-Such credentials are either issued by the authorization server or registered
-by the developer of the client with the authorization server.
-
-OAuth 2.1 defines three client types:
+OAuth 2.1 defines three client types based on their ability to authenticate securely
+with the authorization server as well as the authorization server's assurance of the
+client's identity.
 
 "confidential":
 : Clients that have credentials and their identity has been confirmed by the AS are designated as "confidential clients"
@@ -683,9 +676,8 @@ Authorization servers SHOULD NOT allow clients to choose or influence their
 
 ## Client Authentication {#client-authentication}
 
-If the client has credentials (is a confidential or credentialed client),
-the client and authorization
-server establish a client authentication method suitable for the
+Confidential and credentialed clients establish a client authentication method
+with the authorization server suitable for the
 security requirements of the authorization server.  The authorization
 server MAY accept any form of client authentication meeting its
 security requirements.
@@ -712,9 +704,9 @@ The client MUST NOT use more than one authentication method in each
 request.
 
 
-### Client Password {#client-password}
+### Client Secret {#client-secret}
 
-Clients in possession of a client password, also known as a client secret,
+Clients in possession of a client secret, sometimes known as a client password,
 MAY use the HTTP Basic
 authentication scheme as defined in {{RFC2617}} to authenticate with
 the authorization server.  The client identifier is encoded using the
@@ -773,10 +765,12 @@ authentication methods, the authorization server MUST define a
 mapping between the client identifier (registration record) and
 authentication scheme.
 
-Some additional authentication methods are defined in the 
+Some additional authentication methods such as mTLS {{RFC8705}} 
+and "private_key_jwt" {{OpenID}} are defined in the 
 "[OAuth Token Endpoint Authentication Methods](https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#token-endpoint-auth-method)" registry,
 and may be useful as generic client authentication methods beyond 
 the specific use of protecting the token endpoint.
+
 
 ## Unregistered Clients
 
@@ -836,10 +830,12 @@ The authorization server MUST support the use of the HTTP `GET`
 method {{RFC7231}} for the authorization endpoint and MAY support the
 use of the `POST` method as well.
 
+The authorization server MUST ignore unrecognized request parameters. 
+
+Request and response parameters
+defined by this specification MUST NOT be included more than once. 
 Parameters sent without a value MUST be treated as if they were
-omitted from the request.  The authorization server MUST ignore
-unrecognized request parameters.  Request and response parameters
-defined by this specification MUST NOT be included more than once.
+omitted from the request.
 
 
 ### Response Type {#response-type}
@@ -858,6 +854,8 @@ values, where the order of values does not matter (e.g., response
 type `a b` is the same as `b a`).  The meaning of such composite
 response types is defined by their respective specifications.
 
+Some extension response types are defined by ({{OpenID}}).
+
 If an authorization request is missing the `response_type` parameter,
 or if the response type is not understood, the authorization server
 MUST return an error response as described in {{authorization-code-error-response}}.
@@ -867,18 +865,15 @@ MUST return an error response as described in {{authorization-code-error-respons
 
 After completing its interaction with the resource owner, the
 authorization server directs the resource owner's user-agent back to
-the client.  The authorization server redirects the user-agent to the
-client's redirection endpoint previously established with the
+the client.  The authorization server redirects the user-agent to one of the
+client's redirection endpoints previously established with the
 authorization server during the client registration process.
-
-The authorization server MUST compare the two URIs using simple string
-comparison as defined in {{RFC3986}}, Section 6.2.1.
 
 The redirect URI MUST be an absolute URI as defined by
 {{RFC3986}} Section 4.3.  The endpoint URI MAY include an
 "application/x-www-form-urlencoded" formatted (per Appendix B) query
 component ({{RFC3986}} Section 3.4), which MUST be retained when adding
-additional query parameters.  The endpoint URI MUST NOT include a
+additional query parameters. The endpoint URI MUST NOT include a
 fragment component.
 
 
@@ -911,8 +906,8 @@ customization if needed.
 The authorization server MAY allow the client to register multiple
 redirect URIs.
 
-Lack of requiring registration of redirect URIs enables an
-attacker to use the authorization endpoint as an open redirector as
+Without requiring registration of redirect URIs, attackers can
+use the authorization endpoint as an open redirector as
 described in {{open-redirectors}}.
 
 #### Dynamic Configuration
@@ -936,7 +931,9 @@ an HTML document response, processed by the user-agent.  If the HTML
 response is served directly as the result of the redirection request,
 any script included in the HTML document will execute with full
 access to the redirect URI and the credentials (e.g. authorization code) 
-it contains.
+it contains. Additionally, the request URL containing the authorization code
+may be sent in the HTTP Referer header to any embedded images, stylesheets 
+and other elements loaded in the page.
 
 The client SHOULD NOT include any third-party scripts (e.g., third-
 party analytics, social plug-ins, ad networks) in the redirection
@@ -950,18 +947,19 @@ execute first.
 
 ## Token Endpoint
 
-The token endpoint is used by the client to obtain an access token by
-presenting its authorization grant or refresh token.
+The token endpoint is used by the client to obtain an access token using
+a grant such as those described in {{obtaining-authorization}} and
+{{refreshing-an-access-token}}.
 
 The means through which the client obtains the location of the token
 endpoint are beyond the scope of this specification, but the location
-is typically provided in the service documentation, 
-or in the authorization server's metadata document ({{RFC8414}}).
+is typically provided in the service documentation and configured during
+development of the client, or provided in the authorization server's metadata 
+document ({{RFC8414}}) and fetched programmatically at runtime.
 
 The endpoint URI MAY include an `application/x-www-form-urlencoded`
-formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
-which MUST be retained when adding additional query parameters.  The
-endpoint URI MUST NOT include a fragment component.
+formatted (per Appendix B) query component ({{RFC3986}} Section 3.4)
+and MUST NOT include a fragment component.
 
 Since requests to the token endpoint result in the transmission of
 clear-text credentials (in the HTTP request and response), the
@@ -971,9 +969,10 @@ authorization server MUST require the use of TLS as described in
 The client MUST use the HTTP `POST` method when making access token
 requests.
 
+The authorization server MUST ignore unrecognized request parameters.
+
 Parameters sent without a value MUST be treated as if they were
-omitted from the request.  The authorization server MUST ignore
-unrecognized request parameters.  Request and response parameters
+omitted from the request. Request and response parameters
 defined by this specification MUST NOT be included more than once.
 
 
@@ -1238,7 +1237,16 @@ only):
     Host: server.example.com
 
 The authorization server validates the request to ensure that all
-required parameters are present and valid.  If the request is valid,
+required parameters are present and valid.  
+
+In particular, the authorization server MUST validate the `redirect_uri` 
+in the request if present, ensuring that it matches one of the registered
+redirect URIs previously established during client registration ({{client-registration}}). 
+When comparing the two URIs the authorization server MUST using simple 
+character-by-character string comparison as defined in {{RFC3986}}, Section 6.2.1.
+
+
+If the request is valid,
 the authorization server authenticates the resource owner and obtains
 an authorization decision (by asking the resource owner or by
 establishing approval via other means).
@@ -3507,14 +3515,14 @@ Return and Linefeed characters.)
 
 ## "client_id" Syntax
 
-The `client_id` element is defined in {{client-password}}:
+The `client_id` element is defined in {{client-secret}}:
 
     client-id     = *VSCHAR
 
 
 ## "client_secret" Syntax
 
-The `client_secret` element is defined in {{client-password}}:
+The `client_secret` element is defined in {{client-secret}}:
 
     client-secret = *VSCHAR
 
