@@ -255,7 +255,7 @@ OAuth defines four roles:
     This is sometimes abbreviated as "AS".
 
 The interaction between the authorization server and resource server
-is beyond the scope of this specification, however several extension have
+is beyond the scope of this specification. However, several extensions have
 been defined to provide an option for interoperability between resource
 servers and authorization servers.  The authorization server
 may be the same server as the resource server or a separate entity.
