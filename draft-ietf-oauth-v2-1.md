@@ -3700,7 +3700,7 @@ Below is a list of well-established extensions at the time of publication:
   * The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.
 
 * {{I-D.ietf-oauth-par}}: Pushed Authorization Requests
-  * The Pushed Authorization Requsts extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.
+  * The Pushed Authorization Requests extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.
 
 * {{I-D.ietf-oauth-rar}}: Rich Authorization Requests
   * Rich Authorization Requests specifies a new parameter `authorization_details` that is used to carry fine-grained authorization data in the OAuth authorization request.
