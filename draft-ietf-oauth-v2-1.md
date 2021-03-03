@@ -208,7 +208,7 @@ protected resources hosted by the resource server.
 For example, an end-user (resource owner) can grant a printing
 service (client) access to their protected photos stored at a photo-
 sharing service (resource server), without sharing their username and
-password with the printing service.  Instead, they authenticates
+password with the printing service.  Instead, he authenticates
 directly with a server trusted by the photo-sharing service
 (authorization server), which issues the printing service delegation-
 specific credentials (access token).
