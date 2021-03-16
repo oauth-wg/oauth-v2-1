@@ -1766,11 +1766,11 @@ For example:
 
 # Refreshing an Access Token {#refreshing-an-access-token}
 
-Authorization servers SHOULD determine, based on a risk assessment,
-whether to issue refresh tokens to a certain client.  If the
+Authorization servers SHOULD determine, based on a risk assessment
+and their own policies, whether to issue refresh tokens to a certain client.  If the
 authorization server decides not to issue refresh tokens, the client
-MAY refresh access tokens by utilizing other grant types, such as the
-authorization code grant type.  In such a case, the authorization
+MAY obtain new access tokens by starting the OAuth flow over, for example
+initiating a new authorization code request.  In such a case, the authorization
 server may utilize cookies and persistent grants to optimize the user
 experience.
 
@@ -1779,10 +1779,12 @@ the scope and resource servers as consented by the resource owner.
 This is to prevent privilege escalation by the legitimate client and
 reduce the impact of refresh token leakage.
 
-If the authorization server issued a refresh token to the client, the
-client makes a refresh request to the token endpoint by adding the
+## Refresh Token Request
+
+To use a refresh token to obtain a new access token, the
+client makes a request to the token endpoint by adding the
 following parameters using the `application/x-www-form-urlencoded`
-format per Appendix B with a character encoding of UTF-8 in the HTTP
+format (per Appendix B) with a character encoding of UTF-8 in the HTTP
 request payload:
 
 "grant_type":
@@ -1823,8 +1825,6 @@ The authorization server MUST:
   client, and
 * validate the refresh token.
 
-## Refresh Token Protection {#refresh_token_protection}
-
 Authorization servers SHOULD utilize one of these methods to detect
 refresh token replay by malicious actors for public clients:
 
@@ -1854,6 +1854,8 @@ need to be revoked.  Authorization servers MUST ensure the
 integrity of the refresh token value in this case, for example,
 using signatures.
 
+## Refresh Token Response
+
 If valid and authorized, the authorization server issues an access
 token as described in {{access-token-successful-response}}.  If the request failed
 verification or is invalid, the authorization server returns an error
@@ -1874,7 +1876,7 @@ of a security event, such as:
 * logout at the authorization server
 
 Refresh tokens SHOULD expire if the client has been inactive for some
-time, i.e., the refresh token has not been used to obtain fresh
+time, i.e., the refresh token has not been used to obtain new
 access tokens for some time.  The expiration time is at the
 discretion of the authorization server.  It might be a global value
 or determined based on the client policy or the grant associated with
@@ -2713,7 +2715,7 @@ The authorization server MUST verify the binding between the refresh
 token and client identity whenever the client identity can be
 authenticated.  When client authentication is not possible, the
 authorization server SHOULD issue sender-constrained refresh tokens
-or use refresh token rotation as described in (#refresh_token_protection).
+or use refresh token rotation as described in (#refreshing-an-access-token).
 
 The authorization server MUST ensure that refresh tokens cannot be
 generated, modified, or guessed to produce valid refresh tokens by
