@@ -1505,9 +1505,9 @@ or credentialed clients.
      |         |                                  |               |
      +---------+                                  +---------------+
 ~~~~~~~~~~
-{: #fig-client-credentials-flow title="Client Credentials Flow"}
+{: #fig-client-credentials-grant title="Client Credentials Grant"}
 
-The flow illustrated in {{fig-client-credentials-flow}} includes the following steps:
+The use of the client credentials grant illustrated in {{fig-client-credentials-grant}} includes the following steps:
 
 (1)  The client authenticates with the authorization server and
      requests an access token from the token endpoint.
@@ -2742,7 +2742,7 @@ resource server to distinguish between access tokens authorized by a
 resource owner from access tokens authorized by the client itself.
 
 
-## Protecting Redirect-Based Flows
+## Protecting the Authorization Code Flow
 
 When comparing client redirect URIs against pre-registered URIs,
 authorization servers MUST utilize exact string matching. This measure
@@ -2840,13 +2840,6 @@ Therefore, the RECOMMENDED status code for HTTP redirects is 303.
 
 
 ## Authorization Codes {#authorization_codes}
-
-The transmission of authorization codes MUST be made over a secure
-channel, and the client MUST require the use of TLS with its
-redirect URI if the URI identifies a network resource.  Since
-authorization codes are transmitted via user-agent redirections, they
-could potentially be disclosed through user-agent history and HTTP
-referrer headers.
 
 Authorization codes MUST be short lived and single-use.  If the
 authorization server observes multiple attempts to exchange an
