@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: draft-ietf-oauth-v2-1-01
-date: 2021-02-01
+docname: draft-ietf-oauth-v2-1-02
+date: 2021-03-15
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -41,7 +41,6 @@ normative:
   RFC6125:
   RFC6749:
   RFC6750:
-  RFC8446:
   RFC5280:
   RFC7159:
   RFC7231:
@@ -49,6 +48,7 @@ normative:
   RFC7595:
   RFC8174:
   RFC8252:
+  RFC8259:
   I-D.ietf-oauth-security-topics:
   BCP195:
     title: "Recommendations for Secure Use of Transport Layer Security (TLS)"

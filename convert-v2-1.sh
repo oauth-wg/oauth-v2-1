@@ -8,3 +8,7 @@ xml2rfc build/draft-ietf-oauth-v2-1.xml
 
 # Build the HTML version
 xml2rfc --html --v3 build/draft-ietf-oauth-v2-1.xml
+
+# Submit new draft
+# https://datatracker.ietf.org/submit/
+
