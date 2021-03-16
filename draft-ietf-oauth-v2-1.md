@@ -1035,11 +1035,8 @@ document its scope requirements and default value (if defined).
 # Obtaining Authorization {#obtaining-authorization}
 
 To request an access token, the client obtains authorization from the
-resource owner.  The authorization is expressed in the form of an
-authorization grant, which the client uses to request the access
-token.  OAuth defines two authorization grant types: authorization code
-and client credentials.  It also
-provides an extension mechanism for defining additional grant types.
+resource owner. OAuth defines two authorization grant types: authorization code
+and client credentials.  It also provides an extension mechanism for defining additional grant types.
 
 
 ## Authorization Code Grant {#authorization-code-grant}
@@ -1048,9 +1045,8 @@ The authorization code grant type is used to obtain both access
 tokens and refresh tokens.
 
 Since this is a redirect-based flow, the client must be capable of
-interacting with the resource owner's user-agent (typically a web
-browser) and capable of receiving incoming requests (via redirection)
-from the authorization server.
+initiating the flow with the resource owner's user-agent (typically a web
+browser) and capable of being redirected back to from the authorization server.
 
 ~~~~~~~~~~
 +----------+
@@ -1122,73 +1118,13 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 To begin the authorization request, the client builds the authorization
 request URI by adding parameters to the authorization server's
-authorization endpoint URI.
+authorization endpoint URI. The client will eventually redirect the user-agent
+to this URI to initiate the request, as described in {{initiate-authorization-request}}.
 
-Clients use a unique secret per authorization request to protect against code
+Clients use a unique secret per authorization request to protect against authorization code
 injection and CSRF attacks. The client first generates this secret, which it can
-later use along with the authorization code to prove that the application using the
-authorization code is the same application that requested it. The properties 
-`code_challenge` and `code_verifier` are adopted from the OAuth 2.0 extension
-known as "Proof-Key for Code Exchange", or PKCE ({{RFC7636}}) where this technique
-was originally developed.
-
-Clients MUST use `code_challenge` and `code_verifier` and
-authorization servers MUST enforce their use except under the conditions
-described in {{authorization_codes}}. In this case, using and enforcing
-`code_challenge` and `code_verifier` as described in the following is still
-RECOMMENDED.
-
-#### Client Creates a Code Verifier
-
-The client first creates a code verifier, `code_verifier`, for each
-Authorization Request, in the following manner:
-
-    code_verifier = high-entropy cryptographic random STRING using the
-    unreserved characters `[A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"`
-    from Section 2.3 of {{RFC3986}}, with a minimum length of 43 characters
-    and a maximum length of 128 characters.
-
-ABNF for `code_verifier` is as follows.
-
-    code-verifier = 43*128unreserved
-    unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
-    ALPHA = %x41-5A / %x61-7A
-    DIGIT = %x30-39
-
-NOTE: The code verifier SHOULD have enough entropy to make it
-impractical to guess the value.  It is RECOMMENDED that the output of
-a suitable random number generator be used to create a 32-octet
-sequence.  The octet sequence is then base64url-encoded to produce a
-43-octet URL-safe string to use as the code verifier.
-
-#### Client Creates the Code Challenge
-
-The client then creates a code challenge derived from the code
-verifier by using one of the following transformations on the code
-verifier:
-
-    plain
-      code_challenge = code_verifier
-
-    S256
-      code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
-
-If the client is capable of using `S256`, it MUST use `S256`, as
-`S256` is Mandatory To Implement (MTI) on the server.  Clients are
-permitted to use `plain` only if they cannot support `S256` for some
-technical reason and know via out-of-band configuration or via 
-Authorization Server Metadata ({{RFC8414}}) that the server supports `plain`.
-
-The plain transformation is for compatibility with existing
-deployments and for constrained environments that can't use the `S256`
-transformation.
-
-ABNF for `code_challenge` is as follows.
-
-    code-challenge = 43*128unreserved
-    unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
-    ALPHA = %x41-5A / %x61-7A
-    DIGIT = %x30-39
+use at the time of redeeming the authorization code to prove that the client using the
+authorization code is the same client that requested it. 
 
 #### Client Initiates the Authorization Request {#initiate-authorization-request}
 
@@ -1222,9 +1158,62 @@ using the `application/x-www-form-urlencoded` format, per Appendix B:
      server includes this value when redirecting the user-agent back
      to the client.
 
+The `code_verifier` is a unique high-entropy cryptographically random string generated
+for each authorization request, using the unreserved characters `[A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"`, 
+with a minimum length of 43 characters and a maximum length of 128 characters.
+
+The client stores the `code_verifier` temporarily, and calculates the
+`code_challenge` which it uses in the authorization request.
+
+ABNF for `code_verifier` is as follows.
+
+    code-verifier = 43*128unreserved
+    unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
+    ALPHA = %x41-5A / %x61-7A
+    DIGIT = %x30-39
+
+NOTE: The code verifier SHOULD have enough entropy to make it
+impractical to guess the value.  It is RECOMMENDED that the output of
+a suitable random number generator be used to create a 32-octet
+sequence.  The octet sequence is then base64url-encoded to produce a
+43-octet URL-safe string to use as the code verifier.
+
+The client then creates a `code_challenge` derived from the code
+verifier by using one of the following transformations on the code
+verifier:
+
+    S256
+      code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
+
+    plain
+      code_challenge = code_verifier
+
+If the client is capable of using `S256`, it MUST use `S256`, as
+`S256` is Mandatory To Implement (MTI) on the server.  Clients are
+permitted to use `plain` only if they cannot support `S256` for some
+technical reason, for example constrained environments that do not have
+a hashing function available, and know via out-of-band configuration or via 
+Authorization Server Metadata ({{RFC8414}}) that the server supports `plain`.
+
+ABNF for `code_challenge` is as follows.
+
+    code-challenge = 43*128unreserved
+    unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
+    ALPHA = %x41-5A / %x61-7A
+    DIGIT = %x30-39
+
+The properties `code_challenge` and `code_verifier` are adopted from the OAuth 2.0 extension
+known as "Proof-Key for Code Exchange", or PKCE ({{RFC7636}}) where this technique
+was originally developed.
+
+Clients MUST use `code_challenge` and `code_verifier` and
+authorization servers MUST enforce their use except under the conditions
+described in {{authorization_codes}}. In this case, using and enforcing
+`code_challenge` and `code_verifier` as described in the following is still
+RECOMMENDED.
+
 The client directs the resource owner to the constructed URI using an
-HTTP redirection response, or by other means available to it via the
-user-agent.
+HTTP redirection, or by other means available to it via the user-agent.
 
 For example, the client directs the user-agent to make the following
 HTTP request using TLS (with extra line breaks for display purposes
@@ -1244,7 +1233,6 @@ in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration ({{client-registration}}). 
 When comparing the two URIs the authorization server MUST using simple 
 character-by-character string comparison as defined in {{RFC3986}}, Section 6.2.1.
-
 
 If the request is valid,
 the authorization server authenticates the resource owner and obtains
@@ -1295,21 +1283,17 @@ specification.  The client should avoid making assumptions about code
 value sizes.  The authorization server SHOULD document the size of
 any value it issues.
 
-When the server issues the authorization code in the authorization
-response, it MUST associate the `code_challenge` and
-`code_challenge_method` values with the authorization code so it can
-be verified later.
+The authorization server MUST associate the `code_challenge` and 
+`code_challenge_method` values with the issued authorization code 
+so the code challenge can be verified later.
 
-The `code_challenge` and `code_challenge_method` values
-may be stored in encrypted form in the `code` itself, but could
-alternatively be stored on the server associated with the code.  The
-server MUST NOT include the `code_challenge` value in client requests
-in a form that other entities can extract.
-
-The exact method that the server uses to associate the
-`code_challenge` with the issued `code` is out of scope for this
-specification.
-
+The exact method that the server uses to associate the `code_challenge` 
+with the issued code is out of scope for this specification. The 
+code challenge could be stored on the server and associated with the 
+code there. The `code_challenge` and `code_challenge_method` values may 
+be stored in encrypted form in the code itself, but the server 
+MUST NOT include the `code_challenge` value in a response parameter 
+in a form that entities other than the AS can extract.
 
 #### Error Response {#authorization-code-error-response}
 
