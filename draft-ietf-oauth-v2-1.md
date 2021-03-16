@@ -1615,8 +1615,9 @@ error response as described in {{access-token-error-response}}.
 ## Successful Response {#access-token-successful-response}
 
 The authorization server issues an access token and optional refresh
-token, and constructs the response by adding the following parameters
-to the payload of the HTTP response with a 200 (OK) status code:
+token by creating an HTTP response body using the `application/json`
+media type as defined by {{RFC8259}} with the following parameters
+and an HTTP 200 (OK) status code:
 
 "access_token":
 :    REQUIRED.  The access token issued by the authorization server.
@@ -1642,9 +1643,7 @@ to the payload of the HTTP response with a 200 (OK) status code:
      otherwise, REQUIRED.  The scope of the access token as
      described by {{access-token-scope}}.
 
-The parameters are included in the payload of the HTTP response
-using the `application/json` media type as defined by {{RFC7159}}.  The
-parameters are serialized into a JavaScript Object Notation (JSON)
+The parameters are serialized into a JavaScript Object Notation (JSON)
 structure by adding each parameter at the highest structure level.
 Parameter names and string values are included as JSON strings.
 Numerical values are included as JSON numbers.  The order of
