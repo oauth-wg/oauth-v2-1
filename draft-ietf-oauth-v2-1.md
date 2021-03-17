@@ -721,7 +721,7 @@ For example (with extra line breaks for display purposes only):
 
     Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
 
-Alternatively, the authorization server MAY support including the
+In addition to that, the authorization server MAY support including the
 client credentials in the request-body using the following
 parameters:
 
