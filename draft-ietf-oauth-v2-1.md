@@ -188,7 +188,7 @@ the third party.  This creates several problems and limitations:
 
 *  Resource owners cannot revoke access to an individual third party
    without revoking access to all third parties, and must do so by
-   changing the third party's password.
+   changing their password.
 
 *  Compromise of any third-party application results in compromise of
    the end-user's password and all of the data protected by that
