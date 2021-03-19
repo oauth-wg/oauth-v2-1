@@ -207,7 +207,7 @@ protected resources hosted by the resource server.
 For example, an end-user (resource owner) can grant a printing
 service (client) access to their protected photos stored at a photo-
 sharing service (resource server), without sharing their username and
-password with the printing service.  Instead, they authenticates
+password with the printing service.  Instead, they authenticate
 directly with a server trusted by the photo-sharing service
 (authorization server), which issues the printing service delegation-
 specific credentials (access token).
@@ -254,7 +254,7 @@ OAuth defines four roles:
     This is sometimes abbreviated as "AS".
 
 The interaction between the authorization server and resource server
-is beyond the scope of this specification, however several extension have
+is beyond the scope of this specification, however several extensions have
 been defined to provide an option for interoperability between resource
 servers and authorization servers.  The authorization server
 may be the same server as the resource server or a separate entity.
@@ -630,7 +630,7 @@ This specification has been designed around the following client profiles:
   server.  Resource owners access the client via an HTML user
   interface rendered in a user-agent on the device used by the
   resource owner.  The client credentials as well as any access
-  token issued to the client are stored on the web server and are
+  tokens issued to the client are stored on the web server and are
   not exposed to or accessible by the resource owner.
 
 "browser-based application":
@@ -3685,7 +3685,7 @@ Below is a list of well-established extensions at the time of publication:
   * The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.
 
 * {{I-D.ietf-oauth-par}}: Pushed Authorization Requests
-  * The Pushed Authorization Requsts extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.
+  * The Pushed Authorization Requests extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.
 
 * {{I-D.ietf-oauth-rar}}: Rich Authorization Requests
   * Rich Authorization Requests specifies a new parameter `authorization_details` that is used to carry fine-grained authorization data in the OAuth authorization request.
