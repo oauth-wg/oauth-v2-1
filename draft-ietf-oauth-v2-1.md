@@ -32,7 +32,6 @@ author:
 
 normative:
   RFC2119:
-  RFC2617:
   RFC2818:
   RFC3629:
   RFC3986:
@@ -708,7 +707,7 @@ request.
 
 Clients in possession of a client secret, sometimes known as a client password,
 MAY use the HTTP Basic
-authentication scheme as defined in {{RFC2617}} to authenticate with
+authentication scheme as defined in {{!HTTPAUTH=RFC7235}} to authenticate with
 the authorization server.  The client identifier is encoded using the
 `application/x-www-form-urlencoded` encoding algorithm per
 Appendix B, and the encoded value is used as the username; the client
@@ -1900,7 +1899,7 @@ or a structured access token format such as a JWT {{I-D.ietf-oauth-access-token-
 The method in which the client utilizes the access token to
 authenticate with the resource server depends on the type of access
 token issued by the authorization server.  Typically, it involves
-using the HTTP `Authorization` request header field {{RFC2617}} with an
+using the HTTP `Authorization` request header field {{HTTPAUTH}} with an
 authentication scheme defined by the specification of the access
 token type used, such as `Bearer`, defined below.
 
@@ -1948,7 +1947,7 @@ to transmit the token in each request.
 #### Authorization Request Header Field
 
 When sending the access token in the `Authorization` request header
-field defined by HTTP/1.1 {{RFC2617}}, the client uses the `Bearer`
+field defined by HTTP/1.1 {{HTTPAUTH}}, the client uses the `Bearer`
 authentication scheme to transmit the access token.
 
 For example:
@@ -1959,10 +1958,10 @@ For example:
 
 The syntax of the `Authorization` header field for this scheme
 follows the usage of the Basic scheme defined in Section 2 of
-{{RFC2617}}.  Note that, as with Basic, it does not conform to the
+{{!RFC2617}}.  Note that, as with Basic, it does not conform to the
 generic syntax defined in Section 1.2 of {{RFC2617}} but is compatible
 with the general authentication framework in HTTP 1.1 Authentication
-{{RFC7235}}, although it does not follow the preferred
+{{HTTPAUTH}}, although it does not follow the preferred
 practice outlined therein in order to reflect existing deployments.
 The syntax for Bearer credentials is as follows:
 
@@ -2024,7 +2023,7 @@ credentials or does not contain an access token that enables access
 to the protected resource, the resource server MUST include the HTTP
 `WWW-Authenticate` response header field; it MAY include it in
 response to other conditions as well.  The `WWW-Authenticate` header
-field uses the framework defined by HTTP/1.1 {{RFC2617}}.
+field uses the framework defined by HTTP/1.1 {{HTTPAUTH}}.
 
 All challenges defined by this specification MUST use the auth-scheme
 value `Bearer`.  This scheme MUST be followed by one or more
@@ -2033,7 +2032,7 @@ specification are as follows.  Other auth-param attributes MAY be
 used as well.
 
 A `realm` attribute MAY be included to indicate the scope of
-protection in the manner described in HTTP/1.1 {{RFC2617}}.  The
+protection in the manner described in HTTP/1.1 {{HTTPAUTH}}.  The
 `realm` attribute MUST NOT appear more than once.
 
 The `scope` attribute is defined in {{access-token-scope}}.  The
