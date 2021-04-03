@@ -2770,7 +2770,7 @@ responses of the authorization server they sent the respective request
 to and from the same user agent this authorization request was
 initiated with. Clients MUST store the authorization server they sent
 an authorization request to and bind this information to the user
-agent and check that the authorization request was received from the
+agent and check that the authorization response was received from the
 correct authorization server. Clients MUST ensure that the subsequent
 access token request, if applicable, is sent to the same authorization
 server. Clients SHOULD use distinct redirect URIs for each
