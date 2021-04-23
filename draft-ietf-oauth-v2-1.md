@@ -2499,16 +2499,7 @@ background for the protocol design, is provided by
 
 ## Client Authentication {#security-client-authentication}
 
-Authorization servers SHOULD use client authentication if possible.
-
-It is RECOMMENDED to use asymmetric (public-key based) methods for
-client authentication such as mTLS {{RFC8705}} or
-`private_key_jwt` {{OpenID}}. When asymmetric methods for client
-authentication are used, authorization servers do not need to store
-sensitive symmetric keys, making these methods more robust against a
-number of attacks.
-
-Authorization server MUST only rely on client authentication if the
+The authorization server MUST only rely on client authentication if the
 process of issuance/registration and distribution of the underlying
 credentials ensures their confidentiality.
 
@@ -2534,8 +2525,8 @@ ensures the authorization server it is talking to the same client again.
 In contrast, if there is a web application whose developer's identity
 was verified, who signed a contract and is issued a client secret
 that is only used in a secure backend service, the authorization
-server might allow this client to access more sensible services
-or to use the client credential grant type.
+server might allow this client to access more sensitive services
+or to use the client credentials grant type.
 
 ### Client Authentication of Native Apps
 
