@@ -979,15 +979,18 @@ defined by this specification MUST NOT be included more than once.
 
 ### Client Authentication {#token-endpoint-client-authentication}
 
+<!-- TODO: move this to the token endpoint section -->
+
 Confidential or credentialed clients MUST
 authenticate with the authorization server as described in
-{{client-authentication}} when making requests to the token endpoint.  Client
-authentication is used for:
+{{client-authentication}} when making requests to the token endpoint.  
+
+Client authentication is used for:
 
 *  Enforcing the binding of refresh tokens and authorization codes to
-   the client they were issued to.  Client authentication is critical
-   when an authorization code is transmitted to the redirection
-   endpoint over an insecure channel.
+   the client they were issued to.  Client authentication adds an 
+   additional layer of security when an authorization code is transmitted 
+   to the redirection endpoint over an insecure channel.
 
 *  Recovering from a compromised client by disabling the client or
    changing its credentials, thus preventing an attacker from abusing
