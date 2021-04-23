@@ -2,16 +2,21 @@ GEM
   remote: https://rubygems.org/
   specs:
     certified (1.0.0)
-    kramdown (1.17.0)
-    kramdown-rfc2629 (1.2.13)
+    json_pure (2.5.1)
+    kramdown (2.3.1)
+      rexml
+    kramdown-rfc2629 (1.4.3)
       certified (~> 1.0)
-      kramdown (~> 1.17.0)
+      json_pure (~> 2.0)
+      kramdown (~> 2.3.0)
+    rexml (3.2.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  kramdown (>= 2.3.1)
   kramdown-rfc2629
 
 BUNDLED WITH
-   2.0.2
+   2.2.16
