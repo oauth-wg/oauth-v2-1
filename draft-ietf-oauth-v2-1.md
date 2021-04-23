@@ -42,6 +42,7 @@ normative:
   RFC6750:
   RFC5280:
   RFC7159:
+  RFC7230:
   RFC7231:
   RFC7234:
   RFC7235:
@@ -68,7 +69,6 @@ informative:
   RFC6265:
   RFC6819:
   RFC7009:
-  RFC7230:
   RFC7519:
   RFC7591:
   RFC7592:
@@ -212,7 +212,7 @@ directly with a server trusted by the photo-sharing service
 (authorization server), which issues the printing service delegation-
 specific credentials (access token).
 
-This specification is designed for use with HTTP ({{HTTP=RFC7231}}).  The
+This specification is designed for use with HTTP ({{RFC7231}}).  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
 Since the publication of the OAuth 2.0 Authorization Framework ({{RFC6749}})
@@ -560,9 +560,9 @@ defined in {{RFC4949}}.  These terms include, but are not limited to,
 "confidentiality", "credential", "encryption", "identity", "sign",
 "signature", "trust", "validate", and "verify".
 
-The term "payload" is to be interpreted as described in Section 3.3 of [RFC7231].
+The term "payload" is to be interpreted as described in Section 3.3 of {{RFC7231}}.
 
-The term "user agent" is to be interpreted as described in {{MESSAGING=RFC7230}}.
+The term "user agent" is to be interpreted as described in {{RFC7230}}.
 
 Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.
