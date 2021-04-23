@@ -977,7 +977,7 @@ defined by this specification MUST NOT be included more than once.
 
 ### Client Authentication {#token-endpoint-client-authentication}
 
-Confidential clients or other clients issued client credentials MUST
+Confidential or credentialed clients MUST
 authenticate with the authorization server as described in
 {{client-authentication}} when making requests to the token endpoint.  Client
 authentication is used for:
