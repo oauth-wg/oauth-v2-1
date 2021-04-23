@@ -335,7 +335,7 @@ An authorization code is a temporary credential used to obtain an access token.
 Instead of the client
 requesting authorization directly from the resource owner, the client
 directs the resource owner to an authorization server (via its
-user-agent as defined in {{RFC7231}}), which in turn directs the
+user agent, which in turn directs the
 resource owner back to the client with the authorization code.
 The client can then exchange the authorization code for an access token.
 
@@ -351,7 +351,7 @@ such as multi-factor authentication or delegated accounts.
 The authorization code provides a few important security benefits,
 such as the ability to authenticate the client, as well as the
 transmission of the access token directly to the client without
-passing it through the resource owner's user-agent and potentially
+passing it through the resource owner's user agent and potentially
 exposing it to others, including the resource owner.
 
 
@@ -503,9 +503,9 @@ mechanisms that meet their security requirements.
 
 This specification makes extensive use of HTTP redirections, in which
 the client or the authorization server directs the resource owner's
-user-agent to another destination.  While the examples in this
+user agent to another destination.  While the examples in this
 specification show the use of the HTTP 302 status code, any other
-method available via the user-agent to accomplish this redirection, 
+method available via the user agent to accomplish this redirection, 
 with the exception of HTTP 307, is allowed and is considered to be an 
 implementation detail. See {{redirect_307}} for details.
 
@@ -561,6 +561,8 @@ defined in {{RFC4949}}.  These terms include, but are not limited to,
 "signature", "trust", "validate", and "verify".
 
 The term "payload" is to be interpreted as described in Section 3.3 of [RFC7231].
+
+The term "user agent" is to be interpreted as described in {{MESSAGING=RFC7230}}.
 
 Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.
@@ -628,7 +630,7 @@ This specification has been designed around the following client profiles:
 "web application":
 : A web application is a confidential client running on a web
   server.  Resource owners access the client via an HTML user
-  interface rendered in a user-agent on the device used by the
+  interface rendered in a user agent on the device used by the
   resource owner.  The client credentials as well as any access
   tokens issued to the client are stored on the web server and are
   not exposed to or accessible by the resource owner.
@@ -636,11 +638,11 @@ This specification has been designed around the following client profiles:
 "browser-based application":
 : A browser-based application is a public client in which the
   client code is downloaded from a web server and executes within a
-  user-agent (e.g., web browser) on the device used by the resource
+  user agent (e.g., web browser) on the device used by the resource
   owner.  Protocol data and credentials are easily accessible (and
   often visible) to the resource owner.  Since such applications
-  reside within the user-agent, they can make seamless use of the
-  user-agent capabilities when requesting authorization.
+  reside within the user agent, they can make seamless use of the
+  user agent capabilities when requesting authorization.
 
 "native application":
 : A native application is a public client installed and executed on
@@ -785,7 +787,7 @@ The authorization process utilizes two authorization server endpoints
 (HTTP resources):
 
 *  Authorization endpoint - used by the client to obtain
-   authorization from the resource owner via user-agent redirection.
+   authorization from the resource owner via user agent redirection.
 
 *  Token endpoint - used by the client to exchange an authorization
    grant for an access token, typically with client authentication.
@@ -794,7 +796,7 @@ As well as one client endpoint:
 
 *  Redirection endpoint - used by the authorization server to return
    responses containing authorization credentials to the client via
-   the resource owner user-agent.
+   the resource owner user agent.
 
 Not every authorization grant type utilizes both endpoints.
 Extension grant types MAY define additional endpoints as needed.
@@ -863,8 +865,8 @@ MUST return an error response as described in {{authorization-code-error-respons
 ### Redirection Endpoint {#redirection-endpoint}
 
 After completing its interaction with the resource owner, the
-authorization server directs the resource owner's user-agent back to
-the client.  The authorization server redirects the user-agent to one of the
+authorization server directs the resource owner's user agent back to
+the client.  The authorization server redirects the user agent to one of the
 client's redirection endpoints previously established with the
 authorization server during the client registration process.
 
@@ -920,13 +922,13 @@ include a redirect URI with the authorization request using the
 If an authorization request fails validation due to a missing,
 invalid, or mismatching redirect URI, the authorization server
 SHOULD inform the resource owner of the error and MUST NOT
-automatically redirect the user-agent to the invalid redirect URI.
+automatically redirect the user agent to the invalid redirect URI.
 
 
 #### Endpoint Content
 
 The redirection request to the client's endpoint typically results in
-an HTML document response, processed by the user-agent.  If the HTML
+an HTML document response, processed by the user agent.  If the HTML
 response is served directly as the result of the redirection request,
 any script included in the HTML document will execute with full
 access to the redirect URI and the credentials (e.g. authorization code) 
@@ -937,7 +939,7 @@ and other elements loaded in the page.
 The client SHOULD NOT include any third-party scripts (e.g., third-
 party analytics, social plug-ins, ad networks) in the redirection
 endpoint response.  Instead, it SHOULD extract the credentials from
-the URI and redirect the user-agent again to another endpoint without
+the URI and redirect the user agent again to another endpoint without
 exposing the credentials (in the URI or elsewhere).  If third-party
 scripts are included, the client MUST ensure that its own scripts
 (used to extract and remove the credentials from the URI) will
@@ -1044,7 +1046,7 @@ The authorization code grant type is used to obtain both access
 tokens and refresh tokens.
 
 Since this is a redirect-based flow, the client must be capable of
-initiating the flow with the resource owner's user-agent (typically a web
+initiating the flow with the resource owner's user agent (typically a web
 browser) and capable of being redirected back to from the authorization server.
 
 ~~~~~~~~~~
@@ -1075,25 +1077,25 @@ browser) and capable of being redirected back to from the authorization server.
 +---------+       (w/ Optional Refresh Token)
 
 Note: The lines illustrating steps (1), (2), and (3) are broken into
-two parts as they pass through the user-agent.
+two parts as they pass through the user agent.
 ~~~~~~~~~~
 {: #fig-authorization-code-flow title="Authorization Code Flow"}
 
 The flow illustrated in {{fig-authorization-code-flow}} includes the following steps:
 
 (1)  The client initiates the flow by directing the resource owner's
-     user-agent to the authorization endpoint.  The client includes
+     user agent to the authorization endpoint.  The client includes
      its client identifier, code challenge (derived from a generated code verifier), 
      optional requested scope, optional local state, and a
      redirect URI to which the authorization server will send the
-     user-agent back once access is granted (or denied).
+     user agent back once access is granted (or denied).
 
 (2)  The authorization server authenticates the resource owner (via
-     the user-agent) and establishes whether the resource owner
+     the user agent) and establishes whether the resource owner
      grants or denies the client's access request.
 
 (3)  Assuming the resource owner grants access, the authorization
-     server redirects the user-agent back to the client using the
+     server redirects the user agent back to the client using the
      redirect URI provided earlier (in the request or during
      client registration).  The redirect URI includes an
      authorization code and any local state provided by the client
@@ -1117,7 +1119,7 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 To begin the authorization request, the client builds the authorization
 request URI by adding parameters to the authorization server's
-authorization endpoint URI. The client will eventually redirect the user-agent
+authorization endpoint URI. The client will eventually redirect the user agent
 to this URI to initiate the request, as described in {{initiate-authorization-request}}.
 
 Clients use a unique secret per authorization request to protect against authorization code
@@ -1154,7 +1156,7 @@ using the `application/x-www-form-urlencoded` format, per Appendix B:
 "state":
 :    OPTIONAL.  An opaque value used by the client to maintain
      state between the request and callback.  The authorization
-     server includes this value when redirecting the user-agent back
+     server includes this value when redirecting the user agent back
      to the client.
 
 The `code_verifier` is a unique high-entropy cryptographically random string generated
@@ -1212,9 +1214,9 @@ described in {{authorization_codes}}. In this case, using and enforcing
 RECOMMENDED.
 
 The client directs the resource owner to the constructed URI using an
-HTTP redirection, or by other means available to it via the user-agent.
+HTTP redirection, or by other means available to it via the user agent.
 
-For example, the client directs the user-agent to make the following
+For example, the client directs the user agent to make the following
 HTTP request using TLS (with extra line breaks for display purposes
 only):
 
@@ -1239,9 +1241,9 @@ an authorization decision (by asking the resource owner or by
 establishing approval via other means).
 
 When a decision is established, the authorization server directs the
-user-agent to the provided client redirect URI using an HTTP
+user agent to the provided client redirect URI using an HTTP
 redirection response, or by other means available to it via the
-user-agent.
+user agent.
 
 
 ### Authorization Response {#authorization-response}
@@ -1269,7 +1271,7 @@ per Appendix B:
      authorization request.  The exact value received from the
      client.
 
-For example, the authorization server redirects the user-agent by
+For example, the authorization server redirects the user agent by
 sending the following HTTP response:
 
     HTTP/1.1 302 Found
@@ -1299,7 +1301,7 @@ in a form that entities other than the AS can extract.
 If the request fails due to a missing, invalid, or mismatching
 redirect URI, or if the client identifier is missing or invalid,
 the authorization server SHOULD inform the resource owner of the
-error and MUST NOT automatically redirect the user-agent to the
+error and MUST NOT automatically redirect the user agent to the
 invalid redirect URI.
 
 An AS MUST reject requests without a `code_challenge` from public clients, 
@@ -1382,7 +1384,7 @@ parameters to the query component of the redirect URI using the
      authorization request.  The exact value received from the
      client.
 
-For example, the authorization server redirects the user-agent by
+For example, the authorization server redirects the user agent by
 sending the following HTTP response:
 
     HTTP/1.1 302 Found
@@ -2942,7 +2944,7 @@ Service providers should attempt to educate end-users about the risks
 phishing attacks pose and should provide mechanisms that make it easy
 for end-users to confirm the authenticity of their sites.  Client
 developers should consider the security implications of how they
-interact with the user-agent (e.g., external, embedded), and the
+interact with the user agent (e.g., external, embedded), and the
 ability of the end-user to verify the authenticity of the
 authorization server.
 
@@ -2955,13 +2957,13 @@ interaction.
 
 The native app that is initiating the authorization request has a
 large degree of control over the user interface and can potentially
-present a fake external user-agent, that is, an embedded user-agent
-made to appear as an external user-agent.
+present a fake external user agent, that is, an embedded user agent
+made to appear as an external user agent.
 
-When all good actors are using external user-agents, the advantage is
+When all good actors are using external user agents, the advantage is
 that it is possible for security experts to detect bad actors, as
-anyone faking an external user-agent is provably bad.  On the other
-hand, if good and bad actors alike are using embedded user-agents,
+anyone faking an external user agent is provably bad.  On the other
+hand, if good and bad actors alike are using embedded user agents,
 bad actors don't need to fake anything, making them harder to detect.
 Once a malicious app is detected, it may be possible to use this
 knowledge to blacklist the app's signature in malware scanning
@@ -2970,8 +2972,8 @@ stores) and other steps to reduce the impact and spread of the
 malicious app.
 
 Authorization servers can also directly protect against fake external
-user-agents by requiring an authentication factor only available to
-true external user-agents.
+user agents by requiring an authentication factor only available to
+true external user agents.
 
 Users who are particularly concerned about their security when using
 in-app browser tabs may also take the additional step of opening the
@@ -3152,34 +3154,34 @@ The requirement of {{native-app-registration}}, specifically that authorization
 servers reject requests with URIs that don't match what was
 registered, is also required to prevent such attacks.
 
-## Embedded User Agents in Native Apps {#native-apps-embedded-user-agents}
+## Embedded User Agents in Native Apps {#native-apps-embedded-user agents}
 
-Embedded user-agents are a technically possible method for authorizing native
-apps.  These embedded user-agents are unsafe for use by third parties
+Embedded user agents are a technically possible method for authorizing native
+apps.  These embedded user agents are unsafe for use by third parties
 to the authorization server by definition, as the app that hosts the
-embedded user-agent can access the user's full authentication
+embedded user agent can access the user's full authentication
 credential, not just the OAuth authorization grant that was intended
 for the app.
 
-In typical web-view-based implementations of embedded user-agents,
+In typical web-view-based implementations of embedded user agents,
 the host application can record every keystroke entered in the login
 form to capture usernames and passwords, automatically submit forms
 to bypass user consent, and copy session cookies and use them to
 perform authenticated actions as the user.
 
 Even when used by trusted apps belonging to the same party as the
-authorization server, embedded user-agents violate the principle of
+authorization server, embedded user agents violate the principle of
 least privilege by having access to more powerful credentials than
 they need, potentially increasing the attack surface.
 
-Encouraging users to enter credentials in an embedded user-agent
+Encouraging users to enter credentials in an embedded user agent
 without the usual address bar and visible certificate validation
 features that browsers have makes it impossible for the user to know
 if they are signing in to the legitimate site; even when they are, it
 trains them that it's OK to enter credentials without validating the
 site first.
 
-Aside from the security concerns, embedded user-agents do not share
+Aside from the security concerns, embedded user agents do not share
 the authentication state with other apps or the browser, requiring
 the user to log in for every authorization request, which is often
 considered an inferior user experience.
@@ -3201,26 +3203,26 @@ related to security, platform capabilities, and overall end-user
 experience.
 
 The authorization endpoint requires interaction between the client
-and the resource owner's user-agent. The best current practice is to
-perform the OAuth authorization request in an external user-agent
-(typically the browser) rather than an embedded user-agent (such as
+and the resource owner's user agent. The best current practice is to
+perform the OAuth authorization request in an external user agent
+(typically the browser) rather than an embedded user agent (such as
 one implemented with web-views).
 
 The native application can capture the
 response from the authorization server using a redirect URI
 with a scheme registered with the operating system to invoke the
 client as the handler, manual copy-and-paste of the credentials,
-running a local web server, installing a user-agent extension, or
+running a local web server, installing a user agent extension, or
 by providing a redirect URI identifying a server-hosted
 resource under the client's control, which in turn makes the
 response available to the native application.
 
-Previously, it was common for native apps to use embedded user-agents
+Previously, it was common for native apps to use embedded user agents
 (commonly implemented with web-views) for OAuth authorization
 requests.  That approach has many drawbacks, including the host app
 being able to copy user credentials and cookies as well as the user
-needing to authenticate from scratch in each app.  See {{native-apps-embedded-user-agents}}
-for a deeper analysis of the drawbacks of using embedded user-agents
+needing to authenticate from scratch in each app.  See {{native-apps-embedded-user agents}}
+for a deeper analysis of the drawbacks of using embedded user agents
 for OAuth.
 
 Native app authorization requests that use the browser are more
@@ -3256,7 +3258,7 @@ relying on standards-based web flows that are not specific to a
 particular platform.
 
 Native apps MUST use an external
-user-agent to perform OAuth authorization requests.  This is achieved
+user agent to perform OAuth authorization requests.  This is achieved
 by opening the authorization request in the browser (detailed in
 {{authorization-request-native-app}}) and using a redirect URI that will return the
 authorization response back to the native app (defined in {{authorization-response-native-app}}).
@@ -3277,17 +3279,17 @@ platforms are documented in {{authorization-response-native-app}}.  Any redirect
 the app to receive the URI and inspect its parameters is viable.
 
 After constructing the authorization request URI, the app uses
-platform-specific APIs to open the URI in an external user-agent.
-Typically, the external user-agent used is the default browser, that
+platform-specific APIs to open the URI in an external user agent.
+Typically, the external user agent used is the default browser, that
 is, the application configured for handling `http` and `https` scheme
 URIs on the system; however, different browser selection criteria and
-other categories of external user-agents MAY be used.
+other categories of external user agents MAY be used.
 
 This best practice focuses on the browser as the RECOMMENDED external
-user-agent for native apps.  An external user-agent designed
+user agent for native apps.  An external user agent designed
 specifically for user authorization and capable of processing
 authorization requests and responses like a browser MAY also be used.
-Other external user-agents, such as a native app provided by the
+Other external user agents, such as a native app provided by the
 authorization server may meet the criteria set out in this best
 practice, including using the same redirect URI properties, but
 their use is out of scope for this specification.
