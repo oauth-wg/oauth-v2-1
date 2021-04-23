@@ -3154,7 +3154,7 @@ The requirement of {{native-app-registration}}, specifically that authorization
 servers reject requests with URIs that don't match what was
 registered, is also required to prevent such attacks.
 
-## Embedded User Agents in Native Apps {#native-apps-embedded-user agents}
+## Embedded User Agents in Native Apps {#native-apps-embedded-user-agents}
 
 Embedded user agents are a technically possible method for authorizing native
 apps.  These embedded user agents are unsafe for use by third parties
@@ -3221,7 +3221,7 @@ Previously, it was common for native apps to use embedded user agents
 (commonly implemented with web-views) for OAuth authorization
 requests.  That approach has many drawbacks, including the host app
 being able to copy user credentials and cookies as well as the user
-needing to authenticate from scratch in each app.  See {{native-apps-embedded-user agents}}
+needing to authenticate from scratch in each app.  See {{native-apps-embedded-user-agents}}
 for a deeper analysis of the drawbacks of using embedded user agents
 for OAuth.
 
