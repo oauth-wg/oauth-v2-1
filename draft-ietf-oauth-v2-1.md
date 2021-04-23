@@ -212,7 +212,7 @@ directly with a server trusted by the photo-sharing service
 (authorization server), which issues the printing service delegation-
 specific credentials (access token).
 
-This specification is designed for use with HTTP ({{RFC7230}}).  The
+This specification is designed for use with HTTP ({{HTTP=RFC7231}}).  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
 Since the publication of the OAuth 2.0 Authorization Framework ({{RFC6749}})
