@@ -675,6 +675,102 @@ of any identifier it issues.
 Authorization servers SHOULD NOT allow clients to choose or influence their
 `client_id` value. See {{client-impersonating-resource-owner}} for details.
 
+
+## Client Redirection Endpoint {#redirection-endpoint}
+
+The client redirection endpoint (also referred to as "redirect endpoint")
+is the URI of the client that the authorization server redirects the user 
+agent back to after completing its interaction with the resource owner.
+
+The authorization server redirects the user agent to one of the
+client's redirection endpoints previously established with the
+authorization server during the client registration process.
+
+The redirect URI MUST be an absolute URI as defined by
+{{RFC3986}} Section 4.3.  The endpoint URI MAY include an
+"application/x-www-form-urlencoded" formatted (per Appendix B) query
+component ({{RFC3986}} Section 3.4), which MUST be retained when adding
+additional query parameters. The endpoint URI MUST NOT include a
+fragment component.
+
+
+#### Endpoint Request Confidentiality
+
+The redirection endpoint SHOULD require the use of TLS as described
+in {{tls-version}} when the requested response type is `code`,
+or when the redirection request will result in the transmission of
+sensitive credentials over an open network.
+If TLS is not available, the authorization server
+SHOULD warn the resource owner about the insecure endpoint prior to
+redirection (e.g., display a message during the authorization
+request).
+
+
+
+#### Registration Requirements
+
+Authorization servers MUST require clients to register their complete
+redirect URI (including the path component) and reject authorization
+requests that specify a redirect URI that doesn't exactly match
+one that was registered; the exception is loopback redirects, where
+an exact match is required except for the port URI component.
+
+For private-use URI scheme-based redirect URIs, authorization servers
+SHOULD enforce the requirement in {{private-use-uri-scheme}} that clients use
+schemes that are reverse domain name based.  At a minimum, any
+private-use URI scheme that doesn't contain a period character (`.`)
+SHOULD be rejected.
+
+The client MAY use the `state` request parameter to achieve per-request 
+customization if needed rather than varying the redirect URI per request.
+
+The authorization server MAY allow the client to register multiple
+redirect URIs.
+
+Without requiring registration of redirect URIs, attackers can
+use the authorization endpoint as an open redirector as
+described in {{open-redirectors}}.
+
+#### Dynamic Configuration
+
+If multiple redirect URIs have been registered the client MUST
+include a redirect URI with the authorization request using the
+`redirect_uri` request parameter.
+
+#### Invalid Endpoint
+
+If an authorization request fails validation due to a missing,
+invalid, or mismatching redirect URI, the authorization server
+SHOULD inform the resource owner of the error and MUST NOT
+automatically redirect the user agent to the invalid redirect URI.
+
+
+#### Endpoint Content
+
+The redirection request to the client's endpoint typically results in
+an HTML document response, processed by the user agent.  If the HTML
+response is served directly as the result of the redirection request,
+any script included in the HTML document will execute with full
+access to the redirect URI and the credentials (e.g. authorization code) 
+it contains. Additionally, the request URL containing the authorization code
+may be sent in the HTTP Referer header to any embedded images, stylesheets 
+and other elements loaded in the page.
+
+The client SHOULD NOT include any third-party scripts (e.g., third-
+party analytics, social plug-ins, ad networks) in the redirection
+endpoint response.  Instead, it SHOULD extract the credentials from
+the URI and redirect the user agent again to another endpoint without
+exposing the credentials (in the URI or elsewhere).  If third-party
+scripts are included, the client MUST ensure that its own scripts
+(used to extract and remove the credentials from the URI) will
+execute first.
+
+
+
+
+
+
+
 ## Client Authentication {#client-authentication}
 
 Confidential and credentialed clients establish a client authentication method
@@ -860,90 +956,6 @@ Some extension response types are defined by ({{OpenID}}).
 If an authorization request is missing the `response_type` parameter,
 or if the response type is not understood, the authorization server
 MUST return an error response as described in {{authorization-code-error-response}}.
-
-
-### Redirection Endpoint {#redirection-endpoint}
-
-After completing its interaction with the resource owner, the
-authorization server directs the resource owner's user agent back to
-the client.  The authorization server redirects the user agent to one of the
-client's redirection endpoints previously established with the
-authorization server during the client registration process.
-
-The redirect URI MUST be an absolute URI as defined by
-{{RFC3986}} Section 4.3.  The endpoint URI MAY include an
-"application/x-www-form-urlencoded" formatted (per Appendix B) query
-component ({{RFC3986}} Section 3.4), which MUST be retained when adding
-additional query parameters. The endpoint URI MUST NOT include a
-fragment component.
-
-
-#### Endpoint Request Confidentiality
-
-The redirection endpoint SHOULD require the use of TLS as described
-in {{tls-version}} when the requested response type is `code`,
-or when the redirection request will result in the transmission of
-sensitive credentials over an open network.
-If TLS is not available, the authorization server
-SHOULD warn the resource owner about the insecure endpoint prior to
-redirection (e.g., display a message during the authorization
-request).
-
-Lack of transport-layer security can have a severe impact on the
-security of the client and the protected resources it is authorized
-to access.  The use of transport-layer security is particularly
-critical when the authorization process is used as a form of
-delegated end-user authentication by the client (e.g., third-party
-sign-in service).
-
-
-#### Registration Requirements
-
-The authorization server MUST require all clients to register one or more
-complete redirect URIs prior to utilizing the authorization endpoint.
-The client MAY use the `state` request parameter to achieve per-request 
-customization if needed.
-
-The authorization server MAY allow the client to register multiple
-redirect URIs.
-
-Without requiring registration of redirect URIs, attackers can
-use the authorization endpoint as an open redirector as
-described in {{open-redirectors}}.
-
-#### Dynamic Configuration
-
-If multiple redirect URIs have been registered the client MUST
-include a redirect URI with the authorization request using the
-`redirect_uri` request parameter.
-
-#### Invalid Endpoint
-
-If an authorization request fails validation due to a missing,
-invalid, or mismatching redirect URI, the authorization server
-SHOULD inform the resource owner of the error and MUST NOT
-automatically redirect the user agent to the invalid redirect URI.
-
-
-#### Endpoint Content
-
-The redirection request to the client's endpoint typically results in
-an HTML document response, processed by the user agent.  If the HTML
-response is served directly as the result of the redirection request,
-any script included in the HTML document will execute with full
-access to the redirect URI and the credentials (e.g. authorization code) 
-it contains. Additionally, the request URL containing the authorization code
-may be sent in the HTTP Referer header to any embedded images, stylesheets 
-and other elements loaded in the page.
-
-The client SHOULD NOT include any third-party scripts (e.g., third-
-party analytics, social plug-ins, ad networks) in the redirection
-endpoint response.  Instead, it SHOULD extract the credentials from
-the URI and redirect the user agent again to another endpoint without
-exposing the credentials (in the URI or elsewhere).  If third-party
-scripts are included, the client MUST ensure that its own scripts
-(used to extract and remove the credentials from the URI) will
-execute first.
 
 
 ## Token Endpoint
@@ -2557,31 +2569,20 @@ such.  Authorization servers MUST record the client type in the
 client registration details in order to identify and process requests
 accordingly.
 
-Authorization servers MUST require clients to register their complete
-redirect URI (including the path component) and reject authorization
-requests that specify a redirect URI that doesn't exactly match the
-one that was registered; the exception is loopback redirects, where
-an exact match is required except for the port URI component.
+Authorization servers MAY request the inclusion of other platform-
+specific information, such as the app package or bundle name, or
+other information that may be useful for verifying the calling app's
+identity on operating systems that support such functions.
 
-For private-use URI scheme-based redirects, authorization servers
-SHOULD enforce the requirement in {{private-use-uri-scheme}} that clients use
-schemes that are reverse domain name based.  At a minimum, any
-private-use URI scheme that doesn't contain a period character (`.`)
-SHOULD be rejected.
-
-In addition to the collision-resistant properties, requiring a URI
-scheme based on a domain name that is under the control of the app
-can help to prove ownership in the event of a dispute where two apps
+For private-use URI scheme-based redirect URIs, authorization servers
+SHOULD require that the URI scheme be based on a domain name that is 
+under the control of the app. In addition to the collision-resistant properties,
+this can help to prove ownership in the event of a dispute where two apps
 claim the same private-use URI scheme (where one app is acting
 maliciously).  For example, if two apps claimed `com.example.app`,
 the owner of `example.com` could petition the app store operator to
 remove the counterfeit app.  Such a petition is harder to prove if a
 generic URI scheme was used.
-
-Authorization servers MAY request the inclusion of other platform-
-specific information, such as the app package or bundle name, or
-other information that may be useful for verifying the calling app's
-identity on operating systems that support such functions.
 
 
 ## Client Impersonation
