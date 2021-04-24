@@ -694,7 +694,7 @@ additional query parameters. The endpoint URI MUST NOT include a
 fragment component.
 
 
-#### Endpoint Request Confidentiality
+### Endpoint Request Confidentiality
 
 The redirection endpoint SHOULD require the use of TLS as described
 in {{tls-version}} when the requested response type is `code`,
@@ -706,8 +706,7 @@ redirection (e.g., display a message during the authorization
 request).
 
 
-
-#### Registration Requirements
+### Registration Requirements
 
 Authorization servers MUST require clients to register their complete
 redirect URI (including the path component) and reject authorization
@@ -731,13 +730,13 @@ Without requiring registration of redirect URIs, attackers can
 use the authorization endpoint as an open redirector as
 described in {{open-redirectors}}.
 
-#### Dynamic Configuration
+### Multiple Redirect URIs
 
-If multiple redirect URIs have been registered the client MUST
+If multiple redirect URIs have been registered, the client MUST
 include a redirect URI with the authorization request using the
 `redirect_uri` request parameter.
 
-#### Invalid Endpoint
+### Invalid Endpoint
 
 If an authorization request fails validation due to a missing,
 invalid, or mismatching redirect URI, the authorization server
@@ -745,7 +744,7 @@ SHOULD inform the resource owner of the error and MUST NOT
 automatically redirect the user agent to the invalid redirect URI.
 
 
-#### Endpoint Content
+### Endpoint Content
 
 The redirection request to the client's endpoint typically results in
 an HTML document response, processed by the user agent.  If the HTML
