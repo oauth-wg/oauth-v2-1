@@ -375,7 +375,8 @@ Access tokens are credentials used to access protected resources.  An
 access token is a string representing an authorization issued to the
 client.  The string is considered opaque to the client, even if it has
 a structure. Depending on the authorization server, the access token 
-string may be parseable by the resource server.
+string may be parseable by the resource server, such as when using the
+JSON Web Token Profile for Access Tokens ({{I-D.ietf-oauth-access-token-jwt}}).
 
 Access tokens represent specific scopes and durations of access, granted by the
 resource owner, and enforced by the resource server and authorization server.
@@ -405,6 +406,18 @@ utilization (e.g., cryptographic properties) based on the resource
 server security requirements.  Access token attributes and the
 methods used to access protected resources may be extended beyond
 what is described in this specification.
+
+Access tokens (as well as any confidential access token
+attributes) MUST be kept confidential in transit and storage, and
+only shared among the authorization server, the resource servers the
+access token is valid for, and the client to whom the access token is
+issued.  Access token credentials MUST only be transmitted using TLS
+as described in {{tls-version}} with server authentication as defined by
+{{RFC2818}}.
+
+The authorization server MUST ensure that access tokens cannot be
+generated, modified, or guessed to produce valid access tokens by
+unauthorized parties.
 
 
 ## Refresh Token
@@ -767,9 +780,6 @@ execute first.
 
 
 
-
-
-
 ## Client Authentication {#client-authentication}
 
 Confidential and credentialed clients establish a client authentication method
@@ -782,7 +792,13 @@ Confidential and credentialed clients are typically issued (or establish) a set 
 client credentials used for authenticating with the authorization
 server (e.g., password, public/private key pair).
 
-Authorization servers SHOULD use client authentication if possible.
+The authorization server MUST authenticate the client whenever
+possible.  If the authorization server cannot authenticate the client
+due to the client's nature, the authorization server SHOULD utilize other 
+means to protect resource owners
+from such potentially malicious clients.  For example, the
+authorization server can engage the resource owner to assist in
+identifying the client and its origin.
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
 client authentication such as mTLS {{RFC8705}} or "private_key_jwt"
@@ -2590,15 +2606,6 @@ A malicious client can impersonate another client and obtain access
 to protected resources if the impersonated client fails to, or is
 unable to, keep its client credentials confidential.
 
-The authorization server MUST authenticate the client whenever
-possible.  If the authorization server cannot authenticate the client
-due to the client's nature, the authorization server MUST require the
-registration of any redirect URI used for receiving authorization
-responses and SHOULD utilize other means to protect resource owners
-from such potentially malicious clients.  For example, the
-authorization server can engage the resource owner to assist in
-identifying the client and its origin.
-
 The authorization server SHOULD enforce explicit resource owner
 authentication and provide the resource owner with information about
 the client and the requested authorization scope and lifetime.  It is
@@ -2617,7 +2624,7 @@ As stated above, the authorization
 server SHOULD NOT process authorization requests automatically
 without user consent or interaction, except when the identity of the
 client can be assured.  This includes the case where the user has
-previously approved an authorization request for a given client id --
+previously approved an authorization request for a given client ID --
 unless the identity of the client can be proven, the request SHOULD
 be processed as if no previous request had been approved.
 
@@ -2626,20 +2633,6 @@ authorization servers as identity proof.  Some operating systems may
 offer alternative platform-specific identity features that MAY be
 accepted, as appropriate.
 
-
-## Access Tokens
-
-Access token credentials (as well as any confidential access token
-attributes) MUST be kept confidential in transit and storage, and
-only shared among the authorization server, the resource servers the
-access token is valid for, and the client to whom the access token is
-issued.  Access token credentials MUST only be transmitted using TLS
-as described in {{tls-version}} with server authentication as defined by
-{{RFC2818}}.
-
-The authorization server MUST ensure that access tokens cannot be
-generated, modified, or guessed to produce valid access tokens by
-unauthorized parties.
 
 ### Access Token Privilege Restriction
 
