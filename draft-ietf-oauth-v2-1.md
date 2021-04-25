@@ -9,7 +9,6 @@ kw: Internet-Draft
 cat: std
 area: Security
 
-coding: us-ascii
 pi:
   toc: yes
   sortrefs: yes
