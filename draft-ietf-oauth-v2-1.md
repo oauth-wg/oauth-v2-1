@@ -1,7 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-ietf-oauth-v2-1-02
-date: 2021-03-15
+date: 2021-05-09
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -53,6 +53,7 @@ normative:
   I-D.ietf-oauth-security-topics:
   BCP195:
     title: "Recommendations for Secure Use of Transport Layer Security (TLS)"
+        date: 2015
     author:
       - ins: Y. Sheffer
       - ins: R. Holz
