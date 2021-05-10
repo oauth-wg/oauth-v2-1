@@ -965,7 +965,51 @@ Client authentication is used for:
    of refresh tokens can be challenging, while rotation of a single
    set of client credentials is significantly easier.
 
-## Token Request
+## Token Request {#token-request}
+
+The client makes a request to the token endpoint by sending the
+following parameters using the `application/x-www-form-urlencoded`
+format per Appendix B with a character encoding of UTF-8 in the HTTP
+request payload:
+
+"client_id":
+:    REQUIRED, if the client is not authenticating with the
+     authorization server as described in {{token-endpoint-client-authentication}}.
+
+"scope":
+:    OPTIONAL.  The scope of the access request as described by
+     {{access-token-scope}}.
+
+"grant_type":
+:    REQUIRED.  Identifier of the grant type the client uses with the particular token request. 
+This specification defines the values `authorization_code`, `refresh_token`, and `client_credentials`. 
+The grant type determines the further parameters required or supported by the token request. The 
+details of those grant types will be defined below.
+
+Confidential or credentialed clients MUST authenticate with the authorization 
+server as described in {{token-endpoint-client-authentication}}.
+
+For example, the client makes the following HTTP request using TLS
+(with extra line breaks for display purposes only):
+
+    POST /token HTTP/1.1
+    Host: server.example.com
+    Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+    Content-Type: application/x-www-form-urlencoded
+
+    grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+    &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
+
+The authorization server MUST:
+
+*  require client authentication for confidential and credentialed clients
+   (or clients with other authentication requirements),
+
+*  authenticate the client if client authentication is included
+
+Further grant type specific processing rules apply and will be specified with the respective
+grant type. 
 
 ### Access Token Scope {#access-token-scope}
 
@@ -998,18 +1042,15 @@ request using a pre-defined default value or fail the request
 indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
 
-## Token Response
-
-### Issuing an Access Token
+## Token Response {#token-response}
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
-token as described in {{access-token-successful-response}}.  If the request failed client
-authentication or is invalid, the authorization server returns an
-error response as described in {{access-token-error-response}}.
+token. 
 
-
-#### Successful Response {#access-token-successful-response}
+If the request client
+authentication failed or is invalid, the authorization server returns
+an error response as described in {{token-error-response}}.
 
 The authorization server issues an access token and optional refresh
 token by creating an HTTP response body using the `application/json`
@@ -1071,8 +1112,7 @@ server are left undefined.  The client should avoid making
 assumptions about value sizes.  The authorization server SHOULD
 document the size of any value it issues.
 
-
-#### Error Response {#access-token-error-response}
+#### Error Response {#token-error-response}
 
 The authorization server responds with an HTTP 400 (Bad Request)
 status code (unless specified otherwise) and includes the following
@@ -1157,35 +1197,6 @@ For example:
      "error":"invalid_request"
     }
 
-## Token Error Response
-
-## Extension Grants {#extension-grants}
-
-The client uses an extension grant type by specifying the grant type
-using an absolute URI (defined by the authorization server) as the
-value of the `grant_type` parameter of the token endpoint, and by
-adding any additional parameters necessary.
-
-For example, to request an access token using the Device Authorization Grant
-as defined by {{RFC8628}} after the user has authorized the client on a separate device,
-the client makes the following HTTP request using
-TLS (with extra line breaks for display purposes only):
-
-      POST /token HTTP/1.1
-      Host: server.example.com
-      Content-Type: application/x-www-form-urlencoded
-
-      grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code
-      &device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS
-      &client_id=C409020731
-
-If the access token request is valid and authorized, the
-authorization server issues an access token and optional refresh
-token as described in {{access-token-successful-response}}.  If the request failed client
-authentication or is invalid, the authorization server returns an
-error response as described in {{access-token-error-response}}.
-
-
 # Grant Types {#obtaining-authorization}
 
 To request an access token, the client obtains authorization from the
@@ -1196,6 +1207,9 @@ and client credentials.  It also provides an extension mechanism for defining ad
 
 The authorization code grant type is used to obtain both access
 tokens and refresh tokens.
+
+The grant type uses the additional authorization endpoint to let the authorization server
+interact with the resource owner in order to get consent for resource access.
 
 Since this is a redirect-based flow, the client must be capable of
 initiating the flow with the resource owner's user agent (typically a web
@@ -1267,10 +1281,6 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
      step (3).  If valid, the authorization server responds back with
      an access token and, optionally, a refresh token.
 
-### Token Endpoint Extension
-
-grant_type definition
-
 ### Authorization Endpoint
 
 The authorization endpoint is used to interact with the resource
@@ -1307,28 +1317,6 @@ defined by this specification MUST NOT be included more than once.
 Parameters sent without a value MUST be treated as if they were
 omitted from the request.
 
-#### Response Type {#response-type}
-
-The authorization endpoint is used by the authorization code flow.
-The client informs the authorization server of the desired response type
-using the following parameter:
-
-"response_type":
-:    REQUIRED.  The value MUST be `code` for requesting an authorization
-code as described by {{authorization-request}}, or a registered extension
-value as described by {{new-response-types}}.
-
-Extension response types MAY contain a space-delimited (%x20) list of
-values, where the order of values does not matter (e.g., response
-type `a b` is the same as `b a`).  The meaning of such composite
-response types is defined by their respective specifications.
-
-Some extension response types are defined by ({{OpenID}}).
-
-If an authorization request is missing the `response_type` parameter,
-or if the response type is not understood, the authorization server
-MUST return an error response as described in {{authorization-code-error-response}}.
-
 ### Authorization Request {#authorization-request}
 
 To begin the authorization request, the client builds the authorization
@@ -1341,14 +1329,26 @@ injection and CSRF attacks. The client first generates this secret, which it can
 use at the time of redeeming the authorization code to prove that the client using the
 authorization code is the same client that requested it. 
 
-#### Client Initiates the Authorization Request {#initiate-authorization-request}
-
 The client constructs the request URI by adding the following
 parameters to the query component of the authorization endpoint URI
 using the `application/x-www-form-urlencoded` format, per Appendix B:
 
 "response_type":
-:    REQUIRED.  Value MUST be set to `code`.
+:    REQUIRED.  The authorization endpoint supports different sets of request and response 
+pameters. The client determines the type of flow by using a certain `response_type`
+value. This specification defines the value `code`, which must be used to signal that
+the client wants to use the authorization code flow.
+
+Extension response types MAY contain a space-delimited (%x20) list of
+values, where the order of values does not matter (e.g., response
+type `a b` is the same as `b a`).  The meaning of such composite
+response types is defined by their respective specifications.
+
+Some extension response types are defined by ({{OpenID}}).
+
+If an authorization request is missing the `response_type` parameter,
+or if the response type is not understood, the authorization server
+MUST return an error response as described in {{authorization-code-error-response}}.
 
 "client_id":
 :    REQUIRED.  The client identifier as described in {{client-identifier}}.
@@ -1603,16 +1603,11 @@ sending the following HTTP response:
     HTTP/1.1 302 Found
     Location: https://client.example.com/cb?error=access_denied&state=xyz
 
+### Token Endpoint Extension {#code_token_extension}
 
-### Access Token Request {#access-token-request}
+The authorization grant type is identified at the token endpoint with the `grant_type` value of `authorization_code`.
 
-The client makes a request to the token endpoint by sending the
-following parameters using the `application/x-www-form-urlencoded`
-format per Appendix B with a character encoding of UTF-8 in the HTTP
-request payload:
-
-"grant_type":
-:    REQUIRED.  Value MUST be set to `authorization_code`.
+If this value is set, the following additional token request parameters beyond (#token_request) are required:
 
 "code":
 :    REQUIRED.  The authorization code received from the
@@ -1631,9 +1626,6 @@ request payload:
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
      request. MUST NOT be used otherwise. The original code verifier string.
 
-Confidential or credentialed clients MUST authenticate with the authorization 
-server as described in {{token-endpoint-client-authentication}}.
-
 For example, the client makes the following HTTP request using TLS
 (with extra line breaks for display purposes only):
 
@@ -1646,12 +1638,7 @@ For example, the client makes the following HTTP request using TLS
     &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
     &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 
-The authorization server MUST:
-
-*  require client authentication for confidential and credentialed clients
-   (or clients with other authentication requirements),
-
-*  authenticate the client if client authentication is included,
+In addition to the processing rules in (#token_request), the authorization server MUST:
 
 *  ensure that the authorization code was issued to the authenticated
    confidential or credentialed client, or if the client is public, ensure that the
@@ -1671,31 +1658,6 @@ The authorization server MUST:
    `redirect_uri` parameter was included in the initial authorization
    request as described in {{initiate-authorization-request}}, and if included ensure that
    their values are identical.
-
-
-### Access Token Response {#authorization-code-access-token-response}
-
-If the access token request is valid and authorized, the
-authorization server issues an access token and optional refresh
-token as described in {{access-token-successful-response}}.  If the request client
-authentication failed or is invalid, the authorization server returns
-an error response as described in {{access-token-error-response}}.
-
-An example successful response:
-
-    HTTP/1.1 200 OK
-    Content-Type: application/json
-    Cache-Control: no-store
-
-    {
-      "access_token": "2YotnFZFEjr1zCsicMWpAA",
-      "token_type": "Bearer",
-      "expires_in": 3600,
-      "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
-      "example_parameter": "example_value"
-    }
-
-
 
 ## Client Credentials Grant
 
@@ -1770,9 +1732,9 @@ The authorization server MUST authenticate the client.
 
 If the access token request is valid and authorized, the
 authorization server issues an access token as described in
-{{access-token-successful-response}}.  A refresh token SHOULD NOT be included.  If the request
+{{token-response}}.  A refresh token SHOULD NOT be included.  If the request
 failed client authentication or is invalid, the authorization server
-returns an error response as described in {{access-token-error-response}}.
+returns an error response as described in {{token-error-response}}.
 
 An example successful response:
 
@@ -1880,9 +1842,9 @@ using signatures.
 ### Refresh Token Response
 
 If valid and authorized, the authorization server issues an access
-token as described in {{access-token-successful-response}}.  If the request failed
+token as described in {{token-response}}.  If the request failed
 verification or is invalid, the authorization server returns an error
-response as described in {{access-token-error-response}}.
+response as described in {{token-error-response}}.
 
 The authorization server MAY issue a new refresh token, in which case
 the client MUST discard the old refresh token and replace it with the
@@ -1904,6 +1866,32 @@ access tokens for some time.  The expiration time is at the
 discretion of the authorization server.  It might be a global value
 or determined based on the client policy or the grant associated with
 the refresh token (and its sensitivity).
+
+## Extension Grants {#extension-grants}
+
+The client uses an extension grant type by specifying the grant type
+using an absolute URI (defined by the authorization server) as the
+value of the `grant_type` parameter of the token endpoint, and by
+adding any additional parameters necessary.
+
+For example, to request an access token using the Device Authorization Grant
+as defined by {{RFC8628}} after the user has authorized the client on a separate device,
+the client makes the following HTTP request using
+TLS (with extra line breaks for display purposes only):
+
+      POST /token HTTP/1.1
+      Host: server.example.com
+      Content-Type: application/x-www-form-urlencoded
+
+      grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code
+      &device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS
+      &client_id=C409020731
+
+If the access token request is valid and authorized, the
+authorization server issues an access token and optional refresh
+token as described in {{token-response}}.  If the request failed client
+authentication or is invalid, the authorization server returns an
+error response as described in {{token-error-response}}.
 
 # Accessing Protected Resources {#accessing-protected-resources}
 
@@ -2486,7 +2474,7 @@ denote the same response type.
 In cases where protocol extensions (i.e., access token types,
 extension parameters, or extension grant types) require additional
 error codes to be used with the authorization code grant error
-response ({{authorization-code-error-response}}), the token error response ({{access-token-error-response}}), or the
+response ({{authorization-code-error-response}}), the token error response ({{token-error-response}}), or the
 resource access error response ({{error-response}}), such error codes MAY be
 defined.
 
@@ -3511,7 +3499,7 @@ The `redirect_uri` element is defined in {{authorization-request}}, and {{access
 
 ## "error" Syntax
 
-The `error` element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
+The `error` element is defined in Sections {{authorization-code-error-response}}, {{token-error-response}},
 7.2, and 8.5:
 
      error             = 1*NQSCHAR
@@ -3519,13 +3507,13 @@ The `error` element is defined in Sections {{authorization-code-error-response}}
 ## "error_description" Syntax
 
 The `error_description` element is defined in Sections {{authorization-code-error-response}},
-{{access-token-error-response}}, and {{error-response}}:
+{{token-error-response}}, and {{error-response}}:
 
      error-description = 1*NQSCHAR
 
 ## "error_uri" Syntax
 
-The `error_uri` element is defined in Sections {{authorization-code-error-response}}, {{access-token-error-response}},
+The `error_uri` element is defined in Sections {{authorization-code-error-response}}, {{token-error-response}},
 and 7.2:
 
      error-uri         = URI-reference
@@ -3547,13 +3535,13 @@ The `code` element is defined in {{access-token-request}}:
 
 ## "access_token" Syntax
 
-The `access_token` element is defined in {{access-token-response}} and {{access-token-successful-response}}:
+The `access_token` element is defined in {{token-response}}:
 
      access-token = 1*VSCHAR
 
 ## "token_type" Syntax
 
-The `token_type` element is defined in {{access-token-successful-response}}, and {{defining-access-token-types}}:
+The `token_type` element is defined in {{token-response}}, and {{defining-access-token-types}}:
 
      token-type = type-name / URI-reference
      type-name  = 1*name-char
@@ -3561,13 +3549,13 @@ The `token_type` element is defined in {{access-token-successful-response}}, and
 
 ## "expires_in" Syntax
 
-The `expires_in` element is defined in {{access-token-successful-response}}:
+The `expires_in` element is defined in {{token-response}}:
 
      expires-in = 1*DIGIT
 
 ## "refresh_token" Syntax
 
-The `refresh_token` element is defined in {{access-token-successful-response}} and {{refreshing-an-access-token}}:
+The `refresh_token` element is defined in {{token-response}} and {{refreshing-an-access-token}}:
 
      refresh-token = 1*VSCHAR
 
