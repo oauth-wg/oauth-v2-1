@@ -53,11 +53,11 @@ normative:
   I-D.ietf-oauth-security-topics:
   BCP195:
     title: "Recommendations for Secure Use of Transport Layer Security (TLS)"
-        date: 2015
     author:
-      - ins: Y. Sheffer
-      - ins: R. Holz
-      - ins: P. Saint-Andre
+      ins: Y. Sheffer
+      ins: R. Holz
+      ins: P. Saint-Andre
+    date: 2015
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -296,7 +296,7 @@ interaction between the four roles and includes the following steps:
 
 2.  The client receives an authorization grant, which is a
     credential representing the resource owner's authorization,
-    expressed using one of two authorization grant types defined in this
+    expressed using one of the authorization grant types defined in this
     specification or using an extension grant type.  The
     authorization grant type depends on the method used by the
     client to request authorization and the types supported by the
@@ -324,11 +324,10 @@ authorization server as an intermediary, which is illustrated in
 
 An authorization grant is a credential representing the resource
 owner's authorization (to access its protected resources) used by the
-client to obtain an access token.  This specification defines two
-grant types -- authorization code
+client to obtain an access token.  This specification defines three
+grant types -- authorization code, refresh token, 
 and client credentials -- as well as an extensibility
 mechanism for defining additional types.
-
 
 ### Authorization Code
 
@@ -355,73 +354,7 @@ transmission of the access token directly to the client without
 passing it through the resource owner's user agent and potentially
 exposing it to others, including the resource owner.
 
-
-### Client Credentials
-
-The client credentials or other forms of client authentication
-(e.g. a `client_secret` or a private key used to sign a JWT)
-can be used as an authorization grant when the authorization scope is
-limited to the protected resources under the control of the client,
-or to protected resources previously arranged with the authorization
-server.  Client credentials are used as an authorization grant
-typically when the client is acting on its own behalf (the client is
-also the resource owner) or is requesting access to protected
-resources based on an authorization previously arranged with the
-authorization server.
-
-
-## Access Token
-
-Access tokens are credentials used to access protected resources.  An
-access token is a string representing an authorization issued to the
-client.  The string is considered opaque to the client, even if it has
-a structure. Depending on the authorization server, the access token 
-string may be parseable by the resource server, such as when using the
-JSON Web Token Profile for Access Tokens ({{I-D.ietf-oauth-access-token-jwt}}).
-
-Access tokens represent specific scopes and durations of access, granted by the
-resource owner, and enforced by the resource server and authorization server.
-
-The token may be used by the RS to retrieve the authorization information, 
-or the token may self-contain the authorization information in a verifiable 
-manner (i.e., a token string consisting of a signed data payload). One example 
-of a token retrieval mechanism is Token Introspection {{RFC7662}}, in which the 
-RS calls an endpoint on the AS to validate the token presented by the client. 
-One example of a structured token format is {{I-D.ietf-oauth-access-token-jwt}}, 
-a method of encoding access token data as a JSON Web Token {{RFC7519}}.
-
-Additional authentication credentials, which are beyond
-the scope of this specification, may be required in order for the
-client to use an access token. This is typically referred to as a sender-constrained
-access token, such as Mutual TLS Access Tokens {{RFC8705}}.
-
-The access token provides an abstraction layer, replacing different
-authorization constructs (e.g., username and password) with a single
-token understood by the resource server.  This abstraction enables
-issuing access tokens more restrictive than the authorization grant
-used to obtain them, as well as removing the resource server's need
-to understand a wide range of authentication methods.
-
-Access tokens can have different formats, structures, and methods of
-utilization (e.g., cryptographic properties) based on the resource
-server security requirements.  Access token attributes and the
-methods used to access protected resources may be extended beyond
-what is described in this specification.
-
-Access tokens (as well as any confidential access token
-attributes) MUST be kept confidential in transit and storage, and
-only shared among the authorization server, the resource servers the
-access token is valid for, and the client to whom the access token is
-issued.  Access token credentials MUST only be transmitted using TLS
-as described in {{tls-version}} with server authentication as defined by
-{{RFC2818}}.
-
-The authorization server MUST ensure that access tokens cannot be
-generated, modified, or guessed to produce valid access tokens by
-unauthorized parties.
-
-
-## Refresh Token
+### Refresh Token
 
 Refresh tokens are credentials used to obtain access tokens.  Refresh
 tokens are issued to the client by the authorization server and are
@@ -500,6 +433,69 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
     the refresh token, and if valid, issues a new access token (and,
     optionally, a new refresh token).
 
+
+### Client Credentials
+
+The client credentials or other forms of client authentication
+(e.g. a `client_secret` or a private key used to sign a JWT)
+can be used as an authorization grant when the authorization scope is
+limited to the protected resources under the control of the client,
+or to protected resources previously arranged with the authorization
+server.  Client credentials are used as an authorization grant
+typically when the client is acting on its own behalf (the client is
+also the resource owner) or is requesting access to protected
+resources based on an authorization previously arranged with the
+authorization server.
+
+## Access Token
+
+Access tokens are credentials used to access protected resources.  An
+access token is a string representing an authorization issued to the
+client.  The string is considered opaque to the client, even if it has
+a structure. Depending on the authorization server, the access token 
+string may be parseable by the resource server, such as when using the
+JSON Web Token Profile for Access Tokens ({{I-D.ietf-oauth-access-token-jwt}}).
+
+Access tokens represent specific scopes and durations of access, granted by the
+resource owner, and enforced by the resource server and authorization server.
+
+The token may be used by the RS to retrieve the authorization information, 
+or the token may self-contain the authorization information in a verifiable 
+manner (i.e., a token string consisting of a signed data payload). One example 
+of a token retrieval mechanism is Token Introspection {{RFC7662}}, in which the 
+RS calls an endpoint on the AS to validate the token presented by the client. 
+One example of a structured token format is {{I-D.ietf-oauth-access-token-jwt}}, 
+a method of encoding access token data as a JSON Web Token {{RFC7519}}.
+
+Additional authentication credentials, which are beyond
+the scope of this specification, may be required in order for the
+client to use an access token. This is typically referred to as a sender-constrained
+access token, such as Mutual TLS Access Tokens {{RFC8705}}.
+
+The access token provides an abstraction layer, replacing different
+authorization constructs (e.g., username and password) with a single
+token understood by the resource server.  This abstraction enables
+issuing access tokens more restrictive than the authorization grant
+used to obtain them, as well as removing the resource server's need
+to understand a wide range of authentication methods.
+
+Access tokens can have different formats, structures, and methods of
+utilization (e.g., cryptographic properties) based on the resource
+server security requirements.  Access token attributes and the
+methods used to access protected resources may be extended beyond
+what is described in this specification.
+
+Access tokens (as well as any confidential access token
+attributes) MUST be kept confidential in transit and storage, and
+only shared among the authorization server, the resource servers the
+access token is valid for, and the client to whom the access token is
+issued.  Access token credentials MUST only be transmitted using TLS
+as described in {{tls-version}} with server authentication as defined by
+{{RFC2818}}.
+
+The authorization server MUST ensure that access tokens cannot be
+generated, modified, or guessed to produce valid access tokens by
+unauthorized parties.
 
 ## TLS Version {#tls-version}
 
@@ -913,68 +909,7 @@ As well as one client endpoint:
 Not every authorization grant type utilizes both endpoints.
 Extension grant types MAY define additional endpoints as needed.
 
-
-## Authorization Endpoint
-
-The authorization endpoint is used to interact with the resource
-owner and obtain an authorization grant.  The authorization server
-MUST first verify the identity of the resource owner.  The way in
-which the authorization server authenticates the resource owner
-(e.g., username and password login, session cookies) is beyond the
-scope of this specification.
-
-The means through which the client obtains the location of the
-authorization endpoint are beyond the scope of this specification,
-but the location is typically provided in the service documentation,
-or in the authorization server's metadata document ({{RFC8414}}).
-
-The endpoint URI MAY include an "application/x-www-form-urlencoded"
-formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
-which MUST be retained when adding additional query parameters.  The
-endpoint URI MUST NOT include a fragment component.
-
-Since requests to the authorization endpoint result in user
-authentication and the transmission of clear-text credentials (in the
-HTTP response), the authorization server MUST require the use of TLS
-as described in {{tls-version}} when sending requests to the
-authorization endpoint.
-
-The authorization server MUST support the use of the HTTP `GET`
-method {{RFC7231}} for the authorization endpoint and MAY support the
-use of the `POST` method as well.
-
-The authorization server MUST ignore unrecognized request parameters. 
-
-Request and response parameters
-defined by this specification MUST NOT be included more than once. 
-Parameters sent without a value MUST be treated as if they were
-omitted from the request.
-
-
-### Response Type {#response-type}
-
-The authorization endpoint is used by the authorization code flow.
-The client informs the authorization server of the desired response type
-using the following parameter:
-
-"response_type":
-:    REQUIRED.  The value MUST be `code` for requesting an authorization
-code as described by {{authorization-request}}, or a registered extension
-value as described by {{new-response-types}}.
-
-Extension response types MAY contain a space-delimited (%x20) list of
-values, where the order of values does not matter (e.g., response
-type `a b` is the same as `b a`).  The meaning of such composite
-response types is defined by their respective specifications.
-
-Some extension response types are defined by ({{OpenID}}).
-
-If an authorization request is missing the `response_type` parameter,
-or if the response type is not understood, the authorization server
-MUST return an error response as described in {{authorization-code-error-response}}.
-
-
-## Token Endpoint
+# Token Endpoint
 
 The token endpoint is used by the client to obtain an access token using
 a grant such as those described in {{obtaining-authorization}} and
@@ -1004,8 +939,7 @@ Parameters sent without a value MUST be treated as if they were
 omitted from the request. Request and response parameters
 defined by this specification MUST NOT be included more than once.
 
-
-### Client Authentication {#token-endpoint-client-authentication}
+## Client Authentication {#token-endpoint-client-authentication}
 
 <!-- TODO: move this to the token endpoint section -->
 
@@ -1031,8 +965,9 @@ Client authentication is used for:
    of refresh tokens can be challenging, while rotation of a single
    set of client credentials is significantly easier.
 
+## Token Request
 
-## Access Token Scope {#access-token-scope}
+### Access Token Scope {#access-token-scope}
 
 The authorization and token endpoints allow the client to specify the
 scope of the access request using the `scope` request parameter.  In
@@ -1063,13 +998,199 @@ request using a pre-defined default value or fail the request
 indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
 
+## Token Response
 
-# Obtaining Authorization {#obtaining-authorization}
+### Issuing an Access Token
+
+If the access token request is valid and authorized, the
+authorization server issues an access token and optional refresh
+token as described in {{access-token-successful-response}}.  If the request failed client
+authentication or is invalid, the authorization server returns an
+error response as described in {{access-token-error-response}}.
+
+
+#### Successful Response {#access-token-successful-response}
+
+The authorization server issues an access token and optional refresh
+token by creating an HTTP response body using the `application/json`
+media type as defined by {{RFC8259}} with the following parameters
+and an HTTP 200 (OK) status code:
+
+"access_token":
+:    REQUIRED.  The access token issued by the authorization server.
+
+"token_type":
+:    REQUIRED.  The type of the access token issued as described in
+     {{access-token-types}}.  Value is case insensitive.
+
+"expires_in":
+:    RECOMMENDED.  The lifetime in seconds of the access token.  For
+     example, the value `3600` denotes that the access token will
+     expire in one hour from the time the response was generated.
+     If omitted, the authorization server SHOULD provide the
+     expiration time via other means or document the default value.
+
+"refresh_token":
+:    OPTIONAL.  The refresh token, which can be used to obtain new
+     access tokens using the same authorization grant as described
+     in {{refreshing-an-access-token}}.
+
+"scope":
+:    OPTIONAL, if identical to the scope requested by the client;
+     otherwise, REQUIRED.  The scope of the access token as
+     described by {{access-token-scope}}.
+
+The parameters are serialized into a JavaScript Object Notation (JSON)
+structure by adding each parameter at the highest structure level.
+Parameter names and string values are included as JSON strings.
+Numerical values are included as JSON numbers.  The order of
+parameters does not matter and can vary.
+
+The authorization server MUST include the HTTP `Cache-Control`
+response header field {{RFC7234}} with a value of `no-store` in any
+response containing tokens, credentials, or other sensitive
+information.
+
+For example:
+
+    HTTP/1.1 200 OK
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+      "access_token":"2YotnFZFEjr1zCsicMWpAA",
+      "token_type":"Bearer",
+      "expires_in":3600,
+      "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
+      "example_parameter":"example_value"
+    }
+
+The client MUST ignore unrecognized value names in the response.  The
+sizes of tokens and other values received from the authorization
+server are left undefined.  The client should avoid making
+assumptions about value sizes.  The authorization server SHOULD
+document the size of any value it issues.
+
+
+#### Error Response {#access-token-error-response}
+
+The authorization server responds with an HTTP 400 (Bad Request)
+status code (unless specified otherwise) and includes the following
+parameters with the response:
+
+"error":
+:    REQUIRED.  A single ASCII [USASCII] error code from the following:
+
+     "invalid_request":
+     :     The request is missing a required parameter, includes an
+           unsupported parameter value (other than grant type),
+           repeats a parameter, includes multiple credentials,
+           utilizes more than one mechanism for authenticating the
+           client, contains a `code_verifier` although no 
+           `code_challenge` was sent in the authorization request, 
+           or is otherwise malformed.
+
+     "invalid_client":
+     :     Client authentication failed (e.g., unknown client, no
+           client authentication included, or unsupported
+           authentication method).  The authorization server MAY
+           return an HTTP 401 (Unauthorized) status code to indicate
+           which HTTP authentication schemes are supported.  If the
+           client attempted to authenticate via the `Authorization`
+           request header field, the authorization server MUST
+           respond with an HTTP 401 (Unauthorized) status code and
+           include the `WWW-Authenticate` response header field
+           matching the authentication scheme used by the client.
+
+     "invalid_grant":
+     :     The provided authorization grant (e.g., authorization
+           code, resource owner credentials) or refresh token is
+           invalid, expired, revoked, does not match the redirect
+           URI used in the authorization request, or was issued to
+           another client.
+
+     "unauthorized_client":
+     :     The authenticated client is not authorized to use this
+           authorization grant type.
+
+     "unsupported_grant_type":
+     :     The authorization grant type is not supported by the
+           authorization server.
+
+     "invalid_scope":
+     :     The requested scope is invalid, unknown, malformed, or
+           exceeds the scope granted by the resource owner.
+
+     Values for the `error` parameter MUST NOT include characters
+     outside the set %x20-21 / %x23-5B / %x5D-7E.
+
+"error_description":
+:    OPTIONAL.  Human-readable ASCII [USASCII] text providing
+     additional information, used to assist the client developer in
+     understanding the error that occurred.
+     Values for the `error_description` parameter MUST NOT include
+     characters outside the set %x20-21 / %x23-5B / %x5D-7E.
+
+"error_uri":
+:    OPTIONAL.  A URI identifying a human-readable web page with
+     information about the error, used to provide the client
+     developer with additional information about the error.
+     Values for the `error_uri` parameter MUST conform to the
+     URI-reference syntax and thus MUST NOT include characters
+     outside the set %x21 / %x23-5B / %x5D-7E.
+
+The parameters are included in the payload of the HTTP response
+using the `application/json` media type as defined by [RFC7159].  The
+parameters are serialized into a JSON structure by adding each
+parameter at the highest structure level.  Parameter names and string
+values are included as JSON strings.  Numerical values are included
+as JSON numbers.  The order of parameters does not matter and can
+vary.
+
+For example:
+
+    HTTP/1.1 400 Bad Request
+    Content-Type: application/json
+    Cache-Control: no-store
+
+    {
+     "error":"invalid_request"
+    }
+
+## Token Error Response
+
+## Extension Grants {#extension-grants}
+
+The client uses an extension grant type by specifying the grant type
+using an absolute URI (defined by the authorization server) as the
+value of the `grant_type` parameter of the token endpoint, and by
+adding any additional parameters necessary.
+
+For example, to request an access token using the Device Authorization Grant
+as defined by {{RFC8628}} after the user has authorized the client on a separate device,
+the client makes the following HTTP request using
+TLS (with extra line breaks for display purposes only):
+
+      POST /token HTTP/1.1
+      Host: server.example.com
+      Content-Type: application/x-www-form-urlencoded
+
+      grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code
+      &device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS
+      &client_id=C409020731
+
+If the access token request is valid and authorized, the
+authorization server issues an access token and optional refresh
+token as described in {{access-token-successful-response}}.  If the request failed client
+authentication or is invalid, the authorization server returns an
+error response as described in {{access-token-error-response}}.
+
+
+# Grant Types {#obtaining-authorization}
 
 To request an access token, the client obtains authorization from the
 resource owner. OAuth defines two authorization grant types: authorization code
 and client credentials.  It also provides an extension mechanism for defining additional grant types.
-
 
 ## Authorization Code Grant {#authorization-code-grant}
 
@@ -1145,6 +1266,68 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
      received matches the URI used to redirect the client in
      step (3).  If valid, the authorization server responds back with
      an access token and, optionally, a refresh token.
+
+### Token Endpoint Extension
+
+grant_type definition
+
+### Authorization Endpoint
+
+The authorization endpoint is used to interact with the resource
+owner and obtain an authorization grant.  The authorization server
+MUST first verify the identity of the resource owner.  The way in
+which the authorization server authenticates the resource owner
+(e.g., username and password login, session cookies) is beyond the
+scope of this specification.
+
+The means through which the client obtains the location of the
+authorization endpoint are beyond the scope of this specification,
+but the location is typically provided in the service documentation,
+or in the authorization server's metadata document ({{RFC8414}}).
+
+The endpoint URI MAY include an "application/x-www-form-urlencoded"
+formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
+which MUST be retained when adding additional query parameters.  The
+endpoint URI MUST NOT include a fragment component.
+
+Since requests to the authorization endpoint result in user
+authentication and the transmission of clear-text credentials (in the
+HTTP response), the authorization server MUST require the use of TLS
+as described in {{tls-version}} when sending requests to the
+authorization endpoint.
+
+The authorization server MUST support the use of the HTTP `GET`
+method {{RFC7231}} for the authorization endpoint and MAY support the
+use of the `POST` method as well.
+
+The authorization server MUST ignore unrecognized request parameters. 
+
+Request and response parameters
+defined by this specification MUST NOT be included more than once. 
+Parameters sent without a value MUST be treated as if they were
+omitted from the request.
+
+#### Response Type {#response-type}
+
+The authorization endpoint is used by the authorization code flow.
+The client informs the authorization server of the desired response type
+using the following parameter:
+
+"response_type":
+:    REQUIRED.  The value MUST be `code` for requesting an authorization
+code as described by {{authorization-request}}, or a registered extension
+value as described by {{new-response-types}}.
+
+Extension response types MAY contain a space-delimited (%x20) list of
+values, where the order of values does not matter (e.g., response
+type `a b` is the same as `b a`).  The meaning of such composite
+response types is defined by their respective specifications.
+
+Some extension response types are defined by ({{OpenID}}).
+
+If an authorization request is missing the `response_type` parameter,
+or if the response type is not understood, the authorization server
+MUST return an error response as described in {{authorization-code-error-response}}.
 
 ### Authorization Request {#authorization-request}
 
@@ -1275,7 +1458,6 @@ When a decision is established, the authorization server directs the
 user agent to the provided client redirect URI using an HTTP
 redirection response, or by other means available to it via the
 user agent.
-
 
 ### Authorization Response {#authorization-response}
 
@@ -1605,193 +1787,7 @@ An example successful response:
       "example_parameter": "example_value"
     }
 
-
-## Extension Grants {#extension-grants}
-
-The client uses an extension grant type by specifying the grant type
-using an absolute URI (defined by the authorization server) as the
-value of the `grant_type` parameter of the token endpoint, and by
-adding any additional parameters necessary.
-
-For example, to request an access token using the Device Authorization Grant
-as defined by {{RFC8628}} after the user has authorized the client on a separate device,
-the client makes the following HTTP request using
-TLS (with extra line breaks for display purposes only):
-
-      POST /token HTTP/1.1
-      Host: server.example.com
-      Content-Type: application/x-www-form-urlencoded
-
-      grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code
-      &device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS
-      &client_id=C409020731
-
-If the access token request is valid and authorized, the
-authorization server issues an access token and optional refresh
-token as described in {{access-token-successful-response}}.  If the request failed client
-authentication or is invalid, the authorization server returns an
-error response as described in {{access-token-error-response}}.
-
-
-# Issuing an Access Token
-
-If the access token request is valid and authorized, the
-authorization server issues an access token and optional refresh
-token as described in {{access-token-successful-response}}.  If the request failed client
-authentication or is invalid, the authorization server returns an
-error response as described in {{access-token-error-response}}.
-
-
-## Successful Response {#access-token-successful-response}
-
-The authorization server issues an access token and optional refresh
-token by creating an HTTP response body using the `application/json`
-media type as defined by {{RFC8259}} with the following parameters
-and an HTTP 200 (OK) status code:
-
-"access_token":
-:    REQUIRED.  The access token issued by the authorization server.
-
-"token_type":
-:    REQUIRED.  The type of the access token issued as described in
-     {{access-token-types}}.  Value is case insensitive.
-
-"expires_in":
-:    RECOMMENDED.  The lifetime in seconds of the access token.  For
-     example, the value `3600` denotes that the access token will
-     expire in one hour from the time the response was generated.
-     If omitted, the authorization server SHOULD provide the
-     expiration time via other means or document the default value.
-
-"refresh_token":
-:    OPTIONAL.  The refresh token, which can be used to obtain new
-     access tokens using the same authorization grant as described
-     in {{refreshing-an-access-token}}.
-
-"scope":
-:    OPTIONAL, if identical to the scope requested by the client;
-     otherwise, REQUIRED.  The scope of the access token as
-     described by {{access-token-scope}}.
-
-The parameters are serialized into a JavaScript Object Notation (JSON)
-structure by adding each parameter at the highest structure level.
-Parameter names and string values are included as JSON strings.
-Numerical values are included as JSON numbers.  The order of
-parameters does not matter and can vary.
-
-The authorization server MUST include the HTTP `Cache-Control`
-response header field {{RFC7234}} with a value of `no-store` in any
-response containing tokens, credentials, or other sensitive
-information.
-
-For example:
-
-    HTTP/1.1 200 OK
-    Content-Type: application/json
-    Cache-Control: no-store
-
-    {
-      "access_token":"2YotnFZFEjr1zCsicMWpAA",
-      "token_type":"Bearer",
-      "expires_in":3600,
-      "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
-      "example_parameter":"example_value"
-    }
-
-The client MUST ignore unrecognized value names in the response.  The
-sizes of tokens and other values received from the authorization
-server are left undefined.  The client should avoid making
-assumptions about value sizes.  The authorization server SHOULD
-document the size of any value it issues.
-
-
-## Error Response {#access-token-error-response}
-
-The authorization server responds with an HTTP 400 (Bad Request)
-status code (unless specified otherwise) and includes the following
-parameters with the response:
-
-"error":
-:    REQUIRED.  A single ASCII [USASCII] error code from the following:
-
-     "invalid_request":
-     :     The request is missing a required parameter, includes an
-           unsupported parameter value (other than grant type),
-           repeats a parameter, includes multiple credentials,
-           utilizes more than one mechanism for authenticating the
-           client, contains a `code_verifier` although no 
-           `code_challenge` was sent in the authorization request, 
-           or is otherwise malformed.
-
-     "invalid_client":
-     :     Client authentication failed (e.g., unknown client, no
-           client authentication included, or unsupported
-           authentication method).  The authorization server MAY
-           return an HTTP 401 (Unauthorized) status code to indicate
-           which HTTP authentication schemes are supported.  If the
-           client attempted to authenticate via the `Authorization`
-           request header field, the authorization server MUST
-           respond with an HTTP 401 (Unauthorized) status code and
-           include the `WWW-Authenticate` response header field
-           matching the authentication scheme used by the client.
-
-     "invalid_grant":
-     :     The provided authorization grant (e.g., authorization
-           code, resource owner credentials) or refresh token is
-           invalid, expired, revoked, does not match the redirect
-           URI used in the authorization request, or was issued to
-           another client.
-
-     "unauthorized_client":
-     :     The authenticated client is not authorized to use this
-           authorization grant type.
-
-     "unsupported_grant_type":
-     :     The authorization grant type is not supported by the
-           authorization server.
-
-     "invalid_scope":
-     :     The requested scope is invalid, unknown, malformed, or
-           exceeds the scope granted by the resource owner.
-
-     Values for the `error` parameter MUST NOT include characters
-     outside the set %x20-21 / %x23-5B / %x5D-7E.
-
-"error_description":
-:    OPTIONAL.  Human-readable ASCII [USASCII] text providing
-     additional information, used to assist the client developer in
-     understanding the error that occurred.
-     Values for the `error_description` parameter MUST NOT include
-     characters outside the set %x20-21 / %x23-5B / %x5D-7E.
-
-"error_uri":
-:    OPTIONAL.  A URI identifying a human-readable web page with
-     information about the error, used to provide the client
-     developer with additional information about the error.
-     Values for the `error_uri` parameter MUST conform to the
-     URI-reference syntax and thus MUST NOT include characters
-     outside the set %x21 / %x23-5B / %x5D-7E.
-
-The parameters are included in the payload of the HTTP response
-using the `application/json` media type as defined by [RFC7159].  The
-parameters are serialized into a JSON structure by adding each
-parameter at the highest structure level.  Parameter names and string
-values are included as JSON strings.  Numerical values are included
-as JSON numbers.  The order of parameters does not matter and can
-vary.
-
-For example:
-
-    HTTP/1.1 400 Bad Request
-    Content-Type: application/json
-    Cache-Control: no-store
-
-    {
-     "error":"invalid_request"
-    }
-
-
-# Refreshing an Access Token {#refreshing-an-access-token}
+## Refreshing an Access Token {#refreshing-an-access-token}
 
 Authorization servers SHOULD determine, based on a risk assessment
 and their own policies, whether to issue refresh tokens to a certain client.  If the
@@ -1806,7 +1802,7 @@ the scope and resource servers as consented by the resource owner.
 This is to prevent privilege escalation by the legitimate client and
 reduce the impact of refresh token leakage.
 
-## Refresh Token Request
+### Refresh Token Request
 
 To use a refresh token to obtain a new access token, the
 client makes a request to the token endpoint by adding the
@@ -1881,7 +1877,7 @@ need to be revoked.  Authorization servers MUST ensure the
 integrity of the refresh token value in this case, for example,
 using signatures.
 
-## Refresh Token Response
+### Refresh Token Response
 
 If valid and authorized, the authorization server issues an access
 token as described in {{access-token-successful-response}}.  If the request failed
@@ -1908,9 +1904,6 @@ access tokens for some time.  The expiration time is at the
 discretion of the authorization server.  It might be a global value
 or determined based on the client policy or the grant associated with
 the refresh token (and its sensitivity).
-
-
-
 
 # Accessing Protected Resources {#accessing-protected-resources}
 
