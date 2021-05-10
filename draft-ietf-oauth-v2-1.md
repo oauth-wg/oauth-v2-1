@@ -1322,7 +1322,7 @@ omitted from the request.
 To begin the authorization request, the client builds the authorization
 request URI by adding parameters to the authorization server's
 authorization endpoint URI. The client will eventually redirect the user agent
-to this URI to initiate the request, as described in {{initiate-authorization-request}}.
+to this URI to initiate the request.
 
 Clients use a unique secret per authorization request to protect against authorization code
 injection and CSRF attacks. The client first generates this secret, which it can
@@ -1603,11 +1603,11 @@ sending the following HTTP response:
     HTTP/1.1 302 Found
     Location: https://client.example.com/cb?error=access_denied&state=xyz
 
-### Token Endpoint Extension {#code_token_extension}
+### Token Endpoint Extension {#code-token-extension}
 
 The authorization grant type is identified at the token endpoint with the `grant_type` value of `authorization_code`.
 
-If this value is set, the following additional token request parameters beyond (#token_request) are required:
+If this value is set, the following additional token request parameters beyond {{token-request}} are required:
 
 "code":
 :    REQUIRED.  The authorization code received from the
@@ -1638,7 +1638,7 @@ For example, the client makes the following HTTP request using TLS
     &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
     &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 
-In addition to the processing rules in (#token_request), the authorization server MUST:
+In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
 *  ensure that the authorization code was issued to the authenticated
    confidential or credentialed client, or if the client is public, ensure that the
@@ -1656,7 +1656,7 @@ In addition to the processing rules in (#token_request), the authorization serve
 
 *  ensure that the `redirect_uri` parameter is present if the
    `redirect_uri` parameter was included in the initial authorization
-   request as described in {{initiate-authorization-request}}, and if included ensure that
+   request as described in {{authorization-request}}, and if included ensure that
    their values are identical.
 
 ## Client Credentials Grant
@@ -2848,10 +2848,10 @@ authorization server MUST do the following check:
 
 1. If there was a `code_challenge` in the authorization request for which this 
 code was issued, there must be a `code_verifier` in the token request, and it 
-MUST be verified according to the steps in {{access-token-request}}.
+MUST be verified according to the steps in {{token-request}}.
 (This is no change from the current behavior in {{RFC7636}}.)
 
-2. If there was no `code_challenge` in the authorization request, any request to 
+1. If there was no `code_challenge` in the authorization request, any request to 
 the token endpoint containing a `code_verifier` MUST be rejected.
 
 Authorization servers MUST support the `code_challenge` and `code_verifier` parameters.
@@ -3472,7 +3472,8 @@ The `client_secret` element is defined in {{client-secret}}:
 
 ## "response_type" Syntax
 
-The `response_type` element is defined in {{response-type}} and {{new-response-types}}:
+The `response_type` element is defined in {{authorization-request
+}} and {{new-response-types}}:
 
     response-type = response-name *( SP response-name )
     response-name = 1*response-char
@@ -3493,7 +3494,7 @@ The `state` element is defined in {{authorization-request}}, {{authorization-res
 
 ## "redirect_uri" Syntax
 
-The `redirect_uri` element is defined in {{authorization-request}}, and {{access-token-request}}:
+The `redirect_uri` element is defined in {{authorization-request}}, and {{code-token-extension}}:
 
      redirect-uri      = URI-reference
 
@@ -3520,7 +3521,7 @@ and 7.2:
 
 ## "grant_type" Syntax
 
-The `grant_type` element is defined in Sections {{access-token-request}}, {{access-token-response}}, {{client-credentials-access-token-request}},
+The `grant_type` element is defined in Sections {{token-request}}, {{access-token-response}}, {{client-credentials-access-token-request}},
 {{extension-grants}}, and {{refreshing-an-access-token}}:
 
      grant-type = grant-name / URI-reference
@@ -3529,7 +3530,7 @@ The `grant_type` element is defined in Sections {{access-token-request}}, {{acce
 
 ## "code" Syntax
 
-The `code` element is defined in {{access-token-request}}:
+The `code` element is defined in {{code-token-extension}}:
 
      code       = 1*VSCHAR
 
