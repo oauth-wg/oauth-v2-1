@@ -1076,6 +1076,19 @@ and an HTTP 200 (OK) status code:
      access tokens using the same authorization grant as described
      in {{refreshing-an-access-token}}.
 
+Authorization servers SHOULD determine, based on a risk assessment
+and their own policies, whether to issue refresh tokens to a certain client.  If the
+authorization server decides not to issue refresh tokens, the client
+MAY obtain new access tokens by starting the OAuth flow over, for example
+initiating a new authorization code request.  In such a case, the authorization
+server may utilize cookies and persistent grants to optimize the user
+experience.
+
+If refresh tokens are issued, those refresh tokens MUST be bound to
+the scope and resource servers as consented by the resource owner.
+This is to prevent privilege escalation by the legitimate client and
+reduce the impact of refresh token leakage.
+
 "scope":
 :    OPTIONAL, if identical to the scope requested by the client;
      otherwise, REQUIRED.  The scope of the access token as
@@ -1690,29 +1703,11 @@ The use of the client credentials grant illustrated in {{fig-client-credentials-
 (2)  The authorization server authenticates the client, and if valid,
      issues an access token.
 
+### Token Endpoint Extension {#client-credentials-access-token-request}
 
-### Authorization Request and Response
+The authorization grant type is identified at the token endpoint with the `grant_type` value of `client_credentials`.
 
-Since the client authentication is used as the authorization grant,
-no additional authorization request is needed.
-
-
-### Access Token Request {#client-credentials-access-token-request}
-
-The client makes a request to the token endpoint by adding the
-following parameters using the `application/x-www-form-urlencoded`
-format per Appendix B with a character encoding of UTF-8 in the HTTP
-request payload:
-
-"grant_type":
-:    REQUIRED.  Value MUST be set to `client_credentials`.
-
-"scope":
-:    OPTIONAL.  The scope of the access request as described by
-     {{access-token-scope}}.
-
-The client MUST authenticate with the authorization server as
-described in {{token-endpoint-client-authentication}}.
+If this value is set, no additional parameters beyond {{token-request}} are required/supported:
 
 For example, the client makes the following HTTP request using
 transport-layer security (with extra line breaks for display purposes
@@ -1727,63 +1722,16 @@ only):
 
 The authorization server MUST authenticate the client.
 
+## Refresh Token Grant {#refreshing-an-access-token}
 
-### Access Token Response
+### Token Endpoint Extension
 
-If the access token request is valid and authorized, the
-authorization server issues an access token as described in
-{{token-response}}.  A refresh token SHOULD NOT be included.  If the request
-failed client authentication or is invalid, the authorization server
-returns an error response as described in {{token-error-response}}.
+The authorization grant type is identified at the token endpoint with the `grant_type` value of `refresh_token`.
 
-An example successful response:
-
-    HTTP/1.1 200 OK
-    Content-Type: application/json
-    Cache-Control: no-store
-
-    {
-      "access_token": "2YotnFZFEjr1zCsicMWpAA",
-      "token_type": "Bearer",
-      "expires_in": 3600,
-      "example_parameter": "example_value"
-    }
-
-## Refreshing an Access Token {#refreshing-an-access-token}
-
-Authorization servers SHOULD determine, based on a risk assessment
-and their own policies, whether to issue refresh tokens to a certain client.  If the
-authorization server decides not to issue refresh tokens, the client
-MAY obtain new access tokens by starting the OAuth flow over, for example
-initiating a new authorization code request.  In such a case, the authorization
-server may utilize cookies and persistent grants to optimize the user
-experience.
-
-If refresh tokens are issued, those refresh tokens MUST be bound to
-the scope and resource servers as consented by the resource owner.
-This is to prevent privilege escalation by the legitimate client and
-reduce the impact of refresh token leakage.
-
-### Refresh Token Request
-
-To use a refresh token to obtain a new access token, the
-client makes a request to the token endpoint by adding the
-following parameters using the `application/x-www-form-urlencoded`
-format (per Appendix B) with a character encoding of UTF-8 in the HTTP
-request payload:
-
-"grant_type":
-:    REQUIRED.  Value MUST be set to `refresh_token`.
+If this value is set, the following additional parameters beyond {{token-request}} are required/supported:
 
 "refresh_token":
 :    REQUIRED.  The refresh token issued to the client.
-
-"scope":
-:    OPTIONAL.  The scope of the access request as described by
-     {{access-token-scope}}.  The requested scope MUST NOT include any scope
-     not originally granted by the resource owner, and if omitted is
-     treated as equal to the scope originally granted by the
-     resource owner.
 
 Because refresh tokens are typically long-lasting credentials used to
 request additional access tokens, the refresh token is bound to the
@@ -1802,12 +1750,8 @@ only):
 
     grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 
-The authorization server MUST:
+In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
-* require client authentication for confidential or credentialed clients
-* authenticate the client if client authentication is included and
-  ensure that the refresh token was issued to the authenticated
-  client, and
 * validate the refresh token.
 
 Authorization servers SHOULD utilize one of these methods to detect
@@ -1841,14 +1785,11 @@ using signatures.
 
 ### Refresh Token Response
 
-If valid and authorized, the authorization server issues an access
-token as described in {{token-response}}.  If the request failed
-verification or is invalid, the authorization server returns an error
-response as described in {{token-error-response}}.
-
 The authorization server MAY issue a new refresh token, in which case
 the client MUST discard the old refresh token and replace it with the
-new refresh token.  The authorization server MAY revoke the old
+new refresh token.  
+
+The authorization server MAY revoke the old
 refresh token after issuing a new refresh token to the client.  If a
 new refresh token is issued, the refresh token scope MUST be
 identical to that of the refresh token included by the client in the
@@ -3472,8 +3413,7 @@ The `client_secret` element is defined in {{client-secret}}:
 
 ## "response_type" Syntax
 
-The `response_type` element is defined in {{authorization-request
-}} and {{new-response-types}}:
+The `response_type` element is defined in {{authorization-request}} and {{new-response-types}}:
 
     response-type = response-name *( SP response-name )
     response-name = 1*response-char
@@ -3521,8 +3461,7 @@ and 7.2:
 
 ## "grant_type" Syntax
 
-The `grant_type` element is defined in Sections {{token-request}}, {{access-token-response}}, {{client-credentials-access-token-request}},
-{{extension-grants}}, and {{refreshing-an-access-token}}:
+The `grant_type` element is defined in Section {{token-request}}:
 
      grant-type = grant-name / URI-reference
      grant-name = 1*name-char
