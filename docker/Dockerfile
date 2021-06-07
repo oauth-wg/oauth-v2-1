@@ -5,10 +5,6 @@ RUN pip install xml2rfc
 
 RUN apt-get install -y ruby-full
 
-# RUN gem install bundler
-# COPY Gemfile /data/Gemfile
-# RUN bundle install --gemfile=/data/Gemfile
-
 RUN gem install kramdown
 RUN gem install kramdown-rfc2629
 
