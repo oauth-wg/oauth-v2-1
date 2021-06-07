@@ -983,7 +983,7 @@ request payload:
 :    REQUIRED.  Identifier of the grant type the client uses with the particular token request. 
 This specification defines the values `authorization_code`, `refresh_token`, and `client_credentials`. 
 The grant type determines the further parameters required or supported by the token request. The 
-details of those grant types will be defined below.
+details of those grant types are defined below.
 
 Confidential or credentialed clients MUST authenticate with the authorization 
 server as described in {{token-endpoint-client-authentication}}.
@@ -1007,7 +1007,7 @@ The authorization server MUST:
 
 *  authenticate the client if client authentication is included
 
-Further grant type specific processing rules apply and will be specified with the respective
+Further grant type specific processing rules apply and are specified with the respective
 grant type. 
 
 ### Access Token Scope {#access-token-scope}
@@ -1070,10 +1070,15 @@ and an HTTP 200 (OK) status code:
      If omitted, the authorization server SHOULD provide the
      expiration time via other means or document the default value.
 
+"scope":
+:    OPTIONAL, if identical to the scope requested by the client;
+     otherwise, REQUIRED.  The scope of the access token as
+     described by {{access-token-scope}}.
+
 "refresh_token":
 :    OPTIONAL.  The refresh token, which can be used to obtain new
-     access tokens using the same authorization grant as described
-     in {{refreshing-an-access-token}}.
+     access tokens based on the grant passed in the corresponding 
+     token request.
 
 Authorization servers SHOULD determine, based on a risk assessment
 and their own policies, whether to issue refresh tokens to a certain client.  If the
@@ -1087,11 +1092,6 @@ If refresh tokens are issued, those refresh tokens MUST be bound to
 the scope and resource servers as consented by the resource owner.
 This is to prevent privilege escalation by the legitimate client and
 reduce the impact of refresh token leakage.
-
-"scope":
-:    OPTIONAL, if identical to the scope requested by the client;
-     otherwise, REQUIRED.  The scope of the access token as
-     described by {{access-token-scope}}.
 
 The parameters are serialized into a JavaScript Object Notation (JSON)
 structure by adding each parameter at the highest structure level.
@@ -1212,8 +1212,13 @@ For example:
 # Grant Types {#obtaining-authorization}
 
 To request an access token, the client obtains authorization from the
-resource owner. OAuth defines two authorization grant types: authorization code
-and client credentials.  It also provides an extension mechanism for defining additional grant types.
+resource owner. This specification defines the following authorization grant types: 
+
+* authorization code
+* client credentials, and 
+* refresh token
+
+It also provides an extension mechanism for defining additional grant types.
 
 ## Authorization Code Grant {#authorization-code-grant}
 
@@ -1630,10 +1635,6 @@ If this value is set, the following additional token request parameters beyond {
      authorization request as described in {{authorization-request}}, and their
      values MUST be identical.
 
-"client_id":
-:    REQUIRED, if the client is not authenticating with the
-     authorization server as described in {{token-endpoint-client-authentication}}.
-
 "code_verifier":
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
      request. MUST NOT be used otherwise. The original code verifier string.
@@ -1723,6 +1724,12 @@ The authorization server MUST authenticate the client.
 
 ## Refresh Token Grant {#refreshing-an-access-token}
 
+The refresh token is a credential issued by the authorization server to a client, which can be used
+to obtain new (fresh) access tokens based on an existing grant. The client uses this option either because the previous access
+token has expired or the client previously obtained an access token with a scope more narrow than 
+approved by the respective grant and later requires an access token with a different scope
+under the same grant. 
+
 ### Token Endpoint Extension
 
 The authorization grant type is identified at the token endpoint with the `grant_type` value of `refresh_token`.
@@ -1783,6 +1790,9 @@ integrity of the refresh token value in this case, for example,
 using signatures.
 
 ### Refresh Token Response
+
+If valid and authorized, the authorization server issues an access
+token as described in {{token-response}}.
 
 The authorization server MAY issue a new refresh token, in which case
 the client MUST discard the old refresh token and replace it with the
@@ -3602,7 +3612,21 @@ Below is a list of well-established extensions at the time of publication:
 
 TBD
 
+# Document History
 
+   [[ To be removed from the final specification ]]
+
+   -03
+
+   * refactored structure
+
+   -02
+
+   -01
+
+   -00 
+
+   *  initial revision
 
 
 --- fluff
