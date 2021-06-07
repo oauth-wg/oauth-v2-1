@@ -1,2 +1,5 @@
+build the docker image:
 docker build -t convert-v2-1  docker
+
+run the docker-image:
 docker run -v `pwd`:/data convert-v2-1
