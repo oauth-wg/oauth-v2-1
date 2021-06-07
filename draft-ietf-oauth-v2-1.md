@@ -1,7 +1,6 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-ietf-oauth-v2-1-02
-date: 2021-05-09
 
 ipr: trust200902
 wg: OAuth Working Group
