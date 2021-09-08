@@ -1852,7 +1852,10 @@ covers the requested resource.  The methods used by the resource
 server to validate the access token (as well as any error responses)
 are beyond the scope of this specification, but generally involve an
 interaction or coordination between the resource server and the
-authorization server, such as using Token Introspection {{RFC7662}}
+authorization server. For example, when the resource server and 
+authorization server are colocated or are part of the same system, 
+they may share a database or other storage; when the two components
+are operated independently, they may use Token Introspection {{RFC7662}}
 or a structured access token format such as a JWT {{I-D.ietf-oauth-access-token-jwt}}.
 
 The method in which the client utilizes the access token to
