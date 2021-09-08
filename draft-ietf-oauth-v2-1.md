@@ -2174,7 +2174,8 @@ This document does not specify the encoding or the contents of the
 access token; hence, detailed recommendations about the means of
 guaranteeing access token integrity protection are outside the scope of this
 specification.  The access token integrity protection MUST be sufficient to
-prevent the token from being modified.
+prevent the token from being modified. One example of an encoding and
+signing mechanism for access tokens is described in {{I-D.ietf-oauth-access-token-jwt}}.
 
 To deal with access token redirects, it is important for the authorization
 server to include the identity of the intended recipients (the
