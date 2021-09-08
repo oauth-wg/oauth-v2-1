@@ -2223,8 +2223,8 @@ servers; encryption of the token is one such possible measure.
 To deal with access token capture and replay, the following recommendations
 are made: First, the lifetime of the token MUST be limited; one means
 of achieving this is by putting a validity time field inside the
-protected part of the token.  Note that using short-lived (one hour
-or less) tokens reduces the impact of them being leaked.  Second,
+protected part of the token.  Note that using short-lived 
+tokens reduces the impact of them being leaked.  Second,
 confidentiality protection of the exchanges between the client and
 the authorization server and between the client and the resource
 server MUST be applied.  As a consequence, no eavesdropper along the
@@ -2274,7 +2274,7 @@ against cross-site request forgery.
 #### Issue short-lived bearer tokens
 
 Authorization servers SHOULD issue
-short-lived (one hour or less) bearer tokens, particularly when
+short-lived bearer tokens, particularly when
 issuing tokens to clients that run within a web browser or other
 environments where information leakage may occur.  Using
 short-lived bearer tokens can reduce the impact of them being
