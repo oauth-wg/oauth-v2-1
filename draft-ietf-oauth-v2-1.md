@@ -1987,11 +1987,11 @@ to the protected resource, the resource server MUST include the HTTP
 response to other conditions as well.  The `WWW-Authenticate` header
 field uses the framework defined by HTTP/1.1 {{RFC7235}}.
 
-All challenges defined by this specification MUST use the auth-scheme
+All challenges for this token type MUST use the auth-scheme
 value `Bearer`.  This scheme MUST be followed by one or more
 auth-param values.  The auth-param attributes used or defined by this
-specification are as follows.  Other auth-param attributes MAY be
-used as well.
+specification for this token type are as follows.  Other auth-param 
+attributes MAY be used as well.
 
 A `realm` attribute MAY be included to indicate the scope of
 protection in the manner described in HTTP/1.1 {{RFC7235}}.  The
@@ -3383,7 +3383,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 
 This document does not require any IANA actions.
 
-All referenced registries are defined by RFC6749 and related documents that this 
+All referenced registries are defined by [RFC6749] and related documents that this 
 work is based upon. No changes to those registries are required by this specification.
 
 
