@@ -2296,10 +2296,12 @@ audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.
 
-The authorization server MUST implement TLS.  Which version(s) ought
+The authorization server MUST implement TLS as described in {{tls-version}}.  
+Which version(s) ought
 to be implemented will vary over time and will depend on the
 widespread deployment and known security vulnerabilities at the time
-of implementation.
+of implementation. Refer to {{BCP195}} for up to date recommendations on
+transport layer security.
 
 To protect against access token disclosure, confidentiality protection MUST
 be applied using TLS with a ciphersuite that provides
@@ -2344,8 +2346,8 @@ server MUST be applied.  As a consequence, no eavesdropper along the
 communication path is able to observe the token exchange.
 Consequently, such an on-path adversary cannot replay the token.
 Furthermore, when presenting the token to a resource server, the
-client MUST verify the identity of that resource server, as per
-Section 3.1 of "HTTP Over TLS" {{RFC2818}}.  Note that the client MUST
+client MUST verify the identity of that resource server, as per {{BCP195}}
+and Section 3.1 of "HTTP Over TLS" {{RFC2818}}.  Note that the client MUST
 validate the TLS certificate chain when making these requests to
 protected resources.  Presenting the token to an unauthenticated and
 unauthorized resource server or failing to validate the certificate
