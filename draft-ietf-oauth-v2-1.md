@@ -2123,6 +2123,119 @@ information in a manner parallel to their usage in this
 specification.
 
 
+
+
+# Extensibility
+
+## Defining Access Token Types {#defining-access-token-types}
+
+Access token types can be defined in one of two ways: registered in
+the Access Token Types registry (following the procedures in
+Section 11.1 of {{RFC6749}}), or by using a unique absolute URI as its name.
+
+Types utilizing a URI name SHOULD be limited to vendor-specific
+implementations that are not commonly applicable, and are specific to
+the implementation details of the resource server where they are
+used.
+
+All other types MUST be registered.  Type names MUST conform to the
+type-name ABNF.  If the type definition includes a new HTTP
+authentication scheme, the type name SHOULD be identical to the HTTP
+authentication scheme name (as defined by [RFC2617]).  The token type
+`example` is reserved for use in examples.
+
+    type-name  = 1*name-char
+    name-char  = "-" / "." / "_" / DIGIT / ALPHA
+
+
+## Defining New Endpoint Parameters {#defining-new-endpoint-parameters}
+
+New request or response parameters for use with the authorization
+endpoint or the token endpoint are defined and registered in the
+OAuth Parameters registry following the procedure in Section 11.2 of {{RFC6749}}.
+
+Parameter names MUST conform to the param-name ABNF, and parameter
+values syntax MUST be well-defined (e.g., using ABNF, or a reference
+to the syntax of an existing parameter).
+
+    param-name  = 1*name-char
+    name-char   = "-" / "." / "_" / DIGIT / ALPHA
+
+Unregistered vendor-specific parameter extensions that are not
+commonly applicable and that are specific to the implementation
+details of the authorization server where they are used SHOULD
+utilize a vendor-specific prefix that is not likely to conflict with
+other registered values (e.g., begin with 'companyname_').
+
+
+## Defining New Authorization Grant Types
+
+New authorization grant types can be defined by assigning them a
+unique absolute URI for use with the `grant_type` parameter.  If the
+extension grant type requires additional token endpoint parameters,
+they MUST be registered in the OAuth Parameters registry as described
+by Section 11.2 of {{RFC6749}}.
+
+
+## Defining New Authorization Endpoint Response Types {#new-response-types}
+
+New response types for use with the authorization endpoint are
+defined and registered in the Authorization Endpoint Response Types
+registry following the procedure in Section 11.3 of {{RFC6749}}.  Response type
+names MUST conform to the response-type ABNF.
+
+    response-type  = response-name *( SP response-name )
+    response-name  = 1*response-char
+    response-char  = "_" / DIGIT / ALPHA
+
+If a response type contains one or more space characters (%x20), it
+is compared as a space-delimited list of values in which the order of
+values does not matter.  Only one order of values can be registered,
+which covers all other arrangements of the same set of values.
+
+For example, an extension can define and register the `code other_token`
+response type.  Once registered, the same combination cannot be registered
+as `other_token code`, but both values can be used to
+denote the same response type.
+
+
+## Defining Additional Error Codes
+
+In cases where protocol extensions (i.e., access token types,
+extension parameters, or extension grant types) require additional
+error codes to be used with the authorization code grant error
+response ({{authorization-code-error-response}}), the token error response ({{token-error-response}}), or the
+resource access error response ({{error-response}}), such error codes MAY be
+defined.
+
+Extension error codes MUST be registered (following the procedures in
+Section 11.4 of {{RFC6749}}) if the extension they are used in conjunction with is a
+registered access token type, a registered endpoint parameter, or an
+extension grant type.  Error codes used with unregistered extensions
+MAY be registered.
+
+Error codes MUST conform to the error ABNF and SHOULD be prefixed by
+an identifying name when possible.  For example, an error identifying
+an invalid value set to the extension parameter `example` SHOULD be
+named `example_invalid`.
+
+    error      = 1*error-char
+    error-char = %x20-21 / %x23-5B / %x5D-7E
+
+
+# Security Considerations
+
+As a flexible and extensible framework, OAuth's security
+considerations depend on many factors.  The following sections
+provide implementers with security guidelines focused on the three
+client profiles described in {{client-types}}: web application,
+browser-based application, and native application.
+
+A comprehensive OAuth security model and analysis, as well as
+background for the protocol design, is provided by
+{{RFC6819}} and {{I-D.ietf-oauth-security-topics}}.
+
+
 ## Access Token Security Considerations
 
 ### Security Threats
@@ -2347,118 +2460,6 @@ serve the respective request.  Clients and authorization servers MAY
 utilize the parameter `scope` and
 `authorization_details` as specified in {{I-D.ietf-oauth-rar}} to
 determine those resources and/or actions.
-
-
-
-# Extensibility
-
-## Defining Access Token Types {#defining-access-token-types}
-
-Access token types can be defined in one of two ways: registered in
-the Access Token Types registry (following the procedures in
-Section 11.1 of {{RFC6749}}), or by using a unique absolute URI as its name.
-
-Types utilizing a URI name SHOULD be limited to vendor-specific
-implementations that are not commonly applicable, and are specific to
-the implementation details of the resource server where they are
-used.
-
-All other types MUST be registered.  Type names MUST conform to the
-type-name ABNF.  If the type definition includes a new HTTP
-authentication scheme, the type name SHOULD be identical to the HTTP
-authentication scheme name (as defined by [RFC2617]).  The token type
-`example` is reserved for use in examples.
-
-    type-name  = 1*name-char
-    name-char  = "-" / "." / "_" / DIGIT / ALPHA
-
-
-## Defining New Endpoint Parameters {#defining-new-endpoint-parameters}
-
-New request or response parameters for use with the authorization
-endpoint or the token endpoint are defined and registered in the
-OAuth Parameters registry following the procedure in Section 11.2 of {{RFC6749}}.
-
-Parameter names MUST conform to the param-name ABNF, and parameter
-values syntax MUST be well-defined (e.g., using ABNF, or a reference
-to the syntax of an existing parameter).
-
-    param-name  = 1*name-char
-    name-char   = "-" / "." / "_" / DIGIT / ALPHA
-
-Unregistered vendor-specific parameter extensions that are not
-commonly applicable and that are specific to the implementation
-details of the authorization server where they are used SHOULD
-utilize a vendor-specific prefix that is not likely to conflict with
-other registered values (e.g., begin with 'companyname_').
-
-
-## Defining New Authorization Grant Types
-
-New authorization grant types can be defined by assigning them a
-unique absolute URI for use with the `grant_type` parameter.  If the
-extension grant type requires additional token endpoint parameters,
-they MUST be registered in the OAuth Parameters registry as described
-by Section 11.2 of {{RFC6749}}.
-
-
-## Defining New Authorization Endpoint Response Types {#new-response-types}
-
-New response types for use with the authorization endpoint are
-defined and registered in the Authorization Endpoint Response Types
-registry following the procedure in Section 11.3 of {{RFC6749}}.  Response type
-names MUST conform to the response-type ABNF.
-
-    response-type  = response-name *( SP response-name )
-    response-name  = 1*response-char
-    response-char  = "_" / DIGIT / ALPHA
-
-If a response type contains one or more space characters (%x20), it
-is compared as a space-delimited list of values in which the order of
-values does not matter.  Only one order of values can be registered,
-which covers all other arrangements of the same set of values.
-
-For example, an extension can define and register the `code other_token`
-response type.  Once registered, the same combination cannot be registered
-as `other_token code`, but both values can be used to
-denote the same response type.
-
-
-## Defining Additional Error Codes
-
-In cases where protocol extensions (i.e., access token types,
-extension parameters, or extension grant types) require additional
-error codes to be used with the authorization code grant error
-response ({{authorization-code-error-response}}), the token error response ({{token-error-response}}), or the
-resource access error response ({{error-response}}), such error codes MAY be
-defined.
-
-Extension error codes MUST be registered (following the procedures in
-Section 11.4 of {{RFC6749}}) if the extension they are used in conjunction with is a
-registered access token type, a registered endpoint parameter, or an
-extension grant type.  Error codes used with unregistered extensions
-MAY be registered.
-
-Error codes MUST conform to the error ABNF and SHOULD be prefixed by
-an identifying name when possible.  For example, an error identifying
-an invalid value set to the extension parameter `example` SHOULD be
-named `example_invalid`.
-
-    error      = 1*error-char
-    error-char = %x20-21 / %x23-5B / %x5D-7E
-
-
-# Security Considerations
-
-As a flexible and extensible framework, OAuth's security
-considerations depend on many factors.  The following sections
-provide implementers with security guidelines focused on the three
-client profiles described in {{client-types}}: web application,
-browser-based application, and native application.
-
-A comprehensive OAuth security model and analysis, as well as
-background for the protocol design, is provided by
-{{RFC6819}} and {{I-D.ietf-oauth-security-topics}}.
 
 
 ## Client Authentication {#security-client-authentication}
