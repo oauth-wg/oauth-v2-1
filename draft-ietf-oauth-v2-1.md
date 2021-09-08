@@ -2131,51 +2131,52 @@ The following list presents several common threats against protocols
 utilizing some form of tokens.  This list of threats is based on NIST
 Special Publication 800-63 [NIST800-63].
 
-#### Token manufacture/modification
+#### Access token manufacture/modification
 
 An attacker may generate a bogus
-token or modify the token contents (such as the authentication or
+access token or modify the token contents (such as the authentication or
 attribute statements) of an existing token, causing the resource
 server to grant inappropriate access to the client.  For example,
 an attacker may modify the token to extend the validity period; a
 malicious client may modify the assertion to gain access to
 information that they should not be able to view.
 
-#### Token disclosure
+#### Access token disclosure
 
-Tokens may contain authentication and attribute
+Access tokens may contain authentication and attribute
 statements that include sensitive information.
 
-#### Token redirect
+#### Access token redirect
 
-An attacker uses a token generated for consumption
+An attacker uses an access token generated for consumption
 by one resource server to gain access to a different resource
 server that mistakenly believes the token to be for it.
 
-#### Token replay
+#### Access token replay
 
-An attacker attempts to use a token that has already
+An attacker attempts to use an access token that has already
 been used with that resource server in the past.
 
 ### Threat Mitigation
 
 A large range of threats can be mitigated by protecting the contents
-of the token by using a digital signature.
+of the access token by using a digital signature.
+
 Alternatively, a bearer token can contain a reference to
 authorization information, rather than encoding the information
 directly.  Such references MUST be infeasible for an attacker to
 guess; using a reference may require an extra interaction between a
-server and the token issuer to resolve the reference to the
+server and the access token issuer to resolve the reference to the
 authorization information.  The mechanics of such an interaction are
 not defined by this specification.
 
 This document does not specify the encoding or the contents of the
-token; hence, detailed recommendations about the means of
-guaranteeing token integrity protection are outside the scope of this
-document.  The token integrity protection MUST be sufficient to
+access token; hence, detailed recommendations about the means of
+guaranteeing access token integrity protection are outside the scope of this
+specification.  The access token integrity protection MUST be sufficient to
 prevent the token from being modified.
 
-To deal with token redirect, it is important for the authorization
+To deal with access token redirects, it is important for the authorization
 server to include the identity of the intended recipients (the
 audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
@@ -2186,7 +2187,7 @@ to be implemented will vary over time and will depend on the
 widespread deployment and known security vulnerabilities at the time
 of implementation.
 
-To protect against token disclosure, confidentiality protection MUST
+To protect against access token disclosure, confidentiality protection MUST
 be applied using TLS with a ciphersuite that provides
 confidentiality and integrity protection.  This requires that the
 communication interaction between the client and the authorization
@@ -2195,14 +2196,14 @@ resource server, utilize confidentiality and integrity protection.
 Since TLS is mandatory to implement and to use with this
 specification, it is the preferred approach for preventing token
 disclosure via the communication channel.  For those cases where the
-client is prevented from observing the contents of the token, token
+client is prevented from observing the contents of the access token, token
 encryption MUST be applied in addition to the usage of TLS
 protection.  As a further defense against token disclosure, the
 client MUST validate the TLS certificate chain when making requests
 to protected resources, including checking the Certificate Revocation
 List (CRL) {{RFC5280}}.
 
-Cookies are typically transmitted in the clear.  Thus, any
+If cookies are transmitted without TLS protection, any
 information contained in them is at risk of disclosure.  Therefore,
 Bearer tokens MUST NOT be stored in cookies that can be sent in the
 clear, as any information in them is at risk of disclosure.
@@ -2215,10 +2216,10 @@ server that provides the resource.  This could leave the token
 unprotected between the front-end server where the TLS connection
 terminates and the back-end server that provides the resource.  In
 such deployments, sufficient measures MUST be employed to ensure
-confidentiality of the token between the front-end and back-end
+confidentiality of the access token between the front-end and back-end
 servers; encryption of the token is one such possible measure.
 
-To deal with token capture and replay, the following recommendations
+To deal with access token capture and replay, the following recommendations
 are made: First, the lifetime of the token MUST be limited; one means
 of achieving this is by putting a validity time field inside the
 protected part of the token.  Note that using short-lived (one hour
