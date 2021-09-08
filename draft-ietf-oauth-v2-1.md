@@ -1859,7 +1859,7 @@ are operated independently, they may use Token Introspection {{RFC7662}}
 or a structured access token format such as a JWT {{I-D.ietf-oauth-access-token-jwt}}.
 
 The method in which the client utilizes the access token to
-authenticate with the resource server depends on the type of access
+access protected resources at the resource server depends on the type of access
 token issued by the authorization server.  Typically, it involves
 using the HTTP `Authorization` request header field {{RFC7235}} with an
 authentication scheme defined by the specification of the access
