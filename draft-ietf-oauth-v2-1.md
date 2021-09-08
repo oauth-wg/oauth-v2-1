@@ -908,7 +908,43 @@ As well as one client endpoint:
 Not every authorization grant type utilizes both endpoints.
 Extension grant types MAY define additional endpoints as needed.
 
-# Token Endpoint
+## Authorization Endpoint
+
+The authorization endpoint is used to interact with the resource
+owner and obtain an authorization grant.  The authorization server
+MUST first verify the identity of the resource owner.  The way in
+which the authorization server authenticates the resource owner
+(e.g., username and password login, session cookies) is beyond the
+scope of this specification.
+
+The means through which the client obtains the location of the
+authorization endpoint are beyond the scope of this specification,
+but the location is typically provided in the service documentation,
+or in the authorization server's metadata document ({{RFC8414}}).
+
+The endpoint URI MAY include an "application/x-www-form-urlencoded"
+formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
+which MUST be retained when adding additional query parameters.  The
+endpoint URI MUST NOT include a fragment component.
+
+Since requests to the authorization endpoint result in user
+authentication and the transmission of clear-text credentials (in the
+HTTP response), the authorization server MUST require the use of TLS
+as described in {{tls-version}} when sending requests to the
+authorization endpoint.
+
+The authorization server MUST support the use of the HTTP `GET`
+method {{RFC7231}} for the authorization endpoint and MAY support the
+use of the `POST` method as well.
+
+The authorization server MUST ignore unrecognized request parameters. 
+
+Request and response parameters
+defined by this specification MUST NOT be included more than once. 
+Parameters sent without a value MUST be treated as if they were
+omitted from the request.
+
+## Token Endpoint
 
 The token endpoint is used by the client to obtain an access token using
 a grant such as those described in {{obtaining-authorization}} and
@@ -938,7 +974,7 @@ Parameters sent without a value MUST be treated as if they were
 omitted from the request. Request and response parameters
 defined by this specification MUST NOT be included more than once.
 
-## Client Authentication {#token-endpoint-client-authentication}
+### Client Authentication {#token-endpoint-client-authentication}
 
 <!-- TODO: move this to the token endpoint section -->
 
@@ -964,7 +1000,7 @@ Client authentication is used for:
    of refresh tokens can be challenging, while rotation of a single
    set of client credentials is significantly easier.
 
-## Token Request {#token-request}
+### Token Request {#token-request}
 
 The client makes a request to the token endpoint by sending the
 following parameters using the `application/x-www-form-urlencoded`
@@ -1010,7 +1046,7 @@ The authorization server MUST:
 Further grant type specific processing rules apply and are specified with the respective
 grant type. 
 
-### Access Token Scope {#access-token-scope}
+#### Access Token Scope {#access-token-scope}
 
 The authorization and token endpoints allow the client to specify the
 scope of the access request using the `scope` request parameter.  In
@@ -1041,7 +1077,7 @@ request using a pre-defined default value or fail the request
 indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
 
-## Token Response {#token-response}
+### Token Response {#token-response}
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
@@ -1124,7 +1160,7 @@ server are left undefined.  The client should avoid making
 assumptions about value sizes.  The authorization server SHOULD
 document the size of any value it issues.
 
-#### Error Response {#token-error-response}
+##### Error Response {#token-error-response}
 
 The authorization server responds with an HTTP 400 (Bad Request)
 status code (unless specified otherwise) and includes the following
@@ -1297,42 +1333,6 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
      received matches the URI used to redirect the client in
      step (3).  If valid, the authorization server responds back with
      an access token and, optionally, a refresh token.
-
-### Authorization Endpoint
-
-The authorization endpoint is used to interact with the resource
-owner and obtain an authorization grant.  The authorization server
-MUST first verify the identity of the resource owner.  The way in
-which the authorization server authenticates the resource owner
-(e.g., username and password login, session cookies) is beyond the
-scope of this specification.
-
-The means through which the client obtains the location of the
-authorization endpoint are beyond the scope of this specification,
-but the location is typically provided in the service documentation,
-or in the authorization server's metadata document ({{RFC8414}}).
-
-The endpoint URI MAY include an "application/x-www-form-urlencoded"
-formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
-which MUST be retained when adding additional query parameters.  The
-endpoint URI MUST NOT include a fragment component.
-
-Since requests to the authorization endpoint result in user
-authentication and the transmission of clear-text credentials (in the
-HTTP response), the authorization server MUST require the use of TLS
-as described in {{tls-version}} when sending requests to the
-authorization endpoint.
-
-The authorization server MUST support the use of the HTTP `GET`
-method {{RFC7231}} for the authorization endpoint and MAY support the
-use of the `POST` method as well.
-
-The authorization server MUST ignore unrecognized request parameters. 
-
-Request and response parameters
-defined by this specification MUST NOT be included more than once. 
-Parameters sent without a value MUST be treated as if they were
-omitted from the request.
 
 ### Authorization Request {#authorization-request}
 
