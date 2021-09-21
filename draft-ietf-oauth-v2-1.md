@@ -773,15 +773,10 @@ execute first.
 
 ## Client Authentication {#client-authentication}
 
-Confidential and credentialed clients establish a client authentication method
-with the authorization server suitable for the
-security requirements of the authorization server.  The authorization
-server MAY accept any form of client authentication meeting its
-security requirements.
-
-Confidential and credentialed clients are typically issued (or establish) a set of
-client credentials used for authenticating with the authorization
-server (e.g., password, public/private key pair).
+If the client is confidential or credentialed,
+the authorization server MAY accept any form of client authentication
+meeting its security requirements
+(e.g., password, public/private key pair).
 
 The authorization server MUST authenticate the client whenever
 possible.  If the authorization server cannot authenticate the client
