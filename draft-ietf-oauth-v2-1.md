@@ -2713,14 +2713,8 @@ authorization request and close it once the response is returned.
 Clients should listen on the loopback network interface only, in
 order to avoid interference by other network actors.
 
-While redirect URIs using localhost (i.e.,
-`http://localhost:{port}/{path}`) function similarly to loopback IP
-redirects described in {{loopback-interface-redirection}}, the use of `localhost` is NOT
-RECOMMENDED.  Specifying a redirect URI with the loopback IP literal
-rather than `localhost` avoids inadvertently listening on network
-interfaces other than the loopback interface.  It is also less
-susceptible to client-side firewalls and misconfigured host name
-resolution on the user's device.
+Clients should use loopback IP literals rather than the string `localhost`
+as described in {{loopback-interface-redirection}}.
 
 ### HTTP 307 Redirect {#redirect_307}
 
@@ -3324,6 +3318,15 @@ An example redirect using the IPv6 loopback interface with a randomly
 assigned port:
 
     http://[::1]:61023/oauth2redirect/example-provider
+
+While redirect URIs using the name `localhost` (i.e.,
+`http://localhost:{port}/{path}`) function similarly to loopback IP
+redirects, the use of `localhost` is NOT RECOMMENDED.  Specifying a 
+redirect URI with the loopback IP literal
+rather than `localhost` avoids inadvertently listening on network
+interfaces other than the loopback interface.  It is also less
+susceptible to client-side firewalls and misconfigured host name
+resolution on the user's device.
 
 The authorization server MUST allow any port to be specified at the
 time of the request for loopback IP redirect URIs, to accommodate
