@@ -1899,7 +1899,7 @@ requests to resource servers. Clients MUST use one of the two methods defined be
 and MUST NOT use more than one method to transmit the token in each request.
 
 In particular, clients MUST NOT send the access token in a URI query parameter,
-and resource servers MUST NOT accept access tokens in a URI query parameter.
+and resource servers MUST ignore access tokens in a URI query parameter.
 
 
 #### Authorization Request Header Field
