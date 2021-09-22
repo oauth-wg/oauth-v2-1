@@ -799,7 +799,8 @@ credentialed client authentication for the purpose of
 identifying the client.
 
 The client MUST NOT use more than one authentication method in each
-request.
+request to prevent a conflict of which authentication mechanism is 
+authoritative for the request.
 
 
 ### Client Secret {#client-secret}
