@@ -1887,8 +1887,8 @@ that any other party in possession of it can.  Using a bearer token
 does not require a bearer to prove possession of cryptographic key material
 (proof-of-possession).
 
-Bearer tokens may be extended to include proof-of-possession techniques
-by other specifications.
+Bearer tokens may be enhanced with proof-of-possession specifications such 
+as mTLS {{RFC8705}} to provide proof-of-possession characteristics.
 
 
 ### Authenticated Requests
