@@ -612,10 +612,10 @@ with the authorization server as well as the authorization server's assurance of
 client's identity.
 
 "confidential":
-: Clients that have credentials and their identity has been confirmed by the AS are designated as "confidential clients"
+: Clients that have credentials and have a prior relationship with the AS are designated as "confidential clients"
 
 "credentialed":
-: Clients that have credentials and their identity has been not been confirmed by the AS are designated as "credentialed clients"
+: Clients that have credentials but no prior relationship with the AS are designated as "credentialed clients"
 
 "public":
 : Clients without credentials are called "public clients"
@@ -628,6 +628,7 @@ such as the Client Credentials grant type.
 
 A single `client_id` MUST NOT be treated as more than one type of client.
 
+For example, a client that has been registered at the authorization server by a registered application developer, where the client is expected to be run as server-side code, would be considered a confidential client. A client that runs on an end-user's device, and uses Dynamic Client Registration ({{RFC7591}}) to establish credentials the first time the app runs, would be considered a credentialed client. An application deployed as a single-page app on a static web host would be considered a public client.
 
 This specification has been designed around the following client profiles:
 
