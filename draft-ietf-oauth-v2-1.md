@@ -15,7 +15,7 @@ pi:
 
 author:
   - ins: D. Hardt
-    organization: SignIn.Org
+    organization: Hellō
     name: Dick Hardt
     email: dick.hardt@gmail.com
   - ins: A. Parecki
