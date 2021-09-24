@@ -2072,8 +2072,9 @@ includes one of the following error codes in the response:
      request.
 
 "insufficient_scope":
-:    The request requires higher privileges than provided by the
-     access token.  The resource server SHOULD respond with the HTTP
+:    The request requires higher privileges (scopes) than provided by the
+     scopes granted to the client and represented by the access token.  
+     The resource server SHOULD respond with the HTTP
      403 (Forbidden) status code and MAY include the `scope`
      attribute with the scope necessary to access the protected
      resource.
