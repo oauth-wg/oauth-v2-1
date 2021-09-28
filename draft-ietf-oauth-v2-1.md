@@ -1,6 +1,6 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: draft-ietf-oauth-v2-1-03
+docname: draft-ietf-oauth-v2-1-04
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -15,7 +15,7 @@ pi:
 
 author:
   - ins: D. Hardt
-    organization: SignIn.Org
+    organization: Hellō
     name: Dick Hardt
     email: dick.hardt@gmail.com
   - ins: A. Parecki
@@ -612,10 +612,10 @@ with the authorization server as well as the authorization server's assurance of
 client's identity.
 
 "confidential":
-: Clients that have credentials and their identity has been confirmed by the AS are designated as "confidential clients"
+: Clients that have credentials and have a prior relationship with the AS are designated as "confidential clients"
 
 "credentialed":
-: Clients that have credentials and their identity has been not been confirmed by the AS are designated as "credentialed clients"
+: Clients that have credentials but no prior relationship with the AS are designated as "credentialed clients"
 
 "public":
 : Clients without credentials are called "public clients"
@@ -628,6 +628,7 @@ such as the Client Credentials grant type.
 
 A single `client_id` MUST NOT be treated as more than one type of client.
 
+For example, a client that has been registered at the authorization server by a registered application developer, where the client is expected to be run as server-side code, would be considered a confidential client. A client that runs on an end-user's device, and uses Dynamic Client Registration ({{RFC7591}}) to establish credentials the first time the app runs, would be considered a credentialed client. An application deployed as a single-page app on a static web host would be considered a public client.
 
 This specification has been designed around the following client profiles:
 
@@ -773,15 +774,10 @@ execute first.
 
 ## Client Authentication {#client-authentication}
 
-Confidential and credentialed clients establish a client authentication method
-with the authorization server suitable for the
-security requirements of the authorization server.  The authorization
-server MAY accept any form of client authentication meeting its
-security requirements.
-
-Confidential and credentialed clients are typically issued (or establish) a set of
-client credentials used for authenticating with the authorization
-server (e.g., password, public/private key pair).
+If the client is confidential or credentialed,
+the authorization server MAY accept any form of client authentication
+meeting its security requirements
+(e.g., password, public/private key pair).
 
 The authorization server MUST authenticate the client whenever
 possible.  If the authorization server cannot authenticate the client
@@ -804,7 +800,8 @@ credentialed client authentication for the purpose of
 identifying the client.
 
 The client MUST NOT use more than one authentication method in each
-request.
+request to prevent a conflict of which authentication mechanism is 
+authoritative for the request.
 
 
 ### Client Secret {#client-secret}
@@ -1891,15 +1888,19 @@ that any other party in possession of it can.  Using a bearer token
 does not require a bearer to prove possession of cryptographic key material
 (proof-of-possession).
 
-Bearer tokens may be extended to include proof-of-possession techniques
-by other specifications.
+Bearer tokens may be enhanced with proof-of-possession specifications such 
+as mTLS {{RFC8705}} to provide proof-of-possession characteristics.
 
 
 ### Authenticated Requests
 
 This section defines two methods of sending Bearer tokens in resource
-requests to resource servers. Clients MUST NOT use more than one method
-to transmit the token in each request.
+requests to resource servers. Clients MUST use one of the two methods defined below,
+and MUST NOT use more than one method to transmit the token in each request.
+
+In particular, clients MUST NOT send the access token in a URI query parameter,
+and resource servers MUST ignore access tokens in a URI query parameter.
+
 
 #### Authorization Request Header Field
 
@@ -2071,8 +2072,9 @@ includes one of the following error codes in the response:
      request.
 
 "insufficient_scope":
-:    The request requires higher privileges than provided by the
-     access token.  The resource server SHOULD respond with the HTTP
+:    The request requires higher privileges (scopes) than provided by the
+     scopes granted to the client and represented by the access token.  
+     The resource server SHOULD respond with the HTTP
      403 (Forbidden) status code and MAY include the `scope`
      attribute with the scope necessary to access the protected
      resource.
@@ -2712,14 +2714,8 @@ authorization request and close it once the response is returned.
 Clients should listen on the loopback network interface only, in
 order to avoid interference by other network actors.
 
-While redirect URIs using localhost (i.e.,
-`http://localhost:{port}/{path}`) function similarly to loopback IP
-redirects described in {{loopback-interface-redirection}}, the use of `localhost` is NOT
-RECOMMENDED.  Specifying a redirect URI with the loopback IP literal
-rather than `localhost` avoids inadvertently listening on network
-interfaces other than the loopback interface.  It is also less
-susceptible to client-side firewalls and misconfigured host name
-resolution on the user's device.
+Clients should use loopback IP literals rather than the string `localhost`
+as described in {{loopback-interface-redirection}}.
 
 ### HTTP 307 Redirect {#redirect_307}
 
@@ -3323,6 +3319,15 @@ An example redirect using the IPv6 loopback interface with a randomly
 assigned port:
 
     http://[::1]:61023/oauth2redirect/example-provider
+
+While redirect URIs using the name `localhost` (i.e.,
+`http://localhost:{port}/{path}`) function similarly to loopback IP
+redirects, the use of `localhost` is NOT RECOMMENDED.  Specifying a 
+redirect URI with the loopback IP literal
+rather than `localhost` avoids inadvertently listening on network
+interfaces other than the loopback interface.  It is also less
+susceptible to client-side firewalls and misconfigured host name
+resolution on the user's device.
 
 The authorization server MUST allow any port to be specified at the
 time of the request for loopback IP redirect URIs, to accommodate
