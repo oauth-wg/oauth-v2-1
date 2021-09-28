@@ -1099,7 +1099,7 @@ and an HTTP 200 (OK) status code:
      expiration time via other means or document the default value.
 
 "scope":
-:    OPTIONAL, if identical to the scope requested by the client;
+:    RECOMMENDED, if identical to the scope requested by the client;
      otherwise, REQUIRED.  The scope of the access token as
      described by {{access-token-scope}}.
 
