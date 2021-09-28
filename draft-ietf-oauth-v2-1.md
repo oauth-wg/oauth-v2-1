@@ -3626,7 +3626,11 @@ TBD
 
    -03
 
-   * refactored structure
+    * refactoring to collect all the grant types under the same top-level header in section 4
+    * Better split normative and security consideration text into the appropriate places, both moving text that was really security considerations out of the main part of the document, as well as pulling normative requirements from the security considerations sections into the appropriate part of the main document
+    * Incorporated many of the published errata on RFC6749
+    * Updated references to various RFCs
+    * Editorial clarifications throughout the document
 
    -02
 
