@@ -968,8 +968,6 @@ defined by this specification MUST NOT be included more than once.
 
 ### Client Authentication {#token-endpoint-client-authentication}
 
-<!-- TODO: move this to the token endpoint section -->
-
 Confidential or credentialed clients MUST
 authenticate with the authorization server as described in
 {{client-authentication}} when making requests to the token endpoint.  
