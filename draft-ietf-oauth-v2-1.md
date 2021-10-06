@@ -3622,6 +3622,13 @@ TBD
 
    [[ To be removed from the final specification ]]
 
+   -04 
+
+    * Added explicit mention of not sending access tokens in URI query strings
+    * Clarifications on definition of client types
+    * Consolidated text around loopback vs localhost
+    * Editorial clarifications throughout the document
+
    -03
 
     * refactoring to collect all the grant types under the same top-level header in section 4
