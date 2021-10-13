@@ -3376,6 +3376,22 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 * Refresh tokens should either be sender-constrained or one-time use
   as per Section 4.12.2 of {{I-D.ietf-oauth-security-topics}}
 
+## Removal of the OAuth 2.0 Implicit grant
+
+The OAuth 2.0 Implicit grant is omitted from OAuth 2.1 as it was deprecated in
+{{I-D.ietf-oauth-security-topics}}.
+
+The intent of removing the Implicit grant is to no longer issue access tokens
+in the authorization response, as such tokens are vulnerable to leakage
+and injection, and are unable to be sender-constrained to a client.
+This behavior was indicated by clients using the `response_type=token` parameter. 
+This value for the `response_type` parameter is no longer defined in OAuth 2.1.
+
+Removal of `response_type=token` does not have an effect on other extension
+response types returning other artifacts from the authorization endpoint, 
+for example, `response_type=id_token` defined by {{OpenID}}.
+
+
 
 # IANA Considerations
 
