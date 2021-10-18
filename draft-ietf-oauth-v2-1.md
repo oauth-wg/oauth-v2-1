@@ -3638,6 +3638,10 @@ TBD
 
    [[ To be removed from the final specification ]]
 
+   -05
+
+    * Added a section about the removal of the implicit flow
+
    -04 
 
     * Added explicit mention of not sending access tokens in URI query strings
