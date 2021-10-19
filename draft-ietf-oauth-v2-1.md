@@ -2241,10 +2241,20 @@ an attacker may modify the token to extend the validity period; a
 malicious client may modify the assertion to gain access to
 information that they should not be able to view.
 
-#### Access token disclosure
+#### Access token information disclosure
 
 Access tokens may contain authentication and attribute
 statements that include sensitive information.
+
+If the client should be prevented from observing the contents of the access token,
+content encryption MUST be applied.
+
+Since cookies are by default transmitted in cleartext, any
+information contained in them is at risk of disclosure:
+Bearer tokens MUST NOT be stored in cookies that can be sent in the
+clear.
+See Section 7 and 8 of {{RFC6265}} for security
+considerations about cookies.
 
 #### Access token redirect
 
@@ -2256,6 +2266,18 @@ server that mistakenly believes the token to be for it.
 
 An attacker attempts to use an access token that has already
 been used with that resource server in the past.
+
+#### Intermediaries
+
+Since  HTTP infrastructures rely significantly on intermediaries
+(Section 3.7 of {{SEMANTICS}}),
+caches and TLS terminators (e.g. load balancers, API gateways)
+those actors might have visibility of access tokens.
+
+These risks are mitigated by content encryption.
+
+See Section 17.2 of {{SEMANTICS=I-D.ietf-httpbis-semantics}} for
+further informations.
 
 ### Threat Mitigation
 
@@ -2273,7 +2295,7 @@ not defined by this specification.
 This document does not specify the encoding or the contents of the
 access token; hence, detailed recommendations about the means of
 guaranteeing access token integrity protection are outside the scope of this
-specification.  The access token integrity protection MUST be sufficient to
+specification. The access token integrity protection MUST be sufficient to
 prevent the token from being modified. One example of an encoding and
 signing mechanism for access tokens is described in {{I-D.ietf-oauth-access-token-jwt}}.
 
@@ -2283,56 +2305,24 @@ audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.
 
-To protect against access token disclosure, confidentiality protection MUST
-be applied using TLS with a ciphersuite that provides
-confidentiality and integrity protection.  This requires that the
-communication interaction between the client and the authorization
-server, as well as the interaction between the client and the
-resource server, utilize confidentiality and integrity protection.
-Since TLS is mandatory to implement and to use with this
-specification, it is the preferred approach for preventing token
-disclosure via the communication channel.  For those cases where the
-client is prevented from observing the contents of the access token, token
-encryption MUST be applied in addition to the usage of TLS
-protection.  As a further defense against token disclosure, the
-client MUST validate the TLS certificate chain when making requests
-to protected resources, including checking the Certificate Revocation
-List (CRL) {{RFC5280}}.
+{{communication-security}} provides information to
+protect against access token disclosure and providing
+confidentiality and integrity for the communications
+between client, resource server and authorization server.
 
-If cookies are transmitted without TLS protection, any
-information contained in them is at risk of disclosure.  Therefore,
-Bearer tokens MUST NOT be stored in cookies that can be sent in the
-clear, as any information in them is at risk of disclosure.
-See "HTTP State Management Mechanism" {{RFC6265}} for security
-considerations about cookies.
+The following RECOMMENDATIONS mitigate the risk of
+access token theft and replay:
 
-In some deployments, including those utilizing load balancers, the
-TLS connection to the resource server terminates prior to the actual
-server that provides the resource.  This could leave the token
-unprotected between the front-end server where the TLS connection
-terminates and the back-end server that provides the resource.  In
-such deployments, sufficient measures MUST be employed to ensure
-confidentiality of the access token between the front-end and back-end
-servers; encryption of the token is one such possible measure.
-
-To deal with access token capture and replay, the following recommendations
-are made: First, the lifetime of the token MUST be limited; one means
-of achieving this is by putting a validity time field inside the
-protected part of the token.  Note that using short-lived 
-tokens reduces the impact of them being leaked.  Second,
-confidentiality protection of the exchanges between the client and
-the authorization server and between the client and the resource
-server MUST be applied.  As a consequence, no eavesdropper along the
-communication path is able to observe the token exchange.
-Consequently, such an on-path adversary cannot replay the token.
-Furthermore, when presenting the token to a resource server, the
-client MUST verify the identity of that resource server, as per {{BCP195}}
-and Section 3.1 of "HTTP Over TLS" {{RFC2818}}.  Note that the client MUST
-validate the TLS certificate chain when making these requests to
-protected resources.  Presenting the token to an unauthenticated and
-unauthorized resource server or failing to validate the certificate
-chain will allow adversaries to steal the token and gain unauthorized
-access to protected resources.
+1. limit the lifetime of the token, e.g. by putting a validity time field inside the
+   protected part of the token. Short-lived tokens reduces both the probablity and the impacts of a leak.
+2. protect the confidentiality of the communication between the client and the RS
+   to mitigate the risk of eavesdropping;
+3. the client MUST verify the identity of the resource server before
+   presenting an access token {{communication-security}};
+   presenting the token to an unauthenticated and
+   unauthorized resource server or failing to validate the certificate
+   chain will allow adversaries to steal the token and gain unauthorized
+   access to protected resources.
 
 ### Summary of Recommendations
 
