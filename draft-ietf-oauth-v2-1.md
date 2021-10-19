@@ -48,6 +48,7 @@ normative:
   RFC8174:
   RFC8252:
   RFC8259:
+  RFC8446:
   I-D.ietf-oauth-security-topics:
   BCP195:
     title: "Recommendations for Secure Use of Transport Layer Security (TLS)"
@@ -487,25 +488,43 @@ Access tokens (as well as any confidential access token
 attributes) MUST be kept confidential in transit and storage, and
 only shared among the authorization server, the resource servers the
 access token is valid for, and the client to whom the access token is
-issued.  Access token credentials MUST only be transmitted using TLS
-as described in {{tls-version}} with server authentication as defined by
-{{RFC2818}}.
+issued.
 
 The authorization server MUST ensure that access tokens cannot be
 generated, modified, or guessed to produce valid access tokens by
 unauthorized parties.
 
-## TLS Version {#tls-version}
+## Communication security {#communication-security}
 
-Whenever Transport Layer Security (TLS) is used by this
-specification, the appropriate version (or versions) of TLS will vary
-over time, based on the widespread deployment and known security
-vulnerabilities.  Refer to {{BCP195}} for up to date recommendations on
-transport layer security.
+Implementations MUST use a mechanism to provide communication
+authentication, integrity and confidentiality such as
+Transport-Layer Security {{RFC8446}},
+to protect the exchange of clear-text credentials and tokens
+either in the payload body or in header fields
+from eavesdropping, tampering, and message forgery
+(eg. see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}).
+
+Securing the communication channel is critical
+when the authorization process is used as a form of
+delegated end-user authentication by the client (e.g., third-party
+sign-in service).
+
+OAuth URLs MUST use the `https` scheme
+except for loopback interface redirect URIs,
+which MAY use the `http` scheme.
+When using `https`, TLS certificates MUST be checked
+according to {{!RFC2818}}.
+At the time of this writing,
+TLS version 1.3 {{RFC8446}} is the most recent version.
 
 Implementations MAY also support additional transport-layer security
 mechanisms that meet their security requirements.
 
+The identification of the TLS versions and algorithms
+is outside the scope of this specification.
+Refer to {{BCP195}} for up to date recommendations on
+transport layer security, and to the relevant specifications
+for certificate validation and other security considerations.
 
 ## HTTP Redirections
 
@@ -698,19 +717,6 @@ component ({{RFC3986}} Section 3.4), which MUST be retained when adding
 additional query parameters. The endpoint URI MUST NOT include a
 fragment component.
 
-
-### Endpoint Request Confidentiality
-
-The redirection endpoint SHOULD require the use of TLS as described
-in {{tls-version}} when the requested response type is `code`,
-or when the redirection request will result in the transmission of
-sensitive credentials over an open network.
-If TLS is not available, the authorization server
-SHOULD warn the resource owner about the insecure endpoint prior to
-redirection (e.g., display a message during the authorization
-request).
-
-
 ### Registration Requirements
 
 Authorization servers MUST require clients to register their complete
@@ -850,9 +856,6 @@ only):
     grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
     &client_id=s6BhdRkqt3&client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
 
-The authorization server MUST require the use of TLS as described in
-{{tls-version}} when sending requests using password authentication.
-
 Since this client authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
 brute force attacks.
@@ -919,12 +922,6 @@ formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
 which MUST be retained when adding additional query parameters.  The
 endpoint URI MUST NOT include a fragment component.
 
-Since requests to the authorization endpoint result in user
-authentication and the transmission of clear-text credentials (in the
-HTTP response), the authorization server MUST require the use of TLS
-as described in {{tls-version}} when sending requests to the
-authorization endpoint.
-
 The authorization server MUST support the use of the HTTP `GET`
 method {{RFC7231}} for the authorization endpoint and MAY support the
 use of the `POST` method as well.
@@ -951,11 +948,6 @@ document ({{RFC8414}}) and fetched programmatically at runtime.
 The endpoint URI MAY include an `application/x-www-form-urlencoded`
 formatted (per Appendix B) query component ({{RFC3986}} Section 3.4)
 and MUST NOT include a fragment component.
-
-Since requests to the token endpoint result in the transmission of
-clear-text credentials (in the HTTP request and response), the
-authorization server MUST require the use of TLS as described in
-{{tls-version}} when sending requests to the token endpoint.
 
 The client MUST use the HTTP `POST` method when making access token
 requests.
@@ -1014,7 +1006,7 @@ details of those grant types are defined below.
 Confidential or credentialed clients MUST authenticate with the authorization 
 server as described in {{token-endpoint-client-authentication}}.
 
-For example, the client makes the following HTTP request using TLS
+For example, the client makes the following HTTP request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -1438,7 +1430,7 @@ The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.
 
 For example, the client directs the user agent to make the following
-HTTP request using TLS (with extra line breaks for display purposes
+HTTP request (with extra line breaks for display purposes
 only):
 
     GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
@@ -1629,7 +1621,7 @@ If this value is set, the following additional token request parameters beyond {
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
      request. MUST NOT be used otherwise. The original code verifier string.
 
-For example, the client makes the following HTTP request using TLS
+For example, the client makes the following HTTP request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -1816,8 +1808,8 @@ adding any additional parameters necessary.
 
 For example, to request an access token using the Device Authorization Grant
 as defined by {{RFC8628}} after the user has authorized the client on a separate device,
-the client makes the following HTTP request using
-TLS (with extra line breaks for display purposes only):
+the client makes the following HTTP request
+(with extra line breaks for display purposes only):
 
       POST /token HTTP/1.1
       Host: server.example.com
@@ -2249,10 +2241,20 @@ an attacker may modify the token to extend the validity period; a
 malicious client may modify the assertion to gain access to
 information that they should not be able to view.
 
-#### Access token disclosure
+#### Access token information disclosure
 
 Access tokens may contain authentication and attribute
 statements that include sensitive information.
+
+If the client should be prevented from observing the contents of the access token,
+content encryption MUST be applied.
+
+Since cookies are by default transmitted in cleartext, any
+information contained in them is at risk of disclosure:
+Bearer tokens MUST NOT be stored in cookies that can be sent in the
+clear.
+See Section 7 and 8 of {{RFC6265}} for security
+considerations about cookies.
 
 #### Access token redirect
 
@@ -2264,6 +2266,18 @@ server that mistakenly believes the token to be for it.
 
 An attacker attempts to use an access token that has already
 been used with that resource server in the past.
+
+#### Intermediaries
+
+Since  HTTP infrastructures rely significantly on intermediaries
+(Section 3.7 of {{SEMANTICS}}),
+caches and TLS terminators (e.g. load balancers, API gateways)
+those actors might have visibility of access tokens.
+
+These risks are mitigated by content encryption.
+
+See Section 17.2 of {{SEMANTICS=I-D.ietf-httpbis-semantics}} for
+further informations.
 
 ### Threat Mitigation
 
@@ -2281,7 +2295,7 @@ not defined by this specification.
 This document does not specify the encoding or the contents of the
 access token; hence, detailed recommendations about the means of
 guaranteeing access token integrity protection are outside the scope of this
-specification.  The access token integrity protection MUST be sufficient to
+specification. The access token integrity protection MUST be sufficient to
 prevent the token from being modified. One example of an encoding and
 signing mechanism for access tokens is described in {{I-D.ietf-oauth-access-token-jwt}}.
 
@@ -2291,63 +2305,24 @@ audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.
 
-The authorization server MUST implement TLS as described in {{tls-version}}.  
-Which version(s) ought
-to be implemented will vary over time and will depend on the
-widespread deployment and known security vulnerabilities at the time
-of implementation. Refer to {{BCP195}} for up to date recommendations on
-transport layer security.
+{{communication-security}} provides information to
+protect against access token disclosure and providing
+confidentiality and integrity for the communications
+between client, resource server and authorization server.
 
-To protect against access token disclosure, confidentiality protection MUST
-be applied using TLS with a ciphersuite that provides
-confidentiality and integrity protection.  This requires that the
-communication interaction between the client and the authorization
-server, as well as the interaction between the client and the
-resource server, utilize confidentiality and integrity protection.
-Since TLS is mandatory to implement and to use with this
-specification, it is the preferred approach for preventing token
-disclosure via the communication channel.  For those cases where the
-client is prevented from observing the contents of the access token, token
-encryption MUST be applied in addition to the usage of TLS
-protection.  As a further defense against token disclosure, the
-client MUST validate the TLS certificate chain when making requests
-to protected resources, including checking the Certificate Revocation
-List (CRL) {{RFC5280}}.
+The following RECOMMENDATIONS mitigate the risk of
+access token theft and replay:
 
-If cookies are transmitted without TLS protection, any
-information contained in them is at risk of disclosure.  Therefore,
-Bearer tokens MUST NOT be stored in cookies that can be sent in the
-clear, as any information in them is at risk of disclosure.
-See "HTTP State Management Mechanism" {{RFC6265}} for security
-considerations about cookies.
-
-In some deployments, including those utilizing load balancers, the
-TLS connection to the resource server terminates prior to the actual
-server that provides the resource.  This could leave the token
-unprotected between the front-end server where the TLS connection
-terminates and the back-end server that provides the resource.  In
-such deployments, sufficient measures MUST be employed to ensure
-confidentiality of the access token between the front-end and back-end
-servers; encryption of the token is one such possible measure.
-
-To deal with access token capture and replay, the following recommendations
-are made: First, the lifetime of the token MUST be limited; one means
-of achieving this is by putting a validity time field inside the
-protected part of the token.  Note that using short-lived 
-tokens reduces the impact of them being leaked.  Second,
-confidentiality protection of the exchanges between the client and
-the authorization server and between the client and the resource
-server MUST be applied.  As a consequence, no eavesdropper along the
-communication path is able to observe the token exchange.
-Consequently, such an on-path adversary cannot replay the token.
-Furthermore, when presenting the token to a resource server, the
-client MUST verify the identity of that resource server, as per {{BCP195}}
-and Section 3.1 of "HTTP Over TLS" {{RFC2818}}.  Note that the client MUST
-validate the TLS certificate chain when making these requests to
-protected resources.  Presenting the token to an unauthenticated and
-unauthorized resource server or failing to validate the certificate
-chain will allow adversaries to steal the token and gain unauthorized
-access to protected resources.
+1. limit the lifetime of the token, e.g. by putting a validity time field inside the
+   protected part of the token. Short-lived tokens reduces both the probablity and the impacts of a leak.
+2. protect the confidentiality of the communication between the client and the RS
+   to mitigate the risk of eavesdropping;
+3. the client MUST verify the identity of the resource server before
+   presenting an access token {{communication-security}};
+   presenting the token to an unauthenticated and
+   unauthorized resource server or failing to validate the certificate
+   chain will allow adversaries to steal the token and gain unauthorized
+   access to protected resources.
 
 ### Summary of Recommendations
 
@@ -2625,9 +2600,7 @@ Refresh tokens MUST be kept confidential in transit and storage, and
 shared only among the authorization server and the client to whom the
 refresh tokens were issued.  The authorization server MUST maintain
 the binding between a refresh token and the client to whom it was
-issued.  Refresh tokens MUST only be transmitted using TLS as
-described in {{tls-version}} with server authentication as defined by
-{{RFC2818}}.
+issued.
 
 The authorization server MUST verify the binding between the refresh
 token and client identity whenever the client identity can be
@@ -2700,10 +2673,10 @@ An AS that redirects a request potentially containing user credentials
 MUST avoid forwarding these user credentials accidentally (see
 {{redirect_307}} for details).
 
-### Loopback Redirect Considerations in Native Apps
+### Loopback Redirect Considerations in Native Apps {#loopback-native-apps}
 
 Loopback interface redirect URIs use the `http` scheme (i.e., without
-Transport Layer Security (TLS)).  This is acceptable for loopback
+TLS).  This is acceptable for loopback
 interface redirect URIs as the HTTP request never leaves the device.
 
 Clients should open the network port only when starting the
@@ -2821,12 +2794,10 @@ transmitted over insecure channels or stored insecurely.
 
 ## Ensuring Endpoint Authenticity
 
-In order to prevent man-in-the-middle attacks, the authorization
-server MUST require the use of TLS with server authentication as
-defined by {{RFC2818}} for any request sent to the authorization and
-token endpoints.  The client MUST validate the authorization server's
-TLS certificate as defined by [RFC6125] and in accordance with its
-requirements for server identity authentication.
+The risk related to man-in-the-middle attacks is mitigated by the
+mandatory use of channel security mechanisms such as {{RFC8446}}
+for communicating with the Authorization and Token Endpoints.
+See {{communication-security}} for further details.
 
 ## Credentials-Guessing Attacks
 
@@ -2859,9 +2830,8 @@ interact with the user agent (e.g., external, embedded), and the
 ability of the end-user to verify the authenticity of the
 authorization server.
 
-To reduce the risk of phishing attacks, the authorization servers
-MUST require the use of TLS on every endpoint used for end-user
-interaction.
+See {{communication-security}} for further details
+on mitigating the risk of phishing attacks.
 
 
 ## Fake External User-Agents in Native Apps
