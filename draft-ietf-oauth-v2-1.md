@@ -48,6 +48,7 @@ normative:
   RFC8174:
   RFC8252:
   RFC8259:
+  RFC8446:
   I-D.ietf-oauth-security-topics:
   BCP195:
     title: "Recommendations for Secure Use of Transport Layer Security (TLS)"
@@ -487,25 +488,43 @@ Access tokens (as well as any confidential access token
 attributes) MUST be kept confidential in transit and storage, and
 only shared among the authorization server, the resource servers the
 access token is valid for, and the client to whom the access token is
-issued.  Access token credentials MUST only be transmitted using TLS
-as described in {{tls-version}} with server authentication as defined by
-{{RFC2818}}.
+issued.
 
 The authorization server MUST ensure that access tokens cannot be
 generated, modified, or guessed to produce valid access tokens by
 unauthorized parties.
 
-## TLS Version {#tls-version}
+## Communication security {#communication-security}
 
-Whenever Transport Layer Security (TLS) is used by this
-specification, the appropriate version (or versions) of TLS will vary
-over time, based on the widespread deployment and known security
-vulnerabilities.  Refer to {{BCP195}} for up to date recommendations on
-transport layer security.
+Implementations MUST use a mechanism to provide communication
+authentication, integrity and confidentiality such as
+Transport-Layer Security {{RFC8446}},
+to protect the exchange of clear-text credentials and tokens
+either in the payload body or in header fields
+from eavesdropping, tampering, and message forgery
+(eg. see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}).
+
+Securing the communication channel is critical
+when the authorization process is used as a form of
+delegated end-user authentication by the client (e.g., third-party
+sign-in service).
+
+OAuth URLs MUST use the `https` scheme
+except for loopback interface redirect URIs,
+which MAY use the `http` scheme.
+When using `https`, TLS certificates MUST be checked
+according to {{!RFC2818}}.
+At the time of this writing,
+TLS version 1.3 {{RFC8446}} is the most recent version.
 
 Implementations MAY also support additional transport-layer security
 mechanisms that meet their security requirements.
 
+The identification of the TLS versions and algorithms
+is outside the scope of this specification.
+Refer to {{BCP195}} for up to date recommendations on
+transport layer security, and to the relevant specifications
+for certificate validation and other security considerations.
 
 ## HTTP Redirections
 
@@ -698,19 +717,6 @@ component ({{RFC3986}} Section 3.4), which MUST be retained when adding
 additional query parameters. The endpoint URI MUST NOT include a
 fragment component.
 
-
-### Endpoint Request Confidentiality
-
-The redirection endpoint SHOULD require the use of TLS as described
-in {{tls-version}} when the requested response type is `code`,
-or when the redirection request will result in the transmission of
-sensitive credentials over an open network.
-If TLS is not available, the authorization server
-SHOULD warn the resource owner about the insecure endpoint prior to
-redirection (e.g., display a message during the authorization
-request).
-
-
 ### Registration Requirements
 
 Authorization servers MUST require clients to register their complete
@@ -850,9 +856,6 @@ only):
     grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
     &client_id=s6BhdRkqt3&client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
 
-The authorization server MUST require the use of TLS as described in
-{{tls-version}} when sending requests using password authentication.
-
 Since this client authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
 brute force attacks.
@@ -919,12 +922,6 @@ formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
 which MUST be retained when adding additional query parameters.  The
 endpoint URI MUST NOT include a fragment component.
 
-Since requests to the authorization endpoint result in user
-authentication and the transmission of clear-text credentials (in the
-HTTP response), the authorization server MUST require the use of TLS
-as described in {{tls-version}} when sending requests to the
-authorization endpoint.
-
 The authorization server MUST support the use of the HTTP `GET`
 method {{RFC7231}} for the authorization endpoint and MAY support the
 use of the `POST` method as well.
@@ -951,11 +948,6 @@ document ({{RFC8414}}) and fetched programmatically at runtime.
 The endpoint URI MAY include an `application/x-www-form-urlencoded`
 formatted (per Appendix B) query component ({{RFC3986}} Section 3.4)
 and MUST NOT include a fragment component.
-
-Since requests to the token endpoint result in the transmission of
-clear-text credentials (in the HTTP request and response), the
-authorization server MUST require the use of TLS as described in
-{{tls-version}} when sending requests to the token endpoint.
 
 The client MUST use the HTTP `POST` method when making access token
 requests.
@@ -1014,7 +1006,7 @@ details of those grant types are defined below.
 Confidential or credentialed clients MUST authenticate with the authorization 
 server as described in {{token-endpoint-client-authentication}}.
 
-For example, the client makes the following HTTP request using TLS
+For example, the client makes the following HTTP request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -1438,7 +1430,7 @@ The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.
 
 For example, the client directs the user agent to make the following
-HTTP request using TLS (with extra line breaks for display purposes
+HTTP request (with extra line breaks for display purposes
 only):
 
     GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
@@ -1629,7 +1621,7 @@ If this value is set, the following additional token request parameters beyond {
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
      request. MUST NOT be used otherwise. The original code verifier string.
 
-For example, the client makes the following HTTP request using TLS
+For example, the client makes the following HTTP request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -1816,8 +1808,8 @@ adding any additional parameters necessary.
 
 For example, to request an access token using the Device Authorization Grant
 as defined by {{RFC8628}} after the user has authorized the client on a separate device,
-the client makes the following HTTP request using
-TLS (with extra line breaks for display purposes only):
+the client makes the following HTTP request
+(with extra line breaks for display purposes only):
 
       POST /token HTTP/1.1
       Host: server.example.com
@@ -2291,13 +2283,6 @@ audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.
 
-The authorization server MUST implement TLS as described in {{tls-version}}.  
-Which version(s) ought
-to be implemented will vary over time and will depend on the
-widespread deployment and known security vulnerabilities at the time
-of implementation. Refer to {{BCP195}} for up to date recommendations on
-transport layer security.
-
 To protect against access token disclosure, confidentiality protection MUST
 be applied using TLS with a ciphersuite that provides
 confidentiality and integrity protection.  This requires that the
@@ -2625,9 +2610,7 @@ Refresh tokens MUST be kept confidential in transit and storage, and
 shared only among the authorization server and the client to whom the
 refresh tokens were issued.  The authorization server MUST maintain
 the binding between a refresh token and the client to whom it was
-issued.  Refresh tokens MUST only be transmitted using TLS as
-described in {{tls-version}} with server authentication as defined by
-{{RFC2818}}.
+issued.
 
 The authorization server MUST verify the binding between the refresh
 token and client identity whenever the client identity can be
@@ -2700,10 +2683,10 @@ An AS that redirects a request potentially containing user credentials
 MUST avoid forwarding these user credentials accidentally (see
 {{redirect_307}} for details).
 
-### Loopback Redirect Considerations in Native Apps
+### Loopback Redirect Considerations in Native Apps {#loopback-native-apps}
 
 Loopback interface redirect URIs use the `http` scheme (i.e., without
-Transport Layer Security (TLS)).  This is acceptable for loopback
+TLS).  This is acceptable for loopback
 interface redirect URIs as the HTTP request never leaves the device.
 
 Clients should open the network port only when starting the
@@ -2821,12 +2804,10 @@ transmitted over insecure channels or stored insecurely.
 
 ## Ensuring Endpoint Authenticity
 
-In order to prevent man-in-the-middle attacks, the authorization
-server MUST require the use of TLS with server authentication as
-defined by {{RFC2818}} for any request sent to the authorization and
-token endpoints.  The client MUST validate the authorization server's
-TLS certificate as defined by [RFC6125] and in accordance with its
-requirements for server identity authentication.
+The risk related to man-in-the-middle attacks is mitigated by the
+mandatory use of channel security mechanisms such as {{RFC8446}}
+for communicating with the Authorization and Token Endpoints.
+See {{communication-security}} for further details.
 
 ## Credentials-Guessing Attacks
 
@@ -2859,9 +2840,8 @@ interact with the user agent (e.g., external, embedded), and the
 ability of the end-user to verify the authenticity of the
 authorization server.
 
-To reduce the risk of phishing attacks, the authorization servers
-MUST require the use of TLS on every endpoint used for end-user
-interaction.
+See {{communication-security}} for further details
+on mitigating the risk of phishing attacks.
 
 
 ## Fake External User-Agents in Native Apps
