@@ -504,10 +504,6 @@ either in the payload body or in header fields
 from eavesdropping, tampering, and message forgery
 (eg. see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}).
 
-Securing the communication channel is critical
-when the authorization process is used as a form of
-delegated end-user authentication by the client (e.g., third-party
-sign-in service).
 
 OAuth URLs MUST use the `https` scheme
 except for loopback interface redirect URIs,
