@@ -1883,6 +1883,25 @@ communication interaction between the client and the resource server
 MUST utilize confidentiality and integrity protection as described in
 {{communication-security}}.
 
+To mitigate the risk of access token capture and replay, the following recommendations
+are made: First, the lifetime of the token MUST be limited; one means
+of achieving this is by putting a validity time field inside the
+protected part of the token.  Note that using short-lived 
+tokens reduces the impact of them being leaked.  Second,
+confidentiality protection of the exchanges between the client and
+the authorization server and between the client and the resource
+server MUST be applied.  As a consequence, no eavesdropper along the
+communication path is able to observe the token exchange.
+Consequently, such an on-path adversary cannot replay the token.
+Furthermore, when presenting the token to a resource server, the
+client MUST verify the identity of that resource server, as per {{BCP195}}
+and Section 3.1 of "HTTP Over TLS" {{RFC2818}}.  Note that the client MUST
+validate the TLS certificate chain when making these requests to
+protected resources.  Presenting the token to an unauthenticated and
+unauthorized resource server or failing to validate the certificate
+chain will allow adversaries to steal the token and gain unauthorized
+access to protected resources.
+
 
 ### Authenticated Requests
 
@@ -2301,24 +2320,6 @@ such deployments, sufficient measures MUST be employed to ensure
 confidentiality of the access token between the front-end and back-end
 servers; encryption of the token is one such possible measure.
 
-To mitigate the risk of access token capture and replay, the following recommendations
-are made: First, the lifetime of the token MUST be limited; one means
-of achieving this is by putting a validity time field inside the
-protected part of the token.  Note that using short-lived 
-tokens reduces the impact of them being leaked.  Second,
-confidentiality protection of the exchanges between the client and
-the authorization server and between the client and the resource
-server MUST be applied.  As a consequence, no eavesdropper along the
-communication path is able to observe the token exchange.
-Consequently, such an on-path adversary cannot replay the token.
-Furthermore, when presenting the token to a resource server, the
-client MUST verify the identity of that resource server, as per {{BCP195}}
-and Section 3.1 of "HTTP Over TLS" {{RFC2818}}.  Note that the client MUST
-validate the TLS certificate chain when making these requests to
-protected resources.  Presenting the token to an unauthenticated and
-unauthorized resource server or failing to validate the certificate
-chain will allow adversaries to steal the token and gain unauthorized
-access to protected resources.
 
 ### Summary of Recommendations
 
