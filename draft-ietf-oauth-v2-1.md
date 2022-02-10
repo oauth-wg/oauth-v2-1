@@ -502,7 +502,7 @@ Transport-Layer Security {{RFC8446}},
 to protect the exchange of clear-text credentials and tokens
 either in the payload body or in header fields
 from eavesdropping, tampering, and message forgery
-(eg. see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}).
+(eg. see {{client-secret}}, {{authorization_codes}}, {{token-endpoint}}, and {{bearer-tokens}}).
 
 
 OAuth URLs MUST use the `https` scheme
@@ -1867,16 +1867,21 @@ Each access token type definition specifies the additional attributes
 parameter.  It also defines the HTTP authentication method used to
 include the access token when making a protected resource request.
 
-## Bearer Tokens
+## Bearer Tokens {#bearer-tokens}
 
 A Bearer Token is a security token with the property that any party
 in possession of the token (a "bearer") can use the token in any way
-that any other party in possession of it can.  Using a bearer token
+that any other party in possession of it can.  Using a Bearer Token
 does not require a bearer to prove possession of cryptographic key material
 (proof-of-possession).
 
-Bearer tokens may be enhanced with proof-of-possession specifications such 
+Bearer Tokens may be enhanced with proof-of-possession specifications such 
 as mTLS {{RFC8705}} to provide proof-of-possession characteristics.
+
+To protect against access token disclosure, the
+communication interaction between the client and the resource server
+utilize confidentiality and integrity protection as described in
+{{communication-security}}.
 
 
 ### Authenticated Requests
@@ -2272,29 +2277,13 @@ access token; hence, detailed recommendations about the means of
 guaranteeing access token integrity protection are outside the scope of this
 specification.  The access token integrity protection MUST be sufficient to
 prevent the token from being modified. One example of an encoding and
-signing mechanism for access tokens is described in {{RFC9068}}.
+signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
 
 To deal with access token redirects, it is important for the authorization
 server to include the identity of the intended recipients (the
 audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.
-
-To protect against access token disclosure, confidentiality protection MUST
-be applied using TLS with a ciphersuite that provides
-confidentiality and integrity protection.  This requires that the
-communication interaction between the client and the authorization
-server, as well as the interaction between the client and the
-resource server, utilize confidentiality and integrity protection.
-Since TLS is mandatory to implement and to use with this
-specification, it is the preferred approach for preventing token
-disclosure via the communication channel.  For those cases where the
-client is prevented from observing the contents of the access token, token
-encryption MUST be applied in addition to the usage of TLS
-protection.  As a further defense against token disclosure, the
-client MUST validate the TLS certificate chain when making requests
-to protected resources, including checking the Certificate Revocation
-List (CRL) {{RFC5280}}.
 
 If cookies are transmitted without TLS protection, any
 information contained in them is at risk of disclosure.  Therefore,
