@@ -727,6 +727,14 @@ schemes that are reverse domain name based.  At a minimum, any
 private-use URI scheme that doesn't contain a period character (`.`)
 SHOULD be rejected.
 
+In addition to the collision-resistant properties,
+this can help to prove ownership in the event of a dispute where two apps
+claim the same private-use URI scheme (where one app is acting
+maliciously).  For example, if two apps claimed `com.example.app`,
+the owner of `example.com` could petition the app store operator to
+remove the counterfeit app.  Such a petition is harder to prove if a
+generic URI scheme was used.
+
 The client MAY use the `state` request parameter to achieve per-request 
 customization if needed rather than varying the redirect URI per request.
 
@@ -2483,15 +2491,6 @@ specific information, such as the app package or bundle name, or
 other information that may be useful for verifying the calling app's
 identity on operating systems that support such functions.
 
-For private-use URI scheme-based redirect URIs, authorization servers
-SHOULD require that the URI scheme be based on a domain name that is 
-under the control of the app. In addition to the collision-resistant properties,
-this can help to prove ownership in the event of a dispute where two apps
-claim the same private-use URI scheme (where one app is acting
-maliciously).  For example, if two apps claimed `com.example.app`,
-the owner of `example.com` could petition the app store operator to
-remove the counterfeit app.  Such a petition is harder to prove if a
-generic URI scheme was used.
 
 
 ## Client Impersonation
