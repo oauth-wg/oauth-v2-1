@@ -1880,7 +1880,7 @@ as mTLS {{RFC8705}} to provide proof-of-possession characteristics.
 
 To protect against access token disclosure, the
 communication interaction between the client and the resource server
-utilize confidentiality and integrity protection as described in
+MUST utilize confidentiality and integrity protection as described in
 {{communication-security}}.
 
 
