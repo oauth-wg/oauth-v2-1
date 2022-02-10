@@ -2466,11 +2466,11 @@ client identity MUST depend on the assessment of the overall process
 for client identification and client credential lifecycle management.
 For example, authentication of a dynamically registered client just
 ensures the authorization server it is talking to the same client again.
-In contrast, if there is a web application whose developer's identity
+In contrast, if there is a registered application whose developer's identity
 was verified, who signed a contract and is issued a client secret
 that is only used in a secure backend service, the authorization
 server might allow this client to access more sensitive services
-or to use the client credentials grant type.
+or to use the Client Credentials grant type.
 
 ### Client Authentication of Native Apps
 
