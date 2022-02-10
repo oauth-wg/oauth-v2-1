@@ -1610,8 +1610,9 @@ If this value is set, the following additional token request parameters beyond {
 
 "redirect_uri":
 :    REQUIRED, if the `redirect_uri` parameter was included in the
-     authorization request as described in {{authorization-request}}, and their
-     values MUST be identical.
+     authorization request as described in {{authorization-request}}, in which case their
+     values MUST be identical. If no `redirect_uri` was included in the 
+     authorization request, this parameter is OPTIONAL.
 
 "code_verifier":
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
