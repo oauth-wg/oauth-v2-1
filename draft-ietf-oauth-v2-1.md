@@ -2301,7 +2301,7 @@ such deployments, sufficient measures MUST be employed to ensure
 confidentiality of the access token between the front-end and back-end
 servers; encryption of the token is one such possible measure.
 
-To deal with access token capture and replay, the following recommendations
+To mitigate the risk of access token capture and replay, the following recommendations
 are made: First, the lifetime of the token MUST be limited; one means
 of achieving this is by putting a validity time field inside the
 protected part of the token.  Note that using short-lived 
