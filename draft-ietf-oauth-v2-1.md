@@ -784,24 +784,29 @@ execute first.
 
 ## Client Authentication {#client-authentication}
 
+The authorization server MUST only rely on client authentication if the
+process of issuance/registration and distribution of the underlying
+credentials ensures their confidentiality.
+
 If the client is confidential or credentialed,
 the authorization server MAY accept any form of client authentication
 meeting its security requirements
 (e.g., password, public/private key pair).
-
-The authorization server MUST authenticate the client whenever
-possible.  If the authorization server cannot authenticate the client
-due to the client's nature, the authorization server SHOULD utilize other 
-means to protect resource owners
-from such potentially malicious clients.  For example, the
-authorization server can engage the resource owner to assist in
-identifying the client and its origin.
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
 client authentication such as mTLS {{RFC8705}} or "private_key_jwt"
 {{OpenID}}.  When asymmetric methods for client authentication are
 used, authorization servers do not need to store sensitive symmetric
 keys, making these methods more robust against a number of attacks.
+
+When client authentication is not possible, the authorization server
+SHOULD employ other means to validate the client's identity -- for
+example, by requiring the registration of the client redirect URI
+or enlisting the resource owner to confirm identity.  A valid
+redirect URI is not sufficient to verify the client's identity
+when asking for resource owner authorization but can be used to
+prevent delivering credentials to a counterfeit client after
+obtaining resource owner authorization.
 
 The authorization server MAY establish a client authentication method
 with public clients, which converts them to credentialed 
@@ -812,6 +817,11 @@ identifying the client.
 The client MUST NOT use more than one authentication method in each
 request to prevent a conflict of which authentication mechanism is 
 authoritative for the request.
+
+The authorization server must consider the security implications of
+interacting with unauthenticated clients and take measures to limit
+the potential exposure of tokens issued to such clients, 
+(e.g., limiting the lifetime of refresh tokens).
 
 
 ### Client Secret {#client-secret}
@@ -2428,34 +2438,20 @@ determine those resources and/or actions.
 
 ## Client Authentication {#security-client-authentication}
 
-The authorization server MUST only rely on client authentication if the
-process of issuance/registration and distribution of the underlying
-credentials ensures their confidentiality.
-
-When client authentication is not possible, the authorization server
-SHOULD employ other means to validate the client's identity -- for
-example, by requiring the registration of the client redirect URI
-or enlisting the resource owner to confirm identity.  A valid
-redirect URI is not sufficient to verify the client's identity
-when asking for resource owner authorization but can be used to
-prevent delivering credentials to a counterfeit client after
-obtaining resource owner authorization.
-
-The authorization server must consider the security implications of
-interacting with unauthenticated clients and take measures to limit
-the potential exposure of other credentials (e.g., refresh tokens)
-issued to such clients.
-
 The privileges an authorization server associates with a certain
 client identity MUST depend on the assessment of the overall process
 for client identification and client credential lifecycle management.
-For example, authentication of a dynamically registered client just
-ensures the authorization server it is talking to the same client again.
+For example, authentication of a dynamically registered client does not
+prove the identity of the client, it only ensures that repeated requests
+to the authorization server were made from the same client instance. Such
+clients may be limited in terms of which scopes they are allowed to request,
+or may have other limitations such as shorter token lifetimes.
 In contrast, if there is a registered application whose developer's identity
 was verified, who signed a contract and is issued a client secret
 that is only used in a secure backend service, the authorization
-server might allow this client to access more sensitive services
-or to use the Client Credentials grant type.
+server might allow this client to request more sensitive scopes
+or to be issued longer-lasting tokens.
+
 
 ### Client Authentication of Native Apps
 
@@ -2485,11 +2481,6 @@ they MUST be registered with the authorization server as
 such.  Authorization servers MUST record the client type in the
 client registration details in order to identify and process requests
 accordingly.
-
-Authorization servers MAY request the inclusion of other platform-
-specific information, such as the app package or bundle name, or
-other information that may be useful for verifying the calling app's
-identity on operating systems that support such functions.
 
 
 
