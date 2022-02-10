@@ -78,9 +78,9 @@ informative:
   RFC8628:
   RFC8705:
   RFC8707:
-  I-D.ietf-oauth-access-token-jwt:
+  RFC9068:
+  RFC9126:
   I-D.ietf-oauth-rar:
-  I-D.ietf-oauth-par:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
@@ -453,7 +453,7 @@ access token is a string representing an authorization issued to the
 client.  The string is considered opaque to the client, even if it has
 a structure. Depending on the authorization server, the access token 
 string may be parseable by the resource server, such as when using the
-JSON Web Token Profile for Access Tokens ({{I-D.ietf-oauth-access-token-jwt}}).
+JSON Web Token Profile for Access Tokens ({{RFC9068}}).
 
 Access tokens represent specific scopes and durations of access, granted by the
 resource owner, and enforced by the resource server and authorization server.
@@ -463,7 +463,7 @@ or the token may self-contain the authorization information in a verifiable
 manner (i.e., a token string consisting of a signed data payload). One example 
 of a token retrieval mechanism is Token Introspection {{RFC7662}}, in which the 
 RS calls an endpoint on the AS to validate the token presented by the client. 
-One example of a structured token format is {{I-D.ietf-oauth-access-token-jwt}}, 
+One example of a structured token format is {{RFC9068}}, 
 a method of encoding access token data as a JSON Web Token {{RFC7519}}.
 
 Additional authentication credentials, which are beyond
@@ -1835,7 +1835,7 @@ authorization server. For example, when the resource server and
 authorization server are colocated or are part of the same system, 
 they may share a database or other storage; when the two components
 are operated independently, they may use Token Introspection {{RFC7662}}
-or a structured access token format such as a JWT {{I-D.ietf-oauth-access-token-jwt}}.
+or a structured access token format such as a JWT {{RFC9068}}.
 
 The method in which the client utilizes the access token to
 access protected resources at the resource server depends on the type of access
@@ -2272,7 +2272,7 @@ access token; hence, detailed recommendations about the means of
 guaranteeing access token integrity protection are outside the scope of this
 specification.  The access token integrity protection MUST be sufficient to
 prevent the token from being modified. One example of an encoding and
-signing mechanism for access tokens is described in {{I-D.ietf-oauth-access-token-jwt}}.
+signing mechanism for access tokens is described in {{RFC9068}}.
 
 To deal with access token redirects, it is important for the authorization
 server to include the identity of the intended recipients (the
@@ -3586,7 +3586,7 @@ Below is a list of well-established extensions at the time of publication:
 * {{RFC7592}}: Dynamic Client Management
   * Dynamic Client Management provides a mechanism for updating dynamically registered client information.
 
-* {{I-D.ietf-oauth-access-token-jwt}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
+* {{RFC9068}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
   * This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.
 
 * {{RFC8705}}: Mutual TLS
@@ -3598,7 +3598,7 @@ Below is a list of well-established extensions at the time of publication:
 * {{RFC7009}}: Token Revocation
   * The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.
 
-* {{I-D.ietf-oauth-par}}: Pushed Authorization Requests
+* {{RFC9126}}: Pushed Authorization Requests
   * The Pushed Authorization Requests extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.
 
 * {{I-D.ietf-oauth-rar}}: Rich Authorization Requests
