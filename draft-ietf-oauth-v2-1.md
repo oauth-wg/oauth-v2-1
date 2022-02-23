@@ -150,7 +150,7 @@ informative:
 --- abstract
 
 The OAuth 2.1 authorization framework enables a third-party
-application to obtain limited access to an HTTP service, either on
+application to obtain limited access to a protected resource, either on
 behalf of a resource owner by orchestrating an approval interaction
 between the resource owner and an authorization service, or by allowing the
 third-party application to obtain access on its own behalf.  This
