@@ -1907,6 +1907,8 @@ of achieving this is by putting a validity time field inside the
 protected part of the token.  Note that using short-lived 
 tokens reduces the impact of them being leaked.
 
+There is no requirement on the particular structure or format of a bearer token, as described in {{accessing-protected-resources}}. If a bearer token is a reference to authorization information, such references MUST be infeasible for an attacker to guess, such as using a sufficiently long cryptographically random string. If a bearer token uses an encoding mechanism to contain the authorization information in the token itself, the access token MUST use integrity protection sufficient to prevent the token from being modified. One example of an encoding and signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
+
 
 ### Authenticated Requests
 
@@ -2290,8 +2292,7 @@ of the access token by using a digital signature.
 
 Alternatively, a bearer token can contain a reference to
 authorization information, rather than encoding the information
-directly.  Such references MUST be infeasible for an attacker to
-guess; using a reference may require an extra interaction between a
+directly.  Using a reference may require an extra interaction between a
 server and the access token issuer to resolve the reference to the
 authorization information.  The mechanics of such an interaction are
 not defined by this specification.
@@ -2299,8 +2300,7 @@ not defined by this specification.
 This document does not specify the encoding or the contents of the
 access token; hence, detailed recommendations about the means of
 guaranteeing access token integrity protection are outside the scope of this
-specification.  The access token integrity protection MUST be sufficient to
-prevent the token from being modified. One example of an encoding and
+specification. One example of an encoding and
 signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
 
 To deal with access token redirects, it is important for the authorization
