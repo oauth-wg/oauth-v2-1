@@ -1,6 +1,6 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: draft-ietf-oauth-v2-1-04
+docname: draft-ietf-oauth-v2-1-05
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -3576,6 +3576,10 @@ TBD
    -05
 
     * Added a section about the removal of the implicit flow
+    * Moved many normative requirements from security considerations into the appropriate inline sections
+    * Reorganized and consolidated TLS language
+    * Require TLS on redirect URIs except for localhost/custom URL scheme
+    * Updated refresh token guidance to match security BCP
 
    -04 
 
