@@ -637,7 +637,7 @@ client's identity.
 
 Any clients with credentials MUST take precautions to prevent leakage and abuse of their credentials.
 
-Authorization servers SHOULD consider the level of confidence in a client’s identity
+Authorization servers SHOULD consider the level of confidence in a client's identity
 when deciding whether they allow such a client access to more critical functions,
 such as the Client Credentials grant type.
 
@@ -2862,7 +2862,7 @@ possible) any value received -- in particular, the value of the
 ## Open Redirectors {#open-redirectors}
 
 The following attacks can occur when an AS or client has an open
-redirector. An open redirector is an endpoint that forwards a user’s
+redirector. An open redirector is an endpoint that forwards a user's
 browser to an arbitrary URI obtained from a query parameter.
 
 
