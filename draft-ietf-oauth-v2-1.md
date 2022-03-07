@@ -1564,6 +1564,10 @@ be stored in encrypted form in the code itself, but the server
 MUST NOT include the `code_challenge` value in a response parameter 
 in a form that entities other than the AS can extract.
 
+Clients MUST prevent injection (replay) of authorization codes into the
+authorization response by attackers. Using `code_challenge` and `code_verifier` prevents injection of authorization codes since the authorization server will reject a token request with a mismatched `code_verifier`. See {{authorization_codes}} for more details.
+
+
 #### Error Response {#authorization-code-error-response}
 
 If the request fails due to a missing, invalid, or mismatching
@@ -2672,24 +2676,13 @@ Therefore, the RECOMMENDED status code for HTTP redirects is 303.
 
 ## Authorization Codes {#authorization_codes}
 
-Authorization codes MUST be short lived and single-use.  If the
-authorization server observes multiple attempts to exchange an
-authorization code for an access token, the authorization server
-SHOULD attempt to revoke all refresh and access tokens already granted
-based on the compromised authorization code.
-
-If the client can be authenticated, the authorization servers MUST
-authenticate the client and ensure that the authorization code was
-issued to the same client.
-
-Clients MUST prevent injection (replay) of authorization codes into the
-authorization response by attackers. To this end, using `code_challenge` and
-`code_verifier` is REQUIRED for clients and authorization servers MUST enforce
+To prevent injection of authorization codes into the client, using `code_challenge` and
+`code_verifier` is REQUIRED for clients, and authorization servers MUST enforce
 their use, unless both of the following criteria are met:
 
 * The client is a confidential client.
 * In the specific deployment and the specific request, there is reasonable
-  assurance for authorization server that the client implements the OpenID
+  assurance by the authorization server that the client implements the OpenID
   Connect `nonce` mechanism properly.
 
 In this case, using and enforcing `code_challenge` and `code_verifier` is still RECOMMENDED.
@@ -2699,7 +2692,7 @@ transaction-specific and securely bound to the client and the user agent in
 which the transaction was started. If a transaction leads to an error, fresh
 values for `code_challenge` or `nonce` MUST be chosen.
 
-Historic note: Although PKCE {{RFC7636}} was originally designed as a mechanism
+Historic note: Although PKCE {{RFC7636}} (where the `code_challenge` and `code_verifier` parameters were created) was originally designed as a mechanism
 to protect native apps, this advice applies to all kinds of OAuth clients,
 including web applications and other confidential clients.
 
