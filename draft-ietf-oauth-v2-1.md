@@ -1476,11 +1476,17 @@ The properties `code_challenge` and `code_verifier` are adopted from the OAuth 2
 known as "Proof-Key for Code Exchange", or PKCE ({{RFC7636}}) where this technique
 was originally developed.
 
+Authorization servers MUST support the `code_challenge` and `code_verifier` parameters.
+
 Clients MUST use `code_challenge` and `code_verifier` and
 authorization servers MUST enforce their use except under the conditions
 described in {{authorization_codes}}. In this case, using and enforcing
 `code_challenge` and `code_verifier` as described in the following is still
 RECOMMENDED.
+
+The `state` and `scope` parameters SHOULD NOT include sensitive
+client or resource owner information in plain text, as they can be
+transmitted over insecure channels or stored insecurely.
 
 The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.
@@ -2713,23 +2719,12 @@ MUST be verified according to the steps in {{token-request}}.
 1. If there was no `code_challenge` in the authorization request, any request to 
 the token endpoint containing a `code_verifier` MUST be rejected.
 
-Authorization servers MUST support the `code_challenge` and `code_verifier` parameters.
-
 Authorization servers MUST provide a way to detect their support for
 the `code_challenge` mechanism. To this end, they MUST either (a) publish the element
 `code_challenge_methods_supported` in their AS metadata ({{RFC8414}})
 containing the supported `code_challenge_method`s (which can be used by
 the client to detect support) or (b) provide a
 deployment-specific way to ensure or determine support by the AS.
-
-## Request Confidentiality
-
-Access tokens, refresh tokens, authorization codes, and client
-credentials MUST NOT be transmitted in the clear.
-
-The `state` and `scope` parameters SHOULD NOT include sensitive
-client or resource owner information in plain text, as they can be
-transmitted over insecure channels or stored insecurely.
 
 ## Ensuring Endpoint Authenticity
 
