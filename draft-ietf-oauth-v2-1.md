@@ -2768,50 +2768,6 @@ See {{communication-security}} for further details
 on mitigating the risk of phishing attacks.
 
 
-## Fake External User-Agents in Native Apps
-
-The native app that is initiating the authorization request has a
-large degree of control over the user interface and can potentially
-present a fake external user agent, that is, an embedded user agent
-made to appear as an external user agent.
-
-When all good actors are using external user agents, the advantage is
-that it is possible for security experts to detect bad actors, as
-anyone faking an external user agent is provably bad.  On the other
-hand, if good and bad actors alike are using embedded user agents,
-bad actors don't need to fake anything, making them harder to detect.
-Once a malicious app is detected, it may be possible to use this
-knowledge to blacklist the app's signature in malware scanning
-software, take removal action (in the case of apps distributed by app
-stores) and other steps to reduce the impact and spread of the
-malicious app.
-
-Authorization servers can also directly protect against fake external
-user agents by requiring an authentication factor only available to
-true external user agents.
-
-Users who are particularly concerned about their security when using
-in-app browser tabs may also take the additional step of opening the
-request in the full browser from the in-app browser tab and complete
-the authorization there, as most implementations of the in-app
-browser tab pattern offer such functionality.
-
-
-## Malicious External User-Agents in Native Apps
-
-If a malicious app is able to configure itself as the default handler
-for `https` scheme URIs in the operating system, it will be able to
-intercept authorization requests that use the default browser and
-abuse this position of trust for malicious ends such as phishing the
-user.
-
-This attack is not confined to OAuth; a malicious app configured in
-this way would present a general and ongoing risk to the user beyond
-OAuth usage by native apps.  Many operating systems mitigate this
-issue by requiring an explicit user action to change the default
-handler for `http` and `https` scheme URIs.
-
-
 ## Cross-Site Request Forgery {#csrf_countermeasures}
 
 An attacker might attempt to inject a request to the redirect URI of
@@ -2968,39 +2924,6 @@ authorization response was received exactly matches it.
 The requirement of {{native-app-registration}}, specifically that authorization
 servers reject requests with URIs that don't match what was
 registered, is also required to prevent such attacks.
-
-## Embedded User Agents in Native Apps {#native-apps-embedded-user-agents}
-
-Embedded user agents are a technically possible method for authorizing native
-apps.  These embedded user agents are unsafe for use by third parties
-to the authorization server by definition, as the app that hosts the
-embedded user agent can access the user's full authentication
-credential, not just the OAuth authorization grant that was intended
-for the app.
-
-In typical web-view-based implementations of embedded user agents,
-the host application can record every keystroke entered in the login
-form to capture usernames and passwords, automatically submit forms
-to bypass user consent, and copy session cookies and use them to
-perform authenticated actions as the user.
-
-Even when used by trusted apps belonging to the same party as the
-authorization server, embedded user agents violate the principle of
-least privilege by having access to more powerful credentials than
-they need, potentially increasing the attack surface.
-
-Encouraging users to enter credentials in an embedded user agent
-without the usual address bar and visible certificate validation
-features that browsers have makes it impossible for the user to know
-if they are signing in to the legitimate site; even when they are, it
-trains them that it's OK to enter credentials without validating the
-site first.
-
-Aside from the security concerns, embedded user agents do not share
-the authentication state with other apps or the browser, requiring
-the user to log in for every authorization request, which is often
-considered an inferior user experience.
-
 
 ## Other Recommendations
 
@@ -3269,6 +3192,85 @@ Clients SHOULD NOT assume that the device supports a particular
 version of the Internet Protocol.  It is RECOMMENDED that clients
 attempt to bind to the loopback interface using both IPv4 and IPv6
 and use whichever is available.
+
+## Security Considerations in Native Apps
+
+### Embedded User Agents in Native Apps {#native-apps-embedded-user-agents}
+
+Embedded user agents are a technically possible method for authorizing native
+apps.  These embedded user agents are unsafe for use by third parties
+to the authorization server by definition, as the app that hosts the
+embedded user agent can access the user's full authentication
+credentials, not just the OAuth authorization grant that was intended
+for the app.
+
+In typical web-view-based implementations of embedded user agents,
+the host application can record every keystroke entered in the login
+form to capture usernames and passwords, automatically submit forms
+to bypass user consent, and copy session cookies and use them to
+perform authenticated actions as the user.
+
+Even when used by trusted apps belonging to the same party as the
+authorization server, embedded user agents violate the principle of
+least privilege by having access to more powerful credentials than
+they need, potentially increasing the attack surface.
+
+Encouraging users to enter credentials in an embedded user agent
+without the usual address bar and visible certificate validation
+features that browsers have makes it impossible for the user to know
+if they are signing in to the legitimate site; even when they are, it
+trains them that it's OK to enter credentials without validating the
+site first.
+
+Aside from the security concerns, embedded user agents do not share
+the authentication state with other apps or the browser, requiring
+the user to log in for every authorization request, which is often
+considered an inferior user experience.
+
+
+### Fake External User-Agents in Native Apps
+
+The native app that is initiating the authorization request has a
+large degree of control over the user interface and can potentially
+present a fake external user agent, that is, an embedded user agent
+made to appear as an external user agent.
+
+When all good actors are using external user agents, the advantage is
+that it is possible for security experts to detect bad actors, as
+anyone faking an external user agent is provably bad.  On the other
+hand, if good and bad actors alike are using embedded user agents,
+bad actors don't need to fake anything, making them harder to detect.
+Once a malicious app is detected, it may be possible to use this
+knowledge to blacklist the app's signature in malware scanning
+software, take removal action (in the case of apps distributed by app
+stores) and other steps to reduce the impact and spread of the
+malicious app.
+
+Authorization servers can also directly protect against fake external
+user agents by requiring an authentication factor only available to
+true external user agents.
+
+Users who are particularly concerned about their security when using
+in-app browser tabs may also take the additional step of opening the
+request in the full browser from the in-app browser tab and complete
+the authorization there, as most implementations of the in-app
+browser tab pattern offer such functionality.
+
+
+### Malicious External User-Agents in Native Apps
+
+If a malicious app is able to configure itself as the default handler
+for `https` scheme URIs in the operating system, it will be able to
+intercept authorization requests that use the default browser and
+abuse this position of trust for malicious ends such as phishing the
+user.
+
+This attack is not confined to OAuth; a malicious app configured in
+this way would present a general and ongoing risk to the user beyond
+OAuth usage by native apps.  Many operating systems mitigate this
+issue by requiring an explicit user action to change the default
+handler for `http` and `https` scheme URIs.
+
 
 
 # Browser-Based Apps
