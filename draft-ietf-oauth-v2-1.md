@@ -1731,6 +1731,23 @@ token has expired or the client previously obtained an access token with a scope
 approved by the respective grant and later requires an access token with a different scope
 under the same grant. 
 
+Refresh tokens MUST be kept confidential in transit and storage, and
+shared only among the authorization server and the client to whom the
+refresh tokens were issued.  The authorization server MUST maintain
+the binding between a refresh token and the client to whom it was
+issued.
+
+The authorization server MUST verify the binding between the refresh
+token and client identity whenever the client identity can be
+authenticated.  When client authentication is not possible, the
+authorization server SHOULD issue sender-constrained refresh tokens
+or use refresh token rotation as described in (#refreshing-an-access-token).
+
+The authorization server MUST ensure that refresh tokens cannot be
+generated, modified, or guessed to produce valid refresh tokens by
+unauthorized parties.
+
+
 ### Token Endpoint Extension
 
 The authorization grant type is identified at the token endpoint with the `grant_type` value of `refresh_token`.
@@ -2540,25 +2557,6 @@ of a certain secret as prerequisite for the acceptance of that access token at
 the recipient (e.g., a resource server). The use of Mutual TLS for OAuth 2.0
 {{RFC8705}} is RECOMMENDED.
 
-## Refresh Tokens
-
-Authorization servers MAY issue refresh tokens to clients.
-
-Refresh tokens MUST be kept confidential in transit and storage, and
-shared only among the authorization server and the client to whom the
-refresh tokens were issued.  The authorization server MUST maintain
-the binding between a refresh token and the client to whom it was
-issued.
-
-The authorization server MUST verify the binding between the refresh
-token and client identity whenever the client identity can be
-authenticated.  When client authentication is not possible, the
-authorization server SHOULD issue sender-constrained refresh tokens
-or use refresh token rotation as described in (#refreshing-an-access-token).
-
-The authorization server MUST ensure that refresh tokens cannot be
-generated, modified, or guessed to produce valid refresh tokens by
-unauthorized parties.
 
 ## Client Impersonating Resource Owner {#client-impersonating-resource-owner}
 
