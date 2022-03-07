@@ -721,6 +721,9 @@ requests that specify a redirect URI that doesn't exactly match
 one that was registered; the exception is loopback redirects, where
 an exact match is required except for the port URI component.
 
+The authorization server MAY allow the client to register multiple
+redirect URIs.
+
 For private-use URI scheme-based redirect URIs, authorization servers
 SHOULD enforce the requirement in {{private-use-uri-scheme}} that clients use
 schemes that are reverse domain name based.  At a minimum, any
@@ -735,11 +738,13 @@ the owner of `example.com` could petition the app store operator to
 remove the counterfeit app.  Such a petition is harder to prove if a
 generic URI scheme was used.
 
+Clients MUST NOT expose URLs that forward the user's browser to
+arbitrary URIs obtained from a query parameter ("open redirector").
+Open redirectors can enable exfiltration of authorization codes and
+access tokens, see (#open_redirector_on_client).
+
 The client MAY use the `state` request parameter to achieve per-request 
 customization if needed rather than varying the redirect URI per request.
-
-The authorization server MAY allow the client to register multiple
-redirect URIs.
 
 Without requiring registration of redirect URIs, attackers can
 use the authorization endpoint as an open redirector as
@@ -750,6 +755,35 @@ described in {{open-redirectors}}.
 If multiple redirect URIs have been registered, the client MUST
 include a redirect URI with the authorization request using the
 `redirect_uri` request parameter.
+
+### Preventing CSRF Attacks
+
+Clients MUST prevent Cross-Site Request Forgery (CSRF) attacks. In this
+context, CSRF refers to requests to the redirection endpoint that do
+not originate at the authorization server, but a malicious third party
+(see Section 4.4.1.8. of {{RFC6819}} for details). Clients that have
+ensured that the authorization server supports the `code_challenge` parameter MAY
+rely the CSRF protection provided by that mechanism. In OpenID Connect flows,
+validating the `nonce` parameter provides CSRF protection. Otherwise, one-time
+use CSRF tokens carried in the `state` parameter that are securely
+bound to the user agent MUST be used for CSRF protection (see
+(#csrf_countermeasures)).
+
+
+### Preventing Mix-Up Attacks
+
+In order to prevent mix-up attacks (see (#mix_up)), clients MUST only process redirect
+responses of the authorization server they sent the respective request
+to and from the same user agent this authorization request was
+initiated with. Clients MUST store the authorization server they sent
+an authorization request to and bind this information to the user
+agent and check that the authorization response was received from the
+correct authorization server. Clients MUST ensure that the subsequent
+access token request, if applicable, is sent to the same authorization
+server. Clients SHOULD use distinct redirect URIs for each
+authorization server as a means to identify the authorization server a
+particular response came from.
+
 
 ### Invalid Endpoint
 
@@ -950,6 +984,10 @@ Request and response parameters
 defined by this specification MUST NOT be included more than once. 
 Parameters sent without a value MUST be treated as if they were
 omitted from the request.
+
+An authorization server that redirects a request potentially containing 
+user credentials MUST avoid forwarding these user credentials accidentally 
+(see {{redirect_307}} for details).
 
 ## Token Endpoint
 
@@ -2581,47 +2619,9 @@ resource owner from access tokens authorized by the client itself.
 
 ## Protecting the Authorization Code Flow
 
-When comparing client redirect URIs against pre-registered URIs,
-authorization servers MUST utilize exact string matching. This measure
-contributes to the prevention of leakage of authorization codes and
-access tokens (see (#insufficient_uri_validation)). It can also help to
-detect mix-up attacks (see (#mix_up)).
-
-Clients MUST NOT expose URLs that forward the user’s browser to
-arbitrary URIs obtained from a query parameter ("open redirector").
-Open redirectors can enable exfiltration of authorization codes and
-access tokens, see (#open_redirector_on_client).
-
-Clients MUST prevent Cross-Site Request Forgery (CSRF). In this
-context, CSRF refers to requests to the redirection endpoint that do
-not originate at the authorization server, but a malicious third party
-(see Section 4.4.1.8. of {{RFC6819}} for details). Clients that have
-ensured that the authorization server supports the `code_challenge` parameter MAY
-rely the CSRF protection provided by that mechanism. In OpenID Connect flows,
-the `nonce` parameter provides CSRF protection. Otherwise, one-time
-use CSRF tokens carried in the `state` parameter that are securely
-bound to the user agent MUST be used for CSRF protection (see
-(#csrf_countermeasures)).
-
-In order to prevent mix-up attacks (see (#mix_up)), clients MUST only process redirect
-responses of the authorization server they sent the respective request
-to and from the same user agent this authorization request was
-initiated with. Clients MUST store the authorization server they sent
-an authorization request to and bind this information to the user
-agent and check that the authorization response was received from the
-correct authorization server. Clients MUST ensure that the subsequent
-access token request, if applicable, is sent to the same authorization
-server. Clients SHOULD use distinct redirect URIs for each
-authorization server as a means to identify the authorization server a
-particular response came from.
-
-An AS that redirects a request potentially containing user credentials
-MUST avoid forwarding these user credentials accidentally (see
-{{redirect_307}} for details).
-
 ### Loopback Redirect Considerations in Native Apps {#loopback-native-apps}
 
-Loopback interface redirect URIs use the `http` scheme (i.e., without
+Loopback interface redirect URIs MAY use the `http` scheme (i.e., without
 TLS).  This is acceptable for loopback
 interface redirect URIs as the HTTP request never leaves the device.
 
