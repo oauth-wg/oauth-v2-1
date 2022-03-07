@@ -3571,38 +3571,38 @@ TBD
 
 # Document History
 
-   [[ To be removed from the final specification ]]
+[[ To be removed from the final specification ]]
 
-   -05
+-05
 
-    * Added a section about the removal of the implicit flow
-    * Moved many normative requirements from security considerations into the appropriate inline sections
-    * Reorganized and consolidated TLS language
-    * Require TLS on redirect URIs except for localhost/custom URL scheme
-    * Updated refresh token guidance to match security BCP
+*  Added a section about the removal of the implicit flow
+*  Moved many normative requirements from security considerations into the appropriate inline sections
+*  Reorganized and consolidated TLS language
+*  Require TLS on redirect URIs except for localhost/custom URL scheme
+*  Updated refresh token guidance to match security BCP
 
-   -04 
+-04 
 
-    * Added explicit mention of not sending access tokens in URI query strings
-    * Clarifications on definition of client types
-    * Consolidated text around loopback vs localhost
-    * Editorial clarifications throughout the document
+*  Added explicit mention of not sending access tokens in URI query strings
+*  Clarifications on definition of client types
+*  Consolidated text around loopback vs localhost
+*  Editorial clarifications throughout the document
 
-   -03
+-03
 
-    * refactoring to collect all the grant types under the same top-level header in section 4
-    * Better split normative and security consideration text into the appropriate places, both moving text that was really security considerations out of the main part of the document, as well as pulling normative requirements from the security considerations sections into the appropriate part of the main document
-    * Incorporated many of the published errata on RFC6749
-    * Updated references to various RFCs
-    * Editorial clarifications throughout the document
+*  refactoring to collect all the grant types under the same top-level header in section 4
+*  Better split normative and security consideration text into the appropriate places, both moving text that was really security considerations out of the main part of the document, as well as pulling normative requirements from the security considerations sections into the appropriate part of the main document
+*  Incorporated many of the published errata on RFC6749
+*  Updated references to various RFCs
+*  Editorial clarifications throughout the document
 
-   -02
+-02
 
-   -01
+-01
 
-   -00 
+-00 
 
-   *  initial revision
+*  initial revision
 
 
 --- fluff
