@@ -818,10 +818,14 @@ The client MUST NOT use more than one authentication method in each
 request to prevent a conflict of which authentication mechanism is 
 authoritative for the request.
 
-The authorization server must consider the security implications of
+The authorization server MUST consider the security implications of
 interacting with unauthenticated clients and take measures to limit
 the potential exposure of tokens issued to such clients, 
 (e.g., limiting the lifetime of refresh tokens).
+
+The privileges an authorization server associates with a certain
+client identity MUST depend on the assessment of the overall process
+for client identification and client credential lifecycle management. See {{security-client-authentication}} for additional details.
 
 
 ### Client Secret {#client-secret}
@@ -2438,9 +2442,9 @@ determine those resources and/or actions.
 
 ## Client Authentication {#security-client-authentication}
 
-The privileges an authorization server associates with a certain
-client identity MUST depend on the assessment of the overall process
-for client identification and client credential lifecycle management.
+Depending on the overall process of client registration and credential
+lifecycle management, this may affect the confidence an authorization 
+server has in a particular client.
 For example, authentication of a dynamically registered client does not
 prove the identity of the client, it only ensures that repeated requests
 to the authorization server were made from the same client instance. Such
@@ -2451,36 +2455,6 @@ was verified, who signed a contract and is issued a client secret
 that is only used in a secure backend service, the authorization
 server might allow this client to request more sensitive scopes
 or to be issued longer-lasting tokens.
-
-
-### Client Authentication of Native Apps
-
-Secrets that are statically included as part of an app distributed to
-multiple users should not be treated as confidential secrets, as one
-user may inspect their copy and learn the shared secret.  For this
-reason, it is NOT
-RECOMMENDED for authorization servers to require client
-authentication of public native apps clients using a shared secret,
-as this serves little value beyond client identification which is
-already provided by the `client_id` request parameter.
-
-Authorization servers that still require a statically included shared
-secret for native app clients MUST treat the client as a public
-client (as defined in {{client-types}}), and not
-accept the secret as proof of the client's identity.  Without
-additional measures, such clients are subject to client impersonation
-(see {{native-app-client-impersonation}}).
-
-
-## Registration of Native App Clients {#native-app-registration}
-
-Except when using a mechanism like Dynamic Client Registration
-{{RFC7591}} to provision per-instance secrets, native apps are
-classified as public clients, as defined in {{client-types}};
-they MUST be registered with the authorization server as
-such.  Authorization servers MUST record the client type in the
-client registration details in order to identify and process requests
-accordingly.
 
 
 
@@ -3095,6 +3069,35 @@ communication.  Some OAuth server implementations that assume all
 clients are confidential web clients will need to add an
 understanding of public native app clients and the types of redirect
 URIs they use to support this best practice.
+
+## Registration of Native App Clients {#native-app-registration}
+
+Except when using a mechanism like Dynamic Client Registration
+{{RFC7591}} to provision per-instance secrets, native apps are
+classified as public clients, as defined in {{client-types}};
+they MUST be registered with the authorization server as
+such.  Authorization servers MUST record the client type in the
+client registration details in order to identify and process requests
+accordingly.
+
+### Client Authentication of Native Apps
+
+Secrets that are statically included as part of an app distributed to
+multiple users should not be treated as confidential secrets, as one
+user may inspect their copy and learn the shared secret.  For this
+reason, it is NOT
+RECOMMENDED for authorization servers to require client
+authentication of public native apps clients using a shared secret,
+as this serves little value beyond client identification which is
+already provided by the `client_id` request parameter.
+
+Authorization servers that still require a statically included shared
+secret for native app clients MUST treat the client as a public
+client (as defined in {{client-types}}), and not
+accept the secret as proof of the client's identity.  Without
+additional measures, such clients are subject to client impersonation
+(see {{native-app-client-impersonation}}).
+
 
 ## Using Inter-App URI Communication for OAuth in Native Apps
 
