@@ -3309,7 +3309,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 * Bearer token usage omits the use of bearer tokens in the query string of URIs
   as per Section 4.3.2 of {{I-D.ietf-oauth-security-topics}}
 * Refresh tokens for public clients must either be sender-constrained or one-time use
-  as per Section 4.12.2 of {{I-D.ietf-oauth-security-topics}}
+  as per Section 4.13.2 of {{I-D.ietf-oauth-security-topics}}
 
 ## Removal of the OAuth 2.0 Implicit grant
 
