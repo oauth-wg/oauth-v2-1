@@ -88,7 +88,7 @@ informative:
 
   OpenID:
     title: OpenID Connect Core 1.0
-    target: https://openiD.net/specs/openiD-connect-core-1_0.html
+    target: https://openid.net/specs/openid-connect-core-1_0.html
     date: November 8, 2014
     author:
       - ins: N. Sakimora
