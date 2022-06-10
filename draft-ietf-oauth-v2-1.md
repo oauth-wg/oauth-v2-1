@@ -964,13 +964,13 @@ but the location is typically provided in the service documentation,
 or in the authorization server's metadata document ({{RFC8414}}).
 
 The endpoint URI MAY include an "application/x-www-form-urlencoded"
-formatted (per Appendix B) query component ({{RFC3986}} Section 3.4),
+formatted (per Appendix B) query component (see {{Section 3.4 of RFC3986}}),
 which MUST be retained when adding additional query parameters.  The
 endpoint URI MUST NOT include a fragment component.
 
 The authorization server MUST support the use of the HTTP `GET`
-method {{RFC9110}} for the authorization endpoint and MAY support the
-use of the `POST` method as well.
+method {{Section 9.3.1 of RFC9110}} for the authorization endpoint and MAY support
+the `POST` method (Section 9.3.3 of RFC9110) as well.
 
 The authorization server MUST ignore unrecognized request parameters.
 
@@ -2641,19 +2641,20 @@ as described in {{loopback-interface-redirection}}.
 ### HTTP 307 Redirect {#redirect_307}
 
 An AS which redirects a request that potentially contains user
-credentials MUST NOT use the HTTP 307 status code for
-redirection.  If an HTTP redirection (and not, for example,
-JavaScript) is used for such a request, AS SHOULD use HTTP status
+credentials MUST NOT use the 307 status code (see {{Section 15.4.8 of RFC9110}}) for
+redirection.
+If an HTTP redirection (and not, for example,
+JavaScript) is used for such a request, AS SHOULD use the status
 code 303 "See Other".
 
 At the authorization endpoint, a typical protocol flow is that the AS
 prompts the user to enter their credentials in a form that is then
-submitted (using the HTTP POST method) back to the authorization
+submitted (using the POST method) back to the authorization
 server.  The AS checks the credentials and, if successful, redirects
 the user agent to the client's redirect URI.
 
 If the status code 307 were used for redirection, the user agent
-would send the user credentials via HTTP POST to the client.
+would send the user credentials via a POST request to the client.
 
 This discloses the sensitive credentials to the client.  If the
 relying party is malicious, it can use the credentials to impersonate
@@ -3124,8 +3125,9 @@ the authorization response.
 
 ### Claimed "https" Scheme URI Redirection
 
-Some operating systems allow apps to claim `https` scheme {{RFC9110}}
-URIs in the domains they control.  When the browser encounters a
+Some operating systems allow apps to claim `https` URIs
+(see {{Section 4.2.2 of RFC9110}})
+in the domains they control.  When the browser encounters a
 claimed URI, instead of the page being loaded in the browser, the
 native app is launched with the URI supplied as a launch parameter.
 
