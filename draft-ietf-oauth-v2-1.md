@@ -495,7 +495,7 @@ Implementations MUST use a mechanism to provide communication
 authentication, integrity and confidentiality such as
 Transport-Layer Security {{RFC8446}},
 to protect the exchange of clear-text credentials and tokens
-either in the payload body or in header fields
+either in the content or in header fields
 from eavesdropping, tampering, and message forgery
 (eg. see {{client-secret}}, {{authorization_codes}}, {{token-endpoint}}, and {{bearer-tokens}}).
 
@@ -874,7 +874,7 @@ For example (with extra line breaks for display purposes only):
     Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
 
 In addition to that, the authorization server MAY support including the
-client credentials in the request-body using the following
+client credentials in the request content using the following
 parameters:
 
 "client_id":
@@ -884,15 +884,15 @@ parameters:
 "client_secret":
 :    REQUIRED.  The client secret.
 
-Including the client credentials in the request-body using the two
+Including the client credentials in the request content using the two
 parameters is NOT RECOMMENDED and SHOULD be limited to clients unable
 to directly utilize the HTTP Basic authentication scheme (or other
 password-based HTTP authentication schemes).  The parameters can only
-be transmitted in the request-body and MUST NOT be included in the
+be transmitted in the request content and MUST NOT be included in the
 request URI.
 
 For example, a request to refresh an access token ({{refreshing-an-access-token}}) using
-the body parameters (with extra line breaks for display purposes
+the content parameters (with extra line breaks for display purposes
 only):
 
     POST /token HTTP/1.1
@@ -1037,7 +1037,7 @@ Client authentication is used for:
 The client makes a request to the token endpoint by sending the
 following parameters using the `application/x-www-form-urlencoded`
 format per Appendix B with a character encoding of UTF-8 in the HTTP
-request payload:
+request content:
 
 "client_id":
 :    REQUIRED, if the client is not authenticating with the
@@ -1120,7 +1120,7 @@ authentication failed or is invalid, the authorization server returns
 an error response as described in {{token-error-response}}.
 
 The authorization server issues an access token and optional refresh
-token by creating an HTTP response body using the `application/json`
+token by creating an HTTP response content using the `application/json`
 media type as defined by {{RFC8259}} with the following parameters
 and an HTTP 200 (OK) status code:
 
@@ -1259,7 +1259,7 @@ parameters with the response:
      URI-reference syntax and thus MUST NOT include characters
      outside the set %x21 / %x23-5B / %x5D-7E.
 
-The parameters are included in the payload of the HTTP response
+The parameters are included in the content of the HTTP response
 using the `application/json` media type as defined by [RFC7159].  The
 parameters are serialized into a JSON structure by adding each
 parameter at the highest structure level.  Parameter names and string
@@ -2012,30 +2012,30 @@ Clients SHOULD make authenticated requests with a bearer token using
 the `Authorization` request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
-#### Form-Encoded Body Parameter
+#### Form-Encoded Content Parameter
 
-When sending the access token in the HTTP request payload, the
-client adds the access token to the request-body using the
+When sending the access token in the HTTP request content, the
+client adds the access token to the request content using the
 `access_token` parameter.  The client MUST NOT use this method unless
 all of the following conditions are met:
 
-* The HTTP request entity-header includes the `Content-Type` header
+* The HTTP request includes the `Content-Type` header
   field set to `application/x-www-form-urlencoded`.
 
-* The payload follows the encoding requirements of the
+* The content follows the encoding requirements of the
   `application/x-www-form-urlencoded` content-type as defined by
   HTML 4.01 [W3C.REC-html401-19991224].
 
-* The HTTP request payload is single-part.
+* The HTTP request content is single-part.
 
-* The content to be encoded in the payload MUST consist entirely
+* The content to be encoded in the request MUST consist entirely
   of ASCII {{USASCII}} characters.
 
-* The HTTP request method is one for which the request-body has
+* The HTTP request method is one for which the content has
   defined semantics.  In particular, this means that the `GET`
   method MUST NOT be used.
 
-The payload MAY include other request-specific parameters, in
+The content MAY include other request-specific parameters, in
 which case the `access_token` parameter MUST be properly separated
 from the request-specific parameters using `&` character(s) (ASCII
 code 38).
@@ -2660,11 +2660,11 @@ relying party is malicious, it can use the credentials to impersonate
 the user at the AS.
 
 The behavior might be unexpected for developers, but is defined in
-{{RFC9110}}, Section 6.4.7.  This status code does not require the user
+{{Section 15.4.8 of RFC9110}}.  This status code does not require the user
 agent to rewrite the POST request to a GET request and thereby drop
-the form data in the POST request body.
+the form data in the POST request content.
 
-In the HTTP standard {{RFC9110}}, only the status code 303
+In HTTP {{RFC9110}}, only the status code 303
 unambigiously enforces rewriting the HTTP POST request to an HTTP GET
 request.  For all other status codes, including the popular 302, user
 agents can opt not to rewrite POST to GET requests and therefore to
@@ -3495,13 +3495,13 @@ the IANA MIME Media Types registry
 definition is incomplete, as it does not consider non-US-ASCII
 characters.
 
-To address this shortcoming when generating payloads using this media
+To address this shortcoming when generating contents using this media
 type, names and values MUST be encoded using the UTF-8 character
 encoding scheme [RFC3629] first; the resulting octet sequence then
 needs to be further encoded using the escaping rules defined in
 [W3C.REC-html401-19991224].
 
-When parsing data from a payload using this media type, the names and
+When parsing data from a content using this media type, the names and
 values resulting from reversing the name/value encoding consequently
 need to be treated as octet sequences, to be decoded using the UTF-8
 character encoding scheme.
@@ -3514,7 +3514,7 @@ into the octet sequence below (using hexadecimal notation):
 
     20 25 26 2B C2 A3 E2 82 AC
 
-and then represented in the payload as:
+and then represented in the content as:
 
     +%25%26%2B%C2%A3%E2%82%AC
 
