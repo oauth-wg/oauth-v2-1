@@ -573,9 +573,9 @@ defined in {{RFC4949}}.  These terms include, but are not limited to,
 "confidentiality", "credential", "encryption", "identity", "sign",
 "signature", "trust", "validate", and "verify".
 
-The term "content" is to be interpreted as described in {{Section 6.4 of RFC9110}}.
+The term "content" is to be interpreted as described in Section 6.4 of {{RFC9110}}.
 
-The term "user agent" is to be interpreted as described in {{Section 3.5 of RFC9110}}.
+The term "user agent" is to be interpreted as described in Section 3.5 of {{RFC9110}}.
 
 Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.
@@ -860,7 +860,7 @@ for client identification and client credential lifecycle management. See {{secu
 
 Clients in possession of a client secret, sometimes known as a client password,
 MAY use the HTTP Basic
-authentication scheme as defined in {{Section 11 of RFC9110}} to authenticate with
+authentication scheme as defined in Section 11 of {{RFC9110}} to authenticate with
 the authorization server.  The client identifier is encoded using the
 `application/x-www-form-urlencoded` encoding algorithm per
 Appendix B, and the encoded value is used as the username; the client
@@ -964,12 +964,12 @@ but the location is typically provided in the service documentation,
 or in the authorization server's metadata document ({{RFC8414}}).
 
 The endpoint URI MAY include an "application/x-www-form-urlencoded"
-formatted (per Appendix B) query component (see {{Section 3.4 of RFC3986}}),
+formatted (per Appendix B) query component (see Section 3.4 of {{RFC3986}}),
 which MUST be retained when adding additional query parameters.  The
 endpoint URI MUST NOT include a fragment component.
 
 The authorization server MUST support the use of the HTTP `GET`
-method {{Section 9.3.1 of RFC9110}} for the authorization endpoint and MAY support
+method Section 9.3.1 of {{RFC9110}} for the authorization endpoint and MAY support
 the `POST` method (Section 9.3.3 of RFC9110) as well.
 
 The authorization server MUST ignore unrecognized request parameters.
@@ -1168,7 +1168,7 @@ Numerical values are included as JSON numbers.  The order of
 parameters does not matter and can vary.
 
 The authorization server MUST include the HTTP `Cache-Control`
-response header field (see {{Section 5.2 of RFC9111}}) with a value of `no-store` in any
+response header field (see Section 5.2 of {{RFC9111}}) with a value of `no-store` in any
 response containing tokens, credentials, or other sensitive
 information.
 
@@ -2179,7 +2179,7 @@ description of Bearer tokens in {{bearer-token-error-codes}}.
 
 ### Extension Token Types
 
-{{RFC6750}} establishes a common registry in {{Section 11.4 of RFC6749}}
+{{RFC6750}} establishes a common registry in Section 11.4 of {{RFC6749}}
 for error values to be shared among OAuth token authentication schemes.
 
 New authentication schemes designed primarily for OAuth token
@@ -2641,7 +2641,7 @@ as described in {{loopback-interface-redirection}}.
 ### HTTP 307 Redirect {#redirect_307}
 
 An AS which redirects a request that potentially contains user
-credentials MUST NOT use the 307 status code (see {{Section 15.4.8 of RFC9110}}) for
+credentials MUST NOT use the 307 status code (see Section 15.4.8 of {{RFC9110}}) for
 redirection.
 If an HTTP redirection (and not, for example,
 JavaScript) is used for such a request, AS SHOULD use the status
@@ -2661,7 +2661,7 @@ relying party is malicious, it can use the credentials to impersonate
 the user at the AS.
 
 The behavior might be unexpected for developers, but is defined in
-{{Section 15.4.8 of RFC9110}}.  This status code does not require the user
+Section 15.4.8 of {{RFC9110}}.  This status code does not require the user
 agent to rewrite the POST request to a GET request and thereby drop
 the form data in the POST request content.
 
@@ -3126,7 +3126,7 @@ the authorization response.
 ### Claimed "https" Scheme URI Redirection
 
 Some operating systems allow apps to claim `https` URIs
-(see {{Section 4.2.2 of RFC9110}})
+(see Section 4.2.2 of {{RFC9110}})
 in the domains they control.  When the browser encounters a
 claimed URI, instead of the page being loaded in the browser, the
 native app is launched with the URI supplied as a launch parameter.
