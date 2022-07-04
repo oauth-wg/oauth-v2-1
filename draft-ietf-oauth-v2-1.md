@@ -644,28 +644,32 @@ A single `client_id` MUST NOT be treated as more than one type of client.
 This specification has been designed around the following client profiles:
 
 "web application":
-: A web application is a confidential client running on a web
-  server.  Resource owners access the client via an HTML user
+: A web application is a client running on a web
+  server. Resource owners access the client via an HTML user
   interface rendered in a user agent on the device used by the
   resource owner.  The client credentials as well as any access
   tokens issued to the client are stored on the web server and are
   not exposed to or accessible by the resource owner.
 
 "browser-based application":
-: A browser-based application is a public client in which the
+: A browser-based application is a client in which the
   client code is downloaded from a web server and executes within a
   user agent (e.g., web browser) on the device used by the resource
   owner.  Protocol data and credentials are easily accessible (and
-  often visible) to the resource owner.  Since such applications
+  often visible) to the resource owner. If such applications shall use 
+  client credentials, it is recommended to utilize the 
+  backend for frontend pattern. Since such applications
   reside within the user agent, they can make seamless use of the
   user agent capabilities when requesting authorization.
 
 "native application":
-: A native application is a public client installed and executed on
+: A native application is a client installed and executed on
   the device used by the resource owner.  Protocol data and
   credentials are accessible to the resource owner.  It is assumed
   that any client authentication credentials included in the
-  application can be extracted.  On the other hand, dynamically
+  application can be extracted. If such applications shall use 
+  client credentials, it is recommended to utilize the 
+  backend for frontend pattern.  Dynamically
   issued credentials such as access tokens or refresh tokens can
   receive an acceptable level of protection.  At a minimum, these
   credentials are protected from hostile servers with which the
