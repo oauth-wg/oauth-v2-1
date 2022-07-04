@@ -86,7 +86,7 @@ informative:
     target: https://openid.net/specs/openid-connect-core-1_0.html
     date: November 8, 2014
     author:
-      - ins: N. Sakimora
+      - ins: N. Sakimura
       - ins: J. Bradley
       - ins: M. Jones
       - ins: B. de Medeiros
@@ -431,7 +431,7 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 ### Client Credentials
 
 The client credentials or other forms of client authentication
-(e.g. a `client_secret` or a private key used to sign a JWT)
+(e.g. a private key used to sign a JWT)
 can be used as an authorization grant when the authorization scope is
 limited to the protected resources under the control of the client,
 or to protected resources previously arranged with the authorization
@@ -584,7 +584,7 @@ are case sensitive.
 # Client Registration {#client-registration}
 
 Before initiating the protocol, the client must establish its registration with the
-authorization server.  The means through which the client registers
+authorization server. The means through which the client registers
 with the authorization server are beyond the scope of this
 specification but typically involve the client developer manually registering
 the client at the authorization server's website after creating an account and agreeing
@@ -616,28 +616,30 @@ for clients that may be used even with manual client registration.
 
 ## Client Types {#client-types}
 
-OAuth 2.1 defines three client types based on their ability to authenticate securely
-with the authorization server as well as the authorization server's assurance of the
-client's identity.
+OAuth 2.1 defines two client types based on their ability to authenticate securely
+with the authorization server.
 
 "confidential":
-: Clients that have credentials and have a prior relationship with the AS are designated as "confidential clients"
-
-"credentialed":
-: Clients that have credentials but no prior relationship with the AS are designated as "credentialed clients"
+: Clients that have credentials with the AS are designated as "confidential clients"
 
 "public":
 : Clients without credentials are called "public clients"
 
 Any clients with credentials MUST take precautions to prevent leakage and abuse of their credentials.
 
+Client authentication allows an Authorization Server to ensure it interacts with a certain client 
+(identified by its `client_id`) in an OAuth flow. This might by the pre-requisite to use client 
+policy and metadata in the course of processing this flow. For example, the Authorization Server
+may show the trustworthy client name in user consent or allow access to certain functions as 
+defined in the respective's client policy.    
+
+Whether and how an Authorization server validates the identity of a client or the party 
+providing/operating this client is out of scope of this specification.  
 Authorization servers SHOULD consider the level of confidence in a client's identity
-when deciding whether they allow such a client access to more critical functions,
+when deciding whether they allow a client access to certain resource servers or critical functions,
 such as the Client Credentials grant type.
 
 A single `client_id` MUST NOT be treated as more than one type of client.
-
-For example, a client that has been registered at the authorization server by a registered application developer, where the client is expected to be run as server-side code, would be considered a confidential client. A client that runs on an end-user's device, and uses Dynamic Client Registration ({{RFC7591}}) to establish credentials the first time the app runs, would be considered a credentialed client. An application deployed as a single-page app on a static web host would be considered a public client.
 
 This specification has been designed around the following client profiles:
 
