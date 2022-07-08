@@ -680,12 +680,14 @@ This specification has been designed around the following client profiles:
 
 ## Client Identifier {#client-identifier}
 
-The authorization server issues the registered client a client
-identifier -- a unique string representing the registration
-information provided by the client.  The client identifier is not a
+Every client is identified in the context of an authorization server 
+by a client identifier -- a unique string representing the registration
+information provided by the client. The Authorization Server may itself 
+issue the client identifier, it may also server clients whose client identifier
+was issued by a trusted third party. The client identifier is not a
 secret; it is exposed to the resource owner and MUST NOT be used
-alone for client authentication.  The client identifier is unique to
-the authorization server.
+alone for client authentication.  The client identifier is unique in the 
+context of an authorization server.
 
 The client identifier string size is left undefined by this
 specification.  The client should avoid making assumptions about the
@@ -822,9 +824,8 @@ The authorization server MUST only rely on client authentication if the
 process of issuance/registration and distribution of the underlying
 credentials ensures their confidentiality.
 
-If the client is confidential or credentialed,
-the authorization server MAY accept any form of client authentication
-meeting its security requirements
+If the client is confidential, the authorization server MAY accept any 
+form of client authentication meeting its security requirements
 (e.g., password, public/private key pair).
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
@@ -842,12 +843,6 @@ when asking for resource owner authorization but can be used to
 prevent delivering credentials to a counterfeit client after
 obtaining resource owner authorization.
 
-The authorization server MAY establish a client authentication method
-with public clients, which converts them to credentialed
-clients.  However, the authorization server MUST NOT rely on
-credentialed client authentication for the purpose of
-identifying the client.
-
 The client MUST NOT use more than one authentication method in each
 request to prevent a conflict of which authentication mechanism is
 authoritative for the request.
@@ -859,8 +854,8 @@ the potential exposure of tokens issued to such clients,
 
 The privileges an authorization server associates with a certain
 client identity MUST depend on the assessment of the overall process
-for client identification and client credential lifecycle management. See {{security-client-authentication}} for additional details.
-
+for client identification and client credential lifecycle management. 
+See {{security-client-authentication}} for additional details.
 
 ### Client Secret {#client-secret}
 
@@ -1016,7 +1011,7 @@ defined by this specification MUST NOT be included more than once.
 
 ### Client Authentication {#token-endpoint-client-authentication}
 
-Confidential or credentialed clients MUST
+Confidential clients MUST
 authenticate with the authorization server as described in
 {{client-authentication}} when making requests to the token endpoint.
 
@@ -1059,7 +1054,7 @@ This specification defines the values `authorization_code`, `refresh_token`, and
 The grant type determines the further parameters required or supported by the token request. The
 details of those grant types are defined below.
 
-Confidential or credentialed clients MUST authenticate with the authorization
+Confidential clients MUST authenticate with the authorization
 server as described in {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request
@@ -1076,7 +1071,7 @@ For example, the client makes the following HTTP request
 
 The authorization server MUST:
 
-*  require client authentication for confidential and credentialed clients
+*  require client authentication for confidential clients
    (or clients with other authentication requirements),
 
 *  authenticate the client if client authentication is included
@@ -1703,7 +1698,7 @@ For example, the client makes the following HTTP request
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
 *  ensure that the authorization code was issued to the authenticated
-   confidential or credentialed client, or if the client is public, ensure that the
+   confidential client, or if the client is public, ensure that the
    code was issued to `client_id` in the request,
 
 *  verify that the authorization code is valid,
@@ -1730,8 +1725,7 @@ control, or those of another resource owner that have been previously
 arranged with the authorization server (the method of which is beyond
 the scope of this specification).
 
-The client credentials grant type MUST only be used by confidential
-or credentialed clients.
+The client credentials grant type MUST only be used by confidential clients.
 
 ~~~~~~~~~~
      +---------+                                  +---------------+
@@ -1807,7 +1801,7 @@ If this value is set, the following additional parameters beyond {{token-request
 
 Because refresh tokens are typically long-lasting credentials used to
 request additional access tokens, the refresh token is bound to the
-client to which it was issued. Confidential or credentialed clients
+client to which it was issued. Confidential clients
 MUST authenticate with the authorization server as described in
 {{token-endpoint-client-authentication}}.
 
