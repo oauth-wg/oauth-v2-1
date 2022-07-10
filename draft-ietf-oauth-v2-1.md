@@ -683,7 +683,7 @@ This specification has been designed around the following client profiles:
 Every client is identified in the context of an authorization server 
 by a client identifier -- a unique string representing the registration
 information provided by the client. The Authorization Server may itself 
-issue the client identifier, it may also server clients whose client identifier
+issue the client identifier, it may also serve clients whose client identifier
 was issued by a trusted third party. The client identifier is not a
 secret; it is exposed to the resource owner and MUST NOT be used
 alone for client authentication.  The client identifier is unique in the 
