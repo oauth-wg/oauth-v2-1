@@ -1299,34 +1299,31 @@ initiating the flow with the resource owner's user agent (typically a web
 browser) and capable of being redirected back to from the authorization server.
 
 ~~~~~~~~~~
-+----------+
-| Resource |
-|   Owner  |
-|          |
-+----------+
-     ^
-     |
-    (2)
-+----|-----+          Client Identifier      +---------------+
-|         -+----(1)-- & Redirect URI    ---->|               |
-|  User-   |                                 | Authorization |
-|  Agent  -+----(2)-- User authenticates --->|     Server    |
-|          |                                 |               |
-|         -+----(3)-- Authorization Code ---<|               |
-+-|----|---+                                 +---------------+
-  |    |                                         ^      v
- (1)  (3)                                        |      |
-  |    |                                         |      |
-  ^    v                                         |      |
-+---------+                                      |      |
-|         |>---(4)-- Authorization Code ---------'      |
-|  Client |          & Redirect URI                     |
-|         |                                             |
-|         |<---(5)----- Access Token -------------------'
-+---------+       (w/ Optional Refresh Token)
-
-Note: The lines illustrating steps (1), (2), and (3) are broken into
-two parts as they pass through the user agent.
+ +----------+
+ | Resource |
+ |   Owner  |
+ +----------+
+       ^
+       |
+       |
+ +-----|----+          Client Identifier      +---------------+
+ | .---+---------(A)-- & Redirection URI ---->|               |
+ | |   |    |                                 |               |
+ | |   '---------(B)-- User authenticates --->|               |
+ | | User-  |                                 | Authorization |
+ | | Agent  |                                 |     Server    |
+ | |        |                                 |               |
+ | |    .--------(C)-- Authorization Code ---<|               |
+ +-|----|---+                                 +---------------+
+   |    |                                         ^      v
+   |    |                                         |      |
+   ^    v                                         |      |
+ +---------+                                      |      |
+ |         |>---(D)-- Authorization Code ---------'      |
+ |  Client |          & Redirection URI                  |
+ |         |                                             |
+ |         |<---(E)----- Access Token -------------------'
+ +---------+       (w/ Optional Refresh Token)
 ~~~~~~~~~~
 {: #fig-authorization-code-flow title="Authorization Code Flow"}
 
