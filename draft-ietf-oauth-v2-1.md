@@ -316,7 +316,7 @@ authorization server as an intermediary, which is illustrated in
 
 ## Authorization Grant
 
-An authorization grant is a credential representing the resource
+An authorization grant represents the resource
 owner's authorization (to access its protected resources) used by the
 client to obtain an access token.  This specification defines three
 grant types -- authorization code, refresh token,
@@ -435,11 +435,9 @@ The client credentials or other forms of client authentication
 can be used as an authorization grant when the authorization scope is
 limited to the protected resources under the control of the client,
 or to protected resources previously arranged with the authorization
-server.  Client credentials are used as an authorization grant
-typically when the client is acting on its own behalf (the client is
-also the resource owner) or is requesting access to protected
-resources based on an authorization previously arranged with the
-authorization server.
+server.  Client credentials are used when the client is requesting 
+access to protected resources based on an authorization previously 
+arranged with the authorization server.
 
 ## Access Token
 
