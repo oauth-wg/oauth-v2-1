@@ -431,7 +431,7 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 ### Client Credentials
 
 The client credentials or other forms of client authentication
-(e.g. a private key used to sign a JWT)
+(e.g. a private key used to sign a JWT, as described in {{RFC7523}})
 can be used as an authorization grant when the authorization scope is
 limited to the protected resources under the control of the client,
 or to protected resources previously arranged with the authorization
