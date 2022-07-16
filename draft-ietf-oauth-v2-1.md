@@ -1959,12 +1959,6 @@ communication interaction between the client and the resource server
 MUST utilize confidentiality and integrity protection as described in
 {{communication-security}}.
 
-To mitigate the risk of access token capture and replay,
-the lifetime of the token MUST be limited. One means
-of achieving this is by putting a validity time field inside the
-protected part of the token.  Note that using short-lived
-tokens reduces the impact of them being leaked.
-
 There is no requirement on the particular structure or format of a bearer token, as described in {{accessing-protected-resources}}. If a bearer token is a reference to authorization information, such references MUST be infeasible for an attacker to guess, such as using a sufficiently long cryptographically random string. If a bearer token uses an encoding mechanism to contain the authorization information in the token itself, the access token MUST use integrity protection sufficient to prevent the token from being modified. One example of an encoding and signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
 
 
@@ -2048,6 +2042,29 @@ The `application/x-www-form-urlencoded` method SHOULD NOT be used
 except in application contexts where participating clients do not
 have access to the `Authorization` request header field.  Resource
 servers MAY support this method.
+
+
+### Access Token Validation
+
+After receiving the access token, the resource server MUST check that
+the access token is not yet expired, is authorized to access the requested
+resource, was issued with the appropriate scope, and meets other policy 
+requirements of the resource server to access the protected resource.
+
+Access tokens generally fall into two categories: reference tokens or self-encoded tokens.
+Reference tokens can be validated by querying the authorization server or
+looking up the token in a token database, whereas self-encoded tokens
+contain the authorization information in an encrypted and/or signed string
+which can be extracted by the resource server.
+
+A standardized method to query the authorization server to check the validity
+of an access token is defined in Token Introspection ({{RFC7662}}).
+
+A standardized method of encoding information in a token string is 
+defined in JWT Profile for Access Tokens ({{RFC9068}}).
+
+See {{access-token-security-considerations}} for additional considerations
+around creating and validating access tokens.
 
 
 ### The WWW-Authenticate Response Header Field
@@ -2309,7 +2326,7 @@ background for the protocol design, is provided by
 {{RFC6819}} and {{I-D.ietf-oauth-security-topics}}.
 
 
-## Access Token Security Considerations
+## Access Token Security Considerations {#access-token-security-considerations}
 
 ### Security Threats
 
