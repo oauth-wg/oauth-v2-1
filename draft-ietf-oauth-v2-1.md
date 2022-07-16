@@ -654,7 +654,7 @@ This specification has been designed around the following client profiles:
   client code is downloaded from a web server and executes within a
   user agent (e.g., web browser) on the device used by the resource
   owner.  Protocol data and credentials are easily accessible (and
-  often visible) to the resource owner. If such applications shall use 
+  often visible) to the resource owner. If such applications wish to use 
   client credentials, it is recommended to utilize the 
   backend for frontend pattern. Since such applications
   reside within the user agent, they can make seamless use of the
@@ -665,15 +665,14 @@ This specification has been designed around the following client profiles:
   the device used by the resource owner.  Protocol data and
   credentials are accessible to the resource owner.  It is assumed
   that any client authentication credentials included in the
-  application can be extracted. If such applications shall use 
+  application can be extracted. Dynamically
+  issued access tokens and refresh tokens can
+  receive an acceptable level of protection.  On some platforms, these credentials
+  might even be protected from other applications residing on the same
+  device. If such applications wish to use 
   client credentials, it is recommended to utilize the 
-  backend for frontend pattern.  Dynamically
-  issued credentials such as access tokens or refresh tokens can
-  receive an acceptable level of protection.  At a minimum, these
-  credentials are protected from hostile servers with which the
-  application may interact.  On some platforms, these credentials
-  might be protected from other applications residing on the same
-  device.
+  backend for frontend pattern, or issue the credentials at runtime
+  using Dynamic Client Registration ({{RFC7591}}).
 
 
 ## Client Identifier {#client-identifier}
