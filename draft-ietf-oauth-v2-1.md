@@ -86,7 +86,7 @@ informative:
     target: https://openid.net/specs/openid-connect-core-1_0.html
     date: November 8, 2014
     author:
-      - ins: N. Sakimora
+      - ins: N. Sakimura
       - ins: J. Bradley
       - ins: M. Jones
       - ins: B. de Medeiros
@@ -431,7 +431,7 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 ### Client Credentials
 
 The client credentials or other forms of client authentication
-(e.g. a `client_secret` or a private key used to sign a JWT)
+(e.g. a private key used to sign a JWT, as described in {{RFC7523}})
 can be used as an authorization grant when the authorization scope is
 limited to the protected resources under the control of the client,
 or to protected resources previously arranged with the authorization
@@ -582,7 +582,7 @@ are case sensitive.
 # Client Registration {#client-registration}
 
 Before initiating the protocol, the client must establish its registration with the
-authorization server.  The means through which the client registers
+authorization server. The means through which the client registers
 with the authorization server are beyond the scope of this
 specification but typically involve the client developer manually registering
 the client at the authorization server's website after creating an account and agreeing
@@ -614,54 +614,60 @@ for clients that may be used even with manual client registration.
 
 ## Client Types {#client-types}
 
-OAuth 2.1 defines three client types based on their ability to authenticate securely
-with the authorization server as well as the authorization server's assurance of the
-client's identity.
+OAuth 2.1 defines two client types based on their ability to authenticate securely
+with the authorization server.
 
 "confidential":
-: Clients that have credentials and have a prior relationship with the AS are designated as "confidential clients"
-
-"credentialed":
-: Clients that have credentials but no prior relationship with the AS are designated as "credentialed clients"
+: Clients that have credentials with the AS are designated as "confidential clients"
 
 "public":
 : Clients without credentials are called "public clients"
 
 Any clients with credentials MUST take precautions to prevent leakage and abuse of their credentials.
 
+Client authentication allows an Authorization Server to ensure it interacts with a certain client 
+(identified by its `client_id`) in an OAuth flow. This might by the pre-requisite to use client 
+policy and metadata in the course of processing this flow. For example, the Authorization Server
+may show the trustworthy client name in user consent or allow access to certain functions as 
+defined in the respective's client policy.    
+
+Whether and how an Authorization server validates the identity of a client or the party 
+providing/operating this client is out of scope of this specification.  
 Authorization servers SHOULD consider the level of confidence in a client's identity
-when deciding whether they allow such a client access to more critical functions,
+when deciding whether they allow a client access to certain resource servers or critical functions,
 such as the Client Credentials grant type.
 
 A single `client_id` MUST NOT be treated as more than one type of client.
 
-For example, a client that has been registered at the authorization server by a registered application developer, where the client is expected to be run as server-side code, would be considered a confidential client. A client that runs on an end-user's device, and uses Dynamic Client Registration ({{RFC7591}}) to establish credentials the first time the app runs, would be considered a credentialed client. An application deployed as a single-page app on a static web host would be considered a public client.
-
 This specification has been designed around the following client profiles:
 
 "web application":
-: A web application is a confidential client running on a web
-  server.  Resource owners access the client via an HTML user
+: A web application is a client running on a web
+  server. Resource owners access the client via an HTML user
   interface rendered in a user agent on the device used by the
   resource owner.  The client credentials as well as any access
   tokens issued to the client are stored on the web server and are
   not exposed to or accessible by the resource owner.
 
 "browser-based application":
-: A browser-based application is a public client in which the
+: A browser-based application is a client in which the
   client code is downloaded from a web server and executes within a
   user agent (e.g., web browser) on the device used by the resource
   owner.  Protocol data and credentials are easily accessible (and
-  often visible) to the resource owner.  Since such applications
+  often visible) to the resource owner. If such applications shall use 
+  client credentials, it is recommended to utilize the 
+  backend for frontend pattern. Since such applications
   reside within the user agent, they can make seamless use of the
   user agent capabilities when requesting authorization.
 
 "native application":
-: A native application is a public client installed and executed on
+: A native application is a client installed and executed on
   the device used by the resource owner.  Protocol data and
   credentials are accessible to the resource owner.  It is assumed
   that any client authentication credentials included in the
-  application can be extracted.  On the other hand, dynamically
+  application can be extracted. If such applications shall use 
+  client credentials, it is recommended to utilize the 
+  backend for frontend pattern.  Dynamically
   issued credentials such as access tokens or refresh tokens can
   receive an acceptable level of protection.  At a minimum, these
   credentials are protected from hostile servers with which the
@@ -672,12 +678,14 @@ This specification has been designed around the following client profiles:
 
 ## Client Identifier {#client-identifier}
 
-The authorization server issues the registered client a client
-identifier -- a unique string representing the registration
-information provided by the client.  The client identifier is not a
+Every client is identified in the context of an authorization server 
+by a client identifier -- a unique string representing the registration
+information provided by the client. The Authorization Server may itself 
+issue the client identifier, it may also serve clients whose client identifier
+was issued by a trusted third party. The client identifier is not a
 secret; it is exposed to the resource owner and MUST NOT be used
-alone for client authentication.  The client identifier is unique to
-the authorization server.
+alone for client authentication.  The client identifier is unique in the 
+context of an authorization server.
 
 The client identifier string size is left undefined by this
 specification.  The client should avoid making assumptions about the
@@ -814,9 +822,8 @@ The authorization server MUST only rely on client authentication if the
 process of issuance/registration and distribution of the underlying
 credentials ensures their confidentiality.
 
-If the client is confidential or credentialed,
-the authorization server MAY accept any form of client authentication
-meeting its security requirements
+If the client is confidential, the authorization server MAY accept any 
+form of client authentication meeting its security requirements
 (e.g., password, public/private key pair).
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
@@ -834,12 +841,6 @@ when asking for resource owner authorization but can be used to
 prevent delivering credentials to a counterfeit client after
 obtaining resource owner authorization.
 
-The authorization server MAY establish a client authentication method
-with public clients, which converts them to credentialed
-clients.  However, the authorization server MUST NOT rely on
-credentialed client authentication for the purpose of
-identifying the client.
-
 The client MUST NOT use more than one authentication method in each
 request to prevent a conflict of which authentication mechanism is
 authoritative for the request.
@@ -851,8 +852,8 @@ the potential exposure of tokens issued to such clients,
 
 The privileges an authorization server associates with a certain
 client identity MUST depend on the assessment of the overall process
-for client identification and client credential lifecycle management. See {{security-client-authentication}} for additional details.
-
+for client identification and client credential lifecycle management. 
+See {{security-client-authentication}} for additional details.
 
 ### Client Secret {#client-secret}
 
@@ -1008,7 +1009,7 @@ defined by this specification MUST NOT be included more than once.
 
 ### Client Authentication {#token-endpoint-client-authentication}
 
-Confidential or credentialed clients MUST
+Confidential clients MUST
 authenticate with the authorization server as described in
 {{client-authentication}} when making requests to the token endpoint.
 
@@ -1051,7 +1052,7 @@ This specification defines the values `authorization_code`, `refresh_token`, and
 The grant type determines the further parameters required or supported by the token request. The
 details of those grant types are defined below.
 
-Confidential or credentialed clients MUST authenticate with the authorization
+Confidential clients MUST authenticate with the authorization
 server as described in {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request
@@ -1068,7 +1069,7 @@ For example, the client makes the following HTTP request
 
 The authorization server MUST:
 
-*  require client authentication for confidential and credentialed clients
+*  require client authentication for confidential clients
    (or clients with other authentication requirements),
 
 *  authenticate the client if client authentication is included
@@ -1692,7 +1693,7 @@ For example, the client makes the following HTTP request
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
 *  ensure that the authorization code was issued to the authenticated
-   confidential or credentialed client, or if the client is public, ensure that the
+   confidential client, or if the client is public, ensure that the
    code was issued to `client_id` in the request,
 
 *  verify that the authorization code is valid,
@@ -1719,8 +1720,7 @@ control, or those of another resource owner that have been previously
 arranged with the authorization server (the method of which is beyond
 the scope of this specification).
 
-The client credentials grant type MUST only be used by confidential
-or credentialed clients.
+The client credentials grant type MUST only be used by confidential clients.
 
 ~~~~~~~~~~
      +---------+                                  +---------------+
@@ -1796,7 +1796,7 @@ If this value is set, the following additional parameters beyond {{token-request
 
 Because refresh tokens are typically long-lasting credentials used to
 request additional access tokens, the refresh token is bound to the
-client to which it was issued. Confidential or credentialed clients
+client to which it was issued. Confidential clients
 MUST authenticate with the authorization server as described in
 {{token-endpoint-client-authentication}}.
 
