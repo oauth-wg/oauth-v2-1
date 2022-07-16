@@ -827,8 +827,8 @@ form of client authentication meeting its security requirements
 (e.g., password, public/private key pair).
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
-client authentication such as mTLS {{RFC8705}} or "private_key_jwt"
-{{OpenID}}.  When asymmetric methods for client authentication are
+client authentication such as mTLS {{RFC8705}} or a JWT
+{{RFC7523}}.  When asymmetric methods for client authentication are
 used, authorization servers do not need to store sensitive symmetric
 keys, making these methods more robust against a number of attacks.
 
