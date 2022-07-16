@@ -922,9 +922,10 @@ the specific use of protecting the token endpoint.
 
 ## Unregistered Clients
 
-This specification does not exclude the use of unregistered clients.
-However, the use of such clients is beyond the scope of this
-specification and requires additional security analysis and review of
+This specification does not require that clients be registered with 
+the authorization server. 
+However, the use of unregistered clients is beyond the scope of this 
+specification and requires additional security analysis and review of 
 its interoperability impact.
 
 
