@@ -637,7 +637,7 @@ Authorization servers SHOULD consider the level of confidence in a client's iden
 when deciding whether they allow a client access to certain resource servers or critical functions
 such as the Client Credentials grant type.
 
-A single `client_id` MUST NOT be treated as more than one type of client.
+A single `client_id` SHOULD NOT be treated as more than one type of client.
 
 This specification has been designed around the following client profiles:
 
