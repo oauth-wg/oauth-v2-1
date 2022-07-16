@@ -634,7 +634,7 @@ defined in the respective's client policy.
 Whether and how an Authorization server validates the identity of a client or the party 
 providing/operating this client is out of scope of this specification.  
 Authorization servers SHOULD consider the level of confidence in a client's identity
-when deciding whether they allow a client access to certain resource servers or critical functions,
+when deciding whether they allow a client access to certain resource servers or critical functions
 such as the Client Credentials grant type.
 
 A single `client_id` MUST NOT be treated as more than one type of client.
