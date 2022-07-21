@@ -59,8 +59,22 @@ normative:
     author:
       name: "American National Standards Institute"
     date: 1986
-  W3C.REC-html401-19991224:
+  WHATWG.URL:
+    title: "URL"
+    target: https://url.spec.whatwg.org/
+    author:
+      - ins: WHATWG
+    date: May 2022
   W3C.REC-xml-20081126:
+    title: "Extensible Markup Language"
+    target: https://www.w3.org/TR/REC-xml/REC-xml-20081126.xml
+    author:
+      - ins: T. Bray
+      - ins: J. Paoli
+      - ins: C. M. Sperberg-McQueen
+      - ins: E. Maler
+      - ins: F. Yergeau
+    date: November 2008
 
 informative:
   RFC6265:
@@ -2028,7 +2042,7 @@ all of the following conditions are met:
 
 * The content follows the encoding requirements of the
   `application/x-www-form-urlencoded` content-type as defined by
-  HTML 4.01 [W3C.REC-html401-19991224].
+  the URL Living Standard {{WHATWG.URL}}.
 
 * The HTTP request content is single-part.
 
@@ -3367,8 +3381,8 @@ work is based upon. No changes to those registries are required by this specific
 
 This section provides Augmented Backus-Naur Form (ABNF) syntax
 descriptions for the elements defined in this specification using the
-notation of [RFC5234].  The ABNF below is defined in terms of Unicode
-code points [W3C.REC-xml-20081126]; these characters are typically
+notation of {{RFC5234}}.  The ABNF below is defined in terms of Unicode
+code points {{W3C.REC-xml-20081126}}; these characters are typically
 encoded in UTF-8.  Elements are presented in the order first defined.
 
 Some of the definitions that follow use the "URI-reference"
@@ -3383,7 +3397,7 @@ Some of the definitions that follow use these common definitions:
                         %xE000-FFFD / %x10000-10FFFF
 
 (The UNICODECHARNOCRLF definition is based upon the Char definition
-in Section 2.2 of [W3C.REC-xml-20081126], but omitting the Carriage
+in Section 2.2 of {{W3C.REC-xml-20081126}}, but omitting the Carriage
 Return and Linefeed characters.)
 
 
@@ -3513,40 +3527,6 @@ ABNF for `code_challenge` is as follows.
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
     ALPHA = %x41-5A / %x61-7A
     DIGIT = %x30-39
-
-
-# Use of application/x-www-form-urlencoded Media Type
-
-At the time of publication of this specification, the
-`application/x-www-form-urlencoded` media type was defined in
-Section 17.13.4 of [W3C.REC-html401-19991224] but not registered in
-the IANA MIME Media Types registry
-(<http://www.iana.org/assignments/media-types>).  Furthermore, that
-definition is incomplete, as it does not consider non-US-ASCII
-characters.
-
-To address this shortcoming when generating contents using this media
-type, names and values MUST be encoded using the UTF-8 character
-encoding scheme [RFC3629] first; the resulting octet sequence then
-needs to be further encoded using the escaping rules defined in
-[W3C.REC-html401-19991224].
-
-When parsing data from a content using this media type, the names and
-values resulting from reversing the name/value encoding consequently
-need to be treated as octet sequences, to be decoded using the UTF-8
-character encoding scheme.
-
-For example, the value consisting of the six Unicode code points
-(1) U+0020 (SPACE), (2) U+0025 (PERCENT SIGN),
-(3) U+0026 (AMPERSAND), (4) U+002B (PLUS SIGN),
-(5) U+00A3 (POUND SIGN), and (6) U+20AC (EURO SIGN) would be encoded
-into the octet sequence below (using hexadecimal notation):
-
-    20 25 26 2B C2 A3 E2 82 AC
-
-and then represented in the content as:
-
-    +%25%26%2B%C2%A3%E2%82%AC
 
 
 # Extensions {#extensions}
