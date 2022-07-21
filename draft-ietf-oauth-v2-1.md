@@ -3096,59 +3096,6 @@ There are several redirect URI options available to native apps for
 receiving the authorization response from the browser, the
 availability and user experience of which varies by platform.
 
-To fully support native apps, authorization servers MUST offer
-at least the three redirect URI options described in the following
-subsections to native apps.  Native apps MAY use whichever redirect
-option suits their needs best, taking into account platform-specific
-implementation details.
-
-### Private-Use URI Scheme Redirection {#private-use-uri-scheme}
-
-Many mobile and desktop computing platforms support inter-app
-communication via URIs by allowing apps to register private-use URI
-schemes (sometimes colloquially referred to as "custom URL schemes")
-like `com.example.app`.  When the browser or another app attempts to
-load a URI with a private-use URI scheme, the app that registered it
-is launched to handle the request.
-
-To perform an authorization request with a private-use URI
-scheme redirect, the native app launches the browser with a standard
-authorization request, but one where the redirect URI utilizes a
-private-use URI scheme it registered with the operating system.
-
-When choosing a URI scheme to associate with the app, apps MUST use a
-URI scheme based on a domain name under their control, expressed in
-reverse order, as recommended by Section 3.8 of {{RFC7595}} for
-private-use URI schemes.
-
-For example, an app that controls the domain name `app.example.com`
-can use `com.example.app` as their scheme.  Some authorization
-servers assign client identifiers based on domain names, for example,
-`client1234.usercontent.example.net`, which can also be used as the
-domain name for the scheme when reversed in the same manner.  A
-scheme such as `myapp`, however, would not meet this requirement, as
-it is not based on a domain name.
-
-When there are multiple apps by the same publisher, care must be
-taken so that each scheme is unique within that group.  On platforms
-that use app identifiers based on reverse-order domain names, those
-identifiers can be reused as the private-use URI scheme for the OAuth
-redirect to help avoid this problem.
-
-Following the requirements of Section 3.2 of {{RFC3986}}, as there is
-no naming authority for private-use URI scheme redirects, only a
-single slash (`/`) appears after the scheme component.  A complete
-example of a redirect URI utilizing a private-use URI scheme is:
-
-    com.example.app:/oauth2redirect/example-provider
-
-When the authorization server completes the request, it redirects to
-the client's redirect URI as it would normally.  As the
-redirect URI uses a private-use URI scheme, it results in the
-operating system launching the native app, passing in the URI as a
-launch parameter.  Then, the native app uses normal processing for
-the authorization response.
-
 ### Claimed "https" Scheme URI Redirection
 
 Some operating systems allow apps to claim `https` URIs
@@ -3214,6 +3161,60 @@ Clients SHOULD NOT assume that the device supports a particular
 version of the Internet Protocol.  It is RECOMMENDED that clients
 attempt to bind to the loopback interface using both IPv4 and IPv6
 and use whichever is available.
+
+### Private-Use URI Scheme Redirection {#private-use-uri-scheme}
+
+Many mobile and desktop computing platforms support inter-app
+communication via URIs by allowing apps to register private-use URI
+schemes (sometimes colloquially referred to as "custom URL schemes")
+like `com.example.app`.  When the browser or another app attempts to
+load a URI with a private-use URI scheme, the app that registered it
+is launched to handle the request.
+
+Many environments that support private-use URI schemes do not provide
+a mechanism to claim a scheme and prevent other parties from using
+another application's scheme. As such, clients using private-use URI
+schemes are vulnerable to potential attacks on their redirect URIs,
+so this option should only be used if the previously mentioned more
+secure options are not available.
+
+To perform an authorization request with a private-use URI
+scheme redirect, the native app launches the browser with a standard
+authorization request, but one where the redirect URI utilizes a
+private-use URI scheme it registered with the operating system.
+
+When choosing a URI scheme to associate with the app, apps MUST use a
+URI scheme based on a domain name under their control, expressed in
+reverse order, as recommended by Section 3.8 of {{RFC7595}} for
+private-use URI schemes.
+
+For example, an app that controls the domain name `app.example.com`
+can use `com.example.app` as their scheme.  Some authorization
+servers assign client identifiers based on domain names, for example,
+`client1234.usercontent.example.net`, which can also be used as the
+domain name for the scheme when reversed in the same manner.  A
+scheme such as `myapp`, however, would not meet this requirement, as
+it is not based on a domain name.
+
+When there are multiple apps by the same publisher, care must be
+taken so that each scheme is unique within that group.  On platforms
+that use app identifiers based on reverse-order domain names, those
+identifiers can be reused as the private-use URI scheme for the OAuth
+redirect to help avoid this problem.
+
+Following the requirements of Section 3.2 of {{RFC3986}}, as there is
+no naming authority for private-use URI scheme redirects, only a
+single slash (`/`) appears after the scheme component.  A complete
+example of a redirect URI utilizing a private-use URI scheme is:
+
+    com.example.app:/oauth2redirect/example-provider
+
+When the authorization server completes the request, it redirects to
+the client's redirect URI as it would normally.  As the
+redirect URI uses a private-use URI scheme, it results in the
+operating system launching the native app, passing in the URI as a
+launch parameter.  Then, the native app uses normal processing for
+the authorization response.
 
 ## Security Considerations in Native Apps
 
