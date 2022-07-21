@@ -29,7 +29,6 @@ author:
     organization: yes.com
 
 normative:
-  RFC3629:
   RFC3986:
   RFC4949:
   RFC5234:
