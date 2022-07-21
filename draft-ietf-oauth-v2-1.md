@@ -1678,7 +1678,7 @@ parameters to the query component of the redirect URI using the
 
 "iss":
 :    OPTIONAL. The identifier of the authorization server. See 
-     {{#authorization-response}} above for details.
+     {{authorization-response}} above for details.
 
 For example, the authorization server redirects the user agent by
 sending the following HTTP response:
