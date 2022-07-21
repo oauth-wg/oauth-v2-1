@@ -723,8 +723,8 @@ authorization server during the client registration process.
 
 The redirect URI MUST be an absolute URI as defined by
 {{RFC3986}} Section 4.3.  The endpoint URI MAY include an
-"application/x-www-form-urlencoded" formatted (per Appendix B) query
-component ({{RFC3986}} Section 3.4), which MUST be retained when adding
+"application/x-www-form-urlencoded" formatted query
+component ({{WHATWG.URL}}), which MUST be retained when adding
 additional query parameters. The endpoint URI MUST NOT include a
 fragment component.
 
@@ -979,7 +979,7 @@ but the location is typically provided in the service documentation,
 or in the authorization server's metadata document ({{RFC8414}}).
 
 The endpoint URI MAY include an "application/x-www-form-urlencoded"
-formatted (per Appendix B) query component (see Section 3.4 of {{RFC3986}}),
+formatted query component {{WHATWG.URL}},
 which MUST be retained when adding additional query parameters.  The
 endpoint URI MUST NOT include a fragment component.
 
@@ -1011,7 +1011,7 @@ development of the client, or provided in the authorization server's metadata
 document ({{RFC8414}}) and fetched programmatically at runtime.
 
 The endpoint URI MAY include an `application/x-www-form-urlencoded`
-formatted (per Appendix B) query component ({{RFC3986}} Section 3.4)
+formatted query component ({{WHATWG.URL}})
 and MUST NOT include a fragment component.
 
 The client MUST use the HTTP `POST` method when making access token
@@ -3386,7 +3386,7 @@ code points {{W3C.REC-xml-20081126}}; these characters are typically
 encoded in UTF-8.  Elements are presented in the order first defined.
 
 Some of the definitions that follow use the "URI-reference"
-definition from [RFC3986].
+definition from {{RFC3986}}.
 
 Some of the definitions that follow use these common definitions:
 
