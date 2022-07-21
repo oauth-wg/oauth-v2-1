@@ -44,6 +44,7 @@ normative:
   RFC8446:
   RFC9110:
   RFC9111:
+  RFC9207:
   I-D.ietf-oauth-security-topics:
   BCP195:
     title: "Recommendations for Secure Use of Transport Layer Security (TLS)"
@@ -1535,12 +1536,20 @@ per Appendix B:
      authorization request.  The exact value received from the
      client.
 
+"iss":
+:    OPTIONAL. The identifier of the authorization server which the 
+     client can use to prevent mixup attacks, if the client interacts
+     with more than one authorization server. See {{RFC9207}} for 
+     additional details on when this parameter is necessary, and how the
+     client can use it to prpevent mixup attacks.
+
+
 For example, the authorization server redirects the user agent by
 sending the following HTTP response:
 
     HTTP/1.1 302 Found
     Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA
-              &state=xyz
+              &state=xyz&iss=https://authorization-server.example/
 
 The client MUST ignore unrecognized response parameters.  The
 authorization code string size is left undefined by this
@@ -1652,11 +1661,16 @@ parameters to the query component of the redirect URI using the
      authorization request.  The exact value received from the
      client.
 
+"iss":
+:    OPTIONAL. The identifier of the authorization server. See 
+     {{#authorization-response}} above for details.
+
 For example, the authorization server redirects the user agent by
 sending the following HTTP response:
 
     HTTP/1.1 302 Found
-    Location: https://client.example.com/cb?error=access_denied&state=xyz
+    Location: https://client.example.com/cb?error=access_denied
+              &state=xyz&iss=https://authorization-server.example/
 
 ### Token Endpoint Extension {#code-token-extension}
 
