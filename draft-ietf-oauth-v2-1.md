@@ -3563,6 +3563,9 @@ Below is a list of well-established extensions at the time of publication:
 * {{RFC9126}}: Pushed Authorization Requests
   * The Pushed Authorization Requests extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.
 
+* {{RFC9207}}: Authorization Server Issuer Identification
+  * The `iss` parameter in the authorization response indicates the identity of the authorization server to prevent mix-up attacks in the client.
+
 * {{I-D.ietf-oauth-rar}}: Rich Authorization Requests
   * Rich Authorization Requests specifies a new parameter `authorization_details` that is used to carry fine-grained authorization data in the OAuth authorization request.
 
@@ -3581,7 +3584,7 @@ TBD
 
 *  Removed "credentialed client" term
 *  Simplified definition of "confidential" and "public" clients
-*  Incorporated the iss response parameter referencing RFC9207
+*  Incorporated the `iss` response parameter referencing RFC9207
 *  Added section on access token validation by the RS
 *  Removed requirement for authorization servers to support all 3 redirect methods for native apps
 *  Fixes for some references
@@ -3589,6 +3592,7 @@ TBD
 *  Clarifies "authorization grant" term
 *  Clarifies client credential grant usage
 *  Clean up authorization code diagram
+*  Updated reference for application/x-www-form-urlencoded and removed outdated note about it not being in the IANA registry
 
 -05
 
