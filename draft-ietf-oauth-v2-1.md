@@ -777,7 +777,7 @@ context, CSRF refers to requests to the redirection endpoint that do
 not originate at the authorization server, but a malicious third party
 (see Section 4.4.1.8. of {{RFC6819}} for details). Clients that have
 ensured that the authorization server supports the `code_challenge` parameter MAY
-rely the CSRF protection provided by that mechanism. In OpenID Connect flows,
+rely on the CSRF protection provided by that mechanism. In OpenID Connect flows,
 validating the `nonce` parameter provides CSRF protection. Otherwise, one-time
 use CSRF tokens carried in the `state` parameter that are securely
 bound to the user agent MUST be used for CSRF protection (see
