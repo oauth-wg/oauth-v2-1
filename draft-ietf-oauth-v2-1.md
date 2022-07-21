@@ -3596,6 +3596,19 @@ TBD
 
 [[ To be removed from the final specification ]]
 
+-06
+
+*  Removed "credentialed client" term
+*  Simplified definition of "confidential" and "public" clients
+*  Incorporated the iss response parameter referencing RFC9207
+*  Added section on access token validation by the RS
+*  Removed requirement for authorization servers to support all 3 redirect methods for native apps
+*  Fixes for some references
+*  Updates HTTP references to RFC 9110
+*  Clarifies "authorization grant" term
+*  Clarifies client credential grant usage
+*  Clean up authorization code diagram
+
 -05
 
 *  Added a section about the removal of the implicit flow
