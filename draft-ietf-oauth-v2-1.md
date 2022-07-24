@@ -159,13 +159,13 @@ informative:
 
 --- abstract
 
-The OAuth 2.1 authorization framework enables a third-party
+The OAuth 2.1 authorization framework enables an
 application to obtain limited access to a protected resource, either on
 behalf of a resource owner by orchestrating an approval interaction
 between the resource owner and an authorization service, or by allowing the
 third-party application to obtain access on its own behalf.  This
 specification replaces and obsoletes the OAuth 2.0 Authorization
-Framework described in RFC 6749.
+Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.
 
 --- middle
 
@@ -3578,6 +3578,10 @@ TBD
 # Document History
 
 [[ To be removed from the final specification ]]
+
+-07
+
+* Removed "third party" from abstract
 
 -06
 
