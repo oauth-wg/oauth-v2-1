@@ -18,3 +18,4 @@ archive.json
 draft-ietf-oauth-v2-1.xml
 package-lock.json
 report.xml
+.DS_Store
