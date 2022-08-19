@@ -1,6 +1,6 @@
 ---
 title: The OAuth 2.1 Authorization Framework
-docname: draft-ietf-oauth-v2-1-06
+docname: draft-ietf-oauth-v2-1-latest
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -3579,7 +3579,7 @@ TBD
 
 [[ To be removed from the final specification ]]
 
--07
+-latest
 
 * Removed "third party" from abstract
 
