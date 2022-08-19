@@ -450,8 +450,8 @@ The client credentials or other forms of client authentication
 can be used as an authorization grant when the authorization scope is
 limited to the protected resources under the control of the client,
 or to protected resources previously arranged with the authorization
-server.  Client credentials are used when the client is requesting 
-access to protected resources based on an authorization previously 
+server.  Client credentials are used when the client is requesting
+access to protected resources based on an authorization previously
 arranged with the authorization server.
 
 ## Access Token
@@ -640,14 +640,14 @@ with the authorization server.
 
 Any clients with credentials MUST take precautions to prevent leakage and abuse of their credentials.
 
-Client authentication allows an Authorization Server to ensure it interacts with a certain client 
-(identified by its `client_id`) in an OAuth flow. This might by the pre-requisite to use client 
+Client authentication allows an Authorization Server to ensure it interacts with a certain client
+(identified by its `client_id`) in an OAuth flow. This might by the pre-requisite to use client
 policy and metadata in the course of processing this flow. For example, the Authorization Server
-may show the trustworthy client name in user consent or allow access to certain functions as 
-defined in the respective's client policy.    
+may show the trustworthy client name in user consent or allow access to certain functions as
+defined in the respective's client policy.
 
-Whether and how an Authorization server validates the identity of a client or the party 
-providing/operating this client is out of scope of this specification.  
+Whether and how an Authorization server validates the identity of a client or the party
+providing/operating this client is out of scope of this specification.
 Authorization servers SHOULD consider the level of confidence in a client's identity
 when deciding whether they allow a client access to certain resource servers or critical functions
 such as the Client Credentials grant type.
@@ -669,8 +669,8 @@ This specification has been designed around the following client profiles:
   client code is downloaded from a web server and executes within a
   user agent (e.g., web browser) on the device used by the resource
   owner.  Protocol data and credentials are easily accessible (and
-  often visible) to the resource owner. If such applications wish to use 
-  client credentials, it is recommended to utilize the 
+  often visible) to the resource owner. If such applications wish to use
+  client credentials, it is recommended to utilize the
   backend for frontend pattern. Since such applications
   reside within the user agent, they can make seamless use of the
   user agent capabilities when requesting authorization.
@@ -684,21 +684,21 @@ This specification has been designed around the following client profiles:
   issued access tokens and refresh tokens can
   receive an acceptable level of protection.  On some platforms, these credentials
   might even be protected from other applications residing on the same
-  device. If such applications wish to use 
-  client credentials, it is recommended to utilize the 
+  device. If such applications wish to use
+  client credentials, it is recommended to utilize the
   backend for frontend pattern, or issue the credentials at runtime
   using Dynamic Client Registration ({{RFC7591}}).
 
 
 ## Client Identifier {#client-identifier}
 
-Every client is identified in the context of an authorization server 
+Every client is identified in the context of an authorization server
 by a client identifier -- a unique string representing the registration
-information provided by the client. The Authorization Server may itself 
+information provided by the client. The Authorization Server may itself
 issue the client identifier, it may also serve clients whose client identifier
 was issued by a trusted third party. The client identifier is not a
 secret; it is exposed to the resource owner and MUST NOT be used
-alone for client authentication.  The client identifier is unique in the 
+alone for client authentication.  The client identifier is unique in the
 context of an authorization server.
 
 The client identifier string size is left undefined by this
@@ -836,7 +836,7 @@ The authorization server MUST only rely on client authentication if the
 process of issuance/registration and distribution of the underlying
 credentials ensures their confidentiality.
 
-If the client is confidential, the authorization server MAY accept any 
+If the client is confidential, the authorization server MAY accept any
 form of client authentication meeting its security requirements
 (e.g., password, public/private key pair).
 
@@ -866,7 +866,7 @@ the potential exposure of tokens issued to such clients,
 
 The privileges an authorization server associates with a certain
 client identity MUST depend on the assessment of the overall process
-for client identification and client credential lifecycle management. 
+for client identification and client credential lifecycle management.
 See {{security-client-authentication}} for additional details.
 
 ### Client Secret {#client-secret}
@@ -936,10 +936,10 @@ the specific use of protecting the token endpoint.
 
 ## Unregistered Clients
 
-This specification does not require that clients be registered with 
-the authorization server. 
-However, the use of unregistered clients is beyond the scope of this 
-specification and requires additional security analysis and review of 
+This specification does not require that clients be registered with
+the authorization server.
+However, the use of unregistered clients is beyond the scope of this
+specification and requires additional security analysis and review of
 its interoperability impact.
 
 
@@ -1551,9 +1551,9 @@ per Appendix B:
      client.
 
 "iss":
-:    OPTIONAL. The identifier of the authorization server which the 
+:    OPTIONAL. The identifier of the authorization server which the
      client can use to prevent mixup attacks, if the client interacts
-     with more than one authorization server. See {{RFC9207}} for 
+     with more than one authorization server. See {{RFC9207}} for
      additional details on when this parameter is necessary, and how the
      client can use it to prpevent mixup attacks.
 
@@ -1676,7 +1676,7 @@ parameters to the query component of the redirect URI using the
      client.
 
 "iss":
-:    OPTIONAL. The identifier of the authorization server. See 
+:    OPTIONAL. The identifier of the authorization server. See
      {{authorization-response}} above for details.
 
 For example, the authorization server redirects the user agent by
@@ -2076,7 +2076,7 @@ servers MAY support this method.
 
 After receiving the access token, the resource server MUST check that
 the access token is not yet expired, is authorized to access the requested
-resource, was issued with the appropriate scope, and meets other policy 
+resource, was issued with the appropriate scope, and meets other policy
 requirements of the resource server to access the protected resource.
 
 Access tokens generally fall into two categories: reference tokens or self-encoded tokens.
@@ -2088,7 +2088,7 @@ which can be extracted by the resource server.
 A standardized method to query the authorization server to check the validity
 of an access token is defined in Token Introspection ({{RFC7662}}).
 
-A standardized method of encoding information in a token string is 
+A standardized method of encoding information in a token string is
 defined in JWT Profile for Access Tokens ({{RFC9068}}).
 
 See {{access-token-security-considerations}} for additional considerations
