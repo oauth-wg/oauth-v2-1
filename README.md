@@ -2,10 +2,10 @@
 
 This is the working area for the IETF [OAUTH Working Group](https://datatracker.ietf.org/wg/oauth/documents/) Internet-Draft, "The OAuth 2.1 Authorization Framework".
 
-* [Editor's Copy](https://oauth-wg.github.io/oauth-v2-1/#go.draft-ietf-oauth-v2-1.html)
+* [Editor's Copy](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-oauth-v2-1)
 * [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1)
-* [Compare Editor's Copy to Working Group Draft](https://oauth-wg.github.io/oauth-v2-1/#go.draft-ietf-oauth-v2-1.diff)
+<!-- * [Compare Editor's Copy to Working Group Draft](https://drafts.oauth.net/oauth-v2-1/#go.draft-ietf-oauth-v2-1.diff) -->
 
 
 ## Contributing
