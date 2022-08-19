@@ -1,6 +1,3 @@
 .DS_Store
 vendor/
 .bundle
-build/*.html
-build/*.txt
-build/*.xml
