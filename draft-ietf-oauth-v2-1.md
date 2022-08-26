@@ -730,13 +730,18 @@ fragment component.
 ### Registration Requirements
 
 Authorization servers MUST require clients to register their complete
-redirect URI (including the path component) and reject authorization
-requests that specify a redirect URI that doesn't exactly match
-one that was registered; the exception is loopback redirects, where
-an exact match is required except for the port URI component.
+redirect URI (including the path component). Authorization servers
+MUST reject authorization requests that specify a redirect URI that
+doesn't exactly match one that was registered, with an exception for
+loopback redirects, where an exact match is required except for the
+port URI component.
 
 The authorization server MAY allow the client to register multiple
 redirect URIs.
+
+Registration may happen out of band, such as a manual step of configuring
+the client information at the authorization server, or may happen at
+runtime, such as in the initial POST in Pushed Authorization Requests {{RFC9126}}.
 
 For private-use URI scheme-based redirect URIs, authorization servers
 SHOULD enforce the requirement in {{private-use-uri-scheme}} that clients use
