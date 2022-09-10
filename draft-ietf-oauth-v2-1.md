@@ -1555,7 +1555,7 @@ per Appendix B:
      client can use to prevent mixup attacks, if the client interacts
      with more than one authorization server. See {{RFC9207}} for
      additional details on when this parameter is necessary, and how the
-     client can use it to prpevent mixup attacks.
+     client can use it to prevent mixup attacks.
 
 
 For example, the authorization server redirects the user agent by
