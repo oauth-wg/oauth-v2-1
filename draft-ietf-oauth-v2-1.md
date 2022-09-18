@@ -1323,22 +1323,22 @@ browser) and capable of being redirected back to from the authorization server.
        |
        |
  +-----|----+          Client Identifier      +---------------+
- | .---+---------(A)-- & Redirection URI ---->|               |
+ | .---+---------(1)-- & Redirection URI ---->|               |
  | |   |    |                                 |               |
- | |   '---------(B)-- User authenticates --->|               |
+ | |   '---------(2)-- User authenticates --->|               |
  | | User-  |                                 | Authorization |
  | | Agent  |                                 |     Server    |
  | |        |                                 |               |
- | |    .--------(C)-- Authorization Code ---<|               |
+ | |    .--------(3)-- Authorization Code ---<|               |
  +-|----|---+                                 +---------------+
    |    |                                         ^      v
    |    |                                         |      |
    ^    v                                         |      |
  +---------+                                      |      |
- |         |>---(D)-- Authorization Code ---------'      |
+ |         |>---(4)-- Authorization Code ---------'      |
  |  Client |          & Redirection URI                  |
  |         |                                             |
- |         |<---(E)----- Access Token -------------------'
+ |         |<---(5)----- Access Token -------------------'
  +---------+       (w/ Optional Refresh Token)
 ~~~~~~~~~~
 {: #fig-authorization-code-flow title="Authorization Code Flow"}
