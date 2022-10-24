@@ -119,8 +119,8 @@ informative:
       - ins: T. Ace
       - ins: C. Rickelton-Abdi
       - ins: B. Boyer
-    date: April, 2012
-    target: https://www.oatc.us/Standards/Download-Standards
+    date: August, 2012
+    target: https://www.svta.org/product/online-multimedia-authorization-protocol/
 
   NIST800-63:
     title: "NIST Special Publication 800-63-1, INFORMATION SECURITY"
