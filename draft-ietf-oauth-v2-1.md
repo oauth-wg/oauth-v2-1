@@ -3612,7 +3612,9 @@ Discussions around this specification have also occurred at the OAuth Security W
 -07
 
 * Removed "third party" from abstract
+* Added MFA and passwordless as additional motiviations in introduction
 * Mention PAR as one way redirect URI registration can happen
+* Added a reference to requiring CORS headers on the token endpoint
 * Updated reference to OMAP extension
 * Fixed numbering in sequence diagram
 
