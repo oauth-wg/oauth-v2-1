@@ -1036,6 +1036,17 @@ Parameters sent without a value MUST be treated as if they were
 omitted from the request. Request and response parameters
 defined by this specification MUST NOT be included more than once.
 
+Authorization servers that wish to support browser-based applications
+(applications running exclusively in client-side JavaScript without
+access to a supporting backend server) will need to ensure the token endpoint
+supports the necessary Cross-Origin Resource Sharing (CORS) headers.
+If the authorization server provides additional endpoints to the application, such
+as metadata URLs, dynamic client registration, revocation, introspection, discovery or
+user info endpoints, these endpoints may also be accessed by the browser-based
+application, and will also need to have the CORS headers defined to allow access.
+See {{I-D.ietf-oauth-browser-based-apps}} for further details.
+
+
 ### Client Authentication {#token-endpoint-client-authentication}
 
 Confidential clients MUST
