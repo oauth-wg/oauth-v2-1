@@ -222,6 +222,15 @@ directly with a server trusted by the photo-sharing service
 (authorization server), which issues the printing service delegation-
 specific credentials (access token).
 
+This separation of concerns also provides the ability to use more advanced
+user authentication methods such as multi-factor authentication and even
+passwordless authentication, without any modification to the applications.
+With all user authentication logic handled by the authorization server,
+applications don't need to be concerned with the specifics of implementing
+any particular authentication mechanism. This provides the ability for the
+authorization server to manage the user authentication policies and
+even change them in the future without coordinating the changes with applications.
+
 This specification is designed for use with HTTP ({{RFC9110}}).  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
