@@ -174,18 +174,18 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.
 In the traditional client-server authentication model, the client
 requests an access-restricted resource (protected resource) on the
 server by authenticating with the server using the resource owner's
-credentials.  In order to provide third-party applications access to
-restricted resources, the resource owner shares its credentials with
-the third party.  This creates several problems and limitations:
+credentials.  In order to provide applications access to
+restricted resources, the resource owner shares their credentials with
+the application.  This creates several problems and limitations:
 
-*  Third-party applications are required to store the resource
+*  Applications are required to store the resource
    owner's credentials for future use, typically a password in
    clear-text.
 
 *  Servers are required to support password authentication, despite
    the security weaknesses inherent in passwords.
 
-*  Third-party applications gain overly broad access to the resource
+*  Applications gain overly broad access to the resource
    owner's protected resources, leaving resource owners without any
    ability to restrict duration or access to a limited subset of
    resources.
@@ -195,11 +195,11 @@ the third party.  This creates several problems and limitations:
    a vulnerability or exposure in one service may have security
    implications in completely unrelated services.
 
-*  Resource owners cannot revoke access to an individual third party
+*  Resource owners cannot revoke access to an individual application
    without revoking access to all third parties, and must do so by
    changing their password.
 
-*  Compromise of any third-party application results in compromise of
+*  Compromise of any application results in compromise of
    the end-user's password and all of the data protected by that
    password.
 
