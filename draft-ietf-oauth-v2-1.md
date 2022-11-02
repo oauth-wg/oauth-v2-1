@@ -542,11 +542,13 @@ for certificate validation and other security considerations.
 
 This specification makes extensive use of HTTP redirections, in which
 the client or the authorization server directs the resource owner's
-user agent to another destination.  While the examples in this
-specification show the use of the HTTP 302 status code, any other
-method available via the user agent to accomplish this redirection,
-with the exception of HTTP 307, is allowed and is considered to be an
-implementation detail. See {{redirect_307}} for details.
+user agent to another destination.
+While this specification
+forbids the use of the 307 status code (see {{redirect_307}})
+and illustrates the use of the 302 status code,
+any other mechanism to accomplish the above redirection
+is legitimate and is considered as an implementation detail as long as
+it does not expose user credentials to untrusted parties.
 
 
 ## Interoperability
@@ -980,35 +982,38 @@ Extension grant types MAY define additional endpoints as needed.
 ## Authorization Endpoint
 
 The authorization endpoint is used to interact with the resource
-owner and obtain an authorization grant.  The authorization server
-MUST first verify the identity of the resource owner.  The way in
-which the authorization server authenticates the resource owner
+owner and obtain an authorization grant.  The AS
+MUST first authenticate the resource owner.  The way in
+which the AS authenticates the resource owner
 (e.g., username and password login, session cookies) is beyond the
 scope of this specification.
 
-The means through which the client obtains the location of the
+The means through which the client obtains the URL of the
 authorization endpoint are beyond the scope of this specification,
-but the location is typically provided in the service documentation,
+but the URL is typically provided in the service documentation,
 or in the authorization server's metadata document ({{RFC8414}}).
 
-The endpoint URI MAY include an "application/x-www-form-urlencoded"
+The authorization endpoint URL:
+
+- MUST NOT include a fragment component;
+- MAY include an "application/x-www-form-urlencoded"
 formatted query component {{WHATWG.URL}},
-which MUST be retained when adding additional query parameters.  The
-endpoint URI MUST NOT include a fragment component.
+which MUST be retained when adding additional query parameters.
 
-The authorization server MUST support the use of the HTTP `GET`
-method Section 9.3.1 of {{RFC9110}} for the authorization endpoint and MAY support
-the `POST` method (Section 9.3.3 of RFC9110) as well.
+The authorization endpoint
+MUST support GET requests (see Section 9.3.1 of {{RFC9110}})
+and MAY support POST requests (see Section 9.3.3 of {{RFC9110}}).
 
-The authorization server MUST ignore unrecognized request parameters.
+The authorization endpoint MUST ignore unrecognized request parameters.
 
 Request and response parameters
 defined by this specification MUST NOT be included more than once.
 Parameters sent without a value MUST be treated as if they were
 omitted from the request.
 
-An authorization server that redirects a request potentially containing
-user credentials MUST avoid forwarding these user credentials accidentally
+An authorization endpoint that redirects a request potentially containing
+user credentials is expected to define a trust boundary and to not
+forward these credentials outside it
 (see {{redirect_307}} for details).
 
 ## Token Endpoint
