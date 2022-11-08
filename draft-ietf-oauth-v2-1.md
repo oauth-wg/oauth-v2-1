@@ -1831,14 +1831,14 @@ The authorization server MUST verify the binding between the refresh
 token and client identity whenever the client identity can be
 authenticated.  When client authentication is not possible, the
 authorization server SHOULD issue sender-constrained refresh tokens
-or use refresh token rotation as described in (#refreshing-an-access-token).
+or use refresh token rotation as described in (#refresh-token-endpoint-extension).
 
 The authorization server MUST ensure that refresh tokens cannot be
 generated, modified, or guessed to produce valid refresh tokens by
 unauthorized parties.
 
 
-### Token Endpoint Extension
+### Token Endpoint Extension {#refresh-token-endpoint-extension}
 
 The authorization grant type is identified at the token endpoint with the `grant_type` value of `refresh_token`.
 
