@@ -890,7 +890,7 @@ MAY use the HTTP Basic
 authentication scheme as defined in Section 11 of {{RFC9110}} to authenticate with
 the authorization server.  The client identifier is encoded using the
 `application/x-www-form-urlencoded` encoding algorithm per
-Appendix B, and the encoded value is used as the username; the client
+{{application-x-www-form-urlencoded}}, and the encoded value is used as the username; the client
 secret is encoded using the same algorithm and used as the
 password.  The authorization server MUST support the HTTP Basic
 authentication scheme for authenticating clients that were issued a
@@ -1075,7 +1075,7 @@ Client authentication is used for:
 
 The client makes a request to the token endpoint by sending the
 following parameters using the `application/x-www-form-urlencoded`
-format per Appendix B with a character encoding of UTF-8 in the HTTP
+format per {{application-x-www-form-urlencoded}} with a character encoding of UTF-8 in the HTTP
 request content:
 
 "client_id":
@@ -1416,7 +1416,7 @@ authorization code is the same client that requested it.
 
 The client constructs the request URI by adding the following
 parameters to the query component of the authorization endpoint URI
-using the `application/x-www-form-urlencoded` format, per Appendix B:
+using the `application/x-www-form-urlencoded` format, per {{application-x-www-form-urlencoded}}:
 
 "response_type":
 :    REQUIRED.  The authorization endpoint supports different sets of request and response
@@ -3552,6 +3552,13 @@ ABNF for `code_challenge` is as follows.
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
     ALPHA = %x41-5A / %x61-7A
     DIGIT = %x30-39
+
+
+# Use of application/x-www-form-urlencoded Media Type {#application-x-www-form-urlencoded}
+
+TBD: Describe OAuth's use of `application/x-www-form-urlencoded` encoding, both for URL parameters as well as for the client_id and secret encoding.
+
+GitHub issue: https://github.com/oauth-wg/oauth-v2-1/issues/128
 
 
 # Extensions {#extensions}
