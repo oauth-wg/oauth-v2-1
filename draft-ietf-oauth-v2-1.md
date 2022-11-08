@@ -2173,13 +2173,13 @@ identifying a human-readable web page explaining the error.  The
 `error`, `error_description`, and `error_uri` attributes MUST NOT
 appear more than once.
 
-Values for the `scope` attribute (specified in Appendix A.4)
+Values for the `scope` attribute (specified in {{scope-syntax}})
 MUST NOT include characters outside the set %x21 / %x23-5B
 / %x5D-7E for representing scope values and %x20 for delimiters
 between scope values.  Values for the `error` and `error_description`
-attributes (specified in Appendixes A.7 and A.8) MUST
+attributes (specified in {{error-syntax}} and {{error-description-syntax}}) MUST
 NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.
-Values for the `error_uri` attribute (specified in Appendix A.9 of)
+Values for the `error_uri` attribute (specified in {{error-uri-syntax}} of)
 MUST conform to the URI-reference syntax and thus MUST NOT
 include characters outside the set %x21 / %x23-5B / %x5D-7E.
 
@@ -3448,7 +3448,7 @@ The `response_type` element is defined in {{authorization-request}} and {{new-re
     response-name = 1*response-char
     response-char = "_" / DIGIT / ALPHA
 
-## "scope" Syntax
+## "scope" Syntax {#scope-syntax}
 
 The `scope` element is defined in {{access-token-scope}}:
 
@@ -3467,21 +3467,21 @@ The `redirect_uri` element is defined in {{authorization-request}}, and {{code-t
 
      redirect-uri      = URI-reference
 
-## "error" Syntax
+## "error" Syntax {#error-syntax}
 
 The `error` element is defined in Sections {{authorization-code-error-response}}, {{token-error-response}},
 7.2, and 8.5:
 
      error             = 1*NQSCHAR
 
-## "error_description" Syntax
+## "error_description" Syntax {#error-description-syntax}
 
 The `error_description` element is defined in Sections {{authorization-code-error-response}},
 {{token-error-response}}, and {{error-response}}:
 
      error-description = 1*NQSCHAR
 
-## "error_uri" Syntax
+## "error_uri" Syntax {#error-uri-syntax}
 
 The `error_uri` element is defined in Sections {{authorization-code-error-response}}, {{token-error-response}},
 and 7.2:
@@ -3558,7 +3558,7 @@ ABNF for `code_challenge` is as follows.
 
 TBD: Describe OAuth's use of `application/x-www-form-urlencoded` encoding, both for URL parameters as well as for the client_id and secret encoding.
 
-GitHub issue: https://github.com/oauth-wg/oauth-v2-1/issues/128
+GitHub discussion: <https://github.com/oauth-wg/oauth-v2-1/issues/128>
 
 
 # Extensions {#extensions}
@@ -3624,6 +3624,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Replaced "verify the identity of the resource owner" with "authenticate"
 * Clarified refresh token rotation to match RFC6819
 * Added appendix to hold application/x-www-form-urlencoded examples
+* Fixed references to entries in appendix
 
 -07
 
