@@ -1885,7 +1885,7 @@ refresh token replay by malicious actors for public clients:
   invalidated refresh token, which will inform the authorization
   server of the breach.  The authorization server cannot determine
   which party submitted the invalid refresh token, but it will
-  revoke the active refresh token as well as the access authorization 
+  revoke the active refresh token as well as the access authorization
   grant associated with it. This stops the attack at the
   cost of forcing the legitimate client to obtain a fresh
   authorization grant.
