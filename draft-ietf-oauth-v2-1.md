@@ -983,7 +983,7 @@ The authorization endpoint is used to interact with the resource
 owner and obtain an authorization grant.  The authorization server
 MUST first authenticate the resource owner.  The way in
 which the authorization server authenticates the resource owner
-(e.g., username and password login, passkey, federated login, or by using an established session) 
+(e.g., username and password login, passkey, federated login, or by using an established session)
 is beyond the scope of this specification.
 
 The means through which the client obtains the location of the
