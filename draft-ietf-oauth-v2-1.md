@@ -703,9 +703,9 @@ This specification has been designed around the following client profiles:
 
 Every client is identified in the context of an authorization server
 by a client identifier -- a unique string representing the registration
-information provided by the client. The Authorization Server may itself
-issue the client identifier, it may also serve clients whose client identifier
-was issued by an outside party. The client identifier is not a
+information provided by the client. While the Authorization Server typically
+issues the client identifier itself, it may also serve clients whose client identifier
+was created by a party other than the Authorization Server. The client identifier is not a
 secret; it is exposed to the resource owner and MUST NOT be used
 alone for client authentication.  The client identifier is unique in the
 context of an authorization server.
