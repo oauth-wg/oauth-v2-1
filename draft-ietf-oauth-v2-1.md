@@ -486,7 +486,7 @@ a method of encoding access token data as a JSON Web Token {{RFC7519}}.
 Additional authentication credentials, which are beyond
 the scope of this specification, may be required in order for the
 client to use an access token. This is typically referred to as a sender-constrained
-access token, such as Mutual TLS Access Tokens {{RFC8705}}.
+access token, such as DPoP {{I-D.ietf-oauth-dpop}} and Mutual TLS Access Tokens {{RFC8705}}.
 
 The access token provides an abstraction layer, replacing different
 authorization constructs (e.g., username and password) with a single
@@ -2667,23 +2667,22 @@ the recipient (e.g., a resource server). The use of Mutual TLS for OAuth 2.0
 
 ## Client Impersonating Resource Owner {#client-impersonating-resource-owner}
 
-Resource servers may make access control decisions based on the
-identity of the resource owner as communicated in the `sub` claim
-returned by the authorization server in a token introspection
-response [RFC7662] or other mechanisms.  If a client is able to
-choose its own `client_id` during registration with the authorization
-server, then there is a risk that it can register with the same `sub`
-value as a privileged user.  A subsequent access token obtained under
-the client credentials grant may be mistaken for an access token
-authorized by the privileged user if the resource server does not
-perform additional checks.
+Resource servers may make access control decisions based on the identity of a
+resource owner, for which an access token was issued, or based on the identity
+of a client in the client credentials grant. If both options are possible,
+depending on the details of the implementation, a client's identity may be
+mistaken for the identity of a resource owner. For example, if a client is able
+to choose its own `client_id` during registration with the authorization server,
+a malicious client may set it to a value identifying an end-user (e.g., a `sub`
+value if OpenID Connect is used). If the resource server cannot properly
+distinguish between access tokens issued to clients and access tokens issued to
+end-users, the client may then be able to access resource of the end-user.
 
-Authorization servers SHOULD NOT allow clients to influence their
-`client_id` or `sub` value or any other claim if that can cause
-confusion with a genuine resource owner.  Where this cannot be
-avoided, authorization servers MUST provide other means for the
-resource server to distinguish between access tokens authorized by a
-resource owner from access tokens authorized by the client itself.
+Authorization servers SHOULD NOT allow clients to influence their `client_id` or
+any other Claim if that can cause confusion with a genuine resource owner. Where
+this cannot be avoided, authorization servers MUST provide other means for the
+resource server to distinguish between access tokens authorized by a resource
+owner from access tokens authorized by the client itself.
 
 
 ## Protecting the Authorization Code Flow
@@ -2740,7 +2739,11 @@ most user agents will only show this behaviour for 307 redirects.)
 Therefore, the RECOMMENDED status code for HTTP redirects is 303.
 
 
-## Authorization Codes {#authorization_codes}
+## Authorization Code Injection {#authorization_codes}
+
+TODO: Expand this with background on what authorization code injection in
+
+### Countermeasures
 
 To prevent injection of authorization codes into the client, using `code_challenge` and
 `code_verifier` is REQUIRED for clients, and authorization servers MUST enforce
@@ -2765,7 +2768,7 @@ including web applications and other confidential clients.
 Clients SHOULD use code challenge methods that
 do not expose the `code_verifier` in the authorization request.
 Otherwise, attackers that can read the authorization request (cf.
-Attacker A4 in (#secmodel)) can break the security provided
+Attacker A4 in {{I-D.ietf-oauth-security-topics}}) can break the security provided
 by this mechanism. Currently, `S256` is the only such method.
 
 When an authorization code arrives at the token endpoint, the
