@@ -767,9 +767,9 @@ remove the counterfeit app.  Such a petition is harder to prove if a
 generic URI scheme was used.
 
 Clients MUST NOT expose URLs that forward the user's browser to
-arbitrary URIs obtained from a query parameter ("open redirector").
-Open redirectors can enable exfiltration of authorization codes and
-access tokens, see (#open_redirector_on_client).
+arbitrary URIs obtained from a query parameter ("open redirector"), as
+described in {{open-redirectors}}. Open redirectors can enable
+exfiltration of authorization codes and access tokens.
 
 The client MAY use the `state` request parameter to achieve per-request
 customization if needed rather than varying the redirect URI per request.
@@ -2958,15 +2958,35 @@ of an invalid combination of `client_id` and `redirect_uri`.
 However, an attacker could also utilize a correctly registered
 redirect URI to perform phishing attacks. The attacker could, for
 example, register a client via dynamic client registration {{RFC7591}}
-and intentionally send an erroneous authorization request, e.g., by
-using an invalid scope value, thus instructing the AS to redirect the
-user agent to its phishing site.
+and execute one of the following attacks:
 
-The AS MUST take precautions to prevent this threat. Based on its risk
-assessment, the AS needs to decide whether it can trust the redirect
-URI and SHOULD only automatically redirect the user agent if it trusts
-the redirect URI. If the URI is not trusted, the AS MAY inform the
-user and rely on the user to make the correct decision.
+1. Intentionally send an erroneous authorization request, e.g., by
+    using an invalid scope value, thus instructing the AS to redirect the
+    user-agent to its phishing site.
+1. Intentionally send a valid authorization request with `client_id`
+    and `redirect_uri` controlled by the attacker. After the user authenticates,
+    the AS prompts the user to provide consent to the request. If the user
+    notices an issue with the request and declines the request, the AS still
+    redirects the user agent to the phishing site. In this case, the user agent
+    will be redirected to the phishing site regardless of the action taken by
+    the user.
+1. Intentionally send a valid silent authentication request (`prompt=none`)
+    with `client_id` and `redirect_uri` controlled by the attacker. In this case,
+    the AS will automatically redirect the user agent to the phishing site.
+
+The AS MUST take precautions to prevent these threats. The AS MUST always
+authenticate the user first and, with the exception of the silent authentication
+use case, prompt the user for credentials when needed, before redirecting the
+user. Based on its risk assessment, the AS needs to decide whether it can trust
+the redirect URI or not. It could take into account  URI analytics done
+internally or through some external service to evaluate the credibility and
+trustworthiness content behind the URI, and the source of the redirect URI and
+other client data.
+
+The AS SHOULD only automatically redirect the user agent if it trusts the
+redirect URI.  If the URI is not trusted, the AS MAY inform the user and rely on
+the user to make the correct decision.
+
 
 ## Authorization Server Mix-Up Mitigation in Native Apps
 
@@ -3628,6 +3648,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Clarified refresh token rotation to match RFC6819
 * Added appendix to hold application/x-www-form-urlencoded examples
 * Fixed references to entries in appendix
+* Incorporated new "Phishing via AS" section from Security BCP
 
 -07
 
