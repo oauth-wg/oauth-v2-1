@@ -3009,11 +3009,6 @@ The requirement of {{native-app-registration}}, specifically that authorization
 servers reject requests with URIs that don't match what was
 registered, is also required to prevent such attacks.
 
-## Other Recommendations
-
-Authorization servers SHOULD NOT allow clients to influence their
-`client_id` or `sub` value or any other claim if that can cause
-confusion with a genuine resource owner (see (#client_impersonating)).
 
 
 # Native Applications {#native-applications}
