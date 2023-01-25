@@ -715,8 +715,10 @@ specification.  The client should avoid making assumptions about the
 identifier size.  The authorization server SHOULD document the size
 of any identifier it issues.
 
-Authorization servers SHOULD NOT allow clients to choose or influence their
-`client_id` value. See {{client-impersonating-resource-owner}} for details.
+If the authorization server supports clients with client identifiers issued by
+parties other than the authorization server, the authorization server SHOULD
+take precautions to avoid clients impersonating resource owners as described
+in {{client-impersonating-resource-owner}}.
 
 
 ## Client Redirection Endpoint {#redirection-endpoint}
