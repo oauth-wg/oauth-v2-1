@@ -649,17 +649,16 @@ with the authorization server.
 
 Any clients with credentials MUST take precautions to prevent leakage and abuse of their credentials.
 
-Client authentication allows an Authorization Server to ensure it interacts with a certain client
-(identified by its `client_id`) in an OAuth flow. This might by the pre-requisite to use client
-policy and metadata in the course of processing this flow. For example, the Authorization Server
-may show the trustworthy client name in user consent or allow access to certain functions as
-defined in the respective's client policy.
+Client authentication allows an Authorization Server to ensure it is interacting with a certain client
+(identified by its `client_id`) in an OAuth flow. The Authorization Server might make policy decisions
+about things such as whether to prompt the user for consent on every authorization or only the first
+based on the confidence that the Authorization Server is actually communicating with the legitimate client.
 
-Whether and how an Authorization server validates the identity of a client or the party
+Whether and how an Authorization Server validates the identity of a client or the party
 providing/operating this client is out of scope of this specification.
 Authorization servers SHOULD consider the level of confidence in a client's identity
-when deciding whether they allow a client access to certain resource servers or critical functions
-such as the Client Credentials grant type.
+when deciding whether they allow a client access to more sensitive resources and operations
+such as the Client Credentials grant type and how often to prompt the user for consent.
 
 A single `client_id` SHOULD NOT be treated as more than one type of client.
 
@@ -692,7 +691,7 @@ This specification has been designed around the following client profiles:
   application can be extracted. Dynamically
   issued access tokens and refresh tokens can
   receive an acceptable level of protection.  On some platforms, these credentials
-  might even be protected from other applications residing on the same
+  are protected from other applications residing on the same
   device. If such applications wish to use
   client credentials, it is recommended to utilize the
   backend for frontend pattern, or issue the credentials at runtime
@@ -3646,6 +3645,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Added appendix to hold application/x-www-form-urlencoded examples
 * Fixed references to entries in appendix
 * Incorporated new "Phishing via AS" section from Security BCP
+* Rephrase description of the motivation for client authentication
 
 -07
 
