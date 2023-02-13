@@ -1589,7 +1589,7 @@ sending the following HTTP response:
 
     HTTP/1.1 302 Found
     Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA
-              &state=xyz&iss=https://authorization-server.example/
+              &state=xyz&iss=https%3A%2F%2Fauthorization-server.example.com
 
 The client MUST ignore unrecognized response parameters.  The
 authorization code string size is left undefined by this
@@ -1710,7 +1710,7 @@ sending the following HTTP response:
 
     HTTP/1.1 302 Found
     Location: https://client.example.com/cb?error=access_denied
-              &state=xyz&iss=https://authorization-server.example/
+              &state=xyz&iss=https%3A%2F%2Fauthorization-server.example.com
 
 ### Token Endpoint Extension {#code-token-extension}
 
