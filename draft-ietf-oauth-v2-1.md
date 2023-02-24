@@ -1136,8 +1136,8 @@ The authorization server MAY fully or partially ignore the scope
 requested by the client, based on the authorization server policy or
 the resource owner's instructions.  If the issued access token scope
 is different from the one requested by the client, the authorization
-server MUST include the `scope` response parameter to inform the
-client of the actual scope granted.
+server MUST include the `scope` response parameter in the token response
+({{token-response}}) to inform the client of the actual scope granted.
 
 If the client omits the scope parameter when requesting
 authorization, the authorization server MUST either process the
@@ -3653,6 +3653,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Fixed references to entries in appendix
 * Incorporated new "Phishing via AS" section from Security BCP
 * Rephrase description of the motivation for client authentication
+* Moved "scope" parameter in token request into specific grant types to match OAuth 2.0
 
 -07
 
