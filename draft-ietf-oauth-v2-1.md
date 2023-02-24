@@ -1083,10 +1083,6 @@ request content:
 :    REQUIRED, if the client is not authenticating with the
      authorization server as described in {{token-endpoint-client-authentication}}.
 
-"scope":
-:    OPTIONAL.  The scope of the access request as described by
-     {{access-token-scope}}.
-
 "grant_type":
 :    REQUIRED.  Identifier of the grant type the client uses with the particular token request.
 This specification defines the values `authorization_code`, `refresh_token`, and `client_credentials`.
@@ -1799,7 +1795,11 @@ The use of the client credentials grant illustrated in {{fig-client-credentials-
 
 The authorization grant type is identified at the token endpoint with the `grant_type` value of `client_credentials`.
 
-If this value is set, no additional parameters beyond {{token-request}} are required/supported:
+If this value is set, the following additional token request parameters beyond {{token-request}} are supported:
+
+"scope":
+:    OPTIONAL.  The scope of the access request as described by
+     {{access-token-scope}}.
 
 For example, the client makes the following HTTP request using
 transport-layer security (with extra line breaks for display purposes
@@ -1847,6 +1847,13 @@ If this value is set, the following additional parameters beyond {{token-request
 
 "refresh_token":
 :    REQUIRED.  The refresh token issued to the client.
+
+"scope":
+:    OPTIONAL.  The scope of the access request as described by
+     {{access-token-scope}}. The requested scope MUST NOT include any scope
+     not originally granted by the resource owner, and if omitted is
+     treated as equal to the scope originally granted by the
+     resource owner.
 
 Because refresh tokens are typically long-lasting credentials used to
 request additional access tokens, the refresh token is bound to the
