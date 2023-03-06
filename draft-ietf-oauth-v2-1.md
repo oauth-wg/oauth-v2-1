@@ -2943,21 +2943,27 @@ possible) any value received -- in particular, the value of the
 `state` and `redirect_uri` parameters.
 
 
-## Open Redirectors {#open-redirectors}
+## Open Redirection {#open-redirectors}
 
 The following attacks can occur when an AS or client has an open
-redirector. An open redirector is an endpoint that forwards a user's
-browser to an arbitrary URI obtained from a query parameter.
+redirector. An open redirector is an endpoint that forwards a
+user's browser to an arbitrary URI obtained from a query parameter.
+Such endpoints are sometimes implemented, for example, to show a
+message before a user is then redirected to an external website,
+or to redirect users back to a URL they were intending to visit
+before being interrupted, e.g., by a login prompt.
+
 
 
 ### Client as Open Redirector {#open_redirector_on_client}
 
 Clients MUST NOT expose open redirectors. Attackers may use open
 redirectors to produce URLs pointing to the client and utilize them to
-exfiltrate authorization codes and access tokens, as described in
-(#redir_uri_open_redir). Another abuse case is to produce URLs that
-appear to point to the client. This might trick users into trusting the URL
-and follow it in their browser. This can be abused for phishing.
+exfiltrate authorization codes, as described in
+Section 4.1.1 of {{I-D.ietf-oauth-security-topics}}.
+Another abuse case is to produce URLs that appear to point to the client.
+This might trick users into trusting the URL and follow it in their browser.
+This can be abused for phishing.
 
 In order to prevent open redirection, clients should only redirect if
 the target URLs are whitelisted or if the origin and integrity of a
@@ -3666,7 +3672,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Incorporated new "Phishing via AS" section from Security BCP
 * Rephrase description of the motivation for client authentication
 * Moved "scope" parameter in token request into specific grant types to match OAuth 2.0
-* Updated Clickjacking description from the latest version of the Security BCP
+* Updated Clickjacking and Open Redirection description from the latest version of the Security BCP
 
 -07
 
