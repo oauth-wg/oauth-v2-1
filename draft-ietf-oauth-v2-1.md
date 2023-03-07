@@ -1469,6 +1469,12 @@ ABNF for `code_verifier` is as follows.
     ALPHA = %x41-5A / %x61-7A
     DIGIT = %x30-39
 
+Clients SHOULD use code challenge methods that
+do not expose the `code_verifier` in the authorization request.
+Otherwise, attackers that can read the authorization request (cf.
+Attacker A4 in {{I-D.ietf-oauth-security-topics}}) can break the security provided
+by this mechanism. Currently, `S256` is the only such method.
+
 NOTE: The code verifier SHOULD have enough entropy to make it
 impractical to guess the value.  It is RECOMMENDED that the output of
 a suitable random number generator be used to create a 32-octet
@@ -1760,6 +1766,11 @@ In addition to the processing rules in {{token-request}}, the authorization serv
    `redirect_uri` parameter was included in the initial authorization
    request as described in {{authorization-request}}, and if included ensure that
    their values are identical.
+
+*  If there was no `code_challenge` in the authorization request associated
+   with the authorization code in the token request, the authorization server MUST
+   reject the token request.
+
 
 ## Client Credentials Grant
 
@@ -2750,7 +2761,7 @@ Therefore, the RECOMMENDED status code for HTTP redirects is 303.
 
 ## Authorization Code Injection {#authorization_codes}
 
-TODO: Expand this with background on what authorization code injection in
+TODO: Expand this with background on what authorization code injection is
 
 ### Countermeasures
 
@@ -2774,29 +2785,6 @@ Historic note: Although PKCE {{RFC7636}} (where the `code_challenge` and `code_v
 to protect native apps, this advice applies to all kinds of OAuth clients,
 including web applications and other confidential clients.
 
-Clients SHOULD use code challenge methods that
-do not expose the `code_verifier` in the authorization request.
-Otherwise, attackers that can read the authorization request (cf.
-Attacker A4 in {{I-D.ietf-oauth-security-topics}}) can break the security provided
-by this mechanism. Currently, `S256` is the only such method.
-
-When an authorization code arrives at the token endpoint, the
-authorization server MUST do the following check:
-
-1. If there was a `code_challenge` in the authorization request for which this
-code was issued, there must be a `code_verifier` in the token request, and it
-MUST be verified according to the steps in {{token-request}}.
-(This is no change from the current behavior in {{RFC7636}}.)
-
-1. If there was no `code_challenge` in the authorization request, any request to
-the token endpoint containing a `code_verifier` MUST be rejected.
-
-Authorization servers MUST provide a way to detect their support for
-the `code_challenge` mechanism. To this end, they MUST either (a) publish the element
-`code_challenge_methods_supported` in their AS metadata ({{RFC8414}})
-containing the supported `code_challenge_method`s (which can be used by
-the client to detect support) or (b) provide a
-deployment-specific way to ensure or determine support by the AS.
 
 ## Ensuring Endpoint Authenticity
 
@@ -3673,6 +3661,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Rephrase description of the motivation for client authentication
 * Moved "scope" parameter in token request into specific grant types to match OAuth 2.0
 * Updated Clickjacking and Open Redirection description from the latest version of the Security BCP
+* Moved normative requirements out of authorization code security considerations section
 
 -07
 
