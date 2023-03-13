@@ -2441,15 +2441,17 @@ of the access token by using a digital signature.
 Alternatively, a bearer token can contain a reference to
 authorization information, rather than encoding the information
 directly.  Using a reference may require an extra interaction between a
-server and the access token issuer to resolve the reference to the
+resource server and authorization server to resolve the reference to the
 authorization information.  The mechanics of such an interaction are
-not defined by this specification.
+not defined by this specification, but one such mechanism is defined
+in Token Introspection {{RFC7662}}.
 
 This document does not specify the encoding or the contents of the
 access token; hence, detailed recommendations about the means of
 guaranteeing access token integrity protection are outside the scope of this
 specification. One example of an encoding and
-signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
+signing mechanism for access tokens is described in
+JSON Web Token Profile for Access Tokens {{RFC9068}}.
 
 To deal with access token redirects, it is important for the authorization
 server to include the identity of the intended recipients (the
@@ -2534,21 +2536,25 @@ attackers might be able to steal them from the history data, logs,
 or other unsecured locations.
 
 
-### Token Replay Prevention
+### Sender-Constrained Access Tokens {#sender-constrained-tokens}
 
 A sender-constrained access token scopes the applicability of an
 access token to a certain sender.  This sender is obliged to
 demonstrate knowledge of a certain secret as prerequisite for the
 acceptance of that access token at the recipient (e.g., a resource server).
 
-Authorization and resource servers SHOULD use mechanisms for sender-
-constrained access tokens to prevent token replay as described in
+Authorization and resource servers SHOULD use mechanisms for
+sender-constrained access tokens to prevent token replay as described in
 Section 4.8.1.1.2 of {{I-D.ietf-oauth-security-topics}}.
-The use of Mutual TLS for OAuth 2.0 {{RFC8705}} is RECOMMENDED.
+The use of Mutual TLS for OAuth 2.0 {{RFC8705}} is RECOMMENDED
+as the method of sender-constrained access tokens.
+Another method of achieving sender-constrained tokens is described
+in {{I-D.ietf-oauth-dpop}}.
 
 It is RECOMMENDED to use end-to-end TLS.  If TLS traffic needs to be
 terminated at an intermediary, refer to Section 4.11 of {{I-D.ietf-oauth-security-topics}}
 for further security advice.
+
 
 ### Access Token Privilege Restriction
 
@@ -2572,8 +2578,8 @@ this document and {{RFC8707}}, respectively, to
 determine the resource server they want to access.
 
 Additionally, access tokens SHOULD be restricted to certain resources
-and actions on resource servers or resources.  To put this into
-effect, the authorization server associates the access token with the
+and actions on resource servers or resources.  To put this into effect,
+the authorization server associates the access token with the
 respective resource and actions and every resource server is obliged
 to verify, for every request, whether the access token sent with that
 request was meant to be used for that particular action on the
@@ -2589,11 +2595,13 @@ determine those resources and/or actions.
 Depending on the overall process of client registration and credential
 lifecycle management, this may affect the confidence an authorization
 server has in a particular client.
+
 For example, authentication of a dynamically registered client does not
 prove the identity of the client, it only ensures that repeated requests
 to the authorization server were made from the same client instance. Such
 clients may be limited in terms of which scopes they are allowed to request,
 or may have other limitations such as shorter token lifetimes.
+
 In contrast, if there is a registered application whose developer's identity
 was verified, who signed a contract and is issued a client secret
 that is only used in a secure backend service, the authorization
@@ -2604,9 +2612,9 @@ or to be issued longer-lasting tokens.
 
 ## Client Impersonation
 
-A malicious client can impersonate another client and obtain access
-to protected resources if the impersonated client fails to, or is
-unable to, keep its client credentials confidential.
+If a confidential client has its credentials stolen,
+a malicious client can impersonate the client and obtain access
+to protected resources.
 
 The authorization server SHOULD enforce explicit resource owner
 authentication and provide the resource owner with information about
@@ -2641,7 +2649,7 @@ accepted, as appropriate.
 The client SHOULD request access tokens with the minimal scope
 necessary.  The authorization server SHOULD take the client identity
 into account when choosing how to honor the requested scope and MAY
-issue an access token with less rights than requested.
+issue an access token with fewer scopes than requested.
 
 The privileges associated with an access token SHOULD be restricted to
 the minimum required for the particular application or use case. This
@@ -2661,28 +2669,6 @@ respective request. Clients and authorization servers MAY utilize the
 parameters `scope` or `resource` as specified in
 {{RFC8707}}, respectively, to determine the
 resource server they want to access.
-
-### Access Token Replay Prevention
-
-Additionally, access tokens SHOULD be restricted to certain resources
-and actions on resource servers or resources. To put this into effect,
-the authorization server associates the access token with the
-respective resource and actions and every resource server is obliged
-to verify, for every request, whether the access token sent with that
-request was meant to be used for that particular action on the
-particular resource. If not, the resource server must refuse to serve
-the respective request. Clients and authorization servers MAY utilize
-the parameter `scope` and `authorization_details` as specified in
-{{I-D.ietf-oauth-rar}} to determine those resources and/or actions.
-
-Authorization and resource servers SHOULD use mechanisms for
-sender-constrained access tokens to prevent token replay as described
-in (#pop_tokens). A sender-constrained access token scopes the applicability
-of an access
-token to a certain sender. This sender is obliged to demonstrate knowledge
-of a certain secret as prerequisite for the acceptance of that access token at
-the recipient (e.g., a resource server). The use of Mutual TLS for OAuth 2.0
-{{RFC8705}} is RECOMMENDED.
 
 
 ## Client Impersonating Resource Owner {#client-impersonating-resource-owner}
