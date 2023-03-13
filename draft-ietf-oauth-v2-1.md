@@ -796,12 +796,12 @@ rely on the CSRF protection provided by that mechanism. In OpenID Connect flows,
 validating the `nonce` parameter provides CSRF protection. Otherwise, one-time
 use CSRF tokens carried in the `state` parameter that are securely
 bound to the user agent MUST be used for CSRF protection (see
-(#csrf_countermeasures)).
+{{csrf_countermeasures}}).
 
 
 ### Preventing Mix-Up Attacks
 
-In order to prevent mix-up attacks (see (#mix_up)), clients MUST only process redirect
+In order to prevent mix-up attacks, clients MUST only process redirect
 responses of the authorization server they sent the respective request
 to and from the same user agent this authorization request was
 initiated with. Clients MUST store the authorization server they sent
@@ -943,7 +943,7 @@ mapping between the client identifier (registration record) and
 authentication scheme.
 
 Some additional authentication methods such as mTLS {{RFC8705}}
-and "private_key_jwt" {{OpenID}} are defined in the
+and Private Key JWT {{RFC7523}} are defined in the
 "[OAuth Token Endpoint Authentication Methods](https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#token-endpoint-auth-method)" registry,
 and may be useful as generic client authentication methods beyond
 the specific use of protecting the token endpoint.
