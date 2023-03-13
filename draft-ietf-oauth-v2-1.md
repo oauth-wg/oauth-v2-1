@@ -3042,8 +3042,8 @@ needing to authenticate from scratch in each app.  See {{native-apps-embedded-us
 for a deeper analysis of the drawbacks of using embedded user agents
 for OAuth.
 
-Native app authorization requests that use the browser are more
-secure and can take advantage of the user's authentication state.
+Native app authorization requests that use the system browser are more
+secure and can take advantage of the user's authentication state on the device.
 Being able to use the existing authentication session in the browser
 enables single sign-on, as users don't need to authenticate to the
 authorization server each time they use a new app (unless required by
@@ -3635,7 +3635,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 [[ To be removed from the final specification ]]
 
--latest
+-08
 
 * Updated acknowledgments
 * Swap "by a trusted party" with "by an outside party" in client ID definition
@@ -3648,6 +3648,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Moved "scope" parameter in token request into specific grant types to match OAuth 2.0
 * Updated Clickjacking and Open Redirection description from the latest version of the Security BCP
 * Moved normative requirements out of authorization code security considerations section
+* Security considerations clarifications, and removed a duplicate section
 
 -07
 
