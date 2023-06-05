@@ -1540,8 +1540,8 @@ required parameters are present and valid.
 In particular, the authorization server MUST validate the `redirect_uri`
 in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration ({{client-registration}}).
-When comparing the two URIs the authorization server MUST using simple
-character-by-character string comparison as defined in {{RFC3986}}, Section 6.2.1.
+When comparing the two URIs the authorization server MUST ensure that the
+two URIs are equal, see {{RFC3986}}, Section 6.2.1, Simple String Comparison, for details.
 
 If the request is valid,
 the authorization server authenticates the resource owner and obtains
