@@ -1885,15 +1885,18 @@ only):
 
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
-* validate the refresh token.
+* if client authentication is included in the request, ensure that the refresh token was issued to the authenticated client, OR if a client_id is included in the request, ensure the refresh token was issued to the matching client
 
-Authorization servers SHOULD utilize one of these methods to detect
+* validate that the grant corresponding to this refresh token is still active
+
+* validate the refresh token
+
+Authorization servers MUST utilize one of these methods to detect
 refresh token replay by malicious actors for public clients:
 
 * *Sender-constrained refresh tokens:* the authorization server
   cryptographically binds the refresh token to a certain client
-  instance by utilizing {{I-D.ietf-oauth-token-binding}}, {{RFC8705}},
-  {{I-D.ietf-oauth-dpop}}, or another suitable method.
+  instance, e.g. by utilizing {{RFC8705}} or {{I-D.ietf-oauth-dpop}}.
 
 * *Refresh token rotation:* the authorization server issues a new
   refresh token with every access token refresh response.  The
@@ -1925,6 +1928,8 @@ token as described in {{token-response}}.
 The authorization server MAY issue a new refresh token, in which case
 the client MUST discard the old refresh token and replace it with the
 new refresh token.
+
+### Refresh Token Recommendations
 
 The authorization server MAY revoke the old
 refresh token after issuing a new refresh token to the client.  If a
