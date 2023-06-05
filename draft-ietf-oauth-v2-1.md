@@ -744,7 +744,7 @@ redirect URI (including the path component). Authorization servers
 MUST reject authorization requests that specify a redirect URI that
 doesn't exactly match one that was registered, with an exception for
 loopback redirects, where an exact match is required except for the
-port URI component.
+port URI component, see {{authorization-request}} for details.
 
 The authorization server MAY allow the client to register multiple
 redirect URIs.
