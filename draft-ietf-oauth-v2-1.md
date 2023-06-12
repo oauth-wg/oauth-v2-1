@@ -2823,10 +2823,12 @@ the legitimate client on the victim's device, e.g., to cause the
 client to access resources under the attacker's control. This is a
 variant of an attack known as Cross-Site Request Forgery (CSRF).
 
-The traditional countermeasure are CSRF tokens that are bound to the
-user agent and passed in the `state` parameter to the authorization
-server as described in {{RFC6819}}. The same protection is provided by
-the `code_verifier` parameter or the OpenID Connect `nonce` value.
+The traditional countermeasure is that clients pass a random value, also
+known as a CSRF Token, in the `state` parameter that links the request to
+the redirect URI to the user agent session as described. This
+countermeasure is described in detail in {{RFC6819}}, Section 5.3.5. The
+same protection is provided by the `code_verifier` parameter or the
+OpenID Connect `nonce` value.
 
 When using `code_verifier` instead of `state` or `nonce` for CSRF protection, it is
 important to note that:
