@@ -97,7 +97,7 @@ informative:
   RFC8707:
   RFC9068:
   RFC9126:
-  I-D.ietf-oauth-rar:
+  RFC9396:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
@@ -2599,7 +2599,7 @@ request was meant to be used for that particular action on the
 particular resource.  If not, the resource server must refuse to
 serve the respective request.  Clients and authorization servers MAY
 utilize the parameter `scope` and
-`authorization_details` as specified in {{I-D.ietf-oauth-rar}} to
+`authorization_details` as specified in {{RFC9396}} to
 determine those resources and/or actions.
 
 
@@ -3633,7 +3633,7 @@ Below is a list of well-established extensions at the time of publication:
 * {{RFC9207}}: Authorization Server Issuer Identification
   * The `iss` parameter in the authorization response indicates the identity of the authorization server to prevent mix-up attacks in the client.
 
-* {{I-D.ietf-oauth-rar}}: Rich Authorization Requests
+* {{RFC9396}}: Rich Authorization Requests
   * Rich Authorization Requests specifies a new parameter `authorization_details` that is used to carry fine-grained authorization data in the OAuth authorization request.
 
 
@@ -3662,6 +3662,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * add reference to authorization request from redirect URI registration section
 * sync refresh rotation section from security BCP
 * sync redirect URI matching text from security BCP
+* updated references to RAR (RFC9396)
 
 -08
 
