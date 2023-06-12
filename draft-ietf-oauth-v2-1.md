@@ -2290,7 +2290,21 @@ New authentication schemes MAY choose to also specify the use of the
 information in a manner parallel to their usage in this
 specification.
 
+### Sender-Constrained Access Tokens {#sender-constrained-tokens}
 
+A sender-constrained access token scopes the applicability of an
+access token to a certain sender.  This sender is obliged to
+demonstrate knowledge of a certain secret as prerequisite for the
+acceptance of that access token at the recipient (e.g., a resource server).
+
+Authorization and resource servers SHOULD use mechanisms for
+sender-constraining access tokens, such as Mutual TLS for OAuth 2.0 {{RFC8705}}
+or OAuth Demonstration of Proof of Possession (DPoP) {{I-D.ietf-oauth-dpop}}.
+See {{I-D.ietf-oauth-security-topics}} Section 4.10.1, to prevent misuse of stolen and leaked access tokens.
+
+It is RECOMMENDED to use end-to-end TLS between the client and the
+resource server. If TLS traffic needs to be terminated at an intermediary,
+refer to Section 4.13 of {{I-D.ietf-oauth-security-topics}} for further security advice.
 
 
 # Extensibility
@@ -2540,25 +2554,6 @@ data structures.  If bearer tokens are passed in page URLs,
 attackers might be able to steal them from the history data, logs,
 or other unsecured locations.
 
-
-### Sender-Constrained Access Tokens {#sender-constrained-tokens}
-
-A sender-constrained access token scopes the applicability of an
-access token to a certain sender.  This sender is obliged to
-demonstrate knowledge of a certain secret as prerequisite for the
-acceptance of that access token at the recipient (e.g., a resource server).
-
-Authorization and resource servers SHOULD use mechanisms for
-sender-constrained access tokens to prevent token replay as described in
-Section 4.8.1.1.2 of {{I-D.ietf-oauth-security-topics}}.
-The use of Mutual TLS for OAuth 2.0 {{RFC8705}} is RECOMMENDED
-as the method of sender-constrained access tokens.
-Another method of achieving sender-constrained tokens is described
-in {{I-D.ietf-oauth-dpop}}.
-
-It is RECOMMENDED to use end-to-end TLS.  If TLS traffic needs to be
-terminated at an intermediary, refer to Section 4.11 of {{I-D.ietf-oauth-security-topics}}
-for further security advice.
 
 
 ### Access Token Privilege Restriction
