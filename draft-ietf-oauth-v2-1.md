@@ -65,6 +65,12 @@ normative:
     author:
       - ins: WHATWG
     date: May 2022
+  WHATWG.CORS:
+    title: "Fetch Standard: CORS protocol"
+    target: https://fetch.spec.whatwg.org/#http-cors-protocol
+    author:
+      - ins: WHATWG
+    date: June 2023
   W3C.REC-xml-20081126:
     title: "Extensible Markup Language"
     target: https://www.w3.org/TR/REC-xml/REC-xml-20081126.xml
@@ -1015,6 +1021,10 @@ An authorization server that redirects a request potentially containing
 user credentials MUST avoid forwarding these user credentials accidentally
 (see {{redirect_307}} for details).
 
+Cross-Origin Resource Sharing (also known as CORS) {{WHATWG.CORS}} MUST NOT be
+supported at the Authorization Endpoint as the client does not access this
+endpoint directly, instead the client redirects the user agent to it.
+
 ## Token Endpoint
 
 The token endpoint is used by the client to obtain an access token using
@@ -1043,7 +1053,7 @@ defined by this specification MUST NOT be included more than once.
 Authorization servers that wish to support browser-based applications
 (applications running exclusively in client-side JavaScript without
 access to a supporting backend server) will need to ensure the token endpoint
-supports the necessary Cross-Origin Resource Sharing (CORS) headers.
+supports the necessary CORS ({{WHATWG.CORS}}) headers.
 If the authorization server provides additional endpoints to the application, such
 as metadata URLs, dynamic client registration, revocation, introspection, discovery or
 user info endpoints, these endpoints may also be accessed by the browser-based
