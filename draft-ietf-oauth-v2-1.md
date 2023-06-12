@@ -36,6 +36,7 @@ normative:
   RFC6750:
   RFC7159:
   RFC7235:
+  RFC7521:
   RFC7523:
   RFC7595:
   RFC8174:
@@ -856,10 +857,12 @@ form of client authentication meeting its security requirements
 (e.g., password, public/private key pair).
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
-client authentication such as mTLS {{RFC8705}} or a JWT
-{{RFC7523}}.  When asymmetric methods for client authentication are
-used, authorization servers do not need to store sensitive symmetric
-keys, making these methods more robust against a number of attacks.
+client authentication such as mTLS {{RFC8705}} or using signed JWTs
+("Private Key JWT") in accordance with {{RFC7521}} and {{RFC7523}}
+(in {{OpenID}} defined as the client authentication method `private_key_jwt`).
+When such methods for client authentication are used, authorization
+servers do not need to store sensitive symmetric keys, making these
+methods more robust against a number of attacks.
 
 When client authentication is not possible, the authorization server
 SHOULD employ other means to validate the client's identity -- for
