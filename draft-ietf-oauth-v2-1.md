@@ -2290,7 +2290,7 @@ New authentication schemes MAY choose to also specify the use of the
 information in a manner parallel to their usage in this
 specification.
 
-### Sender-Constrained Access Tokens {#sender-constrained-tokens}
+## Sender-Constrained Access Tokens {#sender-constrained-tokens}
 
 A sender-constrained access token scopes the applicability of an
 access token to a certain sender.  This sender is obliged to
