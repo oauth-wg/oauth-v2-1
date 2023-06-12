@@ -3652,6 +3652,17 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 [[ To be removed from the final specification ]]
 
+-latest
+
+* AS MUST NOT support CORS requests at authorization endpoint
+* more detail on asymmetric client authentication
+* sync CSRF description from security BCP
+* update and move sender-constrained access tokens section
+* sync client impersonating resource owner with security BCP
+* add reference to authorization request from redirect URI registration section
+* sync refresh rotation section from security BCP
+* sync redirect URI matching text from security BCP
+
 -08
 
 * Updated acknowledgments
