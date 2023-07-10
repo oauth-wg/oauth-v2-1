@@ -3696,6 +3696,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * clarifications on URIs
 * removed redirect_uri from the token request
 * expanded security considerations around code_verifier
+* revised introduction section
 
 -08
 
