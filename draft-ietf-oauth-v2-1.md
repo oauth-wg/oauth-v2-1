@@ -1749,7 +1749,8 @@ For example, the client makes the following HTTP request
     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
     Content-Type: application/x-www-form-urlencoded
 
-    grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+    grant_type=authorization_code
+    &code=SplxlOBeZQQYbYS6WxSbIA
     &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
