@@ -3453,12 +3453,6 @@ Some of the definitions that follow use these common definitions:
     VSCHAR     = %x20-7E
     NQCHAR     = %x21 / %x23-5B / %x5D-7E
     NQSCHAR    = %x20-21 / %x23-5B / %x5D-7E
-    UNICODECHARNOCRLF = %x09 /%x20-7E / %x80-D7FF /
-                        %xE000-FFFD / %x10000-10FFFF
-
-(The UNICODECHARNOCRLF definition is based upon the Char definition
-in Section 2.2 of {{W3C.REC-xml-20081126}}, but omitting the Carriage
-Return and Linefeed characters.)
 
 
 ## "client_id" Syntax
