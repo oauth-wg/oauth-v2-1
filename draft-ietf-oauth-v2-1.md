@@ -238,6 +238,27 @@ any particular authentication mechanism. This provides the ability for the
 authorization server to manage the user authentication policies and
 even change them in the future without coordinating the changes with applications.
 
+The authorization layer can also simplify how a resource server determines
+if a request is authorized. Traditionally, after authenticating the client,
+each resource server would evaluate policies to compute if the client is authorized
+on each API call. In a distributed system, the policies need to be synchronized
+to all the resource servers, or the resource server must call a central policy
+server to process each request. In OAuth, evaluation of the policies is performed
+only when a new access token is created by the authorization server. If the
+authorized access is represented in the access token, the resource server no longer
+needs to evaluate the policies, and only needs to validate the access token.
+This simplification applies when the application is acting on behalf of a resource
+owner, or on behalf of itself.
+
+OAuth is an authorization protocol, and is not an authentication protocol. The
+access token represents the authorization granted to the client. It is a common
+practice for the client to present the access token to a proprietary API which
+returns a user identifier for the resource owner, and then using the result of
+the API as a proxy for authenticating the user. This practice is not part of
+the OAuth standard or security considerations, and may not have been considered
+by the resource owner. Implementors should carefully consult the documentation
+of the resource server before adopting this practice.
+
 This specification is designed for use with HTTP ({{RFC9110}}).  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
