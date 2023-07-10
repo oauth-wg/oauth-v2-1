@@ -1750,7 +1750,6 @@ For example, the client makes the following HTTP request
     Content-Type: application/x-www-form-urlencoded
 
     grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
-    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
     &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
