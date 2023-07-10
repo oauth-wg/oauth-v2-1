@@ -178,9 +178,20 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.
 
 # Introduction {#introduction}
 
-In the traditional client-server authentication model, the client
+OAuth introduces an authorization layer to the client-server authentication model
+by separating the role of the client from that of the resource
+owner. In OAuth, the client requests access to resources controlled
+by the resource owner and hosted by the resource server.
+Instead of using the resource owner's credentials to access protected
+resources, the client obtains an access token - a credential representing
+a specific set of access attributes such as scope and lifetime. Access
+tokens are issued to clients by an authorization server with the approval
+of the resource owner. The client uses the access token to access the
+protected resources hosted by the resource server.
+
+In the older, more limited client-server authentication model, the client
 requests an access-restricted resource (protected resource) on the
-server by authenticating with the server using the resource owner's
+server by authenticating to the server using the resource owner's
 credentials.  In order to provide applications access to
 restricted resources, the resource owner shares their credentials with
 the application.  This creates several problems and limitations:
@@ -210,18 +221,7 @@ the application.  This creates several problems and limitations:
    the end-user's password and all of the data protected by that
    password.
 
-OAuth addresses these issues by introducing an authorization layer
-and separating the role of the client from that of the resource
-owner. In OAuth, the client requests access to resources controlled
-by the resource owner and hosted by the resource server.
-Instead of using the resource owner's credentials to access protected
-resources, the client obtains an access token - a credential representing
-a specific set of access attributes such as scope and lifetime. Access
-tokens are issued to clients by an authorization server with the approval
-of the resource owner. The client uses the access token to access the
-protected resources hosted by the resource server.
-
-For example, an end-user (resource owner) can grant a printing
+With OAuth, an end-user (resource owner) can grant a printing
 service (client) access to their protected photos stored at a photo-
 sharing service (resource server), without sharing their username and
 password with the printing service.  Instead, they authenticate
