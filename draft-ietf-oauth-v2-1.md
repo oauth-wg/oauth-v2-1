@@ -3661,7 +3661,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 [[ To be removed from the final specification ]]
 
--latest
+-09
 
 * AS MUST NOT support CORS requests at authorization endpoint
 * more detail on asymmetric client authentication
