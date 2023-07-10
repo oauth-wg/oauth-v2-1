@@ -1737,12 +1737,6 @@ If this value is set, the following additional token request parameters beyond {
 :    REQUIRED.  The authorization code received from the
      authorization server.
 
-"redirect_uri":
-:    REQUIRED, if the `redirect_uri` parameter was included in the
-     authorization request as described in {{authorization-request}}, in which case their
-     values MUST be identical. If no `redirect_uri` was included in the
-     authorization request, this parameter is OPTIONAL.
-
 "code_verifier":
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization
      request. MUST NOT be used otherwise. The original code verifier string.
@@ -1775,15 +1769,12 @@ In addition to the processing rules in {{token-request}}, the authorization serv
    the previously associated `code_challenge`, after first transforming it
    according to the `code_challenge_method` method specified by the client, and
 
-*  ensure that the `redirect_uri` parameter is present if the
-   `redirect_uri` parameter was included in the initial authorization
-   request as described in {{authorization-request}}, and if included ensure that
-   their values are identical.
-
 *  If there was no `code_challenge` in the authorization request associated
    with the authorization code in the token request, the authorization server MUST
    reject the token request.
 
+See {{redirect-uri-in-token-request}} for details on backwards compatibility
+with OAuth 2.0 clients regarding the `redirect_uri` parameter in the token request.
 
 ## Client Credentials Grant
 
@@ -2760,7 +2751,7 @@ most user agents will only show this behaviour for 307 redirects.)
 
 ## Authorization Code Injection {#authorization_codes}
 
-TODO: Expand this with background on what authorization code injection is
+Authorization code injection is an attack where the client receives an authorization code from the attacker in its redirect URI instead of the authorization code from the legitimate authorization server. Without protections in place, there is no mechanism by which the client can know that the attack has taken place. Authorization code injection can lead to both the attacker obtaining access to a victim's account, as well as a victim accidentally gaining access to the attacker's account.
 
 ### Countermeasures
 
@@ -2780,9 +2771,24 @@ transaction-specific and securely bound to the client and the user agent in
 which the transaction was started. If a transaction leads to an error, fresh
 values for `code_challenge` or `nonce` MUST be chosen.
 
-Historic note: Although PKCE {{RFC7636}} (where the `code_challenge` and `code_verifier` parameters were created) was originally designed as a mechanism
-to protect native apps, this advice applies to all kinds of OAuth clients,
-including web applications and other confidential clients.
+Relying on the client to validate the OpenID Connect `nonce` parameter
+means the authorization server has no way to confirm that the client
+has actually protected itself against authorization code injection attacks.
+If an attacker is able to inject an authorization code into a client, the
+client would still exchange the injected authorization code and obtain tokens, and
+would only later reject the ID token after validating the `nonce` and seeing
+that it doesn't match. In contrast, the authorization server enforcing the
+`code_challenge` and `code_verifier` parameters provides a higher security outcome,
+since the authorization server is able to recognize the authorization code
+injection attack pre-emtpively and avoid issuing any tokens in the first place.
+
+Historic note: Although PKCE {{RFC7636}}
+(where the `code_challenge` and `code_verifier` parameters were created)
+was originally designed as a mechanism
+to protect native apps from authorization code exfiltration attacks,
+all kinds of OAuth clients, including web applications and other confidential clients,
+are susceptible to authorziation code injection attacks, which are solved by
+the `code_challenge` and `code_verifier` mechanism.
 
 
 ## Ensuring Endpoint Authenticity
@@ -3406,6 +3412,8 @@ A non-normative list of changes from OAuth 2.0 is listed below:
   as per Section 4.3.2 of {{I-D.ietf-oauth-security-topics}}
 * Refresh tokens for public clients must either be sender-constrained or one-time use
   as per Section 4.13.2 of {{I-D.ietf-oauth-security-topics}}
+* The token endpoint request containing an authorization code no longer contains
+  the `redirect_uri` parameter
 
 ## Removal of the OAuth 2.0 Implicit grant
 
@@ -3422,6 +3430,15 @@ Removal of `response_type=token` does not have an effect on other extension
 response types returning other artifacts from the authorization endpoint,
 for example, `response_type=id_token` defined by {{OpenID}}.
 
+## Redirect URI Parameter in Token Request {#redirect-uri-in-token-request}
+
+In OAuth 2.0, the request to the token endpoint in the authorization code flow (section 4.1.3 of {{RFC6749}}) contains an optional `redirect_uri` parameter. The parameter was intended to prevent an authorization code injection attack, and was required if the `redirect_uri` parameter was sent in the original authorization request. The authorization request only required the `redirect_uri` parameter if multiple redirect URIs were registered to the specific client. However, in practice, many authorization server implementations required the `redirect_uri` parameter in the authorization request even if only one was registered, leading the `redirect_uri` parameter to be required at the token endpoint as well.
+
+In OAuth 2.1, authorization code injection is prevented by the `code_challenge` and `code_verifier` parameters, making the inclusion of the `redirect_uri` parameter serve no purpose in the token request. As such, it has been removed.
+
+For backwards compatibility of an authorization server wishing to support both OAuth 2.0 and OAuth 2.1 clients, the authorization server MUST allow clients to send the `redirect_uri` parameter in the token request ({{code-token-extension}}), and MUST enforce the parameter as described in {{RFC6749}}. The authorization server can use the `client_id` in the request to determine whether to enforce this behavior for the specific client that it knows will be using the older OAuth 2.0 behavior.
+
+A client following only the OAuth 2.1 recommendations will not send the `redirect_uri` in the token request, and therefore will not be compatible with an authorization server that expects the parameter in the token request.
 
 
 # IANA Considerations
@@ -3656,6 +3673,8 @@ Discussions around this specification have also occurred at the OAuth Security W
 * sync redirect URI matching text from security BCP
 * updated references to RAR (RFC9396)
 * clarifications on URIs
+* removed redirect_uri from the token request
+* expanded security considerations around code_verifier
 
 -08
 
