@@ -738,10 +738,10 @@ client's redirection endpoints previously established with the
 authorization server during the client registration process.
 
 The redirect URI MUST be an absolute URI as defined by
-{{RFC3986}} Section 4.3.  The endpoint URI MAY include an
+{{RFC3986}} Section 4.3.  The redirect URI MAY include an
 "application/x-www-form-urlencoded" formatted query
 component ({{WHATWG.URL}}), which MUST be retained when adding
-additional query parameters. The endpoint URI MUST NOT include a
+additional query parameters. The redirect URI MUST NOT include a
 fragment component.
 
 ### Registration Requirements
@@ -835,16 +835,16 @@ The redirection request to the client's endpoint typically results in
 an HTML document response, processed by the user agent.  If the HTML
 response is served directly as the result of the redirection request,
 any script included in the HTML document will execute with full
-access to the redirect URI and the credentials (e.g. authorization code)
+access to the redirect URI and the artifacts (e.g. authorization code)
 it contains. Additionally, the request URL containing the authorization code
 may be sent in the HTTP Referer header to any embedded images, stylesheets
 and other elements loaded in the page.
 
 The client SHOULD NOT include any third-party scripts (e.g., third-
-party analytics, social plug-ins, ad networks) in the redirection
-endpoint response.  Instead, it SHOULD extract the credentials from
+party analytics, social plug-ins, ad networks) in the redirect URI
+endpoint response.  Instead, it SHOULD extract the artifacts from
 the URI and redirect the user agent again to another endpoint without
-exposing the credentials (in the URI or elsewhere).  If third-party
+exposing the artifacts (in the URI or elsewhere).  If third-party
 scripts are included, the client MUST ensure that its own scripts
 (used to extract and remove the credentials from the URI) will
 execute first.
@@ -996,21 +996,21 @@ which the authorization server authenticates the resource owner
 (e.g., username and password login, passkey, federated login, or by using an established session)
 is beyond the scope of this specification.
 
-The means through which the client obtains the location of the
+The means through which the client obtains the URL of the
 authorization endpoint are beyond the scope of this specification,
-but the location is typically provided in the service documentation,
+but the URL is typically provided in the service documentation,
 or in the authorization server's metadata document ({{RFC8414}}).
 
-The endpoint URI MAY include an "application/x-www-form-urlencoded"
-formatted query component {{WHATWG.URL}},
-which MUST be retained when adding additional query parameters.  The
-endpoint URI MUST NOT include a fragment component.
+The authorization endpoint URL MUST NOT include a fragment component,
+and MAY include an "application/x-www-form-urlencoded" formatted
+query component {{WHATWG.URL}}, which MUST be retained when adding
+additional query parameters.
 
 The authorization server MUST support the use of the HTTP `GET`
 method Section 9.3.1 of {{RFC9110}} for the authorization endpoint and MAY support
-the `POST` method (Section 9.3.3 of RFC9110) as well.
+the `POST` method (Section 9.3.3 of {{RFC9110}}) as well.
 
-The authorization server MUST ignore unrecognized request parameters.
+The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.
 
 Request and response parameters
 defined by this specification MUST NOT be included more than once.
@@ -1031,20 +1031,19 @@ The token endpoint is used by the client to obtain an access token using
 a grant such as those described in {{obtaining-authorization}} and
 {{refreshing-an-access-token}}.
 
-The means through which the client obtains the location of the token
-endpoint are beyond the scope of this specification, but the location
+The means through which the client obtains the URL of the token
+endpoint are beyond the scope of this specification, but the URL
 is typically provided in the service documentation and configured during
 development of the client, or provided in the authorization server's metadata
 document ({{RFC8414}}) and fetched programmatically at runtime.
 
-The endpoint URI MAY include an `application/x-www-form-urlencoded`
-formatted query component ({{WHATWG.URL}})
-and MUST NOT include a fragment component.
+The token endpoint URL MUST NOT include a fragment component,
+and MAY include an `application/x-www-form-urlencoded` formatted
+query component ({{WHATWG.URL}}).
 
-The client MUST use the HTTP `POST` method when making access token
-requests.
+The client MUST use the HTTP `POST` method when making requests to the token endpoint.
 
-The authorization server MUST ignore unrecognized request parameters.
+The authorization server MUST ignore unrecognized request parameters sent to the token endpoint.
 
 Parameters sent without a value MUST be treated as if they were
 omitted from the request. Request and response parameters
@@ -1053,7 +1052,8 @@ defined by this specification MUST NOT be included more than once.
 Authorization servers that wish to support browser-based applications
 (applications running exclusively in client-side JavaScript without
 access to a supporting backend server) will need to ensure the token endpoint
-supports the necessary CORS ({{WHATWG.CORS}}) headers.
+supports the necessary CORS ({{WHATWG.CORS}}) headers to allow the responses
+to be visible to the application.
 If the authorization server provides additional endpoints to the application, such
 as metadata URLs, dynamic client registration, revocation, introspection, discovery or
 user info endpoints, these endpoints may also be accessed by the browser-based
@@ -1358,7 +1358,7 @@ browser) and capable of being redirected back to from the authorization server.
        |
        |
  +-----|----+          Client Identifier      +---------------+
- | .---+---------(1)-- & Redirection URI ---->|               |
+ | .---+---------(1)-- & Redirect URI ------->|               |
  | |   |    |                                 |               |
  | |   '---------(2)-- User authenticates --->|               |
  | | User-  |                                 | Authorization |
@@ -1371,7 +1371,7 @@ browser) and capable of being redirected back to from the authorization server.
    ^    v                                         |      |
  +---------+                                      |      |
  |         |>---(4)-- Authorization Code ---------'      |
- |  Client |          & Redirection URI                  |
+ |  Client |          & Redirect URI                     |
  |         |                                             |
  |         |<---(5)----- Access Token -------------------'
  +---------+       (w/ Optional Refresh Token)
@@ -2725,12 +2725,12 @@ as described in {{loopback-interface-redirection}}.
 
 ### HTTP 307 Redirect {#redirect_307}
 
-An AS which redirects a request that potentially contains user
-credentials MUST NOT use the 307 status code (see Section 15.4.8 of {{RFC9110}}) for
+An authorization server which redirects a request that potentially contains user
+credentials MUST NOT use the 307 status code (Section 15.4.8 of {{RFC9110}}) for
 redirection.
 If an HTTP redirection (and not, for example,
 JavaScript) is used for such a request, AS SHOULD use the status
-code 303 "See Other".
+code 303 ("See Other").
 
 At the authorization endpoint, a typical protocol flow is that the AS
 prompts the user to enter their credentials in a form that is then
@@ -2753,11 +2753,9 @@ the form data in the POST request content.
 In HTTP {{RFC9110}}, only the status code 303
 unambigiously enforces rewriting the HTTP POST request to an HTTP GET
 request.  For all other status codes, including the popular 302, user
-agents can opt not to rewrite POST to GET requests and therefore to
+agents can opt not to rewrite POST to GET requests and therefore
 reveal the user credentials to the client.  (In practice, however,
 most user agents will only show this behaviour for 307 redirects.)
-
-Therefore, the RECOMMENDED status code for HTTP redirects is 303.
 
 
 ## Authorization Code Injection {#authorization_codes}
@@ -3657,6 +3655,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * sync refresh rotation section from security BCP
 * sync redirect URI matching text from security BCP
 * updated references to RAR (RFC9396)
+* clarifications on URIs
 
 -08
 
