@@ -114,6 +114,16 @@ informative:
       - ins: B. de Medeiros
       - ins: C. Mortimore
 
+  OpenID.Discovery:
+    title: OpenID Connect Discovery 1.0 incorporating errata set 1
+    target: https://openid.net/specs/openid-connect-discovery-1_0.html
+    date: November 8, 2014
+    author:
+      - ins: N. Sakimura
+      - ins: J. Bradley
+      - ins: M. Jones
+      - ins: E. Jay
+
   OMAP:
     title: "Online Multimedia Authorization Protocol: An Industry Standard for Authorized Access to Internet Multimedia Resources"
     author:
@@ -829,18 +839,10 @@ bound to the user agent MUST be used for CSRF protection (see
 
 ### Preventing Mix-Up Attacks
 
-In order to prevent mix-up attacks, clients MUST only process redirect
-responses of the authorization server they sent the respective request
-to and from the same user agent this authorization request was
-initiated with. Clients MUST store the authorization server they sent
-an authorization request to and bind this information to the user
-agent and check that the authorization response was received from the
-correct authorization server. Clients MUST ensure that the subsequent
-access token request, if applicable, is sent to the same authorization
-server. Clients SHOULD use distinct redirect URIs for each
-authorization server as a means to identify the authorization server a
-particular response came from.
+When an OAuth client can only interact with one authorization server, a mix-up defense is not required. In scenarios where an OAuth client interacts with two or more authorization servers, however, clients MUST prevent mix-up attacks.
+In order to prevent mix-up attacks, clients MUST only process redirect responses of the issuer they sent the respective request to and from the same user agent this authorization request was initiated with.
 
+See {{mixupcountermeasures}} for a detailed description of two different defenses against mix-up attacks.
 
 ### Invalid Endpoint
 
@@ -3030,28 +3032,77 @@ redirect URI.  If the URI is not trusted, the AS MAY inform the user and rely on
 the user to make the correct decision.
 
 
-## Authorization Server Mix-Up Mitigation in Native Apps
+## Authorization Server Mix-Up Mitigation {#mix-up}
 
-(TODO: merge this with the regular mix-up section when it is brought in)
+Mix-up is an attack on scenarios where an OAuth client interacts with
+two or more authorization servers and at least one authorization
+server is under the control of the attacker. This can be the case,
+for example, if the attacker uses dynamic registration to register the
+client at his own authorization server or if an authorization server
+becomes compromised.
 
-To protect against a compromised or malicious authorization server
-attacking another authorization server used by the same app, it is
-REQUIRED that a unique redirect URI is used for each authorization
-server used by the app (for example, by varying the path component),
-and that authorization responses are rejected if the redirect URI
-they were received on doesn't match the redirect URI in an outgoing
-authorization request.
+When an OAuth client can only interact with one authorization server, a mix-up
+defense is not required. In scenarios where an OAuth client interacts with two
+or more authorization servers, however, clients MUST prevent mix-up attacks. Two
+different methods are discussed in the following.
 
-The native app MUST store the redirect URI used in the authorization
-request with the authorization session data (i.e., along with `state`
-and other related data) and MUST verify that the URI on which the
-authorization response was received exactly matches it.
+For both defenses, clients MUST store, for each authorization request, the
+issuer they sent the authorization request to, bind this information to the
+user agent, and check that the authorization response was received from the
+correct issuer. Clients MUST ensure that the subsequent access token request,
+if applicable, is sent to the same issuer. The issuer serves, via the associated
+metadata, as an abstract identifier for the combination of the authorization
+endpoint and token endpoint that are to be used in the flow. If an issuer identifier
+is not available, for example, if neither OAuth metadata {{RFC8414}} nor OpenID
+Connect Discovery {{OpenID.Discovery}} are used, a different unique identifier
+for this tuple or the tuple itself can be used instead. For brevity of presentation,
+such a deployment-specific identifier will be subsumed under the issuer (or
+issuer identifier) in the following.
 
-The requirement of {{native-app-registration}}, specifically that authorization
-servers reject requests with URIs that don't match what was
-registered, is also required to prevent such attacks.
+Note: Just storing the authorization server URL is not sufficient to identify
+mix-up attacks. An attacker might declare an uncompromised AS's authorization endpoint URL as
+"their" AS URL, but declare a token endpoint under their own control.
 
+### Mix-Up Defense via Issuer Identification
+This defense requires that the authorization server sends his issuer identifier
+in the authorization response to the client. When receiving the authorization
+response, the client MUST compare the received issuer identifier to the stored
+issuer identifier. If there is a mismatch, the client MUST abort the
+interaction.
 
+There are different ways this issuer identifier can be transported to the client:
+
+ * The issuer information can be transported, for
+   example, via an optional response parameter `iss` (see {{authorization-response}}).
+ * When OpenID Connect is used and an ID Token is returned in the authorization
+   response, the client can evaluate the `iss` claim in the ID Token.
+
+In both cases, the `iss` value MUST be evaluated according to {{RFC9207}}.
+
+While this defense may require using an additional parameter to transport the
+issuer information, it is a robust and relatively simple defense against mix-up.
+
+### Mix-Up Defense via Distinct Redirect URIs
+For this defense, clients MUST use a distinct redirect URI for each issuer
+they interact with.
+
+Clients MUST check that the authorization response was received from the correct
+issuer by comparing the distinct redirect URI for the issuer to the URI where
+the authorization response was received on. If there is a mismatch, the client
+MUST abort the flow.
+
+While this defense builds upon existing OAuth functionality, it cannot be used
+in scenarios where clients only register once for the use of many different
+issuers (as in some open banking schemes) and due to the tight integration with
+the client registration, it is harder to deploy automatically.
+
+Furthermore, an attacker might be able to circumvent the protection offered by
+this defense by registering a new client with the "honest" AS using the redirect
+URI that the client assigned to the attacker's AS. The attacker could then run
+the attack as described above, replacing the
+client ID with the client ID of his newly created client.
+
+This defense SHOULD therefore only be used if other options are not available.
 
 # Native Applications {#native-applications}
 
