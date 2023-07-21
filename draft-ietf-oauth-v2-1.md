@@ -2931,13 +2931,11 @@ together with those that restrict the sources of scripts allowed to
 execute on an HTML page (by using `script-src`). A non-normative
 example of such a policy is shown in the following listing:
 
-```
-HTTP/1.1 200 OK
-Content-Security-Policy: frame-ancestors https://ext.example.org:8000
-Content-Security-Policy: script-src 'self'
-X-Frame-Options: ALLOW-FROM https://ext.example.org:8000
-...
-```
+    HTTP/1.1 200 OK
+    Content-Security-Policy: frame-ancestors https://ext.example.org:8000
+    Content-Security-Policy: script-src 'self'
+    X-Frame-Options: ALLOW-FROM https://ext.example.org:8000
+    ...
 
 Because some user agents do not support {{CSP-2}}, this technique
 SHOULD be combined with others, including those described in
