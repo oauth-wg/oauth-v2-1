@@ -2967,7 +2967,7 @@ or to redirect users back to a URL they were intending to visit
 before being interrupted, e.g., by a login prompt.
 
 The following attacks can occur when an AS or client has an open
-redirector. 
+redirector.
 
 ### Client as Open Redirector {#open_redirector_on_client}
 
