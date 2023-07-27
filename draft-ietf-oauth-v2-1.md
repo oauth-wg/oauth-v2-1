@@ -1600,11 +1600,7 @@ per {{application-x-www-form-urlencoded}}:
      authorization server and opaque to the client.  The authorization code MUST expire
      shortly after it is issued to mitigate the risk of leaks.  A
      maximum authorization code lifetime of 10 minutes is
-     RECOMMENDED.  The client MUST NOT use the authorization code
-     more than once.  If an authorization code is used more than
-     once, the authorization server MUST deny the request and SHOULD
-     revoke (when possible) all access tokens and refresh tokens previously issued based on
-     that authorization code.  The authorization code is bound to
+     RECOMMENDED. The authorization code is bound to
      the client identifier, code challenge and redirect URI.
 
 "state":
@@ -1761,6 +1757,24 @@ If this value is set, the following additional token request parameters beyond {
 "code_verifier":
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization
      request. MUST NOT be used otherwise. The original code verifier string.
+
+The authorization server MUST return an access token only once for a given authorization code.
+
+TODO:
+
+* Authorization code should be only used once unless in DPoP like circumstances
+* Make it clear to client developers that they should only expect an authorization code to be used once
+
+TODO: Clarify what a "use" is, it doesn't count as a "use" if the AS tells us what to do next (DPoP): The client MUST NOT use the authorization code more than once.
+
+If a second valid token request is made with the same
+authorization code as a previously successful token request,
+the authorization server MUST deny the request and SHOULD
+revoke (when possible) all access tokens and refresh tokens
+previously issued based on that authorization code.
+
+TODO: Point to new security considerations section for the above to explain why. "Reuse of authorization codes".
+(An attacker beat the valid client to requesting the access token, and it was a valid request, so a second call from the valid client should shut down the attacker. However, we don't want to let an attacker DOS valid clients by taking a stolen authorization code and making an invalid request missing the code verifier to the token endpoint preventing the valid client from using the code.)
 
 For example, the client makes the following HTTP request
 (with extra line breaks for display purposes only):
