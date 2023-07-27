@@ -737,7 +737,7 @@ secret; it is exposed to the resource owner and MUST NOT be used
 alone for client authentication.  The client identifier is unique in the
 context of an authorization server.
 
-The client identifier string size is left undefined by this
+The client identifier is an opaque string whose size is left undefined by this
 specification.  The client should avoid making assumptions about the
 identifier size.  The authorization server SHOULD document the size
 of any identifier it issues.
