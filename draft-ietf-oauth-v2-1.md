@@ -99,7 +99,6 @@ informative:
   RFC9126:
   RFC9396:
   I-D.bradley-oauth-jwt-encoded-state:
-  I-D.ietf-oauth-token-binding:
   I-D.ietf-oauth-browser-based-apps:
   I-D.ietf-oauth-dpop:
 
@@ -2252,7 +2251,7 @@ attributes MAY be used as well.
 "error_description":
 : The resource server MAY include the
   `error_description` attribute to provide developers a human-readable
-  explanation that is not meant to be displayed to end-users.  
+  explanation that is not meant to be displayed to end-users.
 
 "error_uri":
 : The resource server MAY include the `error_uri` attribute with an absolute URI
