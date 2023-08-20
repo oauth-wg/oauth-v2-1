@@ -514,7 +514,8 @@ a method of encoding access token data as a JSON Web Token {{RFC7519}}.
 Additional authentication credentials, which are beyond
 the scope of this specification, may be required in order for the
 client to use an access token. This is typically referred to as a sender-constrained
-access token, such as DPoP {{I-D.ietf-oauth-dpop}} and Mutual TLS Access Tokens {{RFC8705}}.
+access token, such as DPoP {{I-D.ietf-oauth-dpop}} and
+Mutual TLS Certificate-Bound Access Tokens {{RFC8705}}.
 
 The access token provides an abstraction layer, replacing different
 authorization constructs (e.g., username and password) with a single
@@ -532,12 +533,57 @@ what is described in this specification.
 Access tokens (as well as any confidential access token
 attributes) MUST be kept confidential in transit and storage, and
 only shared among the authorization server, the resource servers the
-access token is valid for, and the client to whom the access token is
+access token is valid for, and the client to which the access token is
 issued.
 
 The authorization server MUST ensure that access tokens cannot be
 generated, modified, or guessed to produce valid access tokens by
 unauthorized parties.
+
+### Access Token Scope {#access-token-scope}
+
+Access tokens are intended to be issued to clients with less privileges
+than the user granting the access has. This is known as a limited "scope"
+access token. The authorization server and resource server can use this
+scope mechanism to limit what types of resources or level of access a particular client
+can have. For example, a client may only need "read" access to a user's
+resources, but doesn't need to update resources, so the client can request
+the read-only scope defined by the authorization server, and obtain
+an access token that cannot be used to update resources. This requires
+coordination between the authorization server and resource server. The
+authorization server provides the client the ability to request specific
+scopes, and associates those scopes with the access token issued to the client.
+The resource server is then responsible for enforcing scopes when presented
+with a limited-scope access token.
+
+To request a limited-scope access token, the client uses the `scope`
+request parameter at the authorization or token endpoints, depending on
+the grant type used. In turn, the authorization server uses the `scope`
+response parameter to inform the client of the scope of the access token issued.
+
+The value of the scope parameter is expressed as a list of space-
+delimited, case-sensitive strings.  The strings are defined by the
+authorization server.  If the value contains multiple space-delimited
+strings, their order does not matter, and each string adds an
+additional access range to the requested scope.
+
+~~~~abnf
+    scope       = scope-token *( SP scope-token )
+    scope-token = 1*( %x21 / %x23-5B / %x5D-7E )
+~~~~
+
+The authorization server MAY fully or partially ignore the scope
+requested by the client, based on the authorization server policy or
+the resource owner's instructions.  If the issued access token scope
+is different from the one requested by the client, the authorization
+server MUST include the `scope` response parameter in the token response
+({{token-response}}) to inform the client of the actual scope granted.
+
+If the client omits the scope parameter when requesting
+authorization, the authorization server MUST either process the
+request using a pre-defined default value or fail the request
+indicating an invalid scope.  The authorization server SHOULD
+document its scope requirements and default value (if defined).
 
 ## Communication security {#communication-security}
 
@@ -1148,36 +1194,6 @@ The authorization server MUST:
 Further grant type specific processing rules apply and are specified with the respective
 grant type.
 
-#### Access Token Scope {#access-token-scope}
-
-The authorization and token endpoints allow the client to specify the
-scope of the access request using the `scope` request parameter.  In
-turn, the authorization server uses the `scope` response parameter to
-inform the client of the scope of the access token issued.
-
-The value of the scope parameter is expressed as a list of space-
-delimited, case-sensitive strings.  The strings are defined by the
-authorization server.  If the value contains multiple space-delimited
-strings, their order does not matter, and each string adds an
-additional access range to the requested scope.
-
-~~~~abnf
-    scope       = scope-token *( SP scope-token )
-    scope-token = 1*( %x21 / %x23-5B / %x5D-7E )
-~~~~
-
-The authorization server MAY fully or partially ignore the scope
-requested by the client, based on the authorization server policy or
-the resource owner's instructions.  If the issued access token scope
-is different from the one requested by the client, the authorization
-server MUST include the `scope` response parameter in the token response
-({{token-response}}) to inform the client of the actual scope granted.
-
-If the client omits the scope parameter when requesting
-authorization, the authorization server MUST either process the
-request using a pre-defined default value or fail the request
-indicating an invalid scope.  The authorization server SHOULD
-document its scope requirements and default value (if defined).
 
 ### Token Response {#token-response}
 
@@ -3706,6 +3722,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Clarify that the client id is an opaque string
 * Extensions may define additional error codes on a resource request
 * Improved formatting for error field definitions
+* Moved and expanded "scope" definition to introduction section
 
 -09
 
