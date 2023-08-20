@@ -2246,7 +2246,7 @@ attributes MAY be used as well.
   authentication, the resource server SHOULD include the `error`
   attribute to provide the client with the reason why the access
   request was declined.  The parameter value is described in
-  {{bearer-token-error-codes}}.  
+  {{bearer-token-error-codes}}.
 
 "error_description":
 : The resource server MAY include the
