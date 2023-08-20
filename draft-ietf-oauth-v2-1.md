@@ -2256,7 +2256,7 @@ attributes MAY be used as well.
 
 "error_uri":
 : The resource server MAY include the `error_uri` attribute with an absolute URI
-  identifying a human-readable web page explaining the error.  
+  identifying a human-readable web page explaining the error.
 
 The `error`, `error_description`, and `error_uri` attributes MUST NOT
 appear more than once.
