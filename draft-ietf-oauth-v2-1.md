@@ -174,43 +174,6 @@ informative:
     target: https://www.w3.org/TR/CSP2
     date: December 15, 2016
 
-  research.jcs_14:
-    title: Discovering concrete attacks on website authorization by formal analysis
-    target: https://www.doc.ic.ac.uk/~maffeis/papers/jcs14.pdf
-    date: April 23, 2014
-    author:
-      - ins: C. Bansal
-      - ins: K. Bhargavan
-      - ins: A. Delignat-Lavaud
-      - ins: S. Maffeis
-
-  arXiv.1704.08539:
-    title: "The Web SSO Standard OpenID Connect: In-Depth Formal Security Analysis and Security Guidelines"
-    target: http://arxiv.org/abs/1704.08539/
-    date: April 27, 2017
-    author:
-      - ins: D. Fett
-      - ins: R. Küsters
-      - ins: G. Schmitz
-
-  arXiv.1508.04324v2:
-    title: "On the security of modern Single Sign-On Protocols: Second-Order Vulnerabilities in OpenID Connect"
-    target: http://arxiv.org/abs/1508.04324v2/
-    date: January 7, 2016
-    author:
-      - ins: V. Mladenov
-      - ins: C. Mainka
-      - ins: J. Schwenk
-
-  arXiv.1601.01229:
-    title: "A Comprehensive Formal Security Analysis of OAuth 2.0"
-    target: http://arxiv.org/abs/1601.01229/
-    date: January 6, 2016
-    author:
-      - ins: D. Fett
-      - ins: R. Küsters
-      - ins: G. Schmitz
-
 --- abstract
 
 The OAuth 2.1 authorization framework enables an
@@ -3078,90 +3041,6 @@ for example, if the attacker uses dynamic registration to register the
 client at his own authorization server or if an authorization server
 becomes compromised.
 
-The goal of the attack is to obtain an authorization code or an access
-token for an uncompromised authorization server. This is achieved by
-tricking the client into sending those credentials to the compromised
-authorization server (the attacker) instead of using them at the
-respective endpoint of the uncompromised authorization/resource
-server.
-
-### Attack Description
-
-The description here follows {{arXiv.1601.01229}}, with
-variants of the attack outlined below.
-
-Preconditions: For this variant of the attack to work, it is assumed that
-
-  * the implicit or authorization code grant are used with multiple AS
-    of which one is considered "honest" (H-AS) and one is operated by
-    the attacker (A-AS), and
-  * the client stores the AS chosen by the user in a session bound to
-    the user's browser and uses the same redirection endpoint URI for
-    each AS.
-
-In the following, it is further assumed that the client is registered with H-AS (URI:
-`https://honest.as.example`, client ID: `7ZGZldHQ`) and with A-AS (URI:
-`https://attacker.example`, client ID: `666RVZJTA`). URLs shown in the following
-example are shortened for presentation to only include parameters relevant for the
-attack.
-
-Attack on the authorization code grant:
-
- 1. The user selects to start the grant using A-AS (e.g., by clicking on a button at the
-    client's website).
- 2. The client stores in the user's session that the user selected
-    "A-AS" and redirects the user to A-AS's authorization endpoint
-    with a Location header containing the URL
-    `https://attacker.example/authorize?response_type=code&client_id=666RVZJTA`.
- 3. When the user's browser navigates to the attacker's authorization endpoint,
-    the attacker immediately redirects the browser to the authorization endpoint
-    of H-AS. In the authorization request, the attacker replaces the client ID
-    of the client at A-AS with the client's ID at H-AS. Therefore, the browser
-    receives a redirection (`303 See Other`) with a Location header pointing to
-    `https://honest.as.example/authorize?response_type=code&client_id=7ZGZldHQ`
- 4. The user authorizes the client to access her resources at H-AS. (Note that a
-    vigilant user might at this point detect that she intended to use A-AS
-    instead of H-AS. The first attack variant listed below avoids this.) H-AS
-    issues a code and sends it (via the browser) back to the client.
-
- 5. Since the client still assumes that the code was issued by A-AS,
-    it will try to redeem the code at A-AS's token endpoint.
-
- 6. The attacker therefore obtains code and can either exchange the
-    code for an access token (for public clients) or perform an
-    authorization code injection attack as described in
-    (#code_injection).
-
-
-Variants:
-
-  * **Mix-Up With Interception**: This variant works only if the attacker can
-    intercept and manipulate the first request/response pair from a user's
-    browser to the client (in which the user selects a certain AS and is then
-    redirected by the client to that AS), as in Attacker A2 (see (#secmodel)). This capability
-    can, for example, be the result of a man-in-the-middle attack on the user's
-    connection to the client. In the attack, the user starts the flow with H-AS.
-    The attacker intercepts this request and changes the user's selection to
-    A-AS. The rest of the attack proceeds as in Steps 2 and following above.
-  * **Implicit Grant**: In the implicit grant, the attacker receives an access
-    token instead of the code in Step 4. The attacker's AS receives the access token
-    when the client makes a request to the A-AS userinfo endpoint, or since the
-    client believes it has completed the flow with A-AS, a request to the
-    attacker's resource server.
-  * **Per-AS Redirect URIs**: If clients use different redirect URIs for
-    different ASs, do not store the selected AS in the user's session, and ASs
-    do not check the redirect URIs properly, attackers can mount an attack
-    called "Cross-Social Network Request Forgery". These attacks have been
-    observed in practice. Refer to {{research.jcs_14}} for details.
-  * **OpenID Connect**: There are variants that can be used to attack OpenID
-    Connect. In these attacks, the attacker misuses features of the OpenID
-    Connect Discovery {{OpenID.Discovery}} mechanism or replays access tokens or ID
-    Tokens to conduct a mix-up attack. The attacks are described in detail in
-    {{arXiv.1704.08539}}, Appendix A, and {{arXiv.1508.04324v2}}, Section 6
-    ("Malicious Endpoints Attacks").
-
-### Countermeasures {#mixupcountermeasures}
-
 When an OAuth client can only interact with one authorization server, a mix-up
 defense is not required. In scenarios where an OAuth client interacts with two
 or more authorization servers, however, clients MUST prevent mix-up attacks. Two
@@ -3184,7 +3063,7 @@ Note: Just storing the authorization server URL is not sufficient to identify
 mix-up attacks. An attacker might declare an uncompromised AS's authorization endpoint URL as
 "their" AS URL, but declare a token endpoint under their own control.
 
-#### Mix-Up Defense via Issuer Identification
+### Mix-Up Defense via Issuer Identification
 This defense requires that the authorization server sends his issuer identifier
 in the authorization response to the client. When receiving the authorization
 response, the client MUST compare the received issuer identifier to the stored
@@ -3203,7 +3082,7 @@ In both cases, the `iss` value MUST be evaluated according to {{RFC9207}}.
 While this defense may require using an additional parameter to transport the
 issuer information, it is a robust and relatively simple defense against mix-up.
 
-#### Mix-Up Defense via Distinct Redirect URIs
+### Mix-Up Defense via Distinct Redirect URIs
 For this defense, clients MUST use a distinct redirect URI for each issuer
 they interact with.
 
