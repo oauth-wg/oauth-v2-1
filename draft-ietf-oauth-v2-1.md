@@ -1277,7 +1277,7 @@ server are left undefined.  The client should avoid making
 assumptions about value sizes.  The authorization server SHOULD
 document the size of any value it issues.
 
-##### Error Response {#token-error-response}
+### Error Response {#token-error-response}
 
 The authorization server responds with an HTTP 400 (Bad Request)
 status code (unless specified otherwise) and includes the following
