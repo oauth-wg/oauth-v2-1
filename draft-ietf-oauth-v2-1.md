@@ -383,7 +383,7 @@ An authorization code is a temporary credential used to obtain an access token.
 Instead of the client
 requesting authorization directly from the resource owner, the client
 directs the resource owner to an authorization server (via its
-user agent, which in turn directs the
+user agent) which in turn directs the
 resource owner back to the client with the authorization code.
 The client can then exchange the authorization code for an access token.
 
@@ -497,21 +497,25 @@ arranged with the authorization server.
 
 Access tokens are credentials used to access protected resources.  An
 access token is a string representing an authorization issued to the
-client.  The string is considered opaque to the client, even if it has
-a structure. Depending on the authorization server, the access token
-string may be parseable by the resource server, such as when using the
-JSON Web Token Profile for Access Tokens ({{RFC9068}}).
+client.
+
+The string is considered opaque to the client, even if it has
+a structure. The client MUST NOT expect to be able to parse the access
+token value. The authorization server is not required to use a
+consistent access token encoding or format other than what is
+expected by the resource server.
 
 Access tokens represent specific scopes and durations of access, granted by the
 resource owner, and enforced by the resource server and authorization server.
 
-The token may be used by the RS to retrieve the authorization information,
+Depending on the authorization server implementation,
+the token string may be used by the resource server to retrieve the authorization information,
 or the token may self-contain the authorization information in a verifiable
 manner (i.e., a token string consisting of a signed data payload). One example
 of a token retrieval mechanism is Token Introspection {{RFC7662}}, in which the
 RS calls an endpoint on the AS to validate the token presented by the client.
-One example of a structured token format is {{RFC9068}},
-a method of encoding access token data as a JSON Web Token {{RFC7519}}.
+One example of a structured token format is JWT Profile for Access Tokens {{RFC9068}},
+a method of encoding and signing access token data as a JSON Web Token {{RFC7519}}.
 
 Additional authentication credentials, which are beyond
 the scope of this specification, may be required in order for the
@@ -3731,6 +3735,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Split access token section into structure and request
 * Renamed b64token to token68 for consistency with RFC7235
 * Restored content from old appendix B about application/x-www-form-urlencoded
+* Clarified that clients must not parse access tokens
 
 -09
 
