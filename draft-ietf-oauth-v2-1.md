@@ -1825,21 +1825,12 @@ If this value is set, the following additional token request parameters beyond {
 
 The authorization server MUST return an access token only once for a given authorization code.
 
-TODO:
-
-* Authorization code should be only used once unless in DPoP-like circumstances
-* Make it clear to client developers that they should only expect an authorization code to be used once
-
-TODO: Clarify what a "use" is, it doesn't count as a "use" if the AS tells us what to do next (DPoP): The client MUST NOT use the authorization code more than once.
-
 If a second valid token request is made with the same
 authorization code as a previously successful token request,
 the authorization server MUST deny the request and SHOULD
 revoke (when possible) all access tokens and refresh tokens
 previously issued based on that authorization code.
-
-TODO: Point to new security considerations section for the above to explain why. "Reuse of authorization codes".
-(An attacker beat the valid client to requesting the access token, and it was a valid request, so a second call from the valid client should shut down the attacker. However, we don't want to let an attacker DOS valid clients by taking a stolen authorization code and making an invalid request missing the code verifier to the token endpoint preventing the valid client from using the code.)
+See {{authorization-code-reuse}} for further details.
 
 For example, the client makes the following HTTP request
 (with extra line breaks for display purposes only):
@@ -2741,59 +2732,9 @@ this cannot be avoided, authorization servers MUST provide other means for the
 resource server to distinguish between the two types of access tokens.
 
 
-## Protecting the Authorization Code Flow
+## Authorization Code Security Considerations
 
-### Loopback Redirect Considerations in Native Apps {#loopback-native-apps}
-
-Loopback interface redirect URIs MAY use the `http` scheme (i.e., without
-TLS).  This is acceptable for loopback
-interface redirect URIs as the HTTP request never leaves the device.
-
-Clients should open the network port only when starting the
-authorization request and close it once the response is returned.
-
-Clients should listen on the loopback network interface only, in
-order to avoid interference by other network actors.
-
-Clients should use loopback IP literals rather than the string `localhost`
-as described in {{loopback-interface-redirection}}.
-
-### HTTP 307 Redirect {#redirect_307}
-
-An authorization server which redirects a request that potentially contains user
-credentials MUST NOT use the 307 status code (Section 15.4.8 of {{RFC9110}}) for
-redirection.
-If an HTTP redirection (and not, for example,
-JavaScript) is used for such a request, AS SHOULD use the status
-code 303 ("See Other").
-
-At the authorization endpoint, a typical protocol flow is that the AS
-prompts the user to enter their credentials in a form that is then
-submitted (using the POST method) back to the authorization
-server.  The AS checks the credentials and, if successful, redirects
-the user agent to the client's redirect URI.
-
-If the status code 307 were used for redirection, the user agent
-would send the user credentials via a POST request to the client.
-
-This discloses the sensitive credentials to the client.  If the
-relying party is malicious, it can use the credentials to impersonate
-the user at the AS.
-
-The behavior might be unexpected for developers, but is defined in
-Section 15.4.8 of {{RFC9110}}.  This status code does not require the user
-agent to rewrite the POST request to a GET request and thereby drop
-the form data in the POST request content.
-
-In HTTP {{RFC9110}}, only the status code 303
-unambigiously enforces rewriting the HTTP POST request to an HTTP GET
-request.  For all other status codes, including the popular 302, user
-agents can opt not to rewrite POST to GET requests and therefore
-reveal the user credentials to the client.  (In practice, however,
-most user agents will only show this behaviour for 307 redirects.)
-
-
-## Authorization Code Injection {#authorization_codes}
+### Authorization Code Injection {#authorization_codes}
 
 Authorization code injection is an attack where the client receives an authorization code from the attacker in its redirect URI instead of the authorization code from the legitimate authorization server. Without protections in place, there is no mechanism by which the client can know that the attack has taken place. Authorization code injection can lead to both the attacker obtaining access to a victim's account, as well as a victim accidentally gaining access to the attacker's account.
 
@@ -2833,6 +2774,64 @@ to protect native apps from authorization code exfiltration attacks,
 all kinds of OAuth clients, including web applications and other confidential clients,
 are susceptible to authorziation code injection attacks, which are solved by
 the `code_challenge` and `code_verifier` mechanism.
+
+### Reuse of Authorization Codes {#authorization-code-reuse}
+
+Several types of attacks are possible if authorization codes are able to be
+used more than once.
+
+As described in {{code-token-extension}}, the authorization server must reject
+a token request and revoke any issued tokens when receiving a second valid
+request with an authorization code that has already been used to
+issue an access token. If an attacker is able to exfiltrate an authorization code
+and use it before the legitimate client, the attacker will obtain the access token
+and the legitimate client will not. Revoking any issued tokens means the attacker's
+tokens will then be revoked, stopping the attack from proceeding any further.
+
+However, the authorization server should only revoke issued tokens if the
+request containing the authorization code is also valid, including any other parameters
+such as the `code_verifier` and client authentication. The authorization server
+SHOULD NOT revoke any issued tokens when receiving a replayed authorization code
+that contains invalid parameters. If it were to do so, this would create a denial of service
+opportunity for an attacker who is able to obtain an authorization code but
+unable to obtain the client authentication or `code_verifier` by sending an invalid
+authorization code request before the legitimate client and thereby revoking
+the legitimate client's tokens once it makes the valid request.
+
+
+### HTTP 307 Redirect {#redirect_307}
+
+An authorization server which redirects a request that potentially contains user
+credentials MUST NOT use the 307 status code (Section 15.4.8 of {{RFC9110}}) for
+redirection.
+If an HTTP redirection (and not, for example,
+JavaScript) is used for such a request, AS SHOULD use the status
+code 303 ("See Other").
+
+At the authorization endpoint, a typical protocol flow is that the AS
+prompts the user to enter their credentials in a form that is then
+submitted (using the POST method) back to the authorization
+server.  The AS checks the credentials and, if successful, redirects
+the user agent to the client's redirect URI.
+
+If the status code 307 were used for redirection, the user agent
+would send the user credentials via a POST request to the client.
+
+This discloses the sensitive credentials to the client.  If the
+relying party is malicious, it can use the credentials to impersonate
+the user at the AS.
+
+The behavior might be unexpected for developers, but is defined in
+Section 15.4.8 of {{RFC9110}}.  This status code does not require the user
+agent to rewrite the POST request to a GET request and thereby drop
+the form data in the POST request content.
+
+In HTTP {{RFC9110}}, only the status code 303
+unambigiously enforces rewriting the HTTP POST request to an HTTP GET
+request.  For all other status codes, including the popular 302, user
+agents can opt not to rewrite POST to GET requests and therefore
+reveal the user credentials to the client.  (In practice, however,
+most user agents will only show this behaviour for 307 redirects.)
 
 
 ## Ensuring Endpoint Authenticity
@@ -3468,6 +3467,22 @@ issue by requiring an explicit user action to change the default
 handler for `http` and `https` scheme URIs.
 
 
+### Loopback Redirect Considerations in Native Apps {#loopback-native-apps}
+
+Loopback interface redirect URIs MAY use the `http` scheme (i.e., without
+TLS).  This is acceptable for loopback
+interface redirect URIs as the HTTP request never leaves the device.
+
+Clients should open the network port only when starting the
+authorization request and close it once the response is returned.
+
+Clients should listen on the loopback network interface only, in
+order to avoid interference by other network actors.
+
+Clients should use loopback IP literals rather than the string `localhost`
+as described in {{loopback-interface-redirection}}.
+
+
 
 # Browser-Based Apps
 
@@ -3796,6 +3811,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Clarified that clients must not parse access tokens
 * Expanded text around when `redirect_uri` parameter is required in the authorization request
 * Changed "permissions" to "privileges" in refresh token section for consistency
+* Consolidated authorization code flow security considerations
 
 -09
 
