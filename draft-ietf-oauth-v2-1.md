@@ -3799,7 +3799,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 [[ To be removed from the final specification ]]
 
--latest
+-10
 
 * Clarify that the client id is an opaque string
 * Extensions may define additional error codes on a resource request
