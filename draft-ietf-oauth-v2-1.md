@@ -419,7 +419,7 @@ tokens may be issued to the client by the authorization server and are
 used to obtain a new access token when the current access token
 becomes invalid or expires, or to obtain additional access tokens
 with identical or narrower scope (access tokens may have a shorter
-lifetime and fewer permissions than authorized by the resource
+lifetime and fewer privileges than authorized by the resource
 owner).  Issuing a refresh token is optional at the discretion of the
 authorization server, and may be issued based on properties of the client,
 properties of the request, policies within the authorization server, or
@@ -3795,6 +3795,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Restored content from old appendix B about application/x-www-form-urlencoded
 * Clarified that clients must not parse access tokens
 * Expanded text around when `redirect_uri` parameter is required in the authorization request
+* Changed "permissions" to "privileges" in refresh token section for consistency
 
 -09
 
