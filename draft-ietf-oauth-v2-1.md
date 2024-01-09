@@ -490,7 +490,7 @@ server.  Client credentials are used when the client is requesting
 access to protected resources based on an authorization previously
 arranged with the authorization server.
 
-## Access Token
+## Access Token {#access-tokens}
 
 Access tokens are credentials used to access protected resources.  An
 access token is a string representing an authorization issued to the
@@ -583,6 +583,43 @@ authorization, the authorization server MUST either process the
 request using a pre-defined default value or fail the request
 indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
+
+### Bearer Tokens {#bearer-tokens}
+
+A Bearer Token is a security token with the property that any party
+in possession of the token (a "bearer") can use the token in any way
+that any other party in possession of it can.  Using a Bearer Token
+does not require a bearer to prove possession of cryptographic key material
+(proof-of-possession).
+
+Bearer Tokens may be enhanced with proof-of-possession specifications such
+as DPoP {{RFC9449}} and mTLS {{RFC8705}} to provide proof-of-possession characteristics.
+
+To protect against access token disclosure, the
+communication interaction between the client and the resource server
+MUST utilize confidentiality and integrity protection as described in
+{{communication-security}}.
+
+There is no requirement on the particular structure or format of a bearer token. If a bearer token is a reference to authorization information, such references MUST be infeasible for an attacker to guess, such as using a sufficiently long cryptographically random string. If a bearer token uses an encoding mechanism to contain the authorization information in the token itself, the access token MUST use integrity protection sufficient to prevent the token from being modified. One example of an encoding and signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
+
+### Sender-Constrained Access Tokens {#sender-constrained-tokens}
+
+A sender-constrained access token binds the use of an
+access token to a specific sender.  This sender is obliged to
+demonstrate knowledge of a certain secret as prerequisite for the
+acceptance of that access token at the recipient (e.g., a resource server).
+
+Authorization and resource servers SHOULD use mechanisms for
+sender-constraining access tokens, such as OAuth Demonstration of Proof of Possession (DPoP) {{RFC9449}}
+or Mutual TLS for OAuth 2.0 {{RFC8705}}.
+See {{I-D.ietf-oauth-security-topics}} Section 4.10.1, to prevent misuse of stolen and leaked access tokens.
+
+It is RECOMMENDED to use end-to-end TLS between the client and the
+resource server. If TLS traffic needs to be terminated at an intermediary,
+refer to Section 4.13 of {{I-D.ietf-oauth-security-topics}} for further security advice.
+
+
+
 
 ## Communication security {#communication-security}
 
@@ -1214,7 +1251,7 @@ and an HTTP 200 (OK) status code:
 
 "token_type":
 :    REQUIRED.  The type of the access token issued as described in
-     {{access-token-types}}.  Value is case insensitive.
+     {{access-tokens}}.  Value is case insensitive.
 
 "expires_in":
 :    RECOMMENDED.  The lifetime in seconds of the access token.  For
@@ -2030,51 +2067,6 @@ token as described in {{token-response}}.  If the request failed client
 authentication or is invalid, the authorization server returns an
 error response as described in {{token-error-response}}.
 
-# Access Tokens
-
-
-
-## Access Token Types {#access-token-types}
-
-The access token type provides the client with the information
-required to successfully utilize the access token to make a protected
-resource request (along with type-specific attributes).  The client
-MUST NOT use an access token if it does not understand the token
-type.
-
-For example, the `Bearer` token type defined in this specification is utilized
-by including the access token string in the request:
-
-    GET /resource/1 HTTP/1.1
-    Host: example.com
-    Authorization: Bearer mF_9.B5f-4.1JqM
-
-The above example is provided for illustration purposes only.
-
-Each access token type definition specifies the additional attributes
-(if any) sent to the client together with the `access_token` response
-parameter.  It also defines the HTTP authentication method used to
-include the access token and any additional required parameters
-when making a protected resource request.
-
-## Bearer Tokens {#bearer-tokens}
-
-A Bearer Token is a security token with the property that any party
-in possession of the token (a "bearer") can use the token in any way
-that any other party in possession of it can.  Using a Bearer Token
-does not require a bearer to prove possession of cryptographic key material
-(proof-of-possession).
-
-Bearer Tokens may be enhanced with proof-of-possession specifications such
-as DPoP {{RFC9449}} and mTLS {{RFC8705}} to provide proof-of-possession characteristics.
-
-To protect against access token disclosure, the
-communication interaction between the client and the resource server
-MUST utilize confidentiality and integrity protection as described in
-{{communication-security}}.
-
-There is no requirement on the particular structure or format of a bearer token. If a bearer token is a reference to authorization information, such references MUST be infeasible for an attacker to guess, such as using a sufficiently long cryptographically random string. If a bearer token uses an encoding mechanism to contain the authorization information in the token itself, the access token MUST use integrity protection sufficient to prevent the token from being modified. One example of an encoding and signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
-
 
 # Resource Requests {#accessing-protected-resources}
 
@@ -2091,6 +2083,8 @@ they may share a database or other storage; when the two components
 are operated independently, they may use Token Introspection {{RFC7662}}
 or a structured access token format such as a JWT {{RFC9068}}.
 
+## Bearer Token Requests
+
 This section defines two methods of sending Bearer tokens in resource
 requests to resource servers. Clients MUST use one of the two methods defined below,
 and MUST NOT use more than one method to transmit the token in each request.
@@ -2099,7 +2093,7 @@ In particular, clients MUST NOT send the access token in a URI query parameter,
 and resource servers MUST ignore access tokens in a URI query parameter.
 
 
-#### Authorization Request Header Field
+### Authorization Request Header Field
 
 When sending the access token in the `Authorization` request header
 field defined by HTTP/1.1 {{RFC7235}}, the client uses the `Bearer`
@@ -2128,7 +2122,7 @@ Clients SHOULD make authenticated requests with a bearer token using
 the `Authorization` request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
-#### Form-Encoded Content Parameter
+### Form-Encoded Content Parameter
 
 When sending the access token in the HTTP request content, the
 client adds the access token to the request content using the
@@ -2171,7 +2165,7 @@ have access to the `Authorization` request header field.  Resource
 servers MAY support this method.
 
 
-### Access Token Validation
+## Access Token Validation
 
 After receiving the access token, the resource server MUST check that
 the access token is not yet expired, is authorized to access the requested
@@ -2193,6 +2187,12 @@ defined in JWT Profile for Access Tokens ({{RFC9068}}).
 See {{access-token-security-considerations}} for additional considerations
 around creating and validating access tokens.
 
+
+## Error Response {#error-response}
+
+If a resource access request fails, the resource server SHOULD inform
+the client of the error. The details of the error response is determined by the particular token type, such as the
+description of Bearer tokens in {{bearer-token-error-codes}}.
 
 ### The WWW-Authenticate Response Header Field
 
@@ -2316,14 +2316,15 @@ authentication attempt using an expired access token:
                       error_description="The access token expired"
 
 
-## Error Response {#error-response}
+# Extensibility
 
-If a resource access request fails, the resource server SHOULD inform
-the client of the error. The method by which the resource server
-does this is determined by the particular token type, such as the
-description of Bearer tokens in {{bearer-token-error-codes}}.
+## Defining Access Token Types {#defining-access-token-types}
 
-### Extension Token Types
+Access token types can be defined in one of two ways: registered in
+the Access Token Types registry (following the procedures in
+Section 11.1 of {{RFC6749}}), or by using a unique absolute URI as its name.
+
+### Registered Access Token Types
 
 {{RFC6750}} establishes a common registry in Section 11.4 of {{RFC6749}}
 for error values to be shared among OAuth token authentication schemes.
@@ -2346,37 +2347,7 @@ New authentication schemes MAY choose to also specify the use of the
 information in a manner parallel to their usage in this
 specification.
 
-## Sender-Constrained Access Tokens {#sender-constrained-tokens}
-
-A sender-constrained access token scopes the applicability of an
-access token to a certain sender.  This sender is obliged to
-demonstrate knowledge of a certain secret as prerequisite for the
-acceptance of that access token at the recipient (e.g., a resource server).
-
-Authorization and resource servers SHOULD use mechanisms for
-sender-constraining access tokens, such as Mutual TLS for OAuth 2.0 {{RFC8705}}
-or OAuth Demonstration of Proof of Possession (DPoP) {{RFC9449}}.
-See {{I-D.ietf-oauth-security-topics}} Section 4.10.1, to prevent misuse of stolen and leaked access tokens.
-
-It is RECOMMENDED to use end-to-end TLS between the client and the
-resource server. If TLS traffic needs to be terminated at an intermediary,
-refer to Section 4.13 of {{I-D.ietf-oauth-security-topics}} for further security advice.
-
-
-# Extensibility
-
-## Defining Access Token Types {#defining-access-token-types}
-
-Access token types can be defined in one of two ways: registered in
-the Access Token Types registry (following the procedures in
-Section 11.1 of {{RFC6749}}), or by using a unique absolute URI as its name.
-
-Types utilizing a URI name SHOULD be limited to vendor-specific
-implementations that are not commonly applicable, and are specific to
-the implementation details of the resource server where they are
-used.
-
-All other types MUST be registered.  Type names MUST conform to the
+Type names MUST conform to the
 type-name ABNF.  If the type definition includes a new HTTP
 authentication scheme, the type name SHOULD be identical to the HTTP
 authentication scheme name (as defined by [RFC2617]).  The token type
@@ -2385,6 +2356,14 @@ authentication scheme name (as defined by [RFC2617]).  The token type
     type-name  = 1*name-char
     name-char  = "-" / "." / "_" / DIGIT / ALPHA
 
+### Vendor-Specific Access Token Types
+
+Types utilizing a URI name SHOULD be limited to vendor-specific
+implementations that are not commonly applicable, and are specific to
+the implementation details of the resource server where they are
+used.
+
+All other types MUST be registered.
 
 ## Defining New Endpoint Parameters {#defining-new-endpoint-parameters}
 
@@ -3717,6 +3696,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Extensions may define additional error codes on a resource request
 * Improved formatting for error field definitions
 * Moved and expanded "scope" definition to introduction section
+* Split access token section into structure and request
 
 -09
 
