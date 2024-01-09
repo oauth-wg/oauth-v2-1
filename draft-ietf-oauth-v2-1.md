@@ -931,7 +931,7 @@ bound to the user agent MUST be used for CSRF protection (see
 When an OAuth client can only interact with one authorization server, a mix-up defense is not required. In scenarios where an OAuth client interacts with two or more authorization servers, however, clients MUST prevent mix-up attacks.
 In order to prevent mix-up attacks, clients MUST only process redirect responses of the issuer they sent the respective request to and from the same user agent this authorization request was initiated with.
 
-See {{mixupcountermeasures}} for a detailed description of two different defenses against mix-up attacks.
+See {{mix-up}} for a detailed description of two different defenses against mix-up attacks.
 
 ### Invalid Endpoint
 
@@ -3078,6 +3078,9 @@ Note: Just storing the authorization server URL is not sufficient to identify
 mix-up attacks. An attacker might declare an uncompromised AS's authorization endpoint URL as
 "their" AS URL, but declare a token endpoint under their own control.
 
+See Section 4.4 of {{I-D.ietf-oauth-security-topics}} for a detailed description
+of several types of mix-up attacks.
+
 ### Mix-Up Defense via Issuer Identification
 This defense requires that the authorization server sends his issuer identifier
 in the authorization response to the client. When receiving the authorization
@@ -3768,7 +3771,7 @@ Below is a list of well-established extensions at the time of publication:
 
 This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Apps. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
 
-The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Vittorio Bertocci, Michael Jones, Justin Richer, Daniel Fett, Brian Campbell, Joseph Heenan, Roberto Polli, Andrii Deinega, Falko, Michael Peck, and Bob Hamburg.
+The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Vittorio Bertocci, Michael Jones, Justin Richer, Daniel Fett, Brian Campbell, Joseph Heenan, Roberto Polli, Andrii Deinega, Falko, Michael Peck, Bob Hamburg, Deng Chao, and Karsten Meyer zu Selhausen.
 
 Discussions around this specification have also occurred at the OAuth Security Workshop in 2021 and 2022. The authors thank the organizers of the workshop (Guido Schmitz, Steinar Noem, and Daniel Fett) for hosting an event that's conducive to collaboration and community input.
 
