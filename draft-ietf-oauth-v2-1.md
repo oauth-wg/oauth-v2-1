@@ -3812,6 +3812,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Expanded text around when `redirect_uri` parameter is required in the authorization request
 * Changed "permissions" to "privileges" in refresh token section for consistency
 * Consolidated authorization code flow security considerations
+* Clarified authorization code reuse - an authorization code can only obtain an access token once
 
 -09
 
