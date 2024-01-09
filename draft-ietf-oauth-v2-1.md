@@ -98,9 +98,9 @@ informative:
   RFC9068:
   RFC9126:
   RFC9396:
+  RFC9449:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-browser-based-apps:
-  I-D.ietf-oauth-dpop:
 
   OpenID:
     title: OpenID Connect Core 1.0
@@ -513,7 +513,7 @@ a method of encoding access token data as a JSON Web Token {{RFC7519}}.
 Additional authentication credentials, which are beyond
 the scope of this specification, may be required in order for the
 client to use an access token. This is typically referred to as a sender-constrained
-access token, such as DPoP {{I-D.ietf-oauth-dpop}} and
+access token, such as DPoP {{RFC9449}} and
 Mutual TLS Certificate-Bound Access Tokens {{RFC8705}}.
 
 The access token provides an abstraction layer, replacing different
@@ -1777,7 +1777,7 @@ The authorization server MUST return an access token only once for a given autho
 
 TODO:
 
-* Authorization code should be only used once unless in DPoP like circumstances
+* Authorization code should be only used once unless in DPoP-like circumstances
 * Make it clear to client developers that they should only expect an authorization code to be used once
 
 TODO: Clarify what a "use" is, it doesn't count as a "use" if the AS tells us what to do next (DPoP): The client MUST NOT use the authorization code more than once.
@@ -1950,7 +1950,7 @@ refresh token replay by malicious actors for public clients:
 
 * *Sender-constrained refresh tokens:* the authorization server
   cryptographically binds the refresh token to a certain client
-  instance, e.g. by utilizing {{RFC8705}} or {{I-D.ietf-oauth-dpop}}.
+  instance, e.g. by utilizing DPoP {{RFC9449}} or mTLS {{RFC8705}}.
 
 * *Refresh token rotation:* the authorization server issues a new
   refresh token with every access token refresh response.  The
@@ -2030,27 +2030,8 @@ token as described in {{token-response}}.  If the request failed client
 authentication or is invalid, the authorization server returns an
 error response as described in {{token-error-response}}.
 
-# Accessing Protected Resources {#accessing-protected-resources}
+# Access Tokens
 
-The client accesses protected resources by presenting the access
-token to the resource server.  The resource server MUST validate the
-access token and ensure that it has not expired and that its scope
-covers the requested resource.  The methods used by the resource
-server to validate the access token (as well as any error responses)
-are beyond the scope of this specification, but generally involve an
-interaction or coordination between the resource server and the
-authorization server. For example, when the resource server and
-authorization server are colocated or are part of the same system,
-they may share a database or other storage; when the two components
-are operated independently, they may use Token Introspection {{RFC7662}}
-or a structured access token format such as a JWT {{RFC9068}}.
-
-The method in which the client utilizes the access token to
-access protected resources at the resource server depends on the type of access
-token issued by the authorization server.  Typically, it involves
-using the HTTP `Authorization` request header field {{RFC7235}} with an
-authentication scheme defined by the specification of the access
-token type used, such as `Bearer`, defined below.
 
 
 ## Access Token Types {#access-token-types}
@@ -2062,7 +2043,7 @@ MUST NOT use an access token if it does not understand the token
 type.
 
 For example, the `Bearer` token type defined in this specification is utilized
-by simply including the access token string in the request:
+by including the access token string in the request:
 
     GET /resource/1 HTTP/1.1
     Host: example.com
@@ -2073,7 +2054,8 @@ The above example is provided for illustration purposes only.
 Each access token type definition specifies the additional attributes
 (if any) sent to the client together with the `access_token` response
 parameter.  It also defines the HTTP authentication method used to
-include the access token when making a protected resource request.
+include the access token and any additional required parameters
+when making a protected resource request.
 
 ## Bearer Tokens {#bearer-tokens}
 
@@ -2084,17 +2066,30 @@ does not require a bearer to prove possession of cryptographic key material
 (proof-of-possession).
 
 Bearer Tokens may be enhanced with proof-of-possession specifications such
-as mTLS {{RFC8705}} to provide proof-of-possession characteristics.
+as DPoP {{RFC9449}} and mTLS {{RFC8705}} to provide proof-of-possession characteristics.
 
 To protect against access token disclosure, the
 communication interaction between the client and the resource server
 MUST utilize confidentiality and integrity protection as described in
 {{communication-security}}.
 
-There is no requirement on the particular structure or format of a bearer token, as described in {{accessing-protected-resources}}. If a bearer token is a reference to authorization information, such references MUST be infeasible for an attacker to guess, such as using a sufficiently long cryptographically random string. If a bearer token uses an encoding mechanism to contain the authorization information in the token itself, the access token MUST use integrity protection sufficient to prevent the token from being modified. One example of an encoding and signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
+There is no requirement on the particular structure or format of a bearer token. If a bearer token is a reference to authorization information, such references MUST be infeasible for an attacker to guess, such as using a sufficiently long cryptographically random string. If a bearer token uses an encoding mechanism to contain the authorization information in the token itself, the access token MUST use integrity protection sufficient to prevent the token from being modified. One example of an encoding and signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
 
 
-### Authenticated Requests
+# Resource Requests {#accessing-protected-resources}
+
+The client accesses protected resources by presenting an access
+token to the resource server.  The resource server MUST validate the
+access token and ensure that it has not expired and that its scope
+covers the requested resource.  The methods used by the resource
+server to validate the access token
+are beyond the scope of this specification, but generally involve an
+interaction or coordination between the resource server and the
+authorization server. For example, when the resource server and
+authorization server are colocated or are part of the same system,
+they may share a database or other storage; when the two components
+are operated independently, they may use Token Introspection {{RFC7662}}
+or a structured access token format such as a JWT {{RFC9068}}.
 
 This section defines two methods of sending Bearer tokens in resource
 requests to resource servers. Clients MUST use one of the two methods defined below,
@@ -2108,7 +2103,7 @@ and resource servers MUST ignore access tokens in a URI query parameter.
 
 When sending the access token in the `Authorization` request header
 field defined by HTTP/1.1 {{RFC7235}}, the client uses the `Bearer`
-authentication scheme to transmit the access token.
+scheme to transmit the access token.
 
 For example:
 
@@ -2360,7 +2355,7 @@ acceptance of that access token at the recipient (e.g., a resource server).
 
 Authorization and resource servers SHOULD use mechanisms for
 sender-constraining access tokens, such as Mutual TLS for OAuth 2.0 {{RFC8705}}
-or OAuth Demonstration of Proof of Possession (DPoP) {{I-D.ietf-oauth-dpop}}.
+or OAuth Demonstration of Proof of Possession (DPoP) {{RFC9449}}.
 See {{I-D.ietf-oauth-security-topics}} Section 4.10.1, to prevent misuse of stolen and leaked access tokens.
 
 It is RECOMMENDED to use end-to-end TLS between the client and the
