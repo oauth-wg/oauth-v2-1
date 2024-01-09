@@ -906,11 +906,13 @@ Without requiring registration of redirect URIs, attackers can
 use the authorization endpoint as an open redirector as
 described in {{open-redirectors}}.
 
-### Multiple Redirect URIs
+### Multiple Redirect URIs {#multiple-redirect-uris}
 
-If multiple redirect URIs have been registered, the client MUST
+If multiple redirect URIs have been registered to a client, the client MUST
 include a redirect URI with the authorization request using the
-`redirect_uri` request parameter.
+`redirect_uri` request parameter ({{authorization-request}}).
+If only a single redirect URI has been registered to a client,
+the `redirect_uri` request parameter is optional.
 
 ### Preventing CSRF Attacks
 
@@ -1538,7 +1540,9 @@ MUST return an error response as described in {{authorization-code-error-respons
      verifier transformation method is `S256` or `plain`.
 
 "redirect_uri":
-:    OPTIONAL.  As described in {{redirection-endpoint}}.
+:    OPTIONAL if only one redirect URI is registered for this client.
+     REQUIRED if multiple redirict URIs are registered for this client.
+     See {{multiple-redirect-uris}}.
 
 "scope":
 :    OPTIONAL.  The scope of the access request as described by
@@ -3790,6 +3794,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Renamed b64token to token68 for consistency with RFC7235
 * Restored content from old appendix B about application/x-www-form-urlencoded
 * Clarified that clients must not parse access tokens
+* Expanded text around when `redirect_uri` parameter is required in the authorization request
 
 -09
 
