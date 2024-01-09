@@ -2117,9 +2117,9 @@ with the general authentication framework in HTTP 1.1 Authentication
 practice outlined therein in order to reflect existing deployments.
 The syntax for Bearer credentials is as follows:
 
-    b64token    = 1*( ALPHA / DIGIT /
+    token68    = 1*( ALPHA / DIGIT /
                      "-" / "." / "_" / "~" / "+" / "/" ) *"="
-    credentials = "Bearer" 1*SP b64token
+    credentials = "Bearer" 1*SP token68
 
 Clients SHOULD make authenticated requests with a bearer token using
 the `Authorization` request header field with the `Bearer` HTTP
