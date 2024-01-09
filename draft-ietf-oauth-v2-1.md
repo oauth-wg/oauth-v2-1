@@ -3670,6 +3670,9 @@ GitHub discussion: <https://github.com/oauth-wg/oauth-v2-1/issues/128>
 
 Below is a list of well-established extensions at the time of publication:
 
+* {{RFC9068}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
+  * This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.
+
 * {{RFC8628}}: OAuth 2.0 Device Authorization Grant
   * The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps, or devices like hardware video encoders that can stream video to a streaming video service.
 
@@ -3682,14 +3685,11 @@ Below is a list of well-established extensions at the time of publication:
 * {{RFC7591}}: Dynamic Client Registration
   * Dynamic Client Registration provides a mechanism for programmatically registering clients with an authorization server.
 
-* {{RFC7592}}: Dynamic Client Management
-  * Dynamic Client Management provides a mechanism for updating dynamically registered client information.
-
-* {{RFC9068}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
-  * This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.
+* {{RFC9449}}: Demonstrating Proof of Possession (DPoP)
+  * DPoP describes a mechanism of binding tokens to the clients they were issued to, and providing proof of that binding in an HTTP header when making requests.
 
 * {{RFC8705}}: Mutual TLS
-  * Mutual TLS describes a mechanism of binding access tokens and refresh tokens to the clients they were issued to, as well as a client authentication mechanism, via TLS certificate authentication.
+  * Mutual TLS describes a mechanism of binding tokens to the clients they were issued to, as well as a client authentication mechanism, via TLS certificate authentication.
 
 * {{RFC7662}}: Token Introspection
   * The Token Introspection extension defines a mechanism for resource servers to obtain information about access tokens.
