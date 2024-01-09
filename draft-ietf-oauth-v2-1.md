@@ -29,6 +29,7 @@ author:
     organization: yes.com
 
 normative:
+  RFC3629:
   RFC3986:
   RFC4949:
   RFC5234:
@@ -162,6 +163,8 @@ informative:
     title: "Content Security Policy Level 2"
     target: https://www.w3.org/TR/CSP2
     date: December 15, 2016
+
+  W3C.REC-html401-19991224:
 
 --- abstract
 
@@ -3629,7 +3632,36 @@ ABNF for `code_challenge` is as follows.
 
 # Use of application/x-www-form-urlencoded Media Type {#application-x-www-form-urlencoded}
 
-TBD: Describe OAuth's use of `application/x-www-form-urlencoded` encoding, both for URL parameters as well as for the client_id and secret encoding.
+At the time of publication of {{RFC6749}}, the
+`application/x-www-form-urlencoded` media type was defined in
+Section 17.13.4 of {{W3C.REC-html401-19991224}} but not registered in
+the IANA MIME Media Types registry
+(<http://www.iana.org/assignments/media-types>).  Furthermore, that
+definition is incomplete, as it does not consider non-US-ASCII
+characters.
+
+To address this shortcoming when generating contents using this media
+type, names and values MUST be encoded using the UTF-8 character
+encoding scheme {{RFC3629}} first; the resulting octet sequence then
+needs to be further encoded using the escaping rules defined in
+{{W3C.REC-html401-19991224}}.
+
+When parsing data from a content using this media type, the names and
+values resulting from reversing the name/value encoding consequently
+need to be treated as octet sequences, to be decoded using the UTF-8
+character encoding scheme.
+
+For example, the value consisting of the six Unicode code points
+(1) U+0020 (SPACE), (2) U+0025 (PERCENT SIGN),
+(3) U+0026 (AMPERSAND), (4) U+002B (PLUS SIGN),
+(5) U+00A3 (POUND SIGN), and (6) U+20AC (EURO SIGN) would be encoded
+into the octet sequence below (using hexadecimal notation):
+
+    20 25 26 2B C2 A3 E2 82 AC
+
+and then represented in the content as:
+
+    +%25%26%2B%C2%A3%E2%82%AC
 
 GitHub discussion: <https://github.com/oauth-wg/oauth-v2-1/issues/128>
 
@@ -3697,6 +3729,8 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Improved formatting for error field definitions
 * Moved and expanded "scope" definition to introduction section
 * Split access token section into structure and request
+* Renamed b64token to token68 for consistency with RFC7235
+* Restored content from old appendix B about application/x-www-form-urlencoded
 
 -09
 
