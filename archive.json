@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-03-21T00:10:12.349648+00:00",
+  "timestamp": "2024-03-24T00:10:37.629901+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3137,7 +3137,7 @@
       ],
       "body": "499a8f88b70ca00bfa5ef588023c68c1d0277bff removed Appendix B but unlinked references to it are still within the document next to almost every `x-www-form-urlencoded` mention.\r\n\r\n---\r\n\r\nThroughout the years this Appendix was THE resource used over and over to explain why and how the OAuth use of the Basic authorization scheme encodes the username and password tokens.\r\n\r\nIf this Appendix is removed I would propose to add examples of client secret basic with username and password tokens where the client_id and client_secret encoding changes the octets that go into the basic authorization scheme base64 encoding. This is an often overlooked implementation detail that both client and server implementers get wrong and end up inoperable, further driving users to use client secret post which this document marks as NOT RECOMMENDED.",
       "createdAt": "2022-07-25T09:07:39Z",
-      "updatedAt": "2024-01-31T15:12:00Z",
+      "updatedAt": "2024-03-22T13:58:34Z",
       "closedAt": null,
       "comments": [
         {
@@ -3202,6 +3202,90 @@
           "body": "> I think we should discuss restricting the client_id and client_secret syntax to alphanumerics only to avoid this mess completely.\r\n\r\nI'd be very much in favour of something along these lines. The experience of the OIDF certification team very much matches Filip's experience - any time values end up with characters in them that require encoding the number of interoperability problems sky rockets, and often in ways that are complex and time consuming to resolve (as these kind of encodings are often happening automatically in libraries and not always in obvious ways). It really doesn't seem like a good use of any developer's time to try and make these things work correctly when there's really no great advantage to using the characters that do require encoding.\r\n\r\n(This is perhaps also a more general problem, e.g. similar interoperability issues arise if a client actually tries to use a state value that uses the current full set of allowed characters in state as per https://www.rfc-editor.org/rfc/rfc6749#appendix-A.5 )\r\n",
           "createdAt": "2024-01-07T01:24:04Z",
           "updatedAt": "2024-01-07T01:24:04Z"
+        },
+        {
+          "author": "selfissued",
+          "authorAssociation": "NONE",
+          "body": "OpenID Federation Client IDs are HTTPS URLs.  Some OpenID4VC Client IDs are as well.  We need to keep the full character set.",
+          "createdAt": "2024-03-22T05:34:32Z",
+          "updatedAt": "2024-03-22T05:34:32Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "So interestingly, it isn't possible to use an HTTPS URL as a `userid` in HTTP Basic Auth, since HTTP Basic Auth defines `userid` as `*<TEXT excluding \":\">`: https://datatracker.ietf.org/doc/html/rfc2617#section-2\r\n\r\nUpdated reference: https://datatracker.ietf.org/doc/html/rfc7617#section-2",
+          "createdAt": "2024-03-22T05:38:05Z",
+          "updatedAt": "2024-03-22T05:45:28Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "I'm very glad this was discussed at IETF 119. Unfortunately it doesn't seem like any changes are likely to be acceptable.\r\n\r\nThis leaves client and server implementers in a tough spot where neither one can be compliant and/or strict about encoding/decoding the username/password tokens when interoperability is a goal because as seen - this current definition is already not followed.\r\n\r\nWhat guidance should we give to implementers, primarily clients, to be interoperable then? Don't use client_secret_basic, use client_secret_post instead? That's explicitly not meant to be the default and is defined as NOT RECOMMENDED.\r\n\r\n> Including the client credentials in the request content using the two parameters is NOT RECOMMENDED and SHOULD be limited to clients unable to directly utilize the HTTP Basic authentication scheme (or other password-based HTTP authentication schemes).",
+          "createdAt": "2024-03-22T05:46:09Z",
+          "updatedAt": "2024-03-22T05:47:49Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I suppose the other way to go is to open it up more rather than restrict it, for example saying that *only* the `:` character in a client ID or secret is encoded, but all other characters are left alone. That would seem to be allowed according to RFC7617.\r\n\r\nWhile this wouldn't automatically make everything interoperable, it would at least give people a faster path to interoperability for new implementations. Existing implementations that do some mix of pre-encoding the client ID/secret could be described as essentially defining their own encoding of the client ID/secret that the client developer would have to know by reading the docs, just like they already have to read the docs to know what scopes to use.",
+          "createdAt": "2024-03-22T05:52:48Z",
+          "updatedAt": "2024-03-22T05:52:48Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "@aaronpk unfortunately this would also not be compatible, in this case with existing implementations, which would continue to decode the unencoded resulting in malformed data and failed client authentications.",
+          "createdAt": "2024-03-22T05:57:18Z",
+          "updatedAt": "2024-03-22T05:57:18Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Right, but as was mentioned in the meeting, changing the spec also won't necessarily make existing implementations interoperable either. So my suggestion is more about making the spec reflect the reality of the variety of implementations instead.",
+          "createdAt": "2024-03-22T06:04:32Z",
+          "updatedAt": "2024-03-22T06:04:32Z"
+        },
+        {
+          "author": "shartte",
+          "authorAssociation": "NONE",
+          "body": "> I suppose the other way to go is to open it up more rather than restrict it, for example saying that _only_ the `:` character in a client ID or secret is encoded, but all other characters are left alone. That would seem to be allowed according to RFC7617.\r\n> \r\n> While this wouldn't automatically make everything interoperable, it would at least give people a faster path to interoperability for new implementations. Existing implementations that do some mix of pre-encoding the client ID/secret could be described as essentially defining their own encoding of the client ID/secret that the client developer would have to know by reading the docs, just like they already have to read the docs to know what scopes to use.\r\n\r\nThis does not help IT departments that require \"special characters\" in generated passwords (please don't ask), which are non-ASCII (i.e. \u00a7). If clients encode the client secret as per the spec, the character set is well defined as UTF-8. If they don't encode it, it isn't.\r\n\r\nI'd personally say the reasoning for the encoding is clear. Making it known to implementers that they have to take care here is the key problem. :-(",
+          "createdAt": "2024-03-22T12:23:29Z",
+          "updatedAt": "2024-03-22T12:23:29Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "> This does not help IT departments that require \"special characters\" in generated passwords (please don't ask), which are non-ASCII (i.e. \u00a7). If clients encode the client secret as per the spec, the character set is well defined as UTF-8. If they don't encode it, it isn't.\r\n\r\nNon-ASCII characters are outside of the ABNF definition for client_id and client_secret in the first place.\r\n\r\n> I'd personally say the reasoning for the encoding is clear. Making it known to implementers that they have to take care here is the key problem. :-(\r\n\r\nI agree with this.\r\n\r\n---\r\n\r\nPutting my server developer hat on. I can deal with plenty of non-conformities coming from the clients on the server side.\r\n\r\nPutting my client developer hat on. I cannot deal with the different server implementations when they're not flexible. I would like to default to client_secret_post instead of client_secret_basic because of this issue but the fact that it's, a) a MAY support and b) as per spec, NOT RECOMMENDED, stops me from doing so. If that wasn't the case I'd be happy with the current character set and encoding rules, I could implement them properly in the client software and know that by default POST params are used that work with likely every server implementation.",
+          "createdAt": "2024-03-22T12:42:19Z",
+          "updatedAt": "2024-03-22T13:03:15Z"
+        },
+        {
+          "author": "jogu",
+          "authorAssociation": "NONE",
+          "body": "Sadly I couldn't join the meeting last night because of timezones, but I watched the recording at least.\r\n\r\nA couple of observations:\r\n\r\nThe Openbanking use cases that were mentioned that use urls as client ids don't use client secrets. I believe most federation use cases don't allow client secrets either. But I do agree with the conclusion that there's (unfortunately) not much we can/should do to restrict the client_id character set in general.\r\n\r\nI believe the problem only applies to client_secret_basic. I'm not sure how many of the problem authorization servers also support client_secret_post, but it seems google at least does.\r\n\r\nI agree with Aaron's suggestion of making the reality clearer, and Filip's suggestion of adding examples that cover this case.\r\n\r\nI think we could also encourage people to use client_secret_post instead of basic. (Although OAuth2.1 already recommends using asymmetric client authentication so already recommends against all forms of client secrets...)\r\n",
+          "createdAt": "2024-03-22T12:46:14Z",
+          "updatedAt": "2024-03-22T12:46:14Z"
+        },
+        {
+          "author": "jogu",
+          "authorAssociation": "NONE",
+          "body": "@panva (I didn't see your comment before posting mine)\r\n\r\n>  I would like to default to client_secret_post instead of client_secret_basic because of this issue but the fact that it's, as per spec, NOT RECOMMENDED, stops me from doing so.\r\n\r\nI don't think I was aware of that - where abouts is that recommendation?",
+          "createdAt": "2024-03-22T12:49:09Z",
+          "updatedAt": "2024-03-22T12:49:09Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "> I don't think I was aware of that - where abouts is that recommendation?\r\n\r\n@jogu \r\n\r\n[OAuth 2.0 section 2.3.1](https://www.rfc-editor.org/rfc/rfc6749.html#section-2.3.1)\r\n[OAuth 2.1 Draft 10 section 2.4.1](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-10.html#section-2.4.1)",
+          "createdAt": "2024-03-22T12:56:51Z",
+          "updatedAt": "2024-03-22T12:56:51Z"
+        },
+        {
+          "author": "jogu",
+          "authorAssociation": "NONE",
+          "body": "Thanks Filip. That's a pain. I guess my suggestion is useless then.",
+          "createdAt": "2024-03-22T13:58:33Z",
+          "updatedAt": "2024-03-22T13:58:33Z"
         }
       ]
     },
@@ -3371,15 +3455,15 @@
       "id": "I_kwDODkfq5s5cWrdI",
       "title": "Ensure Security BCP recommendations are all incorporated into 2.1",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/136",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2023-01-19T15:57:42Z",
-      "updatedAt": "2023-07-11T12:07:51Z",
-      "closedAt": null,
+      "updatedAt": "2024-03-21T22:51:10Z",
+      "closedAt": "2024-03-21T22:51:10Z",
       "comments": [
         {
           "author": "danielfett",
@@ -3405,9 +3489,9 @@
         {
           "author": "kmzs",
           "authorAssociation": "CONTRIBUTOR",
-          "body": "- [ ] Mix-up attack mitigations: #150 ",
+          "body": "- [x] Mix-up attack mitigations: #150 ",
           "createdAt": "2023-07-11T12:07:51Z",
-          "updatedAt": "2023-07-11T12:07:51Z"
+          "updatedAt": "2024-03-21T22:51:05Z"
         }
       ]
     },
