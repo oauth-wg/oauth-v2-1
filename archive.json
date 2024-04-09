@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-07T00:10:54.821100+00:00",
+  "timestamp": "2024-04-09T00:09:45.611802+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -6990,6 +6990,32 @@
       "mergeCommit": {
         "oid": "6e3ca345d5c3c04fe2904b3e158c603647a977f3"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 172,
+      "id": "PR_kwDODkfq5s5sAH1p",
+      "title": "clarify expires_in is a JSON number",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/172",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This small PR attempts to clarify an unfortunately not that rare mistake of server implementations where they respond with a JSON string and not the expected JSON number.\r\n\r\nIn between the client implementations I maintain I get a PRs/issues at least twice a year which ask that the clients attempt to normalize the Token Endpoint response expires_in value instead of expecting it to be a number.",
+      "createdAt": "2024-04-08T12:17:27Z",
+      "updatedAt": "2024-04-08T12:18:16Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "f79f58841f717b0e6050da663c4a858bc100fda1",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "expires_in_json",
+      "headRefOid": "167b7bf27a193c635855845d58a26ac590a3d331",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
