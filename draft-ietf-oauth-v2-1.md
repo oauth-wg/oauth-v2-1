@@ -646,7 +646,7 @@ Transport-Layer Security {{RFC8446}},
 to protect the exchange of clear-text credentials and tokens
 either in the content or in header fields
 from eavesdropping, tampering, and message forgery
-(eg. see {{client-secret}}, {{authorization_codes}}, {{token-endpoint}}, and {{bearer-tokens}}).
+(e.g., see {{client-secret}}, {{authorization_codes}}, {{token-endpoint}}, and {{bearer-tokens}}).
 
 OAuth URLs MUST use the `https` scheme
 except for loopback interface redirect URIs,
