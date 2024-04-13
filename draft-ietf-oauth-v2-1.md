@@ -495,7 +495,7 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 ### Client Credentials
 
 The client credentials or other forms of client authentication
-(e.g. a private key used to sign a JWT, as described in {{RFC7523}})
+(e.g., a private key used to sign a JWT, as described in {{RFC7523}})
 can be used as an authorization grant when the authorization scope is
 limited to the protected resources under the control of the client,
 or to protected resources previously arranged with the authorization
@@ -949,7 +949,7 @@ The redirection request to the client's endpoint typically results in
 an HTML document response, processed by the user agent.  If the HTML
 response is served directly as the result of the redirection request,
 any script included in the HTML document will execute with full
-access to the redirect URI and the artifacts (e.g. authorization code)
+access to the redirect URI and the artifacts (e.g., authorization code)
 it contains. Additionally, the request URL containing the authorization code
 may be sent in the HTTP Referer header to any embedded images, stylesheets
 and other elements loaded in the page.
@@ -1991,7 +1991,7 @@ refresh token replay by malicious actors for public clients:
 
 * *Sender-constrained refresh tokens:* the authorization server
   cryptographically binds the refresh token to a certain client
-  instance, e.g. by utilizing DPoP {{RFC9449}} or mTLS {{RFC8705}}.
+  instance, e.g., by utilizing DPoP {{RFC9449}} or mTLS {{RFC8705}}.
 
 * *Refresh token rotation:* the authorization server issues a new
   refresh token with every access token refresh response.  The
