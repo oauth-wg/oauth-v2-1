@@ -1265,7 +1265,8 @@ and an HTTP 200 (OK) status code:
      {{access-tokens}}.  Value is case insensitive.
 
 "expires_in":
-:    RECOMMENDED.  The lifetime in seconds of the access token.  For
+:    RECOMMENDED.  A JSON number that represents the lifetime
+     in seconds of the access token.  For
      example, the value `3600` denotes that the access token will
      expire in one hour from the time the response was generated.
      If omitted, the authorization server SHOULD provide the
