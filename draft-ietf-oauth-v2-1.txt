@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 12 July 2024                                               Okta
+Expires: 28 October 2024                                            Okta
                                                           T. Lodderstedt
                                                                  yes.com
-                                                          9 January 2024
+                                                           26 April 2024
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 July 2024.
+   This Internet-Draft will expire on 28 October 2024.
 
 Copyright Notice
 
@@ -3510,10 +3510,10 @@ Table of Contents
 
 9.  Browser-Based Apps
 
-   Browser-based apps are are clients that run in a web browser,
-   typically written in JavaScript, also known as "single-page apps".
-   These types of apps have particular security considerations similar
-   to native apps.
+   Browser-based apps are clients that run in a web browser, typically
+   written in JavaScript, also known as "single-page apps".  These types
+   of apps have particular security considerations similar to native
+   apps.
 
    TODO: Bring in the normative text of the browser-based apps BCP when
    it is finalized.
@@ -3630,9 +3630,9 @@ Table of Contents
               Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,
               "OAuth 2.0 Security Best Current Practice", Work in
               Progress, Internet-Draft, draft-ietf-oauth-security-
-              topics-24, 23 October 2023,
+              topics-26, 21 April 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              security-topics-24>.
+              security-topics-26>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -3761,9 +3761,9 @@ Table of Contents
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., Waite, D., and P. De Ryck, "OAuth 2.0 for
               Browser-Based Apps", Work in Progress, Internet-Draft,
-              draft-ietf-oauth-browser-based-apps-15, 23 October 2023,
+              draft-ietf-oauth-browser-based-apps-17, 28 February 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              browser-based-apps-15>.
+              browser-based-apps-17>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
