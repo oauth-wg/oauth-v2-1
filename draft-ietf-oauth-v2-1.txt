@@ -1301,11 +1301,12 @@ Table of Contents
    "token_type":  REQUIRED.  The type of the access token issued as
       described in Section 1.4.  Value is case insensitive.
 
-   "expires_in":  RECOMMENDED.  The lifetime in seconds of the access
-      token.  For example, the value 3600 denotes that the access token
-      will expire in one hour from the time the response was generated.
-      If omitted, the authorization server SHOULD provide the expiration
-      time via other means or document the default value.
+   "expires_in":  RECOMMENDED.  A JSON number that represents the
+      lifetime in seconds of the access token.  For example, the value
+      3600 denotes that the access token will expire in one hour from
+      the time the response was generated.  If omitted, the
+      authorization server SHOULD provide the expiration time via other
+      means or document the default value.
 
    "scope":  RECOMMENDED, if identical to the scope requested by the
       client; otherwise, REQUIRED.  The scope of the access token as
