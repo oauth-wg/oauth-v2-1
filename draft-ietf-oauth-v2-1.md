@@ -3486,7 +3486,7 @@ as described in {{loopback-interface-redirection}}.
 
 # Browser-Based Apps
 
-Browser-based apps are are clients that run in a web browser, typically
+Browser-based apps are clients that run in a web browser, typically
 written in JavaScript, also known as "single-page apps". These types of apps
 have particular security considerations similar to native apps.
 
