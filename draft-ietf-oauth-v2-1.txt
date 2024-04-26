@@ -507,7 +507,7 @@ Table of Contents
 
 1.3.3.  Client Credentials
 
-   The client credentials or other forms of client authentication (e.g.
+   The client credentials or other forms of client authentication (e.g.,
    a private key used to sign a JWT, as described in [RFC7523]) can be
    used as an authorization grant when the authorization scope is
    limited to the protected resources under the control of the client,
@@ -668,8 +668,8 @@ Table of Contents
    authentication, integrity and confidentiality such as Transport-Layer
    Security [RFC8446], to protect the exchange of clear-text credentials
    and tokens either in the content or in header fields from
-   eavesdropping, tampering, and message forgery (eg. see Section 2.4.1,
-   Section 7.5.1, Section 3.2, and Section 1.4.2).
+   eavesdropping, tampering, and message forgery (e.g., see
+   Section 2.4.1, Section 7.5.1, Section 3.2, and Section 1.4.2).
 
    OAuth URLs MUST use the https scheme except for loopback interface
    redirect URIs, which MAY use the http scheme.  When using https, TLS
@@ -993,7 +993,7 @@ Table of Contents
    an HTML document response, processed by the user agent.  If the HTML
    response is served directly as the result of the redirection request,
    any script included in the HTML document will execute with full
-   access to the redirect URI and the artifacts (e.g. authorization
+   access to the redirect URI and the artifacts (e.g., authorization
    code) it contains.  Additionally, the request URL containing the
    authorization code may be sent in the HTTP Referer header to any
    embedded images, stylesheets and other elements loaded in the page.
@@ -2019,7 +2019,7 @@ Table of Contents
 
    *  _Sender-constrained refresh tokens:_ the authorization server
       cryptographically binds the refresh token to a certain client
-      instance, e.g. by utilizing DPoP [RFC9449] or mTLS [RFC8705].
+      instance, e.g., by utilizing DPoP [RFC9449] or mTLS [RFC8705].
 
    *  _Refresh token rotation:_ the authorization server issues a new
       refresh token with every access token refresh response.  The
