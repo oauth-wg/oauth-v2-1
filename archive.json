@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-09T00:09:56.793573+00:00",
+  "timestamp": "2024-05-12T00:10:34.107240+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3133,11 +3133,12 @@
       "assignees": [],
       "labels": [
         "help wanted",
+        "interim",
         "ietf-117"
       ],
       "body": "499a8f88b70ca00bfa5ef588023c68c1d0277bff removed Appendix B but unlinked references to it are still within the document next to almost every `x-www-form-urlencoded` mention.\r\n\r\n---\r\n\r\nThroughout the years this Appendix was THE resource used over and over to explain why and how the OAuth use of the Basic authorization scheme encodes the username and password tokens.\r\n\r\nIf this Appendix is removed I would propose to add examples of client secret basic with username and password tokens where the client_id and client_secret encoding changes the octets that go into the basic authorization scheme base64 encoding. This is an often overlooked implementation detail that both client and server implementers get wrong and end up inoperable, further driving users to use client secret post which this document marks as NOT RECOMMENDED.",
       "createdAt": "2022-07-25T09:07:39Z",
-      "updatedAt": "2024-03-22T13:58:34Z",
+      "updatedAt": "2024-05-11T01:27:32Z",
       "closedAt": null,
       "comments": [
         {
@@ -3583,11 +3584,11 @@
       "assignees": [],
       "labels": [
         "draft-00-feedback",
-        "ietf-116"
+        "interim"
       ],
       "body": "From the \"[Impersonation of native apps](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-07#section-7.3.1)\" security considerations section:\r\n\r\n> Measures such as claimed https scheme redirects MAY be accepted by authorization servers as identity proof. Some operating systems may offer alternative platform-specific identity features that MAY be accepted, as appropriate.\r\n\r\nVittorio: I find this misleading. Client side measures such as claimed schemes, domains etc might work to prevent an app impersonating another app on the same device/OS, but they aren\u2019t guaranteed to be honored on other operating systems. The AS has no way of knowing whether those measures have been enforced on the client, hence it should not accept them as proof.\r\n\r\nAaron: I believe this was intended to allow the AS to skip the consent screen on repeated authorizations if the app is using a claimed https redirect URI vs a custom scheme. Would it be enough to clarify that this only applies to skipping the consent screen or other similar policies at the AS, but doesn't turn it into a confidential client?",
       "createdAt": "2023-03-13T21:39:10Z",
-      "updatedAt": "2023-03-13T21:39:10Z",
+      "updatedAt": "2024-05-11T01:00:05Z",
       "closedAt": null,
       "comments": []
     },
@@ -3602,11 +3603,11 @@
       "assignees": [],
       "labels": [
         "draft-00-feedback",
-        "ietf-116"
+        "interim"
       ],
       "body": "Much of Vittorio's feedback in the native apps section stems from the differences in practice of mobile apps and desktop apps. \r\n\r\nShould these recommendations be scoped to mobile apps now that we have more deployment experience since the Native Apps BCP was written? Do we all agree that the native apps recommendations are still valid?",
       "createdAt": "2023-03-13T22:34:57Z",
-      "updatedAt": "2023-03-13T22:40:26Z",
+      "updatedAt": "2024-05-11T00:59:18Z",
       "closedAt": null,
       "comments": []
     },
@@ -3866,9 +3867,9 @@
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
-      "body": "https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html\r\n\r\n> Authorization servers MUST record the client type in the client registration details in order to identify and process requests accordingly\r\n\r\nNevertheless many authorization servers *don't* record client type. Some authorization servers explicitly say that they don't support public clients. Is this okay? Banning public clients tempts app developers to bend the rules and register a public client as a confidential client, compromising security. \r\n\r\nSourceHut bans public clients https://man.sr.ht/meta.sr.ht/oauth.md\r\n\r\n> Only confidential clients are supported; public clients are not allowed\r\n\r\nAzure DevOps bans public clients https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/oauth?view=azure-devops#q-can-i-use-oauth-with-my-mobile-phone-app\r\n\r\n> Can I use OAuth with my mobile phone app? No. Azure DevOps Services only supports the web server flow... as [public clients] can't securely store the app secret.\r\n\r\nGitHub doesn't record client type but seems to deduce it based on redirect URI https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app\r\n",
+      "body": "https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html\r\n\r\n> Authorization servers MUST record the client type in the client registration details in order to identify and process requests accordingly\r\n\r\nNevertheless many authorization servers *don't* record client type. Some authorization servers explicitly say that they don't support public clients. Is this okay? Banning public clients tempts app developers to bend the rules and register a public client as a confidential client, compromising security. \r\n\r\nSourceHut bans public clients https://man.sr.ht/meta.sr.ht/oauth.md\r\n\r\n> Only confidential clients are supported; public clients are not allowed\r\n\r\nAzure DevOps bans public clients https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/azure-devops-oauth?view=azure-devops\r\n\r\n> Can I use OAuth with my mobile phone app? No. Azure DevOps Services only supports the web server flow... as [public clients] can't securely store the app secret.\r\n\r\nGitHub doesn't record client type but seems to deduce it based on redirect URI https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app\r\n",
       "createdAt": "2023-07-27T21:32:29Z",
-      "updatedAt": "2023-07-27T21:49:28Z",
+      "updatedAt": "2024-05-11T07:27:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -3877,6 +3878,13 @@
           "body": "Mailing list discussion https://mailarchive.ietf.org/arch/msg/oauth/iJ6WAbJzHWiGmaFO-qAzg30B_28/\n\n> Such servers typically assume all clients to be confidential, neglecting security measures appropriate for public clients.",
           "createdAt": "2023-07-27T21:35:21Z",
           "updatedAt": "2023-07-27T21:49:28Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I don't think there is any requirement in the spec that an AS has to support both types of clients, did you see any language to the contrary?",
+          "createdAt": "2024-05-11T00:58:09Z",
+          "updatedAt": "2024-05-11T00:58:09Z"
         }
       ]
     },
@@ -3889,10 +3897,12 @@
       "author": "adeinega",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "interim"
+      ],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#section-3.2.3.1 says that\r\n\r\n> \"**invalid_client**\":  Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported.\r\n\r\nI am not so sure if it's possible to indicate HTTP authentication schemas for _private_key_jwt_ and _client_secret_jwt_ client authentication types.\r\n\r\nThis text also indicates that multiple authentication schemas are supported. Thus, does the authorization server need to specify multiple WWW-Authenticate headers, say \"WWW-Authenticate: Basic\" and \"WWW-Authenticate: Bearer\"?\r\n\r\nIt would be great to clarify these nuances.\r\n",
       "createdAt": "2023-08-04T19:31:16Z",
-      "updatedAt": "2023-08-04T19:31:42Z",
+      "updatedAt": "2024-05-11T01:22:51Z",
       "closedAt": null,
       "comments": []
     },
@@ -3905,10 +3915,12 @@
       "author": "arukiidou",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "interim"
+      ],
       "body": "- relates #151\r\n\r\n## Summary of proposal\r\n\r\nAdd the following description to https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#access-token-scope\r\n\r\nThe authorization server SHOULD NOT define different content with the same scope name as an OIDC defined claim, even if it does not implement the OIDC specification.\r\n\r\n## Why?\r\n\r\n- Interoperability with OIDC specifications as much as possible\r\n- If client could implicitly expect the request content from the scope name, do not mislead\r\n\r\n## Example\r\n\r\n### \u2705Its OK.\r\n\r\n| scope           | description             |\r\n|------------------------|-----------------------------------------------|\r\n|    openid     |  REQUIRED. for all OpenID Connect OAuth2 requests.   | \r\n|    profile     |  OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.   | \r\n| email          |  OPTIONAL. This scope value requests access to the email and email_verified Claims.  | \r\n| address         |  OPTIONAL. This scope value requests access to the address Claim.   | \r\n| phone         |  OPTIONAL. This scope value requests access to the phone_number and phone_number_verified Claims.   | \r\n\r\n### \u2705not OIDC, but Its also OK( as OAuth2.1).\r\n\r\nNot having a scope defined in the OIDC specification is permitted.\r\n\r\n| scope           | description             |\r\n|------------------------|-----------------------------------------------|\r\n| profile         |  OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.   | \r\n| address         |  OPTIONAL. This scope value requests access to the address Claim.   | \r\n\r\n### \u2705not OIDC, but Its also OK( as OAuth2.1).\r\n\r\n| scope           | description             |\r\n|------------------------|-----------------------------------------------|\r\n| profile         |  OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.   | \r\n| read_registry         |  OPTIONAL. This scope value requests access to the package registry. | \r\n\r\n### \u274c SHOULD NOT - Do not attempt to request access to an email claim by informing the client of the address scope\r\n\r\n| scope           | description             |\r\n|------------------------|-----------------------------------------------|\r\n| profile         |  OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.   | \r\n| address |   OPTIONAL. This scope value requests access to the email-address Claim.   | \r\n\r\n### References: OpenID Connect Core 1.0 Spec \r\n\r\nhttps://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims\r\n",
       "createdAt": "2023-08-15T15:04:03Z",
-      "updatedAt": "2024-01-09T23:09:14Z",
+      "updatedAt": "2024-05-11T01:20:35Z",
       "closedAt": null,
       "comments": []
     },
@@ -3971,10 +3983,12 @@
       "author": "jogu",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "interim"
+      ],
       "body": "It seems to be a common interoperability issue (and a source of some really great arguments as to who is wrong, e.g. https://github.com/fastify/fastify-bearer-auth/pull/172#issuecomment-1903321866 ) that some implementations treat the 'Bearer' http authentication scheme name as case sensitive.\r\n\r\nAs far as I can find, HTTP authentication schemes are case insensitive; in particular https://www.rfc-editor.org/rfc/rfc9110#name-authentication-scheme says:\r\n\r\n> It uses a case-insensitive token to identify the authentication scheme:\r\n\r\nRegardless of whether my conclusion is correct, I think we should add a sentence to OAuth 2.1 that makes it clear if it is case sensitive or not.\r\n",
       "createdAt": "2024-01-22T05:43:22Z",
-      "updatedAt": "2024-01-22T06:39:56Z",
+      "updatedAt": "2024-05-11T11:41:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -3983,6 +3997,20 @@
           "body": "I think people often get confused by https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-10#section-5.1.1 in particular:\r\n\r\n> credentials = \"Bearer\" 1*SP token68\r\n\r\nso this might be a good place to add an additional sentence. (As per https://www.rfc-editor.org/rfc/rfc5234#section-2.3 I believe this is defining 'Bearer' as a case insensitive match.)",
           "createdAt": "2024-01-22T06:39:55Z",
           "updatedAt": "2024-01-22T06:39:55Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Should we update the abnf description to use lowercase too then just for good measure?",
+          "createdAt": "2024-05-11T01:22:17Z",
+          "updatedAt": "2024-05-11T01:22:17Z"
+        },
+        {
+          "author": "jogu",
+          "authorAssociation": "NONE",
+          "body": "Good question and I don't really know if there's any precedent here. \"Bearer\" is the official name as per https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml#authschemes but I'm not sure that matters.",
+          "createdAt": "2024-05-11T11:41:07Z",
+          "updatedAt": "2024-05-11T11:41:07Z"
         }
       ]
     },
@@ -3995,10 +4023,12 @@
       "author": "adeinega",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "editorial"
+      ],
       "body": "Section 3.2.2 Tokens states that\r\n\r\n> The client makes a request to the token endpoint by sending the\r\n> following parameters using the application/x-www-form-urlencoded\r\n> format per Appendix B with a character encoding of UTF-8 in the HTTP\r\n> request content:\r\n\r\nHowever, the following example does not include UTF-8 as character encoding\r\n\r\n> POST /token HTTP/1.1\r\n> Host: server.example.com\r\n> Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW\r\n> Content-Type: application/x-www-form-urlencoded\r\n\r\nit should look like as\r\n\r\n> POST /token HTTP/1.1\r\n> Host: server.example.com\r\n> Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW\r\n> Content-Type: application/x-www-form-urlencoded; charset=UTF-8; \r\n\r\nthe same applies for all other similar examples in the spec.\r\n\r\nHow is this important? In some (rare) cases, it can lead to interoperability issues as app servers & frameworks that run an AS do not necessarily use \"UTF-8\" as a default encoding character, as an example, Java Servlets use \"ISO-8859-1\". So, it is better for a client to always specify the character explicitly. \r\n",
       "createdAt": "2024-01-22T18:32:47Z",
-      "updatedAt": "2024-01-24T00:30:24Z",
+      "updatedAt": "2024-05-11T01:21:14Z",
       "closedAt": null,
       "comments": []
     },
@@ -4027,10 +4057,12 @@
       "author": "SECtim",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "editorial"
+      ],
       "body": "In some places, the term \"relying party\" is used instead of \"client\":\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2820-L2822\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2578-L2582",
       "createdAt": "2024-02-28T09:33:25Z",
-      "updatedAt": "2024-02-28T09:33:25Z",
+      "updatedAt": "2024-05-11T00:44:12Z",
       "closedAt": null,
       "comments": []
     },
@@ -4046,9 +4078,17 @@
       "labels": [],
       "body": "The following text snippets seem like a `code_challenge` is always required in the authorization request (for authZ code flows).\r\n\r\nDescription of the authZ code flow figure:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1468-L1470\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1485-L1487\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1493-L1494\r\n\r\nSection 4.3.1:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1863-L1865\r\n\r\nWhereas various other places, most prominently Section 7.5.2, state that `code_challenge` is (only) required _unless_ some conditions are met:\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2743-L2750",
       "createdAt": "2024-02-28T09:42:36Z",
-      "updatedAt": "2024-02-28T09:42:36Z",
+      "updatedAt": "2024-05-11T01:19:28Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This specific carve-out for the nonce protection is really an edge case, which could probably be made even more explicit. It is not meant to be the common case, which is why the narrative text describes the use of `code_challenge`. I could borrow some more language from the security BCP that talks about the specific conditions in which it's okay to use the nonce from here if that would make it more clear: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-4.5.3.2",
+          "createdAt": "2024-05-11T01:19:27Z",
+          "updatedAt": "2024-05-11T01:19:27Z"
+        }
+      ]
     },
     {
       "number": 171,
@@ -4062,9 +4102,17 @@
       "labels": [],
       "body": "The URIs for the **redirect** and **authorization** endpoints may contain additional query parameters that must be retained when adding more parameters:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L860-L865\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1118-L1121\r\n\r\nFurthermore, query parameters must only appear once (this text appears in the description of the authorization and token endpoints, but is not explicitly mentioned for the redirection endpoint - nevertheless, the cited text already applies to all parameters defined by this spec):\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1129-L1130\r\n\r\nThis becomes a problem in (I admit, somewhat esoteric) cases where the endpoint URIs contain parameters such as `code` in a redirect URI, in that example, the AS would not be allowed to add its `code` parameter in the authorization response. But at the same time, the AS is required to do so:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1657-L1664\r\n\r\nI guess this is just a case of adding something like \"redirect URI MUST NOT contain the parameters...\".",
       "createdAt": "2024-02-28T09:54:55Z",
-      "updatedAt": "2024-02-28T09:54:55Z",
+      "updatedAt": "2024-05-11T00:43:49Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I believe this is the same as https://github.com/oauthstuff/draft-ietf-oauth-security-topics/issues/72, where did we land on language around this @danielfett?",
+          "createdAt": "2024-05-11T00:43:48Z",
+          "updatedAt": "2024-05-11T00:43:48Z"
+        }
+      ]
     },
     {
       "number": 174,
