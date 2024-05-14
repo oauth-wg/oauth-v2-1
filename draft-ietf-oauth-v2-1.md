@@ -577,7 +577,9 @@ Access tokens are intended to be issued to clients with less privileges
 than the user granting the access has. This is known as a limited "scope"
 access token. The authorization server and resource server can use this
 scope mechanism to limit what types of resources or level of access a particular client
-can have. For example, a client may only need "read" access to a user's
+can have.
+
+For example, a client may only need "read" access to a user's
 resources, but doesn't need to update resources, so the client can request
 the read-only scope defined by the authorization server, and obtain
 an access token that cannot be used to update resources. This requires
@@ -586,6 +588,12 @@ authorization server provides the client the ability to request specific
 scopes, and associates those scopes with the access token issued to the client.
 The resource server is then responsible for enforcing scopes when presented
 with a limited-scope access token.
+
+OAuth does not define any scope values, instead scopes are defined by the
+authorization server or by extensions or profiles of OAuth. One such extension
+that defines scopes is {{OpenID}}, which defines a set of scopes that provide
+granular access to a user's profile information. It is recommended to avoid
+defining custom scopes that conflict with scopes from known extensions.
 
 To request a limited-scope access token, the client uses the `scope`
 request parameter at the authorization or token endpoints, depending on
@@ -3827,6 +3835,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 -11
 
 * Explicitly mention that Bearer is case insensitive
+* Recommend against defining custom scopes that conflict with known scopes
 
 -10
 
