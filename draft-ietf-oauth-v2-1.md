@@ -312,6 +312,9 @@ OAuth defines four roles:
     authenticating the resource owner and obtaining authorization.
     This is sometimes abbreviated as "AS".
 
+Most of this specification defines the interaction between the client
+and the authorization server, as well as between the client and resource server.
+
 The interaction between the authorization server and resource server
 is beyond the scope of this specification, however several extensions have
 been defined to provide an option for interoperability between resource
@@ -319,6 +322,18 @@ servers and authorization servers.  The authorization server
 may be the same server as the resource server or a separate entity.
 A single authorization server may issue access tokens accepted by
 multiple resource servers.
+
+The interaction between the resource owner and authorization server
+(e.g. how the end user authenticates themselves at the authorization server)
+is also out of scope of this specification, with some exceptions, such as
+security considerations around prompting the end user for consent.
+
+When the resource owner is the end user, the user will interact with
+the client. When the client is a web-based application, the user will
+interact with the client through a user agent (as described in Section 3.5 of {{RFC9110}}).
+When the client is a native application, the user will interact with
+the client directly through the operating system. See {{client-types}}
+for further details.
 
 
 ## Protocol Flow
