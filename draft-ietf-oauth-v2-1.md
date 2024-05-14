@@ -581,7 +581,7 @@ can have. For example, a client may only need "read" access to a user's
 resources, but doesn't need to update resources, so the client can request
 the read-only scope defined by the authorization server, and obtain
 an access token that cannot be used to update resources. This requires
-coordination between the authorization server and resource server. The
+coordination between the authorization server, resource server, and client. The
 authorization server provides the client the ability to request specific
 scopes, and associates those scopes with the access token issued to the client.
 The resource server is then responsible for enforcing scopes when presented
