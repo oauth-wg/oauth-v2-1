@@ -233,7 +233,7 @@ the application.  This creates several problems and limitations:
    the end-user's password and all of the data protected by that
    password.
 
-With OAuth, an end-user (resource owner) can grant a printing
+With OAuth, an end user (resource owner) can grant a printing
 service (client) access to their protected photos stored at a photo-
 sharing service (resource server), without sharing their username and
 password with the printing service.  Instead, they authenticate
@@ -292,7 +292,7 @@ OAuth defines four roles:
 "resource owner":
 :   An entity capable of granting access to a protected resource.
     When the resource owner is a person, it is referred to as an
-    end-user. This is sometimes abbreviated as "RO".
+    end user. This is sometimes abbreviated as "RO".
 
 "resource server":
 :   The server hosting the protected resources, capable of accepting
@@ -2231,7 +2231,7 @@ attributes MAY be used as well.
   utilize the protected resource.  Use of the `scope` attribute is
   OPTIONAL.  The `scope` attribute MUST NOT appear more than once.  The
   `scope` value is intended for programmatic use and is not meant to be
-  displayed to end-users.
+  displayed to end users.
 
   Two example scope values follow; these are taken from the OpenID
   Connect [OpenID.Messages] and the Open Authentication Technology
@@ -2251,7 +2251,7 @@ attributes MAY be used as well.
 "error_description":
 : The resource server MAY include the
   `error_description` attribute to provide developers a human-readable
-  explanation that is not meant to be displayed to end-users.
+  explanation that is not meant to be displayed to end users.
 
 "error_uri":
 : The resource server MAY include the `error_uri` attribute with an absolute URI
@@ -2719,10 +2719,10 @@ of a client in the client credentials grant. If both options are possible,
 depending on the details of the implementation, a client's identity may be
 mistaken for the identity of a resource owner. For example, if a client is able
 to choose its own `client_id` during registration with the authorization server,
-a malicious client may set it to a value identifying an end-user (e.g., a `sub`
+a malicious client may set it to a value identifying an end user (e.g., a `sub`
 value if OpenID Connect is used). If the resource server cannot properly
 distinguish between access tokens issued to clients and access tokens issued to
-end-users, the client may then be able to access resource of the end-user.
+end users, the client may then be able to access resource of the end user.
 
 If the authorization server has a common namespace for client IDs and user
 identifiers, causing the resource server to be unable to distinguish an access
@@ -2849,7 +2849,7 @@ tokens, authorization codes, refresh tokens, resource owner
 passwords, and client credentials.
 
 The probability of an attacker guessing generated tokens (and other
-credentials not intended for handling by end-users) MUST be less than
+credentials not intended for handling by end users) MUST be less than
 or equal to 2^(-128) and SHOULD be less than or equal to 2^(-160).
 
 The authorization server MUST utilize other means to protect
@@ -2858,19 +2858,19 @@ credentials intended for end-user usage.
 
 ## Phishing Attacks
 
-Wide deployment of this and similar protocols may cause end-users to
+Wide deployment of this and similar protocols may cause end users to
 become inured to the practice of being redirected to websites where
-they are asked to enter their passwords.  If end-users are not
+they are asked to enter their passwords.  If end users are not
 careful to verify the authenticity of these websites before entering
 their credentials, it will be possible for attackers to exploit this
 practice to steal resource owners' passwords.
 
-Service providers should attempt to educate end-users about the risks
+Service providers should attempt to educate end users about the risks
 phishing attacks pose and should provide mechanisms that make it easy
-for end-users to confirm the authenticity of their sites.  Client
+for end users to confirm the authenticity of their sites.  Client
 developers should consider the security implications of how they
 interact with the user agent (e.g., external, embedded), and the
-ability of the end-user to verify the authenticity of the
+ability of the end user to verify the authenticity of the
 authorization server.
 
 See {{communication-security}} for further details
