@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-12T00:10:34.107240+00:00",
+  "timestamp": "2024-05-14T00:09:52.961871+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3795,7 +3795,7 @@
       "title": "GPG based authentication",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/158",
       "state": "CLOSED",
-      "author": "d1nch8g",
+      "author": null,
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [
