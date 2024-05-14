@@ -1032,23 +1032,9 @@ See {{security-client-authentication}} for additional details.
 
 ### Client Secret {#client-secret}
 
-Clients in possession of a client secret, sometimes known as a client password,
-MAY use the HTTP Basic
-authentication scheme as defined in Section 11 of {{RFC9110}} to authenticate with
-the authorization server.  The client identifier is encoded using the
-`application/x-www-form-urlencoded` encoding algorithm per
-{{application-x-www-form-urlencoded}}, and the encoded value is used as the username; the client
-secret is encoded using the same algorithm and used as the
-password.  The authorization server MUST support the HTTP Basic
-authentication scheme for authenticating clients that were issued a
-client secret.
-
-For example (with extra line breaks for display purposes only):
-
-    Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
-
-In addition to that, the authorization server MAY support including the
-client credentials in the request content using the following
+To support clients in possession of a client secret,
+the authorization server MUST support the client including the
+client credentials in the request body content using the following
 parameters:
 
 "client_id":
@@ -1058,12 +1044,8 @@ parameters:
 "client_secret":
 :    REQUIRED.  The client secret.
 
-Including the client credentials in the request content using the two
-parameters is NOT RECOMMENDED and SHOULD be limited to clients unable
-to directly utilize the HTTP Basic authentication scheme (or other
-password-based HTTP authentication schemes).  The parameters can only
-be transmitted in the request content and MUST NOT be included in the
-request URI.
+The parameters can only be transmitted in the request content and MUST NOT
+be included in the request URI.
 
 For example, a request to refresh an access token ({{refreshing-an-access-token}}) using
 the content parameters (with extra line breaks for display purposes
@@ -1076,7 +1058,32 @@ only):
     grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
     &client_id=s6BhdRkqt3&client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
 
-Since this client authentication method involves a password, the
+The authorization server MAY support the HTTP Basic
+authentication scheme for authenticating clients that were issued a
+client secret.
+
+When using the HTTP Basic authentication scheme as defined in Section 11 of {{RFC9110}}
+to authenticate with the authorization server, the client identifier is encoded using the
+`application/x-www-form-urlencoded` encoding algorithm per
+{{application-x-www-form-urlencoded}}, and the encoded value is used as the username; the client
+secret is encoded using the same algorithm and used as the
+password.
+
+For example (with extra line breaks for display purposes only):
+
+    Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
+
+Note: This method of initially form-encoding the client identifier and secret,
+and then using the encoded values as the HTTP Basic authentication username
+and password, has led to many interoperability problems in the past. Some
+implementations have missed the encoding step, or decided to only encode
+certain characters, or ignored the encoding requirement when validating the
+credentials, leading to clients having to special-case how they present the
+credentials to individual authorization servers. Including the credentials
+in the request body content avoids the encoding issues and leads to more
+interoperable implementations.
+
+Since the client secret authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
 brute force attacks.
 
@@ -3836,6 +3843,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 * Explicitly mention that Bearer is case insensitive
 * Recommend against defining custom scopes that conflict with known scopes
+* Change client credentials to be required to be supported in the request body to avoid HTTP Basic authentication encoding interop issues
 
 -10
 
