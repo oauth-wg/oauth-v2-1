@@ -2142,6 +2142,15 @@ Clients SHOULD make authenticated requests with a bearer token using
 the `Authorization` request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
+As described in Section 2.3 of {{RFC5234}}, the string `Bearer`
+is case-insensitive. This means all of the following are valid uses
+of the `Authorization` header:
+
+* `Authorization: Bearer mF_9.B5f-4.1JqM`
+* `Authorization: bearer mF_9.B5f-4.1JqM`
+* `Authorization: BEARER mF_9.B5f-4.1JqM`
+
+
 ### Form-Encoded Content Parameter
 
 When sending the access token in the HTTP request content, the
@@ -3814,6 +3823,10 @@ Discussions around this specification have also occurred at the OAuth Security W
 # Document History
 
 [[ To be removed from the final specification ]]
+
+-11
+
+* Explicitly mention that Bearer is case insensitive
 
 -10
 
