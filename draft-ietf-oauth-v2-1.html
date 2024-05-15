@@ -1037,7 +1037,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hardt, et al.</td>
-<td class="center">Expires 15 November 2024</td>
+<td class="center">Expires 16 November 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1050,12 +1050,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-v2-1-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-05-14" class="published">14 May 2024</time>
+<time datetime="2024-05-15" class="published">15 May 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-11-15">15 November 2024</time></dd>
+<dd class="expires"><time datetime="2024-11-16">16 November 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1114,7 +1114,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 15 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 16 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2564,48 +2564,29 @@ See <a href="#security-client-authentication" class="auto internal xref">Section
           <h4 id="name-client-secret">
 <a href="#section-2.4.1" class="section-number selfRef">2.4.1. </a><a href="#name-client-secret" class="section-name selfRef">Client Secret</a>
           </h4>
-<p id="section-2.4.1-1">Clients in possession of a client secret, sometimes known as a client password,
-MAY use the HTTP Basic
-authentication scheme as defined in Section 11 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> to authenticate with
-the authorization server.  The client identifier is encoded using the
-<code>application/x-www-form-urlencoded</code> encoding algorithm per
-<a href="#application-x-www-form-urlencoded" class="auto internal xref">Appendix B</a>, and the encoded value is used as the username; the client
-secret is encoded using the same algorithm and used as the
-password.  The authorization server MUST support the HTTP Basic
-authentication scheme for authenticating clients that were issued a
-client secret.<a href="#section-2.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-2">For example (with extra line breaks for display purposes only):<a href="#section-2.4.1-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.4.1-3">
-<pre>
-Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
-</pre><a href="#section-2.4.1-3" class="pilcrow">¶</a>
-</div>
-<p id="section-2.4.1-4">In addition to that, the authorization server MAY support including the
-client credentials in the request content using the following
-parameters:<a href="#section-2.4.1-4" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2.4.1-5">
-            <dt id="section-2.4.1-5.1">"client_id":</dt>
-            <dd style="margin-left: 1.5em" id="section-2.4.1-5.2">
-              <p id="section-2.4.1-5.2.1">REQUIRED.  The client identifier issued to the client during
-the registration process described by <a href="#client-identifier" class="auto internal xref">Section 2.2</a>.<a href="#section-2.4.1-5.2.1" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-1">To support clients in possession of a client secret,
+the authorization server MUST support the client including the
+client credentials in the request body content using the following
+parameters:<a href="#section-2.4.1-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2.4.1-2">
+            <dt id="section-2.4.1-2.1">"client_id":</dt>
+            <dd style="margin-left: 1.5em" id="section-2.4.1-2.2">
+              <p id="section-2.4.1-2.2.1">REQUIRED.  The client identifier issued to the client during
+the registration process described by <a href="#client-identifier" class="auto internal xref">Section 2.2</a>.<a href="#section-2.4.1-2.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
-<dt id="section-2.4.1-5.3">"client_secret":</dt>
-            <dd style="margin-left: 1.5em" id="section-2.4.1-5.4">
-              <p id="section-2.4.1-5.4.1">REQUIRED.  The client secret.<a href="#section-2.4.1-5.4.1" class="pilcrow">¶</a></p>
+<dt id="section-2.4.1-2.3">"client_secret":</dt>
+            <dd style="margin-left: 1.5em" id="section-2.4.1-2.4">
+              <p id="section-2.4.1-2.4.1">REQUIRED.  The client secret.<a href="#section-2.4.1-2.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
-<p id="section-2.4.1-6">Including the client credentials in the request content using the two
-parameters is NOT RECOMMENDED and SHOULD be limited to clients unable
-to directly utilize the HTTP Basic authentication scheme (or other
-password-based HTTP authentication schemes).  The parameters can only
-be transmitted in the request content and MUST NOT be included in the
-request URI.<a href="#section-2.4.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-7">For example, a request to refresh an access token (<a href="#refreshing-an-access-token" class="auto internal xref">Section 4.3</a>) using
+<p id="section-2.4.1-3">The parameters can only be transmitted in the request content and MUST NOT
+be included in the request URI.<a href="#section-2.4.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-4">For example, a request to refresh an access token (<a href="#refreshing-an-access-token" class="auto internal xref">Section 4.3</a>) using
 the content parameters (with extra line breaks for display purposes
-only):<a href="#section-2.4.1-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.4.1-8">
+only):<a href="#section-2.4.1-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.4.1-5">
 <pre>
 POST /token HTTP/1.1
 Host: server.example.com
@@ -2613,11 +2594,35 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 &amp;client_id=s6BhdRkqt3&amp;client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
-</pre><a href="#section-2.4.1-8" class="pilcrow">¶</a>
+</pre><a href="#section-2.4.1-5" class="pilcrow">¶</a>
 </div>
-<p id="section-2.4.1-9">Since this client authentication method involves a password, the
+<p id="section-2.4.1-6">The authorization server MAY support the HTTP Basic
+authentication scheme for authenticating clients that were issued a
+client secret.<a href="#section-2.4.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-7">When using the HTTP Basic authentication scheme as defined in Section 11 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>
+to authenticate with the authorization server, the client identifier is encoded using the
+<code>application/x-www-form-urlencoded</code> encoding algorithm per
+<a href="#application-x-www-form-urlencoded" class="auto internal xref">Appendix B</a>, and the encoded value is used as the username; the client
+secret is encoded using the same algorithm and used as the
+password.<a href="#section-2.4.1-7" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-8">For example (with extra line breaks for display purposes only):<a href="#section-2.4.1-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.4.1-9">
+<pre>
+Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
+</pre><a href="#section-2.4.1-9" class="pilcrow">¶</a>
+</div>
+<p id="section-2.4.1-10">Note: This method of initially form-encoding the client identifier and secret,
+and then using the encoded values as the HTTP Basic authentication username
+and password, has led to many interoperability problems in the past. Some
+implementations have missed the encoding step, or decided to only encode
+certain characters, or ignored the encoding requirement when validating the
+credentials, leading to clients having to special-case how they present the
+credentials to individual authorization servers. Including the credentials
+in the request body content avoids the encoding issues and leads to more
+interoperable implementations.<a href="#section-2.4.1-10" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-11">Since the client secret authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
-brute force attacks.<a href="#section-2.4.1-9" class="pilcrow">¶</a></p>
+brute force attacks.<a href="#section-2.4.1-11" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="other-authentication-methods">
@@ -6235,6 +6240,9 @@ into the octet sequence below (using hexadecimal notation):<a href="#appendix-B-
 </li>
         <li class="normal" id="appendix-E-3.2">
           <p id="appendix-E-3.2.1">Recommend against defining custom scopes that conflict with known scopes<a href="#appendix-E-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-E-3.3">
+          <p id="appendix-E-3.3.1">Change client credentials to be required to be supported in the request body to avoid HTTP Basic authentication encoding interop issues<a href="#appendix-E-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-E-4">-10<a href="#appendix-E-4" class="pilcrow">¶</a></p>
