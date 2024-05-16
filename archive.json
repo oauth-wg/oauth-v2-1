@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-14T00:09:52.961871+00:00",
+  "timestamp": "2024-05-16T00:09:31.617445+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3127,7 +3127,7 @@
       "id": "I_kwDODkfq5s5OeEeG",
       "title": "Describe OAuth's use of application/x-www-form-urlencoded encoding",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/128",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "panva",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -3138,8 +3138,8 @@
       ],
       "body": "499a8f88b70ca00bfa5ef588023c68c1d0277bff removed Appendix B but unlinked references to it are still within the document next to almost every `x-www-form-urlencoded` mention.\r\n\r\n---\r\n\r\nThroughout the years this Appendix was THE resource used over and over to explain why and how the OAuth use of the Basic authorization scheme encodes the username and password tokens.\r\n\r\nIf this Appendix is removed I would propose to add examples of client secret basic with username and password tokens where the client_id and client_secret encoding changes the octets that go into the basic authorization scheme base64 encoding. This is an often overlooked implementation detail that both client and server implementers get wrong and end up inoperable, further driving users to use client secret post which this document marks as NOT RECOMMENDED.",
       "createdAt": "2022-07-25T09:07:39Z",
-      "updatedAt": "2024-05-11T01:27:32Z",
-      "closedAt": null,
+      "updatedAt": "2024-05-15T00:00:57Z",
+      "closedAt": "2024-05-15T00:00:56Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -3287,6 +3287,13 @@
           "body": "Thanks Filip. That's a pain. I guess my suggestion is useless then.",
           "createdAt": "2024-03-22T13:58:33Z",
           "updatedAt": "2024-03-22T13:58:33Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "As discussed in the May 14 interim:\r\n\r\nResolved to:\r\n\r\n* Remove the \"NOT RECOMMENDED\" paragraph (but leave sentence \"The parameters can only be transmitted in the request content and MUST NOT be included in the request URI.\")\r\n* Change AS requirements to MUST support post body, MAY support HTTP Basic\r\n* Add a note about historic interop problems with HTTP Basic",
+          "createdAt": "2024-05-14T17:06:22Z",
+          "updatedAt": "2024-05-14T17:06:22Z"
         }
       ]
     },
@@ -3588,9 +3595,17 @@
       ],
       "body": "From the \"[Impersonation of native apps](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-07#section-7.3.1)\" security considerations section:\r\n\r\n> Measures such as claimed https scheme redirects MAY be accepted by authorization servers as identity proof. Some operating systems may offer alternative platform-specific identity features that MAY be accepted, as appropriate.\r\n\r\nVittorio: I find this misleading. Client side measures such as claimed schemes, domains etc might work to prevent an app impersonating another app on the same device/OS, but they aren\u2019t guaranteed to be honored on other operating systems. The AS has no way of knowing whether those measures have been enforced on the client, hence it should not accept them as proof.\r\n\r\nAaron: I believe this was intended to allow the AS to skip the consent screen on repeated authorizations if the app is using a claimed https redirect URI vs a custom scheme. Would it be enough to clarify that this only applies to skipping the consent screen or other similar policies at the AS, but doesn't turn it into a confidential client?",
       "createdAt": "2023-03-13T21:39:10Z",
-      "updatedAt": "2024-05-11T01:00:05Z",
+      "updatedAt": "2024-05-14T17:47:38Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jogu",
+          "authorAssociation": "NONE",
+          "body": "This is text that came from https://www.rfc-editor.org/rfc/rfc8252#section-8.6 and I agree that it's pretty odd text now it's been lifted out of that context.\r\n\r\n> Would it be enough to clarify that this only applies to skipping the consent screen or other similar policies at the AS, but doesn't turn it into a confidential client?\r\n\r\nI don't think that's entirely sufficient. As Vittorio noted there's no way for the AS to verify if the url is a claimed https scheme redirect, so this sentence isn't actually actionable:\r\n\r\n> Measures such as claimed https scheme redirects MAY be accepted by authorization servers as identity proof\r\n\r\nI don't know what to suggest. I think what this was trying to say was just a bit of a rewording of the text in https://www.rfc-editor.org/rfc/rfc6749#section-10.2 about using registered redirect urls but adding \"https urls are more trustable\", but that whole text about registered redirect urls seems not to be there in the equivalent place in OAuth 2.1: https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-10.html#section-7.3\r\n",
+          "createdAt": "2024-05-14T17:47:37Z",
+          "updatedAt": "2024-05-14T17:47:37Z"
+        }
+      ]
     },
     {
       "number": 142,
@@ -3602,14 +3617,21 @@
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [
-        "draft-00-feedback",
-        "interim"
+        "draft-00-feedback"
       ],
       "body": "Much of Vittorio's feedback in the native apps section stems from the differences in practice of mobile apps and desktop apps. \r\n\r\nShould these recommendations be scoped to mobile apps now that we have more deployment experience since the Native Apps BCP was written? Do we all agree that the native apps recommendations are still valid?",
       "createdAt": "2023-03-13T22:34:57Z",
-      "updatedAt": "2024-05-11T00:59:18Z",
+      "updatedAt": "2024-05-14T14:24:48Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This was discussed at IETF 116 and I believe the resolution was to ensure the language is in fact scoped to mobile apps, not desktop apps:\r\n\r\nhttps://datatracker.ietf.org/doc/minutes-116-oauth-202303310030/#differences-between-mobile-and-desktop-apps",
+          "createdAt": "2024-05-14T14:24:46Z",
+          "updatedAt": "2024-05-14T14:24:46Z"
+        }
+      ]
     },
     {
       "number": 143,
@@ -3867,9 +3889,9 @@
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
-      "body": "https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html\r\n\r\n> Authorization servers MUST record the client type in the client registration details in order to identify and process requests accordingly\r\n\r\nNevertheless many authorization servers *don't* record client type. Some authorization servers explicitly say that they don't support public clients. Is this okay? Banning public clients tempts app developers to bend the rules and register a public client as a confidential client, compromising security. \r\n\r\nSourceHut bans public clients https://man.sr.ht/meta.sr.ht/oauth.md\r\n\r\n> Only confidential clients are supported; public clients are not allowed\r\n\r\nAzure DevOps bans public clients https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/azure-devops-oauth?view=azure-devops\r\n\r\n> Can I use OAuth with my mobile phone app? No. Azure DevOps Services only supports the web server flow... as [public clients] can't securely store the app secret.\r\n\r\nGitHub doesn't record client type but seems to deduce it based on redirect URI https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app\r\n",
+      "body": "https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html\r\n\r\n> Authorization servers MUST record the client type in the client registration details in order to identify and process requests accordingly\r\n\r\nUnfortunately many authorization servers *don't* record client type. Some authorization servers explicitly say that they don't support public clients. Is this okay? Banning public clients tempts app developers to bend the rules and register a public client as a confidential client, compromising security. \r\n\r\nSourceHut bans public clients https://man.sr.ht/meta.sr.ht/oauth.md\r\n\r\n> Only confidential clients are supported; public clients are not allowed\r\n\r\nAzure DevOps bans public clients https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/azure-devops-oauth?view=azure-devops\r\n\r\n> Can I use OAuth with my mobile phone app? No. Azure DevOps Services only supports the web server flow... as [public clients] can't securely store the app secret.\r\n\r\nGitHub doesn't record client type but seems to deduce it based on redirect URI https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app\r\n",
       "createdAt": "2023-07-27T21:32:29Z",
-      "updatedAt": "2024-05-11T07:27:16Z",
+      "updatedAt": "2024-05-15T06:30:24Z",
       "closedAt": null,
       "comments": [
         {
@@ -3902,16 +3924,24 @@
       ],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#section-3.2.3.1 says that\r\n\r\n> \"**invalid_client**\":  Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported.\r\n\r\nI am not so sure if it's possible to indicate HTTP authentication schemas for _private_key_jwt_ and _client_secret_jwt_ client authentication types.\r\n\r\nThis text also indicates that multiple authentication schemas are supported. Thus, does the authorization server need to specify multiple WWW-Authenticate headers, say \"WWW-Authenticate: Basic\" and \"WWW-Authenticate: Bearer\"?\r\n\r\nIt would be great to clarify these nuances.\r\n",
       "createdAt": "2023-08-04T19:31:16Z",
-      "updatedAt": "2024-05-11T01:22:51Z",
+      "updatedAt": "2024-05-14T17:52:10Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jogu",
+          "authorAssociation": "NONE",
+          "body": "I'm honestly not sure how much useful behaviour can really be dictated about `invalid_client` errors.\r\n\r\nI wonder if there are any clients that attempt to parse the WWW-Authenticate header and try a different authentication mechanism? The clients I'm aware of all require the client authentication to be explicitly configured.",
+          "createdAt": "2024-05-14T17:52:08Z",
+          "updatedAt": "2024-05-14T17:52:08Z"
+        }
+      ]
     },
     {
       "number": 163,
       "id": "I_kwDODkfq5s5uXS_5",
       "title": "Scope in relation to OIDC",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/163",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arukiidou",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -3920,9 +3950,17 @@
       ],
       "body": "- relates #151\r\n\r\n## Summary of proposal\r\n\r\nAdd the following description to https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#access-token-scope\r\n\r\nThe authorization server SHOULD NOT define different content with the same scope name as an OIDC defined claim, even if it does not implement the OIDC specification.\r\n\r\n## Why?\r\n\r\n- Interoperability with OIDC specifications as much as possible\r\n- If client could implicitly expect the request content from the scope name, do not mislead\r\n\r\n## Example\r\n\r\n### \u2705Its OK.\r\n\r\n| scope           | description             |\r\n|------------------------|-----------------------------------------------|\r\n|    openid     |  REQUIRED. for all OpenID Connect OAuth2 requests.   | \r\n|    profile     |  OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.   | \r\n| email          |  OPTIONAL. This scope value requests access to the email and email_verified Claims.  | \r\n| address         |  OPTIONAL. This scope value requests access to the address Claim.   | \r\n| phone         |  OPTIONAL. This scope value requests access to the phone_number and phone_number_verified Claims.   | \r\n\r\n### \u2705not OIDC, but Its also OK( as OAuth2.1).\r\n\r\nNot having a scope defined in the OIDC specification is permitted.\r\n\r\n| scope           | description             |\r\n|------------------------|-----------------------------------------------|\r\n| profile         |  OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.   | \r\n| address         |  OPTIONAL. This scope value requests access to the address Claim.   | \r\n\r\n### \u2705not OIDC, but Its also OK( as OAuth2.1).\r\n\r\n| scope           | description             |\r\n|------------------------|-----------------------------------------------|\r\n| profile         |  OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.   | \r\n| read_registry         |  OPTIONAL. This scope value requests access to the package registry. | \r\n\r\n### \u274c SHOULD NOT - Do not attempt to request access to an email claim by informing the client of the address scope\r\n\r\n| scope           | description             |\r\n|------------------------|-----------------------------------------------|\r\n| profile         |  OPTIONAL. This scope value requests access to the End-User's default profile Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username, profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.   | \r\n| address |   OPTIONAL. This scope value requests access to the email-address Claim.   | \r\n\r\n### References: OpenID Connect Core 1.0 Spec \r\n\r\nhttps://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims\r\n",
       "createdAt": "2023-08-15T15:04:03Z",
-      "updatedAt": "2024-05-11T01:20:35Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-05-14T20:57:23Z",
+      "closedAt": "2024-05-14T20:57:23Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "As discussed in the May 14 interim:\r\n\r\nResolved to adding a mention of OpenID scopes, and language that (lowercase) recommends not defining conflicting scopes. However, OpenID is not the only OAuth extension that defines scopes. People were not comfortable with \"SHOULD NOT\" language restricting defining scopes with meanings in other specs that are not implemented by the AS, as that's impossible to comply with.",
+          "createdAt": "2024-05-14T17:04:55Z",
+          "updatedAt": "2024-05-14T17:04:55Z"
+        }
+      ]
     },
     {
       "number": 164,
@@ -3979,17 +4017,15 @@
       "id": "I_kwDODkfq5s58wpwE",
       "title": "case sensitivity of Bearer http authentication scheme",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/166",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jogu",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [
-        "interim"
-      ],
+      "labels": [],
       "body": "It seems to be a common interoperability issue (and a source of some really great arguments as to who is wrong, e.g. https://github.com/fastify/fastify-bearer-auth/pull/172#issuecomment-1903321866 ) that some implementations treat the 'Bearer' http authentication scheme name as case sensitive.\r\n\r\nAs far as I can find, HTTP authentication schemes are case insensitive; in particular https://www.rfc-editor.org/rfc/rfc9110#name-authentication-scheme says:\r\n\r\n> It uses a case-insensitive token to identify the authentication scheme:\r\n\r\nRegardless of whether my conclusion is correct, I think we should add a sentence to OAuth 2.1 that makes it clear if it is case sensitive or not.\r\n",
       "createdAt": "2024-01-22T05:43:22Z",
-      "updatedAt": "2024-05-11T11:41:08Z",
-      "closedAt": null,
+      "updatedAt": "2024-05-14T20:57:22Z",
+      "closedAt": "2024-05-14T20:57:22Z",
       "comments": [
         {
           "author": "jogu",
@@ -4011,6 +4047,13 @@
           "body": "Good question and I don't really know if there's any precedent here. \"Bearer\" is the official name as per https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml#authschemes but I'm not sure that matters.",
           "createdAt": "2024-05-11T11:41:07Z",
           "updatedAt": "2024-05-11T11:41:07Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "As discussed in the May 14 interim:\r\n\r\nKeep the examples with the capital B, and add a sentence clarifying that the scheme is case insensitive.",
+          "createdAt": "2024-05-14T17:03:16Z",
+          "updatedAt": "2024-05-14T17:03:16Z"
         }
       ]
     },
@@ -4129,6 +4172,30 @@
       "updatedAt": "2024-04-14T09:02:03Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 176,
+      "id": "I_kwDODkfq5s6I7bVX",
+      "title": "Allow public clients to use the `client_credentials` grant type",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/176",
+      "state": "OPEN",
+      "author": "bellebaum",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi,\r\n\r\nI was looking through the current draft when I found this:\r\n\r\n```\r\nThe client credentials grant type MUST only be used by confidential clients.\r\n```\r\n\r\nI was wondering where it came from. I believe the reasoning might be that resources accessible by public clients are public resources in the first place? I believe that some APIs can be designed much simpler if they always require an access token. This then allows to manage access for public clients centrally at the authorization server (e.g. consider the case where you want to temporarily restrict access to a diverse set of APIs to some known clients).\r\n\r\nThere are other reasons for why omitting this restriction makes for a cleaner design. Consider this typical OAuth token endpoint flow with many omitted details:\r\n\r\n1. Authenticate the client and establish the `client_id`\r\n2. Look at the `grant_type` in the request and determine whether `client_id` is allowed to use it based on its `grant_types` metadata value.\r\n3. Redirect to `grant_type`-specific code to determine the scope of the access token (including where it may be used, a resource owner, etc.)\r\n4. Issue any tokens\r\n\r\nCurrently, point three has to look at authentication information of the client again despite this information being primarily conceived as facilitating the first point. This can make code more complicated. Also, policy decisions as to which client may use a grant are generally perceived as being handled by the second point.\r\n\r\nI would appreciate it if anyone could give me some insight into why this restriction was considered. Thanks in advance :)",
+      "createdAt": "2024-05-15T09:00:23Z",
+      "updatedAt": "2024-05-15T17:23:08Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Perhaps you understand the grant type, or confidential clients. \r\n\r\nThis grant type is where the client authenticates directly to the AS and gets an access token. No user is involved. By definition, only confidential clients can keep a secret, and authenticate with a client credential.\r\n\r\nHence only a confidential client can use the `client_credential` grant type\r\n\r\n",
+          "createdAt": "2024-05-15T17:23:07Z",
+          "updatedAt": "2024-05-15T17:23:07Z"
+        }
+      ]
     }
   ],
   "pulls": [
