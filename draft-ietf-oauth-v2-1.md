@@ -2325,7 +2325,7 @@ includes one of the following error codes in the response:
 
 "invalid_token":
 :    The access token provided is expired, revoked, malformed, or
-     invalid for other reasons.  The resource SHOULD respond with
+     invalid for other reasons.  The resource server SHOULD respond with
      the HTTP 401 (Unauthorized) status code.  The client MAY
      request a new access token and retry the protected resource
      request.
