@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-16T00:09:31.617445+00:00",
+  "timestamp": "2024-05-19T00:10:48.627715+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4185,7 +4185,7 @@
       "labels": [],
       "body": "Hi,\r\n\r\nI was looking through the current draft when I found this:\r\n\r\n```\r\nThe client credentials grant type MUST only be used by confidential clients.\r\n```\r\n\r\nI was wondering where it came from. I believe the reasoning might be that resources accessible by public clients are public resources in the first place? I believe that some APIs can be designed much simpler if they always require an access token. This then allows to manage access for public clients centrally at the authorization server (e.g. consider the case where you want to temporarily restrict access to a diverse set of APIs to some known clients).\r\n\r\nThere are other reasons for why omitting this restriction makes for a cleaner design. Consider this typical OAuth token endpoint flow with many omitted details:\r\n\r\n1. Authenticate the client and establish the `client_id`\r\n2. Look at the `grant_type` in the request and determine whether `client_id` is allowed to use it based on its `grant_types` metadata value.\r\n3. Redirect to `grant_type`-specific code to determine the scope of the access token (including where it may be used, a resource owner, etc.)\r\n4. Issue any tokens\r\n\r\nCurrently, point three has to look at authentication information of the client again despite this information being primarily conceived as facilitating the first point. This can make code more complicated. Also, policy decisions as to which client may use a grant are generally perceived as being handled by the second point.\r\n\r\nI would appreciate it if anyone could give me some insight into why this restriction was considered. Thanks in advance :)",
       "createdAt": "2024-05-15T09:00:23Z",
-      "updatedAt": "2024-05-15T17:23:08Z",
+      "updatedAt": "2024-05-17T16:52:23Z",
       "closedAt": null,
       "comments": [
         {
@@ -4194,8 +4194,73 @@
           "body": "Perhaps you understand the grant type, or confidential clients. \r\n\r\nThis grant type is where the client authenticates directly to the AS and gets an access token. No user is involved. By definition, only confidential clients can keep a secret, and authenticate with a client credential.\r\n\r\nHence only a confidential client can use the `client_credential` grant type\r\n\r\n",
           "createdAt": "2024-05-15T17:23:07Z",
           "updatedAt": "2024-05-15T17:23:07Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "Hello @dickhardt :)\r\n\r\nCorrect, there is no user. According to the draft, `client_credentials` are a used\r\n\r\n```\r\nwhen the authorization scope is limited to the protected resources under the control of the client, or to protected\r\nresources previously arranged with the authorization server. Client credentials are used when the client is requesting\r\naccess to protected resources based on an authorization previously arranged with the authorization server.\r\n```\r\nOAuth clients may even be used in scenarios where they represent the _only_ resource owners in the system. I.e. there are no users. For example, OAuth may be (and is) used as a central management protocol for device authorization.\r\n\r\nMy question relates to the first part of the quote I omitted above:\r\n\r\n```\r\nThe client credentials or other forms of client authentication (e.g., a private key used to sign a JWT, as described in\r\n{{RFC7523}}) can be used as an authorization grant [...]\r\n```\r\n\r\nWhat about use cases where we want to manage permissions of unauthenticated (i.e. public) clients, which authenticate by the mere act of trying? Essentially, the client credentials of public clients are not nonexistent, they are the empty string. These clients also need a way to access resources under their control, so apart from the form of client authentication (which is otherwise not a grant type specific token endpoint extension), they need exactly what the client credentials grant offers.",
+          "createdAt": "2024-05-16T07:11:27Z",
+          "updatedAt": "2024-05-16T07:12:08Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "If there are no credentials, it is not a protected resource ",
+          "createdAt": "2024-05-16T15:40:29Z",
+          "updatedAt": "2024-05-16T15:40:29Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I'm very confused about the language you're using here. These clients with no credentials are needing a way to access resources \"under their control\"? How do you enforce any access control without any credentials?\r\n\r\nIf you were to make a \"client credentials\" request with no credentials, why bother even having an access token in the first place, why not just let the apps request the public API?",
+          "createdAt": "2024-05-16T15:49:54Z",
+          "updatedAt": "2024-05-16T15:49:54Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "Imagine wanting to _temporarily_ restrict access to a diverse range of resources to particular clients. So the resources are public by default, but may be temporarily restricted at will.\r\nIn such a case, access by public clients can be restricted at a single point (the authorization server), while access by unauthenticated clients has to be restricted at each resource server individually.\r\n\r\nFurthermore, the authorization server may additionally centrally enforce further access restrictions such as IP-based rate limiting.\r\n\r\nThese are just some use cases where omitting this restriction can simplify the design of an ecosystem (I have also outlined above how it may simplify the design of an authorization server).\r\n\r\nThe main question is what interoperability or security arguments were considered against this. According to [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119.html#section-6):\r\n\r\n> Imperatives of the type defined in this memo must be used with care\r\n   and sparingly.  In particular, they MUST only be used where it is\r\n   actually required for interoperation or to limit behavior which has\r\n   potential for causing harm (e.g., limiting retransmisssions)  For\r\n   example, they must not be used to try to impose a particular method\r\n   on implementors where the method is not required for\r\n   interoperability.\r\n",
+          "createdAt": "2024-05-17T07:18:26Z",
+          "updatedAt": "2024-05-17T07:18:26Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "If you're wanting to temporarily restrict access to \"particular\" clients, you need to authenticate those clients somehow, which means they have credentials, which means they are not public clients. ",
+          "createdAt": "2024-05-17T12:14:22Z",
+          "updatedAt": "2024-05-17T12:14:22Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "Correct, the particular clients I want to _restrict_ access _to_ need to have credentials, but the ones having their access revoked might not.\r\n\r\nMaybe an example setup might help:\r\n\r\nSay I have clients A,B and C. A and B have credentials. They represent critical services which need to have access to my APIs at all time. C is for public access and has no credentials. Its client_id can be found on my website, but its access to my APIs might get revoked or limited during times of high load.\r\n\r\nI can configure all APIs to require access tokens, but then C needs a way to acquire any (and posting credentials online is bad practice, should probably not be encouraged). The most interoperable way is the `client_credentials` grant.\r\n\r\nAlternatively, I could make my APIs publicly accessible, but then restrictions require coordination with all API managers rather than just a simple switch at the authorization server. In complex environments, this might not always be an option.",
+          "createdAt": "2024-05-17T14:37:36Z",
+          "updatedAt": "2024-05-17T14:37:36Z"
+        },
+        {
+          "author": "archer-321",
+          "authorAssociation": "NONE",
+          "body": "I don't think OAuth would be a good way to enforce rate limiting or a central way to turn off your public API temporarily. Unless you make the tokens extremely short-lived (e.g., a TTL of one minute) or even single-use, the extra step of having an authorization server will be ineffective. Moreover, if the authorization server needs to be contacted for each request anyway, moving this part of the access control to your resource servers (by having them contact the authorization server) would yield similar results. At that point, an internal protocol using optional access tokens might be easier to implement.\r\n\r\nIf you're concerned about your application's complexity, you could expose your API through some form of authenticating proxy. This way, your resource servers won't have to implement authentication, but you can still achieve global rate limiting and access control.\r\n\r\nOAuth is a framework for granting access to protected resources, so adding a grant type to the specification that doesn't require authentication seems dangerous. Outside your use case of using OAuth to enforce rate limiting, granting access to a protected resource without authentication is a security problem, and by having (public) client credentials involved in the access procedure, implementing services might get a false sense of security here.",
+          "createdAt": "2024-05-17T16:52:22Z",
+          "updatedAt": "2024-05-17T16:52:22Z"
         }
       ]
+    },
+    {
+      "number": 177,
+      "id": "I_kwDODkfq5s6JVou_",
+      "title": "Typo: resource server instead of resource",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/177",
+      "state": "OPEN",
+      "author": "mrcaidev",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "See [Section 5.3.2. \"Error Codes\"](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-error-codes).\r\n\r\nIn the description of \"invalid_token\":\r\n\r\n> The resource SHOULD ...\r\n\r\nshould be:\r\n\r\n\"The resource server SHOULD ...\"",
+      "createdAt": "2024-05-18T16:09:06Z",
+      "updatedAt": "2024-05-18T16:09:06Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -7220,6 +7285,32 @@
       "mergeCommit": {
         "oid": "503fda10bf173ba7d53e1b746ff96ca227ac16d3"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 178,
+      "id": "PR_kwDODkfq5s5v3ZY0",
+      "title": "Replace \"resource\" with \"resource server\" (#177)",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/178",
+      "state": "OPEN",
+      "author": "mrcaidev",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Solves #177.",
+      "createdAt": "2024-05-18T16:12:11Z",
+      "updatedAt": "2024-05-18T16:12:12Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "dcd8716ae89a56214f57a627df2a77be701ea08e",
+      "headRepository": "mrcaidev/oauth-v2-1",
+      "headRefName": "patch-1",
+      "headRefOid": "d45388fcda551c17817dbe96806551668d53ae38",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
