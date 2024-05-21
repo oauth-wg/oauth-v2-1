@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-19T00:10:48.627715+00:00",
+  "timestamp": "2024-05-21T00:09:35.329243+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4261,6 +4261,37 @@
       "updatedAt": "2024-05-18T16:09:06Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 179,
+      "id": "I_kwDODkfq5s6JXvNB",
+      "title": "Reasons for recommending loopback redirects over private-use URI scheme",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/179",
+      "state": "OPEN",
+      "author": "archer-321",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The current OAuth 2.1 draft mentions that\r\n\r\n> Many environments that support private-use URI schemes do not provide a mechanism to claim a scheme and prevent other parties from using another application's scheme. As such, clients using private-use URI schemes are vulnerable to potential attacks on their redirect URIs, so this option should only be used if the previously mentioned more secure options are not available.\r\n\r\nAFAICT, this paragraph was introduced by [f428704c](https://github.com/oauth-wg/oauth-v2-1/commit/f428704cd469fb350d0f5318f4b4589e3e6d0e5c#diff-c690e6a757ffca99a8affaa2828883974014878ce549391b38be85d4c91862c9R3174-R3179) for the reasons outlined in the [ietf-113 minutes](https://datatracker.ietf.org/meeting/113/materials/minutes-113-oauth-00):\r\n\r\n> George: I am in favor of ordering of best security practive starting with the claimed https URL.\r\n> Aaron: It sounds like we are going to re-order the list, claimed https URL first, loopback second, and private URI schemes. Remove the sentence for the mandatory -implementing all three. Maybe adding text of why you want to have the private URI scheme at all.\r\n\r\nConsidering that any app can listen on the loopback interface and thus create a valid redirect URI that leads to itself, I wonder what makes loopback redirects more secure than private-use URI schemes.\r\n\r\nOne potential advantage of loopback redirects that I can see is that only one app can listen on the specific port. Thus, it's impossible for an attacker to receive a code that was the result of a valid authorization request if the client has already started its loopback HTTP server. However, integrating PKCE into OAuth 2.1 should already prevent this attack. Moreover, using the authorization code grant type already prevents MITM attacks, public clients can't use the client credentials grant type, and the implicit grant type was removed.\r\n\r\nOn the other hand, most operating systems require some sort of installation procedure (installing a `.desktop` file, creating a registry entry, installing an app with a manifest, etc.) before user agents consider an application for the private-use URI scheme. While this is not a \"true\" security feature that protects against redirect code interception, as multiple applications can register themselves for the same scheme, it prevents users with access to the same loopback device but *without* access to the same user account or the system-wide scheme handler registry from intercepting a code. In comparison, any user on the same computer can bind a port on the loopback device and thus obtain a valid redirect URI that points to itself.\r\n\r\n---\r\n\r\nI agree that all native clients should prefer claimed \"https\" schemes where possible, but unless I'm missing something, I would suggest changing the paragraph above to something like\r\n\r\n> Many environments that support private-use URI schemes do not provide a mechanism to claim a scheme and prevent other parties from using another application's scheme. As such, clients using private-use URI schemes are vulnerable to potential attacks on their redirect URIs, so this option should only be used if claimed https schemes are not available.",
+      "createdAt": "2024-05-19T17:10:44Z",
+      "updatedAt": "2024-05-20T01:57:33Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@archer-321 are you suggesting dropping loopback? \r\n\r\nI think loopback is preferable to private schemes in that you can't MITM it. A malicious app does not know when a protocol is happening. In contrast, if an malicious app registers a private scheme, then it could be intercepting the protocol.\r\n\r\nMobile platforms generally support claimed https and pretty much any app can claim a private scheme. On desktop, the loopback is generally preferable. A common use case are CLI tools that launch the browser -- claiming an https endpoint, or registering a private scheme are not really practical. \r\n",
+          "createdAt": "2024-05-20T00:51:20Z",
+          "updatedAt": "2024-05-20T00:51:20Z"
+        },
+        {
+          "author": "archer-321",
+          "authorAssociation": "NONE",
+          "body": "> @archer-321 are you suggesting dropping loopback?\r\n\r\nNo, I believe loopback is still essential for many native client implementations, and there would be no reason to drop this well-established redirect type. I was merely suggesting rephrasing the private-use redirect URI scheme section I quoted, as I didn't see the security advantages of loopback over private-use URI schemes mentioned.\r\n\r\n> I think loopback is preferable to private schemes in that you can't MITM it. A malicious app does not know when a protocol is happening. In contrast, if an malicious app registers a private scheme, then it could be intercepting the protocol.\r\n\r\nConsidering the only grant type available to public clients in OAuth 2.1 is the authorization code grant, how could an attacker MITM the authorization \"ceremony\"? If they manage to intercept the authorization code, it would either be useless when the legitimate client has obtained an access token, or the legitimate client would encounter an error while trying to retrieve an access token after the attacker has already used the code.\r\n\r\nOne aspect you mentioned that I didn't consider is that attackers are more likely to notice that an authorization ceremony is happening. However, this could also be established by watching all processes until an instance of the client application binds a port on the loopback interface, so I'm unsure how much security the protocol gets here.\r\n\r\nThe primary reason I prefer private-use redirect URIs over loopback is that some services incorrectly implement the user-interaction part of the authorization endpoint. E.g., GitHub doesn't seem to ask for interaction if the user has previously authorized the application. If the application uses a loopback redirect URI, even a process running as another user could create a loopback HTTP server. The only thing a malicious client would have to do in this case to get access to the protected resource is redirect the user to the authorization endpoint somehow (e.g. by sending the user a link or by putting the link on a website the attacker controls - even adding the link to the description of a pull request would work).\r\n\r\nWith private-use URI schemes, the attacker would have to get a system administrator to install it as a scheme handler. Alternatively, the attacker would need access to the user configuration to set up the scheme handler for a single user. Again, I wouldn't count this as a foolproof security feature, but in my head, it makes attacks more complex, at least.\r\n\r\n> Mobile platforms generally support claimed https and pretty much any app can claim a private scheme. On desktop, the loopback is generally preferable. A common use case are CLI tools that launch the browser -- claiming an https endpoint, or registering a private scheme are not really practical.\r\n\r\nI agree that mobile apps (and apps on other systems with the feature) should prefer claimed \"https\" schemes over both loopback redirect URIs and private-use URI schemes. I also agree that CLI tools that ship as a single binary without any installer or package should be able to use loopback. My main concern is that, in my opinion, the quoted paragraph of the specification \"unfairly\" treats private-use URI schemes as less secure than loopback redirects (\"[...] this option should only be used if the previously mentioned more secure options are not available\"). This wording might make future implementing services not consider support for private-use URI schemes while instead forcing apps to use loopback.",
+          "createdAt": "2024-05-20T01:57:32Z",
+          "updatedAt": "2024-05-20T01:57:32Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -7291,7 +7322,7 @@
     {
       "number": 178,
       "id": "PR_kwDODkfq5s5v3ZY0",
-      "title": "Replace \"resource\" with \"resource server\" (#177)",
+      "title": "Replace \"resource\" with \"resource server\". See #177",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/178",
       "state": "OPEN",
       "author": "mrcaidev",
@@ -7300,7 +7331,7 @@
       "labels": [],
       "body": "Solves #177.",
       "createdAt": "2024-05-18T16:12:11Z",
-      "updatedAt": "2024-05-18T16:12:12Z",
+      "updatedAt": "2024-05-19T07:09:45Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "dcd8716ae89a56214f57a627df2a77be701ea08e",
