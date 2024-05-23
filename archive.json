@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-21T00:09:35.329243+00:00",
+  "timestamp": "2024-05-23T00:10:02.797269+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4121,7 +4121,7 @@
       "labels": [],
       "body": "The following text snippets seem like a `code_challenge` is always required in the authorization request (for authZ code flows).\r\n\r\nDescription of the authZ code flow figure:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1468-L1470\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1485-L1487\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1493-L1494\r\n\r\nSection 4.3.1:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1863-L1865\r\n\r\nWhereas various other places, most prominently Section 7.5.2, state that `code_challenge` is (only) required _unless_ some conditions are met:\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2743-L2750",
       "createdAt": "2024-02-28T09:42:36Z",
-      "updatedAt": "2024-05-11T01:19:28Z",
+      "updatedAt": "2024-05-21T07:23:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -4130,6 +4130,13 @@
           "body": "This specific carve-out for the nonce protection is really an edge case, which could probably be made even more explicit. It is not meant to be the common case, which is why the narrative text describes the use of `code_challenge`. I could borrow some more language from the security BCP that talks about the specific conditions in which it's okay to use the nonce from here if that would make it more clear: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#section-4.5.3.2",
           "createdAt": "2024-05-11T01:19:27Z",
           "updatedAt": "2024-05-11T01:19:27Z"
+        },
+        {
+          "author": "SECtim",
+          "authorAssociation": "NONE",
+          "body": "In that case, my take would be to be very explicit in Section 7.5.2 about this being an edge case. And maybe add some sentence saying ASs are still recommended to require `code_challenge` and `code_verifier` even if these conditions are met.",
+          "createdAt": "2024-05-21T07:23:15Z",
+          "updatedAt": "2024-05-21T07:23:15Z"
         }
       ]
     },
@@ -4185,7 +4192,7 @@
       "labels": [],
       "body": "Hi,\r\n\r\nI was looking through the current draft when I found this:\r\n\r\n```\r\nThe client credentials grant type MUST only be used by confidential clients.\r\n```\r\n\r\nI was wondering where it came from. I believe the reasoning might be that resources accessible by public clients are public resources in the first place? I believe that some APIs can be designed much simpler if they always require an access token. This then allows to manage access for public clients centrally at the authorization server (e.g. consider the case where you want to temporarily restrict access to a diverse set of APIs to some known clients).\r\n\r\nThere are other reasons for why omitting this restriction makes for a cleaner design. Consider this typical OAuth token endpoint flow with many omitted details:\r\n\r\n1. Authenticate the client and establish the `client_id`\r\n2. Look at the `grant_type` in the request and determine whether `client_id` is allowed to use it based on its `grant_types` metadata value.\r\n3. Redirect to `grant_type`-specific code to determine the scope of the access token (including where it may be used, a resource owner, etc.)\r\n4. Issue any tokens\r\n\r\nCurrently, point three has to look at authentication information of the client again despite this information being primarily conceived as facilitating the first point. This can make code more complicated. Also, policy decisions as to which client may use a grant are generally perceived as being handled by the second point.\r\n\r\nI would appreciate it if anyone could give me some insight into why this restriction was considered. Thanks in advance :)",
       "createdAt": "2024-05-15T09:00:23Z",
-      "updatedAt": "2024-05-17T16:52:23Z",
+      "updatedAt": "2024-05-22T09:07:52Z",
       "closedAt": null,
       "comments": [
         {
@@ -4243,6 +4250,76 @@
           "body": "I don't think OAuth would be a good way to enforce rate limiting or a central way to turn off your public API temporarily. Unless you make the tokens extremely short-lived (e.g., a TTL of one minute) or even single-use, the extra step of having an authorization server will be ineffective. Moreover, if the authorization server needs to be contacted for each request anyway, moving this part of the access control to your resource servers (by having them contact the authorization server) would yield similar results. At that point, an internal protocol using optional access tokens might be easier to implement.\r\n\r\nIf you're concerned about your application's complexity, you could expose your API through some form of authenticating proxy. This way, your resource servers won't have to implement authentication, but you can still achieve global rate limiting and access control.\r\n\r\nOAuth is a framework for granting access to protected resources, so adding a grant type to the specification that doesn't require authentication seems dangerous. Outside your use case of using OAuth to enforce rate limiting, granting access to a protected resource without authentication is a security problem, and by having (public) client credentials involved in the access procedure, implementing services might get a false sense of security here.",
           "createdAt": "2024-05-17T16:52:22Z",
           "updatedAt": "2024-05-17T16:52:22Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "> OAuth is a framework for granting access to protected resources, so adding a grant type to the specification that doesn't require authentication seems dangerous.\r\n\r\nResource Servers should _never_ make any assumptions based merely on the fact that an authorization server is \"using OAuth\". Indeed, how the server authenticates e.g. users is not at all specified for a reason. The purpose of OAuth is to centralize authorization within an ecosystem.\r\n\r\n> OAuth is a framework for granting access to protected resources, so adding a grant type to the specification that doesn't require authentication seems dangerous.\r\n\r\nSure, if you assume that anyone can take all their APIs and expose them via a single proxy. This falls apart quickly if your ecosystem spans multiple organizations.\r\n\r\n> I don't think OAuth would be a good way to enforce rate limiting or a central way to turn off your public API temporarily. \r\n\r\nRate limiting is just one example :)\r\nAn authorization server is free to enforce an arbitrary policy based on peer address, time of day, phase of the moon or `/dev/random`, if need be. The centralized management options OAuth provides can be quite helpful in some cases.\r\n\r\nYet another use case:\r\n\r\nAccess Tokens are JWTs, every client is simultaneously a resource server and willing to talk to other clients based on attributes in the (non-bearer) access token (i.e. the access token grants access to other clients, hence OAuth). For some clients, the authorization server attests special properties, but arbitrary clients may participate without being attested any special properties. Essentially, the authorization server is used as a kind of CA issuing short-lived (ca. 1h) certificates in JWT-format. In a real-world use case, the clients are essentially devices unable to use a browser.\r\n\r\nAgain, the question is not whether or not this is a reasonable thing to allow: It is being used. The question is whether security or interoperability concerns justify the use of an RFC 2119 reserved word to restrict these use cases.",
+          "createdAt": "2024-05-21T09:19:08Z",
+          "updatedAt": "2024-05-21T09:19:52Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-10#section-2.4.2\r\n\r\n> The authorization server MAY support any suitable authentication scheme matching its security requirements.\r\n\r\nYou can authenticate clients however you want, it doesn't have to use a preregistered client secret as the authentication method.\r\n\r\nThe client credentials grant uses whatever client authentication you've defined.\r\n\r\nSaying that public clients can use the client credentials grant is a contradiction because public clients have no way to authenticate themselves.\r\n\r\nOr another way to look at it, let's say you're using the client IP address to authenticate the client, so that means the client credentials request would contain the client_id and nothing else, it still falls under the \"confidential client\" definition because you're saying that the client IP address is the client credential.",
+          "createdAt": "2024-05-21T12:23:41Z",
+          "updatedAt": "2024-05-21T12:23:41Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "What if I am using the empty string as a client credential and do not send it, as public clients do? This might match my authorization server's security requirements (e.g. for some clients, there are none, such as in my previous comment), hence, by this quote, it should suffice.\r\n\r\nBut then, if clients never sending any form of credential are suddenly counted as confidential clients, what is the purpose of the distinction anyway?",
+          "createdAt": "2024-05-21T12:44:58Z",
+          "updatedAt": "2024-05-21T12:44:58Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "My point is saying public clients can use the client credentials grant is a contradiction because by definition public clients don't authenticate to the AS. As soon as the client authenticates *somehow* it's no longer a public client so it can use its authentication in the client credentials request. You can be as creative as you want about the client authentication method.",
+          "createdAt": "2024-05-21T12:54:58Z",
+          "updatedAt": "2024-05-21T12:54:58Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "Yes, but taking this to the extreme, public clients _are_ confidential clients, just that their authentication check reduces to a mere `return true`. Therefore, they _are_ authenticating to the fullest extend required by the authorization server using their non-existent credentials.",
+          "createdAt": "2024-05-21T13:34:07Z",
+          "updatedAt": "2024-05-21T13:34:07Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I don't think changing the language in the spec is going to help clarify that",
+          "createdAt": "2024-05-21T14:12:00Z",
+          "updatedAt": "2024-05-21T14:12:00Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "Sure, but it does have real implications if there is an explicit statement (with an RFC 2119 keyword!) forbidding such clients from using this particular grant type. In particular, it has an effect on the following claim:\r\n\r\n> saying public clients can use the client credentials grant is a contradiction\r\n\r\nIt is not a contradiction, even if a bit unintuitive at first sight. And it can be helpful. Hence this issue. Currently there is no way (any auditor would accept) to both implement the spec-to-be and facilitate these valid use cases. This is potentially hindering interoperability, which need not be bad per se, but should be motivated by security or another form of interoperability rather than the use cases seeming nonsensical.\r\n\r\nMaybe let me ask from a different perspective:\r\nIf the client credentials grant could be used by any client authenticating to the token endpoint and requesting access to resources it is allowed to access, where would you see problems?",
+          "createdAt": "2024-05-21T15:14:36Z",
+          "updatedAt": "2024-05-21T15:14:36Z"
+        },
+        {
+          "author": "archer-321",
+          "authorAssociation": "NONE",
+          "body": "> Resource Servers should never make any assumptions based merely on the fact that an authorization server is \"using OAuth\". Indeed, how the server authenticates e.g. users is not at all specified for a reason. The purpose of OAuth is to centralize authorization within an ecosystem.\r\n\r\nResource servers and authorization servers are regularly operated by the same entity (or at least operated in a way where the resource server is aware of the security an access token issued by the authorization server provides). As such, all resource servers that verify the token somehow (e.g., by checking a cryptographic property against a known key or secret) have at least some understanding of the level of security provided by this token. I.e. you cannot rely on OAuth providing some level of security on its own, but you cannot use OAuth without being aware of the level of security it provides in your use case.\r\n\r\n> Access Tokens are JWTs, every client is simultaneously a resource server and willing to talk to other clients based on attributes in the (non-bearer) access token (i.e. the access token grants access to other clients, hence OAuth). For some clients, the authorization server attests special properties, but arbitrary clients may participate without being attested any special properties. Essentially, the authorization server is used as a kind of CA issuing short-lived (ca. 1h) certificates in JWT-format. In a real-world use case, the clients are essentially devices unable to use a browser.\r\n\r\nAt this point, you're using OAuth as an alternative to existing structures with a CA issuing X.509 certificates. However, the common practice in this case is that clients without any attested properties don't use a certificate at all. I'm not saying that OAuth would be an inherently flawed way to distribute JWT-formatted certificates. However, not using a certificate if no property is attested is a perfectly valid implementation. Without unauthenticated tokens, you wouldn't need this grant type for public clients in the first place.\r\n\r\n> Currently there is no way (any auditor would accept) to both implement the spec-to-be and facilitate these valid use cases.\r\n\r\nThis will always be a limitation if you want to use a security-related specification for a project with parts implementing the standard that opt out of any security. The problem I see in changing the specification to allow (intentionally) insecure implementations to pass a security audit is that this weakening of the standard also applies to projects that don't try to opt out of security. The vast majority of applications using the client credential grant type *should not* pass a security audit when allowing unauthenticated authorization grants. In other words, the harm of enabling the security implications of your use case to pass an audit would outweigh the benefits, IMHO.",
+          "createdAt": "2024-05-21T17:00:44Z",
+          "updatedAt": "2024-05-21T17:00:44Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "> at least some understanding of the level of security provided by this token\r\n\r\nI agree, and OAuth is purposefully fuzzy there. Maybe that level of understanding is best categorized as \"the level of security that the RS operator trusts the configured AS to provide\". After all, it is the RS operator configuring the RS to trust tokens issued by the AS. So what matters is their understanding of the security guarantees after consultation with the AS operator (which might or might not be the same person). This is where the simplicity of OAuth comes from.\r\n\r\nThis implies that assumptions like \"only clients with suitable methods of authentication should use the RS to access resources for them\" belong to the security considerations for implementations and deployments, not the core protocol.\r\nIn fact, that would be a good place to bring this up.\r\n\r\n> However, the common practice in this case is that clients without any attested properties don't use a certificate at all.\r\n\r\nYes, although the AS agreeing to the communication by issuing the token is a kind of attestation in itself. This is where the centralization comes into play.\r\n\r\n> > Currently there is no way (any auditor would accept) to both implement the spec-to-be and facilitate these valid use cases.\r\n> \r\n> This will always be a limitation if you want to use a security-related specification for a project with parts implementing the standard that opt out of any security. The problem I see in changing the specification to allow (intentionally) insecure implementations to pass a security audit is that this weakening of the standard also applies to projects that don't try to opt out of security. The vast majority of applications using the client credential grant type should not pass a security audit when allowing unauthenticated authorization grants. In other words, the harm of enabling the security implications of your use case to pass an audit would outweigh the benefits, IMHO.\r\n\r\nCould you please specify the exact security implications?\r\nClient metadata already includes both a `token_endpoint_auth_method` and a `grant_types` attribute. So without any code to fulfill this `MUST`, it is already possible to achieve the same effect by configuration. Deviating from a sane default configuration should come with appropriate _context specific_ security considerations. Even if an AS has no concept of client metadata, it can still be written in a way to enforce arbitrary policies. Restricting it at a protocol level thus seems to _only_ restrict use cases, and not provide additional security over proper configuration or implementation. This is what security considerations are for.\r\n\r\nBy allowing public clients to use the client credentials grant, one is not opting out of any security. One is in fact using OAuth's security model to its fullest extend. If the AS deems \"unauthenticated\" as secure enough and the RS is configured to blindly trust the AS, then any client should get access to a resource. Anything beyond that may only make OAuth more complicated and even harder to understand than it already is.",
+          "createdAt": "2024-05-22T08:52:24Z",
+          "updatedAt": "2024-05-22T08:52:24Z"
+        },
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "How about something like this in the security considerations:\r\n\r\n> Issuing access tokens as a response to public clients using the client credentials grant type implies that anyone may acquire such tokens without authentication. Authorization servers SHOULD limit the scope of such tokens to resources for which they expect this to be acceptable.\r\n\r\nDoes this address the security concerns?",
+          "createdAt": "2024-05-22T09:07:51Z",
+          "updatedAt": "2024-05-22T09:07:51Z"
         }
       ]
     },
@@ -4290,6 +4367,37 @@
           "body": "> @archer-321 are you suggesting dropping loopback?\r\n\r\nNo, I believe loopback is still essential for many native client implementations, and there would be no reason to drop this well-established redirect type. I was merely suggesting rephrasing the private-use redirect URI scheme section I quoted, as I didn't see the security advantages of loopback over private-use URI schemes mentioned.\r\n\r\n> I think loopback is preferable to private schemes in that you can't MITM it. A malicious app does not know when a protocol is happening. In contrast, if an malicious app registers a private scheme, then it could be intercepting the protocol.\r\n\r\nConsidering the only grant type available to public clients in OAuth 2.1 is the authorization code grant, how could an attacker MITM the authorization \"ceremony\"? If they manage to intercept the authorization code, it would either be useless when the legitimate client has obtained an access token, or the legitimate client would encounter an error while trying to retrieve an access token after the attacker has already used the code.\r\n\r\nOne aspect you mentioned that I didn't consider is that attackers are more likely to notice that an authorization ceremony is happening. However, this could also be established by watching all processes until an instance of the client application binds a port on the loopback interface, so I'm unsure how much security the protocol gets here.\r\n\r\nThe primary reason I prefer private-use redirect URIs over loopback is that some services incorrectly implement the user-interaction part of the authorization endpoint. E.g., GitHub doesn't seem to ask for interaction if the user has previously authorized the application. If the application uses a loopback redirect URI, even a process running as another user could create a loopback HTTP server. The only thing a malicious client would have to do in this case to get access to the protected resource is redirect the user to the authorization endpoint somehow (e.g. by sending the user a link or by putting the link on a website the attacker controls - even adding the link to the description of a pull request would work).\r\n\r\nWith private-use URI schemes, the attacker would have to get a system administrator to install it as a scheme handler. Alternatively, the attacker would need access to the user configuration to set up the scheme handler for a single user. Again, I wouldn't count this as a foolproof security feature, but in my head, it makes attacks more complex, at least.\r\n\r\n> Mobile platforms generally support claimed https and pretty much any app can claim a private scheme. On desktop, the loopback is generally preferable. A common use case are CLI tools that launch the browser -- claiming an https endpoint, or registering a private scheme are not really practical.\r\n\r\nI agree that mobile apps (and apps on other systems with the feature) should prefer claimed \"https\" schemes over both loopback redirect URIs and private-use URI schemes. I also agree that CLI tools that ship as a single binary without any installer or package should be able to use loopback. My main concern is that, in my opinion, the quoted paragraph of the specification \"unfairly\" treats private-use URI schemes as less secure than loopback redirects (\"[...] this option should only be used if the previously mentioned more secure options are not available\"). This wording might make future implementing services not consider support for private-use URI schemes while instead forcing apps to use loopback.",
           "createdAt": "2024-05-20T01:57:32Z",
           "updatedAt": "2024-05-20T01:57:32Z"
+        }
+      ]
+    },
+    {
+      "number": 180,
+      "id": "I_kwDODkfq5s6Jhvl9",
+      "title": "Consider add field expires_at in token response",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/180",
+      "state": "CLOSED",
+      "author": "jht5945",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Consider add `expires_at` in token response:\r\n\r\n**RECOMMENDED**. Time at which the access token will expire. A JSON number that representing the number of seconds from 1970-01-01T00:00:00Z as measured in UTC until the date/time.\r\n\r\nThere is only a field named `expires_in`, it will take some time where client get the token response from the token was issued, so client cannot know exactly when the access token will expire. Filed `expires_at` will exactly know when the access token will expire.",
+      "createdAt": "2024-05-21T05:26:24Z",
+      "updatedAt": "2024-05-21T12:52:07Z",
+      "closedAt": "2024-05-21T12:52:07Z",
+      "comments": [
+        {
+          "author": "bellebaum",
+          "authorAssociation": "NONE",
+          "body": "In many cases, the `expires_in` number is generated shortly before the token is sent to the client, so we are talking about half a round trip offset from the number a client could calculate given its own clock and adding `expires_in`. Then typical code would check whether that time came before sending the token to a resource server, which gives another half round trip of offset. So assuming the resource server and authorization server have synced up clocks, we have about one round trip we are missing here.\r\n\r\nBringing in `expires_at` would additionally be prone to clock sync problems with the client. I would personally expect these to grow much larger than a single round trip if NTP or similar is not being used.\r\n\r\nMaybe a recommendation to account for a few seconds of clock skew and round times would be helpful here, just like for JWTs?",
+          "createdAt": "2024-05-21T11:20:03Z",
+          "updatedAt": "2024-05-21T11:20:03Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Even with 'expires_at', there is no way to know \"exactly\" when the token expires because clocks will never be perfectly in sync. Additionally, the token might expire ahead of its scheduled expiration for whatever reason. In other words, the client will always have to handle the case where the request fails because the token expired. If the token expires, the client either uses its refresh token or sends the user thru a flow again to get a new token. At best, the client can try to avoid an unnecessary HTTP request with a token it knows is expired and proactively get a new token. The difference between the client knowing an exact timestamp from the server vs calculating the timestamp from the expires_in isn't going to make a difference in practice.\r\n\r\nAdditionally, this was discussed at length on the mailing list years ago and this is not something we can change in 2.1.",
+          "createdAt": "2024-05-21T12:52:07Z",
+          "updatedAt": "2024-05-21T12:52:07Z"
         }
       ]
     }
