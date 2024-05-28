@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-26T00:10:36.011421+00:00",
+  "timestamp": "2024-05-28T00:10:13.689766+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4414,6 +4414,22 @@
           "updatedAt": "2024-05-21T12:52:07Z"
         }
       ]
+    },
+    {
+      "number": 181,
+      "id": "I_kwDODkfq5s6KQDSQ",
+      "title": "Authorization Endpoint HTTP `POST` binding",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/181",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "2.1 added a lot of text around how clients form authorization requests, the language does not however account for the optional POST binding at the authorization endpoint.\r\n\r\n> The authorization server MUST support the use of the HTTP GET method Section 9.3.1 of [[RFC9110](https://www.rfc-editor.org/info/rfc9110)] for the authorization endpoint and MAY support the POST method (Section 9.3.3 of [[RFC9110](https://www.rfc-editor.org/info/rfc9110)]) as well.\r\n\r\nSections [3.1. ](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-3.1)[Authorization Endpoint](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-authorization-endpoint) and [4.1.1. ](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-4.1.1)[Authorization Request](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-authorization-request) do not account for the optional POST binding which uses the request body to carry the `application/x-www-form-urlencoded` encoded parameters.\r\n\r\nIn OIDC there's [explicit text around](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) the request parameters.\r\n\r\n> Authorization Servers MUST support the use of the HTTP GET and POST methods defined in [RFC 7231](https://openid.net/specs/openid-connect-core-1_0.html#RFC7231) [RFC7231] at the Authorization Endpoint. Clients MAY use the HTTP GET or POST methods to send the Authorization Request to the Authorization Server. If using the HTTP GET method, the request parameters are serialized using URI Query String Serialization, per [Section 13.1](https://openid.net/specs/openid-connect-core-1_0.html#QuerySerialization). If using the HTTP POST method, the request parameters are serialized using Form Serialization, per [Section 13.2](https://openid.net/specs/openid-connect-core-1_0.html#FormSerialization).",
+      "createdAt": "2024-05-27T16:06:52Z",
+      "updatedAt": "2024-05-27T16:10:05Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -7460,6 +7476,32 @@
       "headRepository": "mrcaidev/oauth-v2-1",
       "headRefName": "patch-1",
       "headRefOid": "d45388fcda551c17817dbe96806551668d53ae38",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 182,
+      "id": "PR_kwDODkfq5s5wr7FH",
+      "title": "add self to acknowledgements",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/182",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "happy to add anyone else in a single PR to reduce noise",
+      "createdAt": "2024-05-27T17:41:11Z",
+      "updatedAt": "2024-05-27T17:41:12Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "dcd8716ae89a56214f57a627df2a77be701ea08e",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "ack-filip-skokan",
+      "headRefOid": "fefca07a5f42f6c8ecf852c10a57cc70c7cdb12a",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
