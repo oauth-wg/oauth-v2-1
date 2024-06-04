@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-02T00:10:42.164909+00:00",
+  "timestamp": "2024-06-04T00:10:07.628032+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -7495,7 +7495,7 @@
       "labels": [],
       "body": "happy to add anyone else in a single PR to reduce noise",
       "createdAt": "2024-05-27T17:41:11Z",
-      "updatedAt": "2024-05-27T17:41:12Z",
+      "updatedAt": "2024-06-02T09:51:44Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "dcd8716ae89a56214f57a627df2a77be701ea08e",
@@ -7507,7 +7507,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s58tVFL",
+          "commit": {
+            "abbreviatedOid": "fefca07"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "Story checks out",
+          "createdAt": "2024-06-02T09:51:44Z",
+          "updatedAt": "2024-06-02T09:51:44Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
