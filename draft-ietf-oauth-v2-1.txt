@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 16 November 2024                                           Okta
+Expires: 14 December 2024                                           Okta
                                                           T. Lodderstedt
                                                                  yes.com
-                                                             15 May 2024
+                                                            12 June 2024
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 November 2024.
+   This Internet-Draft will expire on 14 December 2024.
 
 Copyright Notice
 
@@ -3675,9 +3675,9 @@ Table of Contents
               Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,
               "OAuth 2.0 Security Best Current Practice", Work in
               Progress, Internet-Draft, draft-ietf-oauth-security-
-              topics-27, 7 May 2024,
+              topics-29, 3 June 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              security-topics-27>.
+              security-topics-29>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -4205,7 +4205,7 @@ Appendix D.  Acknowledgements
    this version of the specification: Vittorio Bertocci, Michael Jones,
    Justin Richer, Daniel Fett, Brian Campbell, Joseph Heenan, Roberto
    Polli, Andrii Deinega, Falko, Michael Peck, Bob Hamburg, Deng Chao,
-   and Karsten Meyer zu Selhausen.
+   Karsten Meyer zu Selhausen, and Filip Skokan.
 
    Discussions around this specification have also occurred at the OAuth
    Security Workshop in 2021 and 2022.  The authors thank the organizers
