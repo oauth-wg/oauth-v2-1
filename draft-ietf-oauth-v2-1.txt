@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 14 December 2024                                           Okta
+Expires: 15 December 2024                                           Okta
                                                           T. Lodderstedt
                                                                  yes.com
-                                                            12 June 2024
+                                                            13 June 2024
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 December 2024.
+   This Internet-Draft will expire on 15 December 2024.
 
 Copyright Notice
 
@@ -2351,10 +2351,10 @@ Table of Contents
       respond with the HTTP 400 (Bad Request) status code.
 
    "invalid_token":  The access token provided is expired, revoked,
-      malformed, or invalid for other reasons.  The resource SHOULD
-      respond with the HTTP 401 (Unauthorized) status code.  The client
-      MAY request a new access token and retry the protected resource
-      request.
+      malformed, or invalid for other reasons.  The resource server
+      SHOULD respond with the HTTP 401 (Unauthorized) status code.  The
+      client MAY request a new access token and retry the protected
+      resource request.
 
    "insufficient_scope":  The request requires higher privileges
       (scopes) than provided by the scopes granted to the client and
