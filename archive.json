@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-11T00:09:55.569834+00:00",
+  "timestamp": "2024-06-13T00:10:20.898056+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -7488,24 +7488,26 @@
       "id": "PR_kwDODkfq5s5wr7FH",
       "title": "add self to acknowledgements",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/182",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "panva",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "happy to add anyone else in a single PR to reduce noise",
       "createdAt": "2024-05-27T17:41:11Z",
-      "updatedAt": "2024-06-02T09:51:44Z",
+      "updatedAt": "2024-06-12T23:45:07Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "dcd8716ae89a56214f57a627df2a77be701ea08e",
       "headRepository": "panva/oauth-v2-1",
       "headRefName": "ack-filip-skokan",
       "headRefOid": "fefca07a5f42f6c8ecf852c10a57cc70c7cdb12a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-06-12T23:45:07Z",
+      "mergedAt": "2024-06-12T23:45:07Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "7e0a25eaf6ae8598438dcd0d6b8c1b4d2a4cf50f"
+      },
       "comments": [],
       "reviews": [
         {
