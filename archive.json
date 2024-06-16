@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-13T00:10:20.898056+00:00",
+  "timestamp": "2024-06-16T00:10:58.551113+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4342,15 +4342,15 @@
       "id": "I_kwDODkfq5s6JVou_",
       "title": "Typo: resource server instead of resource",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/177",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mrcaidev",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "See [Section 5.3.2. \"Error Codes\"](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-error-codes).\r\n\r\nIn the description of \"invalid_token\":\r\n\r\n> The resource SHOULD ...\r\n\r\nshould be:\r\n\r\n\"The resource server SHOULD ...\"",
       "createdAt": "2024-05-18T16:09:06Z",
-      "updatedAt": "2024-05-18T16:09:06Z",
-      "closedAt": null,
+      "updatedAt": "2024-06-13T21:56:10Z",
+      "closedAt": "2024-06-13T21:56:10Z",
       "comments": []
     },
     {
@@ -7495,7 +7495,7 @@
       "labels": [],
       "body": "happy to add anyone else in a single PR to reduce noise",
       "createdAt": "2024-05-27T17:41:11Z",
-      "updatedAt": "2024-06-12T23:45:07Z",
+      "updatedAt": "2024-06-13T07:36:02Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "dcd8716ae89a56214f57a627df2a77be701ea08e",
