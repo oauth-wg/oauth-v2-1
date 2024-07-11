@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-09T00:10:05.294016+00:00",
+  "timestamp": "2024-07-11T00:11:14.912991+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5904,7 +5904,7 @@
       "labels": [],
       "body": "## This PR\r\n\r\n- reorganize Security considerations\r\n- remove redundancies\r\n- reference security considerations from other rfcs\r\n\r\nNeeds #98 ",
       "createdAt": "2021-10-19T11:14:31Z",
-      "updatedAt": "2022-07-21T09:56:24Z",
+      "updatedAt": "2024-07-10T21:36:25Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "c9b0e5f2c1746cb042a82ed1a8efccbdbb1fbc23",
@@ -6089,6 +6089,26 @@
               "body": "done",
               "createdAt": "2022-07-21T09:56:24Z",
               "updatedAt": "2022-07-21T09:56:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6BXb59",
+          "commit": {
+            "abbreviatedOid": "9e6bd98"
+          },
+          "author": "randomstuff",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-10T21:36:24Z",
+          "updatedAt": "2024-07-10T21:36:25Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "To this end, one thing which is currently lacking is a standard/recommended way for the AS to communicate _to the client_ the intended audience(s) (URLs) of the issued access token.",
+              "createdAt": "2024-07-10T21:36:24Z",
+              "updatedAt": "2024-07-10T21:36:25Z"
             }
           ]
         }
