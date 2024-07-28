@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-25T00:10:36.687035+00:00",
+  "timestamp": "2024-07-28T00:11:52.378426+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4454,6 +4454,22 @@
           "updatedAt": "2024-07-08T19:44:29Z"
         }
       ]
+    },
+    {
+      "number": 184,
+      "id": "I_kwDODkfq5s6Q_rLK",
+      "title": "Section 4.1.2.1 Error Response is unclear on how to handle an Invalid Authorization Endpoint request",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/184",
+      "state": "OPEN",
+      "author": "dfcoffin",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The first paragraph of **Section 4.1.2.1. Error Response** indicates that the authorization server **SHOULD** inform the resource owner if an invalid or malformed request is attempted but does not indicate how this should be done.  It also states the authorization server **MUST NOT** automatically redirect the user-agent to the invalid redirection URI but does not indicate what to respond to the requestor other than in an example at the bottom of the section, which displayed an example of an \"access_denied\" response with \"client.example.com\" as the host value.\r\n\r\nI have seen implementations that send the \"access_denied\" as a 302 response using the redirect_uri value as the host element of the \"Location\" header in place of client.example.com.  They also want to use status code 400 for all other errors based on **Section 5.2. Error Response** of RFC 6749.\r\n\r\nShould the titles of the Error Response sections include the referenced Endpoint?  For example, \"4.1.2.1. Authorization Error Response\" and \"5.2. Token Error Response\"?\r\n\r\nShould the Authorization Endpoint and the Token Endpoint use the same status code for errors (i.e., 400 with the error in the body), which would simplify Error Response and eliminate the possibility of transmitting information to the redirect_uri value?\r\n\r\n",
+      "createdAt": "2024-07-26T16:55:54Z",
+      "updatedAt": "2024-07-26T17:06:53Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
