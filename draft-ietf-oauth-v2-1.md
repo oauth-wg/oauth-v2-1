@@ -1545,7 +1545,7 @@ using the `application/x-www-form-urlencoded` format, per {{application-x-www-fo
 
 "response_type":
 :    REQUIRED.  The authorization endpoint supports different sets of request and response
-pameters. The client determines the type of flow by using a certain `response_type`
+parameters. The client determines the type of flow by using a certain `response_type`
 value. This specification defines the value `code`, which must be used to signal that
 the client wants to use the authorization code flow.
 
