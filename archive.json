@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-30T00:10:19.551335+00:00",
+  "timestamp": "2024-08-01T00:11:55.900606+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -7584,6 +7584,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 185,
+      "id": "PR_kwDODkfq5s522G6v",
+      "title": "fix: typos",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/185",
+      "state": "OPEN",
+      "author": "grjan7",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes typos.",
+      "createdAt": "2024-07-30T08:38:58Z",
+      "updatedAt": "2024-07-30T08:38:59Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "fcd80efb48f4600236e49cc8b0e5d95ec16c1542",
+      "headRepository": "grjan7/oauth-v2-1",
+      "headRefName": "typos",
+      "headRefOid": "3671b56cc024f08003fae55e127923bb0ec31235",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
