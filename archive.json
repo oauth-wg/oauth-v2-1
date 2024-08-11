@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-08T00:10:37.226326+00:00",
+  "timestamp": "2024-08-11T00:12:30.700081+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4468,6 +4468,22 @@
       "body": "The first paragraph of **Section 4.1.2.1. Error Response** indicates that the authorization server **SHOULD** inform the resource owner if an invalid or malformed request is attempted but does not indicate how this should be done.  It also states the authorization server **MUST NOT** automatically redirect the user-agent to the invalid redirection URI but does not indicate what to respond to the requestor other than in an example at the bottom of the section, which displayed an example of an \"access_denied\" response with \"client.example.com\" as the host value.\r\n\r\nI have seen implementations that send the \"access_denied\" as a 302 response using the redirect_uri value as the host element of the \"Location\" header in place of client.example.com.  They also want to use status code 400 for all other errors based on **Section 5.2. Error Response** of RFC 6749.\r\n\r\nShould the titles of the Error Response sections include the referenced Endpoint?  For example, \"4.1.2.1. Authorization Error Response\" and \"5.2. Token Error Response\"?\r\n\r\nShould the Authorization Endpoint and the Token Endpoint use the same status code for errors (i.e., 400 with the error in the body), which would simplify Error Response and eliminate the possibility of transmitting information to the redirect_uri value?\r\n\r\n",
       "createdAt": "2024-07-26T16:55:54Z",
       "updatedAt": "2024-07-26T17:06:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 186,
+      "id": "I_kwDODkfq5s6SaB4b",
+      "title": "weird referece, but okay ",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/186",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "see https://github.com/oauth-wg/oauth-v2-1/commit/673d7f0d501aef6cc1fd0bf38b2436d34d0af8cd#r145092580 and suggest https://www.rfc-editor.org/rfc/rfc9110.html#section-11.1 rather than ref to ABNF ",
+      "createdAt": "2024-08-08T17:29:06Z",
+      "updatedAt": "2024-08-08T17:29:06Z",
       "closedAt": null,
       "comments": []
     }
