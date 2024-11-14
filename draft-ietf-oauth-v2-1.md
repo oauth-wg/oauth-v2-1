@@ -2166,6 +2166,7 @@ of the `Authorization` header:
 * `Authorization: Bearer mF_9.B5f-4.1JqM`
 * `Authorization: bearer mF_9.B5f-4.1JqM`
 * `Authorization: BEARER mF_9.B5f-4.1JqM`
+* `Authorization: bEaReR mF_9.B5f-4.1JqM`
 
 
 ### Form-Encoded Content Parameter
