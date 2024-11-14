@@ -3848,6 +3848,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 -12
 
 * Updated language around client registration to better reflect alternative registration methods such as those in use by OpenID Federation and open ecosystems
+* Added DPoP and Step-Up Auth to appendix of extensions
 
 -11
 
