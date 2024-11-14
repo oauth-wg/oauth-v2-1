@@ -1167,7 +1167,7 @@ An authorization server that redirects a request potentially containing
 user credentials MUST avoid forwarding these user credentials accidentally
 (see {{redirect_307}} for details).
 
-Cross-Origin Resource Sharing (also known as CORS) {{WHATWG.CORS}} MUST NOT be
+Cross-Origin Resource Sharing {{WHATWG.CORS}} MUST NOT be
 supported at the Authorization Endpoint as the client does not access this
 endpoint directly, instead the client redirects the user agent to it.
 
@@ -3781,8 +3781,6 @@ into the octet sequence below (using hexadecimal notation):
 and then represented in the content as:
 
     +%25%26%2B%C2%A3%E2%82%AC
-
-GitHub discussion: <https://github.com/oauth-wg/oauth-v2-1/issues/128>
 
 
 # Extensions {#extensions}
