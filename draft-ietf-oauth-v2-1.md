@@ -100,6 +100,7 @@ informative:
   RFC9126:
   RFC9396:
   RFC9449:
+  RFC9470:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-browser-based-apps:
 
@@ -3824,6 +3825,11 @@ Below is a list of well-established extensions at the time of publication:
 * {{RFC9396}}: Rich Authorization Requests
   * Rich Authorization Requests specifies a new parameter `authorization_details` that is used to carry fine-grained authorization data in the OAuth authorization request.
 
+* {{RFC9449}}: Demonstrating Proof of Possession (DPoP)
+  * DPoP describes a mechanism for sender-constraining OAuth 2.0 tokens via a proof-of-possession mechanism on the application level.
+
+* {{RFC9470}}: Step-Up Authentication Challenge Protocol
+  * Step-Up Auth describes a mechanism that resource servers can use to signal to a client that the authentication event associated with the access token of the current request does not meet its authentication requirements.
 
 
 
