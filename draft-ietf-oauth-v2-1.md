@@ -755,12 +755,13 @@ are case sensitive.
 
 # Client Registration {#client-registration}
 
-Before initiating the protocol, the client must establish its registration with the
-authorization server. The means through which the client registers
+Before initiating the protocol, the client must have established an identifier ({{client-identifier}}) at the
+authorization server. The means through which the client identifier is established
 with the authorization server are beyond the scope of this
-specification but typically involve the client developer manually registering
-the client at the authorization server's website after creating an account and agreeing
-to the service's Terms of Service, or by using Dynamic Client Registration ({{RFC7591}}).
+specification, but typically involve the client developer manually registering
+the client at the authorization server's website (after creating an account and agreeing
+to the service's Terms of Service), or by using Dynamic Client Registration ({{RFC7591}}).
+Extensions may also define other programmatic methods of establishing client registration.
 
 Client registration does not require a direct interaction between the
 client and the authorization server.  When supported by the
@@ -771,14 +772,14 @@ be accomplished using a self-issued or third-party-issued assertion,
 or by the authorization server performing client discovery using a
 trusted channel.
 
-When registering a client, the client developer SHALL:
+Client registration MUST include:
 
-*  specify the client type as described in {{client-types}},
+*  the client type as described in {{client-types}},
 
-*  provide client details needed by the grant type in use,
+*  client details needed by the grant type in use,
    such as redirect URIs as described in {{redirection-endpoint}}, and
 
-*  include any other information required by the authorization server
+*  any other information required by the authorization server
    (e.g., application name, website, description, logo image, the
    acceptance of legal terms).
 
@@ -3838,6 +3839,10 @@ Discussions around this specification have also occurred at the OAuth Security W
 # Document History
 
 [[ To be removed from the final specification ]]
+
+-12
+
+* Updated language around client registration to better reflect alternative registration methods such as those in use by OpenID Federation and open ecosystems
 
 -11
 
