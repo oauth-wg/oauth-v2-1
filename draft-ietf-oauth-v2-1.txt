@@ -4285,6 +4285,9 @@ Appendix F.  Document History
 
    *  Moved client_id requirement to the individual grant types
 
+   *  Consolidated the descriptions of serialization methods to the
+      appendix
+
    -11
 
    *  Explicitly mention that Bearer is case insensitive
