@@ -2861,7 +2861,7 @@ If the status code 307 were used for redirection, the user agent
 would send the user credentials via a POST request to the client.
 
 This discloses the sensitive credentials to the client.  If the
-relying party is malicious, it can use the credentials to impersonate
+client is malicious, it can use the credentials to impersonate
 the user at the AS.
 
 The behavior might be unexpected for developers, but is defined in
@@ -3836,7 +3836,7 @@ Below is a list of well-established extensions at the time of publication:
 
 This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Apps. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
 
-The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Vittorio Bertocci, Michael Jones, Justin Richer, Daniel Fett, Brian Campbell, Joseph Heenan, Roberto Polli, Andrii Deinega, Falko, Michael Peck, Bob Hamburg, Deng Chao, Karsten Meyer zu Selhausen, and Filip Skokan.
+The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Vittorio Bertocci, Michael Jones, Justin Richer, Daniel Fett, Brian Campbell, Joseph Heenan, Roberto Polli, Andrii Deinega, Falko, Michael Peck, Bob Hamburg, Deng Chao, Karsten Meyer zu Selhausen, Filip Skokan, and Tim Würtele.
 
 Discussions around this specification have also occurred at the OAuth Security Workshop in 2021 and 2022. The authors thank the organizers of the workshop (Guido Schmitz, Steinar Noem, and Daniel Fett) for hosting an event that's conducive to collaboration and community input.
 
@@ -3850,6 +3850,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Updated language around client registration to better reflect alternative registration methods such as those in use by OpenID Federation and open ecosystems
 * Added DPoP and Step-Up Auth to appendix of extensions
 * Updated reference for case insensitivity of auth scheme to HTTP instead of ABNF
+* Corrected an instance of "relying party" vs "client"
 
 -11
 
