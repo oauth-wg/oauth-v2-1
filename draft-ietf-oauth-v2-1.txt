@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 15 December 2024                                           Okta
+Expires: 19 May 2025                                                Okta
                                                           T. Lodderstedt
                                                                  yes.com
-                                                            13 June 2024
+                                                        15 November 2024
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 December 2024.
+   This Internet-Draft will expire on 19 May 2025.
 
 Copyright Notice
 
@@ -203,9 +203,13 @@ Table of Contents
      A.17. "code_verifier" Syntax
      A.18. "code_challenge" Syntax
    Appendix B.  Use of application/x-www-form-urlencoded Media Type
-   Appendix C.  Extensions
-   Appendix D.  Acknowledgements
-   Appendix E.  Document History
+   Appendix C.  Serializations
+     C.1.  Query String Serialization
+     C.2.  Form-Encoded Serialization
+     C.3.  JSON Serialization
+   Appendix D.  Extensions
+   Appendix E.  Acknowledgements
+   Appendix F.  Document History
    Authors' Addresses
 
 1.  Introduction
@@ -745,7 +749,7 @@ Table of Contents
    *  [RFC7662]: Token Introspection, defining a mechanism for resource
       servers to obtain information about access tokens
 
-   Please refer to Appendix C for a list of current known extensions at
+   Please refer to Appendix D for a list of current known extensions at
    the time of this publication.
 
 1.8.  Compatibility with OAuth 2.0
@@ -791,14 +795,15 @@ Table of Contents
 
 2.  Client Registration
 
-   Before initiating the protocol, the client must establish its
-   registration with the authorization server.  The means through which
-   the client registers with the authorization server are beyond the
-   scope of this specification but typically involve the client
-   developer manually registering the client at the authorization
-   server's website after creating an account and agreeing to the
-   service's Terms of Service, or by using Dynamic Client Registration
-   ([RFC7591]).
+   Before initiating the protocol, the client must have established an
+   identifier (Section 2.2) at the authorization server.  The means
+   through which the client identifier is established with the
+   authorization server are beyond the scope of this specification, but
+   typically involve the client developer manually registering the
+   client at the authorization server's website (after creating an
+   account and agreeing to the service's Terms of Service), or by using
+   Dynamic Client Registration ([RFC7591]).  Extensions may also define
+   other programmatic methods of establishing client registration.
 
    Client registration does not require a direct interaction between the
    client and the authorization server.  When supported by the
@@ -809,16 +814,16 @@ Table of Contents
    by the authorization server performing client discovery using a
    trusted channel.
 
-   When registering a client, the client developer SHALL:
+   Client registration MUST include:
 
-   *  specify the client type as described in Section 2.1,
+   *  the client type as described in Section 2.1,
 
-   *  provide client details needed by the grant type in use, such as
-      redirect URIs as described in Section 2.3, and
+   *  client details needed by the grant type in use, such as redirect
+      URIs as described in Section 2.3, and
 
-   *  include any other information required by the authorization server
-      (e.g., application name, website, description, logo image, the
-      acceptance of legal terms).
+   *  any other information required by the authorization server (e.g.,
+      application name, website, description, logo image, the acceptance
+      of legal terms).
 
    Dynamic Client Registration ([RFC7591]) defines a common general data
    model for clients that may be used even with manual client
@@ -1192,7 +1197,11 @@ Table of Contents
 
    The authorization server MUST support the use of the HTTP GET method
    Section 9.3.1 of [RFC9110] for the authorization endpoint and MAY
-   support the POST method (Section 9.3.3 of [RFC9110]) as well.
+   support the POST method (Section 9.3.3 of [RFC9110]) as well.  If
+   using the HTTP GET method, the request parameters are serialized
+   using Query String Serialization as described in Appendix C.1.  If
+   using the HTTP POST method, the request parameters are serialized
+   using Form Serialization as described in Appendix C.2.
 
    The authorization server MUST ignore unrecognized request parameters
    sent to the authorization endpoint.
@@ -1205,10 +1214,9 @@ Table of Contents
    containing user credentials MUST avoid forwarding these user
    credentials accidentally (see Section 7.5.4 for details).
 
-   Cross-Origin Resource Sharing (also known as CORS) [WHATWG.CORS] MUST
-   NOT be supported at the Authorization Endpoint as the client does not
-   access this endpoint directly, instead the client redirects the user
-   agent to it.
+   Cross-Origin Resource Sharing [WHATWG.CORS] MUST NOT be supported at
+   the Authorization Endpoint as the client does not access this
+   endpoint directly, instead the client redirects the user agent to it.
 
 3.2.  Token Endpoint
 
@@ -1577,7 +1585,7 @@ Table of Contents
    using the application/x-www-form-urlencoded format, per Appendix B:
 
    "response_type":  REQUIRED.  The authorization endpoint supports
-      different sets of request and response pameters.  The client
+      different sets of request and response parameters.  The client
       determines the type of flow by using a certain response_type
       value.  This specification defines the value code, which must be
       used to signal that the client wants to use the authorization code
@@ -2197,6 +2205,8 @@ Table of Contents
    *  Authorization: bearer mF_9.B5f-4.1JqM
 
    *  Authorization: BEARER mF_9.B5f-4.1JqM
+
+   *  Authorization: bEaReR mF_9.B5f-4.1JqM
 
 5.1.2.  Form-Encoded Content Parameter
 
@@ -3806,9 +3816,9 @@ Table of Contents
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., Waite, D., and P. De Ryck, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-18, 1 May 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              browser-based-apps-18>.
+              Draft, draft-ietf-oauth-browser-based-apps-19, 20 October
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              oauth-browser-based-apps-19>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
@@ -3920,6 +3930,11 @@ Table of Contents
               Jones, M., and D. Waite, "OAuth 2.0 Demonstrating Proof of
               Possession (DPoP)", RFC 9449, DOI 10.17487/RFC9449,
               September 2023, <https://www.rfc-editor.org/info/rfc9449>.
+
+   [RFC9470]  Bertocci, V. and B. Campbell, "OAuth 2.0 Step Up
+              Authentication Challenge Protocol", RFC 9470,
+              DOI 10.17487/RFC9470, September 2023,
+              <https://www.rfc-editor.org/info/rfc9470>.
 
    [W3C.REC-html401-19991224]
               Hors, A. L., Ed., Raggett, D., Ed., and I. Jacobs, Ed.,
@@ -4106,10 +4121,42 @@ Appendix B.  Use of application/x-www-form-urlencoded Media Type
 
    +%25%26%2B%C2%A3%E2%82%AC
 
-   GitHub discussion: https://github.com/oauth-wg/oauth-v2-1/issues/128
-   (https://github.com/oauth-wg/oauth-v2-1/issues/128)
+Appendix C.  Serializations
 
-Appendix C.  Extensions
+   Various messages in this specification are serialized using one of
+   the methods described below.  This section describes the syntax of
+   these serialization methods; other sections describe when they can
+   and must be used.  Note that not all methods can be used for all
+   messages.
+
+C.1.  Query String Serialization
+
+   In order to serialize the parameters using the Query String
+   Serialization, the Client constructs the string by adding the
+   parameters and values to the query component of a URL using the
+   application/x-www-form-urlencoded format as defined by Appendix B.
+   Query String Serialization is typically used in HTTP GET requests.
+
+C.2.  Form-Encoded Serialization
+
+   Parameters and their values are Form Serialized by adding the
+   parameter names and values to the entity body of the HTTP request
+   using the application/x-www-form-urlencoded format as defined by
+   Appendix B.  Form Serialization is typically used in HTTP POST
+   requests.
+
+C.3.  JSON Serialization
+
+   The parameters are serialized into a JSON object structure by adding
+   each parameter at the highest structure level.  Parameter names and
+   string values are represented as JSON strings.  Numerical values are
+   represented as JSON numbers.  Boolean values are represented as JSON
+   booleans.  Omitted parameters and parameters with no value SHOULD be
+   omitted from the object and not represented by a JSON null value,
+   unless otherwise specified.  A parameter MAY have a JSON object or a
+   JSON array as its value.
+
+Appendix D.  Extensions
 
    Below is a list of well-established extensions at the time of
    publication:
@@ -4190,7 +4237,20 @@ Appendix C.  Extensions
          authorization_details that is used to carry fine-grained
          authorization data in the OAuth authorization request.
 
-Appendix D.  Acknowledgements
+   *  [RFC9449]: Demonstrating Proof of Possession (DPoP)
+
+      -  DPoP describes a mechanism for sender-constraining OAuth 2.0
+         tokens via a proof-of-possession mechanism on the application
+         level.
+
+   *  [RFC9470]: Step-Up Authentication Challenge Protocol
+
+      -  Step-Up Auth describes a mechanism that resource servers can
+         use to signal to a client that the authentication event
+         associated with the access token of the current request does
+         not meet its authentication requirements.
+
+Appendix E.  Acknowledgements
 
    This specification is the work of the OAuth Working Group, and its
    starting point was based on the contents of the following
@@ -4213,9 +4273,17 @@ Appendix D.  Acknowledgements
    hosting an event that's conducive to collaboration and community
    input.
 
-Appendix E.  Document History
+Appendix F.  Document History
 
    [[ To be removed from the final specification ]]
+
+   -12
+
+   *  Updated language around client registration to better reflect
+      alternative registration methods such as those in use by OpenID
+      Federation and open ecosystems
+
+   *  Added DPoP and Step-Up Auth to appendix of extensions
 
    -11
 
