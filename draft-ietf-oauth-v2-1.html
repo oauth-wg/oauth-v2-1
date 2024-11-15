@@ -2966,10 +2966,7 @@ the scope and resource servers as consented by the resource owner.
 This is to prevent privilege escalation by the legitimate client and
 reduce the impact of refresh token leakage.<a href="#section-3.2.3-6" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-7">The parameters are serialized into a JavaScript Object Notation (JSON)
-structure by adding each parameter at the highest structure level.
-Parameter names and string values are included as JSON strings.
-Numerical values are included as JSON numbers.  The order of
-parameters does not matter and can vary.<a href="#section-3.2.3-7" class="pilcrow">¶</a></p>
+structure as described in <a href="#json-serialization" class="auto internal xref">Appendix C.3</a>.<a href="#section-3.2.3-7" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-8">The authorization server MUST include the HTTP <code>Cache-Control</code>
 response header field (see Section 5.2 of <span>[<a href="#RFC9111" class="cite xref">RFC9111</a>]</span>) with a value of <code>no-store</code> in any
 response containing tokens, credentials, or other sensitive
