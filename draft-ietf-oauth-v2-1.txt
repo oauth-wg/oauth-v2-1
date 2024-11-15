@@ -203,13 +203,9 @@ Table of Contents
      A.17. "code_verifier" Syntax
      A.18. "code_challenge" Syntax
    Appendix B.  Use of application/x-www-form-urlencoded Media Type
-   Appendix C.  Serializations
-     C.1.  Query String Serialization
-     C.2.  Form-Encoded Serialization
-     C.3.  JSON Serialization
-   Appendix D.  Extensions
-   Appendix E.  Acknowledgements
-   Appendix F.  Document History
+   Appendix C.  Extensions
+   Appendix D.  Acknowledgements
+   Appendix E.  Document History
    Authors' Addresses
 
 1.  Introduction
@@ -749,7 +745,7 @@ Table of Contents
    *  [RFC7662]: Token Introspection, defining a mechanism for resource
       servers to obtain information about access tokens
 
-   Please refer to Appendix D for a list of current known extensions at
+   Please refer to Appendix C for a list of current known extensions at
    the time of this publication.
 
 1.8.  Compatibility with OAuth 2.0
@@ -1197,11 +1193,7 @@ Table of Contents
 
    The authorization server MUST support the use of the HTTP GET method
    Section 9.3.1 of [RFC9110] for the authorization endpoint and MAY
-   support the POST method (Section 9.3.3 of [RFC9110]) as well.  If
-   using the HTTP GET method, the request parameters are serialized
-   using Query String Serialization as described in Appendix C.1.  If
-   using the HTTP POST method, the request parameters are serialized
-   using Form Serialization as described in Appendix C.2.
+   support the POST method (Section 9.3.3 of [RFC9110]) as well.
 
    The authorization server MUST ignore unrecognized request parameters
    sent to the authorization endpoint.
@@ -4121,42 +4113,7 @@ Appendix B.  Use of application/x-www-form-urlencoded Media Type
 
    +%25%26%2B%C2%A3%E2%82%AC
 
-Appendix C.  Serializations
-
-   Various messages in this specification are serialized using one of
-   the methods described below.  This section describes the syntax of
-   these serialization methods; other sections describe when they can
-   and must be used.  Note that not all methods can be used for all
-   messages.
-
-C.1.  Query String Serialization
-
-   In order to serialize the parameters using the Query String
-   Serialization, the Client constructs the string by adding the
-   parameters and values to the query component of a URL using the
-   application/x-www-form-urlencoded format as defined by Appendix B.
-   Query String Serialization is typically used in HTTP GET requests.
-
-C.2.  Form-Encoded Serialization
-
-   Parameters and their values are Form Serialized by adding the
-   parameter names and values to the entity body of the HTTP request
-   using the application/x-www-form-urlencoded format as defined by
-   Appendix B.  Form Serialization is typically used in HTTP POST
-   requests.
-
-C.3.  JSON Serialization
-
-   The parameters are serialized into a JSON object structure by adding
-   each parameter at the highest structure level.  Parameter names and
-   string values are represented as JSON strings.  Numerical values are
-   represented as JSON numbers.  Boolean values are represented as JSON
-   booleans.  Omitted parameters and parameters with no value SHOULD be
-   omitted from the object and not represented by a JSON null value,
-   unless otherwise specified.  A parameter MAY have a JSON object or a
-   JSON array as its value.
-
-Appendix D.  Extensions
+Appendix C.  Extensions
 
    Below is a list of well-established extensions at the time of
    publication:
@@ -4250,7 +4207,7 @@ Appendix D.  Extensions
          associated with the access token of the current request does
          not meet its authentication requirements.
 
-Appendix E.  Acknowledgements
+Appendix D.  Acknowledgements
 
    This specification is the work of the OAuth Working Group, and its
    starting point was based on the contents of the following
@@ -4273,7 +4230,7 @@ Appendix E.  Acknowledgements
    hosting an event that's conducive to collaboration and community
    input.
 
-Appendix F.  Document History
+Appendix E.  Document History
 
    [[ To be removed from the final specification ]]
 
