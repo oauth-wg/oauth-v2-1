@@ -1155,6 +1155,7 @@ additional query parameters.
 The authorization server MUST support the use of the HTTP `GET`
 method Section 9.3.1 of {{RFC9110}} for the authorization endpoint and MAY support
 the `POST` method (Section 9.3.3 of {{RFC9110}}) as well.
+If using the HTTP GET method, the request parameters are serialized using Query String Serialization as described in {{query-string-serialization}}. If using the HTTP POST method, the request parameters are serialized using Form Serialization as described in {{form-serialization}}.
 
 The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.
 
@@ -3783,6 +3784,21 @@ and then represented in the content as:
 
     +%25%26%2B%C2%A3%E2%82%AC
 
+# Serializations {#serializations}
+
+Various messages in this specification are serialized using one of the methods described below. This section describes the syntax of these serialization methods; other sections describe when they can and must be used. Note that not all methods can be used for all messages.
+
+## Query String Serialization {#query-string-serialization}
+
+In order to serialize the parameters using the Query String Serialization, the Client constructs the string by adding the parameters and values to the query component of a URL using the application/x-www-form-urlencoded format as defined by {{application-x-www-form-urlencoded}}. Query String Serialization is typically used in HTTP GET requests.
+
+## Form-Encoded Serialization {#form-serialization}
+
+Parameters and their values are Form Serialized by adding the parameter names and values to the entity body of the HTTP request using the application/x-www-form-urlencoded format as defined by {{application-x-www-form-urlencoded}}. Form Serialization is typically used in HTTP POST requests.
+
+## JSON Serialization {#json-serialization}
+
+The parameters are serialized into a JSON object structure by adding each parameter at the highest structure level. Parameter names and string values are represented as JSON strings. Numerical values are represented as JSON numbers. Boolean values are represented as JSON booleans. Omitted parameters and parameters with no value SHOULD be omitted from the object and not represented by a JSON null value, unless otherwise specified. A parameter MAY have a JSON object or a JSON array as its value.
 
 # Extensions {#extensions}
 
