@@ -3863,6 +3863,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Updated reference for case insensitivity of auth scheme to HTTP instead of ABNF
 * Corrected an instance of "relying party" vs "client"
 * Moved `client_id` requirement to the individual grant types
+* Consolidated the descriptions of serialization methods to the appendix
 
 -11
 
