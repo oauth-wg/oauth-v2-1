@@ -1153,7 +1153,6 @@ which MUST be retained when adding additional query parameters.
 The authorization server MUST support the use of the HTTP `GET`
 method Section 9.3.1 of {{RFC9110}} for the authorization endpoint and MAY support
 the `POST` method (Section 9.3.3 of {{RFC9110}}) as well.
-If using the HTTP GET method, the request parameters are serialized using Query String Serialization as described in {{query-string-serialization}}. If using the HTTP POST method, the request parameters are serialized using Form Serialization as described in {{form-serialization}}.
 
 The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.
 
@@ -1236,15 +1235,15 @@ following parameters using the form-encoded serialization
 format per {{form-serialization}} with a character encoding of UTF-8 in the HTTP
 request content:
 
-"client_id":
-:    REQUIRED, if the client is not authenticating with the
-     authorization server as described in {{token-endpoint-client-authentication}}.
-
 "grant_type":
 :    REQUIRED.  Identifier of the grant type the client uses with the particular token request.
 This specification defines the values `authorization_code`, `refresh_token`, and `client_credentials`.
 The grant type determines the further parameters required or supported by the token request. The
 details of those grant types are defined below.
+
+"client_id":
+:    OPTIONAL.  The client identifier is needed when a form of client authentication that
+relies on the parameter is used, or the `grant_type` requires identification of public clients.
 
 Confidential clients MUST authenticate with the authorization
 server as described in {{token-endpoint-client-authentication}}.
@@ -1839,7 +1838,7 @@ sending the following HTTP response:
 
 The authorization grant type is identified at the token endpoint with the `grant_type` value of `authorization_code`.
 
-If this value is set, the following additional token request parameters beyond {{token-request}} are required:
+If this value is set, the following additional token request parameters beyond {{token-request}} are supported:
 
 "code":
 :    REQUIRED.  The authorization code received from the
@@ -1848,6 +1847,10 @@ If this value is set, the following additional token request parameters beyond {
 "code_verifier":
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization
      request. MUST NOT be used otherwise. The original code verifier string.
+
+"client_id":
+:    REQUIRED, if the client is not authenticating with the authorization server
+     as described in {{token-endpoint-client-authentication}}.
 
 The authorization server MUST return an access token only once for a given authorization code.
 
@@ -1925,7 +1928,7 @@ The use of the client credentials grant illustrated in {{fig-client-credentials-
 
 ### Token Endpoint Extension {#client-credentials-access-token-request}
 
-The authorization grant type is identified at the token endpoint with the `grant_type` value of `client_credentials`.
+The client credentials grant type is identified at the token endpoint with the `grant_type` value of `client_credentials`.
 
 If this value is set, the following additional token request parameters beyond {{token-request}} are supported:
 
@@ -1973,9 +1976,9 @@ unauthorized parties.
 
 ### Token Endpoint Extension {#refresh-token-endpoint-extension}
 
-The authorization grant type is identified at the token endpoint with the `grant_type` value of `refresh_token`.
+The refresh token grant type is identified at the token endpoint with the `grant_type` value of `refresh_token`.
 
-If this value is set, the following additional parameters beyond {{token-request}} are required/supported:
+If this value is set, the following additional parameters beyond {{token-request}} are supported:
 
 "refresh_token":
 :    REQUIRED.  The refresh token issued to the client.
@@ -2146,13 +2149,13 @@ The syntax for Bearer credentials is as follows:
 
     token68    = 1*( ALPHA / DIGIT /
                      "-" / "." / "_" / "~" / "+" / "/" ) *"="
-    credentials = "Bearer" 1*SP token68
+    credentials = "bearer" 1*SP token68
 
 Clients SHOULD make authenticated requests with a bearer token using
 the `Authorization` request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
-As described in Section 2.3 of {{RFC5234}}, the string `Bearer`
+As described in Section 11.1 of {{RFC9110}}, the string `bearer`
 is case-insensitive. This means all of the following are valid uses
 of the `Authorization` header:
 
@@ -2854,7 +2857,7 @@ If the status code 307 were used for redirection, the user agent
 would send the user credentials via a POST request to the client.
 
 This discloses the sensitive credentials to the client.  If the
-relying party is malicious, it can use the credentials to impersonate
+client is malicious, it can use the credentials to impersonate
 the user at the AS.
 
 The behavior might be unexpected for developers, but is defined in
@@ -3844,7 +3847,7 @@ Below is a list of well-established extensions at the time of publication:
 
 This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Apps. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
 
-The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Vittorio Bertocci, Michael Jones, Justin Richer, Daniel Fett, Brian Campbell, Joseph Heenan, Roberto Polli, Andrii Deinega, Falko, Michael Peck, Bob Hamburg, Deng Chao, Karsten Meyer zu Selhausen, and Filip Skokan.
+The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Vittorio Bertocci, Michael Jones, Justin Richer, Daniel Fett, Brian Campbell, Joseph Heenan, Roberto Polli, Andrii Deinega, Falko, Michael Peck, Bob Hamburg, Deng Chao, Karsten Meyer zu Selhausen, Filip Skokan, and Tim Würtele.
 
 Discussions around this specification have also occurred at the OAuth Security Workshop in 2021 and 2022. The authors thank the organizers of the workshop (Guido Schmitz, Steinar Noem, and Daniel Fett) for hosting an event that's conducive to collaboration and community input.
 
@@ -3857,6 +3860,9 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 * Updated language around client registration to better reflect alternative registration methods such as those in use by OpenID Federation and open ecosystems
 * Added DPoP and Step-Up Auth to appendix of extensions
+* Updated reference for case insensitivity of auth scheme to HTTP instead of ABNF
+* Corrected an instance of "relying party" vs "client"
+* Moved `client_id` requirement to the individual grant types
 
 -11
 
