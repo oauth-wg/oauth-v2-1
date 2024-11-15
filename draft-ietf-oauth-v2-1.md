@@ -2153,13 +2153,13 @@ The syntax for Bearer credentials is as follows:
 
     token68    = 1*( ALPHA / DIGIT /
                      "-" / "." / "_" / "~" / "+" / "/" ) *"="
-    credentials = "Bearer" 1*SP token68
+    credentials = "bearer" 1*SP token68
 
 Clients SHOULD make authenticated requests with a bearer token using
 the `Authorization` request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
-As described in Section 2.3 of {{RFC5234}}, the string `Bearer`
+As described in Section 11.1 of {{RFC9110}}, the string `bearer`
 is case-insensitive. This means all of the following are valid uses
 of the `Authorization` header:
 
@@ -3849,6 +3849,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 * Updated language around client registration to better reflect alternative registration methods such as those in use by OpenID Federation and open ecosystems
 * Added DPoP and Step-Up Auth to appendix of extensions
+* Updated reference for case insensitivity of auth scheme to HTTP instead of ABNF
 
 -11
 
