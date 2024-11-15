@@ -2914,9 +2914,9 @@ token.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
 authentication failed or is invalid, the authorization server returns
 an error response as described in <a href="#token-error-response" class="auto internal xref">Section 3.2.4</a>.<a href="#section-3.2.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-3">The authorization server issues an access token and optional refresh
-token by creating an HTTP response content using the <code>application/json</code>
-media type as defined by <span>[<a href="#RFC8259" class="cite xref">RFC8259</a>]</span> with the following parameters
-and an HTTP 200 (OK) status code:<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+token by creating an HTTP response according to <a href="#json-serialization" class="auto internal xref">Appendix C.3</a>,
+using the <code>application/json</code> media type as defined by <span>[<a href="#RFC8259" class="cite xref">RFC8259</a>]</span>,
+with the following parameters and an HTTP 200 (OK) status code:<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-3.2.3-4">
             <dt id="section-3.2.3-4.1">"access_token":</dt>
             <dd style="margin-left: 1.5em" id="section-3.2.3-4.2">
@@ -5683,10 +5683,6 @@ work is based upon. No changes to those registries are required by this specific
         <dd>
 <span class="refAuthor">Jones, M.</span> and <span class="refAuthor">D. Hardt</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework: Bearer Token Usage"</span>, <span class="seriesInfo">RFC 6750</span>, <span class="seriesInfo">DOI 10.17487/RFC6750</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6750">https://www.rfc-editor.org/info/rfc6750</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC7159">[RFC7159]</dt>
-        <dd>
-<span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">RFC 7159</span>, <span class="seriesInfo">DOI 10.17487/RFC7159</span>, <time datetime="2014-03" class="refDate">March 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7159">https://www.rfc-editor.org/info/rfc7159</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC7235">[RFC7235]</dt>
         <dd>
 <span class="refAuthor">Fielding, R., Ed.</span> and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"Hypertext Transfer Protocol (HTTP/1.1): Authentication"</span>, <span class="seriesInfo">RFC 7235</span>, <span class="seriesInfo">DOI 10.17487/RFC7235</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7235">https://www.rfc-editor.org/info/rfc7235</a>&gt;</span>. </dd>
@@ -6208,7 +6204,7 @@ into the octet sequence below (using hexadecimal notation):<a href="#appendix-B-
         <h3 id="name-json-serialization">
 <a href="#appendix-C.3" class="section-number selfRef">C.3. </a><a href="#name-json-serialization" class="section-name selfRef">JSON Serialization</a>
         </h3>
-<p id="appendix-C.3-1">The parameters are serialized into a JSON <span>[<a href="#RFC7159" class="cite xref">RFC7159</a>]</span> object structure by adding each parameter at the highest structure level. Parameter names and string values are represented as JSON strings. Numerical values are represented as JSON numbers. Boolean values are represented as JSON booleans. Omitted parameters and parameters with no value SHOULD be omitted from the object and not represented by a JSON null value, unless otherwise specified. A parameter MAY have a JSON object or a JSON array as its value. The order of parameters does not matter and can vary.<a href="#appendix-C.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3-1">The parameters are serialized into a JSON <span>[<a href="#RFC8259" class="cite xref">RFC8259</a>]</span> object structure by adding each parameter at the highest structure level. Parameter names and string values are represented as JSON strings. Numerical values are represented as JSON numbers. Boolean values are represented as JSON booleans. Omitted parameters and parameters with no value SHOULD be omitted from the object and not represented by a JSON null value, unless otherwise specified. A parameter MAY have a JSON object or a JSON array as its value. The order of parameters does not matter and can vary.<a href="#appendix-C.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

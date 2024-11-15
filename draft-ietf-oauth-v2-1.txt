@@ -1326,9 +1326,9 @@ Table of Contents
    Section 3.2.4.
 
    The authorization server issues an access token and optional refresh
-   token by creating an HTTP response content using the application/json
-   media type as defined by [RFC8259] with the following parameters and
-   an HTTP 200 (OK) status code:
+   token by creating an HTTP response according to Appendix C.3, using
+   the application/json media type as defined by [RFC8259], with the
+   following parameters and an HTTP 200 (OK) status code:
 
    "access_token":  REQUIRED.  The access token issued by the
       authorization server.
@@ -3715,10 +3715,6 @@ Table of Contents
               DOI 10.17487/RFC6750, October 2012,
               <https://www.rfc-editor.org/info/rfc6750>.
 
-   [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
-              Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
-              2014, <https://www.rfc-editor.org/info/rfc7159>.
-
    [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Authentication", RFC 7235,
               DOI 10.17487/RFC7235, June 2014,
@@ -4135,7 +4131,7 @@ C.2.  Form-Encoded Serialization
 
 C.3.  JSON Serialization
 
-   The parameters are serialized into a JSON [RFC7159] object structure
+   The parameters are serialized into a JSON [RFC8259] object structure
    by adding each parameter at the highest structure level.  Parameter
    names and string values are represented as JSON strings.  Numerical
    values are represented as JSON numbers.  Boolean values are
