@@ -3936,13 +3936,13 @@ The syntax for Bearer credentials is as follows:<a href="#section-5.1.1-4" class
 <pre>
 token68    = 1*( ALPHA / DIGIT /
                  "-" / "." / "_" / "~" / "+" / "/" ) *"="
-credentials = "Bearer" 1*SP token68
+credentials = "bearer" 1*SP token68
 </pre><a href="#section-5.1.1-5" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1.1-6">Clients SHOULD make authenticated requests with a bearer token using
 the <code>Authorization</code> request header field with the <code>Bearer</code> HTTP
 authorization scheme.  Resource servers MUST support this method.<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
-<p id="section-5.1.1-7">As described in Section 2.3 of <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>, the string <code>Bearer</code>
+<p id="section-5.1.1-7">As described in Section 11.1 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, the string <code>bearer</code>
 is case-insensitive. This means all of the following are valid uses
 of the <code>Authorization</code> header:<a href="#section-5.1.1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -6317,6 +6317,9 @@ into the octet sequence below (using hexadecimal notation):<a href="#appendix-B-
 </li>
         <li class="normal" id="appendix-E-3.2">
           <p id="appendix-E-3.2.1">Added DPoP and Step-Up Auth to appendix of extensions<a href="#appendix-E-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-E-3.3">
+          <p id="appendix-E-3.3.1">Updated reference for case insensitivity of auth scheme to HTTP instead of ABNF<a href="#appendix-E-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-E-4">-11<a href="#appendix-E-4" class="pilcrow">¶</a></p>
