@@ -1325,10 +1325,7 @@ This is to prevent privilege escalation by the legitimate client and
 reduce the impact of refresh token leakage.
 
 The parameters are serialized into a JavaScript Object Notation (JSON)
-structure by adding each parameter at the highest structure level.
-Parameter names and string values are included as JSON strings.
-Numerical values are included as JSON numbers.  The order of
-parameters does not matter and can vary.
+structure as described in {{json-serialization}}.
 
 The authorization server MUST include the HTTP `Cache-Control`
 response header field (see Section 5.2 of {{RFC9111}}) with a value of `no-store` in any
