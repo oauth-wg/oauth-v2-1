@@ -272,15 +272,15 @@ the OAuth standard or security considerations, and may not have been considered
 by the resource owner. Implementors should carefully consult the documentation
 of the resource server before adopting this practice.
 
-This specification is designed for use with HTTP ({{RFC9110}}).  The
+This specification is designed for use with HTTP {{RFC9110}}.  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
-Since the publication of the OAuth 2.0 Authorization Framework ({{RFC6749}})
-in October 2012, it has been updated by OAuth 2.0 for Native Apps ({{RFC8252}}),
-OAuth Security Best Current Practice ({{I-D.ietf-oauth-security-topics}}),
-and OAuth 2.0 for Browser-Based Apps ({{I-D.ietf-oauth-browser-based-apps}}).
-The OAuth 2.0 Authorization Framework: Bearer Token Usage ({{RFC6750}})
-has also been updated with ({{I-D.ietf-oauth-security-topics}}). This
+Since the publication of the OAuth 2.0 Authorization Framework {{RFC6749}}
+in October 2012, it has been updated by OAuth 2.0 for Native Apps {{RFC8252}},
+OAuth Security Best Current Practice {{I-D.ietf-oauth-security-topics}},
+and OAuth 2.0 for Browser-Based Apps {{I-D.ietf-oauth-browser-based-apps}}.
+The OAuth 2.0 Authorization Framework: Bearer Token Usage {{RFC6750}}
+has also been updated with {{I-D.ietf-oauth-security-topics}}. This
 Standards Track specification consolidates the information in all of these
 documents and removes features that have been found to be insecure
 in {{I-D.ietf-oauth-security-topics}}.
@@ -761,7 +761,7 @@ authorization server. The means through which the client identifier is establish
 with the authorization server are beyond the scope of this
 specification, but typically involve the client developer manually registering
 the client at the authorization server's website (after creating an account and agreeing
-to the service's Terms of Service), or by using Dynamic Client Registration ({{RFC7591}}).
+to the service's Terms of Service), or by using Dynamic Client Registration {{RFC7591}}.
 Extensions may also define other programmatic methods of establishing client registration.
 
 Client registration does not require a direct interaction between the
@@ -784,7 +784,7 @@ Client registration MUST include:
    (e.g., application name, website, description, logo image, the
    acceptance of legal terms).
 
-Dynamic Client Registration ({{RFC7591}}) defines a common general data model
+Dynamic Client Registration {{RFC7591}} defines a common general data model
 for clients that may be used even with manual client registration.
 
 
@@ -847,7 +847,7 @@ This specification has been designed around the following client profiles:
   device. If such applications wish to use
   client credentials, it is recommended to utilize the
   backend for frontend pattern, or issue the credentials at runtime
-  using Dynamic Client Registration ({{RFC7591}}).
+  using Dynamic Client Registration {{RFC7591}}.
 
 
 ## Client Identifier {#client-identifier}
@@ -1144,7 +1144,7 @@ is beyond the scope of this specification.
 The means through which the client obtains the URL of the
 authorization endpoint are beyond the scope of this specification,
 but the URL is typically provided in the service documentation,
-or in the authorization server's metadata document ({{RFC8414}}).
+or in the authorization server's metadata document {{RFC8414}}.
 
 The authorization endpoint URL MUST NOT include a fragment component,
 and MAY include a query string component {{query-string-serialization}},
@@ -1179,7 +1179,7 @@ The means through which the client obtains the URL of the token
 endpoint are beyond the scope of this specification, but the URL
 is typically provided in the service documentation and configured during
 development of the client, or provided in the authorization server's metadata
-document ({{RFC8414}}) and fetched programmatically at runtime.
+document {{RFC8414}} and fetched programmatically at runtime.
 
 The token endpoint URL MUST NOT include a fragment component,
 and MAY include a query string component {{query-string-serialization}}.
@@ -1195,7 +1195,7 @@ defined by this specification MUST NOT be included more than once.
 Authorization servers that wish to support browser-based applications
 (applications running exclusively in client-side JavaScript without
 access to a supporting backend server) will need to ensure the token endpoint
-supports the necessary CORS ({{WHATWG.CORS}}) headers to allow the responses
+supports the necessary CORS {{WHATWG.CORS}} headers to allow the responses
 to be visible to the application.
 If the authorization server provides additional endpoints to the application, such
 as metadata URLs, dynamic client registration, revocation, introspection, discovery or
@@ -1548,7 +1548,7 @@ values, where the order of values does not matter (e.g., response
 type `a b` is the same as `b a`).  The meaning of such composite
 response types is defined by their respective specifications.
 
-Some extension response types are defined by ({{OpenID}}).
+Some extension response types are defined by {{OpenID}}.
 
 If an authorization request is missing the `response_type` parameter,
 or if the response type is not understood, the authorization server
@@ -1620,7 +1620,7 @@ If the client is capable of using `S256`, it MUST use `S256`, as
 permitted to use `plain` only if they cannot support `S256` for some
 technical reason, for example constrained environments that do not have
 a hashing function available, and know via out-of-band configuration or via
-Authorization Server Metadata ({{RFC8414}}) that the server supports `plain`.
+Authorization Server Metadata {{RFC8414}} that the server supports `plain`.
 
 ABNF for `code_challenge` is as follows.
 
@@ -1630,7 +1630,7 @@ ABNF for `code_challenge` is as follows.
     DIGIT = %x30-39
 
 The properties `code_challenge` and `code_verifier` are adopted from the OAuth 2.0 extension
-known as "Proof-Key for Code Exchange", or PKCE ({{RFC7636}}) where this technique
+known as "Proof-Key for Code Exchange", or PKCE {{RFC7636}} where this technique
 was originally developed.
 
 Authorization servers MUST support the `code_challenge` and `code_verifier` parameters.
@@ -2222,10 +2222,10 @@ contain the authorization information in an encrypted and/or signed string
 which can be extracted by the resource server.
 
 A standardized method to query the authorization server to check the validity
-of an access token is defined in Token Introspection ({{RFC7662}}).
+of an access token is defined in Token Introspection {{RFC7662}}.
 
 A standardized method of encoding information in a token string is
-defined in JWT Profile for Access Tokens ({{RFC9068}}).
+defined in JWT Profile for Access Tokens {{RFC9068}}.
 
 See {{access-token-security-considerations}} for additional considerations
 around creating and validating access tokens.
@@ -3535,11 +3535,11 @@ TODO: Bring in the normative text of the browser-based apps BCP when it is final
 # Differences from OAuth 2.0 {#oauth-2-0-differences}
 
 This draft consolidates the functionality in OAuth 2.0 {{RFC6749}},
-OAuth 2.0 for Native Apps ({{RFC8252}}),
-Proof Key for Code Exchange ({{RFC7636}}),
-OAuth 2.0 for Browser-Based Apps ({{I-D.ietf-oauth-browser-based-apps}}),
-OAuth Security Best Current Practice ({{I-D.ietf-oauth-security-topics}}),
-and Bearer Token Usage ({{RFC6750}}).
+OAuth 2.0 for Native Apps {{RFC8252}},
+Proof Key for Code Exchange {{RFC7636}},
+OAuth 2.0 for Browser-Based Apps {{I-D.ietf-oauth-browser-based-apps}},
+OAuth Security Best Current Practice {{I-D.ietf-oauth-security-topics}},
+and Bearer Token Usage {{RFC6750}}.
 
 Where a later draft updates or obsoletes functionality found in the original
 {{RFC6749}}, that functionality in this draft is updated with the normative
@@ -3547,7 +3547,7 @@ changes described in a later draft, or removed entirely.
 
 A non-normative list of changes from OAuth 2.0 is listed below:
 
-* The authorization code grant is extended with the functionality from PKCE ({{RFC7636}})
+* The authorization code grant is extended with the functionality from PKCE {{RFC7636}}
   such that the default method of using the authorization code grant according
   to this specification requires the addition of the PKCE parameters
 * Redirect URIs must be compared using exact string matching
@@ -3793,7 +3793,7 @@ Parameters and their values are Form Serialized by adding the parameter names an
 
 ## JSON Serialization {#json-serialization}
 
-The parameters are serialized into a JSON ({{RFC7159}}) object structure by adding each parameter at the highest structure level. Parameter names and string values are represented as JSON strings. Numerical values are represented as JSON numbers. Boolean values are represented as JSON booleans. Omitted parameters and parameters with no value SHOULD be omitted from the object and not represented by a JSON null value, unless otherwise specified. A parameter MAY have a JSON object or a JSON array as its value. The order of parameters does not matter and can vary.
+The parameters are serialized into a JSON {{RFC7159}} object structure by adding each parameter at the highest structure level. Parameter names and string values are represented as JSON strings. Numerical values are represented as JSON numbers. Boolean values are represented as JSON booleans. Omitted parameters and parameters with no value SHOULD be omitted from the object and not represented by a JSON null value, unless otherwise specified. A parameter MAY have a JSON object or a JSON array as its value. The order of parameters does not matter and can vary.
 
 # Extensions {#extensions}
 
