@@ -35,7 +35,6 @@ normative:
   RFC5234:
   RFC6749:
   RFC6750:
-  RFC7159:
   RFC7235:
   RFC7521:
   RFC7523:
@@ -1282,9 +1281,9 @@ authentication failed or is invalid, the authorization server returns
 an error response as described in {{token-error-response}}.
 
 The authorization server issues an access token and optional refresh
-token by creating an HTTP response content using the `application/json`
-media type as defined by {{RFC8259}} with the following parameters
-and an HTTP 200 (OK) status code:
+token by creating an HTTP response according to {{json-serialization}},
+using the `application/json` media type as defined by {{RFC8259}},
+with the following parameters and an HTTP 200 (OK) status code:
 
 "access_token":
 :    REQUIRED.  The access token issued by the authorization server.
@@ -3790,7 +3789,7 @@ Parameters and their values are Form Serialized by adding the parameter names an
 
 ## JSON Serialization {#json-serialization}
 
-The parameters are serialized into a JSON {{RFC7159}} object structure by adding each parameter at the highest structure level. Parameter names and string values are represented as JSON strings. Numerical values are represented as JSON numbers. Boolean values are represented as JSON booleans. Omitted parameters and parameters with no value SHOULD be omitted from the object and not represented by a JSON null value, unless otherwise specified. A parameter MAY have a JSON object or a JSON array as its value. The order of parameters does not matter and can vary.
+The parameters are serialized into a JSON {{RFC8259}} object structure by adding each parameter at the highest structure level. Parameter names and string values are represented as JSON strings. Numerical values are represented as JSON numbers. Boolean values are represented as JSON booleans. Omitted parameters and parameters with no value SHOULD be omitted from the object and not represented by a JSON null value, unless otherwise specified. A parameter MAY have a JSON object or a JSON array as its value. The order of parameters does not matter and can vary.
 
 # Extensions {#extensions}
 
