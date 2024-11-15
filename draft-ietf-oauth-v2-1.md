@@ -1238,15 +1238,15 @@ following parameters using the `application/x-www-form-urlencoded`
 format per {{application-x-www-form-urlencoded}} with a character encoding of UTF-8 in the HTTP
 request content:
 
-"client_id":
-:    REQUIRED, if the client is not authenticating with the
-     authorization server as described in {{token-endpoint-client-authentication}}.
-
 "grant_type":
 :    REQUIRED.  Identifier of the grant type the client uses with the particular token request.
 This specification defines the values `authorization_code`, `refresh_token`, and `client_credentials`.
 The grant type determines the further parameters required or supported by the token request. The
 details of those grant types are defined below.
+
+"client_id":
+:    OPTIONAL.  The client identifier is needed when a form of client authentication that
+relies on the parameter is used, or the `grant_type` requires identification of public clients.
 
 Confidential clients MUST authenticate with the authorization
 server as described in {{token-endpoint-client-authentication}}.
@@ -1846,7 +1846,7 @@ sending the following HTTP response:
 
 The authorization grant type is identified at the token endpoint with the `grant_type` value of `authorization_code`.
 
-If this value is set, the following additional token request parameters beyond {{token-request}} are required:
+If this value is set, the following additional token request parameters beyond {{token-request}} are supported:
 
 "code":
 :    REQUIRED.  The authorization code received from the
@@ -1855,6 +1855,10 @@ If this value is set, the following additional token request parameters beyond {
 "code_verifier":
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization
      request. MUST NOT be used otherwise. The original code verifier string.
+
+"client_id":
+:    REQUIRED, if the client is not authenticating with the authorization server
+     as described in {{token-endpoint-client-authentication}}.
 
 The authorization server MUST return an access token only once for a given authorization code.
 
@@ -1932,7 +1936,7 @@ The use of the client credentials grant illustrated in {{fig-client-credentials-
 
 ### Token Endpoint Extension {#client-credentials-access-token-request}
 
-The authorization grant type is identified at the token endpoint with the `grant_type` value of `client_credentials`.
+The client credentials grant type is identified at the token endpoint with the `grant_type` value of `client_credentials`.
 
 If this value is set, the following additional token request parameters beyond {{token-request}} are supported:
 
@@ -1980,9 +1984,9 @@ unauthorized parties.
 
 ### Token Endpoint Extension {#refresh-token-endpoint-extension}
 
-The authorization grant type is identified at the token endpoint with the `grant_type` value of `refresh_token`.
+The refresh token grant type is identified at the token endpoint with the `grant_type` value of `refresh_token`.
 
-If this value is set, the following additional parameters beyond {{token-request}} are required/supported:
+If this value is set, the following additional parameters beyond {{token-request}} are supported:
 
 "refresh_token":
 :    REQUIRED.  The refresh token issued to the client.
@@ -3851,6 +3855,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Added DPoP and Step-Up Auth to appendix of extensions
 * Updated reference for case insensitivity of auth scheme to HTTP instead of ABNF
 * Corrected an instance of "relying party" vs "client"
+* Moved `client_id` requirement to the individual grant types
 
 -11
 
