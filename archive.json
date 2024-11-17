@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-09-10T00:11:22.922805+00:00",
+  "timestamp": "2024-11-17T00:13:32.136068+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -2858,9 +2858,17 @@
       "labels": [],
       "body": "In https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-07 section 5.2.3 (The WWW-Authenticate Response Header Field):\r\n\r\n>    All challenges for this token type MUST use the auth-scheme value\r\n>    Bearer.  This scheme MUST be followed by one or more auth-param\r\n>    values.\r\n\r\nWhy is at least one `auth-param` required? It makes\r\n```\r\nWWW-Authenticate: Bearer\r\n```\r\n\r\nin response to a request lacking any authentication information (thus without an `error` auth-param attribute) non-compliant. The optional `scope` attribute is not useful in this case. The optional `realm` attribute may not be necessary (e.g. if there is only one realm). So to be compliant, you would have to add a non-meaningful auth-param like `foo=bar`.\r\n\r\nNote: While in [rfc2617](https://datatracker.ietf.org/doc/html/rfc2617#section-1.2) `challenge` was defined as\r\n```\r\n  challenge   = auth-scheme 1*SP 1#auth-param\r\n```\r\n(requiring at least one `auth-param`), [rfc9110](https://www.rfc-editor.org/rfc/rfc9110#section-11.3) does not have this requirement (neither did [rfc7235](https://www.rfc-editor.org/rfc/rfc7235#section-2.1)):\r\n```\r\n  challenge   = auth-scheme [ 1*SP ( token68 / #auth-param ) ]\r\n```\r\n",
       "createdAt": "2022-03-30T12:26:19Z",
-      "updatedAt": "2023-03-29T07:53:11Z",
+      "updatedAt": "2024-11-12T16:37:10Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "johakoch",
+          "authorAssociation": "NONE",
+          "body": "In the meantime, the section numbering has changed. This issue refers to section 5.3.1 of the draft version 11.",
+          "createdAt": "2024-11-12T16:37:09Z",
+          "updatedAt": "2024-11-12T16:37:09Z"
+        }
+      ]
     },
     {
       "number": 109,
@@ -3638,7 +3646,7 @@
       "id": "I_kwDODkfq5s5hJdVa",
       "title": "extension grants can allow unidentified clients",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/143",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -3647,8 +3655,8 @@
       ],
       "body": "I apologize in advance for this one... I really do. \r\n\r\nIt has always been my reading that OAuth 2.0 allows for client identification/authentication to be omitted in extension grants (if the grant type defines it that way), basically allowing (subject to policy and the grant type definition) token endpoint calls without any client identification in certain extension grant types  The text around this is admittedly somewhat ambiguous and hard to follow. And has some history to it. It could be argued that it's even open to different interpretations.  But allowing for unidentified clients in extension grants was my reading and it has been codified in RFCs 7521, 7522 & 7523 for SAML and JWT assertion grants with text like this in the grant definition (and examples with no client_id or any client auth).\r\n\r\n```\r\n  Authentication of the client is optional, as described in\r\n   Section 3.2.1 of OAuth 2.0 [RFC6749] and consequently, the\r\n   \"client_id\" is only needed when a form of client authentication that\r\n   relies on the parameter is used.\r\n```\r\n\r\nThis is some of the text from   Section 3.2.1  that it refers to:\r\n\r\n```\r\n   A client MAY use the \"client_id\" request parameter to identify itself\r\n   when sending requests to the token endpoint.  In the\r\n   \"authorization_code\" \"grant_type\" request to the token endpoint, an\r\n   unauthenticated client MUST send its \"client_id\" to prevent itself\r\n   from inadvertently accepting a code intended for a client with a\r\n   different \"client_id\".  This protects the client from substitution of\r\n   the authentication code.  (It provides no additional security for the\r\n   protected resource.)\r\n```\r\n\r\nrefs:\r\nhttps://www.rfc-editor.org/rfc/rfc7521#section-4.1\r\nhttps://www.rfc-editor.org/rfc/rfc7522#section-2.1\r\nhttps://www.rfc-editor.org/rfc/rfc7523#section-2.1\r\nhttps://www.rfc-editor.org/rfc/rfc6749?#section-3.2.1\r\nhttps://www.rfc-editor.org/rfc/rfc6749?#section-4.5\r\n\r\nAlso the pre-authorized_code grant being defined in OpenID for Verifiable Credential Issuance is another extension grant type that needs to allow for use by unidentified /anonymous clients. https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-11.html#name-token-request\r\n\r\nI think the text for \"client_id\" in https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-08.html#section-3.2.2 precludes the above cases (because it is for all token endpoint requests in 2.1 but came from the code grant in 2.0 https://www.rfc-editor.org/rfc/rfc6749?#section-4.1.3 ). \r\n\r\nIt's ugly and hard to capture the subtly here but maybe something like this instead for client_id in the Token Request section of v2.1?: \r\n \r\n```\r\n  \"client_id\":    \r\n    REQUIRED, if the client is not authenticating with the authorization server as described\r\n     in Section 3.2.1. and the grant_type requires client identification.\r\n```\r\n\r\nor:\r\n\r\n \r\n```\r\n  \"client_id\":    \r\n    REQUIRED, unless the client is authenticating with the authorization server as described\r\n     in Section 3.2.1. or the grant_type allows for unidentified clients.\r\n```\r\n\r\nor maybe:\r\n\r\n```\r\n  \"client_id\":    \r\n    OPTIONAL.  The client identifier is needed when a form of client authentication that\r\n   relies on the parameter is used or the grant_type requires identification of public clients. \r\n```\r\n\r\nor something better but in the spirt thereof. \r\n\r\n\r\nAlso maybe adding that ` \"client_id\":  REQUIRED, if the client is not authenticating with the authorization server as described in Section 3.2.1.` text to the authz code grant section https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-08.html#section-4.1.3 to be explicit like w/ v2.0 that client_id is needed in code grant for public clients.\r\n \r\n\r\n\r\n",
       "createdAt": "2023-03-17T19:59:25Z",
-      "updatedAt": "2023-03-27T07:35:16Z",
-      "closedAt": null,
+      "updatedAt": "2024-11-15T16:02:14Z",
+      "closedAt": "2024-11-15T16:02:14Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -3777,11 +3785,13 @@
       "state": "OPEN",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
-      "assignees": [],
+      "assignees": [
+        "dickhardt"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2023-07-21T22:28:16Z",
-      "updatedAt": "2023-07-21T22:28:16Z",
+      "updatedAt": "2024-11-04T12:12:51Z",
       "closedAt": null,
       "comments": []
     },
@@ -4071,9 +4081,17 @@
       ],
       "body": "Section 3.2.2 Tokens states that\r\n\r\n> The client makes a request to the token endpoint by sending the\r\n> following parameters using the application/x-www-form-urlencoded\r\n> format per Appendix B with a character encoding of UTF-8 in the HTTP\r\n> request content:\r\n\r\nHowever, the following example does not include UTF-8 as character encoding\r\n\r\n> POST /token HTTP/1.1\r\n> Host: server.example.com\r\n> Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW\r\n> Content-Type: application/x-www-form-urlencoded\r\n\r\nit should look like as\r\n\r\n> POST /token HTTP/1.1\r\n> Host: server.example.com\r\n> Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW\r\n> Content-Type: application/x-www-form-urlencoded; charset=UTF-8; \r\n\r\nthe same applies for all other similar examples in the spec.\r\n\r\nHow is this important? In some (rare) cases, it can lead to interoperability issues as app servers & frameworks that run an AS do not necessarily use \"UTF-8\" as a default encoding character, as an example, Java Servlets use \"ISO-8859-1\". So, it is better for a client to always specify the character explicitly. \r\n",
       "createdAt": "2024-01-22T18:32:47Z",
-      "updatedAt": "2024-05-11T01:21:14Z",
+      "updatedAt": "2024-11-15T15:45:40Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "From what I can tell, the `application/x-www-form-urlencoded` content type implies UTF-8 encoding, so it is not needed to include the `charset`.\r\n\r\nhttps://url.spec.whatwg.org/#application/x-www-form-urlencoded\r\n\r\nhttps://url.spec.whatwg.org/#application/x-www-form-urlencoded",
+          "createdAt": "2024-11-15T15:45:39Z",
+          "updatedAt": "2024-11-15T15:45:39Z"
+        }
+      ]
     },
     {
       "number": 168,
@@ -4105,9 +4123,31 @@
       ],
       "body": "In some places, the term \"relying party\" is used instead of \"client\":\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2820-L2822\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2578-L2582",
       "createdAt": "2024-02-28T09:33:25Z",
-      "updatedAt": "2024-05-11T00:44:12Z",
+      "updatedAt": "2024-11-15T17:49:51Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "@dickhardt this sentence is from RFC6750, but the terminology seems to conflict with modern uses of \"audience restricted access tokens\". Do you remember what this was intended to mean?\r\n\r\n>    Issue scoped bearer tokens:  Token servers SHOULD issue bearer tokens\r\n>     that contain an audience restriction, scoping their use to the\r\n>     intended relying party or set of relying parties.\r\n",
+          "createdAt": "2024-11-15T15:42:28Z",
+          "updatedAt": "2024-11-15T15:42:28Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "In practice this is the 'aud' claim in a JWT -- but since 6750 does not specify a token format, this is guidance that the token should indicate who the audience is \r\n\r\nThe phrase \"issue scoped bearer tokens\" is confusing as it is conflating scopes with audience \r\n\r\nCan you point me to what you mean by 'modern uses of \"audience restricted access tokens\"'",
+          "createdAt": "2024-11-15T17:47:33Z",
+          "updatedAt": "2024-11-15T17:47:33Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Also, In the case of 6750 as this is an access token, `replying party` is referring to the resource server, not the `client`. ",
+          "createdAt": "2024-11-15T17:49:50Z",
+          "updatedAt": "2024-11-15T17:49:50Z"
+        }
+      ]
     },
     {
       "number": 170,
@@ -4185,15 +4225,15 @@
       "id": "I_kwDODkfq5s6I7bVX",
       "title": "Allow public clients to use the `client_credentials` grant type",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/176",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bellebaum",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Hi,\r\n\r\nI was looking through the current draft when I found this:\r\n\r\n```\r\nThe client credentials grant type MUST only be used by confidential clients.\r\n```\r\n\r\nI was wondering where it came from. I believe the reasoning might be that resources accessible by public clients are public resources in the first place? I believe that some APIs can be designed much simpler if they always require an access token. This then allows to manage access for public clients centrally at the authorization server (e.g. consider the case where you want to temporarily restrict access to a diverse set of APIs to some known clients).\r\n\r\nThere are other reasons for why omitting this restriction makes for a cleaner design. Consider this typical OAuth token endpoint flow with many omitted details:\r\n\r\n1. Authenticate the client and establish the `client_id`\r\n2. Look at the `grant_type` in the request and determine whether `client_id` is allowed to use it based on its `grant_types` metadata value.\r\n3. Redirect to `grant_type`-specific code to determine the scope of the access token (including where it may be used, a resource owner, etc.)\r\n4. Issue any tokens\r\n\r\nCurrently, point three has to look at authentication information of the client again despite this information being primarily conceived as facilitating the first point. This can make code more complicated. Also, policy decisions as to which client may use a grant are generally perceived as being handled by the second point.\r\n\r\nI would appreciate it if anyone could give me some insight into why this restriction was considered. Thanks in advance :)",
       "createdAt": "2024-05-15T09:00:23Z",
-      "updatedAt": "2024-05-23T17:39:38Z",
-      "closedAt": null,
+      "updatedAt": "2024-11-15T15:38:10Z",
+      "closedAt": "2024-11-15T15:38:10Z",
       "comments": [
         {
           "author": "dickhardt",
@@ -4334,6 +4374,13 @@
           "body": "@bellebaum you are free to implement your AS however you want. There are no standards police that will take you away and lock you up for not following the standard to the letter. What is motivating you to want a change that has not been expressed by anyone else to the authors since OAuth 2.0 was started 15 years ago? ",
           "createdAt": "2024-05-23T17:39:37Z",
           "updatedAt": "2024-05-23T17:39:37Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I don't think this discussion is making any progress, and I don't think it will help anyone to say \"public clients can use the client credentials grant\" because that meanse the client credentials grant is being used without credentials.",
+          "createdAt": "2024-11-15T15:38:10Z",
+          "updatedAt": "2024-11-15T15:38:10Z"
         }
       ]
     },
@@ -4420,16 +4467,24 @@
       "id": "I_kwDODkfq5s6KQDSQ",
       "title": "Authorization Endpoint HTTP `POST` binding",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/181",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "panva",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "2.1 added a lot of text around how clients form authorization requests, the language does not however account for the optional POST binding at the authorization endpoint.\r\n\r\n> The authorization server MUST support the use of the HTTP GET method Section 9.3.1 of [[RFC9110](https://www.rfc-editor.org/info/rfc9110)] for the authorization endpoint and MAY support the POST method (Section 9.3.3 of [[RFC9110](https://www.rfc-editor.org/info/rfc9110)]) as well.\r\n\r\nSections [3.1. ](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-3.1)[Authorization Endpoint](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-authorization-endpoint) and [4.1.1. ](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-4.1.1)[Authorization Request](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-authorization-request) do not account for the optional POST binding which uses the request body to carry the `application/x-www-form-urlencoded` encoded parameters.\r\n\r\nIn OIDC there's [explicit text around](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) the request parameters.\r\n\r\n> Authorization Servers MUST support the use of the HTTP GET and POST methods defined in [RFC 7231](https://openid.net/specs/openid-connect-core-1_0.html#RFC7231) [RFC7231] at the Authorization Endpoint. Clients MAY use the HTTP GET or POST methods to send the Authorization Request to the Authorization Server. If using the HTTP GET method, the request parameters are serialized using URI Query String Serialization, per [Section 13.1](https://openid.net/specs/openid-connect-core-1_0.html#QuerySerialization). If using the HTTP POST method, the request parameters are serialized using Form Serialization, per [Section 13.2](https://openid.net/specs/openid-connect-core-1_0.html#FormSerialization).",
       "createdAt": "2024-05-27T16:06:52Z",
-      "updatedAt": "2024-05-27T16:10:05Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-11-15T16:53:13Z",
+      "closedAt": "2024-11-15T16:53:13Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This has been resolved in #190, there is now a section that describes the serialization methods in an appendix, which is referenced elsewhere in the spec: https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#name-serializations",
+          "createdAt": "2024-11-15T16:53:13Z",
+          "updatedAt": "2024-11-15T16:53:13Z"
+        }
+      ]
     },
     {
       "number": 183,
@@ -4443,7 +4498,7 @@
       "labels": [],
       "body": "There's some unfortunate history around the `aud` value that you use in `private_key_jwt` client authentication assertions.\r\n\r\n[RFC7523](https://datatracker.ietf.org/doc/html/rfc7523#section-3) says:\r\n\r\n```\r\n        The JWT MUST contain an \"aud\" (audience) claim containing a\r\n        value that identifies the authorization server as an intended\r\n        audience.  The token endpoint URL of the authorization server\r\n        MAY be used as a value for an \"aud\" element to identify the\r\n        authorization server as an intended audience of the JWT.  The\r\n        authorization server MUST reject any JWT that does not contain\r\n        its own identity as the intended audience\r\n```\r\n\r\nThe WG already tried to be a bit more specific, e.g. in [PAR](https://www.rfc-editor.org/rfc/rfc9126.html#section-2) we say the issuer value 'SHOULD' be used and 'MUST' be accepted:\r\n\r\n> Due to historical reasons, there is potential ambiguity regarding the appropriate audience value to use when employing JWT client assertion-based authentication (defined in [Section 2.2](https://www.rfc-editor.org/rfc/rfc7523#section-2.2) of [[RFC7523](https://www.rfc-editor.org/rfc/rfc9126.html#RFC7523)] with private_key_jwt or client_secret_jwt authentication method names per Section 9 of [[OIDC](https://www.rfc-editor.org/rfc/rfc9126.html#OIDC)]). To address that ambiguity, the issuer identifier URL of the authorization server according to [[RFC8414](https://www.rfc-editor.org/rfc/rfc9126.html#RFC8414)] SHOULD be used as the value of the audience. In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or pushed authorization request endpoint URL as values that identify it as an intended audience.\r\n\r\n\r\nIt seems like we could add something in OAuth 2.1 to try and help people get this working in an interoperable fashion. Somewhere in https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-2.4 would seem like a possible place to offer a clarification. Perhaps something along the lines of:\r\n\r\n> When using `private_key_jwt`, In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or the endpoint URL that the assertion is being presented to as `aud` values that identify it as an intended audience.\r\n",
       "createdAt": "2024-07-08T17:30:06Z",
-      "updatedAt": "2024-07-08T22:33:56Z",
+      "updatedAt": "2024-11-09T18:27:06Z",
       "closedAt": null,
       "comments": [
         {
@@ -4452,6 +4507,13 @@
           "body": "Apologies again for the way things are.",
           "createdAt": "2024-07-08T19:44:29Z",
           "updatedAt": "2024-07-08T19:44:29Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "NONE",
+          "body": "Apologies again.",
+          "createdAt": "2024-11-09T18:27:05Z",
+          "updatedAt": "2024-11-09T18:27:05Z"
         }
       ]
     },
@@ -4476,14 +4538,72 @@
       "id": "I_kwDODkfq5s6SaB4b",
       "title": "weird referece, but okay ",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/186",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "see https://github.com/oauth-wg/oauth-v2-1/commit/673d7f0d501aef6cc1fd0bf38b2436d34d0af8cd#r145092580 and suggest https://www.rfc-editor.org/rfc/rfc9110.html#section-11.1 rather than ref to ABNF ",
       "createdAt": "2024-08-08T17:29:06Z",
-      "updatedAt": "2024-08-08T17:29:06Z",
+      "updatedAt": "2024-11-15T15:38:43Z",
+      "closedAt": "2024-11-15T15:38:42Z",
+      "comments": []
+    },
+    {
+      "number": 187,
+      "id": "I_kwDODkfq5s6Wjpe6",
+      "title": "Expand on reasons for not including expires_in in the token response",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/187",
+      "state": "OPEN",
+      "author": "pilcrowonpaper",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "aaronpk"
+      ],
+      "labels": [],
+      "body": "Hi, \r\n\r\nIs there a reason why the `expires_in` field exists but an equivalent for refresh token doesn't? Something like `refresh_token_expires_in`.  I couldn't find any discussion on it in past mailing lists. Currently, most implementations use `refresh_token_expires_in` while some use `refresh_expires_in`.\r\n\r\nI'm not sure if this can be changed but I'd like to know if there's any background context to the decision.",
+      "createdAt": "2024-09-14T01:54:06Z",
+      "updatedAt": "2024-11-04T15:04:22Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Many servers have either unlimited length refresh tokens or refresh tokens with a dynamic expiration date.\r\n\r\nIn any case, the client can't do anything useful with the knowledge of the refresh token expiration time, so there's no point in telling it. If the refresh token expires, the only thing the client can do is start a new OAuth flow from scratch.\r\n\r\nThe refresh token also might expire before the scheduled expiration, even if there is a fixed expiration date. For example if the user revokes the application's access, or if they change their password, or any number of other events.\r\n\r\nSo even if the server did tell the client when the refresh token expires, it's actually when it \"might\" expire, and the client would have to handle an earlier expiration anyway.\r\n\r\nThis is all good context to add to the [refresh token section](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-1.3.2) so I will rename this issue so I can track that.",
+          "createdAt": "2024-09-14T02:01:25Z",
+          "updatedAt": "2024-09-14T02:03:37Z"
+        }
+      ]
+    },
+    {
+      "number": 188,
+      "id": "I_kwDODkfq5s6X_-VR",
+      "title": "7.12 Phishing Attacks: Clarification and additional advice to the reader",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/188",
+      "state": "OPEN",
+      "author": "sakimura",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Paragraph 1: it is not only the resource owners' password that can be phished. OTP etc. can be phished as well. \r\nProposes to change: \"steal resource owners' passwords\" to \"steal resource owners' passwords and other credentials that are not phishing-resistant\". \r\n\r\nAlso, as the paragraph 2 advises, user education is important, but its effectiveness is somewhat limited. \r\nIt is better to advise authorization servers to deploy Phishing-resistant authentication mechanisms. \r\nTherefore, I propose to add a new paragraph 2 such as: \r\n\r\nService providers SHOULD implement phishing-resistant authenticator support. \r\n\r\nA question. There are two instances of \"should\" in the current paragraph 2. Are they intended or they actually are \"SHOULD\"? \r\n\r\n\r\n\r\n\r\n",
+      "createdAt": "2024-09-26T10:06:33Z",
+      "updatedAt": "2024-09-26T10:06:33Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 189,
+      "id": "I_kwDODkfq5s6X__8q",
+      "title": "7.X Stateless tokens and key rotation",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/189",
+      "state": "OPEN",
+      "author": "sakimura",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "There has been a case where the signing key for the stateless JWT based access token was stolen and used by attacker to mint new access tokens. Since the token was stateless, meaning the resource servers verified the signature of the access token and if it was successful, the access token was accepted. This lead the attacker to be able to access resources at their will for an extended period as the signing key was not rotated. \r\n\r\nIf such tokens are to be used, then the signing key MUST be rotated periodically to limit the exposed period. \r\n\r\nAlso, the authorization server SHOULD keep track of the tokens issued and return error when a token that it did not issue with a valid signature was submitted to the token introspection endpoint. \r\n",
+      "createdAt": "2024-09-26T10:08:55Z",
+      "updatedAt": "2024-09-26T10:08:55Z",
       "closedAt": null,
       "comments": []
     }
@@ -7606,26 +7726,85 @@
       "id": "PR_kwDODkfq5s522G6v",
       "title": "fix: typos",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/185",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "grjan7",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Fixes typos.",
       "createdAt": "2024-07-30T08:38:58Z",
-      "updatedAt": "2024-07-30T08:38:59Z",
+      "updatedAt": "2024-11-14T23:25:52Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "fcd80efb48f4600236e49cc8b0e5d95ec16c1542",
       "headRepository": "grjan7/oauth-v2-1",
       "headRefName": "typos",
       "headRefOid": "3671b56cc024f08003fae55e127923bb0ec31235",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-11-14T23:25:52Z",
+      "mergedAt": "2024-11-14T23:25:52Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "f0352ade5ac0fbb8d2c3a0bc2904fe9a016a84b5"
+      },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 190,
+      "id": "PR_kwDODkfq5s6CD2iI",
+      "title": "conslidate description of serialization",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/190",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This moves the description of serializations to the appendix\r\n\r\npart of #181",
+      "createdAt": "2024-11-15T15:22:22Z",
+      "updatedAt": "2024-11-15T16:46:55Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "0a7303fa482e715ae6a4875c9ee21beb64a140f0",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "serialization",
+      "headRefOid": "ed6f4e499276ed9d2e027572aec9daaef5f10866",
+      "closedAt": "2024-11-15T16:46:52Z",
+      "mergedAt": "2024-11-15T16:46:52Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "e9da6e6fe74600cea9fa905ed0c1d2fd3b6a7d80"
+      },
+      "comments": [
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "Though i wonder whether the Authorization Response (`{#authorization-response}`) section should account for the `response_mode` extension - https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html with text like \"unless specified otherwise by an extension\".",
+          "createdAt": "2024-11-15T15:44:30Z",
+          "updatedAt": "2024-11-15T15:44:49Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "yeah I can add that, sounds reasonable",
+          "createdAt": "2024-11-15T16:42:59Z",
+          "updatedAt": "2024-11-15T16:42:59Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6RX9ot",
+          "commit": {
+            "abbreviatedOid": "5fd1a46"
+          },
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2024-11-15T15:39:57Z",
+          "updatedAt": "2024-11-15T15:39:57Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
