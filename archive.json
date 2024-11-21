@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-19T00:12:43.838171+00:00",
+  "timestamp": "2024-11-21T00:12:36.665936+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -2623,13 +2623,23 @@
       "state": "OPEN",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "dickhardt"
+      ],
       "labels": [],
       "body": "An attacker could pass a client generated parameter that is too long for the server potentially. Should this be mentioned in security considerations, or would that be considered a general web security consideration and not need mentioning?",
       "createdAt": "2021-09-25T22:38:07Z",
-      "updatedAt": "2021-09-25T22:38:07Z",
+      "updatedAt": "2024-11-20T15:50:07Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Check if HTTP or URL BCPs have anything to reference",
+          "createdAt": "2024-11-20T15:50:02Z",
+          "updatedAt": "2024-11-20T15:50:02Z"
+        }
+      ]
     },
     {
       "number": 97,
@@ -3015,13 +3025,23 @@
       "state": "OPEN",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
-      "assignees": [],
+      "assignees": [
+        "dickhardt"
+      ],
       "labels": [],
       "body": "We may need some additional client registration metadata parameters in order to enforce some of the non-optional things in 2.1 while allowing 2.0 clients to still treat them as optional.\r\n\r\nRelated to #97 ",
       "createdAt": "2022-06-30T17:13:04Z",
-      "updatedAt": "2022-06-30T17:13:04Z",
+      "updatedAt": "2024-11-20T15:43:53Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "We need AS metadata to tell clients what kind of clients it supports: OAuth 2.1 clients, or both clients. If the parameter doesn't exist, clients can assume the server only supports 2.0.\r\n\r\nAS metadata:\r\n* `oauth_versions: [\"2.1\",\"2.0\"]`\r\n\r\nShould go in a new metadata section before extensibility https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-12.html#section-6\r\n\r\nThe client metadata needs to indicate whether the AS should follow 2.1 processing rules or 2.0 processing rules.\r\n\r\nClient metadata\r\n* `oauth_version: \"2.1\"`\r\n\r\nNeed a new client metadata section in https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-12.html#section-2.3.1\r\n",
+          "createdAt": "2024-11-20T15:40:33Z",
+          "updatedAt": "2024-11-20T15:42:36Z"
+        }
+      ]
     },
     {
       "number": 121,
@@ -3047,13 +3067,30 @@
       "state": "OPEN",
       "author": "tlodderstedt",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "dickhardt"
+      ],
       "labels": [],
       "body": "A bit about OAuth adoption in scenarios beyond its original scope (e.g. Open Banking). ",
       "createdAt": "2022-07-04T15:07:57Z",
-      "updatedAt": "2022-07-04T15:07:57Z",
+      "updatedAt": "2024-11-20T15:27:14Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "> With OAuth, an end user (resource owner) can grant a printing service (client) access to their protected photos stored at a photo- sharing service (resource server), without sharing their username and password with the printing service. Instead, they authenticate directly with a server trusted by the photo-sharing service (authorization server), which issues the printing service delegation- specific credentials (access token).\r\n\r\n",
+          "createdAt": "2024-11-20T15:26:39Z",
+          "updatedAt": "2024-11-20T15:26:39Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Related to #168",
+          "createdAt": "2024-11-20T15:27:05Z",
+          "updatedAt": "2024-11-20T15:27:05Z"
+        }
+      ]
     },
     {
       "number": 124,
@@ -3688,16 +3725,24 @@
       "id": "I_kwDODkfq5s5lbHhH",
       "title": "Prohibition of using OAuth for user authentication",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/146",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ritou",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Despite the specification explicitly stating \"This is an Authorization Framework\" as of OAuth 2.0, some Authorization Server/Resource Server and many Client developers have been using this for the purpose of user authentication. In order to avoid the occurrence of vulnerabilities and the lack of interoperability, I hope to include the following sentences:\r\n\r\n- Clients should not (or must not) implement user authentication functionality using this framework.\r\n- If an Authorization server wants to provide user authentication functionality to a Client, it should refer to the expanded OIDC specification for that purpose.",
       "createdAt": "2023-05-09T08:32:14Z",
-      "updatedAt": "2023-05-09T14:58:39Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-11-20T15:24:36Z",
+      "closedAt": "2024-11-20T15:24:36Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This paragraph is new in OAuth 2.1 which clarifies the details https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-12.html#section-1-7",
+          "createdAt": "2024-11-20T15:24:36Z",
+          "updatedAt": "2024-11-20T15:24:36Z"
+        }
+      ]
     },
     {
       "number": 149,
@@ -3748,7 +3793,7 @@
       "id": "I_kwDODkfq5s5rmLuZ",
       "title": "clarify last paragraph of 8.4.1",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/152",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3757,9 +3802,17 @@
       "labels": [],
       "body": "If the app can claim and own a URI on a platform, it MUST use that mechanism ",
       "createdAt": "2023-07-14T16:48:41Z",
-      "updatedAt": "2024-01-31T15:11:22Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-11-20T15:54:58Z",
+      "closedAt": "2024-11-20T15:54:54Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Editor's call, agreed to close with no changes",
+          "createdAt": "2024-11-20T15:54:54Z",
+          "updatedAt": "2024-11-20T15:54:54Z"
+        }
+      ]
     },
     {
       "number": 153,
@@ -3901,7 +3954,7 @@
       "labels": [],
       "body": "https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html\r\n\r\n> Authorization servers MUST record the client type in the client registration details in order to identify and process requests accordingly\r\n\r\nUnfortunately many authorization servers *don't* record client type. Some authorization servers explicitly say that they don't support public clients. Is this okay? Banning public clients tempts app developers to bend the rules and register a public client as a confidential client, compromising security. \r\n\r\nSourceHut bans public clients https://man.sr.ht/meta.sr.ht/oauth.md\r\n\r\n> Only confidential clients are supported; public clients are not allowed\r\n\r\nAzure DevOps bans public clients https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/azure-devops-oauth?view=azure-devops\r\n\r\n> Can I use OAuth with my mobile phone app? No. Azure DevOps Services only supports the web server flow... as [public clients] can't securely store the app secret.\r\n\r\nGitHub doesn't record client type but seems to deduce it based on redirect URI https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app\r\n",
       "createdAt": "2023-07-27T21:32:29Z",
-      "updatedAt": "2024-05-15T06:30:24Z",
+      "updatedAt": "2024-11-20T15:19:52Z",
       "closedAt": null,
       "comments": [
         {
@@ -3917,6 +3970,13 @@
           "body": "I don't think there is any requirement in the spec that an AS has to support both types of clients, did you see any language to the contrary?",
           "createdAt": "2024-05-11T00:58:09Z",
           "updatedAt": "2024-05-11T00:58:09Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Add an explicit mention in https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-12.html#section-2.1 that an AS doesn't have to support public clients.",
+          "createdAt": "2024-11-20T15:19:48Z",
+          "updatedAt": "2024-11-20T15:19:48Z"
         }
       ]
     },
@@ -4105,7 +4165,7 @@
       "labels": [],
       "body": "The printing service example in the introduction (just after the list of disadvantages of the client-server authentication model) comes somewhat as a surprise.\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L236-L242\r\n\r\nI guess this could easily be fixed by adding a \"For example, \".",
       "createdAt": "2024-02-28T05:50:35Z",
-      "updatedAt": "2024-02-28T05:50:53Z",
+      "updatedAt": "2024-11-20T15:27:17Z",
       "closedAt": null,
       "comments": []
     },
@@ -4192,7 +4252,7 @@
       "labels": [],
       "body": "The URIs for the **redirect** and **authorization** endpoints may contain additional query parameters that must be retained when adding more parameters:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L860-L865\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1118-L1121\r\n\r\nFurthermore, query parameters must only appear once (this text appears in the description of the authorization and token endpoints, but is not explicitly mentioned for the redirection endpoint - nevertheless, the cited text already applies to all parameters defined by this spec):\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1129-L1130\r\n\r\nThis becomes a problem in (I admit, somewhat esoteric) cases where the endpoint URIs contain parameters such as `code` in a redirect URI, in that example, the AS would not be allowed to add its `code` parameter in the authorization response. But at the same time, the AS is required to do so:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1657-L1664\r\n\r\nI guess this is just a case of adding something like \"redirect URI MUST NOT contain the parameters...\".",
       "createdAt": "2024-02-28T09:54:55Z",
-      "updatedAt": "2024-05-11T00:43:49Z",
+      "updatedAt": "2024-11-20T15:15:12Z",
       "closedAt": null,
       "comments": [
         {
@@ -4201,6 +4261,13 @@
           "body": "I believe this is the same as https://github.com/oauthstuff/draft-ietf-oauth-security-topics/issues/72, where did we land on language around this @danielfett?",
           "createdAt": "2024-05-11T00:43:48Z",
           "updatedAt": "2024-05-11T00:43:48Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Something like \"You MUST avoid using names in the parameters registry for the endpoint in question https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#parameters\"",
+          "createdAt": "2024-11-20T15:14:17Z",
+          "updatedAt": "2024-11-20T15:14:17Z"
         }
       ]
     },
@@ -5185,7 +5252,7 @@
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "98489a0c5c03cb686b03030b20a07dae8eb47c31",
-      "headRepository": "adeinega/oauth-v2-1",
+      "headRepository": null,
       "headRefName": "pragma",
       "headRefOid": "569a21608cadadebf0361d962c78a908ef925c08",
       "closedAt": "2021-04-23T22:58:44Z",
@@ -5221,7 +5288,7 @@
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e87857efde941ce8e06274615ec669aec995d892",
-      "headRepository": "adeinega/oauth-v2-1",
+      "headRepository": null,
       "headRefName": "mnr_typo",
       "headRefOid": "73ae773819209d19eb99ec463827ef6b15ece9c2",
       "closedAt": "2021-03-19T22:11:57Z",
@@ -5423,7 +5490,7 @@
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "67cb9989140460fed39a40f75a4aa4929f88fbd6",
-      "headRepository": "adeinega/oauth-v2-1",
+      "headRepository": null,
       "headRefName": "eid3446",
       "headRefOid": "178b4e3454f84f70603db87d7761afdf220bc999",
       "closedAt": "2021-03-17T18:43:01Z",
@@ -5451,7 +5518,7 @@
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "67cb9989140460fed39a40f75a4aa4929f88fbd6",
-      "headRepository": "adeinega/oauth-v2-1",
+      "headRepository": null,
       "headRefName": "eid5793",
       "headRefOid": "036968d6e15efafd7fc5438543fc233e0fa5c641",
       "closedAt": "2021-03-17T18:43:38Z",
@@ -6282,7 +6349,7 @@
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "a4084a83c77b215cabe6b601f5d1db786fbeb787",
-      "headRepository": "adeinega/oauth-v2-1",
+      "headRepository": null,
       "headRefName": "patch-1",
       "headRefOid": "c9be7eb913aa418325f2735d0d74f75553a3dba8",
       "closedAt": "2022-02-23T19:55:04Z",
@@ -6338,7 +6405,7 @@
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "f4ab62a7e16adf6402f37f0152103f19f9f239be",
-      "headRepository": "adeinega/oauth-v2-1",
+      "headRepository": null,
       "headRefName": "patch-1",
       "headRefOid": "435457e5181cc90d0d910c6e6f617df5330238e0",
       "closedAt": "2022-05-13T08:07:25Z",
@@ -7372,7 +7439,7 @@
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "f274a833bffd063d927def6832983848e633bd60",
-      "headRepository": "adeinega/oauth-v2-1",
+      "headRepository": null,
       "headRefName": "patch-1",
       "headRefOid": "02fcf611314f2857720495c49db4bf48cb2e01bb",
       "closedAt": "2023-02-13T18:04:05Z",
