@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-03T00:14:11.123629+00:00",
+  "timestamp": "2024-12-05T00:13:14.505953+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -2620,7 +2620,7 @@
       "id": "I_kwDODkfq5s48CNkl",
       "title": "Security consideration of size of client parameters",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/95",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -2629,8 +2629,8 @@
       "labels": [],
       "body": "An attacker could pass a client generated parameter that is too long for the server potentially. Should this be mentioned in security considerations, or would that be considered a general web security consideration and not need mentioning?",
       "createdAt": "2021-09-25T22:38:07Z",
-      "updatedAt": "2024-11-20T15:50:07Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-04T12:17:18Z",
+      "closedAt": "2024-12-04T12:17:18Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -2638,6 +2638,13 @@
           "body": "Check if HTTP or URL BCPs have anything to reference",
           "createdAt": "2024-11-20T15:50:02Z",
           "updatedAt": "2024-11-20T15:50:02Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I did not find any BCPs on query parameter length",
+          "createdAt": "2024-12-04T12:17:18Z",
+          "updatedAt": "2024-12-04T12:17:18Z"
         }
       ]
     },
@@ -3073,7 +3080,7 @@
       "labels": [],
       "body": "A bit about OAuth adoption in scenarios beyond its original scope (e.g. Open Banking). ",
       "createdAt": "2022-07-04T15:07:57Z",
-      "updatedAt": "2024-11-20T15:27:14Z",
+      "updatedAt": "2024-12-04T15:11:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -3089,6 +3096,13 @@
           "body": "Related to #168",
           "createdAt": "2024-11-20T15:27:05Z",
           "updatedAt": "2024-11-20T15:27:05Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Examples:\r\n\r\n* granting access to account information to a financial management app.\r\n* granting a third party app access to post to a social media account\r\n",
+          "createdAt": "2024-12-04T15:10:19Z",
+          "updatedAt": "2024-12-04T15:11:19Z"
         }
       ]
     },
@@ -3784,9 +3798,38 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-07-14T16:18:15Z",
-      "updatedAt": "2024-01-31T15:11:27Z",
+      "updatedAt": "2024-12-04T15:05:19Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@aaronpk remind me what we were going to do here?",
+          "createdAt": "2024-12-04T12:21:11Z",
+          "updatedAt": "2024-12-04T12:21:11Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I think the idea was to at least mention that OIDC exists as a common extension of OAuth that is useful for user authentication",
+          "createdAt": "2024-12-04T13:48:22Z",
+          "updatedAt": "2024-12-04T13:48:22Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Update this paragraph:\r\n\r\n> OAuth is an authorization protocol, and is not an authentication protocol. The access token represents the authorization granted to the client. It is a common practice for the client to present the access token to a proprietary API which returns a user identifier for the resource owner, and then using the result of the API as a proxy for authenticating the user. This practice is not part of the OAuth standard or security considerations, and may not have been considered by the resource owner. Implementors should carefully consult the documentation of the resource server before adopting this practice.",
+          "createdAt": "2024-12-04T15:04:54Z",
+          "updatedAt": "2024-12-04T15:04:54Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "OAuth is not authentication -- refer to OIDC for auth",
+          "createdAt": "2024-12-04T15:04:56Z",
+          "updatedAt": "2024-12-04T15:05:19Z"
+        }
+      ]
     },
     {
       "number": 152,
@@ -4630,7 +4673,7 @@
       "labels": [],
       "body": "Hi, \r\n\r\nIs there a reason why the `expires_in` field exists but an equivalent for refresh token doesn't? Something like `refresh_token_expires_in`.  I couldn't find any discussion on it in past mailing lists. Currently, most implementations use `refresh_token_expires_in` while some use `refresh_expires_in`.\r\n\r\nI'm not sure if this can be changed but I'd like to know if there's any background context to the decision.",
       "createdAt": "2024-09-14T01:54:06Z",
-      "updatedAt": "2024-11-04T15:04:22Z",
+      "updatedAt": "2024-12-04T15:18:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -4639,6 +4682,13 @@
           "body": "Many servers have either unlimited length refresh tokens or refresh tokens with a dynamic expiration date.\r\n\r\nIn any case, the client can't do anything useful with the knowledge of the refresh token expiration time, so there's no point in telling it. If the refresh token expires, the only thing the client can do is start a new OAuth flow from scratch.\r\n\r\nThe refresh token also might expire before the scheduled expiration, even if there is a fixed expiration date. For example if the user revokes the application's access, or if they change their password, or any number of other events.\r\n\r\nSo even if the server did tell the client when the refresh token expires, it's actually when it \"might\" expire, and the client would have to handle an earlier expiration anyway.\r\n\r\nThis is all good context to add to the [refresh token section](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-1.3.2) so I will rename this issue so I can track that.",
           "createdAt": "2024-09-14T02:01:25Z",
           "updatedAt": "2024-09-14T02:03:37Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "* The client has to handle the case of a refresh token expiring at any given time, the expiry is up to the AS, and can be scheduled or at an arbitrary time\r\n* The only thing the client can do when the refresh token expires is start a new OAuth flow",
+          "createdAt": "2024-12-04T15:18:18Z",
+          "updatedAt": "2024-12-04T15:18:18Z"
         }
       ]
     },
@@ -4650,13 +4700,30 @@
       "state": "OPEN",
       "author": "sakimura",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "aaronpk"
+      ],
       "labels": [],
       "body": "Paragraph 1: it is not only the resource owners' password that can be phished. OTP etc. can be phished as well. \r\nProposes to change: \"steal resource owners' passwords\" to \"steal resource owners' passwords and other credentials that are not phishing-resistant\". \r\n\r\nAlso, as the paragraph 2 advises, user education is important, but its effectiveness is somewhat limited. \r\nIt is better to advise authorization servers to deploy Phishing-resistant authentication mechanisms. \r\nTherefore, I propose to add a new paragraph 2 such as: \r\n\r\nService providers SHOULD implement phishing-resistant authenticator support. \r\n\r\nA question. There are two instances of \"should\" in the current paragraph 2. Are they intended or they actually are \"SHOULD\"? \r\n\r\n\r\n\r\n\r\n",
       "createdAt": "2024-09-26T10:06:33Z",
-      "updatedAt": "2024-09-26T10:06:33Z",
+      "updatedAt": "2024-12-04T15:42:05Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This moved to 7.8 https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-7.8",
+          "createdAt": "2024-12-04T15:39:31Z",
+          "updatedAt": "2024-12-04T15:39:31Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "> Service providers should attempt to educate end users about the risks phishing attacks pose and should provide mechanisms that make it easy for end users to confirm the authenticity of their sites, such as using phishing-resistant authenticators.",
+          "createdAt": "2024-12-04T15:42:02Z",
+          "updatedAt": "2024-12-04T15:42:02Z"
+        }
+      ]
     },
     {
       "number": 189,
@@ -4666,11 +4733,57 @@
       "state": "OPEN",
       "author": "sakimura",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "aaronpk"
+      ],
       "labels": [],
       "body": "There has been a case where the signing key for the stateless JWT based access token was stolen and used by attacker to mint new access tokens. Since the token was stateless, meaning the resource servers verified the signature of the access token and if it was successful, the access token was accepted. This lead the attacker to be able to access resources at their will for an extended period as the signing key was not rotated. \r\n\r\nIf such tokens are to be used, then the signing key MUST be rotated periodically to limit the exposed period. \r\n\r\nAlso, the authorization server SHOULD keep track of the tokens issued and return error when a token that it did not issue with a valid signature was submitted to the token introspection endpoint. \r\n",
       "createdAt": "2024-09-26T10:08:55Z",
-      "updatedAt": "2024-09-26T10:08:55Z",
+      "updatedAt": "2024-12-04T15:37:36Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-7.1.2\r\n\r\nWe will update this:\r\n\r\n> A large range of threats can be mitigated by protecting the contents of the access token by using a digital signature, and by following best practices for signing key management such as periodic key rotation.\r\n\r\nI don't think it makes sense to add your second recommendation.",
+          "createdAt": "2024-12-04T15:37:34Z",
+          "updatedAt": "2024-12-04T15:37:34Z"
+        }
+      ]
+    },
+    {
+      "number": 191,
+      "id": "I_kwDODkfq5s6iAp-k",
+      "title": "Expand on definition of expires_in",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/191",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "dickhardt"
+      ],
+      "labels": [],
+      "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-3.2.3\r\n\r\n> If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.\r\n\r\nReplace the last sentence explaining that an access token might expire ahead of the scheduled expiration here",
+      "createdAt": "2024-12-04T15:19:05Z",
+      "updatedAt": "2024-12-04T15:19:51Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 192,
+      "id": "I_kwDODkfq5s6iAtMa",
+      "title": "rework description of access token ",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/192",
+      "state": "OPEN",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "dickhardt"
+      ],
+      "labels": [],
+      "body": "see 1.4\r\n\r\n> Access tokens represent specific scopes and durations of access, granted by the resource owner, and enforced by the resource server and authorization server.\r\n\r\n- separate out what is done by AS vs RS\r\n- add in expiry language",
+      "createdAt": "2024-12-04T15:23:26Z",
+      "updatedAt": "2024-12-04T15:23:27Z",
       "closedAt": null,
       "comments": []
     }
