@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-10T00:13:24.098108+00:00",
+  "timestamp": "2024-12-12T00:13:13.984513+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4784,6 +4784,22 @@
       "body": "see 1.4\r\n\r\n> Access tokens represent specific scopes and durations of access, granted by the resource owner, and enforced by the resource server and authorization server.\r\n\r\n- separate out what is done by AS vs RS\r\n- add in expiry language",
       "createdAt": "2024-12-04T15:23:26Z",
       "updatedAt": "2024-12-04T15:23:27Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 193,
+      "id": "I_kwDODkfq5s6iteXd",
+      "title": "RFC9449 duplicated in Appendix D",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/193",
+      "state": "OPEN",
+      "author": "mrcaidev",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "RFC9449 appeared twice in [Appendix D. Extensions](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#name-extensions).\r\n\r\nTo prevent similar issues from happening, I think these extensions can be sorted by their RFC serial number.",
+      "createdAt": "2024-12-10T11:19:27Z",
+      "updatedAt": "2024-12-10T11:19:27Z",
       "closedAt": null,
       "comments": []
     }
