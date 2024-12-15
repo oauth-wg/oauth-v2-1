@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-12T00:13:13.984513+00:00",
+  "timestamp": "2024-12-15T00:14:51.554047+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4800,6 +4800,22 @@
       "body": "RFC9449 appeared twice in [Appendix D. Extensions](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#name-extensions).\r\n\r\nTo prevent similar issues from happening, I think these extensions can be sorted by their RFC serial number.",
       "createdAt": "2024-12-10T11:19:27Z",
       "updatedAt": "2024-12-10T11:19:27Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 194,
+      "id": "I_kwDODkfq5s6jSg1R",
+      "title": "Reference Errors in Section 4.1.1",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/194",
+      "state": "OPEN",
+      "author": "mrcaidev",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "There are two reference errors in the following paragraph in [Section 4.1.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-4.1.1):\r\n\r\n> Clients MUST use code_challenge and code_verifier and authorization servers MUST enforce their use except under the conditions described in [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#authorization_codes). In this case, using and enforcing code_challenge and code_verifier as described in the following is still RECOMMENDED.\r\n\r\n## 1. No Exception Condition Given in Section 7.5.1\r\n\r\n> Clients MUST use code_challenge and code_verifier and authorization servers MUST enforce their use except under the conditions described in [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#authorization_codes).\r\n\r\n[Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-7.5.1) no longer justifies the exception condition, which was only present in [Draft v1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-01#name-authorization-codes):\r\n\r\n> * The client is a confidential client.\r\n>\r\n> * In the specific deployment and the specific request, there is reasonable assurance for authorization server that the client implements the OpenID Connect nonce mechanism properly.\r\n\r\nIf this exception condition was removed on purpose, then code_challenge should be marked as REQUIRED only, not REQUIRED or RECOMMENDED as marked in Section 4.1.1. If this exception was meant to be moved to somewhere else, the reference link should be updated.\r\n\r\n## 2. There is No \"the following\"\r\n\r\n> In this case, using and enforcing code_challenge and code_verifier as described in the following is still RECOMMENDED.\r\n\r\nHowever, \"the following\" no longer describes the generation & transformation process of code_challenge and code_verfier, which was also only present in [v1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-01#name-authorization-request).\r\n\r\nGenerally speaking, there is currently some contradictions about the requirements of code_challenge.\r\n",
+      "createdAt": "2024-12-14T03:59:11Z",
+      "updatedAt": "2024-12-14T03:59:11Z",
       "closedAt": null,
       "comments": []
     }
