@@ -2272,7 +2272,7 @@ been used with that resource server in the past.
 Since  HTTP infrastructures rely significantly on intermediaries
 (Section 3.7 of {{SEMANTICS}}),
 caches and TLS terminators (e.g. load balancers, API gateways)
-those actors might have visibility of access tokens.
+those actors have visibility of access tokens and could modify the tokens or requests.
 
 These risks are mitigated by content encryption.
 
