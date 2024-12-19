@@ -2897,12 +2897,15 @@ become inured to the practice of being redirected to websites where
 they are asked to enter their passwords.  If end users are not
 careful to verify the authenticity of these websites before entering
 their credentials, it will be possible for attackers to exploit this
-practice to steal resource owners' passwords.
+practice to steal resource owners' passwords, and other phishable
+credentials such as OTPs.
 
 Service providers should attempt to educate end users about the risks
 phishing attacks pose and should provide mechanisms that make it easy
 for end users to confirm the authenticity of their sites, such as using
-phishing-resistant authenticators, as phishing resistant authenticators will offer a credential to log in to a certain site to the user only if the platform has successfully verified the site's origin. Client
+phishing-resistant authenticators, as phishing resistant authenticators
+will offer a credential to log in to a certain site to the user only if
+the platform has successfully verified the site's origin. Client
 developers should consider the security implications of how they
 interact with the user agent (e.g., external, embedded), and the
 ability of the end user to verify the authenticity of the
