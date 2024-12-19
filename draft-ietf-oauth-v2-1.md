@@ -2578,14 +2578,11 @@ clear, as any information in them is at risk of disclosure.
 See "HTTP State Management Mechanism" {{RFC6265}} for security
 considerations about cookies.
 
-In some deployments, including those utilizing load balancers, the
-TLS connection to the resource server terminates prior to the actual
-server that provides the resource.  This could leave the token
-unprotected between the front-end server where the TLS connection
-terminates and the back-end server that provides the resource.  In
-such deployments, sufficient measures MUST be employed to ensure
-confidentiality of the access token between the front-end and back-end
-servers; encryption of the token is one such possible measure.
+When an OAuth server sits behind a reverse proxy
+that terminates TLS connections from clients,
+tokens can be spoofed or tampered.
+Mitigating measures includes using TLS along all the infrastructural
+components and implementing similar requirements at message level.
 
 
 ### Summary of Recommendations
