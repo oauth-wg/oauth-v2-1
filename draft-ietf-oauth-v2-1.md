@@ -684,10 +684,10 @@ authentication, integrity and confidentiality such as
 Transport-Layer Security {{RFC8446}},
 to protect the exchange of clear-text credentials and tokens
 either in the content or in header fields
-from eavesdropping, tampering, and message forgery
-(e.g., see {{client-secret}}, {{authorization_codes}}, {{token-endpoint}}, and {{bearer-tokens}}).
+from eavesdropping which enables replay
+(eg. see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}), and {{bearer-tokens}}).
 
-OAuth URLs MUST use the `https` scheme
+All the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the `https` scheme
 except for loopback interface redirect URIs,
 which MAY use the `http` scheme.
 When using `https`, TLS certificates MUST be checked
@@ -1263,7 +1263,7 @@ relies on the parameter is used, or the `grant_type` requires identification of 
 Confidential clients MUST authenticate with the authorization
 server as described in {{token-endpoint-client-authentication}}.
 
-For example, the client makes the following HTTP request
+For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -1661,7 +1661,7 @@ The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.
 
 For example, the client directs the user agent to make the following
-HTTP request (with extra line breaks for display purposes
+HTTPS request (with extra line breaks for display purposes
 only):
 
     GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
@@ -1875,7 +1875,7 @@ revoke (when possible) all access tokens and refresh tokens
 previously issued based on that authorization code.
 See {{authorization-code-reuse}} for further details.
 
-For example, the client makes the following HTTP request
+For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -2097,7 +2097,7 @@ adding any additional parameters necessary.
 
 For example, to request an access token using the Device Authorization Grant
 as defined by {{RFC8628}} after the user has authorized the client on a separate device,
-the client makes the following HTTP request
+the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
       POST /token HTTP/1.1
@@ -2528,10 +2528,20 @@ an attacker may modify the token to extend the validity period; a
 malicious client may modify the assertion to gain access to
 information that they should not be able to view.
 
-#### Access token disclosure
+#### Access token information disclosure
 
 Access tokens may contain authentication and attribute
 statements that include sensitive information.
+
+If the client should be prevented from observing the contents of the access token,
+content encryption MUST be applied.
+
+Since cookies are by default transmitted in cleartext, any
+information contained in them is at risk of disclosure:
+Bearer tokens MUST NOT be stored in cookies that can be sent in the
+clear.
+See Section 7 and 8 of {{RFC6265}} for security
+considerations about cookies.
 
 #### Access token redirect
 
@@ -2571,22 +2581,10 @@ audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.
 
-If cookies are transmitted without TLS protection, any
-information contained in them is at risk of disclosure.  Therefore,
-Bearer tokens MUST NOT be stored in cookies that can be sent in the
-clear, as any information in them is at risk of disclosure.
-See "HTTP State Management Mechanism" {{RFC6265}} for security
-considerations about cookies.
-
-In some deployments, including those utilizing load balancers, the
-TLS connection to the resource server terminates prior to the actual
-server that provides the resource.  This could leave the token
-unprotected between the front-end server where the TLS connection
-terminates and the back-end server that provides the resource.  In
-such deployments, sufficient measures MUST be employed to ensure
-confidentiality of the access token between the front-end and back-end
-servers; encryption of the token is one such possible measure.
-
+{{communication-security}} provides information to
+protect against access token disclosure and providing
+confidentiality and integrity for the communications
+between client, resource server and authorization server.
 
 ### Summary of Recommendations
 
@@ -3107,6 +3105,20 @@ The AS SHOULD only automatically redirect the user agent if it trusts the
 redirect URI.  If the URI is not trusted, the AS MAY inform the user and rely on
 the user to make the correct decision.
 
+
+## Transport Security
+
+In some deployments, including those utilizing load balancers,
+the TLS connection to the resource server terminates prior to the actual
+server that provides the resource. This could leave the token
+unprotected between the front-end server where the TLS connection
+terminates and the back-end server that provides the resource. In
+such deployments, sufficient measures MUST be employed to ensure
+confidentiality of the access token between the front-end and back-
+end servers; encryption of the token is one such possible measure.
+
+See Section 17.2 of {{SEMANTICS=I-D.ietf-httpbis-semantics}} for
+further informations.
 
 ## Authorization Server Mix-Up Mitigation {#mix-up}
 
