@@ -3117,8 +3117,7 @@ such deployments, sufficient measures MUST be employed to ensure
 confidentiality of the access token between the front-end and back-
 end servers; encryption of the token is one such possible measure.
 
-See Section 17.2 of {{SEMANTICS=I-D.ietf-httpbis-semantics}} for
-further informations.
+See Section 17.2 of {{RFC9110}} for further informations.
 
 ## Authorization Server Mix-Up Mitigation {#mix-up}
 
