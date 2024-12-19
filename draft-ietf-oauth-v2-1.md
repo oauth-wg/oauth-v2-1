@@ -1662,7 +1662,7 @@ in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration ({{client-registration}}).
 When comparing the two URIs the authorization server MUST ensure that the
 two URIs are equal, see {{RFC3986}}, Section 6.2.1, Simple String Comparison, for details.
-The only exception is native apps using a localhost URI: In this case, the authorization server 
+The only exception is native apps using a localhost URI: In this case, the authorization server
 MUST allow variable port numbers as described in [RFC8252], Section 7.3.
 
 If the request is valid,
