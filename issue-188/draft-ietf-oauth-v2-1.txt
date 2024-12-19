@@ -2928,10 +2928,13 @@ Table of Contents
    Service providers should attempt to educate end users about the risks
    phishing attacks pose and should provide mechanisms that make it easy
    for end users to confirm the authenticity of their sites, such as
-   using phishing-resistant authenticators.  Client developers should
-   consider the security implications of how they interact with the user
-   agent (e.g., external, embedded), and the ability of the end user to
-   verify the authenticity of the authorization server.
+   using phishing-resistant authenticators, as phishing resistant
+   authenticators will offer a credential to log in to a certain site to
+   the user only if the platform has successfully verified the site's
+   origin.  Client developers should consider the security implications
+   of how they interact with the user agent (e.g., external, embedded),
+   and the ability of the end user to verify the authenticity of the
+   authorization server.
 
    See Section 1.5 for further details on mitigating the risk of
    phishing attacks.
@@ -3798,11 +3801,11 @@ Table of Contents
               oauth-jwt-encoded-state-09>.
 
    [I-D.ietf-oauth-browser-based-apps]
-              Parecki, A., Waite, D., and P. D. Ryck, "OAuth 2.0 for
+              Parecki, A., Waite, D., and P. De Ryck, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
               Draft, draft-ietf-oauth-browser-based-apps-20, 18 December
-              2024, <https://datatracker.ietf.org/api/v1/doc/document/
-              draft-ietf-oauth-browser-based-apps/>.
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              oauth-browser-based-apps-20>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
