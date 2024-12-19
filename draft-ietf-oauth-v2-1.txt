@@ -462,7 +462,8 @@ Table of Contents
    client, properties of the request, policies within the authorization
    server, or any other criteria.  If the authorization server issues a
    refresh token, it is included when issuing an access token (i.e.,
-   step (2) in Figure 2).
+   step (2) in Figure 2).  The lifetime of the refresh token is also at
+   the discretion of the authorization server.
 
    A refresh token is a string representing the authorization granted to
    the client by the resource owner.  The string is considered opaque to
@@ -525,6 +526,23 @@ Table of Contents
    8.  The authorization server authenticates the client and validates
        the refresh token, and if valid, issues a new access token (and,
        optionally, a new refresh token).
+
+   Note that there is no need to communicate the lifetime of the refresh
+   token to the client, because the client can't do anything different
+   with the knowledge of the lifetime.  Additionally, the authorization
+   server might choose to use dynamic lifetimes (e.g. the refresh token
+   expiry is extended as long as the refresh token is used at least once
+   every 7 days), or the authorization server might revoke the refresh
+   token before its scheduled expiration date for any reason, such as if
+   the user revokes the application's access.  This means the client
+   already has to handle the case of a refresh token expiring at an
+   arbitrary time.
+
+   Regardless of why or when the refresh token expires, the client has
+   only one path to obtain new tokens, which is to start a new OAuth
+   flow from the beginning.  For that reason, there is no property
+   defined to communicate the expiration of a refresh token to the
+   client.
 
 1.3.3.  Client Credentials
 
