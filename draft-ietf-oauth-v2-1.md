@@ -2529,7 +2529,8 @@ been used with that resource server in the past.
 ### Threat Mitigation
 
 A large range of threats can be mitigated by protecting the contents
-of the access token by using a digital signature.
+of the access token by using a digital signature, and by following
+best practices for signing key management such as periodic key rotation.
 
 Alternatively, a bearer token can contain a reference to
 authorization information, rather than encoding the information
