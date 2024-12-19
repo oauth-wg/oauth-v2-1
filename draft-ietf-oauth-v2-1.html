@@ -3335,7 +3335,9 @@ required parameters are present and valid.<a href="#section-4.1.1-27" class="pil
 in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration (<a href="#client-registration" class="auto internal xref">Section 2</a>).
 When comparing the two URIs the authorization server MUST ensure that the
-two URIs are equal, see <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, Section 6.2.1, Simple String Comparison, for details.<a href="#section-4.1.1-28" class="pilcrow">¶</a></p>
+two URIs are equal, see <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, Section 6.2.1, Simple String Comparison, for details.
+The only exception is native apps using a localhost URI: In this case, the authorization server
+MUST allow variable port numbers as described in <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span>, Section 7.3.<a href="#section-4.1.1-28" class="pilcrow">¶</a></p>
 <p id="section-4.1.1-29">If the request is valid,
 the authorization server authenticates the resource owner and obtains
 an authorization decision (by asking the resource owner or by
