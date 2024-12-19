@@ -501,7 +501,7 @@ authentication, integrity and confidentiality such as
 Transport-Layer Security {{RFC8446}},
 to protect the exchange of clear-text credentials and tokens
 either in the payload body or in header fields
-from eavesdropping, tampering, and message forgery
+from eavesdropping which enables replay
 (eg. see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}).
 
 Securing the communication channel is critical
@@ -509,7 +509,7 @@ when the authorization process is used as a form of
 delegated end-user authentication by the client (e.g., third-party
 sign-in service).
 
-OAuth URLs MUST use the `https` scheme
+All the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the `https` scheme
 except for loopback interface redirect URIs,
 which MAY use the `http` scheme.
 When using `https`, TLS certificates MUST be checked
@@ -1006,7 +1006,7 @@ details of those grant types are defined below.
 Confidential or credentialed clients MUST authenticate with the authorization 
 server as described in {{token-endpoint-client-authentication}}.
 
-For example, the client makes the following HTTP request
+For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -1430,7 +1430,7 @@ The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.
 
 For example, the client directs the user agent to make the following
-HTTP request (with extra line breaks for display purposes
+HTTPS request (with extra line breaks for display purposes
 only):
 
     GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
@@ -1621,7 +1621,7 @@ If this value is set, the following additional token request parameters beyond {
 :    REQUIRED, if the `code_challenge` parameter was included in the authorization 
      request. MUST NOT be used otherwise. The original code verifier string.
 
-For example, the client makes the following HTTP request
+For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -1808,7 +1808,7 @@ adding any additional parameters necessary.
 
 For example, to request an access token using the Device Authorization Grant
 as defined by {{RFC8628}} after the user has authorized the client on a separate device,
-the client makes the following HTTP request
+the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
       POST /token HTTP/1.1
