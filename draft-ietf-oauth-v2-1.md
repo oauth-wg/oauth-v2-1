@@ -2267,18 +2267,6 @@ server that mistakenly believes the token to be for it.
 An attacker attempts to use an access token that has already
 been used with that resource server in the past.
 
-#### Intermediaries
-
-Since  HTTP infrastructures rely significantly on intermediaries
-(Section 3.7 of {{SEMANTICS}}),
-caches and TLS terminators (e.g. load balancers, API gateways)
-those actors have visibility of access tokens and could modify the tokens or requests.
-
-These risks are mitigated by content encryption.
-
-See Section 17.2 of {{SEMANTICS=I-D.ietf-httpbis-semantics}} for
-further informations.
-
 ### Threat Mitigation
 
 A large range of threats can be mitigated by protecting the contents
@@ -2309,20 +2297,6 @@ specific scope is also RECOMMENDED.
 protect against access token disclosure and providing
 confidentiality and integrity for the communications
 between client, resource server and authorization server.
-
-The following RECOMMENDATIONS mitigate the risk of
-access token theft and replay:
-
-1. limit the lifetime of the token, e.g. by putting a validity time field inside the
-   protected part of the token. Short-lived tokens reduces both the probablity and the impacts of a leak.
-2. protect the confidentiality of the communication between the client and the RS
-   to mitigate the risk of eavesdropping;
-3. the client MUST verify the identity of the resource server before
-   presenting an access token {{communication-security}};
-   presenting the token to an unauthenticated and
-   unauthorized resource server or failing to validate the certificate
-   chain will allow adversaries to steal the token and gain unauthorized
-   access to protected resources.
 
 ### Summary of Recommendations
 
@@ -3066,6 +3040,21 @@ Aside from the security concerns, embedded user agents do not share
 the authentication state with other apps or the browser, requiring
 the user to log in for every authorization request, which is often
 considered an inferior user experience.
+
+
+## Communication Security
+
+In some deployments, including those utilizing load balancers,
+the TLS connection to the resource server terminates prior to the actual
+server that provides the resource. This could leave the token
+unprotected between the front-end server where the TLS connection
+terminates and the back-end server that provides the resource. In
+such deployments, sufficient measures MUST be employed to ensure
+confidentiality of the access token between the front-end and back-
+end servers; encryption of the token is one such possible measure.
+
+See Section 17.2 of {{SEMANTICS=I-D.ietf-httpbis-semantics}} for
+further informations.
 
 
 ## Other Recommendations
