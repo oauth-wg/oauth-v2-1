@@ -26,7 +26,7 @@ author:
   - ins: T. Lodderstedt
     name: Torsten Lodderstedt
     email: torsten@lodderstedt.net
-    organization: yes.com
+    organization: SPRIND
 
 normative:
   RFC3629:
