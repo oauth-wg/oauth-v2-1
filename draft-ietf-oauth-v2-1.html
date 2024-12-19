@@ -1475,13 +1475,16 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.13">
-                <p id="section-toc.1-1.7.2.13.1"><a href="#section-7.13" class="auto internal xref">7.13</a>. <a href="#name-authorization-server-mix-up" class="internal xref">Authorization Server Mix-Up Mitigation</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.13.2.1">
-                    <p id="section-toc.1-1.7.2.13.2.1.1"><a href="#section-7.13.1" class="auto internal xref">7.13.1</a>.  <a href="#name-mix-up-defense-via-issuer-i" class="internal xref">Mix-Up Defense via Issuer Identification</a></p>
+                <p id="section-toc.1-1.7.2.13.1"><a href="#section-7.13" class="auto internal xref">7.13</a>. <a href="#name-transport-security" class="internal xref">Transport Security</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.13.2.2">
-                    <p id="section-toc.1-1.7.2.13.2.2.1"><a href="#section-7.13.2" class="auto internal xref">7.13.2</a>.  <a href="#name-mix-up-defense-via-distinct" class="internal xref">Mix-Up Defense via Distinct Redirect URIs</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.14">
+                <p id="section-toc.1-1.7.2.14.1"><a href="#section-7.14" class="auto internal xref">7.14</a>. <a href="#name-authorization-server-mix-up" class="internal xref">Authorization Server Mix-Up Mitigation</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.14.2.1">
+                    <p id="section-toc.1-1.7.2.14.2.1.1"><a href="#section-7.14.1" class="auto internal xref">7.14.1</a>.  <a href="#name-mix-up-defense-via-issuer-i" class="internal xref">Mix-Up Defense via Issuer Identification</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.14.2.2">
+                    <p id="section-toc.1-1.7.2.14.2.2.1"><a href="#section-7.14.2" class="auto internal xref">7.14.2</a>.  <a href="#name-mix-up-defense-via-distinct" class="internal xref">Mix-Up Defense via Distinct Redirect URIs</a></p>
 </li>
                 </ul>
 </li>
@@ -2202,9 +2205,9 @@ authentication, integrity and confidentiality such as
 Transport-Layer Security <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>,
 to protect the exchange of clear-text credentials and tokens
 either in the content or in header fields
-from eavesdropping, tampering, and message forgery
-(e.g., see <a href="#client-secret" class="auto internal xref">Section 2.4.1</a>, <a href="#authorization_codes" class="auto internal xref">Section 7.5.1</a>, <a href="#token-endpoint" class="auto internal xref">Section 3.2</a>, and <a href="#bearer-tokens" class="auto internal xref">Section 1.4.2</a>).<a href="#section-1.5-1" class="pilcrow">¶</a></p>
-<p id="section-1.5-2">OAuth URLs MUST use the <code>https</code> scheme
+from eavesdropping which enables replay
+(eg. see <a href="#client-secret" class="auto internal xref">Section 2.4.1</a>, <a href="#authorization_codes" class="auto internal xref">Section 7.5.1</a> and <a href="#token-endpoint" class="auto internal xref">Section 3.2</a>), and <a href="#bearer-tokens" class="auto internal xref">Section 1.4.2</a>).<a href="#section-1.5-1" class="pilcrow">¶</a></p>
+<p id="section-1.5-2">All the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the <code>https</code> scheme
 except for loopback interface redirect URIs,
 which MAY use the <code>http</code> scheme.
 When using <code>https</code>, TLS certificates MUST be checked
@@ -2530,7 +2533,7 @@ bound to the user agent MUST be used for CSRF protection (see
           </h4>
 <p id="section-2.3.4-1">When an OAuth client can only interact with one authorization server, a mix-up defense is not required. In scenarios where an OAuth client interacts with two or more authorization servers, however, clients MUST prevent mix-up attacks.
 In order to prevent mix-up attacks, clients MUST only process redirect responses of the issuer they sent the respective request to and from the same user agent this authorization request was initiated with.<a href="#section-2.3.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.3.4-2">See <a href="#mix-up" class="auto internal xref">Section 7.13</a> for a detailed description of two different defenses against mix-up attacks.<a href="#section-2.3.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.3.4-2">See <a href="#mix-up" class="auto internal xref">Section 7.14</a> for a detailed description of two different defenses against mix-up attacks.<a href="#section-2.3.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="invalid-endpoint">
@@ -2855,7 +2858,7 @@ relies on the parameter is used, or the <code>grant_type</code> requires identif
 </dl>
 <p id="section-3.2.2-3">Confidential clients MUST authenticate with the authorization
 server as described in <a href="#token-endpoint-client-authentication" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.2-4">For example, the client makes the following HTTP request
+<p id="section-3.2.2-4">For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):<a href="#section-3.2.2-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.2.2-5">
 <pre>
@@ -3318,7 +3321,7 @@ transmitted over insecure channels or stored insecurely.<a href="#section-4.1.1-
 <p id="section-4.1.1-24">The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.<a href="#section-4.1.1-24" class="pilcrow">¶</a></p>
 <p id="section-4.1.1-25">For example, the client directs the user agent to make the following
-HTTP request (with extra line breaks for display purposes
+HTTPS request (with extra line breaks for display purposes
 only):<a href="#section-4.1.1-25" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.1.1-26">
 <pre>
@@ -3380,7 +3383,7 @@ client.<a href="#section-4.1.2-2.4.1" class="pilcrow">¶</a></p>
             <dd style="margin-left: 1.5em" id="section-4.1.2-2.6">
               <p id="section-4.1.2-2.6.1">OPTIONAL. The identifier of the authorization server which the
 client can use to prevent mix-up attacks, if the client interacts
-with more than one authorization server. See <a href="#mix-up" class="auto internal xref">Section 7.13</a> and <span>[<a href="#RFC9207" class="cite xref">RFC9207</a>]</span> for
+with more than one authorization server. See <a href="#mix-up" class="auto internal xref">Section 7.14</a> and <span>[<a href="#RFC9207" class="cite xref">RFC9207</a>]</span> for
 additional details on when this parameter is necessary, and how the
 client can use it to prevent mix-up attacks.<a href="#section-4.1.2-2.6.1" class="pilcrow">¶</a></p>
 </dd>
@@ -3576,7 +3579,7 @@ the authorization server MUST deny the request and SHOULD
 revoke (when possible) all access tokens and refresh tokens
 previously issued based on that authorization code.
 See <a href="#authorization-code-reuse" class="auto internal xref">Section 7.5.3</a> for further details.<a href="#section-4.1.3-5" class="pilcrow">¶</a></p>
-<p id="section-4.1.3-6">For example, the client makes the following HTTP request
+<p id="section-4.1.3-6">For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):<a href="#section-4.1.3-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.1.3-7">
 <pre>
@@ -3851,7 +3854,7 @@ value of the <code>grant_type</code> parameter of the token endpoint, and by
 adding any additional parameters necessary.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <p id="section-4.4-2">For example, to request an access token using the Device Authorization Grant
 as defined by <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span> after the user has authorized the client on a separate device,
-the client makes the following HTTP request
+the client makes the following HTTPS request
 (with extra line breaks for display purposes only):<a href="#section-4.4-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.4-3">
 <pre>
@@ -4384,13 +4387,21 @@ malicious client may modify the assertion to gain access to
 information that they should not be able to view.<a href="#section-7.1.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="access-token-disclosure">
+<div id="access-token-information-disclosure">
 <section id="section-7.1.1.2">
-            <h5 id="name-access-token-disclosure">
-<a href="#section-7.1.1.2" class="section-number selfRef">7.1.1.2. </a><a href="#name-access-token-disclosure" class="section-name selfRef">Access token disclosure</a>
+            <h5 id="name-access-token-information-di">
+<a href="#section-7.1.1.2" class="section-number selfRef">7.1.1.2. </a><a href="#name-access-token-information-di" class="section-name selfRef">Access token information disclosure</a>
             </h5>
 <p id="section-7.1.1.2-1">Access tokens may contain authentication and attribute
 statements that include sensitive information.<a href="#section-7.1.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.1.1.2-2">If the client should be prevented from observing the contents of the access token,
+content encryption MUST be applied.<a href="#section-7.1.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.1.1.2-3">Since cookies are by default transmitted in cleartext, any
+information contained in them is at risk of disclosure:
+Bearer tokens MUST NOT be stored in cookies that can be sent in the
+clear.
+See Section 7 and 8 of <span>[<a href="#RFC6265" class="cite xref">RFC6265</a>]</span> for security
+considerations about cookies.<a href="#section-7.1.1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="access-token-redirect">
@@ -4440,20 +4451,10 @@ server to include the identity of the intended recipients (the
 audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.<a href="#section-7.1.2-4" class="pilcrow">¶</a></p>
-<p id="section-7.1.2-5">If cookies are transmitted without TLS protection, any
-information contained in them is at risk of disclosure.  Therefore,
-Bearer tokens MUST NOT be stored in cookies that can be sent in the
-clear, as any information in them is at risk of disclosure.
-See "HTTP State Management Mechanism" <span>[<a href="#RFC6265" class="cite xref">RFC6265</a>]</span> for security
-considerations about cookies.<a href="#section-7.1.2-5" class="pilcrow">¶</a></p>
-<p id="section-7.1.2-6">In some deployments, including those utilizing load balancers, the
-TLS connection to the resource server terminates prior to the actual
-server that provides the resource.  This could leave the token
-unprotected between the front-end server where the TLS connection
-terminates and the back-end server that provides the resource.  In
-such deployments, sufficient measures MUST be employed to ensure
-confidentiality of the access token between the front-end and back-end
-servers; encryption of the token is one such possible measure.<a href="#section-7.1.2-6" class="pilcrow">¶</a></p>
+<p id="section-7.1.2-5"><a href="#communication-security" class="auto internal xref">Section 1.5</a> provides information to
+protect against access token disclosure and providing
+confidentiality and integrity for the communications
+between client, resource server and authorization server.<a href="#section-7.1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="summary-of-recommendations">
@@ -5055,22 +5056,38 @@ the user to make the correct decision.<a href="#section-7.12.2-6" class="pilcrow
 </div>
 </section>
 </div>
-<div id="mix-up">
+<div id="transport-security">
 <section id="section-7.13">
-        <h3 id="name-authorization-server-mix-up">
-<a href="#section-7.13" class="section-number selfRef">7.13. </a><a href="#name-authorization-server-mix-up" class="section-name selfRef">Authorization Server Mix-Up Mitigation</a>
+        <h3 id="name-transport-security">
+<a href="#section-7.13" class="section-number selfRef">7.13. </a><a href="#name-transport-security" class="section-name selfRef">Transport Security</a>
         </h3>
-<p id="section-7.13-1">Mix-up is an attack on scenarios where an OAuth client interacts with
+<p id="section-7.13-1">In some deployments, including those utilizing load balancers,
+the TLS connection to the resource server terminates prior to the actual
+server that provides the resource. This could leave the token
+unprotected between the front-end server where the TLS connection
+terminates and the back-end server that provides the resource. In
+such deployments, sufficient measures MUST be employed to ensure
+confidentiality of the access token between the front-end and back-
+end servers; encryption of the token is one such possible measure.<a href="#section-7.13-1" class="pilcrow">¶</a></p>
+<p id="section-7.13-2">See Section 17.2 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> for further informations.<a href="#section-7.13-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="mix-up">
+<section id="section-7.14">
+        <h3 id="name-authorization-server-mix-up">
+<a href="#section-7.14" class="section-number selfRef">7.14. </a><a href="#name-authorization-server-mix-up" class="section-name selfRef">Authorization Server Mix-Up Mitigation</a>
+        </h3>
+<p id="section-7.14-1">Mix-up is an attack on scenarios where an OAuth client interacts with
 two or more authorization servers and at least one authorization
 server is under the control of the attacker. This can be the case,
 for example, if the attacker uses dynamic registration to register the
 client at his own authorization server or if an authorization server
-becomes compromised.<a href="#section-7.13-1" class="pilcrow">¶</a></p>
-<p id="section-7.13-2">When an OAuth client can only interact with one authorization server, a mix-up
+becomes compromised.<a href="#section-7.14-1" class="pilcrow">¶</a></p>
+<p id="section-7.14-2">When an OAuth client can only interact with one authorization server, a mix-up
 defense is not required. In scenarios where an OAuth client interacts with two
 or more authorization servers, however, clients MUST prevent mix-up attacks. Two
-different methods are discussed in the following.<a href="#section-7.13-2" class="pilcrow">¶</a></p>
-<p id="section-7.13-3">For both defenses, clients MUST store, for each authorization request, the
+different methods are discussed in the following.<a href="#section-7.14-2" class="pilcrow">¶</a></p>
+<p id="section-7.14-3">For both defenses, clients MUST store, for each authorization request, the
 issuer they sent the authorization request to, bind this information to the
 user agent, and check that the authorization response was received from the
 correct issuer. Clients MUST ensure that the subsequent access token request,
@@ -5081,59 +5098,59 @@ is not available, for example, if neither OAuth metadata <span>[<a href="#RFC841
 Connect Discovery <span>[<a href="#OpenID.Discovery" class="cite xref">OpenID.Discovery</a>]</span> are used, a different unique identifier
 for this tuple or the tuple itself can be used instead. For brevity of presentation,
 such a deployment-specific identifier will be subsumed under the issuer (or
-issuer identifier) in the following.<a href="#section-7.13-3" class="pilcrow">¶</a></p>
-<p id="section-7.13-4">Note: Just storing the authorization server URL is not sufficient to identify
+issuer identifier) in the following.<a href="#section-7.14-3" class="pilcrow">¶</a></p>
+<p id="section-7.14-4">Note: Just storing the authorization server URL is not sufficient to identify
 mix-up attacks. An attacker might declare an uncompromised AS's authorization endpoint URL as
-"their" AS URL, but declare a token endpoint under their own control.<a href="#section-7.13-4" class="pilcrow">¶</a></p>
-<p id="section-7.13-5">See Section 4.4 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span> for a detailed description
-of several types of mix-up attacks.<a href="#section-7.13-5" class="pilcrow">¶</a></p>
+"their" AS URL, but declare a token endpoint under their own control.<a href="#section-7.14-4" class="pilcrow">¶</a></p>
+<p id="section-7.14-5">See Section 4.4 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span> for a detailed description
+of several types of mix-up attacks.<a href="#section-7.14-5" class="pilcrow">¶</a></p>
 <div id="mix-up-defense-via-issuer-identification">
-<section id="section-7.13.1">
+<section id="section-7.14.1">
           <h4 id="name-mix-up-defense-via-issuer-i">
-<a href="#section-7.13.1" class="section-number selfRef">7.13.1. </a><a href="#name-mix-up-defense-via-issuer-i" class="section-name selfRef">Mix-Up Defense via Issuer Identification</a>
+<a href="#section-7.14.1" class="section-number selfRef">7.14.1. </a><a href="#name-mix-up-defense-via-issuer-i" class="section-name selfRef">Mix-Up Defense via Issuer Identification</a>
           </h4>
-<p id="section-7.13.1-1">This defense requires that the authorization server sends his issuer identifier
+<p id="section-7.14.1-1">This defense requires that the authorization server sends his issuer identifier
 in the authorization response to the client. When receiving the authorization
 response, the client MUST compare the received issuer identifier to the stored
 issuer identifier. If there is a mismatch, the client MUST abort the
-interaction.<a href="#section-7.13.1-1" class="pilcrow">¶</a></p>
-<p id="section-7.13.1-2">There are different ways this issuer identifier can be transported to the client:<a href="#section-7.13.1-2" class="pilcrow">¶</a></p>
+interaction.<a href="#section-7.14.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.14.1-2">There are different ways this issuer identifier can be transported to the client:<a href="#section-7.14.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7.13.1-3.1">
-              <p id="section-7.13.1-3.1.1">The issuer information can be transported, for
-example, via an optional response parameter <code>iss</code> (see <a href="#authorization-response" class="auto internal xref">Section 4.1.2</a>).<a href="#section-7.13.1-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-7.14.1-3.1">
+              <p id="section-7.14.1-3.1.1">The issuer information can be transported, for
+example, via an optional response parameter <code>iss</code> (see <a href="#authorization-response" class="auto internal xref">Section 4.1.2</a>).<a href="#section-7.14.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7.13.1-3.2">
-              <p id="section-7.13.1-3.2.1">When OpenID Connect is used and an ID Token is returned in the authorization
-response, the client can evaluate the <code>iss</code> claim in the ID Token.<a href="#section-7.13.1-3.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-7.14.1-3.2">
+              <p id="section-7.14.1-3.2.1">When OpenID Connect is used and an ID Token is returned in the authorization
+response, the client can evaluate the <code>iss</code> claim in the ID Token.<a href="#section-7.14.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-7.13.1-4">In both cases, the <code>iss</code> value MUST be evaluated according to <span>[<a href="#RFC9207" class="cite xref">RFC9207</a>]</span>.<a href="#section-7.13.1-4" class="pilcrow">¶</a></p>
-<p id="section-7.13.1-5">While this defense may require using an additional parameter to transport the
-issuer information, it is a robust and relatively simple defense against mix-up.<a href="#section-7.13.1-5" class="pilcrow">¶</a></p>
+<p id="section-7.14.1-4">In both cases, the <code>iss</code> value MUST be evaluated according to <span>[<a href="#RFC9207" class="cite xref">RFC9207</a>]</span>.<a href="#section-7.14.1-4" class="pilcrow">¶</a></p>
+<p id="section-7.14.1-5">While this defense may require using an additional parameter to transport the
+issuer information, it is a robust and relatively simple defense against mix-up.<a href="#section-7.14.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mix-up-defense-via-distinct-redirect-uris">
-<section id="section-7.13.2">
+<section id="section-7.14.2">
           <h4 id="name-mix-up-defense-via-distinct">
-<a href="#section-7.13.2" class="section-number selfRef">7.13.2. </a><a href="#name-mix-up-defense-via-distinct" class="section-name selfRef">Mix-Up Defense via Distinct Redirect URIs</a>
+<a href="#section-7.14.2" class="section-number selfRef">7.14.2. </a><a href="#name-mix-up-defense-via-distinct" class="section-name selfRef">Mix-Up Defense via Distinct Redirect URIs</a>
           </h4>
-<p id="section-7.13.2-1">For this defense, clients MUST use a distinct redirect URI for each issuer
-they interact with.<a href="#section-7.13.2-1" class="pilcrow">¶</a></p>
-<p id="section-7.13.2-2">Clients MUST check that the authorization response was received from the correct
+<p id="section-7.14.2-1">For this defense, clients MUST use a distinct redirect URI for each issuer
+they interact with.<a href="#section-7.14.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.14.2-2">Clients MUST check that the authorization response was received from the correct
 issuer by comparing the distinct redirect URI for the issuer to the URI where
 the authorization response was received on. If there is a mismatch, the client
-MUST abort the flow.<a href="#section-7.13.2-2" class="pilcrow">¶</a></p>
-<p id="section-7.13.2-3">While this defense builds upon existing OAuth functionality, it cannot be used
+MUST abort the flow.<a href="#section-7.14.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.14.2-3">While this defense builds upon existing OAuth functionality, it cannot be used
 in scenarios where clients only register once for the use of many different
 issuers (as in some open banking schemes) and due to the tight integration with
-the client registration, it is harder to deploy automatically.<a href="#section-7.13.2-3" class="pilcrow">¶</a></p>
-<p id="section-7.13.2-4">Furthermore, an attacker might be able to circumvent the protection offered by
+the client registration, it is harder to deploy automatically.<a href="#section-7.14.2-3" class="pilcrow">¶</a></p>
+<p id="section-7.14.2-4">Furthermore, an attacker might be able to circumvent the protection offered by
 this defense by registering a new client with the "honest" AS using the redirect
 URI that the client assigned to the attacker's AS. The attacker could then run
 the attack as described above, replacing the
-client ID with the client ID of his newly created client.<a href="#section-7.13.2-4" class="pilcrow">¶</a></p>
-<p id="section-7.13.2-5">This defense SHOULD therefore only be used if other options are not available.<a href="#section-7.13.2-5" class="pilcrow">¶</a></p>
+client ID with the client ID of his newly created client.<a href="#section-7.14.2-4" class="pilcrow">¶</a></p>
+<p id="section-7.14.2-5">This defense SHOULD therefore only be used if other options are not available.<a href="#section-7.14.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
