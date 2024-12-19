@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 19 May 2025                                                Okta
+Expires: 22 June 2025                                               Okta
                                                           T. Lodderstedt
                                                                  yes.com
-                                                        15 November 2024
+                                                        19 December 2024
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 May 2025.
+   This Internet-Draft will expire on 22 June 2025.
 
 Copyright Notice
 
@@ -2554,7 +2554,9 @@ Table of Contents
 7.1.2.  Threat Mitigation
 
    A large range of threats can be mitigated by protecting the contents
-   of the access token by using a digital signature.
+   of the access token by using a digital signature, and by following
+   best practices for signing key management such as periodic key
+   rotation.
 
    Alternatively, a bearer token can contain a reference to
    authorization information, rather than encoding the information
@@ -3798,11 +3800,11 @@ Table of Contents
               oauth-jwt-encoded-state-09>.
 
    [I-D.ietf-oauth-browser-based-apps]
-              Parecki, A., Waite, D., and P. De Ryck, "OAuth 2.0 for
+              Parecki, A., Waite, D., and P. D. Ryck, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-19, 20 October
-              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-19>.
+              Draft, draft-ietf-oauth-browser-based-apps-20, 18 December
+              2024, <https://datatracker.ietf.org/api/v1/doc/document/
+              draft-ietf-oauth-browser-based-apps/>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
