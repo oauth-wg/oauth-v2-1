@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-19T00:12:47.583637+00:00",
+  "timestamp": "2024-12-22T00:13:10.827210+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4664,7 +4664,7 @@
       "id": "I_kwDODkfq5s6Wjpe6",
       "title": "Expand on reasons for not including expires_in in the token response",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/187",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "pilcrowonpaper",
       "authorAssociation": "NONE",
       "assignees": [
@@ -4673,8 +4673,8 @@
       "labels": [],
       "body": "Hi, \r\n\r\nIs there a reason why the `expires_in` field exists but an equivalent for refresh token doesn't? Something like `refresh_token_expires_in`.  I couldn't find any discussion on it in past mailing lists. Currently, most implementations use `refresh_token_expires_in` while some use `refresh_expires_in`.\r\n\r\nI'm not sure if this can be changed but I'd like to know if there's any background context to the decision.",
       "createdAt": "2024-09-14T01:54:06Z",
-      "updatedAt": "2024-12-04T15:18:19Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-19T15:07:58Z",
+      "closedAt": "2024-12-19T15:07:58Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -4697,7 +4697,7 @@
       "id": "I_kwDODkfq5s6X_-VR",
       "title": "7.12 Phishing Attacks: Clarification and additional advice to the reader",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/188",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sakimura",
       "authorAssociation": "NONE",
       "assignees": [
@@ -4706,8 +4706,8 @@
       "labels": [],
       "body": "Paragraph 1: it is not only the resource owners' password that can be phished. OTP etc. can be phished as well. \r\nProposes to change: \"steal resource owners' passwords\" to \"steal resource owners' passwords and other credentials that are not phishing-resistant\". \r\n\r\nAlso, as the paragraph 2 advises, user education is important, but its effectiveness is somewhat limited. \r\nIt is better to advise authorization servers to deploy Phishing-resistant authentication mechanisms. \r\nTherefore, I propose to add a new paragraph 2 such as: \r\n\r\nService providers SHOULD implement phishing-resistant authenticator support. \r\n\r\nA question. There are two instances of \"should\" in the current paragraph 2. Are they intended or they actually are \"SHOULD\"? \r\n\r\n\r\n\r\n\r\n",
       "createdAt": "2024-09-26T10:06:33Z",
-      "updatedAt": "2024-12-04T15:42:05Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-19T15:22:09Z",
+      "closedAt": "2024-12-19T15:22:09Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -4730,7 +4730,7 @@
       "id": "I_kwDODkfq5s6X__8q",
       "title": "7.X Stateless tokens and key rotation",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/189",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sakimura",
       "authorAssociation": "NONE",
       "assignees": [
@@ -4739,8 +4739,8 @@
       "labels": [],
       "body": "There has been a case where the signing key for the stateless JWT based access token was stolen and used by attacker to mint new access tokens. Since the token was stateless, meaning the resource servers verified the signature of the access token and if it was successful, the access token was accepted. This lead the attacker to be able to access resources at their will for an extended period as the signing key was not rotated. \r\n\r\nIf such tokens are to be used, then the signing key MUST be rotated periodically to limit the exposed period. \r\n\r\nAlso, the authorization server SHOULD keep track of the tokens issued and return error when a token that it did not issue with a valid signature was submitted to the token introspection endpoint. \r\n",
       "createdAt": "2024-09-26T10:08:55Z",
-      "updatedAt": "2024-12-04T15:37:36Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-19T15:13:30Z",
+      "closedAt": "2024-12-19T15:13:30Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -4816,6 +4816,40 @@
       "body": "There are two reference errors in the following paragraph in [Section 4.1.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-4.1.1):\r\n\r\n> Clients MUST use code_challenge and code_verifier and authorization servers MUST enforce their use except under the conditions described in [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#authorization_codes). In this case, using and enforcing code_challenge and code_verifier as described in the following is still RECOMMENDED.\r\n\r\n## 1. No Exception Condition Given in Section 7.5.1\r\n\r\n> Clients MUST use code_challenge and code_verifier and authorization servers MUST enforce their use except under the conditions described in [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#authorization_codes).\r\n\r\n[Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-7.5.1) no longer justifies the exception condition, which was only present in [Draft v1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-01#name-authorization-codes):\r\n\r\n> * The client is a confidential client.\r\n>\r\n> * In the specific deployment and the specific request, there is reasonable assurance for authorization server that the client implements the OpenID Connect nonce mechanism properly.\r\n\r\nIf this exception condition was removed on purpose, then code_challenge should be marked as REQUIRED only, not REQUIRED or RECOMMENDED as marked in Section 4.1.1. If this exception was meant to be moved to somewhere else, the reference link should be updated.\r\n\r\n## 2. There is No \"the following\"\r\n\r\n> In this case, using and enforcing code_challenge and code_verifier as described in the following is still RECOMMENDED.\r\n\r\nHowever, \"the following\" no longer describes the generation & transformation process of code_challenge and code_verfier, which was also only present in [v1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-01#name-authorization-request).\r\n\r\nGenerally speaking, there is currently some contradictions about the requirements of code_challenge.\r\n",
       "createdAt": "2024-12-14T03:59:11Z",
       "updatedAt": "2024-12-14T03:59:11Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 200,
+      "id": "I_kwDODkfq5s6j9NPD",
+      "title": "Reorganize section 7.1.1",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/200",
+      "state": "OPEN",
+      "author": "tlodderstedt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "tlodderstedt"
+      ],
+      "labels": [],
+      "body": "reorganize access token threats section",
+      "createdAt": "2024-12-19T15:41:33Z",
+      "updatedAt": "2024-12-19T15:41:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 201,
+      "id": "I_kwDODkfq5s6kLMEK",
+      "title": "Relations with COAP / RFC9200",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/201",
+      "state": "OPEN",
+      "author": "ioggstream",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## Question\r\n\r\nIt seems that there are non-TLS-based implementations of OAuth.\r\nShould we better decouple the flows from channel requirements?\r\n\r\nSee https://datatracker.ietf.org/doc/rfc9200/",
+      "createdAt": "2024-12-21T23:05:04Z",
+      "updatedAt": "2024-12-21T23:05:04Z",
       "closedAt": null,
       "comments": []
     }
@@ -6261,24 +6295,28 @@
       "id": "PR_kwDODkfq5s4tYN4s",
       "title": "Reorganize Security considerations. See #64",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/99",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "aaronpk"
+      ],
       "labels": [],
       "body": "## This PR\r\n\r\n- reorganize Security considerations\r\n- remove redundancies\r\n- reference security considerations from other rfcs\r\n\r\nNeeds #98 ",
       "createdAt": "2021-10-19T11:14:31Z",
-      "updatedAt": "2024-07-10T21:36:25Z",
+      "updatedAt": "2024-12-21T21:46:21Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "c9b0e5f2c1746cb042a82ed1a8efccbdbb1fbc23",
       "headRepository": "ioggstream/oauth-v2-1",
       "headRefName": "ioggstream-64",
-      "headRefOid": "9e6bd9852692e702be4d7247e89b725b3f8b11eb",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b2c104c589e74254fc9f56e28a2bbd1a69e33687",
+      "closedAt": "2024-12-19T16:21:15Z",
+      "mergedAt": "2024-12-19T16:21:14Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "b2c104c589e74254fc9f56e28a2bbd1a69e33687"
+      },
       "comments": [
         {
           "author": "ioggstream",
@@ -6475,6 +6513,188 @@
               "updatedAt": "2024-07-10T21:36:25Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V5HF3",
+          "commit": {
+            "abbreviatedOid": "9e6bd98"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-12-19T13:50:39Z",
+          "updatedAt": "2024-12-19T13:57:59Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "TLS is used as means to prevent leakage (and replay) but not against tampering or forgery. ",
+              "createdAt": "2024-12-19T13:50:39Z",
+              "updatedAt": "2024-12-19T13:57:59Z"
+            },
+            {
+              "originalPosition": 43,
+              "body": "Should the text mention that this holds true for all parties involved, including the client?",
+              "createdAt": "2024-12-19T13:51:22Z",
+              "updatedAt": "2024-12-19T13:57:59Z"
+            },
+            {
+              "originalPosition": 131,
+              "body": "```suggestion\r\nHTTPS request (with extra line breaks for display purposes\r\n```",
+              "createdAt": "2024-12-19T13:51:42Z",
+              "updatedAt": "2024-12-19T13:57:59Z"
+            },
+            {
+              "originalPosition": 140,
+              "body": "```suggestion\r\nFor example, the client makes the following HTTPS request\r\n```",
+              "createdAt": "2024-12-19T13:51:53Z",
+              "updatedAt": "2024-12-19T13:57:59Z"
+            },
+            {
+              "originalPosition": 150,
+              "body": "```suggestion\r\nthe client makes the following HTTPS request\r\n```",
+              "createdAt": "2024-12-19T13:52:01Z",
+              "updatedAt": "2024-12-19T13:57:59Z"
+            },
+            {
+              "originalPosition": 187,
+              "body": "is it visibility only? I would assume forgery is a risk, too, that's why implementers must sign tokens or use high entropy handles",
+              "createdAt": "2024-12-19T13:53:38Z",
+              "updatedAt": "2024-12-19T13:57:59Z"
+            },
+            {
+              "originalPosition": 117,
+              "body": "@randomstuff that is what resource indicators and RAR do. \r\nAudience restriction is always a good idea but it will only limit the impact of replay, it does not prevent it. Most application with on substantial security requirements will use sender constrained access tokens. ",
+              "createdAt": "2024-12-19T13:55:11Z",
+              "updatedAt": "2024-12-19T13:57:59Z"
+            },
+            {
+              "originalPosition": 272,
+              "body": "This contains a pretty complete list of countermeasures: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#name-token-replay-prevention",
+              "createdAt": "2024-12-19T13:57:49Z",
+              "updatedAt": "2024-12-19T13:57:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V62Mn",
+          "commit": {
+            "abbreviatedOid": "9e6bd98"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-19T15:27:55Z",
+          "updatedAt": "2024-12-19T15:27:55Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "```suggestion\r\nfrom eavesdropping which enables replay\r\n```",
+              "createdAt": "2024-12-19T15:27:55Z",
+              "updatedAt": "2024-12-19T15:27:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V64CV",
+          "commit": {
+            "abbreviatedOid": "9e6bd98"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-19T15:29:44Z",
+          "updatedAt": "2024-12-19T15:29:44Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "```suggestion\r\nAll the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the `https` scheme\r\n```",
+              "createdAt": "2024-12-19T15:29:44Z",
+              "updatedAt": "2024-12-19T15:29:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V65TN",
+          "commit": {
+            "abbreviatedOid": "9e6bd98"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-19T15:30:55Z",
+          "updatedAt": "2024-12-19T15:30:56Z",
+          "comments": [
+            {
+              "originalPosition": 122,
+              "body": "```suggestion\r\nFor example, the client makes the following HTTPS request\r\n```",
+              "createdAt": "2024-12-19T15:30:56Z",
+              "updatedAt": "2024-12-19T15:30:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V7KSW",
+          "commit": {
+            "abbreviatedOid": "9e6bd98"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-19T15:46:39Z",
+          "updatedAt": "2024-12-19T15:46:40Z",
+          "comments": [
+            {
+              "originalPosition": 187,
+              "body": "```suggestion\r\nthose actors have visibility of access tokens and could modify the tokens or requests.\r\n```",
+              "createdAt": "2024-12-19T15:46:39Z",
+              "updatedAt": "2024-12-19T15:46:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6WHMRN",
+          "commit": {
+            "abbreviatedOid": "9e6bd98"
+          },
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-20T22:43:28Z",
+          "updatedAt": "2024-12-20T22:43:29Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "@tlodderstedt sorry for the late reply. I just inherited from RFC8446. Is there a reason for removing tampering/forgery?\r\n\r\n   This document specifies version 1.3 of the Transport Layer Security\r\n   (TLS) protocol.  TLS allows client/server applications to communicate\r\n   over the Internet in a way that is designed to prevent eavesdropping,\r\n   tampering, and message forgery.\r\n",
+              "createdAt": "2024-12-20T22:43:28Z",
+              "updatedAt": "2024-12-20T22:43:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6WJ2yW",
+          "commit": {
+            "abbreviatedOid": "9e6bd98"
+          },
+          "author": "randomstuff",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-21T21:46:21Z",
+          "updatedAt": "2024-12-21T21:46:21Z",
+          "comments": [
+            {
+              "originalPosition": 117,
+              "body": "@tlodderstedt, in the current resource indicators RFC, the client can tell the AS the intended audience (RS) but there is currently no standard way for the *AS* to communicate the audience of the token to the *client* (for example as a confirmation that the audience restriction has been applied by the AS).",
+              "createdAt": "2024-12-21T21:46:21Z",
+              "updatedAt": "2024-12-21T21:46:21Z"
+            }
+          ]
         }
       ]
     },
@@ -6617,7 +6837,7 @@
       "labels": [],
       "body": "## This draft PR\r\n\r\n- clarifies redirection and request/response terminology",
       "createdAt": "2022-06-10T09:18:57Z",
-      "updatedAt": "2022-07-21T09:50:44Z",
+      "updatedAt": "2024-12-19T13:47:33Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "aeb4be4b8eac83cf873d06a53e081bdd292ff7d7",
@@ -6947,6 +7167,32 @@
               "body": "@aaronpk I reworded it removing normative language. This is because we cannot forbid to accidentally do something ;) instead it is better to suggest how to mitigate the risk.",
               "createdAt": "2022-07-21T09:50:07Z",
               "updatedAt": "2022-07-21T09:50:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V5Bjq",
+          "commit": {
+            "abbreviatedOid": "03d5c09"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-19T13:45:10Z",
+          "updatedAt": "2024-12-19T13:47:33Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "What is the rationale for this suggested change?",
+              "createdAt": "2024-12-19T13:45:10Z",
+              "updatedAt": "2024-12-19T13:47:33Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "how is this proposed change related to redirects?",
+              "createdAt": "2024-12-19T13:46:13Z",
+              "updatedAt": "2024-12-19T13:47:33Z"
             }
           ]
         }
@@ -7476,7 +7722,7 @@
       "labels": [],
       "body": "## This PR\r\n\r\n- token encryption can't replace TLS unless similar requirements are implemented (integrity, privacy, authenticity) ;\r\n- suggest using TLS along the way, even when using TLS terminators;\r\n- MUST does not define here a specific requirement \r\n\r\n## Note\r\n\r\nSome mitigation measure express strict requirements (e.g. MUST NIT store in insecure cookies). IMHO that's ok, but in this case it's more than mitigation, since an implementation that does not respect these is non conformant.",
       "createdAt": "2022-07-21T11:02:41Z",
-      "updatedAt": "2022-07-21T11:04:12Z",
+      "updatedAt": "2024-12-19T13:41:29Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "aeb4be4b8eac83cf873d06a53e081bdd292ff7d7",
@@ -7488,7 +7734,28 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6V49y7",
+          "commit": {
+            "abbreviatedOid": "9e62313"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-12-19T13:41:25Z",
+          "updatedAt": "2024-12-19T13:41:29Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "I agree that token encryption is not a replacement for TLS. Encryption should be used to prevent any party along the way from AS to RS to inspect the data in the token, including the client. \r\nSimilar, signatures protect the integrity and authenticity of self-contained tokens along the way, especially at the client. \r\nLack of TLS protection from datacenter edge to RS could cause only problems with sender constrained access tokens bound to a TLS certificate. I think the suitable solution would be to use DPoP instead of Client TLS authentication in such cases. ",
+              "createdAt": "2024-12-19T13:41:25Z",
+              "updatedAt": "2024-12-19T13:41:29Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 130,
@@ -8015,6 +8282,276 @@
           "createdAt": "2024-11-15T15:39:57Z",
           "updatedAt": "2024-11-15T15:39:57Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 195,
+      "id": "PR_kwDODkfq5s6FtrXn",
+      "title": "add key rotation recommendation for access tokens",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/195",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "closes #189",
+      "createdAt": "2024-12-19T01:04:01Z",
+      "updatedAt": "2024-12-19T15:13:32Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e9406f38ac7fdb2d40ca1203a97c361132a2cb2e",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-189",
+      "headRefOid": "861c273833680a1d1669eacb341dc27acd26b754",
+      "closedAt": "2024-12-19T15:13:29Z",
+      "mergedAt": "2024-12-19T15:13:29Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "947dec46061c8ea3f86d49638d5adf3940f1b011"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6V43O4",
+          "commit": {
+            "abbreviatedOid": "861c273"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-19T13:35:42Z",
+          "updatedAt": "2024-12-19T13:35:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 196,
+      "id": "PR_kwDODkfq5s6Ftr6B",
+      "title": "add a mention of phishing-resistant authenticators",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/196",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "...in the \"phishing attacks\" security consideration section\r\n\r\ncloses #188",
+      "createdAt": "2024-12-19T01:06:46Z",
+      "updatedAt": "2024-12-19T15:22:11Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e9406f38ac7fdb2d40ca1203a97c361132a2cb2e",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-188",
+      "headRefOid": "5dca2566bd04e5e52d48bfe6f88346b745302d1c",
+      "closedAt": "2024-12-19T15:22:08Z",
+      "mergedAt": "2024-12-19T15:22:08Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "ea167a0099e69987b65fd88db82aebd941fce24c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6V411n",
+          "commit": {
+            "abbreviatedOid": "d328270"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2024-12-19T13:34:27Z",
+          "updatedAt": "2024-12-19T13:34:31Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "It might not be obvious to anyone why a phishing resistent authenticator makes it easier for a user to confirm a site's authenticity. Something along the lines of \"as phishing resistant authentications will only offer a credential to login to a certain site to the user if the platform has successfully authenticated this site.\"\r\n \r\nAlso Nat's original comment was related to \"steal resource owners' password\" and suggested to make it more general by referring to pwasswords and other non-phishing resistent credentials (like OTPs). ",
+              "createdAt": "2024-12-19T13:34:27Z",
+              "updatedAt": "2024-12-19T13:34:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V6juy",
+          "commit": {
+            "abbreviatedOid": "d328270"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-19T15:10:50Z",
+          "updatedAt": "2024-12-19T15:10:50Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nphishing-resistant authenticators, as phishing resistant authenticators will offer a credential to log in to a certain site to the user only if the platform has successfully verified the site's origin. Client\r\n```",
+              "createdAt": "2024-12-19T15:10:50Z",
+              "updatedAt": "2024-12-19T15:10:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V6mNF",
+          "commit": {
+            "abbreviatedOid": "5dca256"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-19T15:13:05Z",
+          "updatedAt": "2024-12-19T15:13:05Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 197,
+      "id": "PR_kwDODkfq5s6FttKB",
+      "title": "expand on reasons why no refresh token expiration is provided",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/197",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "closes #187",
+      "createdAt": "2024-12-19T01:14:00Z",
+      "updatedAt": "2024-12-19T15:08:00Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e9406f38ac7fdb2d40ca1203a97c361132a2cb2e",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-187",
+      "headRefOid": "b36fd90d8bf023cbe469bb4af11364361741a07d",
+      "closedAt": "2024-12-19T15:07:57Z",
+      "mergedAt": "2024-12-19T15:07:57Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "5ecaa182ee2643196bdedd325900579e42ab6159"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6V4vrJ",
+          "commit": {
+            "abbreviatedOid": "b36fd90"
+          },
+          "author": "tlodderstedt",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-19T13:29:15Z",
+          "updatedAt": "2024-12-19T13:29:15Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 198,
+      "id": "PR_kwDODkfq5s6FyHax",
+      "title": "Change Torsten's affiliation to SPRIND",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/198",
+      "state": "MERGED",
+      "author": "tlodderstedt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-12-19T13:22:01Z",
+      "updatedAt": "2024-12-19T15:05:38Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e9406f38ac7fdb2d40ca1203a97c361132a2cb2e",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "affiliation_torsten",
+      "headRefOid": "d94cd5f061a7c129f24f5a4e139fd4dd82141498",
+      "closedAt": "2024-12-19T15:05:35Z",
+      "mergedAt": "2024-12-19T15:05:35Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "7c9b78c868e1cb9e6057f0eec7a7e37871ec9079"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6V6eCd",
+          "commit": {
+            "abbreviatedOid": "d94cd5f"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-19T15:05:31Z",
+          "updatedAt": "2024-12-19T15:05:31Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 199,
+      "id": "PR_kwDODkfq5s6FyLLp",
+      "title": "added port number exception to uri matching rules",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/199",
+      "state": "MERGED",
+      "author": "tlodderstedt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-12-19T13:27:59Z",
+      "updatedAt": "2024-12-19T15:13:03Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e9406f38ac7fdb2d40ca1203a97c361132a2cb2e",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "uri_matching",
+      "headRefOid": "c133b62a63e3ca903e909c05b503755e3219dad4",
+      "closedAt": "2024-12-19T15:12:59Z",
+      "mergedAt": "2024-12-19T15:12:59Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "3830b8e58b1da16c8914076eabfed4c5b3d88abd"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6V6fMI",
+          "commit": {
+            "abbreviatedOid": "bd2aeea"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-19T15:06:38Z",
+          "updatedAt": "2024-12-19T15:06:38Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDODkfq5s6V6f9B",
+          "commit": {
+            "abbreviatedOid": "bd2aeea"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-12-19T15:07:20Z",
+          "updatedAt": "2024-12-19T15:07:21Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\nThe only exception is native apps using a localhost URI: In this case, the authorization server\r\n```",
+              "createdAt": "2024-12-19T15:07:20Z",
+              "updatedAt": "2024-12-19T15:07:21Z"
+            }
+          ]
         }
       ]
     }
