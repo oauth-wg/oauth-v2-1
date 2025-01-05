@@ -26,7 +26,7 @@ author:
   - ins: T. Lodderstedt
     name: Torsten Lodderstedt
     email: torsten@lodderstedt.net
-    organization: yes.com
+    organization: SPRIND
 
 normative:
   RFC3629:
@@ -440,7 +440,8 @@ authorization server, and may be issued based on properties of the client,
 properties of the request, policies within the authorization server, or
 any other criteria.  If the authorization server issues a refresh
 token, it is included when issuing an access token (i.e., step (2) in
-{{fig-refresh-token-flow}}).
+{{fig-refresh-token-flow}}). The lifetime of the refresh token is also
+at the discretion of the authorization server.
 
 A refresh token is a string representing the authorization granted to
 the client by the resource owner.  The string is considered opaque to
@@ -505,6 +506,21 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 8.  The authorization server authenticates the client and validates
     the refresh token, and if valid, issues a new access token (and,
     optionally, a new refresh token).
+
+Note that there is no need to communicate the lifetime of the refresh
+token to the client, because the client can't do anything different with
+the knowledge of the lifetime. Additionally, the authorization server
+might choose to use dynamic lifetimes (e.g. the refresh token expiry
+is extended as long as the refresh token is used at least once every 7 days),
+or the authorization server might revoke the refresh token before
+its scheduled expiration date for any reason, such as if the user
+revokes the application's access. This means the client already has
+to handle the case of a refresh token expiring at an arbitrary time.
+
+Regardless of why or when the refresh token expires, the client
+has only one path to obtain new tokens, which is to start a new
+OAuth flow from the beginning. For that reason, there is no property
+defined to communicate the expiration of a refresh token to the client.
 
 
 ### Client Credentials
@@ -668,10 +684,10 @@ authentication, integrity and confidentiality such as
 Transport-Layer Security {{RFC8446}},
 to protect the exchange of clear-text credentials and tokens
 either in the content or in header fields
-from eavesdropping, tampering, and message forgery
-(e.g., see {{client-secret}}, {{authorization_codes}}, {{token-endpoint}}, and {{bearer-tokens}}).
+from eavesdropping which enables replay
+(eg. see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}), and {{bearer-tokens}}).
 
-OAuth URLs MUST use the `https` scheme
+All the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the `https` scheme
 except for loopback interface redirect URIs,
 which MAY use the `http` scheme.
 When using `https`, TLS certificates MUST be checked
@@ -1247,7 +1263,7 @@ relies on the parameter is used, or the `grant_type` requires identification of 
 Confidential clients MUST authenticate with the authorization
 server as described in {{token-endpoint-client-authentication}}.
 
-For example, the client makes the following HTTP request
+For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -1645,7 +1661,7 @@ The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.
 
 For example, the client directs the user agent to make the following
-HTTP request (with extra line breaks for display purposes
+HTTPS request (with extra line breaks for display purposes
 only):
 
     GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
@@ -1662,6 +1678,8 @@ in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration ({{client-registration}}).
 When comparing the two URIs the authorization server MUST ensure that the
 two URIs are equal, see {{RFC3986}}, Section 6.2.1, Simple String Comparison, for details.
+The only exception is native apps using a localhost URI: In this case, the authorization server
+MUST allow variable port numbers as described in [RFC8252], Section 7.3.
 
 If the request is valid,
 the authorization server authenticates the resource owner and obtains
@@ -1857,7 +1875,7 @@ revoke (when possible) all access tokens and refresh tokens
 previously issued based on that authorization code.
 See {{authorization-code-reuse}} for further details.
 
-For example, the client makes the following HTTP request
+For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
     POST /token HTTP/1.1
@@ -2079,7 +2097,7 @@ adding any additional parameters necessary.
 
 For example, to request an access token using the Device Authorization Grant
 as defined by {{RFC8628}} after the user has authorized the client on a separate device,
-the client makes the following HTTP request
+the client makes the following HTTPS request
 (with extra line breaks for display purposes only):
 
       POST /token HTTP/1.1
@@ -2510,10 +2528,20 @@ an attacker may modify the token to extend the validity period; a
 malicious client may modify the assertion to gain access to
 information that they should not be able to view.
 
-#### Access token disclosure
+#### Access token information disclosure
 
 Access tokens may contain authentication and attribute
 statements that include sensitive information.
+
+If the client should be prevented from observing the contents of the access token,
+content encryption MUST be applied.
+
+Since cookies are by default transmitted in cleartext, any
+information contained in them is at risk of disclosure:
+Bearer tokens MUST NOT be stored in cookies that can be sent in the
+clear.
+See Section 7 and 8 of {{RFC6265}} for security
+considerations about cookies.
 
 #### Access token redirect
 
@@ -2529,7 +2557,8 @@ been used with that resource server in the past.
 ### Threat Mitigation
 
 A large range of threats can be mitigated by protecting the contents
-of the access token by using a digital signature.
+of the access token by using a digital signature, and by following
+best practices for signing key management such as periodic key rotation.
 
 Alternatively, a bearer token can contain a reference to
 authorization information, rather than encoding the information
@@ -2552,22 +2581,10 @@ audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.
 
-If cookies are transmitted without TLS protection, any
-information contained in them is at risk of disclosure.  Therefore,
-Bearer tokens MUST NOT be stored in cookies that can be sent in the
-clear, as any information in them is at risk of disclosure.
-See "HTTP State Management Mechanism" {{RFC6265}} for security
-considerations about cookies.
-
-In some deployments, including those utilizing load balancers, the
-TLS connection to the resource server terminates prior to the actual
-server that provides the resource.  This could leave the token
-unprotected between the front-end server where the TLS connection
-terminates and the back-end server that provides the resource.  In
-such deployments, sufficient measures MUST be employed to ensure
-confidentiality of the access token between the front-end and back-end
-servers; encryption of the token is one such possible measure.
-
+{{communication-security}} provides information to
+protect against access token disclosure and providing
+confidentiality and integrity for the communications
+between client, resource server and authorization server.
 
 ### Summary of Recommendations
 
@@ -2897,11 +2914,15 @@ become inured to the practice of being redirected to websites where
 they are asked to enter their passwords.  If end users are not
 careful to verify the authenticity of these websites before entering
 their credentials, it will be possible for attackers to exploit this
-practice to steal resource owners' passwords.
+practice to steal resource owners' passwords, and other phishable
+credentials such as OTPs.
 
 Service providers should attempt to educate end users about the risks
 phishing attacks pose and should provide mechanisms that make it easy
-for end users to confirm the authenticity of their sites.  Client
+for end users to confirm the authenticity of their sites, such as using
+phishing-resistant authenticators, as phishing resistant authenticators
+will offer a credential to log in to a certain site to the user only if
+the platform has successfully verified the site's origin. Client
 developers should consider the security implications of how they
 interact with the user agent (e.g., external, embedded), and the
 ability of the end user to verify the authenticity of the
@@ -3084,6 +3105,19 @@ The AS SHOULD only automatically redirect the user agent if it trusts the
 redirect URI.  If the URI is not trusted, the AS MAY inform the user and rely on
 the user to make the correct decision.
 
+
+## Transport Security
+
+In some deployments, including those utilizing load balancers,
+the TLS connection to the resource server terminates prior to the actual
+server that provides the resource. This could leave the token
+unprotected between the front-end server where the TLS connection
+terminates and the back-end server that provides the resource. In
+such deployments, sufficient measures MUST be employed to ensure
+confidentiality of the access token between the front-end and back-
+end servers; encryption of the token is one such possible measure.
+
+See Section 17.2 of {{RFC9110}} for further informations.
 
 ## Authorization Server Mix-Up Mitigation {#mix-up}
 
