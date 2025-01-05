@@ -546,8 +546,10 @@ token value. The authorization server is not required to use a
 consistent access token encoding or format other than what is
 expected by the resource server.
 
-Access tokens represent specific scopes and durations of access, granted by the
-resource owner, and enforced by the resource server and authorization server.
+The access granted by the resource owner to the client is represented by
+the Access Token created by the authorization server. Access Tokens are 
+short lived to reduce the blast radius of a leaked Access Token. The expiration
+of the Access Token is set by the authorization server. 
 
 Depending on the authorization server implementation,
 the token string may be used by the resource server to retrieve the authorization information,
