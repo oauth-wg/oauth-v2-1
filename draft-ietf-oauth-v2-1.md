@@ -233,13 +233,13 @@ the application.  This creates several problems and limitations:
    the end-user's password and all of the data protected by that
    password.
 
-With OAuth, an end user (resource owner) can grant a printing
-service (client) access to their protected photos stored at a photo-
-sharing service (resource server), without sharing their username and
-password with the printing service.  Instead, they authenticate
-directly with a server trusted by the photo-sharing service
-(authorization server), which issues the printing service delegation-
-specific credentials (access token).
+With OAuth, an end user (resource owner) can grant a financial management 
+service (client) access to their sensitive transaction history stored at 
+a banking service (resource server), without sharing their username and 
+password with the financial management service. Instead, they authenticate 
+directly with a server trusted by the banking service (authorization server), 
+which issues the financial management service delegation-specific credentials 
+(access token).
 
 This separation of concerns also provides the ability to use more advanced
 user authentication methods such as multi-factor authentication and even
