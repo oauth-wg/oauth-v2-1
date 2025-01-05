@@ -546,8 +546,10 @@ token value. The authorization server is not required to use a
 consistent access token encoding or format other than what is
 expected by the resource server.
 
-Access tokens represent specific scopes and durations of access, granted by the
-resource owner, and enforced by the resource server and authorization server.
+The access granted by the resource owner to the client is represented by
+the Access Token created by the authorization server. Access Tokens are 
+short lived to reduce the blast radius of a leaked Access Token. The expiration
+of the Access Token is set by the authorization server. 
 
 Depending on the authorization server implementation,
 the token string may be used by the resource server to retrieve the authorization information,
@@ -1314,7 +1316,10 @@ with the following parameters and an HTTP 200 (OK) status code:
      example, the value `3600` denotes that the access token will
      expire in one hour from the time the response was generated.
      If omitted, the authorization server SHOULD provide the
-     expiration time via other means or document the default value.
+     lifetime via other means or document the default value. Note 
+     that the authorization server may prematurely expire an access
+     token and clients MUST NOT expect an access token to be valid
+     for the provided lifetime.
 
 "scope":
 :    RECOMMENDED, if identical to the scope requested by the client;
