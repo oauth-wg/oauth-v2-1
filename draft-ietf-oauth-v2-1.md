@@ -1316,7 +1316,10 @@ with the following parameters and an HTTP 200 (OK) status code:
      example, the value `3600` denotes that the access token will
      expire in one hour from the time the response was generated.
      If omitted, the authorization server SHOULD provide the
-     expiration time via other means or document the default value.
+     lifetime via other means or document the default value. Note 
+     that the authorization server may prematurely expire an access
+     token and clients MUST NOT expect an access token to be valid
+     for the provided lifetime.
 
 "scope":
 :    RECOMMENDED, if identical to the scope requested by the client;
