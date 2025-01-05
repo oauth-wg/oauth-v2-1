@@ -233,12 +233,12 @@ the application.  This creates several problems and limitations:
    the end-user's password and all of the data protected by that
    password.
 
-With OAuth, an end user (resource owner) can grant a financial management 
-service (client) access to their sensitive transaction history stored at 
-a banking service (resource server), without sharing their username and 
-password with the financial management service. Instead, they authenticate 
-directly with a server trusted by the banking service (authorization server), 
-which issues the financial management service delegation-specific credentials 
+With OAuth, an end user (resource owner) can grant a financial management
+service (client) access to their sensitive transaction history stored at
+a banking service (resource server), without sharing their username and
+password with the financial management service. Instead, they authenticate
+directly with a server trusted by the banking service (authorization server),
+which issues the financial management service delegation-specific credentials
 (access token).
 
 This separation of concerns also provides the ability to use more advanced
@@ -549,9 +549,9 @@ consistent access token encoding or format other than what is
 expected by the resource server.
 
 The access granted by the resource owner to the client is represented by
-the Access Token created by the authorization server. Access Tokens are 
+the Access Token created by the authorization server. Access Tokens are
 short lived to reduce the blast radius of a leaked Access Token. The expiration
-of the Access Token is set by the authorization server. 
+of the Access Token is set by the authorization server.
 
 Depending on the authorization server implementation,
 the token string may be used by the resource server to retrieve the authorization information,
@@ -736,6 +736,26 @@ extensions which implementations can choose to use, such as:
 
 Please refer to {{extensions}} for a list of current known extensions at
 the time of this publication.
+
+## OAuth Versions
+
+OAuth 2.1 requires features that were optional in OAuth 2.0. See [#oauth-2-0-differences].
+Authorizations servers that support OAuth 2.1 MUST include the following value in their Authorization Server Metadata:
+
+oauth_versions
+    REQUIRED. JSON array of strings indicating the OAuth versions supported by the authorization server.
+    One of the strings MUST be "2.1". The value "2.0" MAY be provided to indicate the authorization server s
+    upports both versions.
+
+If an authorization server supports both OAuth 2.0 and OAuth 2.1, it MUST keep track of which version clients
+are configured to use.
+
+Clients using Dynamic Client Registration that support OAuth 2.1, MUST include the following value in their registration request:
+
+oauth_version
+    REQUIRED. A string indicating the OAuth version the client is using. MUST be the value "2.1" for clients.
+
+
 
 
 ## Compatibility with OAuth 2.0
@@ -1318,7 +1338,7 @@ with the following parameters and an HTTP 200 (OK) status code:
      example, the value `3600` denotes that the access token will
      expire in one hour from the time the response was generated.
      If omitted, the authorization server SHOULD provide the
-     lifetime via other means or document the default value. Note 
+     lifetime via other means or document the default value. Note
      that the authorization server may prematurely expire an access
      token and clients MUST NOT expect an access token to be valid
      for the provided lifetime.
@@ -3628,13 +3648,22 @@ A client following only the OAuth 2.1 recommendations will not send the `redirec
 
 # IANA Considerations
 
-This document does not require any IANA actions.
 
-All referenced registries are defined by [RFC6749] and related documents that this
-work is based upon. No changes to those registries are required by this specification.
+## Update to Authorization Server Metadata Registry
 
+This document requests that IANA register the following metadata parameter in the **"OAuth Authorization Server Metadata"** registry defined in [RFC8414](https://www.rfc-editor.org/rfc/rfc8414):
 
---- back
+| **Metadata Name** | **Description** | **Change Controller** | **Specification Document** |
+|-------------------|-----------------|------------------------|----------------------------|
+| `oauth_versions`  | JSON array of strings indicating the OAuth versions supported by the authorization server.  | IETF                  | [This Document]            |
+
+## Update to Dynamic Client Registration Metadata Registry
+
+This document requests that IANA register the following metadata parameter in the **"OAuth Dynamic Client Registration Metadata"** registry defined in [RFC7591](https://www.rfc-editor.org/rfc/rfc7591):
+
+| **Metadata Name** | **Description** | **Change Controller** | **Specification Document** |
+|-------------------|-----------------|------------------------|----------------------------|
+| `oauth_version`   | String indicating the OAuth version the client is using. | IETF                  | [This Document]            |
 
 
 # Augmented Backus-Naur Form (ABNF) Syntax
