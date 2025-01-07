@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-05T00:13:21.263020+00:00",
+  "timestamp": "2025-01-07T00:12:52.739899+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -8550,6 +8550,154 @@
               "body": "```suggestion\r\nThe only exception is native apps using a localhost URI: In this case, the authorization server\r\n```",
               "createdAt": "2024-12-19T15:07:20Z",
               "updatedAt": "2024-12-19T15:07:21Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 202,
+      "id": "PR_kwDODkfq5s6GwWaf",
+      "title": "#192 ",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/202",
+      "state": "MERGED",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-05T17:11:41Z",
+      "updatedAt": "2025-01-05T17:19:31Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "147a42bea1911a77c4998ac1459e4b304178f851",
+      "headRepository": "dickhardt/oauth-v2-1",
+      "headRefName": "main",
+      "headRefOid": "41d0e25e504e473d5cef41ad41ed1fcefb9a152d",
+      "closedAt": "2025-01-05T17:19:30Z",
+      "mergedAt": "2025-01-05T17:19:30Z",
+      "mergedBy": "dickhardt",
+      "mergeCommit": {
+        "oid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 203,
+      "id": "PR_kwDODkfq5s6GwXtx",
+      "title": "point implementers to OIDC in intro #151",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/203",
+      "state": "OPEN",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-05T17:29:17Z",
+      "updatedAt": "2025-01-05T17:29:18Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276",
+      "headRepository": "dickhardt/oauth-v2-1",
+      "headRefName": "OIDC-reference",
+      "headRefOid": "c3f1741f955ca4ede06d40265dedecaa6bcc34cc",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 204,
+      "id": "PR_kwDODkfq5s6GwXxI",
+      "title": "More secure use case",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/204",
+      "state": "OPEN",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-05T17:30:05Z",
+      "updatedAt": "2025-01-06T23:29:15Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276",
+      "headRepository": "dickhardt/oauth-v2-1",
+      "headRefName": "more-secure-use-case",
+      "headRefOid": "88adc12bde99f2590a7cb4a116a57657d68ec9e0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6W_J1j",
+          "commit": {
+            "abbreviatedOid": "88adc12"
+          },
+          "author": "adeinega",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-06T23:29:14Z",
+          "updatedAt": "2025-01-06T23:29:15Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "I'd suggest using _credentials_ instead of `username and password` in this sentence.\r\n\r\nThe reason is credentials also cover things such as API keys.",
+              "createdAt": "2025-01-06T23:29:14Z",
+              "updatedAt": "2025-01-06T23:29:15Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 205,
+      "id": "PR_kwDODkfq5s6Gwawe",
+      "title": "Oauth versions",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/205",
+      "state": "OPEN",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-01-05T18:11:46Z",
+      "updatedAt": "2025-01-06T23:32:11Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276",
+      "headRepository": "dickhardt/oauth-v2-1",
+      "headRefName": "oauth-versions",
+      "headRefOid": "90cd4e8b4e02fa975ce805b8d5079ebb9fa0641f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6W_KZc",
+          "commit": {
+            "abbreviatedOid": "90cd4e8"
+          },
+          "author": "adeinega",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-06T23:32:11Z",
+          "updatedAt": "2025-01-06T23:32:11Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "Seems like a separate https://github.com/oauth-wg/oauth-v2-1/pull/204 covers this.",
+              "createdAt": "2025-01-06T23:32:11Z",
+              "updatedAt": "2025-01-06T23:32:11Z"
             }
           ]
         }
