@@ -262,7 +262,11 @@ needs to evaluate the policies, and only needs to validate the access token.
 This simplification applies when the application is acting on behalf of a resource
 owner, or on behalf of itself.
 
-OAuth is an authorization protocol, and is not an authentication protocol. The
+OAuth is an authorization protocol, not an authentication protocol, as OAuth does not define the necessary components to achieve user authentication.
+An authentication protocol is necessary if the goal is to authenticate users. An example is OpenID Connect {{OpenID}}, which builds on OAuth to provide the security
+characteristics and necessary components required of an authentication protocol.
+
+The
 access token represents the authorization granted to the client. It is a common
 practice for the client to present the access token to a proprietary API which
 returns a user identifier for the resource owner, and then using the result of
