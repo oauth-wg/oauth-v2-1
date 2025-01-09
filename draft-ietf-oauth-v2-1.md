@@ -233,7 +233,7 @@ the application.  This creates several problems and limitations:
    the end-user's password and all of the data protected by that
    password.
 
-With OAuth, an end user (resource owner) can grant a financial management 
+An example where OAuth is used is where an end user (resource owner) grants a financial management 
 service (client) access to their sensitive transaction history stored at 
 a banking service (resource server), without sharing their username and 
 password with the financial management service. Instead, they authenticate 
