@@ -264,7 +264,9 @@ owner, or on behalf of itself.
 
 OAuth is an authorization protocol, not an authentication protocol, as OAuth does not define the necessary components to achieve user authentication.
 An authentication protocol is necessary if the goal is to authenticate users. An example is OpenID Connect {{OpenID}}, which builds on OAuth to provide the security
-characteristics and necessary components required of an authentication protocol. The
+characteristics and necessary components required of an authentication protocol.
+
+The
 access token represents the authorization granted to the client. It is a common
 practice for the client to present the access token to a proprietary API which
 returns a user identifier for the resource owner, and then using the result of
