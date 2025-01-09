@@ -237,7 +237,7 @@ An example where OAuth is used is where an end user (resource owner) grants a fi
 service (client) access to their sensitive transaction history stored at 
 a banking service (resource server), without sharing their username and 
 password with the financial management service. Instead, they authenticate 
-directly with a server trusted by the banking service (authorization server), 
+directly with their financial institution's server (authorization server), 
 which issues the financial management service delegation-specific credentials 
 (access token).
 
