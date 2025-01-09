@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-07T00:12:52.739899+00:00",
+  "timestamp": "2025-01-09T00:12:16.593803+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -8621,7 +8621,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-05T17:30:05Z",
-      "updatedAt": "2025-01-06T23:29:15Z",
+      "updatedAt": "2025-01-07T19:22:54Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276",
@@ -8651,6 +8651,46 @@
               "body": "I'd suggest using _credentials_ instead of `username and password` in this sentence.\r\n\r\nThe reason is credentials also cover things such as API keys.",
               "createdAt": "2025-01-06T23:29:14Z",
               "updatedAt": "2025-01-06T23:29:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6XGKbC",
+          "commit": {
+            "abbreviatedOid": "88adc12"
+          },
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-07T17:19:33Z",
+          "updatedAt": "2025-01-07T17:19:33Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "This is an example, and so we are specific with username and password. \r\n\r\nThere are many, many kinds of credentials. Access tokens and refresh tokens are credentials. A broader term muddies understanding the eample.",
+              "createdAt": "2025-01-07T17:19:33Z",
+              "updatedAt": "2025-01-07T17:19:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6XG__z",
+          "commit": {
+            "abbreviatedOid": "88adc12"
+          },
+          "author": "adeinega",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-07T19:22:54Z",
+          "updatedAt": "2025-01-07T19:22:54Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "Got it.",
+              "createdAt": "2025-01-07T19:22:54Z",
+              "updatedAt": "2025-01-07T19:22:54Z"
             }
           ]
         }
