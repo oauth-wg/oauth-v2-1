@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-09T00:12:16.593803+00:00",
+  "timestamp": "2025-01-12T00:13:31.350394+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -112,6 +112,11 @@
       "name": "ietf-117",
       "description": "",
       "color": "bfdadc"
+    },
+    {
+      "name": "ietf-122",
+      "description": "",
+      "color": "D9DECE"
     }
   ],
   "issues": [
@@ -3035,10 +3040,12 @@
       "assignees": [
         "dickhardt"
       ],
-      "labels": [],
+      "labels": [
+        "ietf-122"
+      ],
       "body": "We may need some additional client registration metadata parameters in order to enforce some of the non-optional things in 2.1 while allowing 2.0 clients to still treat them as optional.\r\n\r\nRelated to #97 ",
       "createdAt": "2022-06-30T17:13:04Z",
-      "updatedAt": "2024-11-20T15:43:53Z",
+      "updatedAt": "2025-01-09T17:53:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -3047,6 +3054,13 @@
           "body": "We need AS metadata to tell clients what kind of clients it supports: OAuth 2.1 clients, or both clients. If the parameter doesn't exist, clients can assume the server only supports 2.0.\r\n\r\nAS metadata:\r\n* `oauth_versions: [\"2.1\",\"2.0\"]`\r\n\r\nShould go in a new metadata section before extensibility https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-12.html#section-6\r\n\r\nThe client metadata needs to indicate whether the AS should follow 2.1 processing rules or 2.0 processing rules.\r\n\r\nClient metadata\r\n* `oauth_version: \"2.1\"`\r\n\r\nNeed a new client metadata section in https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-12.html#section-2.3.1\r\n",
           "createdAt": "2024-11-20T15:40:33Z",
           "updatedAt": "2024-11-20T15:42:36Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "* There are multiple ways someone might want to migrate clients\r\n* How do I support both 2.0 and 2.1 clients at the same time\r\n* How do I not break existing clients, some of which might never upgrade\r\n* Provide clients a way to opt in to 2.1 behavior in a slow rollout (e.g. native apps where upgrades roll out slowly)\r\n",
+          "createdAt": "2025-01-09T17:52:25Z",
+          "updatedAt": "2025-01-09T17:52:25Z"
         }
       ]
     },
@@ -4201,16 +4215,24 @@
       "id": "I_kwDODkfq5s6Aoxnc",
       "title": "\"Suprising\" printing service example in introduction",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/168",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "SECtim",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "The printing service example in the introduction (just after the list of disadvantages of the client-server authentication model) comes somewhat as a surprise.\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L236-L242\r\n\r\nI guess this could easily be fixed by adding a \"For example, \".",
       "createdAt": "2024-02-28T05:50:35Z",
-      "updatedAt": "2024-11-20T15:27:17Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-01-09T17:21:09Z",
+      "closedAt": "2025-01-09T17:21:09Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Resolved by #204 ",
+          "createdAt": "2025-01-09T17:21:09Z",
+          "updatedAt": "2025-01-09T17:21:09Z"
+        }
+      ]
     },
     {
       "number": 169,
@@ -8588,50 +8610,135 @@
       "id": "PR_kwDODkfq5s6GwXtx",
       "title": "point implementers to OIDC in intro #151",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/203",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-05T17:29:17Z",
-      "updatedAt": "2025-01-05T17:29:18Z",
+      "updatedAt": "2025-01-09T17:15:57Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276",
       "headRepository": "dickhardt/oauth-v2-1",
       "headRefName": "OIDC-reference",
-      "headRefOid": "c3f1741f955ca4ede06d40265dedecaa6bcc34cc",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "2a3c2374acc9238dc774e66be25f853f78fbd5a8",
+      "closedAt": "2025-01-09T17:15:57Z",
+      "mergedAt": "2025-01-09T17:15:57Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "426ce072a02a0a79b76e1a2cce636bf03b66242b"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s6XbOdX",
+          "commit": {
+            "abbreviatedOid": "c3f1741"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-09T17:13:02Z",
+          "updatedAt": "2025-01-09T17:13:02Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nOAuth is an authorization protocol, not an authentication protocol, as OAuth does not define the necessary components to achieve user authentication.\r\n```",
+              "createdAt": "2025-01-09T17:13:02Z",
+              "updatedAt": "2025-01-09T17:13:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6XbOff",
+          "commit": {
+            "abbreviatedOid": "c3f1741"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-09T17:13:06Z",
+          "updatedAt": "2025-01-09T17:13:06Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nAn authentication protocol is necessary if the goal is to authenticate users. An example is OpenID Connect {{OpenID}}, which builds on OAuth to provide the security\r\n```",
+              "createdAt": "2025-01-09T17:13:06Z",
+              "updatedAt": "2025-01-09T17:13:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6XbOhE",
+          "commit": {
+            "abbreviatedOid": "c3f1741"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-09T17:13:09Z",
+          "updatedAt": "2025-01-09T17:13:10Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\ncharacteristics and necessary components required of an authentication protocol. The\r\n```",
+              "createdAt": "2025-01-09T17:13:09Z",
+              "updatedAt": "2025-01-09T17:13:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6XbPM0",
+          "commit": {
+            "abbreviatedOid": "d85c188"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-09T17:14:34Z",
+          "updatedAt": "2025-01-09T17:14:35Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\r\ncharacteristics and necessary components required of an authentication protocol.\r\n\r\nThe\r\n```",
+              "createdAt": "2025-01-09T17:14:35Z",
+              "updatedAt": "2025-01-09T17:14:35Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 204,
       "id": "PR_kwDODkfq5s6GwXxI",
       "title": "More secure use case",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/204",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-05T17:30:05Z",
-      "updatedAt": "2025-01-07T19:22:54Z",
+      "updatedAt": "2025-01-09T17:20:56Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276",
       "headRepository": "dickhardt/oauth-v2-1",
       "headRefName": "more-secure-use-case",
-      "headRefOid": "88adc12bde99f2590a7cb4a116a57657d68ec9e0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "04c44b4e2d198420a79c936778baa58afdf6183d",
+      "closedAt": "2025-01-09T17:20:55Z",
+      "mergedAt": "2025-01-09T17:20:55Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "defa6b7d2cada9a72a85e9b02564a07047b9f134"
+      },
       "comments": [],
       "reviews": [
         {
@@ -8693,6 +8800,46 @@
               "updatedAt": "2025-01-07T19:22:54Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6XbRcc",
+          "commit": {
+            "abbreviatedOid": "88adc12"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-09T17:19:04Z",
+          "updatedAt": "2025-01-09T17:19:05Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "```suggestion\r\nAn example where OAuth is used is where an end user (resource owner) grants a financial management \r\n```",
+              "createdAt": "2025-01-09T17:19:04Z",
+              "updatedAt": "2025-01-09T17:19:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s6XbSFm",
+          "commit": {
+            "abbreviatedOid": "0fd5c2f"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-09T17:20:25Z",
+          "updatedAt": "2025-01-09T17:20:25Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\r\ndirectly with their financial institution's server (authorization server), \r\n```",
+              "createdAt": "2025-01-09T17:20:25Z",
+              "updatedAt": "2025-01-09T17:20:26Z"
+            }
+          ]
         }
       ]
     },
@@ -8708,7 +8855,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-05T18:11:46Z",
-      "updatedAt": "2025-01-06T23:32:11Z",
+      "updatedAt": "2025-01-09T17:53:11Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276",
@@ -8719,7 +8866,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "We're going to rethink this and bring it up on the mailing list and/or IETF 122",
+          "createdAt": "2025-01-09T17:53:10Z",
+          "updatedAt": "2025-01-09T17:53:10Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDODkfq5s6W_KZc",
