@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-30T00:11:39.484600+00:00",
+  "timestamp": "2025-02-11T00:12:12.577528+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4695,7 +4695,7 @@
       "labels": [],
       "body": "Hi, \r\n\r\nIs there a reason why the `expires_in` field exists but an equivalent for refresh token doesn't? Something like `refresh_token_expires_in`.  I couldn't find any discussion on it in past mailing lists. Currently, most implementations use `refresh_token_expires_in` while some use `refresh_expires_in`.\r\n\r\nI'm not sure if this can be changed but I'd like to know if there's any background context to the decision.",
       "createdAt": "2024-09-14T01:54:06Z",
-      "updatedAt": "2024-12-19T15:07:58Z",
+      "updatedAt": "2025-02-06T00:36:11Z",
       "closedAt": "2024-12-19T15:07:58Z",
       "comments": [
         {
@@ -4711,6 +4711,48 @@
           "body": "* The client has to handle the case of a refresh token expiring at any given time, the expiry is up to the AS, and can be scheduled or at an arbitrary time\r\n* The only thing the client can do when the refresh token expires is start a new OAuth flow",
           "createdAt": "2024-12-04T15:18:18Z",
           "updatedAt": "2024-12-04T15:18:18Z"
+        },
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "Regarding \"the client can't do anything useful with the knowledge of the refresh token expiration time\", we (Google) have received feedback from several clients that they want to remind the user to reauthorize the application prior to the expiration of the refresh token in order to avoid a disruption of service.  This is most common with applications that run in the background, e.g. analytics or monitoring tools, where the user is not typically around to be prompted to reauthorize when the RT does expire.\n\nThis isn't to say that clients are off the hook for handling RT expiration at \"unexpected\" times, but they should be allowed to optimize for the normal case when the RT expires when the AS says it will.\n\nGiven that OAuth 2.1 covers refresh token rotation (mandatory for public clients if tokens are unbound), and RT expiration can relate directly to that, it seems reasonable to include within the purview of this spec version.\n\n(Side note: I agree with OP that refresh_token_expires_in is a reasonable name. A quick search suggests that Microsoft and Github already use this name, and we at Google are eyeing it too.)",
+          "createdAt": "2025-02-01T05:21:31Z",
+          "updatedAt": "2025-02-01T05:21:31Z"
+        },
+        {
+          "author": "IvanAnishchuk",
+          "authorAssociation": "NONE",
+          "body": ":+1: on the last point. Already used that exact name `refresh_token_expires_in` in a custom implementation few years back.",
+          "createdAt": "2025-02-01T07:17:44Z",
+          "updatedAt": "2025-02-01T07:17:44Z"
+        },
+        {
+          "author": "tiwarivikash",
+          "authorAssociation": "NONE",
+          "body": "Many clients such as Zoom inform users proactively that their session is going to expire in near future and they can choose to extend it before that.",
+          "createdAt": "2025-02-01T14:54:10Z",
+          "updatedAt": "2025-02-01T14:54:10Z"
+        },
+        {
+          "author": "ObjectIsAdvantag",
+          "authorAssociation": "NONE",
+          "body": "+1 to add `refresh_token_expires_in`\nCisco Webex already support it: https://developer.webex.com/docs/integrations#using-the-refresh-token\nand we need the OAuth specifications to include the field officially so that we can standardize internally on this exact name for other Cisco products.",
+          "createdAt": "2025-02-03T11:21:09Z",
+          "updatedAt": "2025-02-03T11:21:09Z"
+        },
+        {
+          "author": "erincandescent",
+          "authorAssociation": "NONE",
+          "body": "> In any case, the client can't do anything useful with the knowledge of the refresh token expiration time, so there's no point in telling it. If the refresh token expires, the only thing the client can do is start a new OAuth flow from scratch.\n\nI don't think this is true, or what people mean by `refresh_token_expires_in` differs from my understanding. My understanding of `refresh_token_expires_in` is that _in the normal case_ (token not revoked early), the client has until that time to invoke the refresh token grant with this token to receive a new access token and refresh token.\n\nAs an AS implementer, its very useful to be able to expire \"stale\" sessions; this means that refresh tokens must expire at some point. Clients need to know how often they must refresh their tokens in order to maintain the session. At present, the only advice they have on this is the `expires_in` value; but access token lifetime is often short. I might want e.g. access tokens to expire in 10 minutes but refresh tokens to expire in 7 days, but both me and the client would like it if they could only hit the token endpoint once every 7 days during periods of time where they're not actively using the RS but just need to maintain the session.",
+          "createdAt": "2025-02-05T23:54:09Z",
+          "updatedAt": "2025-02-05T23:54:09Z"
+        },
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "I think there are two concepts at play here:\n\n1. How long is the user's authorization good for? Some AS may offer the user a choice (or mandate) to grant permissions only for a certain amount of time, especially for very sensitive data access (e.g. mail or biometrics).\n2. How long is the credential itself valid, i.e. how often does the client need to hit the token endpoint to get a new RT.\n\nCan a single `refresh_token_expires_in` field adequately address both use cases? The RT itself would always expire in `min(rotation_cadence, user_authz_duration)`, so a single field would still be accurate, but clients might want to handle each case differently.",
+          "createdAt": "2025-02-06T00:36:10Z",
+          "updatedAt": "2025-02-06T00:36:10Z"
         }
       ]
     },
