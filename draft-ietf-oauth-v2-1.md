@@ -233,12 +233,12 @@ the application.  This creates several problems and limitations:
    the end-user's password and all of the data protected by that
    password.
 
-An example where OAuth is used is where an end user (resource owner) grants a financial management 
-service (client) access to their sensitive transaction history stored at 
-a banking service (resource server), without sharing their username and 
-password with the financial management service. Instead, they authenticate 
-directly with their financial institution's server (authorization server), 
-which issues the financial management service delegation-specific credentials 
+An example where OAuth is used is where an end user (resource owner) grants a financial management
+service (client) access to their sensitive transaction history stored at
+a banking service (resource server), without sharing their username and
+password with the financial management service. Instead, they authenticate
+directly with their financial institution's server (authorization server),
+which issues the financial management service delegation-specific credentials
 (access token).
 
 This separation of concerns also provides the ability to use more advanced
@@ -551,9 +551,9 @@ consistent access token encoding or format other than what is
 expected by the resource server.
 
 The access granted by the resource owner to the client is represented by
-the Access Token created by the authorization server. Access Tokens are 
+the Access Token created by the authorization server. Access Tokens are
 short lived to reduce the blast radius of a leaked Access Token. The expiration
-of the Access Token is set by the authorization server. 
+of the Access Token is set by the authorization server.
 
 Depending on the authorization server implementation,
 the token string may be used by the resource server to retrieve the authorization information,
@@ -1320,7 +1320,7 @@ with the following parameters and an HTTP 200 (OK) status code:
      example, the value `3600` denotes that the access token will
      expire in one hour from the time the response was generated.
      If omitted, the authorization server SHOULD provide the
-     lifetime via other means or document the default value. Note 
+     lifetime via other means or document the default value. Note
      that the authorization server may prematurely expire an access
      token and clients MUST NOT expect an access token to be valid
      for the provided lifetime.
@@ -2361,7 +2361,7 @@ includes one of the following error codes in the response:
      resource.
 
 Extensions may define additional error codes or specify additional
-circumstances in which the above error codes are retured.
+circumstances in which the above error codes are returned.
 
 If the request lacks any authentication information (e.g., the client
 was unaware that authentication is necessary or attempted using an
@@ -2826,7 +2826,7 @@ would only later reject the ID token after validating the `nonce` and seeing
 that it doesn't match. In contrast, the authorization server enforcing the
 `code_challenge` and `code_verifier` parameters provides a higher security outcome,
 since the authorization server is able to recognize the authorization code
-injection attack pre-emtpively and avoid issuing any tokens in the first place.
+injection attack pre-emptively and avoid issuing any tokens in the first place.
 
 Historic note: Although PKCE {{RFC7636}}
 (where the `code_challenge` and `code_verifier` parameters were created)
@@ -2888,7 +2888,7 @@ agent to rewrite the POST request to a GET request and thereby drop
 the form data in the POST request content.
 
 In HTTP {{RFC9110}}, only the status code 303
-unambigiously enforces rewriting the HTTP POST request to an HTTP GET
+unambigously enforces rewriting the HTTP POST request to an HTTP GET
 request.  For all other status codes, including the popular 302, user
 agents can opt not to rewrite POST to GET requests and therefore
 reveal the user credentials to the client.  (In practice, however,
