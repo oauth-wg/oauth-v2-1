@@ -17,16 +17,16 @@ application to obtain access on its own behalf.  This
 specification replaces and obsoletes the OAuth 2.0 Authorization
 Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750. 
     " name="description">
-<meta content="xml2rfc 3.25.0" name="generator">
+<meta content="xml2rfc 3.28.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-oauth-v2-1-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.25.0
-    Python 3.12.8
+  xml2rfc 3.28.0
+    Python 3.12.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.4
+    Jinja2 3.1.5
     lxml 5.3.0
     platformdirs 4.3.6
     pycountry 24.6.1
@@ -443,7 +443,7 @@ dl {
     margin-bottom: 0;
   }
 }
-dl > dt {
+dl:not(.dlNewline) > dt {
   float: left;
   margin-right: 2ch;
   min-width: 8ch;
@@ -1052,11 +1052,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">The OAuth 2.1 Authorization Framework</td>
-<td class="right">December 2024</td>
+<td class="right">March 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hardt, et al.</td>
-<td class="center">Expires 22 June 2025</td>
+<td class="center">Expires 5 September 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1069,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-v2-1-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-12-19" class="published">19 December 2024</time>
+<time datetime="2025-03-04" class="published">4 March 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-06-22">22 June 2025</time></dd>
+<dd class="expires"><time datetime="2025-09-05">5 September 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 22 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1142,7 +1142,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2024 IETF Trust and the persons identified as the
+            Copyright (c) 2025 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1714,13 +1714,13 @@ the end-user's password and all of the data protected by that
 password.<a href="#section-1-3.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-1-4">With OAuth, an end user (resource owner) can grant a printing
-service (client) access to their protected photos stored at a photo-
-sharing service (resource server), without sharing their username and
-password with the printing service.  Instead, they authenticate
-directly with a server trusted by the photo-sharing service
-(authorization server), which issues the printing service delegation-
-specific credentials (access token).<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">An example where OAuth is used is where an end user (resource owner) grants a financial management
+service (client) access to their sensitive transaction history stored at
+a banking service (resource server), without sharing their username and
+password with the financial management service. Instead, they authenticate
+directly with their financial institution's server (authorization server),
+which issues the financial management service delegation-specific credentials
+(access token).<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">This separation of concerns also provides the ability to use more advanced
 user authentication methods such as multi-factor authentication and even
 passwordless authentication, without any modification to the applications.
@@ -1740,17 +1740,20 @@ authorized access is represented in the access token, the resource server no lon
 needs to evaluate the policies, and only needs to validate the access token.
 This simplification applies when the application is acting on behalf of a resource
 owner, or on behalf of itself.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">OAuth is an authorization protocol, and is not an authentication protocol. The
+<p id="section-1-7">OAuth is an authorization protocol, not an authentication protocol, as OAuth does not define the necessary components to achieve user authentication.
+An authentication protocol is necessary if the goal is to authenticate users. An example is OpenID Connect <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span>, which builds on OAuth to provide the security
+characteristics and necessary components required of an authentication protocol.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8">The
 access token represents the authorization granted to the client. It is a common
 practice for the client to present the access token to a proprietary API which
 returns a user identifier for the resource owner, and then using the result of
 the API as a proxy for authenticating the user. This practice is not part of
 the OAuth standard or security considerations, and may not have been considered
 by the resource owner. Implementors should carefully consult the documentation
-of the resource server before adopting this practice.<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">This specification is designed for use with HTTP <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.  The
-use of OAuth over any protocol other than HTTP is out of scope.<a href="#section-1-8" class="pilcrow">¶</a></p>
-<p id="section-1-9">Since the publication of the OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>
+of the resource server before adopting this practice.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-9">This specification is designed for use with HTTP <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.  The
+use of OAuth over any protocol other than HTTP is out of scope.<a href="#section-1-9" class="pilcrow">¶</a></p>
+<p id="section-1-10">Since the publication of the OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>
 in October 2012, it has been updated by OAuth 2.0 for Native Apps <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span>,
 OAuth Security Best Current Practice <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>,
 and OAuth 2.0 for Browser-Based Apps <span>[<a href="#I-D.ietf-oauth-browser-based-apps" class="cite xref">I-D.ietf-oauth-browser-based-apps</a>]</span>.
@@ -1758,7 +1761,7 @@ The OAuth 2.0 Authorization Framework: Bearer Token Usage <span>[<a href="#RFC67
 has also been updated with <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>. This
 Standards Track specification consolidates the information in all of these
 documents and removes features that have been found to be insecure
-in <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>.<a href="#section-1-9" class="pilcrow">¶</a></p>
+in <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>.<a href="#section-1-10" class="pilcrow">¶</a></p>
 <div id="roles">
 <section id="section-1.1">
         <h3 id="name-roles">
@@ -2070,8 +2073,10 @@ a structure. The client MUST NOT expect to be able to parse the access
 token value. The authorization server is not required to use a
 consistent access token encoding or format other than what is
 expected by the resource server.<a href="#section-1.4-2" class="pilcrow">¶</a></p>
-<p id="section-1.4-3">Access tokens represent specific scopes and durations of access, granted by the
-resource owner, and enforced by the resource server and authorization server.<a href="#section-1.4-3" class="pilcrow">¶</a></p>
+<p id="section-1.4-3">The access granted by the resource owner to the client is represented by
+the Access Token created by the authorization server. Access Tokens are
+short lived to reduce the blast radius of a leaked Access Token. The expiration
+of the Access Token is set by the authorization server.<a href="#section-1.4-3" class="pilcrow">¶</a></p>
 <p id="section-1.4-4">Depending on the authorization server implementation,
 the token string may be used by the resource server to retrieve the authorization information,
 or the token may self-contain the authorization information in a verifiable
@@ -2920,7 +2925,10 @@ in seconds of the access token.  For
 example, the value <code>3600</code> denotes that the access token will
 expire in one hour from the time the response was generated.
 If omitted, the authorization server SHOULD provide the
-expiration time via other means or document the default value.<a href="#section-3.2.3-4.6.1" class="pilcrow">¶</a></p>
+lifetime via other means or document the default value. Note
+that the authorization server may prematurely expire an access
+token and clients MUST NOT expect an access token to be valid
+for the provided lifetime.<a href="#section-3.2.3-4.6.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-3.2.3-4.7">"scope":</dt>
@@ -4166,7 +4174,7 @@ resource.<a href="#section-5.3.2-2.6.1" class="pilcrow">¶</a></p>
           <dd class="break"></dd>
 </dl>
 <p id="section-5.3.2-3">Extensions may define additional error codes or specify additional
-circumstances in which the above error codes are retured.<a href="#section-5.3.2-3" class="pilcrow">¶</a></p>
+circumstances in which the above error codes are returned.<a href="#section-5.3.2-3" class="pilcrow">¶</a></p>
 <p id="section-5.3.2-4">If the request lacks any authentication information (e.g., the client
 was unaware that authentication is necessary or attempted using an
 unsupported authentication method), the resource server SHOULD NOT
@@ -4741,7 +4749,7 @@ would only later reject the ID token after validating the <code>nonce</code> and
 that it doesn't match. In contrast, the authorization server enforcing the
 <code>code_challenge</code> and <code>code_verifier</code> parameters provides a higher security outcome,
 since the authorization server is able to recognize the authorization code
-injection attack pre-emtpively and avoid issuing any tokens in the first place.<a href="#section-7.5.2-5" class="pilcrow">¶</a></p>
+injection attack pre-emptively and avoid issuing any tokens in the first place.<a href="#section-7.5.2-5" class="pilcrow">¶</a></p>
 <p id="section-7.5.2-6">Historic note: Although PKCE <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>
 (where the <code>code_challenge</code> and <code>code_verifier</code> parameters were created)
 was originally designed as a mechanism
@@ -4802,7 +4810,7 @@ Section 15.4.8 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span
 agent to rewrite the POST request to a GET request and thereby drop
 the form data in the POST request content.<a href="#section-7.5.4-5" class="pilcrow">¶</a></p>
 <p id="section-7.5.4-6">In HTTP <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, only the status code 303
-unambigiously enforces rewriting the HTTP POST request to an HTTP GET
+unambigously enforces rewriting the HTTP POST request to an HTTP GET
 request.  For all other status codes, including the popular 302, user
 agents can opt not to rewrite POST to GET requests and therefore
 reveal the user credentials to the client.  (In practice, however,
@@ -5767,7 +5775,7 @@ work is based upon. No changes to those registries are required by this specific
 <dd class="break"></dd>
 <dt id="I-D.ietf-oauth-browser-based-apps">[I-D.ietf-oauth-browser-based-apps]</dt>
         <dd>
-<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">Waite, D.</span>, and <span class="refAuthor">P. De Ryck</span>, <span class="refTitle">"OAuth 2.0 for Browser-Based Applications"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-browser-based-apps-20</span>, <time datetime="2024-12-18" class="refDate">18 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-20">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-20</a>&gt;</span>. </dd>
+<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">Ryck, P. D.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 for Browser-Based Applications"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-browser-based-apps-24</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/api/v1/doc/document/draft-ietf-oauth-browser-based-apps/">https://datatracker.ietf.org/api/v1/doc/document/draft-ietf-oauth-browser-based-apps/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="NIST800-63">[NIST800-63]</dt>
         <dd>

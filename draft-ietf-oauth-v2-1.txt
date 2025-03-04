@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 22 June 2025                                               Okta
+Expires: 5 September 2025                                           Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                        19 December 2024
+                                                            4 March 2025
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,11 +50,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 June 2025.
+   This Internet-Draft will expire on 5 September 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -256,13 +256,14 @@ Table of Contents
    *  Compromise of any application results in compromise of the end-
       user's password and all of the data protected by that password.
 
-   With OAuth, an end user (resource owner) can grant a printing service
-   (client) access to their protected photos stored at a photo- sharing
-   service (resource server), without sharing their username and
-   password with the printing service.  Instead, they authenticate
-   directly with a server trusted by the photo-sharing service
-   (authorization server), which issues the printing service delegation-
-   specific credentials (access token).
+   An example where OAuth is used is where an end user (resource owner)
+   grants a financial management service (client) access to their
+   sensitive transaction history stored at a banking service (resource
+   server), without sharing their username and password with the
+   financial management service.  Instead, they authenticate directly
+   with their financial institution's server (authorization server),
+   which issues the financial management service delegation-specific
+   credentials (access token).
 
    This separation of concerns also provides the ability to use more
    advanced user authentication methods such as multi-factor
@@ -289,12 +290,18 @@ Table of Contents
    simplification applies when the application is acting on behalf of a
    resource owner, or on behalf of itself.
 
-   OAuth is an authorization protocol, and is not an authentication
-   protocol.  The access token represents the authorization granted to
-   the client.  It is a common practice for the client to present the
-   access token to a proprietary API which returns a user identifier for
-   the resource owner, and then using the result of the API as a proxy
-   for authenticating the user.  This practice is not part of the OAuth
+   OAuth is an authorization protocol, not an authentication protocol,
+   as OAuth does not define the necessary components to achieve user
+   authentication.  An authentication protocol is necessary if the goal
+   is to authenticate users.  An example is OpenID Connect [OpenID],
+   which builds on OAuth to provide the security characteristics and
+   necessary components required of an authentication protocol.
+
+   The access token represents the authorization granted to the client.
+   It is a common practice for the client to present the access token to
+   a proprietary API which returns a user identifier for the resource
+   owner, and then using the result of the API as a proxy for
+   authenticating the user.  This practice is not part of the OAuth
    standard or security considerations, and may not have been considered
    by the resource owner.  Implementors should carefully consult the
    documentation of the resource server before adopting this practice.
@@ -568,9 +575,11 @@ Table of Contents
    consistent access token encoding or format other than what is
    expected by the resource server.
 
-   Access tokens represent specific scopes and durations of access,
-   granted by the resource owner, and enforced by the resource server
-   and authorization server.
+   The access granted by the resource owner to the client is represented
+   by the Access Token created by the authorization server.  Access
+   Tokens are short lived to reduce the blast radius of a leaked Access
+   Token.  The expiration of the Access Token is set by the
+   authorization server.
 
    Depending on the authorization server implementation, the token
    string may be used by the resource server to retrieve the
@@ -1360,8 +1369,10 @@ Table of Contents
       lifetime in seconds of the access token.  For example, the value
       3600 denotes that the access token will expire in one hour from
       the time the response was generated.  If omitted, the
-      authorization server SHOULD provide the expiration time via other
-      means or document the default value.
+      authorization server SHOULD provide the lifetime via other means
+      or document the default value.  Note that the authorization server
+      may prematurely expire an access token and clients MUST NOT expect
+      an access token to be valid for the provided lifetime.
 
    "scope":  RECOMMENDED, if identical to the scope requested by the
       client; otherwise, REQUIRED.  The scope of the access token as
@@ -1647,7 +1658,7 @@ Table of Contents
 
    Clients SHOULD use code challenge methods that do not expose the
    code_verifier in the authorization request.  Otherwise, attackers
-   that can read the authorization request (cf.  Attacker A4 in
+   that can read the authorization request (cf. Attacker A4 in
    [I-D.ietf-oauth-security-topics]) can break the security provided by
    this mechanism.  Currently, S256 is the only such method.
 
@@ -2385,7 +2396,7 @@ Table of Contents
       protected resource.
 
    Extensions may define additional error codes or specify additional
-   circumstances in which the above error codes are retured.
+   circumstances in which the above error codes are returned.
 
    If the request lacks any authentication information (e.g., the client
    was unaware that authentication is necessary or attempted using an
@@ -2849,7 +2860,7 @@ Table of Contents
    contrast, the authorization server enforcing the code_challenge and
    code_verifier parameters provides a higher security outcome, since
    the authorization server is able to recognize the authorization code
-   injection attack pre-emtpively and avoid issuing any tokens in the
+   injection attack pre-emptively and avoid issuing any tokens in the
    first place.
 
    Historic note: Although PKCE [RFC7636] (where the code_challenge and
@@ -2912,7 +2923,7 @@ Table of Contents
    user agent to rewrite the POST request to a GET request and thereby
    drop the form data in the POST request content.
 
-   In HTTP [RFC9110], only the status code 303 unambigiously enforces
+   In HTTP [RFC9110], only the status code 303 unambigously enforces
    rewriting the HTTP POST request to an HTTP GET request.  For all
    other status codes, including the popular 302, user agents can opt
    not to rewrite POST to GET requests and therefore reveal the user
@@ -3838,11 +3849,11 @@ Table of Contents
               oauth-jwt-encoded-state-09>.
 
    [I-D.ietf-oauth-browser-based-apps]
-              Parecki, A., Waite, D., and P. De Ryck, "OAuth 2.0 for
+              Parecki, A., Ryck, P. D., and D. Waite, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-20, 18 December
-              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-20>.
+              Draft, draft-ietf-oauth-browser-based-apps-24, 3 March
+              2025, <https://datatracker.ietf.org/api/v1/doc/document/
+              draft-ietf-oauth-browser-based-apps/>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
