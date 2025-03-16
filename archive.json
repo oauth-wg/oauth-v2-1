@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-13T00:13:04.786827+00:00",
+  "timestamp": "2025-03-16T00:14:12.582835+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4630,7 +4630,7 @@
       "labels": [],
       "body": "There's some unfortunate history around the `aud` value that you use in `private_key_jwt` client authentication assertions.\r\n\r\n[RFC7523](https://datatracker.ietf.org/doc/html/rfc7523#section-3) says:\r\n\r\n```\r\n        The JWT MUST contain an \"aud\" (audience) claim containing a\r\n        value that identifies the authorization server as an intended\r\n        audience.  The token endpoint URL of the authorization server\r\n        MAY be used as a value for an \"aud\" element to identify the\r\n        authorization server as an intended audience of the JWT.  The\r\n        authorization server MUST reject any JWT that does not contain\r\n        its own identity as the intended audience\r\n```\r\n\r\nThe WG already tried to be a bit more specific, e.g. in [PAR](https://www.rfc-editor.org/rfc/rfc9126.html#section-2) we say the issuer value 'SHOULD' be used and 'MUST' be accepted:\r\n\r\n> Due to historical reasons, there is potential ambiguity regarding the appropriate audience value to use when employing JWT client assertion-based authentication (defined in [Section 2.2](https://www.rfc-editor.org/rfc/rfc7523#section-2.2) of [[RFC7523](https://www.rfc-editor.org/rfc/rfc9126.html#RFC7523)] with private_key_jwt or client_secret_jwt authentication method names per Section 9 of [[OIDC](https://www.rfc-editor.org/rfc/rfc9126.html#OIDC)]). To address that ambiguity, the issuer identifier URL of the authorization server according to [[RFC8414](https://www.rfc-editor.org/rfc/rfc9126.html#RFC8414)] SHOULD be used as the value of the audience. In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or pushed authorization request endpoint URL as values that identify it as an intended audience.\r\n\r\n\r\nIt seems like we could add something in OAuth 2.1 to try and help people get this working in an interoperable fashion. Somewhere in https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-2.4 would seem like a possible place to offer a clarification. Perhaps something along the lines of:\r\n\r\n> When using `private_key_jwt`, In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or the endpoint URL that the assertion is being presented to as `aud` values that identify it as an intended audience.\r\n",
       "createdAt": "2024-07-08T17:30:06Z",
-      "updatedAt": "2024-11-09T18:27:06Z",
+      "updatedAt": "2025-03-14T16:13:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -4646,6 +4646,13 @@
           "body": "Apologies again.",
           "createdAt": "2024-11-09T18:27:05Z",
           "updatedAt": "2024-11-09T18:27:05Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "NONE",
+          "body": "This is still relevant but what is done about it here, if anything, may change due to https://talks.secworkshop.events/osw2025/talk/R8D9BS/",
+          "createdAt": "2025-03-14T16:13:43Z",
+          "updatedAt": "2025-03-14T16:13:43Z"
         }
       ]
     },
