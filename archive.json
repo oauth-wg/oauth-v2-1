@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-16T00:14:12.582835+00:00",
+  "timestamp": "2025-03-18T00:12:39.342770+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3803,7 +3803,7 @@
       "id": "I_kwDODkfq5s5rmCns",
       "title": "point implementers to OIDC in intro",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/151",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3812,8 +3812,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-07-14T16:18:15Z",
-      "updatedAt": "2024-12-04T15:05:19Z",
-      "closedAt": null,
+      "updatedAt": "2025-03-16T08:11:36Z",
+      "closedAt": "2025-03-16T08:11:36Z",
       "comments": [
         {
           "author": "dickhardt",
@@ -4827,7 +4827,7 @@
       "id": "I_kwDODkfq5s6iAp-k",
       "title": "Expand on definition of expires_in",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/191",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -4836,8 +4836,8 @@
       "labels": [],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-3.2.3\r\n\r\n> If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.\r\n\r\nReplace the last sentence explaining that an access token might expire ahead of the scheduled expiration here",
       "createdAt": "2024-12-04T15:19:05Z",
-      "updatedAt": "2024-12-04T15:19:51Z",
-      "closedAt": null,
+      "updatedAt": "2025-03-16T08:28:59Z",
+      "closedAt": "2025-03-16T08:28:54Z",
       "comments": []
     },
     {
