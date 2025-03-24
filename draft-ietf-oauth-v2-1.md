@@ -3601,6 +3601,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
   as per Section 4.13.2 of {{I-D.ietf-oauth-security-topics}}
 * The token endpoint request containing an authorization code no longer contains
   the `redirect_uri` parameter
+* Authorization servers must support client credentials in the request body
 
 ## Removal of the OAuth 2.0 Implicit grant
 
