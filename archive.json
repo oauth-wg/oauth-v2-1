@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-23T00:14:11.494330+00:00",
+  "timestamp": "2025-03-25T00:13:09.064520+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4051,7 +4051,7 @@
       ],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#section-3.2.3.1 says that\r\n\r\n> \"**invalid_client**\":  Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported.\r\n\r\nI am not so sure if it's possible to indicate HTTP authentication schemas for _private_key_jwt_ and _client_secret_jwt_ client authentication types.\r\n\r\nThis text also indicates that multiple authentication schemas are supported. Thus, does the authorization server need to specify multiple WWW-Authenticate headers, say \"WWW-Authenticate: Basic\" and \"WWW-Authenticate: Bearer\"?\r\n\r\nIt would be great to clarify these nuances.\r\n",
       "createdAt": "2023-08-04T19:31:16Z",
-      "updatedAt": "2024-05-14T17:52:10Z",
+      "updatedAt": "2025-03-24T09:54:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -4060,6 +4060,13 @@
           "body": "I'm honestly not sure how much useful behaviour can really be dictated about `invalid_client` errors.\r\n\r\nI wonder if there are any clients that attempt to parse the WWW-Authenticate header and try a different authentication mechanism? The clients I'm aware of all require the client authentication to be explicitly configured.",
           "createdAt": "2024-05-14T17:52:08Z",
           "updatedAt": "2024-05-14T17:52:08Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "> I wonder if there are any clients that attempt to parse the WWW-Authenticate header and try a different authentication mechanism? The clients I'm aware of all require the client authentication to be explicitly configured.\n\nI concur.",
+          "createdAt": "2025-03-24T09:54:56Z",
+          "updatedAt": "2025-03-24T09:54:56Z"
         }
       ]
     },
@@ -8988,6 +8995,58 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 207,
+      "id": "PR_kwDODkfq5s6P1nyK",
+      "title": "add client credentials in body change to oauth-2-0-differences",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/207",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Adds the change from dcd8716 to https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-12.html#name-differences-from-oauth-20",
+      "createdAt": "2025-03-24T09:44:05Z",
+      "updatedAt": "2025-03-24T09:44:06Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "be8df5055e6ef4baa1672b6ead0c9a166e334de5",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "update-diff",
+      "headRefOid": "e398b8ccbb92eadc583adbbcf8a85e871c2b115e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 208,
+      "id": "PR_kwDODkfq5s6P1rmi",
+      "title": "remove dupe in and sort #extensions",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/208",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Removes the dupe (9447) and sorts the #extensions by their RFC number\r\n\r\ncloses #193",
+      "createdAt": "2025-03-24T09:50:38Z",
+      "updatedAt": "2025-03-24T09:51:07Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "be8df5055e6ef4baa1672b6ead0c9a166e334de5",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "sort-extensions",
+      "headRefOid": "9c2f928057ab0f976feeda80b116e34ab0499ff0",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
