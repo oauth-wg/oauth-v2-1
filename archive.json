@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-01T00:15:01.113610+00:00",
+  "timestamp": "2025-04-13T00:38:05.917910+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4709,7 +4709,7 @@
       "labels": [],
       "body": "Hi, \r\n\r\nIs there a reason why the `expires_in` field exists but an equivalent for refresh token doesn't? Something like `refresh_token_expires_in`.  I couldn't find any discussion on it in past mailing lists. Currently, most implementations use `refresh_token_expires_in` while some use `refresh_expires_in`.\r\n\r\nI'm not sure if this can be changed but I'd like to know if there's any background context to the decision.",
       "createdAt": "2024-09-14T01:54:06Z",
-      "updatedAt": "2025-02-06T00:36:11Z",
+      "updatedAt": "2025-04-10T20:15:31Z",
       "closedAt": "2024-12-19T15:07:58Z",
       "comments": [
         {
@@ -4767,6 +4767,13 @@
           "body": "I think there are two concepts at play here:\n\n1. How long is the user's authorization good for? Some AS may offer the user a choice (or mandate) to grant permissions only for a certain amount of time, especially for very sensitive data access (e.g. mail or biometrics).\n2. How long is the credential itself valid, i.e. how often does the client need to hit the token endpoint to get a new RT.\n\nCan a single `refresh_token_expires_in` field adequately address both use cases? The RT itself would always expire in `min(rotation_cadence, user_authz_duration)`, so a single field would still be accurate, but clients might want to handle each case differently.",
           "createdAt": "2025-02-06T00:36:10Z",
           "updatedAt": "2025-02-06T00:36:10Z"
+        },
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "To close the loop here: Based on discussions at IETF 122, we are not including this in OAuth 2.1 but I will send out a draft of a standalone spec for RT and/or consent expiration.",
+          "createdAt": "2025-04-10T20:15:30Z",
+          "updatedAt": "2025-04-10T20:15:30Z"
         }
       ]
     },
