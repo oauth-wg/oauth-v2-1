@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-13T00:38:05.917910+00:00",
+  "timestamp": "2025-04-17T00:13:24.817180+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4937,6 +4937,37 @@
       "updatedAt": "2024-12-21T23:05:04Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 209,
+      "id": "I_kwDODkfq5s6yzsSd",
+      "title": "what does it mean to \"sanitise\" state/redirect urls?",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/209",
+      "state": "OPEN",
+      "author": "jogu",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11 says:\n\n> A code injection attack occurs when an input or otherwise external variable is used by an application unsanitized and causes modification to the application logic. This may allow an attacker to gain access to the application device or its data, cause denial of service, or introduce a wide range of malicious side-effects.[\u00b6](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11-1)\n>\n> The authorization server and client MUST sanitize (and validate when possible) any value received -- in particular, the value of the state and redirect_uri parameters.[\u00b6](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11-2)\n\nI don't really know what \"sanitize\" means here. I don't think it would be correct for an AS to remove some characters from state because it decided it didn't like them - the only sane option seems to be to reject the request.\n\n(From a discussion on today's FAPI WG call)",
+      "createdAt": "2025-04-16T14:47:20Z",
+      "updatedAt": "2025-04-16T14:52:55Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "That's copy pasted from RFC6749, maybe @dickhardt remembers the context of adding that in the first place?\n\nhttps://www.rfc-editor.org/rfc/rfc6749.html#section-10.14",
+          "createdAt": "2025-04-16T14:49:23Z",
+          "updatedAt": "2025-04-16T14:49:23Z"
+        },
+        {
+          "author": "gffletch",
+          "authorAssociation": "NONE",
+          "body": "Personally, I'd prefer 2.1 to say that state values MUST be URL safe... but that would be a pretty big breaking change :( Maybe we can make it a SHOULD to encourage people to move away from VSCHAR?\n\nOpenID4VP restricts nonces to...\n> Values MUST only contain ASCII URL safe characters (uppercase and lowercase letters, decimal digits, hyphen, period, underscore, and tilde).",
+          "createdAt": "2025-04-16T14:49:44Z",
+          "updatedAt": "2025-04-16T14:52:55Z"
+        }
+      ]
     }
   ],
   "pulls": [
