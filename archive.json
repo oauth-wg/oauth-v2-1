@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-17T00:13:24.817180+00:00",
+  "timestamp": "2025-04-20T00:14:53.547846+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4950,7 +4950,7 @@
       "labels": [],
       "body": "https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11 says:\n\n> A code injection attack occurs when an input or otherwise external variable is used by an application unsanitized and causes modification to the application logic. This may allow an attacker to gain access to the application device or its data, cause denial of service, or introduce a wide range of malicious side-effects.[\u00b6](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11-1)\n>\n> The authorization server and client MUST sanitize (and validate when possible) any value received -- in particular, the value of the state and redirect_uri parameters.[\u00b6](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11-2)\n\nI don't really know what \"sanitize\" means here. I don't think it would be correct for an AS to remove some characters from state because it decided it didn't like them - the only sane option seems to be to reject the request.\n\n(From a discussion on today's FAPI WG call)",
       "createdAt": "2025-04-16T14:47:20Z",
-      "updatedAt": "2025-04-16T14:52:55Z",
+      "updatedAt": "2025-04-19T00:12:23Z",
       "closedAt": null,
       "comments": [
         {
@@ -4966,6 +4966,13 @@
           "body": "Personally, I'd prefer 2.1 to say that state values MUST be URL safe... but that would be a pretty big breaking change :( Maybe we can make it a SHOULD to encourage people to move away from VSCHAR?\n\nOpenID4VP restricts nonces to...\n> Values MUST only contain ASCII URL safe characters (uppercase and lowercase letters, decimal digits, hyphen, period, underscore, and tilde).",
           "createdAt": "2025-04-16T14:49:44Z",
           "updatedAt": "2025-04-16T14:52:55Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The intent of the sanitize guidance was to remind implementors to use their \"standard\" sanitization code to protect against SQL injections etc. I believe we left it vague on exactly what to do so that implementors would respond to new attacks, or attacks specific to their deployment. In other words, including this phrase \"seemed like a good idea at the time\".\n\nNow that a redirect_uri has to be a direct match, there is less concern about it.\n\nA restricted character set for a state parameter would have been a good idea so it could be validated. \n\n@jogu I agree that a parameter should not be modified. If it is non-conforming, then the request should be rejected.\n\nPerhaps sanitizing should be dropped from this section and we should warn implementors to treat the parameters as random strings that could be malicious -- or some similar language? \n",
+          "createdAt": "2025-04-19T00:12:22Z",
+          "updatedAt": "2025-04-19T00:12:22Z"
         }
       ]
     }
