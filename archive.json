@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-24T00:13:28.334774+00:00",
+  "timestamp": "2025-04-29T00:13:38.638969+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4988,7 +4988,7 @@
       "labels": [],
       "body": "Whilst the revised text in OAuth 2.1 does clear up a lot of my concerns from the OAuth mailing list, it still doesn't explicitly define the methods by name from what I can see.\n\nIt would be good to have these named methods very clearly defined in this revision.\n\nhttps://mailarchive.ietf.org/arch/msg/oauth/QGJfkCMqN2kVMRMDwvCiF3mZ6r4/",
       "createdAt": "2025-04-22T22:21:41Z",
-      "updatedAt": "2025-04-22T22:29:36Z",
+      "updatedAt": "2025-04-28T00:26:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -4997,6 +4997,41 @@
           "body": "PRs are welcome!\r\n\u1427\r\n\r\nOn Tue, Apr 22, 2025 at 3:22\u202fPM Emelia Smith ***@***.***>\r\nwrote:\r\n\r\n> Whilst the revised text in OAuth 2.1 does clear up a lot of my concerns\r\n> from the OAuth mailing list, it still doesn't explicitly define the methods\r\n> by name from what I can see.\r\n>\r\n> It would be good to have these named methods very clearly defined in this\r\n> revision.\r\n>\r\n> https://mailarchive.ietf.org/arch/msg/oauth/QGJfkCMqN2kVMRMDwvCiF3mZ6r4/\r\n>\r\n> \u2014\r\n> Reply to this email directly, view it on GitHub\r\n> <https://github.com/oauth-wg/oauth-v2-1/issues/210>, or unsubscribe\r\n> <https://github.com/notifications/unsubscribe-auth/AAFIGVVPUX5XKICDV5KSAUD2226IZAVCNFSM6AAAAAB3U2AHX2VHI2DSMVQWIX3LMV43ASLTON2WKOZTGAYTEMRVG4YDGNY>\r\n> .\r\n> You are receiving this because you are subscribed to this thread.Message\r\n> ID: ***@***.***>\r\n> *ThisIsMissEm* created an issue (oauth-wg/oauth-v2-1#210)\r\n> <https://github.com/oauth-wg/oauth-v2-1/issues/210>\r\n>\r\n> Whilst the revised text in OAuth 2.1 does clear up a lot of my concerns\r\n> from the OAuth mailing list, it still doesn't explicitly define the methods\r\n> by name from what I can see.\r\n>\r\n> It would be good to have these named methods very clearly defined in this\r\n> revision.\r\n>\r\n> https://mailarchive.ietf.org/arch/msg/oauth/QGJfkCMqN2kVMRMDwvCiF3mZ6r4/\r\n>\r\n> \u2014\r\n> Reply to this email directly, view it on GitHub\r\n> <https://github.com/oauth-wg/oauth-v2-1/issues/210>, or unsubscribe\r\n> <https://github.com/notifications/unsubscribe-auth/AAFIGVVPUX5XKICDV5KSAUD2226IZAVCNFSM6AAAAAB3U2AHX2VHI2DSMVQWIX3LMV43ASLTON2WKOZTGAYTEMRVG4YDGNY>\r\n> .\r\n> You are receiving this because you are subscribed to this thread.Message\r\n> ID: ***@***.***>\r\n>\r\n",
           "createdAt": "2025-04-22T22:29:35Z",
           "updatedAt": "2025-04-22T22:29:35Z"
+        },
+        {
+          "author": "ThisIsMissEm",
+          "authorAssociation": "NONE",
+          "body": "To be honest, the reason I opened the issue is because I'm not sure exactly how we'd want to structure this information in this I-D that I don't work on currently.",
+          "createdAt": "2025-04-27T14:52:42Z",
+          "updatedAt": "2025-04-27T14:52:42Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "That's fine. Would you be up for summarizing your email in the issue?",
+          "createdAt": "2025-04-27T15:39:52Z",
+          "updatedAt": "2025-04-27T15:39:52Z"
+        },
+        {
+          "author": "ThisIsMissEm",
+          "authorAssociation": "NONE",
+          "body": "I believe I have already: the client authentication mechanism mentioned by name above aren't formally specified \u2014 they are given names in RFC7591 (DCR) but the definitions linked to in RFC6749 are not without a lot of room for interpretation.\n\nE.g., can you use `client_secret_basic` without a \"password\" value in the HTTP Basic Authentication header?\n\nAlso, the links in RFC7591 are broken & reference internal sections that do not exist",
+          "createdAt": "2025-04-27T16:11:33Z",
+          "updatedAt": "2025-04-27T16:11:33Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Any hints on what is not clear and needs clarity is useful. For example, why would you want to use `client_secret_basic` without a password value? I would think that you would need to include a password if using `client_secret_basic`. ",
+          "createdAt": "2025-04-27T23:51:54Z",
+          "updatedAt": "2025-04-27T23:51:54Z"
+        },
+        {
+          "author": "ThisIsMissEm",
+          "authorAssociation": "NONE",
+          "body": "> I would think that you would need to include a password if using client_secret_basic.\n\nRight, but that behaviour isn't specified, I think I'd agree you'd need to pass the client_secret via the http basic authentication password to use client_secret_basic, just like client_secret_post requires client_secret",
+          "createdAt": "2025-04-28T00:26:15Z",
+          "updatedAt": "2025-04-28T00:26:15Z"
         }
       ]
     }
