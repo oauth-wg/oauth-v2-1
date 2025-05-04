@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-29T00:13:38.638969+00:00",
+  "timestamp": "2025-05-04T00:15:24.548520+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5034,6 +5034,22 @@
           "updatedAt": "2025-04-28T00:26:15Z"
         }
       ]
+    },
+    {
+      "number": 211,
+      "id": "I_kwDODkfq5s608hIL",
+      "title": "Refresh Tokens",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/211",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft has extensive reference to access tokens in the security considerations section, but appears silent on refresh tokens. Consider adding a security considerations for Refresh tokens that references the Security BCP (RFC9700). ",
+      "createdAt": "2025-05-02T11:08:45Z",
+      "updatedAt": "2025-05-02T11:08:45Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
