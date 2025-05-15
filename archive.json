@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-04T00:15:24.548520+00:00",
+  "timestamp": "2025-05-15T00:12:43.381957+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5048,6 +5048,42 @@
       "body": "The draft has extensive reference to access tokens in the security considerations section, but appears silent on refresh tokens. Consider adding a security considerations for Refresh tokens that references the Security BCP (RFC9700). ",
       "createdAt": "2025-05-02T11:08:45Z",
       "updatedAt": "2025-05-02T11:08:45Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 212,
+      "id": "I_kwDODkfq5s62peIT",
+      "title": "guidance on rotating refreshing tokens and dealing with",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/212",
+      "state": "OPEN",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "dickhardt"
+      ],
+      "labels": [],
+      "body": "we should provide guidance on the impact of a refresh that fails where the old refresh token is now invalid but the new refresh token did not get to the client because of an error along the way",
+      "createdAt": "2025-05-14T21:32:58Z",
+      "updatedAt": "2025-05-14T21:32:58Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 213,
+      "id": "I_kwDODkfq5s62phJT",
+      "title": "guidance on issues of using personal oauth flows for a service to get long term access and then refresh fails and then service does not have access",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/213",
+      "state": "OPEN",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "dickhardt"
+      ],
+      "labels": [],
+      "body": "feedback from AuthCon ",
+      "createdAt": "2025-05-14T21:41:04Z",
+      "updatedAt": "2025-05-14T21:41:04Z",
       "closedAt": null,
       "comments": []
     }
