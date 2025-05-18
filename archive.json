@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-15T00:12:43.381957+00:00",
+  "timestamp": "2025-05-18T00:15:12.032430+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5065,9 +5065,24 @@
       "labels": [],
       "body": "we should provide guidance on the impact of a refresh that fails where the old refresh token is now invalid but the new refresh token did not get to the client because of an error along the way",
       "createdAt": "2025-05-14T21:32:58Z",
-      "updatedAt": "2025-05-14T21:32:58Z",
+      "updatedAt": "2025-05-16T15:56:01Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "surbas",
+          "authorAssociation": "NONE",
+          "body": "Appreciated this one. Depending on the oauth2 provider we sometimes lose up to 1% of active connections in a day, which means for us somebodies automated workflow breaking down and requiring re-authentication.... which is annoying. With some, we have been able to convinced them, that if they value resiliency more then the incremental secure gain, that they should allow more then one (2 or 3) refresh token to be valid. This is not as secure (by some amount), but the trade off is the connection is more resilient. Having some guidance in the spec around this discussion would help tremendously to at least start to having these conversations. Let me know how I can help!",
+          "createdAt": "2025-05-16T15:31:57Z",
+          "updatedAt": "2025-05-16T15:31:57Z"
+        },
+        {
+          "author": "brockallen",
+          "authorAssociation": "NONE",
+          "body": "I think there was already guidance that one-time use refresh tokens are not really ideal, and don't provide the security benefits originally thought. Perhaps it was in the browser-based apps BCP (BFF) doc?",
+          "createdAt": "2025-05-16T15:55:44Z",
+          "updatedAt": "2025-05-16T15:56:00Z"
+        }
+      ]
     },
     {
       "number": 213,
@@ -5083,9 +5098,17 @@
       "labels": [],
       "body": "feedback from AuthCon ",
       "createdAt": "2025-05-14T21:41:04Z",
-      "updatedAt": "2025-05-14T21:41:04Z",
+      "updatedAt": "2025-05-15T15:40:19Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "voidmain",
+          "authorAssociation": "NONE",
+          "body": "A good example is something like this (application is synonymous with client):\n\n1. Application uses Personal (i.e. human clicking) OAuth flow to get an access token and refresh token\n2. Application stores these tokens in the database\n3. Application uses access token to make API calls\n4. At some point in the future, application either checks the token (JWT) to see if it is expired or makes an API call and gets a error response indicating it is expired\n5. Application then requests a new access token via the Refresh Token Grant\n6. Server generates new access token and new refresh token, since it rotates refresh tokens during the Refresh Token Grant\n7. Network/server crashes and application never sees the response\n8. Application can no longer call APIs and cannot refresh its tokens either\n\nIn this case, the refresh token the application has in the database is invalid as is the access token, but the application has no way to recover since the new refresh token is lost. This requires that the user logs back into the application and completes the Personal OAuth flow again in order to generate 2 new tokens (access and refresh). Until a user logs in and actively completes this process, the application is essentially inoperable with respect to the service it is using the tokens to interact with.\n\nThere is likely a discussion around storing N refresh tokens and deleting the oldest ones once newer ones have been used. However, this seems to be just as risky as never rotating refresh tokens, which basically solve this problem entirely.",
+          "createdAt": "2025-05-15T15:40:17Z",
+          "updatedAt": "2025-05-15T15:40:17Z"
+        }
+      ]
     }
   ],
   "pulls": [
