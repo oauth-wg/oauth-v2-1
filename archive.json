@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-18T00:15:12.032430+00:00",
+  "timestamp": "2025-05-22T00:13:51.350149+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5098,7 +5098,7 @@
       "labels": [],
       "body": "feedback from AuthCon ",
       "createdAt": "2025-05-14T21:41:04Z",
-      "updatedAt": "2025-05-15T15:40:19Z",
+      "updatedAt": "2025-05-22T00:03:04Z",
       "closedAt": null,
       "comments": [
         {
@@ -5107,6 +5107,55 @@
           "body": "A good example is something like this (application is synonymous with client):\n\n1. Application uses Personal (i.e. human clicking) OAuth flow to get an access token and refresh token\n2. Application stores these tokens in the database\n3. Application uses access token to make API calls\n4. At some point in the future, application either checks the token (JWT) to see if it is expired or makes an API call and gets a error response indicating it is expired\n5. Application then requests a new access token via the Refresh Token Grant\n6. Server generates new access token and new refresh token, since it rotates refresh tokens during the Refresh Token Grant\n7. Network/server crashes and application never sees the response\n8. Application can no longer call APIs and cannot refresh its tokens either\n\nIn this case, the refresh token the application has in the database is invalid as is the access token, but the application has no way to recover since the new refresh token is lost. This requires that the user logs back into the application and completes the Personal OAuth flow again in order to generate 2 new tokens (access and refresh). Until a user logs in and actively completes this process, the application is essentially inoperable with respect to the service it is using the tokens to interact with.\n\nThere is likely a discussion around storing N refresh tokens and deleting the oldest ones once newer ones have been used. However, this seems to be just as risky as never rotating refresh tokens, which basically solve this problem entirely.",
           "createdAt": "2025-05-15T15:40:17Z",
           "updatedAt": "2025-05-15T15:40:17Z"
+        },
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "An option that would likely address the majority of practical problems is to allow a small grace period before the AS invalidates the old RT, e.g. 60 seconds. This allows the client to retry transient errors with the old RT. I don't think this compromises the security of RT rotation _too_ much, as an attacker with a stolen RT would need to ensure nearly synchronized refreshes with the real client in order to keep the token active. Real clients can guard against this by introducing jitter in their RT refresh cadence.",
+          "createdAt": "2025-05-20T17:33:46Z",
+          "updatedAt": "2025-05-20T17:33:46Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Another option would be to use DPoP in the initial token request, and in refreshes, which would provide assurance it is the same client on refresh which could remove the desire of rotating refresh tokens. \n\n@voidmain would managing DPoP be preferable to the rotating refresh token issues?",
+          "createdAt": "2025-05-21T01:25:58Z",
+          "updatedAt": "2025-05-21T01:25:58Z"
+        },
+        {
+          "author": "voidmain",
+          "authorAssociation": "NONE",
+          "body": "@njwatson32 - a grace period would certainly work. However, that type of solution should be configurable and will require some testing. It's similar in nature to a thread-safety issue where timing comes in to play and it's not always deterministic when the second request will happen or if it will fail.\n\nFor example, the IDP might be in an AWS Region that experiences an outage and the first request occurred right as the outage started. That means the second request might be 30 minutes later.\n\n@dickhardt - I don't think DPoP helps much because this is a race condition not a proof problem. Can you expand on your DPoP idea so we can discuss?",
+          "createdAt": "2025-05-21T20:20:23Z",
+          "updatedAt": "2025-05-21T20:20:23Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@voidmain DPoP could allow an AS to *not* rotate the refresh token, removing any race condition. ",
+          "createdAt": "2025-05-21T22:26:50Z",
+          "updatedAt": "2025-05-21T22:26:50Z"
+        },
+        {
+          "author": "voidmain",
+          "authorAssociation": "NONE",
+          "body": "@dickhardt - Ah. That makes sense. Though leaking keys and refresh tokens is still an issue. But it would at least reduce some threat vectors.\n\nHowever, I would only make that one of the possible options. This allows clients that don't want to or aren't capable of using DPoP to still handle refresh token issues with a configurable grace period.",
+          "createdAt": "2025-05-21T22:34:42Z",
+          "updatedAt": "2025-05-21T22:34:42Z"
+        },
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "@voidmain yeah, the grace period likely won't address that AWS regional example you gave, but I'd expect that to be a small outlier compared to the much more common transient network errors. Configurable grace period also seems reasonable.",
+          "createdAt": "2025-05-21T22:42:30Z",
+          "updatedAt": "2025-05-21T22:42:30Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@voidmain why would DPoP not be possible for a client? \n\nA configurable grace period would be new functionality, which is out of scope for OAuth 2.1\n\nDPoP is an existing spec and using it is a best practice. ",
+          "createdAt": "2025-05-22T00:03:03Z",
+          "updatedAt": "2025-05-22T00:03:03Z"
         }
       ]
     }
