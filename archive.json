@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-22T00:13:51.350149+00:00",
+  "timestamp": "2025-05-25T00:15:43.385331+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5098,7 +5098,7 @@
       "labels": [],
       "body": "feedback from AuthCon ",
       "createdAt": "2025-05-14T21:41:04Z",
-      "updatedAt": "2025-05-22T00:03:04Z",
+      "updatedAt": "2025-05-22T22:13:03Z",
       "closedAt": null,
       "comments": [
         {
@@ -5156,6 +5156,34 @@
           "body": "@voidmain why would DPoP not be possible for a client? \n\nA configurable grace period would be new functionality, which is out of scope for OAuth 2.1\n\nDPoP is an existing spec and using it is a best practice. ",
           "createdAt": "2025-05-22T00:03:03Z",
           "updatedAt": "2025-05-22T00:03:03Z"
+        },
+        {
+          "author": "voidmain",
+          "authorAssociation": "NONE",
+          "body": "@dickhardt - ah the challenge of getting customers to use features. WebAuthn is still at less than 10% adoption still. And some customers still don't use PCKE.\n\nAs a vendor, we rarely force things. For FusionAuth, we would make this optional, even if the spec requires it. Otherwise, customers will go find a solution where it's optional.\n\nWe even break spec and allow wildcards on `redirect_uri`, because.... customers demand that feature.",
+          "createdAt": "2025-05-22T17:35:21Z",
+          "updatedAt": "2025-05-22T17:35:21Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@voidmain you are free to implement whatever you want of course! ... and I'm a big fan of giving customers what they want. \n\nAs an industry we have a responsibility to improve the security of our customers, and to design things that work. The refresh is a problematic space. We can provide guidance wrt a grace period as a best practice. \n\nWe can also describe how DPoP can be a substitute for rotating refresh tokens.\n\n>  WebAuthn is still at less than 10% adoption still.\n\nI'm not surprised ... but that is a different spec! :) ",
+          "createdAt": "2025-05-22T20:47:47Z",
+          "updatedAt": "2025-05-22T20:47:47Z"
+        },
+        {
+          "author": "voidmain",
+          "authorAssociation": "NONE",
+          "body": "@dickhardt - agreed on all of that. Just want to give choices and options and only use the word \"MUST\" when absolutely necessary. \ud83d\ude01",
+          "createdAt": "2025-05-22T21:51:32Z",
+          "updatedAt": "2025-05-22T21:51:32Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Even with a MUST -- your implementation can do whatever it wants!",
+          "createdAt": "2025-05-22T22:13:02Z",
+          "updatedAt": "2025-05-22T22:13:02Z"
         }
       ]
     }
