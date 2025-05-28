@@ -1755,13 +1755,13 @@ of the resource server before adopting this practice.<a href="#section-1-8" clas
 use of OAuth over any protocol other than HTTP is out of scope.<a href="#section-1-9" class="pilcrow">¶</a></p>
 <p id="section-1-10">Since the publication of the OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>
 in October 2012, it has been updated by OAuth 2.0 for Native Apps <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span>,
-OAuth Security Best Current Practice <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>,
+OAuth Security Best Current Practice <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>,
 and OAuth 2.0 for Browser-Based Apps <span>[<a href="#I-D.ietf-oauth-browser-based-apps" class="cite xref">I-D.ietf-oauth-browser-based-apps</a>]</span>.
 The OAuth 2.0 Authorization Framework: Bearer Token Usage <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>
-has also been updated with <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>. This
+has also been updated with <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>. This
 Standards Track specification consolidates the information in all of these
 documents and removes features that have been found to be insecure
-in <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>.<a href="#section-1-10" class="pilcrow">¶</a></p>
+in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-1-10" class="pilcrow">¶</a></p>
 <div id="roles">
 <section id="section-1.1">
         <h3 id="name-roles">
@@ -1816,7 +1816,7 @@ is also out of scope of this specification, with some exceptions, such as
 security considerations around prompting the end user for consent.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 <p id="section-1.1-6">When the resource owner is the end user, the user will interact with
 the client. When the client is a web-based application, the user will
-interact with the client through a user agent (as described in Section 3.5 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>).
+interact with the client through a user agent (as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-3.5" class="relref">Section 3.5</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>).
 When the client is a native application, the user will interact with
 the client directly through the operating system. See <a href="#client-types" class="auto internal xref">Section 2.1</a>
 for further details.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
@@ -2192,10 +2192,10 @@ acceptance of that access token at the recipient (e.g., a resource server).<a hr
 <p id="section-1.4.3-2">Authorization and resource servers SHOULD use mechanisms for
 sender-constraining access tokens, such as OAuth Demonstration of Proof of Possession (DPoP) <span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>
 or Mutual TLS for OAuth 2.0 <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>.
-See <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span> Section 4.10.1, to prevent misuse of stolen and leaked access tokens.<a href="#section-1.4.3-2" class="pilcrow">¶</a></p>
+See <span><a href="https://rfc-editor.org/rfc/rfc9700#section-4.10.1" class="relref">Section 4.10.1</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span> to prevent misuse of stolen and leaked access tokens.<a href="#section-1.4.3-2" class="pilcrow">¶</a></p>
 <p id="section-1.4.3-3">It is RECOMMENDED to use end-to-end TLS between the client and the
 resource server. If TLS traffic needs to be terminated at an intermediary,
-refer to Section 4.13 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span> for further security advice.<a href="#section-1.4.3-3" class="pilcrow">¶</a></p>
+refer to <span><a href="https://rfc-editor.org/rfc/rfc9700#section-4.13" class="relref">Section 4.13</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span> for further security advice.<a href="#section-1.4.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2305,8 +2305,8 @@ defined in <span>[<a href="#RFC4949" class="cite xref">RFC4949</a>]</span>.  The
 "attack", "authentication", "authorization", "certificate",
 "confidentiality", "credential", "encryption", "identity", "sign",
 "signature", "trust", "validate", and "verify".<a href="#section-1.9-3" class="pilcrow">¶</a></p>
-<p id="section-1.9-4">The term "content" is to be interpreted as described in Section 6.4 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.<a href="#section-1.9-4" class="pilcrow">¶</a></p>
-<p id="section-1.9-5">The term "user agent" is to be interpreted as described in Section 3.5 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.<a href="#section-1.9-5" class="pilcrow">¶</a></p>
+<p id="section-1.9-4">The term "content" is to be interpreted as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-6.4" class="relref">Section 6.4</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.<a href="#section-1.9-4" class="pilcrow">¶</a></p>
+<p id="section-1.9-5">The term "user agent" is to be interpreted as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-3.5" class="relref">Section 3.5</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.<a href="#section-1.9-5" class="pilcrow">¶</a></p>
 <p id="section-1.9-6">Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.<a href="#section-1.9-6" class="pilcrow">¶</a></p>
 </section>
@@ -2459,7 +2459,7 @@ agent back to after completing its interaction with the resource owner.<a href="
 client's redirection endpoints previously established with the
 authorization server during the client registration process.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <p id="section-2.3-3">The redirect URI MUST be an absolute URI as defined by
-<span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> Section 4.3.  The redirect URI MAY include an
+<span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.  The redirect URI MAY include an
 query string component (<a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>), which MUST be retained when adding
 additional query parameters. The redirect URI MUST NOT include a
 fragment component.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
@@ -2522,7 +2522,7 @@ the <code>redirect_uri</code> request parameter is optional.<a href="#section-2.
 <p id="section-2.3.3-1">Clients MUST prevent Cross-Site Request Forgery (CSRF) attacks. In this
 context, CSRF refers to requests to the redirection endpoint that do
 not originate at the authorization server, but a malicious third party
-(see Section 4.4.1.8. of <span>[<a href="#RFC6819" class="cite xref">RFC6819</a>]</span> for details). Clients that have
+(see <span><a href="https://rfc-editor.org/rfc/rfc6819#section-4.4.1.8" class="relref">Section 4.4.1.8</a> of [<a href="#RFC6819" class="cite xref">RFC6819</a>]</span> for details). Clients that have
 ensured that the authorization server supports the <code>code_challenge</code> parameter MAY
 rely on the CSRF protection provided by that mechanism. In OpenID Connect flows,
 validating the <code>nonce</code> parameter provides CSRF protection. Otherwise, one-time
@@ -2654,7 +2654,7 @@ grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 <p id="section-2.4.1-6">The authorization server MAY support the HTTP Basic
 authentication scheme for authenticating clients that were issued a
 client secret.<a href="#section-2.4.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-7">When using the HTTP Basic authentication scheme as defined in Section 11 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>
+<p id="section-2.4.1-7">When using the HTTP Basic authentication scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>
 to authenticate with the authorization server, the client identifier is encoded using the
 <code>application/x-www-form-urlencoded</code> encoding algorithm per
 <a href="#application-x-www-form-urlencoded" class="auto internal xref">Appendix B</a>, and the encoded value is used as the username; the client
@@ -2759,8 +2759,8 @@ or in the authorization server's metadata document <span>[<a href="#RFC8414" cla
 and MAY include a query string component <a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>,
 which MUST be retained when adding additional query parameters.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <p id="section-3.1-4">The authorization server MUST support the use of the HTTP <code>GET</code>
-method Section 9.3.1 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> for the authorization endpoint and MAY support
-the <code>POST</code> method (Section 9.3.3 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) as well.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+method <span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.1" class="relref">Section 9.3.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> for the authorization endpoint and MAY support
+the <code>POST</code> method (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.3" class="relref">Section 9.3.3</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) as well.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <p id="section-3.1-5">The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.1-6">Request and response parameters
 defined by this specification MUST NOT be included more than once.
@@ -2960,7 +2960,7 @@ reduce the impact of refresh token leakage.<a href="#section-3.2.3-6" class="pil
 <p id="section-3.2.3-7">The parameters are serialized into a JavaScript Object Notation (JSON)
 structure as described in <a href="#json-serialization" class="auto internal xref">Appendix C.3</a>.<a href="#section-3.2.3-7" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-8">The authorization server MUST include the HTTP <code>Cache-Control</code>
-response header field (see Section 5.2 of <span>[<a href="#RFC9111" class="cite xref">RFC9111</a>]</span>) with a value of <code>no-store</code> in any
+response header field (see <span><a href="https://rfc-editor.org/rfc/rfc9111#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9111" class="cite xref">RFC9111</a>]</span>) with a value of <code>no-store</code> in any
 response containing tokens, credentials, or other sensitive
 information.<a href="#section-3.2.3-8" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-9">For example:<a href="#section-3.2.3-9" class="pilcrow">¶</a></p>
@@ -3280,7 +3280,7 @@ DIGIT = %x30-39
 <p id="section-4.1.1-13">Clients SHOULD use code challenge methods that
 do not expose the <code>code_verifier</code> in the authorization request.
 Otherwise, attackers that can read the authorization request (cf.
-Attacker A4 in <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>) can break the security provided
+Attacker A4 in <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>) can break the security provided
 by this mechanism. Currently, <code>S256</code> is the only such method.<a href="#section-4.1.1-13" class="pilcrow">¶</a></p>
 <p id="section-4.1.1-14">NOTE: The code verifier SHOULD have enough entropy to make it
 impractical to guess the value.  It is RECOMMENDED that the output of
@@ -3346,9 +3346,9 @@ required parameters are present and valid.<a href="#section-4.1.1-27" class="pil
 in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration (<a href="#client-registration" class="auto internal xref">Section 2</a>).
 When comparing the two URIs the authorization server MUST ensure that the
-two URIs are equal, see <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, Section 6.2.1, Simple String Comparison, for details.
+two URIs are equal, see <span><a href="https://rfc-editor.org/rfc/rfc3986#section-6.2.1" class="relref">Section 6.2.1</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, Simple String Comparison, for details.
 The only exception is native apps using a localhost URI: In this case, the authorization server
-MUST allow variable port numbers as described in <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span>, Section 7.3.<a href="#section-4.1.1-28" class="pilcrow">¶</a></p>
+MUST allow variable port numbers as described in <span><a href="https://rfc-editor.org/rfc/rfc8252#section-7.3" class="relref">Section 7.3</a> of [<a href="#RFC8252" class="cite xref">RFC8252</a>]</span>.<a href="#section-4.1.1-28" class="pilcrow">¶</a></p>
 <p id="section-4.1.1-29">If the request is valid,
 the authorization server authenticates the resource owner and obtains
 an authorization decision (by asking the resource owner or by
@@ -3928,9 +3928,9 @@ scheme to transmit the access token.<a href="#section-5.1.1-1" class="pilcrow">�
 </pre><a href="#section-5.1.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1.1-4">The syntax of the <code>Authorization</code> header field for this scheme
-follows the usage of the Basic scheme defined in Section 2 of
-<span>[<a href="#RFC2617" class="cite xref">RFC2617</a>]</span>.  Note that, as with Basic, it does not conform to the
-generic syntax defined in Section 1.2 of <span>[<a href="#RFC2617" class="cite xref">RFC2617</a>]</span> but is compatible
+follows the usage of the Basic scheme defined in <span><a href="https://rfc-editor.org/rfc/rfc2617#section-2" class="relref">Section 2</a> of [<a href="#RFC2617" class="cite xref">RFC2617</a>]</span>.
+Note that, as with Basic, it does not conform to the
+generic syntax defined in <span><a href="https://rfc-editor.org/rfc/rfc2617#section-1.2" class="relref">Section 1.2</a> of [<a href="#RFC2617" class="cite xref">RFC2617</a>]</span> but is compatible
 with the general authentication framework in HTTP 1.1 Authentication
 <span>[<a href="#RFC7235" class="cite xref">RFC7235</a>]</span>, although it does not follow the preferred
 practice outlined therein in order to reflect existing deployments.
@@ -3945,7 +3945,7 @@ credentials = "bearer" 1*SP token68
 <p id="section-5.1.1-6">Clients SHOULD make authenticated requests with a bearer token using
 the <code>Authorization</code> request header field with the <code>Bearer</code> HTTP
 authorization scheme.  Resource servers MUST support this method.<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
-<p id="section-5.1.1-7">As described in Section 11.1 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, the string <code>bearer</code>
+<p id="section-5.1.1-7">As described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.1" class="relref">Section 11.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, the string <code>bearer</code>
 is case-insensitive. This means all of the following are valid uses
 of the <code>Authorization</code> header:<a href="#section-5.1.1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -4214,13 +4214,13 @@ WWW-Authenticate: Bearer realm="example",
         </h3>
 <p id="section-6.1-1">Access token types can be defined in one of two ways: registered in
 the Access Token Types registry (following the procedures in
-Section 11.1 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>), or by using a unique absolute URI as its name.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.1" class="relref">Section 11.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>), or by using a unique absolute URI as its name.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <div id="registered-access-token-types">
 <section id="section-6.1.1">
           <h4 id="name-registered-access-token-typ">
 <a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-registered-access-token-typ" class="section-name selfRef">Registered Access Token Types</a>
           </h4>
-<p id="section-6.1.1-1"><span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span> establishes a common registry in Section 11.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>
+<p id="section-6.1.1-1"><span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span> establishes a common registry in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.4" class="relref">Section 11.4</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>
 for error values to be shared among OAuth token authentication schemes.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1.1-2">New authentication schemes designed primarily for OAuth token
 authentication SHOULD define a mechanism for providing an error
@@ -4270,7 +4270,7 @@ used.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
         </h3>
 <p id="section-6.2-1">New request or response parameters for use with the authorization
 endpoint or the token endpoint are defined and registered in the
-OAuth Parameters registry following the procedure in Section 11.2 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+OAuth Parameters registry following the procedure in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.2" class="relref">Section 11.2</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.2-2">Parameter names MUST conform to the param-name ABNF, and parameter
 values syntax MUST be well-defined (e.g., using ABNF, or a reference
 to the syntax of an existing parameter).<a href="#section-6.2-2" class="pilcrow">¶</a></p>
@@ -4296,7 +4296,7 @@ other registered values (e.g., begin with 'companyname_').<a href="#section-6.2-
 unique absolute URI for use with the <code>grant_type</code> parameter.  If the
 extension grant type requires additional token endpoint parameters,
 they MUST be registered in the OAuth Parameters registry as described
-by Section 11.2 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+by <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.2" class="relref">Section 11.2</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="new-response-types">
@@ -4306,7 +4306,7 @@ by Section 11.2 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</spa
         </h3>
 <p id="section-6.4-1">New response types for use with the authorization endpoint are
 defined and registered in the Authorization Endpoint Response Types
-registry following the procedure in Section 11.3 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.  Response type
+registry following the procedure in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.3" class="relref">Section 11.3</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.  Response type
 names MUST conform to the response-type ABNF.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.4-2">
 <pre>
@@ -4337,7 +4337,7 @@ response (<a href="#authorization-code-error-response" class="auto internal xref
 resource access error response (<a href="#error-response" class="auto internal xref">Section 5.3</a>), such error codes MAY be
 defined.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
 <p id="section-6.5-2">Extension error codes MUST be registered (following the procedures in
-Section 11.4 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) if the extension they are used in conjunction with is a
+<span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.4" class="relref">Section 11.4</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) if the extension they are used in conjunction with is a
 registered access token type, a registered endpoint parameter, or an
 extension grant type.  Error codes used with unregistered extensions
 MAY be registered.<a href="#section-6.5-2" class="pilcrow">¶</a></p>
@@ -4367,7 +4367,7 @@ client profiles described in <a href="#client-types" class="auto internal xref">
 browser-based application, and native application.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">A comprehensive OAuth security model and analysis, as well as
 background for the protocol design, is provided by
-<span>[<a href="#RFC6819" class="cite xref">RFC6819</a>]</span> and <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<span>[<a href="#RFC6819" class="cite xref">RFC6819</a>]</span> and <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <div id="access-token-security-considerations">
 <section id="section-7.1">
         <h3 id="name-access-token-security-consi">
@@ -4790,7 +4790,7 @@ the legitimate client's tokens once it makes the valid request.<a href="#section
 <a href="#section-7.5.4" class="section-number selfRef">7.5.4. </a><a href="#name-http-307-redirect" class="section-name selfRef">HTTP 307 Redirect</a>
           </h4>
 <p id="section-7.5.4-1">An authorization server which redirects a request that potentially contains user
-credentials MUST NOT use the 307 status code (Section 15.4.8 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) for
+credentials MUST NOT use the 307 status code (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4.8" class="relref">Section 15.4.8</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) for
 redirection.
 If an HTTP redirection (and not, for example,
 JavaScript) is used for such a request, AS SHOULD use the status
@@ -4806,7 +4806,7 @@ would send the user credentials via a POST request to the client.<a href="#secti
 client is malicious, it can use the credentials to impersonate
 the user at the AS.<a href="#section-7.5.4-4" class="pilcrow">¶</a></p>
 <p id="section-7.5.4-5">The behavior might be unexpected for developers, but is defined in
-Section 15.4.8 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.  This status code does not require the user
+<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4.8" class="relref">Section 15.4.8</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.  This status code does not require the user
 agent to rewrite the POST request to a GET request and thereby drop
 the form data in the POST request content.<a href="#section-7.5.4-5" class="pilcrow">¶</a></p>
 <p id="section-7.5.4-6">In HTTP <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, only the status code 303
@@ -4883,7 +4883,7 @@ variant of an attack known as Cross-Site Request Forgery (CSRF).<a href="#sectio
 <p id="section-7.9-2">The traditional countermeasure is that clients pass a random value, also
 known as a CSRF Token, in the <code>state</code> parameter that links the request to
 the redirect URI to the user agent session as described. This
-countermeasure is described in detail in <span>[<a href="#RFC6819" class="cite xref">RFC6819</a>]</span>, Section 5.3.5. The
+countermeasure is described in detail in <span><a href="https://rfc-editor.org/rfc/rfc6819#section-5.3.5" class="relref">Section 5.3.5</a> of [<a href="#RFC6819" class="cite xref">RFC6819</a>]</span>. The
 same protection is provided by the <code>code_verifier</code> parameter or the
 OpenID Connect <code>nonce</code> value.<a href="#section-7.9-2" class="pilcrow">¶</a></p>
 <p id="section-7.9-3">When using <code>code_verifier</code> instead of <code>state</code> or <code>nonce</code> for CSRF protection, it is
@@ -4912,7 +4912,7 @@ deployment-specific way to ensure or determine support.<a href="#section-7.9-5" 
         <h3 id="name-clickjacking">
 <a href="#section-7.10" class="section-number selfRef">7.10. </a><a href="#name-clickjacking" class="section-name selfRef">Clickjacking</a>
         </h3>
-<p id="section-7.10-1">As described in Section 4.4.1.9 of <span>[<a href="#RFC6819" class="cite xref">RFC6819</a>]</span>, the authorization
+<p id="section-7.10-1">As described in <span><a href="https://rfc-editor.org/rfc/rfc6819#section-4.4.1.9" class="relref">Section 4.4.1.9</a> of [<a href="#RFC6819" class="cite xref">RFC6819</a>]</span>, the authorization
 request is susceptible to clickjacking attacks, also called user
 interface redressing. In such an attack, an attacker embeds the
 authorization endpoint user interface in an innocuous context.
@@ -5002,7 +5002,7 @@ redirector.<a href="#section-7.12-2" class="pilcrow">¶</a></p>
 <p id="section-7.12.1-1">Clients MUST NOT expose open redirectors. Attackers may use open
 redirectors to produce URLs pointing to the client and utilize them to
 exfiltrate authorization codes, as described in
-Section 4.1.1 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>.
+<span><a href="https://rfc-editor.org/rfc/rfc9700#section-4.1.1" class="relref">Section 4.1.1</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.
 Another abuse case is to produce URLs that appear to point to the client.
 This might trick users into trusting the URL and follow it in their browser.
 This can be abused for phishing.<a href="#section-7.12.1-1" class="pilcrow">¶</a></p>
@@ -5077,7 +5077,7 @@ terminates and the back-end server that provides the resource. In
 such deployments, sufficient measures MUST be employed to ensure
 confidentiality of the access token between the front-end and back-
 end servers; encryption of the token is one such possible measure.<a href="#section-7.13-1" class="pilcrow">¶</a></p>
-<p id="section-7.13-2">See Section 17.2 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> for further informations.<a href="#section-7.13-2" class="pilcrow">¶</a></p>
+<p id="section-7.13-2">See <span><a href="https://rfc-editor.org/rfc/rfc9110#section-17.2" class="relref">Section 17.2</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> for further informations.<a href="#section-7.13-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mix-up">
@@ -5110,7 +5110,7 @@ issuer identifier) in the following.<a href="#section-7.14-3" class="pilcrow">¶
 <p id="section-7.14-4">Note: Just storing the authorization server URL is not sufficient to identify
 mix-up attacks. An attacker might declare an uncompromised AS's authorization endpoint URL as
 "their" AS URL, but declare a token endpoint under their own control.<a href="#section-7.14-4" class="pilcrow">¶</a></p>
-<p id="section-7.14-5">See Section 4.4 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span> for a detailed description
+<p id="section-7.14-5">See <span><a href="https://rfc-editor.org/rfc/rfc9700#section-4.4" class="relref">Section 4.4</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span> for a detailed description
 of several types of mix-up attacks.<a href="#section-7.14-5" class="pilcrow">¶</a></p>
 <div id="mix-up-defense-via-issuer-identification">
 <section id="section-7.14.1">
@@ -5321,7 +5321,7 @@ availability and user experience of which varies by platform.<a href="#section-8
 <a href="#section-8.4.1" class="section-number selfRef">8.4.1. </a><a href="#name-claimed-https-scheme-uri-re" class="section-name selfRef">Claimed "https" Scheme URI Redirection</a>
           </h4>
 <p id="section-8.4.1-1">Some operating systems allow apps to claim <code>https</code> URIs
-(see Section 4.2.2 of <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>)
+(see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.2.2" class="relref">Section 4.2.2</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>)
 in the domains they control.  When the browser encounters a
 claimed URI, instead of the page being loaded in the browser, the
 native app is launched with the URI supplied as a launch parameter.<a href="#section-8.4.1-1" class="pilcrow">¶</a></p>
@@ -5412,7 +5412,7 @@ authorization request, but one where the redirect URI utilizes a
 private-use URI scheme it registered with the operating system.<a href="#section-8.4.3-3" class="pilcrow">¶</a></p>
 <p id="section-8.4.3-4">When choosing a URI scheme to associate with the app, apps MUST use a
 URI scheme based on a domain name under their control, expressed in
-reverse order, as recommended by Section 3.8 of <span>[<a href="#RFC7595" class="cite xref">RFC7595</a>]</span> for
+reverse order, as recommended by <span><a href="https://rfc-editor.org/rfc/rfc7595#section-3.8" class="relref">Section 3.8</a> of [<a href="#RFC7595" class="cite xref">RFC7595</a>]</span> for
 private-use URI schemes.<a href="#section-8.4.3-4" class="pilcrow">¶</a></p>
 <p id="section-8.4.3-5">For example, an app that controls the domain name <code>app.example.com</code>
 can use <code>com.example.app</code> as their scheme.  Some authorization
@@ -5426,7 +5426,7 @@ taken so that each scheme is unique within that group.  On platforms
 that use app identifiers based on reverse-order domain names, those
 identifiers can be reused as the private-use URI scheme for the OAuth
 redirect to help avoid this problem.<a href="#section-8.4.3-6" class="pilcrow">¶</a></p>
-<p id="section-8.4.3-7">Following the requirements of Section 3.2 of <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, as there is
+<p id="section-8.4.3-7">Following the requirements of <span><a href="https://rfc-editor.org/rfc/rfc3986#section-3.2" class="relref">Section 3.2</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>, as there is
 no naming authority for private-use URI scheme redirects, only a
 single slash (<code>/</code>) appears after the scheme component.  A complete
 example of a redirect URI utilizing a private-use URI scheme is:<a href="#section-8.4.3-7" class="pilcrow">¶</a></p>
@@ -5568,7 +5568,7 @@ have particular security considerations similar to native apps.<a href="#section
 OAuth 2.0 for Native Apps <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span>,
 Proof Key for Code Exchange <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>,
 OAuth 2.0 for Browser-Based Apps <span>[<a href="#I-D.ietf-oauth-browser-based-apps" class="cite xref">I-D.ietf-oauth-browser-based-apps</a>]</span>,
-OAuth Security Best Current Practice <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>,
+OAuth Security Best Current Practice <span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>,
 and Bearer Token Usage <span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">Where a later draft updates or obsoletes functionality found in the original
 <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>, that functionality in this draft is updated with the normative
@@ -5582,27 +5582,30 @@ to this specification requires the addition of the PKCE parameters<a href="#sect
 </li>
         <li class="normal" id="section-10-4.2">
           <p id="section-10-4.2.1">Redirect URIs must be compared using exact string matching
-as per Section 4.1.3 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span><a href="#section-10-4.2.1" class="pilcrow">¶</a></p>
+as per <span><a href="https://rfc-editor.org/rfc/rfc9700#section-4.1.3" class="relref">Section 4.1.3</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span><a href="#section-10-4.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-10-4.3">
           <p id="section-10-4.3.1">The Implicit grant (<code>response_type=token</code>) is omitted from this specification
-as per Section 2.1.2 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span><a href="#section-10-4.3.1" class="pilcrow">¶</a></p>
+as per <span><a href="https://rfc-editor.org/rfc/rfc9700#section-2.1.2" class="relref">Section 2.1.2</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span><a href="#section-10-4.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-10-4.4">
           <p id="section-10-4.4.1">The Resource Owner Password Credentials grant is omitted from this specification
-as per Section 2.4 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span><a href="#section-10-4.4.1" class="pilcrow">¶</a></p>
+as per <span><a href="https://rfc-editor.org/rfc/rfc9700#section-2.4" class="relref">Section 2.4</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span><a href="#section-10-4.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-10-4.5">
           <p id="section-10-4.5.1">Bearer token usage omits the use of bearer tokens in the query string of URIs
-as per Section 4.3.2 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span><a href="#section-10-4.5.1" class="pilcrow">¶</a></p>
+as per <span><a href="https://rfc-editor.org/rfc/rfc9700#section-4.3.2" class="relref">Section 4.3.2</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span><a href="#section-10-4.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-10-4.6">
           <p id="section-10-4.6.1">Refresh tokens for public clients must either be sender-constrained or one-time use
-as per Section 4.13.2 of <span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span><a href="#section-10-4.6.1" class="pilcrow">¶</a></p>
+as per <span><a href="https://rfc-editor.org/rfc/rfc9700#section-4.13.2" class="relref">Section 4.13.2</a> of [<a href="#RFC9700" class="cite xref">RFC9700</a>]</span><a href="#section-10-4.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-10-4.7">
           <p id="section-10-4.7.1">The token endpoint request containing an authorization code no longer contains
 the <code>redirect_uri</code> parameter<a href="#section-10-4.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-10-4.8">
+          <p id="section-10-4.8.1">Authorization servers must support client credentials in the request body<a href="#section-10-4.8.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="removal-of-the-oauth-20-implicit-grant">
@@ -5611,7 +5614,7 @@ the <code>redirect_uri</code> parameter<a href="#section-10-4.7.1" class="pilcro
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-removal-of-the-oauth-20-imp" class="section-name selfRef">Removal of the OAuth 2.0 Implicit grant</a>
         </h3>
 <p id="section-10.1-1">The OAuth 2.0 Implicit grant is omitted from OAuth 2.1 as it was deprecated in
-<span>[<a href="#I-D.ietf-oauth-security-topics" class="cite xref">I-D.ietf-oauth-security-topics</a>]</span>.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+<span>[<a href="#RFC9700" class="cite xref">RFC9700</a>]</span>.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
 <p id="section-10.1-2">The intent of removing the Implicit grant is to no longer issue access tokens
 in the authorization response, as such tokens are vulnerable to leakage
 and injection, and are unable to be sender-constrained to a client.
@@ -5627,7 +5630,7 @@ for example, <code>response_type=id_token</code> defined by <span>[<a href="#Ope
         <h3 id="name-redirect-uri-parameter-in-t">
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-redirect-uri-parameter-in-t" class="section-name selfRef">Redirect URI Parameter in Token Request</a>
         </h3>
-<p id="section-10.2-1">In OAuth 2.0, the request to the token endpoint in the authorization code flow (section 4.1.3 of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) contains an optional <code>redirect_uri</code> parameter. The parameter was intended to prevent an authorization code injection attack, and was required if the <code>redirect_uri</code> parameter was sent in the original authorization request. The authorization request only required the <code>redirect_uri</code> parameter if multiple redirect URIs were registered to the specific client. However, in practice, many authorization server implementations required the <code>redirect_uri</code> parameter in the authorization request even if only one was registered, leading the <code>redirect_uri</code> parameter to be required at the token endpoint as well.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+<p id="section-10.2-1">In OAuth 2.0, the request to the token endpoint in the authorization code flow (<span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.1.3" class="relref">Section 4.1.3</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) contains an optional <code>redirect_uri</code> parameter. The parameter was intended to prevent an authorization code injection attack, and was required if the <code>redirect_uri</code> parameter was sent in the original authorization request. The authorization request only required the <code>redirect_uri</code> parameter if multiple redirect URIs were registered to the specific client. However, in practice, many authorization server implementations required the <code>redirect_uri</code> parameter in the authorization request even if only one was registered, leading the <code>redirect_uri</code> parameter to be required at the token endpoint as well.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
 <p id="section-10.2-2">In OAuth 2.1, authorization code injection is prevented by the <code>code_challenge</code> and <code>code_verifier</code> parameters, making the inclusion of the <code>redirect_uri</code> parameter serve no purpose in the token request. As such, it has been removed.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
 <p id="section-10.2-3">For backwards compatibility of an authorization server wishing to support both OAuth 2.0 and OAuth 2.1 clients, the authorization server MUST allow clients to send the <code>redirect_uri</code> parameter in the token request (<a href="#code-token-extension" class="auto internal xref">Section 4.1.3</a>), and MUST enforce the parameter as described in <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>. The authorization server can use the <code>client_id</code> in the request to determine whether to enforce this behavior for the specific client that it knows will be using the older OAuth 2.0 behavior.<a href="#section-10.2-3" class="pilcrow">¶</a></p>
 <p id="section-10.2-4">A client following only the OAuth 2.1 recommendations will not send the <code>redirect_uri</code> in the token request, and therefore will not be compatible with an authorization server that expects the parameter in the token request.<a href="#section-10.2-4" class="pilcrow">¶</a></p>
@@ -5659,10 +5662,6 @@ work is based upon. No changes to those registries are required by this specific
 <dt id="BCP195">[BCP195]</dt>
         <dd>
 <span class="refAuthor">Saint-Andre, P.</span>, <span class="refTitle">"Recommendations for Secure Use of Transport Layer Security (TLS)"</span>, <time datetime="2015" class="refDate">2015</time>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.ietf-oauth-security-topics">[I-D.ietf-oauth-security-topics]</dt>
-        <dd>
-<span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Labunets, A.</span>, and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"OAuth 2.0 Security Best Current Practice"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-security-topics-29</span>, <time datetime="2024-06-03" class="refDate">3 June 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-29">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-29</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -5739,6 +5738,10 @@ work is based upon. No changes to those registries are required by this specific
 <dt id="RFC9207">[RFC9207]</dt>
         <dd>
 <span class="refAuthor">Meyer zu Selhausen, K.</span> and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Issuer Identification"</span>, <span class="seriesInfo">RFC 9207</span>, <span class="seriesInfo">DOI 10.17487/RFC9207</span>, <time datetime="2022-03" class="refDate">March 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9207">https://www.rfc-editor.org/info/rfc9207</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9700">[RFC9700]</dt>
+        <dd>
+<span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Labunets, A.</span>, and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"Best Current Practice for OAuth 2.0 Security"</span>, <span class="seriesInfo">BCP 240</span>, <span class="seriesInfo">RFC 9700</span>, <span class="seriesInfo">DOI 10.17487/RFC9700</span>, <time datetime="2025-01" class="refDate">January 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9700">https://www.rfc-editor.org/info/rfc9700</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="USASCII">[USASCII]</dt>
         <dd>
@@ -6352,273 +6355,285 @@ into the octet sequence below (using hexadecimal notation):<a href="#appendix-B-
 <a href="#appendix-F" class="section-number selfRef">Appendix F. </a><a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
 <p id="appendix-F-1">[[ To be removed from the final specification ]]<a href="#appendix-F-1" class="pilcrow">¶</a></p>
-<p id="appendix-F-2">-12<a href="#appendix-F-2" class="pilcrow">¶</a></p>
+<p id="appendix-F-2">-13<a href="#appendix-F-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-3.1">
-          <p id="appendix-F-3.1.1">Updated language around client registration to better reflect alternative registration methods such as those in use by OpenID Federation and open ecosystems<a href="#appendix-F-3.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.1.1">Updated references to RFC 9700<a href="#appendix-F-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.2">
-          <p id="appendix-F-3.2.1">Added DPoP and Step-Up Auth to appendix of extensions<a href="#appendix-F-3.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.2.1">Updated and sorted list of OAuth extensions<a href="#appendix-F-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.3">
-          <p id="appendix-F-3.3.1">Updated reference for case insensitivity of auth scheme to HTTP instead of ABNF<a href="#appendix-F-3.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-3.4">
-          <p id="appendix-F-3.4.1">Corrected an instance of "relying party" vs "client"<a href="#appendix-F-3.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-3.5">
-          <p id="appendix-F-3.5.1">Moved <code>client_id</code> requirement to the individual grant types<a href="#appendix-F-3.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-3.6">
-          <p id="appendix-F-3.6.1">Consolidated the descriptions of serialization methods to the appendix<a href="#appendix-F-3.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.3.1">Updated references to link to section numbers<a href="#appendix-F-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-4">-11<a href="#appendix-F-4" class="pilcrow">¶</a></p>
+<p id="appendix-F-4">-12<a href="#appendix-F-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-5.1">
-          <p id="appendix-F-5.1.1">Explicitly mention that Bearer is case insensitive<a href="#appendix-F-5.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-5.1.1">Updated language around client registration to better reflect alternative registration methods such as those in use by OpenID Federation and open ecosystems<a href="#appendix-F-5.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-5.2">
-          <p id="appendix-F-5.2.1">Recommend against defining custom scopes that conflict with known scopes<a href="#appendix-F-5.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-5.2.1">Added DPoP and Step-Up Auth to appendix of extensions<a href="#appendix-F-5.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-5.3">
-          <p id="appendix-F-5.3.1">Change client credentials to be required to be supported in the request body to avoid HTTP Basic authentication encoding interop issues<a href="#appendix-F-5.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-5.3.1">Updated reference for case insensitivity of auth scheme to HTTP instead of ABNF<a href="#appendix-F-5.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-5.4">
+          <p id="appendix-F-5.4.1">Corrected an instance of "relying party" vs "client"<a href="#appendix-F-5.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-5.5">
+          <p id="appendix-F-5.5.1">Moved <code>client_id</code> requirement to the individual grant types<a href="#appendix-F-5.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-5.6">
+          <p id="appendix-F-5.6.1">Consolidated the descriptions of serialization methods to the appendix<a href="#appendix-F-5.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-6">-10<a href="#appendix-F-6" class="pilcrow">¶</a></p>
+<p id="appendix-F-6">-11<a href="#appendix-F-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-7.1">
-          <p id="appendix-F-7.1.1">Clarify that the client id is an opaque string<a href="#appendix-F-7.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-7.1.1">Explicitly mention that Bearer is case insensitive<a href="#appendix-F-7.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-7.2">
-          <p id="appendix-F-7.2.1">Extensions may define additional error codes on a resource request<a href="#appendix-F-7.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-7.2.1">Recommend against defining custom scopes that conflict with known scopes<a href="#appendix-F-7.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-7.3">
-          <p id="appendix-F-7.3.1">Improved formatting for error field definitions<a href="#appendix-F-7.3.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.4">
-          <p id="appendix-F-7.4.1">Moved and expanded "scope" definition to introduction section<a href="#appendix-F-7.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.5">
-          <p id="appendix-F-7.5.1">Split access token section into structure and request<a href="#appendix-F-7.5.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.6">
-          <p id="appendix-F-7.6.1">Renamed b64token to token68 for consistency with RFC7235<a href="#appendix-F-7.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.7">
-          <p id="appendix-F-7.7.1">Restored content from old appendix B about application/x-www-form-urlencoded<a href="#appendix-F-7.7.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.8">
-          <p id="appendix-F-7.8.1">Clarified that clients must not parse access tokens<a href="#appendix-F-7.8.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.9">
-          <p id="appendix-F-7.9.1">Expanded text around when <code>redirect_uri</code> parameter is required in the authorization request<a href="#appendix-F-7.9.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.10">
-          <p id="appendix-F-7.10.1">Changed "permissions" to "privileges" in refresh token section for consistency<a href="#appendix-F-7.10.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.11">
-          <p id="appendix-F-7.11.1">Consolidated authorization code flow security considerations<a href="#appendix-F-7.11.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-7.12">
-          <p id="appendix-F-7.12.1">Clarified authorization code reuse - an authorization code can only obtain an access token once<a href="#appendix-F-7.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-7.3.1">Change client credentials to be required to be supported in the request body to avoid HTTP Basic authentication encoding interop issues<a href="#appendix-F-7.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-8">-09<a href="#appendix-F-8" class="pilcrow">¶</a></p>
+<p id="appendix-F-8">-10<a href="#appendix-F-8" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-9.1">
-          <p id="appendix-F-9.1.1">AS MUST NOT support CORS requests at authorization endpoint<a href="#appendix-F-9.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.1.1">Clarify that the client id is an opaque string<a href="#appendix-F-9.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.2">
-          <p id="appendix-F-9.2.1">more detail on asymmetric client authentication<a href="#appendix-F-9.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.2.1">Extensions may define additional error codes on a resource request<a href="#appendix-F-9.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.3">
-          <p id="appendix-F-9.3.1">sync CSRF description from security BCP<a href="#appendix-F-9.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.3.1">Improved formatting for error field definitions<a href="#appendix-F-9.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.4">
-          <p id="appendix-F-9.4.1">update and move sender-constrained access tokens section<a href="#appendix-F-9.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.4.1">Moved and expanded "scope" definition to introduction section<a href="#appendix-F-9.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.5">
-          <p id="appendix-F-9.5.1">sync client impersonating resource owner with security BCP<a href="#appendix-F-9.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.5.1">Split access token section into structure and request<a href="#appendix-F-9.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.6">
-          <p id="appendix-F-9.6.1">add reference to authorization request from redirect URI registration section<a href="#appendix-F-9.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.6.1">Renamed b64token to token68 for consistency with RFC7235<a href="#appendix-F-9.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.7">
-          <p id="appendix-F-9.7.1">sync refresh rotation section from security BCP<a href="#appendix-F-9.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.7.1">Restored content from old appendix B about application/x-www-form-urlencoded<a href="#appendix-F-9.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.8">
-          <p id="appendix-F-9.8.1">sync redirect URI matching text from security BCP<a href="#appendix-F-9.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.8.1">Clarified that clients must not parse access tokens<a href="#appendix-F-9.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.9">
-          <p id="appendix-F-9.9.1">updated references to RAR (RFC9396)<a href="#appendix-F-9.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.9.1">Expanded text around when <code>redirect_uri</code> parameter is required in the authorization request<a href="#appendix-F-9.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.10">
-          <p id="appendix-F-9.10.1">clarifications on URIs<a href="#appendix-F-9.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.10.1">Changed "permissions" to "privileges" in refresh token section for consistency<a href="#appendix-F-9.10.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.11">
-          <p id="appendix-F-9.11.1">removed redirect_uri from the token request<a href="#appendix-F-9.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.11.1">Consolidated authorization code flow security considerations<a href="#appendix-F-9.11.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-9.12">
-          <p id="appendix-F-9.12.1">expanded security considerations around code_verifier<a href="#appendix-F-9.12.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-9.13">
-          <p id="appendix-F-9.13.1">revised introduction section<a href="#appendix-F-9.13.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-9.12.1">Clarified authorization code reuse - an authorization code can only obtain an access token once<a href="#appendix-F-9.12.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-10">-08<a href="#appendix-F-10" class="pilcrow">¶</a></p>
+<p id="appendix-F-10">-09<a href="#appendix-F-10" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-11.1">
-          <p id="appendix-F-11.1.1">Updated acknowledgments<a href="#appendix-F-11.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.1.1">AS MUST NOT support CORS requests at authorization endpoint<a href="#appendix-F-11.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.2">
-          <p id="appendix-F-11.2.1">Swap "by a trusted party" with "by an outside party" in client ID definition<a href="#appendix-F-11.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.2.1">more detail on asymmetric client authentication<a href="#appendix-F-11.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.3">
-          <p id="appendix-F-11.3.1">Replaced "verify the identity of the resource owner" with "authenticate"<a href="#appendix-F-11.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.3.1">sync CSRF description from security BCP<a href="#appendix-F-11.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.4">
-          <p id="appendix-F-11.4.1">Clarified refresh token rotation to match RFC6819<a href="#appendix-F-11.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.4.1">update and move sender-constrained access tokens section<a href="#appendix-F-11.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.5">
-          <p id="appendix-F-11.5.1">Added appendix to hold application/x-www-form-urlencoded examples<a href="#appendix-F-11.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.5.1">sync client impersonating resource owner with security BCP<a href="#appendix-F-11.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.6">
-          <p id="appendix-F-11.6.1">Fixed references to entries in appendix<a href="#appendix-F-11.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.6.1">add reference to authorization request from redirect URI registration section<a href="#appendix-F-11.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.7">
-          <p id="appendix-F-11.7.1">Incorporated new "Phishing via AS" section from Security BCP<a href="#appendix-F-11.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.7.1">sync refresh rotation section from security BCP<a href="#appendix-F-11.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.8">
-          <p id="appendix-F-11.8.1">Rephrase description of the motivation for client authentication<a href="#appendix-F-11.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.8.1">sync redirect URI matching text from security BCP<a href="#appendix-F-11.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.9">
-          <p id="appendix-F-11.9.1">Moved "scope" parameter in token request into specific grant types to match OAuth 2.0<a href="#appendix-F-11.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.9.1">updated references to RAR (RFC9396)<a href="#appendix-F-11.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.10">
-          <p id="appendix-F-11.10.1">Updated Clickjacking and Open Redirection description from the latest version of the Security BCP<a href="#appendix-F-11.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.10.1">clarifications on URIs<a href="#appendix-F-11.10.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.11">
-          <p id="appendix-F-11.11.1">Moved normative requirements out of authorization code security considerations section<a href="#appendix-F-11.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.11.1">removed redirect_uri from the token request<a href="#appendix-F-11.11.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-11.12">
-          <p id="appendix-F-11.12.1">Security considerations clarifications, and removed a duplicate section<a href="#appendix-F-11.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-11.12.1">expanded security considerations around code_verifier<a href="#appendix-F-11.12.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-11.13">
+          <p id="appendix-F-11.13.1">revised introduction section<a href="#appendix-F-11.13.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-12">-07<a href="#appendix-F-12" class="pilcrow">¶</a></p>
+<p id="appendix-F-12">-08<a href="#appendix-F-12" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-13.1">
-          <p id="appendix-F-13.1.1">Removed "third party" from abstract<a href="#appendix-F-13.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-13.1.1">Updated acknowledgments<a href="#appendix-F-13.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-13.2">
-          <p id="appendix-F-13.2.1">Added MFA and passwordless as additional motiviations in introduction<a href="#appendix-F-13.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-13.2.1">Swap "by a trusted party" with "by an outside party" in client ID definition<a href="#appendix-F-13.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-13.3">
-          <p id="appendix-F-13.3.1">Mention PAR as one way redirect URI registration can happen<a href="#appendix-F-13.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-13.3.1">Replaced "verify the identity of the resource owner" with "authenticate"<a href="#appendix-F-13.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-13.4">
-          <p id="appendix-F-13.4.1">Added a reference to requiring CORS headers on the token endpoint<a href="#appendix-F-13.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-13.4.1">Clarified refresh token rotation to match RFC6819<a href="#appendix-F-13.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-13.5">
-          <p id="appendix-F-13.5.1">Updated reference to OMAP extension<a href="#appendix-F-13.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-13.5.1">Added appendix to hold application/x-www-form-urlencoded examples<a href="#appendix-F-13.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-13.6">
-          <p id="appendix-F-13.6.1">Fixed numbering in sequence diagram<a href="#appendix-F-13.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-13.6.1">Fixed references to entries in appendix<a href="#appendix-F-13.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-13.7">
+          <p id="appendix-F-13.7.1">Incorporated new "Phishing via AS" section from Security BCP<a href="#appendix-F-13.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-13.8">
+          <p id="appendix-F-13.8.1">Rephrase description of the motivation for client authentication<a href="#appendix-F-13.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-13.9">
+          <p id="appendix-F-13.9.1">Moved "scope" parameter in token request into specific grant types to match OAuth 2.0<a href="#appendix-F-13.9.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-13.10">
+          <p id="appendix-F-13.10.1">Updated Clickjacking and Open Redirection description from the latest version of the Security BCP<a href="#appendix-F-13.10.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-13.11">
+          <p id="appendix-F-13.11.1">Moved normative requirements out of authorization code security considerations section<a href="#appendix-F-13.11.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-13.12">
+          <p id="appendix-F-13.12.1">Security considerations clarifications, and removed a duplicate section<a href="#appendix-F-13.12.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-14">-06<a href="#appendix-F-14" class="pilcrow">¶</a></p>
+<p id="appendix-F-14">-07<a href="#appendix-F-14" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-15.1">
-          <p id="appendix-F-15.1.1">Removed "credentialed client" term<a href="#appendix-F-15.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-15.1.1">Removed "third party" from abstract<a href="#appendix-F-15.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-15.2">
-          <p id="appendix-F-15.2.1">Simplified definition of "confidential" and "public" clients<a href="#appendix-F-15.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-15.2.1">Added MFA and passwordless as additional motiviations in introduction<a href="#appendix-F-15.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-15.3">
-          <p id="appendix-F-15.3.1">Incorporated the <code>iss</code> response parameter referencing RFC9207<a href="#appendix-F-15.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-15.3.1">Mention PAR as one way redirect URI registration can happen<a href="#appendix-F-15.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-15.4">
-          <p id="appendix-F-15.4.1">Added section on access token validation by the RS<a href="#appendix-F-15.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-15.4.1">Added a reference to requiring CORS headers on the token endpoint<a href="#appendix-F-15.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-15.5">
-          <p id="appendix-F-15.5.1">Removed requirement for authorization servers to support all 3 redirect methods for native apps<a href="#appendix-F-15.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-15.5.1">Updated reference to OMAP extension<a href="#appendix-F-15.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-15.6">
-          <p id="appendix-F-15.6.1">Fixes for some references<a href="#appendix-F-15.6.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-15.7">
-          <p id="appendix-F-15.7.1">Updates HTTP references to RFC 9110<a href="#appendix-F-15.7.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-15.8">
-          <p id="appendix-F-15.8.1">Clarifies "authorization grant" term<a href="#appendix-F-15.8.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-15.9">
-          <p id="appendix-F-15.9.1">Clarifies client credential grant usage<a href="#appendix-F-15.9.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-15.10">
-          <p id="appendix-F-15.10.1">Clean up authorization code diagram<a href="#appendix-F-15.10.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-15.11">
-          <p id="appendix-F-15.11.1">Updated reference for application/x-www-form-urlencoded and removed outdated note about it not being in the IANA registry<a href="#appendix-F-15.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-15.6.1">Fixed numbering in sequence diagram<a href="#appendix-F-15.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-16">-05<a href="#appendix-F-16" class="pilcrow">¶</a></p>
+<p id="appendix-F-16">-06<a href="#appendix-F-16" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-17.1">
-          <p id="appendix-F-17.1.1">Added a section about the removal of the implicit flow<a href="#appendix-F-17.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-17.1.1">Removed "credentialed client" term<a href="#appendix-F-17.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-17.2">
-          <p id="appendix-F-17.2.1">Moved many normative requirements from security considerations into the appropriate inline sections<a href="#appendix-F-17.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-17.2.1">Simplified definition of "confidential" and "public" clients<a href="#appendix-F-17.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-17.3">
-          <p id="appendix-F-17.3.1">Reorganized and consolidated TLS language<a href="#appendix-F-17.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-17.3.1">Incorporated the <code>iss</code> response parameter referencing RFC9207<a href="#appendix-F-17.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-17.4">
-          <p id="appendix-F-17.4.1">Require TLS on redirect URIs except for localhost/custom URL scheme<a href="#appendix-F-17.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-17.4.1">Added section on access token validation by the RS<a href="#appendix-F-17.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-17.5">
-          <p id="appendix-F-17.5.1">Updated refresh token guidance to match security BCP<a href="#appendix-F-17.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-17.5.1">Removed requirement for authorization servers to support all 3 redirect methods for native apps<a href="#appendix-F-17.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-17.6">
+          <p id="appendix-F-17.6.1">Fixes for some references<a href="#appendix-F-17.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-17.7">
+          <p id="appendix-F-17.7.1">Updates HTTP references to RFC 9110<a href="#appendix-F-17.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-17.8">
+          <p id="appendix-F-17.8.1">Clarifies "authorization grant" term<a href="#appendix-F-17.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-17.9">
+          <p id="appendix-F-17.9.1">Clarifies client credential grant usage<a href="#appendix-F-17.9.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-17.10">
+          <p id="appendix-F-17.10.1">Clean up authorization code diagram<a href="#appendix-F-17.10.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-17.11">
+          <p id="appendix-F-17.11.1">Updated reference for application/x-www-form-urlencoded and removed outdated note about it not being in the IANA registry<a href="#appendix-F-17.11.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-18">-04<a href="#appendix-F-18" class="pilcrow">¶</a></p>
+<p id="appendix-F-18">-05<a href="#appendix-F-18" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-19.1">
-          <p id="appendix-F-19.1.1">Added explicit mention of not sending access tokens in URI query strings<a href="#appendix-F-19.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-19.1.1">Added a section about the removal of the implicit flow<a href="#appendix-F-19.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-19.2">
-          <p id="appendix-F-19.2.1">Clarifications on definition of client types<a href="#appendix-F-19.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-19.2.1">Moved many normative requirements from security considerations into the appropriate inline sections<a href="#appendix-F-19.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-19.3">
-          <p id="appendix-F-19.3.1">Consolidated text around loopback vs localhost<a href="#appendix-F-19.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-19.3.1">Reorganized and consolidated TLS language<a href="#appendix-F-19.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-19.4">
-          <p id="appendix-F-19.4.1">Editorial clarifications throughout the document<a href="#appendix-F-19.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-19.4.1">Require TLS on redirect URIs except for localhost/custom URL scheme<a href="#appendix-F-19.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-19.5">
+          <p id="appendix-F-19.5.1">Updated refresh token guidance to match security BCP<a href="#appendix-F-19.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-20">-03<a href="#appendix-F-20" class="pilcrow">¶</a></p>
+<p id="appendix-F-20">-04<a href="#appendix-F-20" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-21.1">
-          <p id="appendix-F-21.1.1">refactoring to collect all the grant types under the same top-level header in section 4<a href="#appendix-F-21.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-21.1.1">Added explicit mention of not sending access tokens in URI query strings<a href="#appendix-F-21.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-21.2">
-          <p id="appendix-F-21.2.1">Better split normative and security consideration text into the appropriate places, both moving text that was really security considerations out of the main part of the document, as well as pulling normative requirements from the security considerations sections into the appropriate part of the main document<a href="#appendix-F-21.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-21.2.1">Clarifications on definition of client types<a href="#appendix-F-21.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-21.3">
-          <p id="appendix-F-21.3.1">Incorporated many of the published errata on RFC6749<a href="#appendix-F-21.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-21.3.1">Consolidated text around loopback vs localhost<a href="#appendix-F-21.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-21.4">
-          <p id="appendix-F-21.4.1">Updated references to various RFCs<a href="#appendix-F-21.4.1" class="pilcrow">¶</a></p>
-</li>
-        <li class="normal" id="appendix-F-21.5">
-          <p id="appendix-F-21.5.1">Editorial clarifications throughout the document<a href="#appendix-F-21.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-21.4.1">Editorial clarifications throughout the document<a href="#appendix-F-21.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="appendix-F-22">-02<a href="#appendix-F-22" class="pilcrow">¶</a></p>
-<p id="appendix-F-23">-01<a href="#appendix-F-23" class="pilcrow">¶</a></p>
-<p id="appendix-F-24">-00<a href="#appendix-F-24" class="pilcrow">¶</a></p>
+<p id="appendix-F-22">-03<a href="#appendix-F-22" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-F-25.1">
-          <p id="appendix-F-25.1.1">initial revision<a href="#appendix-F-25.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-F-23.1">
+          <p id="appendix-F-23.1.1">refactoring to collect all the grant types under the same top-level header in section 4<a href="#appendix-F-23.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-23.2">
+          <p id="appendix-F-23.2.1">Better split normative and security consideration text into the appropriate places, both moving text that was really security considerations out of the main part of the document, as well as pulling normative requirements from the security considerations sections into the appropriate part of the main document<a href="#appendix-F-23.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-23.3">
+          <p id="appendix-F-23.3.1">Incorporated many of the published errata on RFC6749<a href="#appendix-F-23.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-23.4">
+          <p id="appendix-F-23.4.1">Updated references to various RFCs<a href="#appendix-F-23.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-23.5">
+          <p id="appendix-F-23.5.1">Editorial clarifications throughout the document<a href="#appendix-F-23.5.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-F-24">-02<a href="#appendix-F-24" class="pilcrow">¶</a></p>
+<p id="appendix-F-25">-01<a href="#appendix-F-25" class="pilcrow">¶</a></p>
+<p id="appendix-F-26">-00<a href="#appendix-F-26" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-F-27.1">
+          <p id="appendix-F-27.1.1">initial revision<a href="#appendix-F-27.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>

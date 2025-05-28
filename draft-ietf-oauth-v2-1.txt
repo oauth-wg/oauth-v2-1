@@ -312,13 +312,12 @@ Table of Contents
    Since the publication of the OAuth 2.0 Authorization Framework
    [RFC6749] in October 2012, it has been updated by OAuth 2.0 for
    Native Apps [RFC8252], OAuth Security Best Current Practice
-   [I-D.ietf-oauth-security-topics], and OAuth 2.0 for Browser-Based
-   Apps [I-D.ietf-oauth-browser-based-apps].  The OAuth 2.0
-   Authorization Framework: Bearer Token Usage [RFC6750] has also been
-   updated with [I-D.ietf-oauth-security-topics].  This Standards Track
-   specification consolidates the information in all of these documents
-   and removes features that have been found to be insecure in
-   [I-D.ietf-oauth-security-topics].
+   [RFC9700], and OAuth 2.0 for Browser-Based Apps
+   [I-D.ietf-oauth-browser-based-apps].  The OAuth 2.0 Authorization
+   Framework: Bearer Token Usage [RFC6750] has also been updated with
+   [RFC9700].  This Standards Track specification consolidates the
+   information in all of these documents and removes features that have
+   been found to be insecure in [RFC9700].
 
 1.1.  Roles
 
@@ -712,13 +711,13 @@ Table of Contents
    Authorization and resource servers SHOULD use mechanisms for sender-
    constraining access tokens, such as OAuth Demonstration of Proof of
    Possession (DPoP) [RFC9449] or Mutual TLS for OAuth 2.0 [RFC8705].
-   See [I-D.ietf-oauth-security-topics] Section 4.10.1, to prevent
-   misuse of stolen and leaked access tokens.
+   See Section 4.10.1 of [RFC9700] to prevent misuse of stolen and
+   leaked access tokens.
 
    It is RECOMMENDED to use end-to-end TLS between the client and the
    resource server.  If TLS traffic needs to be terminated at an
-   intermediary, refer to Section 4.13 of
-   [I-D.ietf-oauth-security-topics] for further security advice.
+   intermediary, refer to Section 4.13 of [RFC9700] for further security
+   advice.
 
 1.5.  Communication security
 
@@ -956,8 +955,8 @@ Table of Contents
    client's redirection endpoints previously established with the
    authorization server during the client registration process.
 
-   The redirect URI MUST be an absolute URI as defined by [RFC3986]
-   Section 4.3.  The redirect URI MAY include an query string component
+   The redirect URI MUST be an absolute URI as defined by Section 4.3 of
+   [RFC3986].  The redirect URI MAY include an query string component
    (Appendix C.1), which MUST be retained when adding additional query
    parameters.  The redirect URI MUST NOT include a fragment component.
 
@@ -1018,7 +1017,7 @@ Table of Contents
    Clients MUST prevent Cross-Site Request Forgery (CSRF) attacks.  In
    this context, CSRF refers to requests to the redirection endpoint
    that do not originate at the authorization server, but a malicious
-   third party (see Section 4.4.1.8. of [RFC6819] for details).  Clients
+   third party (see Section 4.4.1.8 of [RFC6819] for details).  Clients
    that have ensured that the authorization server supports the
    code_challenge parameter MAY rely on the CSRF protection provided by
    that mechanism.  In OpenID Connect flows, validating the nonce
@@ -1659,8 +1658,8 @@ Table of Contents
    Clients SHOULD use code challenge methods that do not expose the
    code_verifier in the authorization request.  Otherwise, attackers
    that can read the authorization request (cf. Attacker A4 in
-   [I-D.ietf-oauth-security-topics]) can break the security provided by
-   this mechanism.  Currently, S256 is the only such method.
+   [RFC9700]) can break the security provided by this mechanism.
+   Currently, S256 is the only such method.
 
    NOTE: The code verifier SHOULD have enough entropy to make it
    impractical to guess the value.  It is RECOMMENDED that the output of
@@ -1730,10 +1729,10 @@ Table of Contents
    of the registered redirect URIs previously established during client
    registration (Section 2).  When comparing the two URIs the
    authorization server MUST ensure that the two URIs are equal, see
-   [RFC3986], Section 6.2.1, Simple String Comparison, for details.  The
-   only exception is native apps using a localhost URI: In this case,
-   the authorization server MUST allow variable port numbers as
-   described in [RFC8252], Section 7.3.
+   Section 6.2.1 of [RFC3986], Simple String Comparison, for details.
+   The only exception is native apps using a localhost URI: In this
+   case, the authorization server MUST allow variable port numbers as
+   described in Section 7.3 of [RFC8252].
 
    If the request is valid, the authorization server authenticates the
    resource owner and obtains an authorization decision (by asking the
@@ -2549,7 +2548,7 @@ Table of Contents
 
    A comprehensive OAuth security model and analysis, as well as
    background for the protocol design, is provided by [RFC6819] and
-   [I-D.ietf-oauth-security-topics].
+   [RFC9700].
 
 7.1.  Access Token Security Considerations
 
@@ -2984,8 +2983,8 @@ Table of Contents
    The traditional countermeasure is that clients pass a random value,
    also known as a CSRF Token, in the state parameter that links the
    request to the redirect URI to the user agent session as described.
-   This countermeasure is described in detail in [RFC6819],
-   Section 5.3.5.  The same protection is provided by the code_verifier
+   This countermeasure is described in detail in Section 5.3.5 of
+   [RFC6819].  The same protection is provided by the code_verifier
    parameter or the OpenID Connect nonce value.
 
    When using code_verifier instead of state or nonce for CSRF
@@ -3091,10 +3090,9 @@ Table of Contents
    Clients MUST NOT expose open redirectors.  Attackers may use open
    redirectors to produce URLs pointing to the client and utilize them
    to exfiltrate authorization codes, as described in Section 4.1.1 of
-   [I-D.ietf-oauth-security-topics].  Another abuse case is to produce
-   URLs that appear to point to the client.  This might trick users into
-   trusting the URL and follow it in their browser.  This can be abused
-   for phishing.
+   [RFC9700].  Another abuse case is to produce URLs that appear to
+   point to the client.  This might trick users into trusting the URL
+   and follow it in their browser.  This can be abused for phishing.
 
    In order to prevent open redirection, clients should only redirect if
    the target URLs are whitelisted or if the origin and integrity of a
@@ -3198,8 +3196,8 @@ Table of Contents
    AS's authorization endpoint URL as "their" AS URL, but declare a
    token endpoint under their own control.
 
-   See Section 4.4 of [I-D.ietf-oauth-security-topics] for a detailed
-   description of several types of mix-up attacks.
+   See Section 4.4 of [RFC9700] for a detailed description of several
+   types of mix-up attacks.
 
 7.14.1.  Mix-Up Defense via Issuer Identification
 
@@ -3618,8 +3616,7 @@ Table of Contents
    OAuth 2.0 for Native Apps [RFC8252], Proof Key for Code Exchange
    [RFC7636], OAuth 2.0 for Browser-Based Apps
    [I-D.ietf-oauth-browser-based-apps], OAuth Security Best Current
-   Practice [I-D.ietf-oauth-security-topics], and Bearer Token Usage
-   [RFC6750].
+   Practice [RFC9700], and Bearer Token Usage [RFC6750].
 
    Where a later draft updates or obsoletes functionality found in the
    original [RFC6749], that functionality in this draft is updated with
@@ -3634,31 +3631,30 @@ Table of Contents
       the addition of the PKCE parameters
 
    *  Redirect URIs must be compared using exact string matching as per
-      Section 4.1.3 of [I-D.ietf-oauth-security-topics]
+      Section 4.1.3 of [RFC9700]
 
    *  The Implicit grant (response_type=token) is omitted from this
-      specification as per Section 2.1.2 of
-      [I-D.ietf-oauth-security-topics]
+      specification as per Section 2.1.2 of [RFC9700]
 
    *  The Resource Owner Password Credentials grant is omitted from this
-      specification as per Section 2.4 of
-      [I-D.ietf-oauth-security-topics]
+      specification as per Section 2.4 of [RFC9700]
 
    *  Bearer token usage omits the use of bearer tokens in the query
-      string of URIs as per Section 4.3.2 of
-      [I-D.ietf-oauth-security-topics]
+      string of URIs as per Section 4.3.2 of [RFC9700]
 
    *  Refresh tokens for public clients must either be sender-
-      constrained or one-time use as per Section 4.13.2 of
-      [I-D.ietf-oauth-security-topics]
+      constrained or one-time use as per Section 4.13.2 of [RFC9700]
 
    *  The token endpoint request containing an authorization code no
       longer contains the redirect_uri parameter
 
+   *  Authorization servers must support client credentials in the
+      request body
+
 10.1.  Removal of the OAuth 2.0 Implicit grant
 
    The OAuth 2.0 Implicit grant is omitted from OAuth 2.1 as it was
-   deprecated in [I-D.ietf-oauth-security-topics].
+   deprecated in [RFC9700].
 
    The intent of removing the Implicit grant is to no longer issue
    access tokens in the authorization response, as such tokens are
@@ -3675,7 +3671,7 @@ Table of Contents
 10.2.  Redirect URI Parameter in Token Request
 
    In OAuth 2.0, the request to the token endpoint in the authorization
-   code flow (section 4.1.3 of [RFC6749]) contains an optional
+   code flow (Section 4.1.3 of [RFC6749]) contains an optional
    redirect_uri parameter.  The parameter was intended to prevent an
    authorization code injection attack, and was required if the
    redirect_uri parameter was sent in the original authorization
@@ -3719,14 +3715,6 @@ Table of Contents
 
    [BCP195]   Saint-Andre, P., "Recommendations for Secure Use of
               Transport Layer Security (TLS)", 2015.
-
-   [I-D.ietf-oauth-security-topics]
-              Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,
-              "OAuth 2.0 Security Best Current Practice", Work in
-              Progress, Internet-Draft, draft-ietf-oauth-security-
-              topics-29, 3 June 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              security-topics-29>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -3817,6 +3805,11 @@ Table of Contents
               Authorization Server Issuer Identification", RFC 9207,
               DOI 10.17487/RFC9207, March 2022,
               <https://www.rfc-editor.org/info/rfc9207>.
+
+   [RFC9700]  Lodderstedt, T., Bradley, J., Labunets, A., and D. Fett,
+              "Best Current Practice for OAuth 2.0 Security", BCP 240,
+              RFC 9700, DOI 10.17487/RFC9700, January 2025,
+              <https://www.rfc-editor.org/info/rfc9700>.
 
    [USASCII]  Institute, A. N. S., "Coded Character Set -- 7-bit
               American Standard Code for Information Interchange, ANSI
@@ -4306,6 +4299,14 @@ Appendix E.  Acknowledgements
 Appendix F.  Document History
 
    [[ To be removed from the final specification ]]
+
+   -13
+
+   *  Updated references to RFC 9700
+
+   *  Updated and sorted list of OAuth extensions
+
+   *  Updated references to link to section numbers
 
    -12
 
