@@ -46,7 +46,7 @@ normative:
   RFC9110:
   RFC9111:
   RFC9207:
-  I-D.ietf-oauth-security-topics:
+  RFC9700:
   BCP195:
     title: "Recommendations for Secure Use of Transport Layer Security (TLS)"
     author:
@@ -280,13 +280,13 @@ use of OAuth over any protocol other than HTTP is out of scope.
 
 Since the publication of the OAuth 2.0 Authorization Framework {{RFC6749}}
 in October 2012, it has been updated by OAuth 2.0 for Native Apps {{RFC8252}},
-OAuth Security Best Current Practice {{I-D.ietf-oauth-security-topics}},
+OAuth Security Best Current Practice {{RFC97900}},
 and OAuth 2.0 for Browser-Based Apps {{I-D.ietf-oauth-browser-based-apps}}.
 The OAuth 2.0 Authorization Framework: Bearer Token Usage {{RFC6750}}
-has also been updated with {{I-D.ietf-oauth-security-topics}}. This
+has also been updated with {{RFC9700}}. This
 Standards Track specification consolidates the information in all of these
 documents and removes features that have been found to be insecure
-in {{I-D.ietf-oauth-security-topics}}.
+in {{RFC9700}}.
 
 
 ## Roles
@@ -334,7 +334,7 @@ security considerations around prompting the end user for consent.
 
 When the resource owner is the end user, the user will interact with
 the client. When the client is a web-based application, the user will
-interact with the client through a user agent (as described in Section 3.5 of {{RFC9110}}).
+interact with the client through a user agent (as described in {{Section 3.5 of RFC9110}}).
 When the client is a native application, the user will interact with
 the client directly through the operating system. See {{client-types}}
 for further details.
@@ -674,11 +674,11 @@ acceptance of that access token at the recipient (e.g., a resource server).
 Authorization and resource servers SHOULD use mechanisms for
 sender-constraining access tokens, such as OAuth Demonstration of Proof of Possession (DPoP) {{RFC9449}}
 or Mutual TLS for OAuth 2.0 {{RFC8705}}.
-See {{I-D.ietf-oauth-security-topics}} Section 4.10.1, to prevent misuse of stolen and leaked access tokens.
+See {{Section 4.10.1 of RFC9700}} to prevent misuse of stolen and leaked access tokens.
 
 It is RECOMMENDED to use end-to-end TLS between the client and the
 resource server. If TLS traffic needs to be terminated at an intermediary,
-refer to Section 4.13 of {{I-D.ietf-oauth-security-topics}} for further security advice.
+refer to {{Section 4.13 of RFC9700}} for further security advice.
 
 
 
@@ -767,9 +767,9 @@ defined in {{RFC4949}}.  These terms include, but are not limited to,
 "confidentiality", "credential", "encryption", "identity", "sign",
 "signature", "trust", "validate", and "verify".
 
-The term "content" is to be interpreted as described in Section 6.4 of {{RFC9110}}.
+The term "content" is to be interpreted as described in {{Section 6.4 of RFC9110}}.
 
-The term "user agent" is to be interpreted as described in Section 3.5 of {{RFC9110}}.
+The term "user agent" is to be interpreted as described in {{Section 3.5 of RFC9110}}.
 
 Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.
@@ -904,7 +904,7 @@ client's redirection endpoints previously established with the
 authorization server during the client registration process.
 
 The redirect URI MUST be an absolute URI as defined by
-{{RFC3986}} Section 4.3.  The redirect URI MAY include an
+{{Section 4.3 of RFC3986}}.  The redirect URI MAY include an
 query string component ({{query-string-serialization}}), which MUST be retained when adding
 additional query parameters. The redirect URI MUST NOT include a
 fragment component.
@@ -964,7 +964,7 @@ the `redirect_uri` request parameter is optional.
 Clients MUST prevent Cross-Site Request Forgery (CSRF) attacks. In this
 context, CSRF refers to requests to the redirection endpoint that do
 not originate at the authorization server, but a malicious third party
-(see Section 4.4.1.8. of {{RFC6819}} for details). Clients that have
+(see {{Section 4.4.1.8 of RFC6819}} for details). Clients that have
 ensured that the authorization server supports the `code_challenge` parameter MAY
 rely on the CSRF protection provided by that mechanism. In OpenID Connect flows,
 validating the `nonce` parameter provides CSRF protection. Otherwise, one-time
@@ -1084,7 +1084,7 @@ The authorization server MAY support the HTTP Basic
 authentication scheme for authenticating clients that were issued a
 client secret.
 
-When using the HTTP Basic authentication scheme as defined in Section 11 of {{RFC9110}}
+When using the HTTP Basic authentication scheme as defined in {{Section 11 of RFC9110}}
 to authenticate with the authorization server, the client identifier is encoded using the
 `application/x-www-form-urlencoded` encoding algorithm per
 {{application-x-www-form-urlencoded}}, and the encoded value is used as the username; the client
@@ -1172,8 +1172,8 @@ and MAY include a query string component {{query-string-serialization}},
 which MUST be retained when adding additional query parameters.
 
 The authorization server MUST support the use of the HTTP `GET`
-method Section 9.3.1 of {{RFC9110}} for the authorization endpoint and MAY support
-the `POST` method (Section 9.3.3 of {{RFC9110}}) as well.
+method {{Section 9.3.1 of RFC9110}} for the authorization endpoint and MAY support
+the `POST` method ({{Section 9.3.3 of RFC9110}}) as well.
 
 The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.
 
@@ -1352,7 +1352,7 @@ The parameters are serialized into a JavaScript Object Notation (JSON)
 structure as described in {{json-serialization}}.
 
 The authorization server MUST include the HTTP `Cache-Control`
-response header field (see Section 5.2 of {{RFC9111}}) with a value of `no-store` in any
+response header field (see {{Section 5.2 of RFC9111}}) with a value of `no-store` in any
 response containing tokens, credentials, or other sensitive
 information.
 
@@ -1617,7 +1617,7 @@ ABNF for `code_verifier` is as follows.
 Clients SHOULD use code challenge methods that
 do not expose the `code_verifier` in the authorization request.
 Otherwise, attackers that can read the authorization request (cf.
-Attacker A4 in {{I-D.ietf-oauth-security-topics}}) can break the security provided
+Attacker A4 in {{RFC9700}}) can break the security provided
 by this mechanism. Currently, `S256` is the only such method.
 
 NOTE: The code verifier SHOULD have enough entropy to make it
@@ -1686,9 +1686,9 @@ In particular, the authorization server MUST validate the `redirect_uri`
 in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration ({{client-registration}}).
 When comparing the two URIs the authorization server MUST ensure that the
-two URIs are equal, see {{RFC3986}}, Section 6.2.1, Simple String Comparison, for details.
+two URIs are equal, see {{Section 6.2.1 of RFC3986}}, Simple String Comparison, for details.
 The only exception is native apps using a localhost URI: In this case, the authorization server
-MUST allow variable port numbers as described in [RFC8252], Section 7.3.
+MUST allow variable port numbers as described in {{Section 7.3 of RFC8252}}.
 
 If the request is valid,
 the authorization server authenticates the resource owner and obtains
@@ -2162,9 +2162,9 @@ For example:
      Authorization: Bearer mF_9.B5f-4.1JqM
 
 The syntax of the `Authorization` header field for this scheme
-follows the usage of the Basic scheme defined in Section 2 of
-{{!RFC2617}}.  Note that, as with Basic, it does not conform to the
-generic syntax defined in Section 1.2 of {{RFC2617}} but is compatible
+follows the usage of the Basic scheme defined in {{Section 2 of !RFC2617}}.
+Note that, as with Basic, it does not conform to the
+generic syntax defined in {{Section 1.2 of RFC2617}} but is compatible
 with the general authentication framework in HTTP 1.1 Authentication
 {{RFC7235}}, although it does not follow the preferred
 practice outlined therein in order to reflect existing deployments.
@@ -2178,7 +2178,7 @@ Clients SHOULD make authenticated requests with a bearer token using
 the `Authorization` request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
-As described in Section 11.1 of {{RFC9110}}, the string `bearer`
+As described in {{Section 11.1 of RFC9110}}, the string `bearer`
 is case-insensitive. This means all of the following are valid uses
 of the `Authorization` header:
 
@@ -2388,11 +2388,11 @@ authentication attempt using an expired access token:
 
 Access token types can be defined in one of two ways: registered in
 the Access Token Types registry (following the procedures in
-Section 11.1 of {{RFC6749}}), or by using a unique absolute URI as its name.
+{{Section 11.1 of RFC6749}}), or by using a unique absolute URI as its name.
 
 ### Registered Access Token Types
 
-{{RFC6750}} establishes a common registry in Section 11.4 of {{RFC6749}}
+{{RFC6750}} establishes a common registry in {{Section 11.4 of RFC6749}}
 for error values to be shared among OAuth token authentication schemes.
 
 New authentication schemes designed primarily for OAuth token
@@ -2435,7 +2435,7 @@ All other types MUST be registered.
 
 New request or response parameters for use with the authorization
 endpoint or the token endpoint are defined and registered in the
-OAuth Parameters registry following the procedure in Section 11.2 of {{RFC6749}}.
+OAuth Parameters registry following the procedure in {{Section 11.2 of RFC6749}}.
 
 Parameter names MUST conform to the param-name ABNF, and parameter
 values syntax MUST be well-defined (e.g., using ABNF, or a reference
@@ -2457,14 +2457,14 @@ New authorization grant types can be defined by assigning them a
 unique absolute URI for use with the `grant_type` parameter.  If the
 extension grant type requires additional token endpoint parameters,
 they MUST be registered in the OAuth Parameters registry as described
-by Section 11.2 of {{RFC6749}}.
+by {{Section 11.2 of RFC6749}}.
 
 
 ## Defining New Authorization Endpoint Response Types {#new-response-types}
 
 New response types for use with the authorization endpoint are
 defined and registered in the Authorization Endpoint Response Types
-registry following the procedure in Section 11.3 of {{RFC6749}}.  Response type
+registry following the procedure in {{Section 11.3 of RFC6749}}.  Response type
 names MUST conform to the response-type ABNF.
 
     response-type  = response-name *( SP response-name )
@@ -2492,7 +2492,7 @@ resource access error response ({{error-response}}), such error codes MAY be
 defined.
 
 Extension error codes MUST be registered (following the procedures in
-Section 11.4 of {{RFC6749}}) if the extension they are used in conjunction with is a
+{{Section 11.4 of RFC6749}}) if the extension they are used in conjunction with is a
 registered access token type, a registered endpoint parameter, or an
 extension grant type.  Error codes used with unregistered extensions
 MAY be registered.
@@ -2516,7 +2516,7 @@ browser-based application, and native application.
 
 A comprehensive OAuth security model and analysis, as well as
 background for the protocol design, is provided by
-{{RFC6819}} and {{I-D.ietf-oauth-security-topics}}.
+{{RFC6819}} and {{RFC9700}}.
 
 
 ## Access Token Security Considerations {#access-token-security-considerations}
@@ -2863,7 +2863,7 @@ the legitimate client's tokens once it makes the valid request.
 ### HTTP 307 Redirect {#redirect_307}
 
 An authorization server which redirects a request that potentially contains user
-credentials MUST NOT use the 307 status code (Section 15.4.8 of {{RFC9110}}) for
+credentials MUST NOT use the 307 status code ({{Section 15.4.8 of RFC9110}}) for
 redirection.
 If an HTTP redirection (and not, for example,
 JavaScript) is used for such a request, AS SHOULD use the status
@@ -2883,7 +2883,7 @@ client is malicious, it can use the credentials to impersonate
 the user at the AS.
 
 The behavior might be unexpected for developers, but is defined in
-Section 15.4.8 of {{RFC9110}}.  This status code does not require the user
+{{Section 15.4.8 of RFC9110}}.  This status code does not require the user
 agent to rewrite the POST request to a GET request and thereby drop
 the form data in the POST request content.
 
@@ -2951,7 +2951,7 @@ variant of an attack known as Cross-Site Request Forgery (CSRF).
 The traditional countermeasure is that clients pass a random value, also
 known as a CSRF Token, in the `state` parameter that links the request to
 the redirect URI to the user agent session as described. This
-countermeasure is described in detail in {{RFC6819}}, Section 5.3.5. The
+countermeasure is described in detail in {{Section 5.3.5 of RFC6819}}. The
 same protection is provided by the `code_verifier` parameter or the
 OpenID Connect `nonce` value.
 
@@ -2975,7 +2975,7 @@ deployment-specific way to ensure or determine support.
 
 ## Clickjacking
 
-As described in Section 4.4.1.9 of {{RFC6819}}, the authorization
+As described in {{Section 4.4.1.9 of RFC6819}}, the authorization
 request is susceptible to clickjacking attacks, also called user
 interface redressing. In such an attack, an attacker embeds the
 authorization endpoint user interface in an innocuous context.
@@ -3061,7 +3061,7 @@ redirector.
 Clients MUST NOT expose open redirectors. Attackers may use open
 redirectors to produce URLs pointing to the client and utilize them to
 exfiltrate authorization codes, as described in
-Section 4.1.1 of {{I-D.ietf-oauth-security-topics}}.
+{{Section 4.1.1 of RFC9700}}.
 Another abuse case is to produce URLs that appear to point to the client.
 This might trick users into trusting the URL and follow it in their browser.
 This can be abused for phishing.
@@ -3126,7 +3126,7 @@ such deployments, sufficient measures MUST be employed to ensure
 confidentiality of the access token between the front-end and back-
 end servers; encryption of the token is one such possible measure.
 
-See Section 17.2 of {{RFC9110}} for further informations.
+See {{Section 17.2 of RFC9110}} for further informations.
 
 ## Authorization Server Mix-Up Mitigation {#mix-up}
 
@@ -3159,7 +3159,7 @@ Note: Just storing the authorization server URL is not sufficient to identify
 mix-up attacks. An attacker might declare an uncompromised AS's authorization endpoint URL as
 "their" AS URL, but declare a token endpoint under their own control.
 
-See Section 4.4 of {{I-D.ietf-oauth-security-topics}} for a detailed description
+See {{Section 4.4 of RFC9700}} for a detailed description
 of several types of mix-up attacks.
 
 ### Mix-Up Defense via Issuer Identification
@@ -3349,7 +3349,7 @@ availability and user experience of which varies by platform.
 ### Claimed "https" Scheme URI Redirection
 
 Some operating systems allow apps to claim `https` URIs
-(see Section 4.2.2 of {{RFC9110}})
+(see {{Section 4.2.2 of RFC9110}})
 in the domains they control.  When the browser encounters a
 claimed URI, instead of the page being loaded in the browser, the
 native app is launched with the URI supplied as a launch parameter.
@@ -3435,7 +3435,7 @@ private-use URI scheme it registered with the operating system.
 
 When choosing a URI scheme to associate with the app, apps MUST use a
 URI scheme based on a domain name under their control, expressed in
-reverse order, as recommended by Section 3.8 of {{RFC7595}} for
+reverse order, as recommended by {{Section 3.8 of RFC7595}} for
 private-use URI schemes.
 
 For example, an app that controls the domain name `app.example.com`
@@ -3452,7 +3452,7 @@ that use app identifiers based on reverse-order domain names, those
 identifiers can be reused as the private-use URI scheme for the OAuth
 redirect to help avoid this problem.
 
-Following the requirements of Section 3.2 of {{RFC3986}}, as there is
+Following the requirements of {{Section 3.2 of RFC3986}}, as there is
 no naming authority for private-use URI scheme redirects, only a
 single slash (`/`) appears after the scheme component.  A complete
 example of a redirect URI utilizing a private-use URI scheme is:
@@ -3577,7 +3577,7 @@ This draft consolidates the functionality in OAuth 2.0 {{RFC6749}},
 OAuth 2.0 for Native Apps {{RFC8252}},
 Proof Key for Code Exchange {{RFC7636}},
 OAuth 2.0 for Browser-Based Apps {{I-D.ietf-oauth-browser-based-apps}},
-OAuth Security Best Current Practice {{I-D.ietf-oauth-security-topics}},
+OAuth Security Best Current Practice {{RFC9700}},
 and Bearer Token Usage {{RFC6750}}.
 
 Where a later draft updates or obsoletes functionality found in the original
@@ -3590,22 +3590,22 @@ A non-normative list of changes from OAuth 2.0 is listed below:
   such that the default method of using the authorization code grant according
   to this specification requires the addition of the PKCE parameters
 * Redirect URIs must be compared using exact string matching
-  as per Section 4.1.3 of {{I-D.ietf-oauth-security-topics}}
+  as per {{Section 4.1.3 of RFC9700}}
 * The Implicit grant (`response_type=token`) is omitted from this specification
-  as per Section 2.1.2 of {{I-D.ietf-oauth-security-topics}}
+  as per {{Section 2.1.2 of RFC9700}}
 * The Resource Owner Password Credentials grant is omitted from this specification
-  as per Section 2.4 of {{I-D.ietf-oauth-security-topics}}
+  as per {{Section 2.4 of RFC9700}}
 * Bearer token usage omits the use of bearer tokens in the query string of URIs
-  as per Section 4.3.2 of {{I-D.ietf-oauth-security-topics}}
+  as per {{Section 4.3.2 of RFC9700}}
 * Refresh tokens for public clients must either be sender-constrained or one-time use
-  as per Section 4.13.2 of {{I-D.ietf-oauth-security-topics}}
+  as per {{Section 4.13.2 of RFC9700}}
 * The token endpoint request containing an authorization code no longer contains
   the `redirect_uri` parameter
 
 ## Removal of the OAuth 2.0 Implicit grant
 
 The OAuth 2.0 Implicit grant is omitted from OAuth 2.1 as it was deprecated in
-{{I-D.ietf-oauth-security-topics}}.
+{{RFC9700}}.
 
 The intent of removing the Implicit grant is to no longer issue access tokens
 in the authorization response, as such tokens are vulnerable to leakage
@@ -3619,7 +3619,7 @@ for example, `response_type=id_token` defined by {{OpenID}}.
 
 ## Redirect URI Parameter in Token Request {#redirect-uri-in-token-request}
 
-In OAuth 2.0, the request to the token endpoint in the authorization code flow (section 4.1.3 of {{RFC6749}}) contains an optional `redirect_uri` parameter. The parameter was intended to prevent an authorization code injection attack, and was required if the `redirect_uri` parameter was sent in the original authorization request. The authorization request only required the `redirect_uri` parameter if multiple redirect URIs were registered to the specific client. However, in practice, many authorization server implementations required the `redirect_uri` parameter in the authorization request even if only one was registered, leading the `redirect_uri` parameter to be required at the token endpoint as well.
+In OAuth 2.0, the request to the token endpoint in the authorization code flow ({{Section 4.1.3 of RFC6749}}) contains an optional `redirect_uri` parameter. The parameter was intended to prevent an authorization code injection attack, and was required if the `redirect_uri` parameter was sent in the original authorization request. The authorization request only required the `redirect_uri` parameter if multiple redirect URIs were registered to the specific client. However, in practice, many authorization server implementations required the `redirect_uri` parameter in the authorization request even if only one was registered, leading the `redirect_uri` parameter to be required at the token endpoint as well.
 
 In OAuth 2.1, authorization code injection is prevented by the `code_challenge` and `code_verifier` parameters, making the inclusion of the `redirect_uri` parameter serve no purpose in the token request. As such, it has been removed.
 
@@ -3891,6 +3891,12 @@ Discussions around this specification have also occurred at the OAuth Security W
 # Document History
 
 [[ To be removed from the final specification ]]
+
+-13
+
+* Updated references to RFC 9700
+* Updated and sorted list of OAuth extensions
+* Updated references to link to section numbers
 
 -12
 
