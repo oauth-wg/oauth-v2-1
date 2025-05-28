@@ -3838,32 +3838,29 @@ The parameters are serialized into a JSON {{RFC8259}} object structure by adding
 
 Below is a list of well-established extensions at the time of publication:
 
-* {{RFC9068}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
-  * This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.
-
-* {{RFC8628}}: OAuth 2.0 Device Authorization Grant
-  * The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps, or devices like hardware video encoders that can stream video to a streaming video service.
-
-* {{RFC8414}}: Authorization Server Metadata
-  * Authorization Server Metadata (also known as OAuth Discovery) defines an endpoint clients can use to look up the information needed to interact with a particular OAuth server, such as the location of the authorization and token endpoints and the supported grant types.
-
-* {{RFC8707}}: Resource Indicators
-  * Provides a way for the client to explicitly signal to the authorization server where it intends to use the access token it is requesting.
+* {{RFC7009}}: Token Revocation
+  * The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.
 
 * {{RFC7591}}: Dynamic Client Registration
   * Dynamic Client Registration provides a mechanism for programmatically registering clients with an authorization server.
 
-* {{RFC9449}}: Demonstrating Proof of Possession (DPoP)
-  * DPoP describes a mechanism of binding tokens to the clients they were issued to, and providing proof of that binding in an HTTP header when making requests.
+* {{RFC7662}}: Token Introspection
+  * The Token Introspection extension defines a mechanism for resource servers to obtain information about access tokens.
+
+* {{RFC8414}}: Authorization Server Metadata
+  * Authorization Server Metadata (also known as OAuth Discovery) defines an endpoint clients can use to look up the information needed to interact with a particular OAuth server, such as the location of the authorization and token endpoints and the supported grant types.
+
+* {{RFC8628}}: OAuth 2.0 Device Authorization Grant
+  * The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps, or devices like hardware video encoders that can stream video to a streaming video service.
 
 * {{RFC8705}}: Mutual TLS
   * Mutual TLS describes a mechanism of binding tokens to the clients they were issued to, as well as a client authentication mechanism, via TLS certificate authentication.
 
-* {{RFC7662}}: Token Introspection
-  * The Token Introspection extension defines a mechanism for resource servers to obtain information about access tokens.
+* {{RFC8707}}: Resource Indicators
+  * Provides a way for the client to explicitly signal to the authorization server where it intends to use the access token it is requesting.
 
-* {{RFC7009}}: Token Revocation
-  * The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.
+* {{RFC9068}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
+  * This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.
 
 * {{RFC9126}}: Pushed Authorization Requests
   * The Pushed Authorization Requests extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.
