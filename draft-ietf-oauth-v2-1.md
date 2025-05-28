@@ -280,7 +280,7 @@ use of OAuth over any protocol other than HTTP is out of scope.
 
 Since the publication of the OAuth 2.0 Authorization Framework {{RFC6749}}
 in October 2012, it has been updated by OAuth 2.0 for Native Apps {{RFC8252}},
-OAuth Security Best Current Practice {{RFC97900}},
+OAuth Security Best Current Practice {{RFC9700}},
 and OAuth 2.0 for Browser-Based Apps {{I-D.ietf-oauth-browser-based-apps}}.
 The OAuth 2.0 Authorization Framework: Bearer Token Usage {{RFC6750}}
 has also been updated with {{RFC9700}}. This
