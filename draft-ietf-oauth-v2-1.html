@@ -17,18 +17,18 @@ application to obtain access on its own behalf.  This
 specification replaces and obsoletes the OAuth 2.0 Authorization
 Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750. 
     " name="description">
-<meta content="xml2rfc 3.28.0" name="generator">
+<meta content="xml2rfc 3.28.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-oauth-v2-1-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.0
-    Python 3.12.9
+  xml2rfc 3.28.1
+    Python 3.12.10
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.5
+    Jinja2 3.1.6
     lxml 5.3.0
-    platformdirs 4.3.6
+    platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.3
@@ -1052,11 +1052,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">The OAuth 2.1 Authorization Framework</td>
-<td class="right">March 2025</td>
+<td class="right">May 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hardt, et al.</td>
-<td class="center">Expires 5 September 2025</td>
+<td class="center">Expires 29 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1069,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-v2-1-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-03-04" class="published">4 March 2025</time>
+<time datetime="2025-05-28" class="published">28 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-09-05">5 September 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-29">29 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1133,7 +1133,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 29 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -5775,7 +5775,7 @@ work is based upon. No changes to those registries are required by this specific
 <dd class="break"></dd>
 <dt id="I-D.ietf-oauth-browser-based-apps">[I-D.ietf-oauth-browser-based-apps]</dt>
         <dd>
-<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">Ryck, P. D.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 for Browser-Based Applications"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-browser-based-apps-24</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/api/v1/doc/document/draft-ietf-oauth-browser-based-apps/">https://datatracker.ietf.org/api/v1/doc/document/draft-ietf-oauth-browser-based-apps/</a>&gt;</span>. </dd>
+<span class="refAuthor">Parecki, A.</span>, <span class="refAuthor">De Ryck, P.</span>, and <span class="refAuthor">D. Waite</span>, <span class="refTitle">"OAuth 2.0 for Browser-Based Applications"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-browser-based-apps-24</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-24">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps-24</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="NIST800-63">[NIST800-63]</dt>
         <dd>
@@ -6230,114 +6230,106 @@ into the octet sequence below (using hexadecimal notation):<a href="#appendix-B-
 <p id="appendix-D-1">Below is a list of well-established extensions at the time of publication:<a href="#appendix-D-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.1">
-          <p id="appendix-D-2.1.1"><span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens<a href="#appendix-D-2.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.1.1"><span>[<a href="#RFC7009" class="cite xref">RFC7009</a>]</span>: Token Revocation<a href="#appendix-D-2.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.1.2.1">
-              <p id="appendix-D-2.1.2.1.1">This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.<a href="#appendix-D-2.1.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.1.2.1.1">The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.<a href="#appendix-D-2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.2">
-          <p id="appendix-D-2.2.1"><span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span>: OAuth 2.0 Device Authorization Grant<a href="#appendix-D-2.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.2.1"><span>[<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>: Dynamic Client Registration<a href="#appendix-D-2.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.2.2.1">
-              <p id="appendix-D-2.2.2.1.1">The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps, or devices like hardware video encoders that can stream video to a streaming video service.<a href="#appendix-D-2.2.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.2.2.1.1">Dynamic Client Registration provides a mechanism for programmatically registering clients with an authorization server.<a href="#appendix-D-2.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.3">
-          <p id="appendix-D-2.3.1"><span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span>: Authorization Server Metadata<a href="#appendix-D-2.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.3.1"><span>[<a href="#RFC7662" class="cite xref">RFC7662</a>]</span>: Token Introspection<a href="#appendix-D-2.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.3.2.1">
-              <p id="appendix-D-2.3.2.1.1">Authorization Server Metadata (also known as OAuth Discovery) defines an endpoint clients can use to look up the information needed to interact with a particular OAuth server, such as the location of the authorization and token endpoints and the supported grant types.<a href="#appendix-D-2.3.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.3.2.1.1">The Token Introspection extension defines a mechanism for resource servers to obtain information about access tokens.<a href="#appendix-D-2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.4">
-          <p id="appendix-D-2.4.1"><span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span>: Resource Indicators<a href="#appendix-D-2.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.4.1"><span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span>: Authorization Server Metadata<a href="#appendix-D-2.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.4.2.1">
-              <p id="appendix-D-2.4.2.1.1">Provides a way for the client to explicitly signal to the authorization server where it intends to use the access token it is requesting.<a href="#appendix-D-2.4.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.4.2.1.1">Authorization Server Metadata (also known as OAuth Discovery) defines an endpoint clients can use to look up the information needed to interact with a particular OAuth server, such as the location of the authorization and token endpoints and the supported grant types.<a href="#appendix-D-2.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.5">
-          <p id="appendix-D-2.5.1"><span>[<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>: Dynamic Client Registration<a href="#appendix-D-2.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.5.1"><span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span>: OAuth 2.0 Device Authorization Grant<a href="#appendix-D-2.5.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.5.2.1">
-              <p id="appendix-D-2.5.2.1.1">Dynamic Client Registration provides a mechanism for programmatically registering clients with an authorization server.<a href="#appendix-D-2.5.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.5.2.1.1">The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps, or devices like hardware video encoders that can stream video to a streaming video service.<a href="#appendix-D-2.5.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.6">
-          <p id="appendix-D-2.6.1"><span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>: Demonstrating Proof of Possession (DPoP)<a href="#appendix-D-2.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.6.1"><span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>: Mutual TLS<a href="#appendix-D-2.6.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.6.2.1">
-              <p id="appendix-D-2.6.2.1.1">DPoP describes a mechanism of binding tokens to the clients they were issued to, and providing proof of that binding in an HTTP header when making requests.<a href="#appendix-D-2.6.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.6.2.1.1">Mutual TLS describes a mechanism of binding tokens to the clients they were issued to, as well as a client authentication mechanism, via TLS certificate authentication.<a href="#appendix-D-2.6.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.7">
-          <p id="appendix-D-2.7.1"><span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>: Mutual TLS<a href="#appendix-D-2.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.7.1"><span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span>: Resource Indicators<a href="#appendix-D-2.7.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.7.2.1">
-              <p id="appendix-D-2.7.2.1.1">Mutual TLS describes a mechanism of binding tokens to the clients they were issued to, as well as a client authentication mechanism, via TLS certificate authentication.<a href="#appendix-D-2.7.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.7.2.1.1">Provides a way for the client to explicitly signal to the authorization server where it intends to use the access token it is requesting.<a href="#appendix-D-2.7.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.8">
-          <p id="appendix-D-2.8.1"><span>[<a href="#RFC7662" class="cite xref">RFC7662</a>]</span>: Token Introspection<a href="#appendix-D-2.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.8.1"><span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens<a href="#appendix-D-2.8.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.8.2.1">
-              <p id="appendix-D-2.8.2.1.1">The Token Introspection extension defines a mechanism for resource servers to obtain information about access tokens.<a href="#appendix-D-2.8.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.8.2.1.1">This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.<a href="#appendix-D-2.8.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.9">
-          <p id="appendix-D-2.9.1"><span>[<a href="#RFC7009" class="cite xref">RFC7009</a>]</span>: Token Revocation<a href="#appendix-D-2.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.9.1"><span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>: Pushed Authorization Requests<a href="#appendix-D-2.9.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.9.2.1">
-              <p id="appendix-D-2.9.2.1.1">The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.<a href="#appendix-D-2.9.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.9.2.1.1">The Pushed Authorization Requests extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.<a href="#appendix-D-2.9.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.10">
-          <p id="appendix-D-2.10.1"><span>[<a href="#RFC9126" class="cite xref">RFC9126</a>]</span>: Pushed Authorization Requests<a href="#appendix-D-2.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.10.1"><span>[<a href="#RFC9207" class="cite xref">RFC9207</a>]</span>: Authorization Server Issuer Identification<a href="#appendix-D-2.10.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.10.2.1">
-              <p id="appendix-D-2.10.2.1.1">The Pushed Authorization Requests extension describes a technique of initiating an OAuth flow from the back channel, providing better security and more flexibility for building complex authorization requests.<a href="#appendix-D-2.10.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.10.2.1.1">The <code>iss</code> parameter in the authorization response indicates the identity of the authorization server to prevent mix-up attacks in the client.<a href="#appendix-D-2.10.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.11">
-          <p id="appendix-D-2.11.1"><span>[<a href="#RFC9207" class="cite xref">RFC9207</a>]</span>: Authorization Server Issuer Identification<a href="#appendix-D-2.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.11.1"><span>[<a href="#RFC9396" class="cite xref">RFC9396</a>]</span>: Rich Authorization Requests<a href="#appendix-D-2.11.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.11.2.1">
-              <p id="appendix-D-2.11.2.1.1">The <code>iss</code> parameter in the authorization response indicates the identity of the authorization server to prevent mix-up attacks in the client.<a href="#appendix-D-2.11.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.11.2.1.1">Rich Authorization Requests specifies a new parameter <code>authorization_details</code> that is used to carry fine-grained authorization data in the OAuth authorization request.<a href="#appendix-D-2.11.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.12">
-          <p id="appendix-D-2.12.1"><span>[<a href="#RFC9396" class="cite xref">RFC9396</a>]</span>: Rich Authorization Requests<a href="#appendix-D-2.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.12.1"><span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>: Demonstrating Proof of Possession (DPoP)<a href="#appendix-D-2.12.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.12.2.1">
-              <p id="appendix-D-2.12.2.1.1">Rich Authorization Requests specifies a new parameter <code>authorization_details</code> that is used to carry fine-grained authorization data in the OAuth authorization request.<a href="#appendix-D-2.12.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.12.2.1.1">DPoP describes a mechanism for sender-constraining OAuth 2.0 tokens via a proof-of-possession mechanism on the application level.<a href="#appendix-D-2.12.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
         <li class="normal" id="appendix-D-2.13">
-          <p id="appendix-D-2.13.1"><span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>: Demonstrating Proof of Possession (DPoP)<a href="#appendix-D-2.13.1" class="pilcrow">¶</a></p>
+          <p id="appendix-D-2.13.1"><span>[<a href="#RFC9470" class="cite xref">RFC9470</a>]</span>: Step-Up Authentication Challenge Protocol<a href="#appendix-D-2.13.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-D-2.13.2.1">
-              <p id="appendix-D-2.13.2.1.1">DPoP describes a mechanism for sender-constraining OAuth 2.0 tokens via a proof-of-possession mechanism on the application level.<a href="#appendix-D-2.13.2.1.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-</li>
-        <li class="normal" id="appendix-D-2.14">
-          <p id="appendix-D-2.14.1"><span>[<a href="#RFC9470" class="cite xref">RFC9470</a>]</span>: Step-Up Authentication Challenge Protocol<a href="#appendix-D-2.14.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="appendix-D-2.14.2.1">
-              <p id="appendix-D-2.14.2.1.1">Step-Up Auth describes a mechanism that resource servers can use to signal to a client that the authentication event associated with the access token of the current request does not meet its authentication requirements.<a href="#appendix-D-2.14.2.1.1" class="pilcrow">¶</a></p>
+              <p id="appendix-D-2.13.2.1.1">Step-Up Auth describes a mechanism that resource servers can use to signal to a client that the authentication event associated with the access token of the current request does not meet its authentication requirements.<a href="#appendix-D-2.13.2.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>

@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 5 September 2025                                           Okta
+Expires: 29 November 2025                                           Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                            4 March 2025
+                                                             28 May 2025
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 September 2025.
+   This Internet-Draft will expire on 29 November 2025.
 
 Copyright Notice
 
@@ -3849,11 +3849,11 @@ Table of Contents
               oauth-jwt-encoded-state-09>.
 
    [I-D.ietf-oauth-browser-based-apps]
-              Parecki, A., Ryck, P. D., and D. Waite, "OAuth 2.0 for
+              Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
               Draft, draft-ietf-oauth-browser-based-apps-24, 3 March
-              2025, <https://datatracker.ietf.org/api/v1/doc/document/
-              draft-ietf-oauth-browser-based-apps/>.
+              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              oauth-browser-based-apps-24>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
@@ -4197,19 +4197,22 @@ Appendix D.  Extensions
    Below is a list of well-established extensions at the time of
    publication:
 
-   *  [RFC9068]: JSON Web Token (JWT) Profile for OAuth 2.0 Access
-      Tokens
+   *  [RFC7009]: Token Revocation
 
-      -  This specification defines a profile for issuing OAuth access
-         tokens in JSON Web Token (JWT) format.
+      -  The Token Revocation extension defines a mechanism for clients
+         to indicate to the authorization server that an access token is
+         no longer needed.
 
-   *  [RFC8628]: OAuth 2.0 Device Authorization Grant
+   *  [RFC7591]: Dynamic Client Registration
 
-      -  The Device Authorization Grant (formerly known as the Device
-         Flow) is an extension that enables devices with no browser or
-         limited input capability to obtain an access token.  This is
-         commonly used by smart TV apps, or devices like hardware video
-         encoders that can stream video to a streaming video service.
+      -  Dynamic Client Registration provides a mechanism for
+         programmatically registering clients with an authorization
+         server.
+
+   *  [RFC7662]: Token Introspection
+
+      -  The Token Introspection extension defines a mechanism for
+         resource servers to obtain information about access tokens.
 
    *  [RFC8414]: Authorization Server Metadata
 
@@ -4219,23 +4222,13 @@ Appendix D.  Extensions
          location of the authorization and token endpoints and the
          supported grant types.
 
-   *  [RFC8707]: Resource Indicators
+   *  [RFC8628]: OAuth 2.0 Device Authorization Grant
 
-      -  Provides a way for the client to explicitly signal to the
-         authorization server where it intends to use the access token
-         it is requesting.
-
-   *  [RFC7591]: Dynamic Client Registration
-
-      -  Dynamic Client Registration provides a mechanism for
-         programmatically registering clients with an authorization
-         server.
-
-   *  [RFC9449]: Demonstrating Proof of Possession (DPoP)
-
-      -  DPoP describes a mechanism of binding tokens to the clients
-         they were issued to, and providing proof of that binding in an
-         HTTP header when making requests.
+      -  The Device Authorization Grant (formerly known as the Device
+         Flow) is an extension that enables devices with no browser or
+         limited input capability to obtain an access token.  This is
+         commonly used by smart TV apps, or devices like hardware video
+         encoders that can stream video to a streaming video service.
 
    *  [RFC8705]: Mutual TLS
 
@@ -4243,16 +4236,17 @@ Appendix D.  Extensions
          clients they were issued to, as well as a client authentication
          mechanism, via TLS certificate authentication.
 
-   *  [RFC7662]: Token Introspection
+   *  [RFC8707]: Resource Indicators
 
-      -  The Token Introspection extension defines a mechanism for
-         resource servers to obtain information about access tokens.
+      -  Provides a way for the client to explicitly signal to the
+         authorization server where it intends to use the access token
+         it is requesting.
 
-   *  [RFC7009]: Token Revocation
+   *  [RFC9068]: JSON Web Token (JWT) Profile for OAuth 2.0 Access
+      Tokens
 
-      -  The Token Revocation extension defines a mechanism for clients
-         to indicate to the authorization server that an access token is
-         no longer needed.
+      -  This specification defines a profile for issuing OAuth access
+         tokens in JSON Web Token (JWT) format.
 
    *  [RFC9126]: Pushed Authorization Requests
 
