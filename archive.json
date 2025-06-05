@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-29T00:14:02.662138+00:00",
+  "timestamp": "2025-06-05T00:14:18.932971+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5186,6 +5186,22 @@
           "updatedAt": "2025-05-22T22:13:02Z"
         }
       ]
+    },
+    {
+      "number": 214,
+      "id": "I_kwDODkfq5s65ioBa",
+      "title": "Make PKCE optional when DPoP + PAR are used",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/214",
+      "state": "OPEN",
+      "author": "matthieusieben",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section [4.1.2.1. Error Response](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-error-response-2) contains:\n\n> An AS MUST reject requests without a code_challenge from public clients, and MUST reject such requests from other clients unless there is reasonable assurance that the client mitigates authorization code injection in other ways. See [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#authorization_codes) for details.\n\nIn instances where PAR + DPoP (during PAR) are used, it seems that PKCE can be made completely optional. Even for public clients.\n\n[7.5.2. Countermeasures](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-7.5.2) could also be adapted to make PKCE optional when DPoP is used during PAR.\n\n",
+      "createdAt": "2025-06-03T07:50:51Z",
+      "updatedAt": "2025-06-03T07:57:02Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
