@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-22T00:15:56.137185+00:00",
+  "timestamp": "2025-07-13T00:16:34.225424+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5261,6 +5261,22 @@
           "updatedAt": "2025-06-21T17:48:32Z"
         }
       ]
+    },
+    {
+      "number": 216,
+      "id": "I_kwDODkfq5s6_-Ukw",
+      "title": "clarity on refresh_token grant with lesser scope change without \"offline_access\"",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/216",
+      "state": "OPEN",
+      "author": "dvanmali",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In Section 4.3.1, the refresh_token grant can supply an optional scope parameter.\n\n> \"scope\":\n> OPTIONAL. The scope of the access request as described by [Section 1.4.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13#access-token-scope). The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner.\n\nIf the scope \"offline_access\" is provided in the scope, it is clear that a new refresh token should respond. If lesser scopes are requested, an access token with lesser scope is provided and the original scope is maintained.\n\nHowever, if the optional scope does not list \"offline_access\" should a new refresh token still be provided or should the old refresh token be usable again? Should it be different for public/confidential clients?\n\nSection 10 also makes this more confusing:\n\n> Refresh tokens for public clients must either be sender-constrained or one-time use as per [Section 4.13.2](https://rfc-editor.org/rfc/rfc9700#section-4.13.2) of [[RFC9700](https://www.rfc-editor.org/info/rfc9700)]\n",
+      "createdAt": "2025-07-10T21:38:52Z",
+      "updatedAt": "2025-07-10T21:57:02Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
