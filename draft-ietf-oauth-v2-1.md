@@ -102,6 +102,7 @@ informative:
   RFC9470:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-browser-based-apps:
+  I-D.ietf-oauth-rfc7523bis:
 
   OpenID:
     title: OpenID Connect Core 1.0
@@ -530,7 +531,8 @@ defined to communicate the expiration of a refresh token to the client.
 ### Client Credentials
 
 The client credentials or other forms of client authentication
-(e.g., a private key used to sign a JWT, as described in {{RFC7523}})
+(e.g., a private key used to sign a JWT, as described in {{RFC7523}}
+and its update {{I-D.ietf-oauth-rfc7523bis}})
 can be used as an authorization grant when the authorization scope is
 limited to the protected resources under the control of the client,
 or to protected resources previously arranged with the authorization
@@ -1023,7 +1025,8 @@ form of client authentication meeting its security requirements
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
 client authentication such as mTLS {{RFC8705}} or using signed JWTs
-("Private Key JWT") in accordance with {{RFC7521}} and {{RFC7523}}
+("Private Key JWT") in accordance with {{RFC7521}}, {{RFC7523}},
+and their update {{I-D.ietf-oauth-rfc7523bis}}
 (in {{OpenID}} defined as the client authentication method `private_key_jwt`).
 When such methods for client authentication are used, authorization
 servers do not need to store sensitive symmetric keys, making these
@@ -1118,7 +1121,8 @@ mapping between the client identifier (registration record) and
 authentication scheme.
 
 Some additional authentication methods such as mTLS {{RFC8705}}
-and Private Key JWT {{RFC7523}} are defined in the
+and Private Key JWT ({{RFC7523}}, {{I-D.ietf-oauth-rfc7523bis}})
+are defined in the
 "[OAuth Token Endpoint Authentication Methods](https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#token-endpoint-auth-method)" registry,
 and may be useful as generic client authentication methods beyond
 the specific use of protecting the token endpoint.
