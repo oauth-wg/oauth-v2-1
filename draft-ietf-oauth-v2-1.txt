@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 29 November 2025                                           Okta
+Expires: 25 January 2026                                            Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                             28 May 2025
+                                                            24 July 2025
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 November 2025.
+   This Internet-Draft will expire on 25 January 2026.
 
 Copyright Notice
 
@@ -554,13 +554,14 @@ Table of Contents
 1.3.3.  Client Credentials
 
    The client credentials or other forms of client authentication (e.g.,
-   a private key used to sign a JWT, as described in [RFC7523]) can be
-   used as an authorization grant when the authorization scope is
-   limited to the protected resources under the control of the client,
-   or to protected resources previously arranged with the authorization
-   server.  Client credentials are used when the client is requesting
-   access to protected resources based on an authorization previously
-   arranged with the authorization server.
+   a private key used to sign a JWT, as described in [RFC7523] and its
+   update [I-D.ietf-oauth-rfc7523bis]) can be used as an authorization
+   grant when the authorization scope is limited to the protected
+   resources under the control of the client, or to protected resources
+   previously arranged with the authorization server.  Client
+   credentials are used when the client is requesting access to
+   protected resources based on an authorization previously arranged
+   with the authorization server.
 
 1.4.  Access Token
 
@@ -1077,11 +1078,12 @@ Table of Contents
 
    It is RECOMMENDED to use asymmetric (public-key based) methods for
    client authentication such as mTLS [RFC8705] or using signed JWTs
-   ("Private Key JWT") in accordance with [RFC7521] and [RFC7523] (in
-   [OpenID] defined as the client authentication method
-   private_key_jwt).  When such methods for client authentication are
-   used, authorization servers do not need to store sensitive symmetric
-   keys, making these methods more robust against a number of attacks.
+   ("Private Key JWT") in accordance with [RFC7521], [RFC7523], and
+   their update [I-D.ietf-oauth-rfc7523bis] (in [OpenID] defined as the
+   client authentication method private_key_jwt).  When such methods for
+   client authentication are used, authorization servers do not need to
+   store sensitive symmetric keys, making these methods more robust
+   against a number of attacks.
 
    When client authentication is not possible, the authorization server
    SHOULD employ other means to validate the client's identity -- for
@@ -1170,11 +1172,12 @@ Table of Contents
    authentication scheme.
 
    Some additional authentication methods such as mTLS [RFC8705] and
-   Private Key JWT [RFC7523] are defined in the "OAuth Token Endpoint
-   Authentication Methods (https://www.iana.org/assignments/oauth-
-   parameters/oauth-parameters.xhtml#token-endpoint-auth-method)"
-   registry, and may be useful as generic client authentication methods
-   beyond the specific use of protecting the token endpoint.
+   Private Key JWT ([RFC7523], [I-D.ietf-oauth-rfc7523bis]) are defined
+   in the "OAuth Token Endpoint Authentication Methods
+   (https://www.iana.org/assignments/oauth-parameters/oauth-
+   parameters.xhtml#token-endpoint-auth-method)" registry, and may be
+   useful as generic client authentication methods beyond the specific
+   use of protecting the token endpoint.
 
 2.5.  Unregistered Clients
 
@@ -3844,9 +3847,17 @@ Table of Contents
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-24, 3 March
+              Draft, draft-ietf-oauth-browser-based-apps-25, 3 July
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-24>.
+              oauth-browser-based-apps-25>.
+
+   [I-D.ietf-oauth-rfc7523bis]
+              Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
+              "Updates to Audience Values for OAuth 2.0 Authorization
+              Servers", Work in Progress, Internet-Draft, draft-ietf-
+              oauth-rfc7523bis-02, 22 July 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              rfc7523bis-02>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
