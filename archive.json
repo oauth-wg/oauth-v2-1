@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-24T00:15:07.478331+00:00",
+  "timestamp": "2025-07-27T00:16:58.468806+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -9425,6 +9425,49 @@
         "oid": "65fe3c57e0bf91e8f9f12e16326377c43b6f8e38"
       },
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 217,
+      "id": "PR_kwDODkfq5s6gaR4C",
+      "title": "reference 7523 updates",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/217",
+      "state": "MERGED",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "to consider - whether we should leave the recognition of there being an update to 7523 to the reader or directly reference to it.",
+      "createdAt": "2025-07-24T08:44:57Z",
+      "updatedAt": "2025-07-24T08:57:34Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "6f86507b0fbd04a747ee413401daeb700ecbdd8f",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "7523bis",
+      "headRefOid": "8adb01865d912ae8db2d309ee8acac4084fa9fe6",
+      "closedAt": "2025-07-24T08:47:02Z",
+      "mergedAt": "2025-07-24T08:47:01Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "71c398aa9675a874f92edca3aef52d965149d4e1"
+      },
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I think it's a good idea to mention it explicitly",
+          "createdAt": "2025-07-24T08:46:55Z",
+          "updatedAt": "2025-07-24T08:46:55Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "cc @jeffsec-aws this one is based on your comment on the oauth wg meeting chat",
+          "createdAt": "2025-07-24T08:57:34Z",
+          "updatedAt": "2025-07-24T08:57:34Z"
+        }
+      ],
       "reviews": []
     }
   ]
