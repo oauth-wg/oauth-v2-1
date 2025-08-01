@@ -3602,7 +3602,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 * Bearer token usage omits the use of bearer tokens in the query string of URIs
   as per {{Section 4.3.2 of RFC9700}}
 * Refresh tokens for public clients must either be sender-constrained or one-time use
-  as per {{Section 4.13.2 of RFC9700}}
+  as per {{Section 4.14.2 of RFC9700}}
 * The token endpoint request containing an authorization code no longer contains
   the `redirect_uri` parameter
 * Authorization servers must support client credentials in the request body
