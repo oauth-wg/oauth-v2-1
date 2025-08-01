@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 25 January 2026                                            Okta
+Expires: 2 February 2026                                            Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                            24 July 2025
+                                                           1 August 2025
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 January 2026.
+   This Internet-Draft will expire on 2 February 2026.
 
 Copyright Notice
 
@@ -3646,7 +3646,7 @@ Table of Contents
       string of URIs as per Section 4.3.2 of [RFC9700]
 
    *  Refresh tokens for public clients must either be sender-
-      constrained or one-time use as per Section 4.13.2 of [RFC9700]
+      constrained or one-time use as per Section 4.14.2 of [RFC9700]
 
    *  The token endpoint request containing an authorization code no
       longer contains the redirect_uri parameter
