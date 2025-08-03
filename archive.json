@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-27T00:16:58.468806+00:00",
+  "timestamp": "2025-08-03T00:17:13.329060+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -9468,6 +9468,34 @@
           "updatedAt": "2025-07-24T08:57:34Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 218,
+      "id": "PR_kwDODkfq5s6hr7Ls",
+      "title": "Fix an error in a RFC9700 reference",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/218",
+      "state": "MERGED",
+      "author": "NilsRenaud",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "4.13.2 does not exist. It should point to [4.14.2](https://www.rfc-editor.org/rfc/rfc9700#section-4.14.2)",
+      "createdAt": "2025-08-01T09:50:53Z",
+      "updatedAt": "2025-08-01T16:42:54Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "71c398aa9675a874f92edca3aef52d965149d4e1",
+      "headRepository": "NilsRenaud/oauth-v2-1",
+      "headRefName": "patch-1",
+      "headRefOid": "95ce879fcfcfbdac87cf34fa011dd41912f8d3bf",
+      "closedAt": "2025-08-01T16:42:53Z",
+      "mergedAt": "2025-08-01T16:42:53Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "3597d204ca4c03582447bd1ea1f892c8ceaba5a6"
+      },
+      "comments": [],
       "reviews": []
     }
   ]
