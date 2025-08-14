@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-03T00:17:13.329060+00:00",
+  "timestamp": "2025-08-14T00:14:27.294760+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5971,7 +5971,7 @@
       "labels": [],
       "body": "## This PR\r\n\r\nobsoletes OAuth 2.0\r\n\r\nNB: consider adding other specs obsoleted or updated by this one. \r\n\r\nRelated to #28\r\n\r\n\r\ncc: @aaronpk ",
       "createdAt": "2021-03-09T17:17:52Z",
-      "updatedAt": "2021-09-21T19:09:55Z",
+      "updatedAt": "2025-08-12T19:27:49Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e87857efde941ce8e06274615ec669aec995d892",
@@ -7290,7 +7290,7 @@
       "labels": [],
       "body": "## This draft PR\r\n\r\n- clarifies redirection and request/response terminology",
       "createdAt": "2022-06-10T09:18:57Z",
-      "updatedAt": "2024-12-19T13:47:33Z",
+      "updatedAt": "2025-08-12T19:28:09Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "aeb4be4b8eac83cf873d06a53e081bdd292ff7d7",
@@ -8175,7 +8175,7 @@
       "labels": [],
       "body": "## This PR\r\n\r\n- token encryption can't replace TLS unless similar requirements are implemented (integrity, privacy, authenticity) ;\r\n- suggest using TLS along the way, even when using TLS terminators;\r\n- MUST does not define here a specific requirement \r\n\r\n## Note\r\n\r\nSome mitigation measure express strict requirements (e.g. MUST NIT store in insecure cookies). IMHO that's ok, but in this case it's more than mitigation, since an implementation that does not respect these is non conformant.",
       "createdAt": "2022-07-21T11:02:41Z",
-      "updatedAt": "2024-12-19T13:41:29Z",
+      "updatedAt": "2025-08-12T19:28:27Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "aeb4be4b8eac83cf873d06a53e081bdd292ff7d7",
