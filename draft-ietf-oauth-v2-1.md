@@ -1553,9 +1553,9 @@ request URI by adding parameters to the authorization server's
 authorization endpoint URI. The client will eventually redirect the user agent
 to this URI to initiate the request.
 
-Clients use a unique secret per authorization request to protect against authorization code
-injection and CSRF attacks. The client first generates this secret, which it can
-use at the time of redeeming the authorization code to prove that the client using the
+Clients use a unique secret, called the "code verifier", per authorization request to protect against authorization code
+injection and CSRF attacks. The client first generates the code verifier, then derives the "code challenge" to include in the authorization request. The client
+uses the code verifier when exchanging the authorization code at the token endpoint to prove that the client using the
 authorization code is the same client that requested it.
 
 The client constructs the request URI by adding the following
@@ -1583,7 +1583,7 @@ MUST return an error response as described in {{authorization-code-error-respons
 :    REQUIRED.  The client identifier as described in {{client-identifier}}.
 
 "code_challenge":
-:    REQUIRED or RECOMMENDED (see {{authorization_codes}}).  Code challenge.
+:    REQUIRED unless the specific requirements of {{authorization_codes}} are met.  Code challenge derived from the code verifier.
 
 "code_challenge_method":
 :    OPTIONAL, defaults to `plain` if not present in the request.  Code
