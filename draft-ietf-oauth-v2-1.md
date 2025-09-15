@@ -105,9 +105,9 @@ informative:
   I-D.ietf-oauth-rfc7523bis:
 
   OpenID:
-    title: OpenID Connect Core 1.0
+    title: OpenID Connect Core 1.0 incorporating errata set 2
     target: https://openid.net/specs/openid-connect-core-1_0.html
-    date: November 8, 2014
+    date: December 15, 2023
     author:
       - ins: N. Sakimura
       - ins: J. Bradley
@@ -116,9 +116,9 @@ informative:
       - ins: C. Mortimore
 
   OpenID.Discovery:
-    title: OpenID Connect Discovery 1.0 incorporating errata set 1
+    title: OpenID Connect Discovery 1.0 incorporating errata set 2
     target: https://openid.net/specs/openid-connect-discovery-1_0.html
-    date: November 8, 2014
+    date: December 15, 2023
     author:
       - ins: N. Sakimura
       - ins: J. Bradley
