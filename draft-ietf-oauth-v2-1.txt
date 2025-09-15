@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 2 February 2026                                            Okta
+Expires: 19 March 2026                                              Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                           1 August 2025
+                                                       15 September 2025
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 February 2026.
+   This Internet-Draft will expire on 19 March 2026.
 
 Copyright Notice
 
@@ -1592,10 +1592,12 @@ Table of Contents
    server's authorization endpoint URI.  The client will eventually
    redirect the user agent to this URI to initiate the request.
 
-   Clients use a unique secret per authorization request to protect
-   against authorization code injection and CSRF attacks.  The client
-   first generates this secret, which it can use at the time of
-   redeeming the authorization code to prove that the client using the
+   Clients use a unique secret, called the "code verifier", per
+   authorization request to protect against authorization code injection
+   and CSRF attacks.  The client first generates the code verifier, then
+   derives the "code challenge" to include in the authorization request.
+   The client uses the code verifier when exchanging the authorization
+   code at the token endpoint to prove that the client using the
    authorization code is the same client that requested it.
 
    The client constructs the request URI by adding the following
@@ -1623,8 +1625,9 @@ Table of Contents
    "client_id":  REQUIRED.  The client identifier as described in
       Section 2.2.
 
-   "code_challenge":  REQUIRED or RECOMMENDED (see Section 7.5.1).  Code
-      challenge.
+   "code_challenge":  REQUIRED unless the specific requirements of
+      Section 7.5.1 are met.  Code challenge derived from the code
+      verifier.
 
    "code_challenge_method":  OPTIONAL, defaults to plain if not present
       in the request.  Code verifier transformation method is S256 or
@@ -3874,13 +3877,14 @@ Table of Contents
               authorization-protocol/>.
 
    [OpenID]   Sakimura, N., Bradley, J., Jones, M., de Medeiros, B., and
-              C. Mortimore, "OpenID Connect Core 1.0", November 2014,
+              C. Mortimore, "OpenID Connect Core 1.0 incorporating
+              errata set 2", December 2023,
               <https://openid.net/specs/openid-connect-core-1_0.html>.
 
    [OpenID.Discovery]
               Sakimura, N., Bradley, J., Jones, M., and E. Jay, "OpenID
-              Connect Discovery 1.0 incorporating errata set 1",
-              November 2014, <https://openid.net/specs/openid-connect-
+              Connect Discovery 1.0 incorporating errata set 2",
+              December 2023, <https://openid.net/specs/openid-connect-
               discovery-1_0.html>.
 
    [OpenID.Messages]
