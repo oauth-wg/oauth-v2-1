@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-14T00:14:27.294760+00:00",
+  "timestamp": "2025-09-16T00:12:42.799941+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -117,6 +117,11 @@
       "name": "ietf-122",
       "description": "",
       "color": "D9DECE"
+    },
+    {
+      "name": "ietf-124",
+      "description": "",
+      "color": "82d217"
     }
   ],
   "issues": [
@@ -3041,11 +3046,11 @@
         "dickhardt"
       ],
       "labels": [
-        "ietf-122"
+        "ietf-124"
       ],
       "body": "We may need some additional client registration metadata parameters in order to enforce some of the non-optional things in 2.1 while allowing 2.0 clients to still treat them as optional.\r\n\r\nRelated to #97 ",
       "createdAt": "2022-06-30T17:13:04Z",
-      "updatedAt": "2025-01-09T17:53:42Z",
+      "updatedAt": "2025-09-15T18:14:56Z",
       "closedAt": null,
       "comments": [
         {
@@ -3061,6 +3066,20 @@
           "body": "* There are multiple ways someone might want to migrate clients\r\n* How do I support both 2.0 and 2.1 clients at the same time\r\n* How do I not break existing clients, some of which might never upgrade\r\n* Provide clients a way to opt in to 2.1 behavior in a slow rollout (e.g. native apps where upgrades roll out slowly)\r\n",
           "createdAt": "2025-01-09T17:52:25Z",
           "updatedAt": "2025-01-09T17:52:25Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "posted the following to mail list for discussion\n\nThere are a number of protocol features that are valid in OAuth 2.0 that are not valid in OAuth 2.1. For example, the code_challenge is REQUIRED in OAuth 2.1\n\nWe are proposing the following normative additions to support version support discovery between the AS and the client. \n\nFor a client to know if an AS supports 2.1, the AS metadata contains a new \"oauth_versions_supported\" property that is an array of version strings. \n\nexample:\n\n\"oauth_versions_supported\": [\"2.0\",\"2.1\"]\n\nThis indicates the AS supports both OAuth 2.0 and OAuth 2.1\n\nFor an AS to learn that a client supports 2.1, the client would include in its metadata the \"oauth_version\" property which would contain the string \"2.1\"\n\nexample:\n\n\"oauth_version\": \"2.1\" \n\nNote that there is no explicit signal from the client or server at runtime if a given request or response is conforming with OAuth 2.0 vs OAuth 2.1",
+          "createdAt": "2025-09-15T17:34:59Z",
+          "updatedAt": "2025-09-15T17:34:59Z"
+        },
+        {
+          "author": "gffletch",
+          "authorAssociation": "NONE",
+          "body": "Is it possible to add more clarity on how a client provides the \"metadata oauth_version\" value? Is this a new parameter in Dynamic Client Registration? Is it something that the AS should make available in it's developer portal to allow the client to specify to the AS which version of OAuth it's supporting? \n\nWhat about clients that work with multiple Authorization Servers not all of which may be supporting 2.1?",
+          "createdAt": "2025-09-15T18:14:56Z",
+          "updatedAt": "2025-09-15T18:14:56Z"
         }
       ]
     },
@@ -5303,6 +5322,40 @@
       "body": "In Section 4.3.1, the refresh_token grant can supply an optional scope parameter.\n\n> \"scope\":\n> OPTIONAL. The scope of the access request as described by [Section 1.4.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13#access-token-scope). The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner.\n\nIf the scope \"offline_access\" is provided in the scope, it is clear that a new refresh token should respond. If lesser scopes are requested, an access token with lesser scope is provided and the original scope is maintained.\n\nHowever, if the optional scope does not list \"offline_access\" should a new refresh token still be provided or should the old refresh token be usable again? Should it be different for public/confidential clients?\n\nSection 10 also makes this more confusing:\n\n> Refresh tokens for public clients must either be sender-constrained or one-time use as per [Section 4.13.2](https://rfc-editor.org/rfc/rfc9700#section-4.13.2) of [[RFC9700](https://www.rfc-editor.org/info/rfc9700)]\n",
       "createdAt": "2025-07-10T21:38:52Z",
       "updatedAt": "2025-07-10T21:57:02Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 219,
+      "id": "I_kwDODkfq5s7LmFhm",
+      "title": "Working Group Draft link fails",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/219",
+      "state": "CLOSED",
+      "author": "WhippsP",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "There is a broken link to the \"Working Group Draft\" (https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1) this I beleive is actully an issue with datatracker and should normally work but there may be a conflict between /draft-ietf-oauth-v2-1 (this doc) and /draft-ietf-oauth-v2-01 (Version 01 of Oauth2).\n\nI have created a [bug](https://github.com/ietf-tools/datatracker/issues/9533) in Datatracker for this but for now it may be worth adding a revision to the link (eg https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13).",
+      "createdAt": "2025-09-14T23:44:40Z",
+      "updatedAt": "2025-09-14T23:48:02Z",
+      "closedAt": "2025-09-14T23:48:02Z",
+      "comments": []
+    },
+    {
+      "number": 220,
+      "id": "I_kwDODkfq5s7LwjdR",
+      "title": "Clarify the PKCE mechanism",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/220",
+      "state": "OPEN",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "dickhardt"
+      ],
+      "labels": [],
+      "body": "intro paragraph in the 4.1.1 (2nd paragraph) define code_verifier and code_challenge and refer to a new section on how it works and reference the exception for OpenID Connect\n\nchange \n\n```code_challenge\":\nREQUIRED or RECOMMENDED (see [Section 7.5.1](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#authorization_codes)). Code challenge.```\n\nto be REQUIRED unless ....  The code_challenge as described in XXX",
+      "createdAt": "2025-09-15T15:37:52Z",
+      "updatedAt": "2025-09-15T15:37:52Z",
       "closedAt": null,
       "comments": []
     }
