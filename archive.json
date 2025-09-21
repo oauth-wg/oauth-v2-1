@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-16T00:12:42.799941+00:00",
+  "timestamp": "2025-09-21T00:14:35.110447+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5337,9 +5337,17 @@
       "labels": [],
       "body": "There is a broken link to the \"Working Group Draft\" (https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1) this I beleive is actully an issue with datatracker and should normally work but there may be a conflict between /draft-ietf-oauth-v2-1 (this doc) and /draft-ietf-oauth-v2-01 (Version 01 of Oauth2).\n\nI have created a [bug](https://github.com/ietf-tools/datatracker/issues/9533) in Datatracker for this but for now it may be worth adding a revision to the link (eg https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13).",
       "createdAt": "2025-09-14T23:44:40Z",
-      "updatedAt": "2025-09-14T23:48:02Z",
+      "updatedAt": "2025-09-19T03:25:30Z",
       "closedAt": "2025-09-14T23:48:02Z",
-      "comments": []
+      "comments": [
+        {
+          "author": "WhippsP",
+          "authorAssociation": "NONE",
+          "body": "@aaronpk This can actually be reversed now, the fix I added to datatracker resolves the issue and has rolled out to Prod. It can now be referenced as /draft-ietf-oauth-v2-1",
+          "createdAt": "2025-09-19T03:25:30Z",
+          "updatedAt": "2025-09-19T03:25:30Z"
+        }
+      ]
     },
     {
       "number": 220,
