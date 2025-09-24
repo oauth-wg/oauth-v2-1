@@ -699,7 +699,7 @@ All the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the
 except for loopback interface redirect URIs,
 which MAY use the `http` scheme.
 When using `https`, TLS certificates MUST be checked
-according to {{RFC9110}}.
+according to {{Section 4.3.4 of RFC9110}}.
 At the time of this writing,
 TLS version 1.3 {{RFC8446}} is the most recent version.
 
