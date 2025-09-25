@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-21T00:14:35.110447+00:00",
+  "timestamp": "2025-09-25T00:13:00.023807+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5366,6 +5366,22 @@
       "updatedAt": "2025-09-15T15:37:52Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 221,
+      "id": "I_kwDODkfq5s7NqkNp",
+      "title": "specific reference to Section 4.3.4 of RFC9100 for TLS server certificate check",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/221",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "from https://github.com/oauth-wg/oauth-transaction-tokens/pull/239#discussion_r2335128185:\n\n> I would have had the same feedback for @aaronpk and his OAuth 2.1 coauthors (but really only Aaron b/c AFAICT he's the only one really contributing to 2.1) but admittedly I did miss the RFC6125 cert validation stuff in the nearly 200 pages of RFC9100. Apologies there. \n> \n> Perhaps just a bit more specific reference (I think/hope this syntax is correct)? \n> \n> \\```suggestion\n> Workloads SHOULD use the `https` scheme to secure the communication channel and authenticate the Transaction Token Service. When using `https`, TLS certificates MUST be checked according to {{Section 4.3.4 of RFC9110}}. At the time of this writing, TLS version 1.3 {{RFC8446}} is the most recent version.\n> \\```\n> \n> Ignoring that I just noticed again that RFC6125 has been obsoleted by RFC 9525. But maybe pointing at 9110 can enable just continuing to ignore that.\n\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-transaction-tokens/pull/239#discussion_r2337456201_\n            ",
+      "createdAt": "2025-09-24T18:30:35Z",
+      "updatedAt": "2025-09-24T20:39:11Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -9556,6 +9572,32 @@
       "mergeCommit": {
         "oid": "3597d204ca4c03582447bd1ea1f892c8ceaba5a6"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 222,
+      "id": "PR_kwDODkfq5s6qWFeB",
+      "title": "ref Section 4.3.4 of RFC9110 for TLS server cert check",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/222",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "to fix #221",
+      "createdAt": "2025-09-24T18:37:59Z",
+      "updatedAt": "2025-09-24T18:38:00Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "bcd27e23f2dd5cfe6ee5db1413a763ae2141bb58",
+      "headRepository": "bc-pi/oauth-v2-1",
+      "headRefName": "patch-1",
+      "headRefOid": "5cae67d1f99060fd0e7fbe577a5d4f9137debe05",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
