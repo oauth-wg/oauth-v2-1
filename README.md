@@ -4,7 +4,7 @@ This is the working area for the IETF [OAUTH Working Group](https://datatracker.
 
 * [Editor's Copy](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-oauth-v2-1)
-* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1)
 <!-- * [Compare Editor's Copy to Working Group Draft](https://drafts.oauth.net/oauth-v2-1/#go.draft-ietf-oauth-v2-1.diff) -->
 
 
