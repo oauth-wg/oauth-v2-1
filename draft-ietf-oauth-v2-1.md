@@ -3906,6 +3906,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Editorial clarifications
 * Corrected an instance of "relying party" vs "resource server"
 * Add references to `client_secret_post` and `client_secret_basic` terms from RFC7591
+* Replaced "sanitize" language with treating as untrusted input
 
 -13
 
