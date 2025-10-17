@@ -3901,6 +3901,11 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 [[ To be removed from the final specification ]]
 
+-14
+
+* Corrected an instance of "relying party" vs "resource server"
+* Add references to `client_secret_post` and `client_secret_basic` terms from RFC7591
+
 -13
 
 * Updated references to RFC 9700
