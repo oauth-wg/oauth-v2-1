@@ -1019,15 +1019,15 @@ The authorization server MUST only rely on client authentication if the
 process of issuance/registration and distribution of the underlying
 credentials ensures their confidentiality.
 
-If the client is confidential, the authorization server MAY accept any
+For confidential clients, the authorization server MAY accept any
 form of client authentication meeting its security requirements
-(e.g., password, public/private key pair).
+(e.g., client secret, public/private key pair).
 
 It is RECOMMENDED to use asymmetric (public-key based) methods for
 client authentication such as mTLS {{RFC8705}} or using signed JWTs
 ("Private Key JWT") in accordance with {{RFC7521}}, {{RFC7523}},
 and their update {{I-D.ietf-oauth-rfc7523bis}}
-(in {{OpenID}} defined as the client authentication method `private_key_jwt`).
+(defined in {{OpenID}} as the client authentication method `private_key_jwt`).
 When such methods for client authentication are used, authorization
 servers do not need to store sensitive symmetric keys, making these
 methods more robust against a number of attacks.
@@ -1057,7 +1057,7 @@ See {{security-client-authentication}} for additional details.
 
 ### Client Secret {#client-secret}
 
-To support clients in possession of a client secret,
+To support confidential clients in possession of a client secret,
 the authorization server MUST support the client including the
 client credentials in the request body content using the following
 parameters:
