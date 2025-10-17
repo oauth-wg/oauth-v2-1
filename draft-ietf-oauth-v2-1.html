@@ -2640,10 +2640,11 @@ the registration process described by <a href="#client-identifier" class="auto i
 </dl>
 <p id="section-2.4.1-3">The parameters can only be transmitted in the request content and MUST NOT
 be included in the request URI.<a href="#section-2.4.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-4">For example, a request to refresh an access token (<a href="#refreshing-an-access-token" class="auto internal xref">Section 4.3</a>) using
+<p id="section-2.4.1-4">This is also known as <code>client_secret_post</code> as defined in <span><a href="https://rfc-editor.org/rfc/rfc7591#section-2" class="relref">Section 2</a> of [<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>.<a href="#section-2.4.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-5">For example, a request to refresh an access token (<a href="#refreshing-an-access-token" class="auto internal xref">Section 4.3</a>) using
 the content parameters (with extra line breaks for display purposes
-only):<a href="#section-2.4.1-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.4.1-5">
+only):<a href="#section-2.4.1-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.4.1-6">
 <pre>
 POST /token HTTP/1.1
 Host: server.example.com
@@ -2651,24 +2652,25 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 &amp;client_id=s6BhdRkqt3&amp;client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
-</pre><a href="#section-2.4.1-5" class="pilcrow">¶</a>
+</pre><a href="#section-2.4.1-6" class="pilcrow">¶</a>
 </div>
-<p id="section-2.4.1-6">The authorization server MAY support the HTTP Basic
+<p id="section-2.4.1-7">The authorization server MAY support the HTTP Basic
 authentication scheme for authenticating clients that were issued a
-client secret.<a href="#section-2.4.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-7">When using the HTTP Basic authentication scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>
+client secret.<a href="#section-2.4.1-7" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-8">When using the HTTP Basic authentication scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>
 to authenticate with the authorization server, the client identifier is encoded using the
 <code>application/x-www-form-urlencoded</code> encoding algorithm per
 <a href="#application-x-www-form-urlencoded" class="auto internal xref">Appendix B</a>, and the encoded value is used as the username; the client
 secret is encoded using the same algorithm and used as the
-password.<a href="#section-2.4.1-7" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-8">For example (with extra line breaks for display purposes only):<a href="#section-2.4.1-8" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.4.1-9">
+password.<a href="#section-2.4.1-8" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-9">This is also known as <code>client_secret_basic</code> as defined in <span><a href="https://rfc-editor.org/rfc/rfc7591#section-2" class="relref">Section 2</a> of [<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>.<a href="#section-2.4.1-9" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-10">For example (with extra line breaks for display purposes only):<a href="#section-2.4.1-10" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.4.1-11">
 <pre>
 Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
-</pre><a href="#section-2.4.1-9" class="pilcrow">¶</a>
+</pre><a href="#section-2.4.1-11" class="pilcrow">¶</a>
 </div>
-<p id="section-2.4.1-10">Note: This method of initially form-encoding the client identifier and secret,
+<p id="section-2.4.1-12">Note: This method of initially form-encoding the client identifier and secret,
 and then using the encoded values as the HTTP Basic authentication username
 and password, has led to many interoperability problems in the past. Some
 implementations have missed the encoding step, or decided to only encode
@@ -2676,10 +2678,10 @@ certain characters, or ignored the encoding requirement when validating the
 credentials, leading to clients having to special-case how they present the
 credentials to individual authorization servers. Including the credentials
 in the request body content avoids the encoding issues and leads to more
-interoperable implementations.<a href="#section-2.4.1-10" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-11">Since the client secret authentication method involves a password, the
+interoperable implementations.<a href="#section-2.4.1-12" class="pilcrow">¶</a></p>
+<p id="section-2.4.1-13">Since the client secret authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
-brute force attacks.<a href="#section-2.4.1-11" class="pilcrow">¶</a></p>
+brute force attacks.<a href="#section-2.4.1-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="other-authentication-methods">
