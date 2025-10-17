@@ -2681,8 +2681,8 @@ Table of Contents
 7.1.3.6.  Issue scoped bearer tokens
 
    Authorization servers SHOULD issue bearer tokens that contain an
-   audience restriction, scoping their use to the intended relying party
-   or set of relying parties.
+   audience restriction, scoping their use to the intended resource
+   server or set of resource servers.
 
 7.1.3.7.  Don't pass bearer tokens in page URLs
 
