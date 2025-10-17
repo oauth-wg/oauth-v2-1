@@ -2586,14 +2586,14 @@ execute first.<a href="#section-2.3.6-2" class="pilcrow">¶</a></p>
 <p id="section-2.4-1">The authorization server MUST only rely on client authentication if the
 process of issuance/registration and distribution of the underlying
 credentials ensures their confidentiality.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">If the client is confidential, the authorization server MAY accept any
+<p id="section-2.4-2">For confidential clients, the authorization server MAY accept any
 form of client authentication meeting its security requirements
-(e.g., password, public/private key pair).<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+(e.g., client secret, public/private key pair).<a href="#section-2.4-2" class="pilcrow">¶</a></p>
 <p id="section-2.4-3">It is RECOMMENDED to use asymmetric (public-key based) methods for
 client authentication such as mTLS <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span> or using signed JWTs
 ("Private Key JWT") in accordance with <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span>, <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>,
 and their update <span>[<a href="#I-D.ietf-oauth-rfc7523bis" class="cite xref">I-D.ietf-oauth-rfc7523bis</a>]</span>
-(in <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span> defined as the client authentication method <code>private_key_jwt</code>).
+(defined in <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span> as the client authentication method <code>private_key_jwt</code>).
 When such methods for client authentication are used, authorization
 servers do not need to store sensitive symmetric keys, making these
 methods more robust against a number of attacks.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
@@ -2621,7 +2621,7 @@ See <a href="#security-client-authentication" class="auto internal xref">Section
           <h4 id="name-client-secret">
 <a href="#section-2.4.1" class="section-number selfRef">2.4.1. </a><a href="#name-client-secret" class="section-name selfRef">Client Secret</a>
           </h4>
-<p id="section-2.4.1-1">To support clients in possession of a client secret,
+<p id="section-2.4.1-1">To support confidential clients in possession of a client secret,
 the authorization server MUST support the client including the
 client credentials in the request body content using the following
 parameters:<a href="#section-2.4.1-1" class="pilcrow">¶</a></p>
