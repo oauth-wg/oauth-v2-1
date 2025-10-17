@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 19 March 2026                                              Okta
+Expires: 20 April 2026                                              Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                       15 September 2025
+                                                         17 October 2025
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 March 2026.
+   This Internet-Draft will expire on 20 April 2026.
 
 Copyright Notice
 
@@ -732,8 +732,9 @@ Table of Contents
    All the OAuth protocol URLs (URLs exposed by the AS, RS and Client)
    MUST use the https scheme except for loopback interface redirect
    URIs, which MAY use the http scheme.  When using https, TLS
-   certificates MUST be checked according to [RFC9110].  At the time of
-   this writing, TLS version 1.3 [RFC8446] is the most recent version.
+   certificates MUST be checked according to Section 4.3.4 of [RFC9110].
+   At the time of this writing, TLS version 1.3 [RFC8446] is the most
+   recent version.
 
    Implementations MAY also support additional transport-layer security
    mechanisms that meet their security requirements.
@@ -3856,11 +3857,12 @@ Table of Contents
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
-              "Updates to Audience Values for OAuth 2.0 Authorization
-              Servers", Work in Progress, Internet-Draft, draft-ietf-
-              oauth-rfc7523bis-02, 22 July 2025,
+              "Updates to OAuth 2.0 JSON Web Token (JWT) Client
+              Authentication and Assertion-Based Authorization Grants",
+              Work in Progress, Internet-Draft, draft-ietf-oauth-
+              rfc7523bis-03, 7 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-02>.
+              rfc7523bis-03>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
