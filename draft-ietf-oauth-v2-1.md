@@ -2648,7 +2648,7 @@ leaked.
 
 Authorization servers SHOULD issue bearer tokens
 that contain an audience restriction, scoping their use to the
-intended relying party or set of relying parties.
+intended resource server or set of resource servers.
 
 #### Don't pass bearer tokens in page URLs
 
