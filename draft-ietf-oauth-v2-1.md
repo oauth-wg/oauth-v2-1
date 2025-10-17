@@ -3039,17 +3039,17 @@ by the authorization server. Even in such cases, additional
 countermeasures SHOULD still be employed.
 
 
-## Code Injection and Input Validation
+## Injection and Input Validation
 
-A code injection attack occurs when an input or otherwise external
+An injection attack occurs when an input or otherwise external
 variable is used by an application unsanitized and causes
 modification to the application logic.  This may allow an attacker to
 gain access to the application device or its data, cause denial of
 service, or introduce a wide range of malicious side-effects.
 
-The authorization server and client MUST sanitize (and validate when
-possible) any value received -- in particular, the value of the
-`state` and `redirect_uri` parameters.
+The authorization server and client MUST treat parameters received
+as potentially malicious external input and apply appropriate protections,
+in particular, the values of the `state` and `redirect_uri` parameters.
 
 
 ## Open Redirection {#open-redirectors}
