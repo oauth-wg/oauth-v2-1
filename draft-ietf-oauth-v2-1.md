@@ -1072,6 +1072,8 @@ parameters:
 The parameters can only be transmitted in the request content and MUST NOT
 be included in the request URI.
 
+This is also known as `client_secret_post` as defined in {{Section 2 of RFC7591}}.
+
 For example, a request to refresh an access token ({{refreshing-an-access-token}}) using
 the content parameters (with extra line breaks for display purposes
 only):
@@ -1093,6 +1095,8 @@ to authenticate with the authorization server, the client identifier is encoded 
 {{application-x-www-form-urlencoded}}, and the encoded value is used as the username; the client
 secret is encoded using the same algorithm and used as the
 password.
+
+This is also known as `client_secret_basic` as defined in {{Section 2 of RFC7591}}.
 
 For example (with extra line breaks for display purposes only):
 
