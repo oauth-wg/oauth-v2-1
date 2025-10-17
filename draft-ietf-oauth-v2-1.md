@@ -1218,7 +1218,7 @@ omitted from the request. Request and response parameters
 defined by this specification MUST NOT be included more than once.
 
 Authorization servers that wish to support browser-based applications
-(applications running exclusively in client-side JavaScript without
+(for example, applications running exclusively in client-side JavaScript without
 access to a supporting backend server) will need to ensure the token endpoint
 supports the necessary CORS {{WHATWG.CORS}} headers to allow the responses
 to be visible to the application.
