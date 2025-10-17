@@ -1461,7 +1461,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
                 <p id="section-toc.1-1.7.2.10.1"><a href="#section-7.10" class="auto internal xref">7.10</a>. <a href="#name-clickjacking" class="internal xref">Clickjacking</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.11">
-                <p id="section-toc.1-1.7.2.11.1"><a href="#section-7.11" class="auto internal xref">7.11</a>. <a href="#name-code-injection-and-input-va" class="internal xref">Code Injection and Input Validation</a></p>
+                <p id="section-toc.1-1.7.2.11.1"><a href="#section-7.11" class="auto internal xref">7.11</a>. <a href="#name-injection-and-input-validat" class="internal xref">Injection and Input Validation</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.12">
                 <p id="section-toc.1-1.7.2.12.1"><a href="#section-7.12" class="auto internal xref">7.12</a>. <a href="#name-open-redirection" class="internal xref">Open Redirection</a></p>
@@ -4971,19 +4971,19 @@ by the authorization server. Even in such cases, additional
 countermeasures SHOULD still be employed.<a href="#section-7.10-7" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="code-injection-and-input-validation">
+<div id="injection-and-input-validation">
 <section id="section-7.11">
-        <h3 id="name-code-injection-and-input-va">
-<a href="#section-7.11" class="section-number selfRef">7.11. </a><a href="#name-code-injection-and-input-va" class="section-name selfRef">Code Injection and Input Validation</a>
+        <h3 id="name-injection-and-input-validat">
+<a href="#section-7.11" class="section-number selfRef">7.11. </a><a href="#name-injection-and-input-validat" class="section-name selfRef">Injection and Input Validation</a>
         </h3>
-<p id="section-7.11-1">A code injection attack occurs when an input or otherwise external
+<p id="section-7.11-1">An injection attack occurs when an input or otherwise external
 variable is used by an application unsanitized and causes
 modification to the application logic.  This may allow an attacker to
 gain access to the application device or its data, cause denial of
 service, or introduce a wide range of malicious side-effects.<a href="#section-7.11-1" class="pilcrow">¶</a></p>
-<p id="section-7.11-2">The authorization server and client MUST sanitize (and validate when
-possible) any value received -- in particular, the value of the
-<code>state</code> and <code>redirect_uri</code> parameters.<a href="#section-7.11-2" class="pilcrow">¶</a></p>
+<p id="section-7.11-2">The authorization server and client MUST treat parameters received
+as potentially malicious external input and apply appropriate protections,
+in particular, the values of the <code>state</code> and <code>redirect_uri</code> parameters.<a href="#section-7.11-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="open-redirectors">
