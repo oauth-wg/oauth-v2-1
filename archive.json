@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-25T00:13:00.023807+00:00",
+  "timestamp": "2025-10-19T00:15:15.389607+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3050,7 +3050,7 @@
       ],
       "body": "We may need some additional client registration metadata parameters in order to enforce some of the non-optional things in 2.1 while allowing 2.0 clients to still treat them as optional.\r\n\r\nRelated to #97 ",
       "createdAt": "2022-06-30T17:13:04Z",
-      "updatedAt": "2025-09-15T18:14:56Z",
+      "updatedAt": "2025-10-17T21:42:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -3080,6 +3080,13 @@
           "body": "Is it possible to add more clarity on how a client provides the \"metadata oauth_version\" value? Is this a new parameter in Dynamic Client Registration? Is it something that the AS should make available in it's developer portal to allow the client to specify to the AS which version of OAuth it's supporting? \n\nWhat about clients that work with multiple Authorization Servers not all of which may be supporting 2.1?",
           "createdAt": "2025-09-15T18:14:56Z",
           "updatedAt": "2025-09-15T18:14:56Z"
+        },
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "The AS exposing versioned endpoints makes the most sense to me as a way for clients to opt into 2.1 or not. It allows clients to implement fractional rollouts to gradually switch over to 2.1, as opposed to a flag on the client itself which is a binary switch.\n\nVersioning endpoints would also greatly benefit from versioned AS metadata, e.g. https://issuer.example.com/.well-known/oauth-authorization-server/2.1. (That could still be coupled with oauth_versions_supported for _all_ published AS metadata.)  Without that, it would be infeasible for large AS to update authorization_endpoint without breaking some clients.",
+          "createdAt": "2025-10-17T21:42:42Z",
+          "updatedAt": "2025-10-17T21:42:42Z"
         }
       ]
     },
@@ -4265,7 +4272,7 @@
       "id": "I_kwDODkfq5s6AqD-N",
       "title": "Terminology: \"relying party\" vs. \"client\"",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/169",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "SECtim",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4274,8 +4281,8 @@
       ],
       "body": "In some places, the term \"relying party\" is used instead of \"client\":\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2820-L2822\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2578-L2582",
       "createdAt": "2024-02-28T09:33:25Z",
-      "updatedAt": "2024-11-15T17:49:51Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-17T23:41:45Z",
+      "closedAt": "2025-10-17T23:41:45Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -4367,15 +4374,15 @@
       "id": "I_kwDODkfq5s6FovuN",
       "title": "Strict JavaScript Exclusiveness?",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/174",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "MozharAlhosni",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Under [Token Endpoint](https://github.com/oauth-wg/oauth-v2-1/blob/main/draft-ietf-oauth-v2-1.md#token-endpoint), it states:\r\n\r\n> Authorization servers that wish to support browser-based applications (applications running exclusively in client-side JavaScript without access to a supporting backend server)\r\n\r\nHowever, the sentence \"running exclusively in client-side JavaScript\" imposes strict exclusiveness, regardless that these client-side browser-based applications may be running [WebAssembly](https://webassembly.org/) (for example, like Blazor WebAssembly web applications).",
       "createdAt": "2024-04-14T08:52:37Z",
-      "updatedAt": "2024-04-14T09:02:03Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-17T23:34:13Z",
+      "closedAt": "2025-10-17T23:34:11Z",
       "comments": []
     },
     {
@@ -4656,29 +4663,43 @@
       "labels": [],
       "body": "There's some unfortunate history around the `aud` value that you use in `private_key_jwt` client authentication assertions.\r\n\r\n[RFC7523](https://datatracker.ietf.org/doc/html/rfc7523#section-3) says:\r\n\r\n```\r\n        The JWT MUST contain an \"aud\" (audience) claim containing a\r\n        value that identifies the authorization server as an intended\r\n        audience.  The token endpoint URL of the authorization server\r\n        MAY be used as a value for an \"aud\" element to identify the\r\n        authorization server as an intended audience of the JWT.  The\r\n        authorization server MUST reject any JWT that does not contain\r\n        its own identity as the intended audience\r\n```\r\n\r\nThe WG already tried to be a bit more specific, e.g. in [PAR](https://www.rfc-editor.org/rfc/rfc9126.html#section-2) we say the issuer value 'SHOULD' be used and 'MUST' be accepted:\r\n\r\n> Due to historical reasons, there is potential ambiguity regarding the appropriate audience value to use when employing JWT client assertion-based authentication (defined in [Section 2.2](https://www.rfc-editor.org/rfc/rfc7523#section-2.2) of [[RFC7523](https://www.rfc-editor.org/rfc/rfc9126.html#RFC7523)] with private_key_jwt or client_secret_jwt authentication method names per Section 9 of [[OIDC](https://www.rfc-editor.org/rfc/rfc9126.html#OIDC)]). To address that ambiguity, the issuer identifier URL of the authorization server according to [[RFC8414](https://www.rfc-editor.org/rfc/rfc9126.html#RFC8414)] SHOULD be used as the value of the audience. In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or pushed authorization request endpoint URL as values that identify it as an intended audience.\r\n\r\n\r\nIt seems like we could add something in OAuth 2.1 to try and help people get this working in an interoperable fashion. Somewhere in https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-2.4 would seem like a possible place to offer a clarification. Perhaps something along the lines of:\r\n\r\n> When using `private_key_jwt`, In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or the endpoint URL that the assertion is being presented to as `aud` values that identify it as an intended audience.\r\n",
       "createdAt": "2024-07-08T17:30:06Z",
-      "updatedAt": "2025-03-14T16:13:44Z",
+      "updatedAt": "2025-10-18T13:01:53Z",
       "closedAt": null,
       "comments": [
         {
           "author": "bc-pi",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Apologies again for the way things are.",
           "createdAt": "2024-07-08T19:44:29Z",
           "updatedAt": "2024-07-08T19:44:29Z"
         },
         {
           "author": "bc-pi",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Apologies again.",
           "createdAt": "2024-11-09T18:27:05Z",
           "updatedAt": "2024-11-09T18:27:05Z"
         },
         {
           "author": "bc-pi",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "This is still relevant but what is done about it here, if anything, may change due to https://talks.secworkshop.events/osw2025/talk/R8D9BS/",
           "createdAt": "2025-03-14T16:13:43Z",
           "updatedAt": "2025-03-14T16:13:43Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I think we can just point at the updated language in RFC7523bis now rather than trying to recreate it here, yea?",
+          "createdAt": "2025-10-17T23:59:23Z",
+          "updatedAt": "2025-10-17T23:59:23Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> I think we can just point at the updated language in RFC7523bis now rather than trying to recreate it here, yea?\n\nYeah, I think so. And the -03 is hopefully close to progressing to last call https://mailarchive.ietf.org/arch/msg/oauth/6rIP17LhENI1aKqNaS1rQy79pIg/\n",
+          "createdAt": "2025-10-18T13:01:52Z",
+          "updatedAt": "2025-10-18T13:01:52Z"
         }
       ]
     },
@@ -4962,15 +4983,15 @@
       "id": "I_kwDODkfq5s6yzsSd",
       "title": "what does it mean to \"sanitise\" state/redirect urls?",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/209",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jogu",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11 says:\n\n> A code injection attack occurs when an input or otherwise external variable is used by an application unsanitized and causes modification to the application logic. This may allow an attacker to gain access to the application device or its data, cause denial of service, or introduce a wide range of malicious side-effects.[\u00b6](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11-1)\n>\n> The authorization server and client MUST sanitize (and validate when possible) any value received -- in particular, the value of the state and redirect_uri parameters.[\u00b6](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.11-2)\n\nI don't really know what \"sanitize\" means here. I don't think it would be correct for an AS to remove some characters from state because it decided it didn't like them - the only sane option seems to be to reject the request.\n\n(From a discussion on today's FAPI WG call)",
       "createdAt": "2025-04-16T14:47:20Z",
-      "updatedAt": "2025-04-19T00:12:23Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-17T23:56:57Z",
+      "closedAt": "2025-10-17T23:56:47Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -5000,15 +5021,17 @@
       "id": "I_kwDODkfq5s6zi2UN",
       "title": "Add definitions for client_secret_basic, client_secret_post and none client authentication methods",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/210",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ThisIsMissEm",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf-124"
+      ],
       "body": "Whilst the revised text in OAuth 2.1 does clear up a lot of my concerns from the OAuth mailing list, it still doesn't explicitly define the methods by name from what I can see.\n\nIt would be good to have these named methods very clearly defined in this revision.\n\nhttps://mailarchive.ietf.org/arch/msg/oauth/QGJfkCMqN2kVMRMDwvCiF3mZ6r4/",
       "createdAt": "2025-04-22T22:21:41Z",
-      "updatedAt": "2025-04-28T00:26:16Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-17T23:41:22Z",
+      "closedAt": "2025-10-17T23:41:21Z",
       "comments": [
         {
           "author": "dickhardt",
@@ -5051,6 +5074,13 @@
           "body": "> I would think that you would need to include a password if using client_secret_basic.\n\nRight, but that behaviour isn't specified, I think I'd agree you'd need to pass the client_secret via the http basic authentication password to use client_secret_basic, just like client_secret_post requires client_secret",
           "createdAt": "2025-04-28T00:26:15Z",
           "updatedAt": "2025-04-28T00:26:15Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Please see this PR: https://github.com/oauth-wg/oauth-v2-1/pull/223\n\nSince RFC7591 defines the registry, I don't think it's a good idea to try to move the registry itself. But in the spirit of updating OAuth 2.1 with references to newer specs that RFC6749, it seemed appropriate to at least mention these names and the definition in RFC7591 in the client authentication section.\n\nI don't think there is any ambiguity about whether a password needs to be included, since the whole section begins by talking about how clients with passwords authenticate.",
+          "createdAt": "2025-10-17T23:31:34Z",
+          "updatedAt": "2025-10-17T23:31:34Z"
         }
       ]
     },
@@ -5372,15 +5402,15 @@
       "id": "I_kwDODkfq5s7NqkNp",
       "title": "specific reference to Section 4.3.4 of RFC9100 for TLS server certificate check",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/221",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "bc-pi",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "from https://github.com/oauth-wg/oauth-transaction-tokens/pull/239#discussion_r2335128185:\n\n> I would have had the same feedback for @aaronpk and his OAuth 2.1 coauthors (but really only Aaron b/c AFAICT he's the only one really contributing to 2.1) but admittedly I did miss the RFC6125 cert validation stuff in the nearly 200 pages of RFC9100. Apologies there. \n> \n> Perhaps just a bit more specific reference (I think/hope this syntax is correct)? \n> \n> \\```suggestion\n> Workloads SHOULD use the `https` scheme to secure the communication channel and authenticate the Transaction Token Service. When using `https`, TLS certificates MUST be checked according to {{Section 4.3.4 of RFC9110}}. At the time of this writing, TLS version 1.3 {{RFC8446}} is the most recent version.\n> \\```\n> \n> Ignoring that I just noticed again that RFC6125 has been obsoleted by RFC 9525. But maybe pointing at 9110 can enable just continuing to ignore that.\n\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-transaction-tokens/pull/239#discussion_r2337456201_\n            ",
       "createdAt": "2025-09-24T18:30:35Z",
-      "updatedAt": "2025-09-24T20:39:11Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-17T23:14:38Z",
+      "closedAt": "2025-10-17T23:14:38Z",
       "comments": []
     }
   ],
@@ -9580,24 +9610,259 @@
       "id": "PR_kwDODkfq5s6qWFeB",
       "title": "ref Section 4.3.4 of RFC9110 for TLS server cert check",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/222",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bc-pi",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "to fix #221",
       "createdAt": "2025-09-24T18:37:59Z",
-      "updatedAt": "2025-09-24T18:38:00Z",
+      "updatedAt": "2025-10-17T23:14:37Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "bcd27e23f2dd5cfe6ee5db1413a763ae2141bb58",
       "headRepository": "bc-pi/oauth-v2-1",
       "headRefName": "patch-1",
       "headRefOid": "5cae67d1f99060fd0e7fbe577a5d4f9137debe05",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-10-17T23:14:37Z",
+      "mergedAt": "2025-10-17T23:14:37Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "94b157b98261226296b0e529c51949578295ad2a"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 223,
+      "id": "PR_kwDODkfq5s6uZl3i",
+      "title": "add references to client authentication method names from RFC7591",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/223",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "closes #210",
+      "createdAt": "2025-10-17T23:30:14Z",
+      "updatedAt": "2025-10-17T23:41:23Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "94b157b98261226296b0e529c51949578295ad2a",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "aaronpk/client-auth-methods",
+      "headRefOid": "590edf8b1226f6bb0f19e8638d5eb2fe6dda4eba",
+      "closedAt": "2025-10-17T23:41:21Z",
+      "mergedAt": "2025-10-17T23:41:20Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "a1ec11e1adc0ea37784583815773aa4c6a687102"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 224,
+      "id": "PR_kwDODkfq5s6uZnLw",
+      "title": "editorial nits",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/224",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "just thought this reads better",
+      "createdAt": "2025-10-17T23:36:09Z",
+      "updatedAt": "2025-10-18T02:47:25Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "24c643aa7303145d8b32b480f9b3f8ce403b66ec",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "aaronpk/editorial",
+      "headRefOid": "36654cf1d4439307c41145ef165d62bbe318f081",
+      "closedAt": "2025-10-17T23:41:02Z",
+      "mergedAt": "2025-10-17T23:41:02Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "a6c668ca6ecdb9671b4be64877d1a6b15a3ca175"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s7H0Wvu",
+          "commit": {
+            "abbreviatedOid": "36654cf"
+          },
+          "author": "adeinega",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-17T23:46:53Z",
+          "updatedAt": "2025-10-17T23:46:53Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Strongly speaking, it's defined in OpenID Connect... isn't it?",
+              "createdAt": "2025-10-17T23:46:53Z",
+              "updatedAt": "2025-10-17T23:46:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s7H0jrx",
+          "commit": {
+            "abbreviatedOid": "36654cf"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-18T01:17:25Z",
+          "updatedAt": "2025-10-18T01:17:25Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Yes, in this doc `{{OpenID}}` is a shorthand reference to OpenID Connect. It should link up correctly to the references if you click through in the HTML version.",
+              "createdAt": "2025-10-18T01:17:25Z",
+              "updatedAt": "2025-10-18T01:17:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s7H0ryR",
+          "commit": {
+            "abbreviatedOid": "36654cf"
+          },
+          "author": "adeinega",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-18T01:58:13Z",
+          "updatedAt": "2025-10-18T01:58:13Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "This wasn't what I saw... and that's why I left a comment about this minor nit.",
+              "createdAt": "2025-10-18T01:58:13Z",
+              "updatedAt": "2025-10-18T01:58:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s7H0tUT",
+          "commit": {
+            "abbreviatedOid": "36654cf"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-18T02:19:36Z",
+          "updatedAt": "2025-10-18T02:19:37Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "https://github.com/oauth-wg/oauth-v2-1/blob/5aef6a870fa7c6e4381d5a68834365132520746c/draft-ietf-oauth-v2-1.md?plain=1#L107\r\n\r\nhttps://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-13.html#OpenID",
+              "createdAt": "2025-10-18T02:19:36Z",
+              "updatedAt": "2025-10-18T02:19:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s7H0ty1",
+          "commit": {
+            "abbreviatedOid": "36654cf"
+          },
+          "author": "adeinega",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-18T02:26:49Z",
+          "updatedAt": "2025-10-18T02:26:49Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "It gets rendered as \"OpenID\" in txt and html formats like\r\n\r\n<img width=\"836\" height=\"210\" alt=\"image\" src=\"https://github.com/user-attachments/assets/bfcaacfe-eaf3-4d6b-99d2-439565b478e0\" />\r\n",
+              "createdAt": "2025-10-18T02:26:49Z",
+              "updatedAt": "2025-10-18T02:26:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s7H0veN",
+          "commit": {
+            "abbreviatedOid": "36654cf"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-18T02:47:25Z",
+          "updatedAt": "2025-10-18T02:47:25Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Yes, and if you click it it goes to the link at the bottom that says OpenID Connect. Do you think the short name should be updated throughout? That wasn't a change made in this PR. You are welcome to send a new PR that updates the short name everywhere in the doc.",
+              "createdAt": "2025-10-18T02:47:25Z",
+              "updatedAt": "2025-10-18T02:47:25Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 225,
+      "id": "PR_kwDODkfq5s6uZnct",
+      "title": "s/relying party/resource server",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/225",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "since this is talking about access token audience, \"resource server\" is a more appropriate term than \"relying party\"\r\n\r\ncloses #169",
+      "createdAt": "2025-10-17T23:37:41Z",
+      "updatedAt": "2025-10-17T23:41:44Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "24c643aa7303145d8b32b480f9b3f8ce403b66ec",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "aaronpk/relying-party",
+      "headRefOid": "221f23c14aa29c50e8a14c89a3d48a572bafe872",
+      "closedAt": "2025-10-17T23:41:44Z",
+      "mergedAt": "2025-10-17T23:41:44Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "ae337cb1ffdbf096785cf3e8e6ae1c2c219a2de9"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 226,
+      "id": "PR_kwDODkfq5s6uZrc9",
+      "title": "replace \"sanitize\" language",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/226",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "closes #209\r\n\r\nalso dropped \"code\" from the title because otherwise it sounds like authorization code injection attack",
+      "createdAt": "2025-10-17T23:54:46Z",
+      "updatedAt": "2025-10-17T23:56:49Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "a93458a5457d96bccad5b7dffe576f19fcdefc72",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "aaronpk/sanitize",
+      "headRefOid": "5dd1847230c387ae9c707407928f3e55eba51ff7",
+      "closedAt": "2025-10-17T23:56:46Z",
+      "mergedAt": "2025-10-17T23:56:46Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "d7e8905878a1fc46c136b90d07de641ce268781b"
+      },
       "comments": [],
       "reviews": []
     }
