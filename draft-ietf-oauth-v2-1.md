@@ -836,6 +836,8 @@ Authorization servers SHOULD consider the level of confidence in a client's iden
 when deciding whether they allow a client access to more sensitive resources and operations
 such as the Client Credentials grant type and how often to prompt the user for consent.
 
+There is no requirement that an Authorization Server supports a particular client type.
+
 A single `client_id` SHOULD NOT be treated as more than one type of client.
 
 This specification has been designed around the following client profiles:
@@ -3924,6 +3926,8 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Corrected an instance of "relying party" vs "resource server"
 * Add references to `client_secret_post` and `client_secret_basic` terms from RFC7591
 * Replaced "sanitize" language with treating as untrusted input
+* Clarified that native apps guidance applies primarily to mobile app platforms
+* Clarify that there is no requirement that an AS supports public or confidential clients in particular
 
 -13
 
