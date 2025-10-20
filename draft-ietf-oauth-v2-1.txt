@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 20 April 2026                                              Okta
+Expires: 23 April 2026                                              Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                         17 October 2025
+                                                         20 October 2025
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 April 2026.
+   This Internet-Draft will expire on 23 April 2026.
 
 Copyright Notice
 
@@ -163,8 +163,9 @@ Table of Contents
        7.14.1.  Mix-Up Defense via Issuer Identification
        7.14.2.  Mix-Up Defense via Distinct Redirect URIs
    8.  Native Applications
-     8.1.  Registration of Native App Clients
-       8.1.1.  Client Authentication of Native Apps
+     8.1.  Client Authentication of Native Apps
+       8.1.1.  Registration of Native App Clients
+       8.1.2.  Native App Attestation
      8.2.  Using Inter-App URI Communication for OAuth in Native Apps
      8.3.  Initiating the Authorization Request from a Native App
      8.4.  Receiving the Authorization Response in a Native App
@@ -3268,10 +3269,17 @@ Table of Contents
 8.  Native Applications
 
    Native applications are clients installed and executed on the device
-   used by the resource owner (i.e., desktop application, native mobile
-   application).  Native applications require special consideration
-   related to security, platform capabilities, and overall end-user
-   experience.
+   used by the resource owner (i.e., desktop applications or native
+   mobile applications).  Native applications require special
+   consideration related to security, platform capabilities, and overall
+   end-user experience.
+
+   The guidance in this section is primarily in the context of native
+   mobile apps as opposed to desktop apps.  The native mobile platforms
+   have matured more than the desktop platforms in terms of the
+   capabilities provided to app developers relevant to the OAuth flows
+   described here.  While the guidance is primarily focused on mobile
+   apps, much of it generally can apply to desktop apps as well.
 
    The authorization endpoint requires interaction between the client
    and the resource owner's user agent.  The best current practice is to
@@ -3280,12 +3288,14 @@ Table of Contents
    one implemented with web-views).
 
    The native application can capture the response from the
-   authorization server using a redirect URI with a scheme registered
-   with the operating system to invoke the client as the handler, manual
-   copy-and-paste of the credentials, running a local web server,
-   installing a user agent extension, or by providing a redirect URI
-   identifying a server-hosted resource under the client's control,
-   which in turn makes the response available to the native application.
+   authorization server in several different ways with differing
+   security properties of each.  For example, using a redirect URI with
+   an "app-claimed URL" or custom URL scheme registered with the
+   operating system to invoke the client as the handler, manual copy-
+   and-paste of the credentials, running a local web server, installing
+   a user agent extension, or by providing a redirect URI identifying a
+   server-hosted resource under the client's control, which in turn
+   makes the response available to the native application.
 
    Previously, it was common for native apps to use embedded user agents
    (commonly implemented with web-views) for OAuth authorization
@@ -3311,30 +3321,38 @@ Table of Contents
    understanding of public native app clients and the types of redirect
    URIs they use to support this best practice.
 
-8.1.  Registration of Native App Clients
-
-   Except when using a mechanism like Dynamic Client Registration
-   [RFC7591] to provision per-instance secrets, native apps are
-   classified as public clients, as defined in Section 2.1; they MUST be
-   registered with the authorization server as such.  Authorization
-   servers MUST record the client type in the client registration
-   details in order to identify and process requests accordingly.
-
-8.1.1.  Client Authentication of Native Apps
+8.1.  Client Authentication of Native Apps
 
    Secrets that are statically included as part of an app distributed to
-   multiple users should not be treated as confidential secrets, as one
-   user may inspect their copy and learn the shared secret.  For this
-   reason, it is NOT RECOMMENDED for authorization servers to require
-   client authentication of public native apps clients using a shared
-   secret, as this serves little value beyond client identification
-   which is already provided by the client_id request parameter.
+   multiple users are not confidential secrets, as one user may inspect
+   their copy and learn the shared secret.  For this reason,
+   authorization servers MUST NOT require client authentication of
+   native app clients using a shared secret, as this serves no value
+   beyond client identification which is already provided by the
+   client_id request parameter.
 
    Authorization servers that still require a statically included shared
    secret for native app clients MUST treat the client as a public
    client (as defined in Section 2.1), and not accept the secret as
    proof of the client's identity.  Without additional measures, such
    clients are subject to client impersonation (see Section 7.3.1).
+
+8.1.1.  Registration of Native App Clients
+
+   Except when using a mechanism like Dynamic Client Registration
+   [RFC7591] to provision per-instance credentials, native apps are
+   classified as public clients, as defined in Section 2.1, and MUST be
+   registered with the authorization server as such.  Authorization
+   servers MUST record the client type in the client registration
+   details in order to identify and process requests accordingly.
+
+8.1.2.  Native App Attestation
+
+   The draft specification
+   [I-D.ietf-oauth-attestation-based-client-auth] defines a mechanism
+   that can be used by a native app to obtain a key-bound attestation to
+   authenticate to an authorization server or resource server.  This can
+   provide a higher level of assurance of a mobile app's identity.
 
 8.2.  Using Inter-App URI Communication for OAuth in Native Apps
 
@@ -3406,11 +3424,11 @@ Table of Contents
 
 8.4.1.  Claimed "https" Scheme URI Redirection
 
-   Some operating systems allow apps to claim https URIs (see
-   Section 4.2.2 of [RFC9110]) in the domains they control.  When the
-   browser encounters a claimed URI, instead of the page being loaded in
-   the browser, the native app is launched with the URI supplied as a
-   launch parameter.
+   Some operating systems, in particular mobile operating systems, allow
+   apps to claim https URIs (see Section 4.2.2 of [RFC9110]) in the
+   domains they control.  When the browser encounters a claimed URI,
+   instead of the page being loaded in the browser, the native app is
+   launched with the URI supplied as a launch parameter.
 
    Such URIs can be used as redirect URIs by native apps.  They are
    indistinguishable to the authorization server from a regular web-
@@ -3420,7 +3438,7 @@ Table of Contents
 
    As the redirect URI alone is not enough to distinguish public native
    app clients from confidential web clients, it is REQUIRED in
-   Section 8.1 that the client type be recorded during client
+   Section 8.1.1 that the client type be recorded during client
    registration to enable the server to determine the client type and
    act accordingly.
 
@@ -3533,7 +3551,9 @@ Table of Contents
    use by third parties to the authorization server by definition, as
    the app that hosts the embedded user agent can access the user's full
    authentication credentials, not just the OAuth authorization grant
-   that was intended for the app.
+   that was intended for the app.  They are also typically sandboxed by
+   the operating system and mechanisms such as WebAuthn that rely on the
+   web origin are disabled.
 
    In typical web-view-based implementations of embedded user agents,
    the host application can record every keystroke entered in the login
@@ -3606,13 +3626,13 @@ Table of Contents
    without TLS).  This is acceptable for loopback interface redirect
    URIs as the HTTP request never leaves the device.
 
-   Clients should open the network port only when starting the
+   Clients SHOULD open the network port only when starting the
    authorization request and close it once the response is returned.
 
-   Clients should listen on the loopback network interface only, in
+   Clients SHOULD listen on the loopback network interface only, in
    order to avoid interference by other network actors.
 
-   Clients should use loopback IP literals rather than the string
+   Clients SHOULD use loopback IP literals rather than the string
    localhost as described in Section 8.4.2.
 
 9.  Browser-Based Apps
@@ -3855,6 +3875,14 @@ Table of Contents
               encoded-state-09, 4 November 2018,
               <https://datatracker.ietf.org/doc/html/draft-bradley-
               oauth-jwt-encoded-state-09>.
+
+   [I-D.ietf-oauth-attestation-based-client-auth]
+              Looker, T., Bastian, P., and C. Bormann, "OAuth 2.0
+              Attestation-Based Client Authentication", Work in
+              Progress, Internet-Draft, draft-ietf-oauth-attestation-
+              based-client-auth-07, 15 September 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              attestation-based-client-auth-07>.
 
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
