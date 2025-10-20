@@ -2382,22 +2382,23 @@ providing/operating this client is out of scope of this specification.
 Authorization servers SHOULD consider the level of confidence in a client's identity
 when deciding whether they allow a client access to more sensitive resources and operations
 such as the Client Credentials grant type and how often to prompt the user for consent.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
-<p id="section-2.1-6">A single <code>client_id</code> SHOULD NOT be treated as more than one type of client.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.1-7">This specification has been designed around the following client profiles:<a href="#section-2.1-7" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2.1-8">
-          <dt id="section-2.1-8.1">"web application":</dt>
-          <dd style="margin-left: 1.5em" id="section-2.1-8.2">
-            <p id="section-2.1-8.2.1">A web application is a client running on a web
+<p id="section-2.1-6">There is no requirement that an Authorization Server supports a particular client type.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.1-7">A single <code>client_id</code> SHOULD NOT be treated as more than one type of client.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+<p id="section-2.1-8">This specification has been designed around the following client profiles:<a href="#section-2.1-8" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2.1-9">
+          <dt id="section-2.1-9.1">"web application":</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-9.2">
+            <p id="section-2.1-9.2.1">A web application is a client running on a web
 server. Resource owners access the client via an HTML user
 interface rendered in a user agent on the device used by the
 resource owner.  The client credentials as well as any access
 tokens issued to the client are stored on the web server and are
-not exposed to or accessible by the resource owner.<a href="#section-2.1-8.2.1" class="pilcrow">¶</a></p>
+not exposed to or accessible by the resource owner.<a href="#section-2.1-9.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.1-8.3">"browser-based application":</dt>
-          <dd style="margin-left: 1.5em" id="section-2.1-8.4">
-            <p id="section-2.1-8.4.1">A browser-based application is a client in which the
+<dt id="section-2.1-9.3">"browser-based application":</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-9.4">
+            <p id="section-2.1-9.4.1">A browser-based application is a client in which the
 client code is downloaded from a web server and executes within a
 user agent (e.g., web browser) on the device used by the resource
 owner.  Protocol data and credentials are easily accessible (and
@@ -2405,12 +2406,12 @@ often visible) to the resource owner. If such applications wish to use
 client credentials, it is recommended to utilize the
 backend for frontend pattern. Since such applications
 reside within the user agent, they can make seamless use of the
-user agent capabilities when requesting authorization.<a href="#section-2.1-8.4.1" class="pilcrow">¶</a></p>
+user agent capabilities when requesting authorization.<a href="#section-2.1-9.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-2.1-8.5">"native application":</dt>
-          <dd style="margin-left: 1.5em" id="section-2.1-8.6">
-            <p id="section-2.1-8.6.1">A native application is a client installed and executed on
+<dt id="section-2.1-9.5">"native application":</dt>
+          <dd style="margin-left: 1.5em" id="section-2.1-9.6">
+            <p id="section-2.1-9.6.1">A native application is a client installed and executed on
 the device used by the resource owner.  Protocol data and
 credentials are accessible to the resource owner.  It is assumed
 that any client authentication credentials included in the
@@ -2421,7 +2422,7 @@ are protected from other applications residing on the same
 device. If such applications wish to use
 client credentials, it is recommended to utilize the
 backend for frontend pattern, or issue the credentials at runtime
-using Dynamic Client Registration <span>[<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>.<a href="#section-2.1-8.6.1" class="pilcrow">¶</a></p>
+using Dynamic Client Registration <span>[<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>.<a href="#section-2.1-9.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -6403,6 +6404,12 @@ into the octet sequence below (using hexadecimal notation):<a href="#appendix-B-
 </li>
         <li class="normal" id="appendix-F-3.4">
           <p id="appendix-F-3.4.1">Replaced "sanitize" language with treating as untrusted input<a href="#appendix-F-3.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-3.5">
+          <p id="appendix-F-3.5.1">Clarified that native apps guidance applies primarily to mobile app platforms<a href="#appendix-F-3.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-3.6">
+          <p id="appendix-F-3.6.1">Clarify that there is no requirement that an AS supports public or confidential clients in particular<a href="#appendix-F-3.6.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-F-4">-13<a href="#appendix-F-4" class="pilcrow">¶</a></p>
