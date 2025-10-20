@@ -103,6 +103,7 @@ informative:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-browser-based-apps:
   I-D.ietf-oauth-rfc7523bis:
+  I-D.ietf-oauth-attestation-based-client-auth:
 
   OpenID:
     title: OpenID Connect Core 1.0 incorporating errata set 2
@@ -3214,10 +3215,17 @@ This defense SHOULD therefore only be used if other options are not available.
 # Native Applications {#native-applications}
 
 Native applications are clients installed and executed on the device
-used by the resource owner (i.e., desktop application, native mobile
-application).  Native applications require special consideration
+used by the resource owner (i.e., desktop applications or native mobile
+applications).  Native applications require special consideration
 related to security, platform capabilities, and overall end-user
 experience.
+
+The guidance in this section is primarily in the context of native mobile apps
+as opposed to desktop apps. The native mobile platforms have matured
+more than the desktop platforms in terms of the capabilities provided
+to app developers relevant to the OAuth flows described here. While
+the guidance is primarily focused on mobile apps, much of it generally can
+apply to desktop apps as well.
 
 The authorization endpoint requires interaction between the client
 and the resource owner's user agent. The best current practice is to
@@ -3226,8 +3234,10 @@ perform the OAuth authorization request in an external user agent
 one implemented with web-views).
 
 The native application can capture the
-response from the authorization server using a redirect URI
-with a scheme registered with the operating system to invoke the
+response from the authorization server in several different ways with
+differing security properties of each. For example, using a redirect URI
+with an "app-claimed URL" or custom URL scheme
+registered with the operating system to invoke the
 client as the handler, manual copy-and-paste of the credentials,
 running a local web server, installing a user agent extension, or
 by providing a redirect URI identifying a server-hosted
@@ -3258,25 +3268,14 @@ clients are confidential web clients will need to add an
 understanding of public native app clients and the types of redirect
 URIs they use to support this best practice.
 
-## Registration of Native App Clients {#native-app-registration}
-
-Except when using a mechanism like Dynamic Client Registration
-{{RFC7591}} to provision per-instance secrets, native apps are
-classified as public clients, as defined in {{client-types}};
-they MUST be registered with the authorization server as
-such.  Authorization servers MUST record the client type in the
-client registration details in order to identify and process requests
-accordingly.
-
-### Client Authentication of Native Apps
+## Client Authentication of Native Apps
 
 Secrets that are statically included as part of an app distributed to
-multiple users should not be treated as confidential secrets, as one
+multiple users are not confidential secrets, as one
 user may inspect their copy and learn the shared secret.  For this
-reason, it is NOT
-RECOMMENDED for authorization servers to require client
-authentication of public native apps clients using a shared secret,
-as this serves little value beyond client identification which is
+reason, authorization servers MUST NOT require client
+authentication of native app clients using a shared secret,
+as this serves no value beyond client identification which is
 already provided by the `client_id` request parameter.
 
 Authorization servers that still require a statically included shared
@@ -3286,6 +3285,23 @@ accept the secret as proof of the client's identity.  Without
 additional measures, such clients are subject to client impersonation
 (see {{native-app-client-impersonation}}).
 
+### Registration of Native App Clients {#native-app-registration}
+
+Except when using a mechanism like Dynamic Client Registration
+{{RFC7591}} to provision per-instance credentials, native apps are
+classified as public clients, as defined in {{client-types}},
+and MUST be registered with the authorization server as
+such.  Authorization servers MUST record the client type in the
+client registration details in order to identify and process requests
+accordingly.
+
+### Native App Attestation {#native-app-attestation}
+
+The draft specification {{I-D.ietf-oauth-attestation-based-client-auth}}
+defines a mechanism that can be used by a native app to obtain
+a key-bound attestation to authenticate to an authorization server or
+resource server. This can provide a higher level of assurance of
+a mobile app's identity.
 
 ## Using Inter-App URI Communication for OAuth in Native Apps
 
@@ -3356,7 +3372,7 @@ availability and user experience of which varies by platform.
 
 ### Claimed "https" Scheme URI Redirection
 
-Some operating systems allow apps to claim `https` URIs
+Some operating systems, in particular mobile operating systems, allow apps to claim `https` URIs
 (see {{Section 4.2.2 of RFC9110}})
 in the domains they control.  When the browser encounters a
 claimed URI, instead of the page being loaded in the browser, the
@@ -3483,7 +3499,8 @@ apps.  These embedded user agents are unsafe for use by third parties
 to the authorization server by definition, as the app that hosts the
 embedded user agent can access the user's full authentication
 credentials, not just the OAuth authorization grant that was intended
-for the app.
+for the app. They are also typically sandboxed by the operating system
+and mechanisms such as WebAuthn that rely on the web origin are disabled.
 
 In typical web-view-based implementations of embedded user agents,
 the host application can record every keystroke entered in the login
@@ -3559,13 +3576,13 @@ Loopback interface redirect URIs MAY use the `http` scheme (i.e., without
 TLS).  This is acceptable for loopback
 interface redirect URIs as the HTTP request never leaves the device.
 
-Clients should open the network port only when starting the
+Clients SHOULD open the network port only when starting the
 authorization request and close it once the response is returned.
 
-Clients should listen on the loopback network interface only, in
+Clients SHOULD listen on the loopback network interface only, in
 order to avoid interference by other network actors.
 
-Clients should use loopback IP literals rather than the string `localhost`
+Clients SHOULD use loopback IP literals rather than the string `localhost`
 as described in {{loopback-interface-redirection}}.
 
 
