@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-19T00:15:15.389607+00:00",
+  "timestamp": "2025-10-21T00:13:51.267064+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3711,7 +3711,7 @@
       "id": "I_kwDODkfq5s5gs5B1",
       "title": "Native apps differences between mobile and desktop apps",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/142",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -3720,8 +3720,8 @@
       ],
       "body": "Much of Vittorio's feedback in the native apps section stems from the differences in practice of mobile apps and desktop apps. \r\n\r\nShould these recommendations be scoped to mobile apps now that we have more deployment experience since the Native Apps BCP was written? Do we all agree that the native apps recommendations are still valid?",
       "createdAt": "2023-03-13T22:34:57Z",
-      "updatedAt": "2024-05-14T14:24:48Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-20T01:36:49Z",
+      "closedAt": "2025-10-20T01:27:37Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -4030,15 +4030,15 @@
       "id": "I_kwDODkfq5s5syzh8",
       "title": "Problems with authorization servers that don't support public clients",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/161",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "hickford",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html\r\n\r\n> Authorization servers MUST record the client type in the client registration details in order to identify and process requests accordingly\r\n\r\nUnfortunately many authorization servers *don't* record client type. Some authorization servers explicitly say that they don't support public clients. Is this okay? Banning public clients tempts app developers to bend the rules and register a public client as a confidential client, compromising security. \r\n\r\nSourceHut bans public clients https://man.sr.ht/meta.sr.ht/oauth.md\r\n\r\n> Only confidential clients are supported; public clients are not allowed\r\n\r\nAzure DevOps bans public clients https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/azure-devops-oauth?view=azure-devops\r\n\r\n> Can I use OAuth with my mobile phone app? No. Azure DevOps Services only supports the web server flow... as [public clients] can't securely store the app secret.\r\n\r\nGitHub doesn't record client type but seems to deduce it based on redirect URI https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app\r\n",
       "createdAt": "2023-07-27T21:32:29Z",
-      "updatedAt": "2024-11-20T15:19:52Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-20T01:35:33Z",
+      "closedAt": "2025-10-20T01:35:33Z",
       "comments": [
         {
           "author": "hickford",
@@ -4281,7 +4281,7 @@
       ],
       "body": "In some places, the term \"relying party\" is used instead of \"client\":\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2820-L2822\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2578-L2582",
       "createdAt": "2024-02-28T09:33:25Z",
-      "updatedAt": "2025-10-17T23:41:45Z",
+      "updatedAt": "2025-10-20T01:37:20Z",
       "closedAt": "2025-10-17T23:41:45Z",
       "comments": [
         {
@@ -5351,9 +5351,17 @@
       "labels": [],
       "body": "In Section 4.3.1, the refresh_token grant can supply an optional scope parameter.\n\n> \"scope\":\n> OPTIONAL. The scope of the access request as described by [Section 1.4.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13#access-token-scope). The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner.\n\nIf the scope \"offline_access\" is provided in the scope, it is clear that a new refresh token should respond. If lesser scopes are requested, an access token with lesser scope is provided and the original scope is maintained.\n\nHowever, if the optional scope does not list \"offline_access\" should a new refresh token still be provided or should the old refresh token be usable again? Should it be different for public/confidential clients?\n\nSection 10 also makes this more confusing:\n\n> Refresh tokens for public clients must either be sender-constrained or one-time use as per [Section 4.13.2](https://rfc-editor.org/rfc/rfc9700#section-4.13.2) of [[RFC9700](https://www.rfc-editor.org/info/rfc9700)]\n",
       "createdAt": "2025-07-10T21:38:52Z",
-      "updatedAt": "2025-07-10T21:57:02Z",
+      "updatedAt": "2025-10-20T21:24:37Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "> 4.3.2.  Refresh Token Response\n>\n> The authorization server MAY issue a new refresh token, in which case the client MUST discard the old refresh token and replace it with the new refresh token.\n\nThis seems clear enough that it's at the AS' discretion. I suppose a sentence could be added saying that if the AS doesn't issue a new RT then the client may assume the old one is usable again.\n\nI don't think OAuth 2.1 should mention offline_access at all. It's an OIDC-defined scope, and its interaction with RT rotation and/or DPoP should be covered in an OID spec. (Aside: I strongly dislike the existence of offline_access as a scope, as it does not actually convey data access but rather \"circumstances\" of access.)",
+          "createdAt": "2025-10-20T21:24:37Z",
+          "updatedAt": "2025-10-20T21:24:37Z"
+        }
+      ]
     },
     {
       "number": 219,
@@ -5409,7 +5417,7 @@
       "labels": [],
       "body": "from https://github.com/oauth-wg/oauth-transaction-tokens/pull/239#discussion_r2335128185:\n\n> I would have had the same feedback for @aaronpk and his OAuth 2.1 coauthors (but really only Aaron b/c AFAICT he's the only one really contributing to 2.1) but admittedly I did miss the RFC6125 cert validation stuff in the nearly 200 pages of RFC9100. Apologies there. \n> \n> Perhaps just a bit more specific reference (I think/hope this syntax is correct)? \n> \n> \\```suggestion\n> Workloads SHOULD use the `https` scheme to secure the communication channel and authenticate the Transaction Token Service. When using `https`, TLS certificates MUST be checked according to {{Section 4.3.4 of RFC9110}}. At the time of this writing, TLS version 1.3 {{RFC8446}} is the most recent version.\n> \\```\n> \n> Ignoring that I just noticed again that RFC6125 has been obsoleted by RFC 9525. But maybe pointing at 9110 can enable just continuing to ignore that.\n\n_Originally posted by @bc-pi in https://github.com/oauth-wg/oauth-transaction-tokens/pull/239#discussion_r2337456201_\n            ",
       "createdAt": "2025-09-24T18:30:35Z",
-      "updatedAt": "2025-10-17T23:14:38Z",
+      "updatedAt": "2025-10-20T01:37:22Z",
       "closedAt": "2025-10-17T23:14:38Z",
       "comments": []
     }
@@ -9617,7 +9625,7 @@
       "labels": [],
       "body": "to fix #221",
       "createdAt": "2025-09-24T18:37:59Z",
-      "updatedAt": "2025-10-17T23:14:37Z",
+      "updatedAt": "2025-10-20T01:36:32Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "bcd27e23f2dd5cfe6ee5db1413a763ae2141bb58",
@@ -9645,7 +9653,7 @@
       "labels": [],
       "body": "closes #210",
       "createdAt": "2025-10-17T23:30:14Z",
-      "updatedAt": "2025-10-17T23:41:23Z",
+      "updatedAt": "2025-10-20T01:36:33Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "94b157b98261226296b0e529c51949578295ad2a",
@@ -9673,7 +9681,7 @@
       "labels": [],
       "body": "just thought this reads better",
       "createdAt": "2025-10-17T23:36:09Z",
-      "updatedAt": "2025-10-18T02:47:25Z",
+      "updatedAt": "2025-10-20T01:36:33Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "24c643aa7303145d8b32b480f9b3f8ce403b66ec",
@@ -9822,7 +9830,7 @@
       "labels": [],
       "body": "since this is talking about access token audience, \"resource server\" is a more appropriate term than \"relying party\"\r\n\r\ncloses #169",
       "createdAt": "2025-10-17T23:37:41Z",
-      "updatedAt": "2025-10-17T23:41:44Z",
+      "updatedAt": "2025-10-20T01:36:33Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "24c643aa7303145d8b32b480f9b3f8ce403b66ec",
@@ -9850,7 +9858,7 @@
       "labels": [],
       "body": "closes #209\r\n\r\nalso dropped \"code\" from the title because otherwise it sounds like authorization code injection attack",
       "createdAt": "2025-10-17T23:54:46Z",
-      "updatedAt": "2025-10-17T23:56:49Z",
+      "updatedAt": "2025-10-20T01:36:34Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "a93458a5457d96bccad5b7dffe576f19fcdefc72",
@@ -9862,6 +9870,62 @@
       "mergedBy": "aaronpk",
       "mergeCommit": {
         "oid": "d7e8905878a1fc46c136b90d07de641ce268781b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 227,
+      "id": "PR_kwDODkfq5s6uikrC",
+      "title": "scope native apps language to mobile apps",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/227",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "this adds language to clarify that most of the recommendations are in the context of mobile apps\r\n\r\ncloses #142",
+      "createdAt": "2025-10-20T01:27:03Z",
+      "updatedAt": "2025-10-20T01:36:34Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "5aef6a870fa7c6e4381d5a68834365132520746c",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "aaronpk/native-apps",
+      "headRefOid": "9f62f920406c366d1ef79e45c70f1e754298d32f",
+      "closedAt": "2025-10-20T01:27:36Z",
+      "mergedAt": "2025-10-20T01:27:36Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "ce5ad9aa5a0f6e91c8a45d49687710b010493867"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 228,
+      "id": "PR_kwDODkfq5s6uinRL",
+      "title": "Clarify that there is no requirement that an AS supports public or co\u2026",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/228",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "\u2026nfidential clients in particular\r\n\r\ncloses #161",
+      "createdAt": "2025-10-20T01:35:24Z",
+      "updatedAt": "2025-10-20T01:36:35Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "1f3017b9eafcbfb7df4a2a0e19af0ec8ca66bb2e",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "aaronpk/client-types",
+      "headRefOid": "cf3cd48cebb5e008596056ebaaac14b738faab72",
+      "closedAt": "2025-10-20T01:35:32Z",
+      "mergedAt": "2025-10-20T01:35:32Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3"
       },
       "comments": [],
       "reviews": []
