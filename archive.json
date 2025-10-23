@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-21T00:13:51.267064+00:00",
+  "timestamp": "2025-10-23T00:13:50.053694+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5342,17 +5342,17 @@
     {
       "number": 216,
       "id": "I_kwDODkfq5s6_-Ukw",
-      "title": "clarity on refresh_token grant with lesser scope change without \"offline_access\"",
+      "title": "clarity on refresh_token response and reuse",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/216",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dvanmali",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "In Section 4.3.1, the refresh_token grant can supply an optional scope parameter.\n\n> \"scope\":\n> OPTIONAL. The scope of the access request as described by [Section 1.4.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13#access-token-scope). The requested scope MUST NOT include any scope not originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by the resource owner.\n\nIf the scope \"offline_access\" is provided in the scope, it is clear that a new refresh token should respond. If lesser scopes are requested, an access token with lesser scope is provided and the original scope is maintained.\n\nHowever, if the optional scope does not list \"offline_access\" should a new refresh token still be provided or should the old refresh token be usable again? Should it be different for public/confidential clients?\n\nSection 10 also makes this more confusing:\n\n> Refresh tokens for public clients must either be sender-constrained or one-time use as per [Section 4.13.2](https://rfc-editor.org/rfc/rfc9700#section-4.13.2) of [[RFC9700](https://www.rfc-editor.org/info/rfc9700)]\n",
       "createdAt": "2025-07-10T21:38:52Z",
-      "updatedAt": "2025-10-20T21:24:37Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-21T07:26:30Z",
+      "closedAt": "2025-10-21T07:26:30Z",
       "comments": [
         {
           "author": "njwatson32",
@@ -5360,6 +5360,13 @@
           "body": "> 4.3.2.  Refresh Token Response\n>\n> The authorization server MAY issue a new refresh token, in which case the client MUST discard the old refresh token and replace it with the new refresh token.\n\nThis seems clear enough that it's at the AS' discretion. I suppose a sentence could be added saying that if the AS doesn't issue a new RT then the client may assume the old one is usable again.\n\nI don't think OAuth 2.1 should mention offline_access at all. It's an OIDC-defined scope, and its interaction with RT rotation and/or DPoP should be covered in an OID spec. (Aside: I strongly dislike the existence of offline_access as a scope, as it does not actually convey data access but rather \"circumstances\" of access.)",
           "createdAt": "2025-10-20T21:24:37Z",
           "updatedAt": "2025-10-20T21:24:37Z"
+        },
+        {
+          "author": "dvanmali",
+          "authorAssociation": "NONE",
+          "body": "To keep scopes out of this and with 4.3.2, then I believe we don't need another line. I was confused that if the client wasn't expected to receive a refresh token could a refresh token still be received. But according to 4.3.2, then the client should always be ready to receive a refresh token. Also, this leaves it up to the AS not the client to determine when a new refresh token should be received which is better design in general. Thus, will close.",
+          "createdAt": "2025-10-21T07:26:19Z",
+          "updatedAt": "2025-10-21T07:26:19Z"
         }
       ]
     },
