@@ -105,7 +105,7 @@ informative:
   I-D.ietf-oauth-rfc7523bis:
   I-D.ietf-oauth-attestation-based-client-auth:
 
-  OpenID:
+  OpenID.Connect:
     title: OpenID Connect Core 1.0 incorporating errata set 2
     target: https://openid.net/specs/openid-connect-core-1_0.html
     date: December 15, 2023
@@ -265,7 +265,7 @@ This simplification applies when the application is acting on behalf of a resour
 owner, or on behalf of itself.
 
 OAuth is an authorization protocol, not an authentication protocol, as OAuth does not define the necessary components to achieve user authentication.
-An authentication protocol is necessary if the goal is to authenticate users. An example is OpenID Connect {{OpenID}}, which builds on OAuth to provide the security
+An authentication protocol is necessary if the goal is to authenticate users. An example is OpenID Connect {{OpenID.Connect}}, which builds on OAuth to provide the security
 characteristics and necessary components required of an authentication protocol.
 
 The
@@ -616,7 +616,7 @@ with a limited-scope access token.
 
 OAuth does not define any scope values, instead scopes are defined by the
 authorization server or by extensions or profiles of OAuth. One such extension
-that defines scopes is {{OpenID}}, which defines a set of scopes that provide
+that defines scopes is {{OpenID.Connect}}, which defines a set of scopes that provide
 granular access to a user's profile information. It is recommended to avoid
 defining custom scopes that conflict with scopes from known extensions.
 
@@ -1030,7 +1030,7 @@ It is RECOMMENDED to use asymmetric (public-key based) methods for
 client authentication such as mTLS {{RFC8705}} or using signed JWTs
 ("Private Key JWT") in accordance with {{RFC7521}}, {{RFC7523}},
 and their update {{I-D.ietf-oauth-rfc7523bis}}
-(defined in {{OpenID}} as the client authentication method `private_key_jwt`).
+(defined in {{OpenID.Connect}} as the client authentication method `private_key_jwt`).
 When such methods for client authentication are used, authorization
 servers do not need to store sensitive symmetric keys, making these
 methods more robust against a number of attacks.
@@ -1580,7 +1580,7 @@ values, where the order of values does not matter (e.g., response
 type `a b` is the same as `b a`).  The meaning of such composite
 response types is defined by their respective specifications.
 
-Some extension response types are defined by {{OpenID}}.
+Some extension response types are defined by {{OpenID.Connect}}.
 
 If an authorization request is missing the `response_type` parameter,
 or if the response type is not understood, the authorization server
@@ -3160,8 +3160,8 @@ correct issuer. Clients MUST ensure that the subsequent access token request,
 if applicable, is sent to the same issuer. The issuer serves, via the associated
 metadata, as an abstract identifier for the combination of the authorization
 endpoint and token endpoint that are to be used in the flow. If an issuer identifier
-is not available, for example, if neither OAuth metadata {{RFC8414}} nor OpenID
-Connect Discovery {{OpenID.Discovery}} are used, a different unique identifier
+is not available, for example, if neither OAuth 2.0 Authorization Server Metadata {{RFC8414}}
+nor OpenID Connect Discovery {{OpenID.Discovery}} are used, a different unique identifier
 for this tuple or the tuple itself can be used instead. For brevity of presentation,
 such a deployment-specific identifier will be subsumed under the issuer (or
 issuer identifier) in the following.
@@ -3643,7 +3643,7 @@ This value for the `response_type` parameter is no longer defined in OAuth 2.1.
 
 Removal of `response_type=token` does not have an effect on other extension
 response types returning other artifacts from the authorization endpoint,
-for example, `response_type=id_token` defined by {{OpenID}}.
+for example, `response_type=id_token` defined by {{OpenID.Connect}}.
 
 ## Redirect URI Parameter in Token Request {#redirect-uri-in-token-request}
 
