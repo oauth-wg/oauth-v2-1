@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-23T00:13:50.053694+00:00",
+  "timestamp": "2025-10-26T00:15:10.300260+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -9934,6 +9934,32 @@
       "mergeCommit": {
         "oid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 229,
+      "id": "PR_kwDODkfq5s6vnJ9x",
+      "title": "Change all references from OpenID to OpenID Connect",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/229",
+      "state": "OPEN",
+      "author": "adeinega",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Proposed changes for https://github.com/oauth-wg/oauth-v2-1/pull/224#discussion_r2441536553.",
+      "createdAt": "2025-10-24T23:06:10Z",
+      "updatedAt": "2025-10-24T23:06:10Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
+      "headRepository": "adeinega/oauth-v2-1",
+      "headRefName": "patch-1",
+      "headRefOid": "37395050f4e1c7015f9ca4b1b8c746cdc6ed4abf",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
