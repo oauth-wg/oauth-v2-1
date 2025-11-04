@@ -166,6 +166,24 @@ informative:
     date: June 2012
     target: http://openid.net/specs/openid-connect-messages-1_0.html
 
+  OpenID.Fragment:
+    title: OAuth 2.0 Multiple Response Type Encoding Practices
+    author:
+      - ins: B. de Medeiros
+      - ins: M. Scurtescu
+      - ins: P. Tarjan
+      - ins: M. Jones
+    date: February 2014
+    target: https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html
+  
+  OpenID.FormPost:
+    title: OAuth 2.0 Form Post Response Mode
+    author:
+      - ins: M. Jones
+      - ins: B. Campbell
+    date: April 2015
+    target: https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html
+
   owasp_redir:
     title: "OWASP Cheat Sheet Series - Unvalidated Redirects and Forwards"
     target: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
@@ -2983,6 +3001,55 @@ AS therefore MUST provide a way to detect their supported code challenge methods
 either via AS metadata according to {{RFC8414}} or provide a
 deployment-specific way to ensure or determine support.
 
+## Browser-Swapping
+
+Attackers might initialize an authorization code flow within their session and trick users
+to browse the attacker's authorization request URI.
+After signing in to the AS (might not require any user-interaction within an existing session
+with the AS), the user will be redirected to the client.
+If the client sufficiently checks the `state` parameter to mitigate CSRF attacks (see
+{{authorization_codes}}), the client will reject the user's authorization code.
+Therefore, the authorization code is unused and remains valid until it expires.
+
+If attackers get access to this unused authorization code before it expires, they can
+browse the same redirect URI, containing the user's authorization code and their own `state`
+parameter.
+Since the `state` verification succeeds, the client will exchange the user's authorization
+code for a valid token and therefore, the attacker is logged into the client with the user's
+account.
+
+Getting the authorization code can be acheived by the attacker in the following ways:
+
+* URL sharing: The failing CSRF-protection causes an error response to the user and the
+  `code` paramter remains in the URL bar. Since they are unaware of that the URL contains a
+  secret, users might send this URL to the attacker.
+  To solve this, clients SHOULD sanitize the URL, especially in error cases, e.g., by redirecting
+  to a dedicated error page.
+* `Referer` header: The redirect URL might link or reference external resources, e.g., the `/favicon.ico`.
+  When navigating to links or downloading external resources, web browsers provide the `referer` header,
+  which contains the full URL, including the `code` query parameter.
+  To solve this, clients SHOULD provide a `referrer-policy` header to deny sending any query parameters.
+* Analytics tools: The callback URI might contain scripts which are sending the query parameters to
+  analytics service providers.
+  To solve this, clients SHOULD NOT include any analytics tools on the redirect URI.
+* Logging: Query parameters can be logged at various locations, e.g., browsers, servers, any involved
+  proxies, (third-party) middlewares (web applications firewalls, intrusion detection and prevention systems,
+  etc.), or monitoring systems.
+  Misconfigured log access permissions, or malicious log auditors could access authorization codes from logs.
+  This issue cannot be entirely solved, because client implementers do not have control over all eventually
+  compromised services, e.g., the user's HTTP proxy, or the client provider's third-party middlewares.
+
+A good solution that targets all these issues is not providing secrets like the authorization code in
+query parameters.
+Therefore, clients SHOULD append the `response_mode=fragment` parameter to any authorization request for all
+user-side executed client, e.g., mobile apps, or JavaScript web apps like single-page applications.
+This provides the authorization code as a fragment parameter in the redirect URI to the client which reduces
+the attack surface to the user's web browser or mobile app client which calls this URL.
+For clients located in the backend, `response_mode=form_post` SHOULD be used instead.
+This will provide the authorization code in the redirect URI endpoint as a POST body parameter which are
+typically not logged by any system as they are supectible to contain eventually leaked secrets.
+The authorization server MUST provide the opportunity for client developers to enforce a specific response mode
+for their individual client to prevent downgrading attacks to `response_mode=query`.
 
 ## Clickjacking
 
