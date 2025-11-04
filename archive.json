@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-26T00:15:10.300260+00:00",
+  "timestamp": "2025-11-04T00:13:45.849991+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4073,11 +4073,11 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
-        "interim"
+        "ietf-124"
       ],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#section-3.2.3.1 says that\r\n\r\n> \"**invalid_client**\":  Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported.\r\n\r\nI am not so sure if it's possible to indicate HTTP authentication schemas for _private_key_jwt_ and _client_secret_jwt_ client authentication types.\r\n\r\nThis text also indicates that multiple authentication schemas are supported. Thus, does the authorization server need to specify multiple WWW-Authenticate headers, say \"WWW-Authenticate: Basic\" and \"WWW-Authenticate: Bearer\"?\r\n\r\nIt would be great to clarify these nuances.\r\n",
       "createdAt": "2023-08-04T19:31:16Z",
-      "updatedAt": "2025-03-24T09:54:57Z",
+      "updatedAt": "2025-11-03T03:26:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -4347,10 +4347,12 @@
       "author": "SECtim",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf-124"
+      ],
       "body": "The URIs for the **redirect** and **authorization** endpoints may contain additional query parameters that must be retained when adding more parameters:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L860-L865\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1118-L1121\r\n\r\nFurthermore, query parameters must only appear once (this text appears in the description of the authorization and token endpoints, but is not explicitly mentioned for the redirection endpoint - nevertheless, the cited text already applies to all parameters defined by this spec):\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1129-L1130\r\n\r\nThis becomes a problem in (I admit, somewhat esoteric) cases where the endpoint URIs contain parameters such as `code` in a redirect URI, in that example, the AS would not be allowed to add its `code` parameter in the authorization response. But at the same time, the AS is required to do so:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1657-L1664\r\n\r\nI guess this is just a case of adding something like \"redirect URI MUST NOT contain the parameters...\".",
       "createdAt": "2024-02-28T09:54:55Z",
-      "updatedAt": "2024-11-20T15:15:12Z",
+      "updatedAt": "2025-11-02T22:17:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -4663,7 +4665,7 @@
       "labels": [],
       "body": "There's some unfortunate history around the `aud` value that you use in `private_key_jwt` client authentication assertions.\r\n\r\n[RFC7523](https://datatracker.ietf.org/doc/html/rfc7523#section-3) says:\r\n\r\n```\r\n        The JWT MUST contain an \"aud\" (audience) claim containing a\r\n        value that identifies the authorization server as an intended\r\n        audience.  The token endpoint URL of the authorization server\r\n        MAY be used as a value for an \"aud\" element to identify the\r\n        authorization server as an intended audience of the JWT.  The\r\n        authorization server MUST reject any JWT that does not contain\r\n        its own identity as the intended audience\r\n```\r\n\r\nThe WG already tried to be a bit more specific, e.g. in [PAR](https://www.rfc-editor.org/rfc/rfc9126.html#section-2) we say the issuer value 'SHOULD' be used and 'MUST' be accepted:\r\n\r\n> Due to historical reasons, there is potential ambiguity regarding the appropriate audience value to use when employing JWT client assertion-based authentication (defined in [Section 2.2](https://www.rfc-editor.org/rfc/rfc7523#section-2.2) of [[RFC7523](https://www.rfc-editor.org/rfc/rfc9126.html#RFC7523)] with private_key_jwt or client_secret_jwt authentication method names per Section 9 of [[OIDC](https://www.rfc-editor.org/rfc/rfc9126.html#OIDC)]). To address that ambiguity, the issuer identifier URL of the authorization server according to [[RFC8414](https://www.rfc-editor.org/rfc/rfc9126.html#RFC8414)] SHOULD be used as the value of the audience. In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or pushed authorization request endpoint URL as values that identify it as an intended audience.\r\n\r\n\r\nIt seems like we could add something in OAuth 2.1 to try and help people get this working in an interoperable fashion. Somewhere in https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-2.4 would seem like a possible place to offer a clarification. Perhaps something along the lines of:\r\n\r\n> When using `private_key_jwt`, In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or the endpoint URL that the assertion is being presented to as `aud` values that identify it as an intended audience.\r\n",
       "createdAt": "2024-07-08T17:30:06Z",
-      "updatedAt": "2025-10-18T13:01:53Z",
+      "updatedAt": "2025-11-02T22:18:13Z",
       "closedAt": null,
       "comments": [
         {
@@ -4967,16 +4969,26 @@
       "id": "I_kwDODkfq5s6kLMEK",
       "title": "Relations with COAP / RFC9200",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/201",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf-122"
+      ],
       "body": "## Question\r\n\r\nIt seems that there are non-TLS-based implementations of OAuth.\r\nShould we better decouple the flows from channel requirements?\r\n\r\nSee https://datatracker.ietf.org/doc/rfc9200/",
       "createdAt": "2024-12-21T23:05:04Z",
-      "updatedAt": "2024-12-21T23:05:04Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-11-02T21:38:51Z",
+      "closedAt": "2025-11-02T21:38:36Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This was discussed at IETF 122 and there was strong consensus to keep OAuth 2.1 focused on the HTTP transport. \n\nhttps://datatracker.ietf.org/doc/minutes-122-oauth-202503210230/#oauth-21---aaron-25-min",
+          "createdAt": "2025-11-02T21:38:36Z",
+          "updatedAt": "2025-11-02T21:38:36Z"
+        }
+      ]
     },
     {
       "number": 209,
@@ -5096,7 +5108,7 @@
       "labels": [],
       "body": "The draft has extensive reference to access tokens in the security considerations section, but appears silent on refresh tokens. Consider adding a security considerations for Refresh tokens that references the Security BCP (RFC9700). ",
       "createdAt": "2025-05-02T11:08:45Z",
-      "updatedAt": "2025-05-02T11:08:45Z",
+      "updatedAt": "2025-11-02T22:17:53Z",
       "closedAt": null,
       "comments": []
     },
@@ -5248,9 +5260,24 @@
       "labels": [],
       "body": "Section [4.1.2.1. Error Response](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-error-response-2) contains:\n\n> An AS MUST reject requests without a code_challenge from public clients, and MUST reject such requests from other clients unless there is reasonable assurance that the client mitigates authorization code injection in other ways. See [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#authorization_codes) for details.\n\nIn instances where PAR + DPoP (during PAR) are used, it seems that PKCE can be made completely optional. Even for public clients.\n\n[7.5.2. Countermeasures](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-7.5.2) could also be adapted to make PKCE optional when DPoP is used during PAR.\n\n",
       "createdAt": "2025-06-03T07:50:51Z",
-      "updatedAt": "2025-06-03T07:57:02Z",
+      "updatedAt": "2025-11-03T07:40:27Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I don't think that's necessarily true. It would only stop an authorization code injection attack if the client uses different DPoP keys _per session_, so that the DPoP private key is analogous to the PKCE code verifier. But that is not at all a requirement of DPoP. Plus like you mentioned, it would also require DPoP at the PAR request, which is also not required by DPoP. So it would require quite a bit of extra text to explain the exact situation in which it is optional.",
+          "createdAt": "2025-11-02T22:03:08Z",
+          "updatedAt": "2025-11-02T22:03:08Z"
+        },
+        {
+          "author": "matthieusieben",
+          "authorAssociation": "NONE",
+          "body": "You are right.\n\nMy point was that it'd be nice if the text allowed to drop PKCE in case DPoP (with unique keys) and PAR are used together. As it stands, PKCE is not optional.\n\nWe've got quite a bit of feedback from devs implementing AT favored OAuth and the main feedback we got was that it is quite hard. We will likely not change our spec but being able to build a strong, yet simpler, OAuth profile might be worth a small extra text in the spec ?",
+          "createdAt": "2025-11-03T07:40:27Z",
+          "updatedAt": "2025-11-03T07:40:27Z"
+        }
+      ]
     },
     {
       "number": 215,
