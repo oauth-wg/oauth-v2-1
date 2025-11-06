@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-04T00:13:45.849991+00:00",
+  "timestamp": "2025-11-06T00:13:59.420842+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5454,6 +5454,30 @@
       "updatedAt": "2025-10-20T01:37:22Z",
       "closedAt": "2025-10-17T23:14:38Z",
       "comments": []
+    },
+    {
+      "number": 231,
+      "id": "I_kwDODkfq5s7V3n2E",
+      "title": "Protocol Flow Diagram",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/231",
+      "state": "OPEN",
+      "author": "jricher",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The protocol flow diagram in 1.2 is confusing to readers, and it's not uncommon for a reader to think \"Resource Owner\" is another computer alongside the Authorization Server and Resource Server. This is further confounded by the text:\n\n>  The authorization request can be made directly to the resource owner (as shown),\n\nWith the removal of the password grant, this should be updated both in the diagram and the text to show that the authorization grant is mediated through the AS. Even better, I would argue that this protocol flow is too abstract to be useful in most explanations, and the diagram does more harm than good.",
+      "createdAt": "2025-11-04T20:57:26Z",
+      "updatedAt": "2025-11-04T20:59:34Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "You did point this out in 2021 :joy: https://github.com/oauth-wg/oauth-v2-1/issues/26#issuecomment-771281328",
+          "createdAt": "2025-11-04T20:59:34Z",
+          "updatedAt": "2025-11-04T20:59:34Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -9988,6 +10012,40 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 230,
+      "id": "PR_kwDODkfq5s6xUait",
+      "title": "Browser-Swapping",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/230",
+      "state": "OPEN",
+      "author": "JonasPrimbs",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Added references to OpenID Connect response modes and addressed browser-swapping attack mitigation strategies.",
+      "createdAt": "2025-11-04T03:46:38Z",
+      "updatedAt": "2025-11-05T20:51:39Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
+      "headRepository": "JonasPrimbs/oauth-v2-1",
+      "headRefName": "patch-1",
+      "headRefOid": "191d5e7a8e60a853e5b9c7fd0e05ad24d4412d9e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "OllieJC",
+          "authorAssociation": "NONE",
+          "body": "Just throwing in another potential mitigation:\r\n- use POSTs with the authorisation endpoint (currently a `MAY`, could we bump to a `SHOULD`?)\r\n- auth servers _should_ for a given client allow specifiying expected auth request URI method and then fail if request with another method is used\r\n- use `response_mode=form_post` \r\n- again, auth servers _should_ allow specifiying expected `response_mode` and fail if different\r\n",
+          "createdAt": "2025-11-05T20:51:39Z",
+          "updatedAt": "2025-11-05T20:51:39Z"
+        }
+      ],
       "reviews": []
     }
   ]
