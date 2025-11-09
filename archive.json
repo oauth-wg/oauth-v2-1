@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-06T00:13:59.420842+00:00",
+  "timestamp": "2025-11-09T00:15:26.770677+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5478,6 +5478,22 @@
           "updatedAt": "2025-11-04T20:59:34Z"
         }
       ]
+    },
+    {
+      "number": 232,
+      "id": "I_kwDODkfq5s7WbmEq",
+      "title": "Sender-constrained refresh tokens examples improvement",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/232",
+      "state": "OPEN",
+      "author": "sakimura",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In section 4.3.1, the current text says: \n\n> Sender-constrained refresh tokens: the authorization server cryptographically binds the refresh token to a certain client instance, e.g., by utilizing DPoP [[RFC9449](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC9449)] or mTLS [[RFC8705](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC8705)].\n\n\nNow, according to RFC 6749 section 10.4 stats: \n\n> The authorization server MUST NOT issue refresh tokens to clients that cannot protect the confidentiality of client credentials\n\nSo, in the case of a confidential client, all refresh tokens are, in fact, sender-constrained. \nI proposed to add this fact to the text. for example, changing e.g. to\n\ne.g., issueing only to a confidential client as in [RFC6749], by utilizing DPoP [[RFC9449](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC9449)] or mTLS [[RFC8705](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC8705)].",
+      "createdAt": "2025-11-06T20:41:45Z",
+      "updatedAt": "2025-11-07T21:12:45Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
