@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-09T00:15:26.770677+00:00",
+  "timestamp": "2025-11-13T00:14:21.510018+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -2885,7 +2885,7 @@
       "labels": [],
       "body": "In https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-07 section 5.2.3 (The WWW-Authenticate Response Header Field):\r\n\r\n>    All challenges for this token type MUST use the auth-scheme value\r\n>    Bearer.  This scheme MUST be followed by one or more auth-param\r\n>    values.\r\n\r\nWhy is at least one `auth-param` required? It makes\r\n```\r\nWWW-Authenticate: Bearer\r\n```\r\n\r\nin response to a request lacking any authentication information (thus without an `error` auth-param attribute) non-compliant. The optional `scope` attribute is not useful in this case. The optional `realm` attribute may not be necessary (e.g. if there is only one realm). So to be compliant, you would have to add a non-meaningful auth-param like `foo=bar`.\r\n\r\nNote: While in [rfc2617](https://datatracker.ietf.org/doc/html/rfc2617#section-1.2) `challenge` was defined as\r\n```\r\n  challenge   = auth-scheme 1*SP 1#auth-param\r\n```\r\n(requiring at least one `auth-param`), [rfc9110](https://www.rfc-editor.org/rfc/rfc9110#section-11.3) does not have this requirement (neither did [rfc7235](https://www.rfc-editor.org/rfc/rfc7235#section-2.1)):\r\n```\r\n  challenge   = auth-scheme [ 1*SP ( token68 / #auth-param ) ]\r\n```\r\n",
       "createdAt": "2022-03-30T12:26:19Z",
-      "updatedAt": "2024-11-12T16:37:10Z",
+      "updatedAt": "2025-11-11T19:28:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -2894,6 +2894,13 @@
           "body": "In the meantime, the section numbering has changed. This issue refers to section 5.3.1 of the draft version 11.",
           "createdAt": "2024-11-12T16:37:09Z",
           "updatedAt": "2024-11-12T16:37:09Z"
+        },
+        {
+          "author": "johakoch",
+          "authorAssociation": "NONE",
+          "body": "@panva In your question to @aaronpk discussing issue https://github.com/oauth-wg/oauth-v2-1/issues/162 at IETF124 I heard you mentioning that WWW-Authenticate needs an auth scheme _AND_ at least one parameter. Maybe you have an opinion on this issue, too.",
+          "createdAt": "2025-11-11T19:28:44Z",
+          "updatedAt": "2025-11-11T19:28:44Z"
         }
       ]
     },
