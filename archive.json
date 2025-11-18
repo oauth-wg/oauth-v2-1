@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-13T00:14:21.510018+00:00",
+  "timestamp": "2025-11-18T00:14:22.790440+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -9635,7 +9635,7 @@
       "labels": [],
       "body": "to consider - whether we should leave the recognition of there being an update to 7523 to the reader or directly reference to it.",
       "createdAt": "2025-07-24T08:44:57Z",
-      "updatedAt": "2025-07-24T08:57:34Z",
+      "updatedAt": "2025-11-16T09:29:45Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "6f86507b0fbd04a747ee413401daeb700ecbdd8f",
@@ -9664,7 +9664,21 @@
           "updatedAt": "2025-07-24T08:57:34Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s7O0-fQ",
+          "commit": {
+            "abbreviatedOid": "8adb018"
+          },
+          "author": "AlexVogell",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "|SWAPPING BROWSERS.PATCH|\n\n|& Merged #230 into main branch while strengthening security|\n",
+          "createdAt": "2025-11-16T09:13:57Z",
+          "updatedAt": "2025-11-16T09:13:57Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 218,
