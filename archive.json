@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-18T00:14:22.790440+00:00",
+  "timestamp": "2025-11-23T00:16:14.339373+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -2885,7 +2885,7 @@
       "labels": [],
       "body": "In https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-07 section 5.2.3 (The WWW-Authenticate Response Header Field):\r\n\r\n>    All challenges for this token type MUST use the auth-scheme value\r\n>    Bearer.  This scheme MUST be followed by one or more auth-param\r\n>    values.\r\n\r\nWhy is at least one `auth-param` required? It makes\r\n```\r\nWWW-Authenticate: Bearer\r\n```\r\n\r\nin response to a request lacking any authentication information (thus without an `error` auth-param attribute) non-compliant. The optional `scope` attribute is not useful in this case. The optional `realm` attribute may not be necessary (e.g. if there is only one realm). So to be compliant, you would have to add a non-meaningful auth-param like `foo=bar`.\r\n\r\nNote: While in [rfc2617](https://datatracker.ietf.org/doc/html/rfc2617#section-1.2) `challenge` was defined as\r\n```\r\n  challenge   = auth-scheme 1*SP 1#auth-param\r\n```\r\n(requiring at least one `auth-param`), [rfc9110](https://www.rfc-editor.org/rfc/rfc9110#section-11.3) does not have this requirement (neither did [rfc7235](https://www.rfc-editor.org/rfc/rfc7235#section-2.1)):\r\n```\r\n  challenge   = auth-scheme [ 1*SP ( token68 / #auth-param ) ]\r\n```\r\n",
       "createdAt": "2022-03-30T12:26:19Z",
-      "updatedAt": "2025-11-11T19:28:44Z",
+      "updatedAt": "2025-11-20T09:48:27Z",
       "closedAt": null,
       "comments": [
         {
@@ -2901,6 +2901,62 @@
           "body": "@panva In your question to @aaronpk discussing issue https://github.com/oauth-wg/oauth-v2-1/issues/162 at IETF124 I heard you mentioning that WWW-Authenticate needs an auth scheme _AND_ at least one parameter. Maybe you have an opinion on this issue, too.",
           "createdAt": "2025-11-11T19:28:44Z",
           "updatedAt": "2025-11-11T19:28:44Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "@johakoch thank you for the ping, I dug a bit deeper and yeah, there's some nuance here.\n\nThe requirement for one auth-param being in WWW-Authenticate is present in protected resource responses (originally RFC 6750[^6750], now unfurled into 2.1[^21]).\n\nSo, as far as WWW-Authenticate at the AS authenticated endpoints (token, PAR, etc), we don't require an auth-param as that has been removed in RFC 7235 and RFC 9110\n\n[^6750]: https://www.rfc-editor.org/rfc/rfc6750.html#section-3\n[^21]: https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#section-5.3.1-2",
+          "createdAt": "2025-11-20T08:04:56Z",
+          "updatedAt": "2025-11-20T08:11:45Z"
+        },
+        {
+          "author": "johakoch",
+          "authorAssociation": "NONE",
+          "body": "@panva Thanks for the response. My question is exactly about error responses to unauthorized (unauthenticated) protected resource requests.\n\nhttps://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#section-5.3.1:\n\n> If the protected resource request does not include authentication credentials or does not contain an access token that enables access to the protected resource, the resource server MUST include the HTTP WWW-Authenticate response header field;\n\n...\n\n> All challenges for this token type MUST use the auth-scheme value Bearer. This scheme MUST be followed by one or more auth-param values.\n\nSo there _MUST_ be an auth-param,\n```\nWWW-Authenticate: Bearer\n```\nis _not_ sufficient.\n\nAnd https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#name-error-codes:\n\n> If the request lacks any authentication information (e.g., the client was unaware that authentication is necessary or attempted using an unsupported authentication method), the resource server SHOULD NOT include an error code or other error information.\n\nSo the auth-param _required_ by https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#section-5.3.1 _SHOULD NOT_ be `error`, `error_description` or `error_uri`.\n\nSee also Neil Madden's response (https://mailarchive.ietf.org/arch/msg/oauth/nWNGqhZjG14Yne7MykcZp50arb0/) to my question on the OAuth mailing list.\n\nWhich auth-param _is_ appropriate in this case? As I said in the description, `scope` is not appropriate (IMO) and `realm` may not be necessary. Do we have to add a non-meaningful auth-param only to satisfy this OAuth requirement, which may no longer be necessary, as it's no longer required by HTTP?",
+          "createdAt": "2025-11-20T09:16:08Z",
+          "updatedAt": "2025-11-20T09:16:08Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "My feedback wrt to www-authenticate in the Montreal meeting was during a discussion of 401 & www-authenticate in token endpoint responses tho.",
+          "createdAt": "2025-11-20T09:21:01Z",
+          "updatedAt": "2025-11-20T09:21:01Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "> Which auth-param is appropriate in this case?\n\nI've seen realm=\"API\", realm=\"<hostname>\", or similar \"pointless\" params.",
+          "createdAt": "2025-11-20T09:21:41Z",
+          "updatedAt": "2025-11-20T09:21:41Z"
+        },
+        {
+          "author": "johakoch",
+          "authorAssociation": "NONE",
+          "body": "OK, is there a reason for the OAuth spec to still _require_ an auth-param?",
+          "createdAt": "2025-11-20T09:24:11Z",
+          "updatedAt": "2025-11-20T09:24:11Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "From my POV, no, other than backwards compatibility with clients that utilize strict parsers, of which there may be very few?\n\nI think it appropriate to dig into the intention behind this requirement in 6750",
+          "createdAt": "2025-11-20T09:27:29Z",
+          "updatedAt": "2025-11-20T09:27:29Z"
+        },
+        {
+          "author": "johakoch",
+          "authorAssociation": "NONE",
+          "body": "> I think it appropriate to dig into the intention behind this requirement in 6750\n\nYes, I'd be glad if someone could shed some light. @selfissued, @dickhardt ?",
+          "createdAt": "2025-11-20T09:34:11Z",
+          "updatedAt": "2025-11-20T09:34:11Z"
+        },
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "Going by RFC number sequence alone it's likely because https://datatracker.ietf.org/doc/html/rfc2617#section-1.2 was the only standing definition at the time.",
+          "createdAt": "2025-11-20T09:48:27Z",
+          "updatedAt": "2025-11-20T09:48:27Z"
         }
       ]
     },
@@ -5499,6 +5555,22 @@
       "body": "In section 4.3.1, the current text says: \n\n> Sender-constrained refresh tokens: the authorization server cryptographically binds the refresh token to a certain client instance, e.g., by utilizing DPoP [[RFC9449](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC9449)] or mTLS [[RFC8705](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC8705)].\n\n\nNow, according to RFC 6749 section 10.4 stats: \n\n> The authorization server MUST NOT issue refresh tokens to clients that cannot protect the confidentiality of client credentials\n\nSo, in the case of a confidential client, all refresh tokens are, in fact, sender-constrained. \nI proposed to add this fact to the text. for example, changing e.g. to\n\ne.g., issueing only to a confidential client as in [RFC6749], by utilizing DPoP [[RFC9449](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC9449)] or mTLS [[RFC8705](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC8705)].",
       "createdAt": "2025-11-06T20:41:45Z",
       "updatedAt": "2025-11-07T21:12:45Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 233,
+      "id": "I_kwDODkfq5s7ZSe6f",
+      "title": "make mix-up mitigation via issuer mandatory",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/233",
+      "state": "OPEN",
+      "author": "will-bartlett",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "OAuth 2.1 incorporates RFC 9207's issuer parameter optionally. MCP reveals a rapidly growing use case where mitigating this attack is necessary. See discussion in https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1721#issuecomment-3555689564. \n\nOptional security mitigations add complexity compared to mandatory security mitigations. I didn't see any discussion of optional vs mandatory in #46 or the IETF minutes. Can we make this mitigation mandatory in OAuth 2.1?",
+      "createdAt": "2025-11-20T05:18:04Z",
+      "updatedAt": "2025-11-20T05:18:04Z",
       "closedAt": null,
       "comments": []
     }
