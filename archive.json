@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-23T00:16:14.339373+00:00",
+  "timestamp": "2025-12-07T00:16:20.303758+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5498,9 +5498,17 @@
       "labels": [],
       "body": "intro paragraph in the 4.1.1 (2nd paragraph) define code_verifier and code_challenge and refer to a new section on how it works and reference the exception for OpenID Connect\n\nchange \n\n```code_challenge\":\nREQUIRED or RECOMMENDED (see [Section 7.5.1](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#authorization_codes)). Code challenge.```\n\nto be REQUIRED unless ....  The code_challenge as described in XXX",
       "createdAt": "2025-09-15T15:37:52Z",
-      "updatedAt": "2025-09-15T15:37:52Z",
+      "updatedAt": "2025-12-05T11:25:27Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@aaronpk @tlodderstedt  - is there a reason we don't recommend code_challenge_method=S256 ???",
+          "createdAt": "2025-12-05T11:25:27Z",
+          "updatedAt": "2025-12-05T11:25:27Z"
+        }
+      ]
     },
     {
       "number": 221,
