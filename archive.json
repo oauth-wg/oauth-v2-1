@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-07T00:16:20.303758+00:00",
+  "timestamp": "2025-12-09T00:14:29.735158+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5579,6 +5579,22 @@
       "body": "OAuth 2.1 incorporates RFC 9207's issuer parameter optionally. MCP reveals a rapidly growing use case where mitigating this attack is necessary. See discussion in https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1721#issuecomment-3555689564. \n\nOptional security mitigations add complexity compared to mandatory security mitigations. I didn't see any discussion of optional vs mandatory in #46 or the IETF minutes. Can we make this mitigation mandatory in OAuth 2.1?",
       "createdAt": "2025-11-20T05:18:04Z",
       "updatedAt": "2025-11-20T05:18:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 234,
+      "id": "I_kwDODkfq5s7cv6uL",
+      "title": "Ensure open redirector language from RFC9700 is referenced",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/234",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "https://datatracker.ietf.org/doc/html/rfc9700#section-4.11.2",
+      "createdAt": "2025-12-07T14:22:13Z",
+      "updatedAt": "2025-12-07T14:22:13Z",
       "closedAt": null,
       "comments": []
     }
