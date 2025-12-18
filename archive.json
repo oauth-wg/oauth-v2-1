@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-09T00:14:29.735158+00:00",
+  "timestamp": "2025-12-18T00:12:43.733998+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5578,9 +5578,17 @@
       "labels": [],
       "body": "OAuth 2.1 incorporates RFC 9207's issuer parameter optionally. MCP reveals a rapidly growing use case where mitigating this attack is necessary. See discussion in https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1721#issuecomment-3555689564. \n\nOptional security mitigations add complexity compared to mandatory security mitigations. I didn't see any discussion of optional vs mandatory in #46 or the IETF minutes. Can we make this mitigation mandatory in OAuth 2.1?",
       "createdAt": "2025-11-20T05:18:04Z",
-      "updatedAt": "2025-11-20T05:18:04Z",
+      "updatedAt": "2025-12-17T19:13:07Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I believe the reason it's not mandatory in RFC9700/OAuth 2.1 is because not all OAuth deployments/ecosystems will have the problem that it solves.\n\n[Section 4.4.2](https://www.rfc-editor.org/rfc/rfc9700#section-4.4.2)\n> When an OAuth client can only interact with one authorization server, a mix-up defense is not required\n\nThe other option to solve the mixup attack is for the client to use distinct redirect URIs per authorization server. That option isn't really practical for MCP, but works fine for clients that redirect to a small fixed list of OAuth servers.\n\nSo I don't really see a path to making 9207 mandatory in all of OAuth 2.1. But it definitely can be made mandatory in MCP.",
+          "createdAt": "2025-12-17T19:13:07Z",
+          "updatedAt": "2025-12-17T19:13:07Z"
+        }
+      ]
     },
     {
       "number": 234,
