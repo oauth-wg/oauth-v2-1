@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-18T00:12:43.733998+00:00",
+  "timestamp": "2025-12-21T00:16:14.541437+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5578,7 +5578,7 @@
       "labels": [],
       "body": "OAuth 2.1 incorporates RFC 9207's issuer parameter optionally. MCP reveals a rapidly growing use case where mitigating this attack is necessary. See discussion in https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1721#issuecomment-3555689564. \n\nOptional security mitigations add complexity compared to mandatory security mitigations. I didn't see any discussion of optional vs mandatory in #46 or the IETF minutes. Can we make this mitigation mandatory in OAuth 2.1?",
       "createdAt": "2025-11-20T05:18:04Z",
-      "updatedAt": "2025-12-17T19:13:07Z",
+      "updatedAt": "2025-12-18T19:04:23Z",
       "closedAt": null,
       "comments": [
         {
@@ -5587,6 +5587,20 @@
           "body": "I believe the reason it's not mandatory in RFC9700/OAuth 2.1 is because not all OAuth deployments/ecosystems will have the problem that it solves.\n\n[Section 4.4.2](https://www.rfc-editor.org/rfc/rfc9700#section-4.4.2)\n> When an OAuth client can only interact with one authorization server, a mix-up defense is not required\n\nThe other option to solve the mixup attack is for the client to use distinct redirect URIs per authorization server. That option isn't really practical for MCP, but works fine for clients that redirect to a small fixed list of OAuth servers.\n\nSo I don't really see a path to making 9207 mandatory in all of OAuth 2.1. But it definitely can be made mandatory in MCP.",
           "createdAt": "2025-12-17T19:13:07Z",
           "updatedAt": "2025-12-17T19:13:07Z"
+        },
+        {
+          "author": "will-bartlett",
+          "authorAssociation": "NONE",
+          "body": "> not all OAuth deployments/ecosystems will have the problem that it solves.\n\nI don't think this is the right criteria.\n\nPKCE was introduced to solve a problem that only some OAuth deployments/ecosystems have. From [RFC 7636](https://datatracker.ietf.org/doc/html/rfc7636):\n\n>    In this attack, the attacker intercepts the authorization code\n>    returned from the authorization endpoint within a communication path\n>    not protected by Transport Layer Security (TLS), such as inter-\n>    application communication within the client's operating system.\n\nI.e. PKCE is only relevant for OAuth ecosystems that have native applications that use inter-application communication within the client's operating system.\n\nSimilarly with the deprecation of the implicit flow. Some OAuth ecosystems (say, for healthcare employees) will mitigate the threats related to the implicit flow (browser history, referer) by using locked down web browsers in secure environments. Nevertheless, it is deprecated.\n\nI believe the right criteria are:\n\n 1. Is the problem common?\n 2. Is the mitigation cheap?\n\nOn both PKCE and the implicit flow, OAuth 2.1 makes the right choice. The problems with the implicit flow and lack of PKCE are common and the mitigations are cheap, so OAuth 2.1 removes the implicit flow and makes PKCE mandatory. \n\nLikewise, with mix-up attacks. The problem seems to be reasonably common, if not quite as common as the PKCE and implicit problems, impacting the entire MCP ecosystem. And the mitigation is cheap - returning a constant value that many other OAuth specifications (such as authorization server metadata) assume already exists.\n\n> But it definitely can be made mandatory in MCP.\n\nIn the linked issue, the MCP folks indicate some reluctance to define fine-grained auth requirements given that auth isn't really their area of expertise (\"I've no idea how universal support for this is though, so can't really comment on whether it's good or bad to require it from a compatibility point-of-view.\"). I think this is righteous feedback. Instead of telling new scenarios like MCP that they should use OAuth 2.1 and activate a library of extensions like RFC 9207 depending on their security analysis on which extensions are needed, I think it would be better if OAuth WG could simply say to use OAuth 2.1. There's value in being able to make _simpler_ recommendations to non-auth experts.  ",
+          "createdAt": "2025-12-18T18:53:39Z",
+          "updatedAt": "2025-12-18T18:53:39Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "PKCE affects far more than just native apps... authorization code injection is also possible with server-side confidential clients, it's just that the origins of PKCE was native apps. The text in RFC7636 only talks about authorization code interception because the injection attack wasn't thought of at the time. That has all been fixed in RFC9700 though, which is why PKCE is part of OAuth 2.1.\n\nI do personally agree that a large number of OAuth deployments/ecosystems will benefit from the `iss` response parameter. There was a good presentation at the last OAuth Security Workshop about how broad this problem is. I also agree it is the easier way to solve the problem vs using different redirect URIs per authorization servers. I would be in favor of making it mandatory, I am just trying to describe the challenges I see in doing so.\n\nUltimately this will need some broader feedback from the working group if we want to make it mandatory in 2.1. I'd like to not wait until the March meeting to discuss, so we should either take this to the mailing list or schedule an interim meeting for OAuth 2.1 between now and March.",
+          "createdAt": "2025-12-18T19:04:23Z",
+          "updatedAt": "2025-12-18T19:04:23Z"
         }
       ]
     },
@@ -10167,7 +10181,7 @@
       "labels": [],
       "body": "Added references to OpenID Connect response modes and addressed browser-swapping attack mitigation strategies.",
       "createdAt": "2025-11-04T03:46:38Z",
-      "updatedAt": "2025-11-05T20:51:39Z",
+      "updatedAt": "2025-12-18T20:36:29Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
@@ -10185,6 +10199,27 @@
           "body": "Just throwing in another potential mitigation:\r\n- use POSTs with the authorisation endpoint (currently a `MAY`, could we bump to a `SHOULD`?)\r\n- auth servers _should_ for a given client allow specifiying expected auth request URI method and then fail if request with another method is used\r\n- use `response_mode=form_post` \r\n- again, auth servers _should_ allow specifiying expected `response_mode` and fail if different\r\n",
           "createdAt": "2025-11-05T20:51:39Z",
           "updatedAt": "2025-11-05T20:51:39Z"
+        },
+        {
+          "author": "will-bartlett",
+          "authorAssociation": "NONE",
+          "body": "I wanted to call folks attention specifically to the loopback redirect URI pattern from section 7.3 of [RFC 8252](https://datatracker.ietf.org/doc/html/rfc8252#section-7.3). This case is a bit special, because the application may not be running. Because the application is not running, this rules out certain mitigation options. \r\n\r\nThe current PR says (emphasis added):\r\n\r\n> * URL sharing: The failing CSRF-protection causes an error response to the user and the\r\n>   `code` paramter remains in the URL bar. Since they are unaware of that the URL contains a\r\n>   secret, users might send this URL to the attacker.\r\n>   **To solve this, clients SHOULD sanitize the URL, especially in error cases, e.g., by redirecting\r\n>   to a dedicated error page.**\r\n\r\nThis mitigation is not suitable for applications that use loopback. Because the client is not running, it cannot redirect to a dedicated error page. Rather, loopback will 404, leaving the authorization code in the URL bar.\r\n\r\nSimilarly, these [IETF slides](https://datatracker.ietf.org/meeting/124/materials/slides-124-oauth-sessa-browser-swapping-01) suggest \"Specification of an authorization code invalidation mechanism.\" This mitigation is also not suitable for application that use loopback. Because the client is not running, it cannot send the authorization code to an invalidation endpoint. \r\n\r\nIt appears to me that the only suitable mitigation option for loopback URIs is the use of response_mode=form_post and error for all other response modes. ",
+          "createdAt": "2025-12-18T19:35:37Z",
+          "updatedAt": "2025-12-18T19:51:17Z"
+        },
+        {
+          "author": "JonasPrimbs",
+          "authorAssociation": "NONE",
+          "body": "Jep, that's true.\r\n\r\nI just tested this successfully in a VPN client, which uses response_mode=query (immutable).\r\nIf the VPN client of the legitimate user is not waiting for a callback on exactly the same port as the client of the attacker (randomly chosen by the way), the legitimate user will end up in an error screen of the browser, because the browser cannot establish a connection to this loopback address.\r\nHowever, the URL remains in the browser and contains the unresolved authorization code.\r\n\r\nThat's ... problematic. I think the only way in such scenarios to fix this issue would be changing the client implementation to wait for a POST response and enforce response_mode=form_post on the authorization server, as @will-bartlett suggested.",
+          "createdAt": "2025-12-18T20:28:08Z",
+          "updatedAt": "2025-12-18T20:28:08Z"
+        },
+        {
+          "author": "will-bartlett",
+          "authorAssociation": "NONE",
+          "body": "Yes. I sent a mail to the mailing list covering some of this same area (https://mailarchive.ietf.org/arch/msg/oauth/KUUTS7lXFPQ2vLrTYeeaV0eiRTU/). In addition to VPN that blocks a domain, I suspect you could get similar results by using a state parameter that triggers an XSS filter or is too long for the web server. In these scenarios, web servers will often reject requests with a 4xx or 5xx error, before the application code (including authorization code invalidation) has an opportunity to run. ",
+          "createdAt": "2025-12-18T20:36:29Z",
+          "updatedAt": "2025-12-18T20:36:29Z"
         }
       ],
       "reviews": []
