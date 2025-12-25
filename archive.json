@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-21T00:16:14.541437+00:00",
+  "timestamp": "2025-12-25T00:14:50.863943+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5617,6 +5617,22 @@
       "body": "https://datatracker.ietf.org/doc/html/rfc9700#section-4.11.2",
       "createdAt": "2025-12-07T14:22:13Z",
       "updatedAt": "2025-12-07T14:22:13Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 235,
+      "id": "I_kwDODkfq5s7f7l3-",
+      "title": "CORS Origin Validation for Token Endpoint",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/235",
+      "state": "OPEN",
+      "author": "tennantje",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "## Problem\nThe OAuth 2.1 spec mentions CORS support for token endpoints (Section 3.2) but doesn't specify how authorization servers should validate the Origin header in CORS requests.\n\n## Context\nRelated to #133 which addressed broader CORS recommendations. While that issue covered which endpoints need CORS support, the specific implementation approach for origin validation wasn't addressed.\n\n## Current Implementation Gap\nMost implementations likely extract origins from registered redirect URIs (e.g., https://myapp.com/callback \u2192 allow https://myapp.com), but this approach isn't documented in the spec.\n\n## Question\nShould the spec recommend:\n1. Extract origins from redirect URIs (covers 90% of use cases)\n2. Separate \"allowed origins\" registration (handles edge cases like microservices)\n3. Both approaches with guidance on when to use each\n\n## Example Scenario\n- Client registers redirect URI: https://myapp.com/oauth/callback\n- Token request comes from origin: https://myapp.com\n- Should this be automatically allowed, or require separate origin registration?",
+      "createdAt": "2025-12-23T10:47:51Z",
+      "updatedAt": "2025-12-23T10:47:51Z",
       "closedAt": null,
       "comments": []
     }
