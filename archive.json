@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-15T00:14:54.513909+00:00",
+  "timestamp": "2026-02-17T00:20:26.332524+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5671,6 +5671,37 @@
           "body": "Possible mitigations for this type of attack\n\n* use PAR (can prevent a lot of authorization request manipulations);\n* adding a `code_challenge_methods_supported` client registration parameter (which currently does not exist).",
           "createdAt": "2026-01-13T23:08:01Z",
           "updatedAt": "2026-01-13T23:08:01Z"
+        }
+      ]
+    },
+    {
+      "number": 237,
+      "id": "I_kwDODkfq5s7rHVQN",
+      "title": "PKCE verifier generation for confidential clients",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/237",
+      "state": "CLOSED",
+      "author": "functasti",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "RFC 7636 4.1 states that the client creates a code verifier \u201cfor each OAuth 2.0 Authorization Request.\u201d Is this intended to require generating a new verifier for every authorization flow in the case of confidential clients, or is reuse of a single verifier value across multiple flows acceptable when the token endpoint already requires client authentication?\n\nAssuming the intended interpretation is that a new verifier is created per authorization request, what concrete security benefit is expected in the confidential client scenario compared to relying on the secrecy of a single verifier value stored only on the server and reused across flows?\n\nThanks for any clarification.\n",
+      "createdAt": "2026-02-15T17:45:13Z",
+      "updatedAt": "2026-02-15T22:17:55Z",
+      "closedAt": "2026-02-15T19:54:17Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Client authentication has no relation to PKCE. There are attacks on confidential clients that PKCE solves, in particular the Authorization Code Injection attack described here: https://datatracker.ietf.org/doc/html/rfc9700#section-4.5.1 A client secret does not prevent that attack.\n\nAnd yes, the PKCE code verifier cannot be reused or it defeats the purpose and doesn't prevent the attack.",
+          "createdAt": "2026-02-15T19:54:17Z",
+          "updatedAt": "2026-02-15T19:54:17Z"
+        },
+        {
+          "author": "functasti",
+          "authorAssociation": "NONE",
+          "body": "@aaronpk Thank you very much for sharing the link describing the attack,  it really clarified things, and it now makes perfect sense why the PKCE code verifier must not be reused. As a side note, I\u2019d highly recommend including that link in part 12 of your Udemy course. It\u2019s a fantastic course, by the way! \ud83d\ude42",
+          "createdAt": "2026-02-15T22:17:55Z",
+          "updatedAt": "2026-02-15T22:17:55Z"
         }
       ]
     }
