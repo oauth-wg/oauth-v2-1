@@ -625,8 +625,8 @@ request parameter at the authorization or token endpoints, depending on
 the grant type used. In turn, the authorization server uses the `scope`
 response parameter to inform the client of the scope of the access token issued.
 
-The value of the scope parameter is expressed as a list of space-
-delimited, case-sensitive strings.  The strings are defined by the
+The value of the scope parameter is expressed as a space-
+delimited list of case-sensitive strings.  The strings are defined by the
 authorization server.  If the value contains multiple space-delimited
 strings, their order does not matter, and each string adds an
 additional access range to the requested scope.
@@ -1549,7 +1549,7 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 
 (5)  The authorization server authenticates the client when possible, validates the
      authorization code, validates the code verifier, and ensures that the redirect URI
-     received matches the URI used to redirect the client in
+     received matches the URI used to redirect the user agent to the client in
      step (3).  If valid, the authorization server responds back with
      an access token and, optionally, a refresh token.
 
