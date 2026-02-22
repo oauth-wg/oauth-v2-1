@@ -694,7 +694,7 @@ Transport-Layer Security {{RFC8446}},
 to protect the exchange of clear-text credentials and tokens
 either in the content or in header fields
 from eavesdropping which enables replay
-(eg. see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}), and {{bearer-tokens}}).
+(e.g., see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}), and {{bearer-tokens}}).
 
 All the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the `https` scheme
 except for loopback interface redirect URIs,
@@ -1598,7 +1598,7 @@ MUST return an error response as described in {{authorization-code-error-respons
 
 "redirect_uri":
 :    OPTIONAL if only one redirect URI is registered for this client.
-     REQUIRED if multiple redirict URIs are registered for this client.
+     REQUIRED if multiple redirect URIs are registered for this client.
      See {{multiple-redirect-uris}}.
 
 "scope":
@@ -2844,7 +2844,7 @@ Historic note: Although PKCE {{RFC7636}}
 was originally designed as a mechanism
 to protect native apps from authorization code exfiltration attacks,
 all kinds of OAuth clients, including web applications and other confidential clients,
-are susceptible to authorziation code injection attacks, which are solved by
+are susceptible to authorization code injection attacks, which are solved by
 the `code_challenge` and `code_verifier` mechanism.
 
 ### Reuse of Authorization Codes {#authorization-code-reuse}
@@ -2899,7 +2899,7 @@ agent to rewrite the POST request to a GET request and thereby drop
 the form data in the POST request content.
 
 In HTTP {{RFC9110}}, only the status code 303
-unambigously enforces rewriting the HTTP POST request to an HTTP GET
+unambiguously enforces rewriting the HTTP POST request to an HTTP GET
 request.  For all other status codes, including the popular 302, user
 agents can opt not to rewrite POST to GET requests and therefore
 reveal the user credentials to the client.  (In practice, however,
@@ -3137,7 +3137,7 @@ such deployments, sufficient measures MUST be employed to ensure
 confidentiality of the access token between the front-end and back-
 end servers; encryption of the token is one such possible measure.
 
-See {{Section 17.2 of RFC9110}} for further informations.
+See {{Section 17.2 of RFC9110}} for further information.
 
 ## Authorization Server Mix-Up Mitigation {#mix-up}
 
