@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-17T00:20:26.332524+00:00",
+  "timestamp": "2026-02-24T00:19:59.746204+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -10307,6 +10307,106 @@
           "updatedAt": "2025-12-18T20:36:29Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 238,
+      "id": "PR_kwDODkfq5s7FcWxU",
+      "title": "resolve ambiguity around repeated parameters",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/238",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This updates the authorization and token endpoint \"repeat\" parameter handling as such that recognized repeat parameters are default-prohibited even for extension params but with a caveat that extensions may explicitly allow such\r\n\r\nExhibit a: https://www.rfc-editor.org/rfc/rfc8707.html#section-2-2.2 (resource, token and authorization endpoints, any grant)\r\n\r\n> Multiple resource parameters MAY be used to indicate that the requested token is intended to be used at multiple resources.\r\n\r\nExhibit b: https://www.rfc-editor.org/rfc/rfc8693.html#section-2.1-4.4 (resource, token endpoint, token exchange grant)\r\n\r\n> Multiple resource parameters may be used to indicate that the issued token is intended to be used at the multiple resources listed.\r\n\r\nExhibit c: https://www.rfc-editor.org/rfc/rfc8693.html#section-2.1-4.6 (audience, token endpoint, token exchange grant)\r\n\r\n> Multiple audience parameters may be used to indicate that the issued token is intended to be used at the multiple audiences listed.\r\n\r\nRefs: https://www.rfc-editor.org/errata/eid5708\r\nRefs (thread): https://mailarchive.ietf.org/arch/msg/oauth/l3Yp2W4QXHdCXgO3NVpC6syUMws/\r\n",
+      "createdAt": "2026-02-22T10:17:40Z",
+      "updatedAt": "2026-02-23T22:09:33Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "multi-param-extensions",
+      "headRefOid": "c9f2149bfedd2f802912575e15a517cc325ecc07",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "https://mailarchive.ietf.org/arch/msg/oauth/wJ4pHDhz1Vgytz91dNCKj4wEz8U/ also just for posterity ",
+          "createdAt": "2026-02-23T22:09:33Z",
+          "updatedAt": "2026-02-23T22:09:33Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s7lG2s_",
+          "commit": {
+            "abbreviatedOid": "c9f2149"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-23T22:08:33Z",
+          "updatedAt": "2026-02-23T22:08:33Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 239,
+      "id": "PR_kwDODkfq5s7FclWq",
+      "title": "incorporate EID 3500 and 6613",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/239",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Updates to reflect\r\n\r\n- Verified RFC6749 Errata ID 3500 https://www.rfc-editor.org/errata/eid3500\r\n- Verified RFC6749 Errata ID 6613 https://www.rfc-editor.org/errata/eid6613",
+      "createdAt": "2026-02-22T10:49:25Z",
+      "updatedAt": "2026-02-22T10:49:43Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "eid3500-eid6613",
+      "headRefOid": "abd3f5785708964f01dd923d187cacbe21431a56",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 240,
+      "id": "PR_kwDODkfq5s7Fc7Zu",
+      "title": "fix various typos",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/240",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "\r\nBefore | After\r\n-- | --\r\nredirict | redirect\r\nauthorziation | authorization\r\nunambigously | unambiguously\r\ninformations | information\r\n(eg. see | (e.g., see",
+      "createdAt": "2026-02-22T11:41:12Z",
+      "updatedAt": "2026-02-22T11:42:01Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "fix-typos",
+      "headRefOid": "65b35b450e0243b338242a8290f70f73d1625abb",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
