@@ -1436,13 +1436,10 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
                     <p id="section-toc.1-1.7.2.5.2.1.1"><a href="#section-7.5.1" class="auto internal xref">7.5.1</a>.  <a href="#name-authorization-code-injectio" class="internal xref">Authorization Code Injection</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.5.2.2">
-                    <p id="section-toc.1-1.7.2.5.2.2.1"><a href="#section-7.5.2" class="auto internal xref">7.5.2</a>.  <a href="#name-countermeasures" class="internal xref">Countermeasures</a></p>
+                    <p id="section-toc.1-1.7.2.5.2.2.1"><a href="#section-7.5.2" class="auto internal xref">7.5.2</a>.  <a href="#name-reuse-of-authorization-code" class="internal xref">Reuse of Authorization Codes</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.5.2.3">
-                    <p id="section-toc.1-1.7.2.5.2.3.1"><a href="#section-7.5.3" class="auto internal xref">7.5.3</a>.  <a href="#name-reuse-of-authorization-code" class="internal xref">Reuse of Authorization Codes</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.5.2.4">
-                    <p id="section-toc.1-1.7.2.5.2.4.1"><a href="#section-7.5.4" class="auto internal xref">7.5.4</a>.  <a href="#name-http-307-redirect" class="internal xref">HTTP 307 Redirect</a></p>
+                    <p id="section-toc.1-1.7.2.5.2.3.1"><a href="#section-7.5.3" class="auto internal xref">7.5.3</a>.  <a href="#name-http-307-redirect" class="internal xref">HTTP 307 Redirect</a></p>
 </li>
                 </ul>
 </li>
@@ -2244,7 +2241,7 @@ user agent to another destination.  While the examples in this
 specification show the use of the HTTP 302 status code, any other
 method available via the user agent to accomplish this redirection,
 with the exception of HTTP 307, is allowed and is considered to be an
-implementation detail. See <a href="#redirect_307" class="auto internal xref">Section 7.5.4</a> for details.<a href="#section-1.6-1" class="pilcrow">¶</a></p>
+implementation detail. See <a href="#redirect_307" class="auto internal xref">Section 7.5.3</a> for details.<a href="#section-1.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="interoperability">
@@ -2781,7 +2778,7 @@ Parameters sent without a value MUST be treated as if they were
 omitted from the request.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 <p id="section-3.1-7">An authorization server that redirects a request potentially containing
 user credentials MUST avoid forwarding these user credentials accidentally
-(see <a href="#redirect_307" class="auto internal xref">Section 7.5.4</a> for details).<a href="#section-3.1-7" class="pilcrow">¶</a></p>
+(see <a href="#redirect_307" class="auto internal xref">Section 7.5.3</a> for details).<a href="#section-3.1-7" class="pilcrow">¶</a></p>
 <p id="section-3.1-8">Cross-Origin Resource Sharing <span>[<a href="#WHATWG.CORS" class="cite xref">WHATWG.CORS</a>]</span> MUST NOT be
 supported at the Authorization Endpoint as the client does not access this
 endpoint directly, instead the client redirects the user agent to it.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
@@ -3602,7 +3599,7 @@ authorization code as a previously successful token request,
 the authorization server MUST deny the request and SHOULD
 revoke (when possible) all access tokens and refresh tokens
 previously issued based on that authorization code.
-See <a href="#authorization-code-reuse" class="auto internal xref">Section 7.5.3</a> for further details.<a href="#section-4.1.3-5" class="pilcrow">¶</a></p>
+See <a href="#authorization-code-reuse" class="auto internal xref">Section 7.5.2</a> for further details.<a href="#section-4.1.3-5" class="pilcrow">¶</a></p>
 <p id="section-4.1.3-6">For example, the client makes the following HTTPS request
 (with extra line breaks for display purposes only):<a href="#section-4.1.3-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.1.3-7">
@@ -4731,32 +4728,30 @@ resource server to distinguish between the two types of access tokens.<a href="#
 <a href="#section-7.5.1" class="section-number selfRef">7.5.1. </a><a href="#name-authorization-code-injectio" class="section-name selfRef">Authorization Code Injection</a>
           </h4>
 <p id="section-7.5.1-1">Authorization code injection is an attack where the client receives an authorization code from the attacker in its redirect URI instead of the authorization code from the legitimate authorization server. Without protections in place, there is no mechanism by which the client can know that the attack has taken place. Authorization code injection can lead to both the attacker obtaining access to a victim's account, as well as a victim accidentally gaining access to the attacker's account.<a href="#section-7.5.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="countermeasures">
-<section id="section-7.5.2">
-          <h4 id="name-countermeasures">
-<a href="#section-7.5.2" class="section-number selfRef">7.5.2. </a><a href="#name-countermeasures" class="section-name selfRef">Countermeasures</a>
-          </h4>
-<p id="section-7.5.2-1">To prevent injection of authorization codes into the client, using <code>code_challenge</code> and
+<section id="section-7.5.1.1">
+            <h5 id="name-countermeasures">
+<a href="#section-7.5.1.1" class="section-number selfRef">7.5.1.1. </a><a href="#name-countermeasures" class="section-name selfRef">Countermeasures</a>
+            </h5>
+<p id="section-7.5.1.1-1">To prevent injection of authorization codes into the client, using <code>code_challenge</code> and
 <code>code_verifier</code> is REQUIRED for clients, and authorization servers MUST enforce
-their use, unless both of the following criteria are met:<a href="#section-7.5.2-1" class="pilcrow">¶</a></p>
+their use, unless both of the following criteria are met:<a href="#section-7.5.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7.5.2-2.1">
-              <p id="section-7.5.2-2.1.1">The client is a confidential client.<a href="#section-7.5.2-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-7.5.1.1-2.1">
+                <p id="section-7.5.1.1-2.1.1">The client is a confidential client.<a href="#section-7.5.1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7.5.2-2.2">
-              <p id="section-7.5.2-2.2.1">In the specific deployment and the specific request, there is reasonable
+              <li class="normal" id="section-7.5.1.1-2.2">
+                <p id="section-7.5.1.1-2.2.1">In the specific deployment and the specific request, there is reasonable
 assurance by the authorization server that the client implements the OpenID
-Connect <code>nonce</code> mechanism properly.<a href="#section-7.5.2-2.2.1" class="pilcrow">¶</a></p>
+Connect <code>nonce</code> mechanism properly.<a href="#section-7.5.1.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          </ul>
-<p id="section-7.5.2-3">In this case, using and enforcing <code>code_challenge</code> and <code>code_verifier</code> is still RECOMMENDED.<a href="#section-7.5.2-3" class="pilcrow">¶</a></p>
-<p id="section-7.5.2-4">The <code>code_challenge</code> or OpenID Connect <code>nonce</code> value MUST be
+            </ul>
+<p id="section-7.5.1.1-3">In this case, using and enforcing <code>code_challenge</code> and <code>code_verifier</code> is still RECOMMENDED.<a href="#section-7.5.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.5.1.1-4">The <code>code_challenge</code> or OpenID Connect <code>nonce</code> value MUST be
 transaction-specific and securely bound to the client and the user agent in
 which the transaction was started. If a transaction leads to an error, fresh
-values for <code>code_challenge</code> or <code>nonce</code> MUST be chosen.<a href="#section-7.5.2-4" class="pilcrow">¶</a></p>
-<p id="section-7.5.2-5">Relying on the client to validate the OpenID Connect <code>nonce</code> parameter
+values for <code>code_challenge</code> or <code>nonce</code> MUST be chosen.<a href="#section-7.5.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-7.5.1.1-5">Relying on the client to validate the OpenID Connect <code>nonce</code> parameter
 means the authorization server has no way to confirm that the client
 has actually protected itself against authorization code injection attacks.
 If an attacker is able to inject an authorization code into a client, the
@@ -4765,31 +4760,33 @@ would only later reject the ID token after validating the <code>nonce</code> and
 that it doesn't match. In contrast, the authorization server enforcing the
 <code>code_challenge</code> and <code>code_verifier</code> parameters provides a higher security outcome,
 since the authorization server is able to recognize the authorization code
-injection attack pre-emptively and avoid issuing any tokens in the first place.<a href="#section-7.5.2-5" class="pilcrow">¶</a></p>
-<p id="section-7.5.2-6">Historic note: Although PKCE <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>
+injection attack pre-emptively and avoid issuing any tokens in the first place.<a href="#section-7.5.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-7.5.1.1-6">Historic note: Although PKCE <span>[<a href="#RFC7636" class="cite xref">RFC7636</a>]</span>
 (where the <code>code_challenge</code> and <code>code_verifier</code> parameters were created)
 was originally designed as a mechanism
 to protect native apps from authorization code exfiltration attacks,
 all kinds of OAuth clients, including web applications and other confidential clients,
 are susceptible to authorization code injection attacks, which are solved by
-the <code>code_challenge</code> and <code>code_verifier</code> mechanism.<a href="#section-7.5.2-6" class="pilcrow">¶</a></p>
+the <code>code_challenge</code> and <code>code_verifier</code> mechanism.<a href="#section-7.5.1.1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="authorization-code-reuse">
-<section id="section-7.5.3">
+<section id="section-7.5.2">
           <h4 id="name-reuse-of-authorization-code">
-<a href="#section-7.5.3" class="section-number selfRef">7.5.3. </a><a href="#name-reuse-of-authorization-code" class="section-name selfRef">Reuse of Authorization Codes</a>
+<a href="#section-7.5.2" class="section-number selfRef">7.5.2. </a><a href="#name-reuse-of-authorization-code" class="section-name selfRef">Reuse of Authorization Codes</a>
           </h4>
-<p id="section-7.5.3-1">Several types of attacks are possible if authorization codes are able to be
-used more than once.<a href="#section-7.5.3-1" class="pilcrow">¶</a></p>
-<p id="section-7.5.3-2">As described in <a href="#code-token-extension" class="auto internal xref">Section 4.1.3</a>, the authorization server must reject
+<p id="section-7.5.2-1">Several types of attacks are possible if authorization codes are able to be
+used more than once.<a href="#section-7.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.5.2-2">As described in <a href="#code-token-extension" class="auto internal xref">Section 4.1.3</a>, the authorization server must reject
 a token request and revoke any issued tokens when receiving a second valid
 request with an authorization code that has already been used to
 issue an access token. If an attacker is able to exfiltrate an authorization code
 and use it before the legitimate client, the attacker will obtain the access token
 and the legitimate client will not. Revoking any issued tokens means the attacker's
-tokens will then be revoked, stopping the attack from proceeding any further.<a href="#section-7.5.3-2" class="pilcrow">¶</a></p>
-<p id="section-7.5.3-3">However, the authorization server should only revoke issued tokens if the
+tokens will then be revoked, stopping the attack from proceeding any further.<a href="#section-7.5.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.5.2-3">However, the authorization server should only revoke issued tokens if the
 request containing the authorization code is also valid, including any other parameters
 such as the <code>code_verifier</code> and client authentication. The authorization server
 SHOULD NOT revoke any issued tokens when receiving a replayed authorization code
@@ -4797,40 +4794,40 @@ that contains invalid parameters. If it were to do so, this would create a denia
 opportunity for an attacker who is able to obtain an authorization code but
 unable to obtain the client authentication or <code>code_verifier</code> by sending an invalid
 authorization code request before the legitimate client and thereby revoking
-the legitimate client's tokens once it makes the valid request.<a href="#section-7.5.3-3" class="pilcrow">¶</a></p>
+the legitimate client's tokens once it makes the valid request.<a href="#section-7.5.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="redirect_307">
-<section id="section-7.5.4">
+<section id="section-7.5.3">
           <h4 id="name-http-307-redirect">
-<a href="#section-7.5.4" class="section-number selfRef">7.5.4. </a><a href="#name-http-307-redirect" class="section-name selfRef">HTTP 307 Redirect</a>
+<a href="#section-7.5.3" class="section-number selfRef">7.5.3. </a><a href="#name-http-307-redirect" class="section-name selfRef">HTTP 307 Redirect</a>
           </h4>
-<p id="section-7.5.4-1">An authorization server which redirects a request that potentially contains user
+<p id="section-7.5.3-1">An authorization server which redirects a request that potentially contains user
 credentials MUST NOT use the 307 status code (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4.8" class="relref">Section 15.4.8</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) for
 redirection.
 If an HTTP redirection (and not, for example,
 JavaScript) is used for such a request, AS SHOULD use the status
-code 303 ("See Other").<a href="#section-7.5.4-1" class="pilcrow">¶</a></p>
-<p id="section-7.5.4-2">At the authorization endpoint, a typical protocol flow is that the AS
+code 303 ("See Other").<a href="#section-7.5.3-1" class="pilcrow">¶</a></p>
+<p id="section-7.5.3-2">At the authorization endpoint, a typical protocol flow is that the AS
 prompts the user to enter their credentials in a form that is then
 submitted (using the POST method) back to the authorization
 server.  The AS checks the credentials and, if successful, redirects
-the user agent to the client's redirect URI.<a href="#section-7.5.4-2" class="pilcrow">¶</a></p>
-<p id="section-7.5.4-3">If the status code 307 were used for redirection, the user agent
-would send the user credentials via a POST request to the client.<a href="#section-7.5.4-3" class="pilcrow">¶</a></p>
-<p id="section-7.5.4-4">This discloses the sensitive credentials to the client.  If the
+the user agent to the client's redirect URI.<a href="#section-7.5.3-2" class="pilcrow">¶</a></p>
+<p id="section-7.5.3-3">If the status code 307 were used for redirection, the user agent
+would send the user credentials via a POST request to the client.<a href="#section-7.5.3-3" class="pilcrow">¶</a></p>
+<p id="section-7.5.3-4">This discloses the sensitive credentials to the client.  If the
 client is malicious, it can use the credentials to impersonate
-the user at the AS.<a href="#section-7.5.4-4" class="pilcrow">¶</a></p>
-<p id="section-7.5.4-5">The behavior might be unexpected for developers, but is defined in
+the user at the AS.<a href="#section-7.5.3-4" class="pilcrow">¶</a></p>
+<p id="section-7.5.3-5">The behavior might be unexpected for developers, but is defined in
 <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4.8" class="relref">Section 15.4.8</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.  This status code does not require the user
 agent to rewrite the POST request to a GET request and thereby drop
-the form data in the POST request content.<a href="#section-7.5.4-5" class="pilcrow">¶</a></p>
-<p id="section-7.5.4-6">In HTTP <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, only the status code 303
+the form data in the POST request content.<a href="#section-7.5.3-5" class="pilcrow">¶</a></p>
+<p id="section-7.5.3-6">In HTTP <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, only the status code 303
 unambiguously enforces rewriting the HTTP POST request to an HTTP GET
 request.  For all other status codes, including the popular 302, user
 agents can opt not to rewrite POST to GET requests and therefore
 reveal the user credentials to the client.  (In practice, however,
-most user agents will only show this behaviour for 307 redirects.)<a href="#section-7.5.4-6" class="pilcrow">¶</a></p>
+most user agents will only show this behaviour for 307 redirects.)<a href="#section-7.5.3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

@@ -146,9 +146,8 @@ Table of Contents
      7.4.  Client Impersonating Resource Owner
      7.5.  Authorization Code Security Considerations
        7.5.1.  Authorization Code Injection
-       7.5.2.  Countermeasures
-       7.5.3.  Reuse of Authorization Codes
-       7.5.4.  HTTP 307 Redirect
+       7.5.2.  Reuse of Authorization Codes
+       7.5.3.  HTTP 307 Redirect
      7.6.  Ensuring Endpoint Authenticity
      7.7.  Credentials-Guessing Attacks
      7.8.  Phishing Attacks
@@ -755,7 +754,7 @@ Table of Contents
    specification show the use of the HTTP 302 status code, any other
    method available via the user agent to accomplish this redirection,
    with the exception of HTTP 307, is allowed and is considered to be an
-   implementation detail.  See Section 7.5.4 for details.
+   implementation detail.  See Section 7.5.3 for details.
 
 1.7.  Interoperability
 
@@ -1251,7 +1250,7 @@ Table of Contents
 
    An authorization server that redirects a request potentially
    containing user credentials MUST avoid forwarding these user
-   credentials accidentally (see Section 7.5.4 for details).
+   credentials accidentally (see Section 7.5.3 for details).
 
    Cross-Origin Resource Sharing [WHATWG.CORS] MUST NOT be supported at
    the Authorization Endpoint as the client does not access this
@@ -1933,7 +1932,7 @@ Table of Contents
    code as a previously successful token request, the authorization
    server MUST deny the request and SHOULD revoke (when possible) all
    access tokens and refresh tokens previously issued based on that
-   authorization code.  See Section 7.5.3 for further details.
+   authorization code.  See Section 7.5.2 for further details.
 
    For example, the client makes the following HTTPS request (with extra
    line breaks for display purposes only):
@@ -2852,7 +2851,7 @@ Table of Contents
    victim's account, as well as a victim accidentally gaining access to
    the attacker's account.
 
-7.5.2.  Countermeasures
+7.5.1.1.  Countermeasures
 
    To prevent injection of authorization codes into the client, using
    code_challenge and code_verifier is REQUIRED for clients, and
@@ -2894,7 +2893,7 @@ Table of Contents
    injection attacks, which are solved by the code_challenge and
    code_verifier mechanism.
 
-7.5.3.  Reuse of Authorization Codes
+7.5.2.  Reuse of Authorization Codes
 
    Several types of attacks are possible if authorization codes are able
    to be used more than once.
@@ -2920,7 +2919,7 @@ Table of Contents
    before the legitimate client and thereby revoking the legitimate
    client's tokens once it makes the valid request.
 
-7.5.4.  HTTP 307 Redirect
+7.5.3.  HTTP 307 Redirect
 
    An authorization server which redirects a request that potentially
    contains user credentials MUST NOT use the 307 status code
