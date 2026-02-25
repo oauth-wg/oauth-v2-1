@@ -2774,6 +2774,9 @@ the <code>POST</code> method (<span><a href="https://rfc-editor.org/rfc/rfc9110#
 <p id="section-3.1-5">The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.1-6">Request and response parameters
 defined by this specification MUST NOT be included more than once.
+This requirement also applies to parameters defined by extensions
+unless the extension explicitly defines otherwise for a specific
+parameter.
 Parameters sent without a value MUST be treated as if they were
 omitted from the request.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 <p id="section-3.1-7">An authorization server that redirects a request potentially containing
@@ -2803,7 +2806,10 @@ and MAY include a query string component <a href="#query-string-serialization" c
 <p id="section-3.2-5">The authorization server MUST ignore unrecognized request parameters sent to the token endpoint.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
 <p id="section-3.2-6">Parameters sent without a value MUST be treated as if they were
 omitted from the request. Request and response parameters
-defined by this specification MUST NOT be included more than once.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+defined by this specification MUST NOT be included more than once.
+This requirement also applies to parameters defined by extensions
+unless the extension explicitly defines otherwise for a specific
+parameter.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
 <p id="section-3.2-7">Authorization servers that wish to support browser-based applications
 (for example, applications running exclusively in client-side JavaScript without
 access to a supporting backend server) will need to ensure the token endpoint
