@@ -1724,8 +1724,9 @@ Table of Contents
 
    Clients MUST use code_challenge and code_verifier and authorization
    servers MUST enforce their use except under the conditions described
-   in Section 7.5.1.  In this case, using and enforcing code_challenge
-   and code_verifier as described in the following is still RECOMMENDED.
+   in Section 7.5.1.  Even in this case, using and enforcing
+   code_challenge and code_verifier as described above is still
+   RECOMMENDED.
 
    The state and scope parameters SHOULD NOT include sensitive client or
    resource owner information in plain text, as they can be transmitted
