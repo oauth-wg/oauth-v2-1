@@ -2142,8 +2142,8 @@ defining custom scopes that conflict with scopes from known extensions.<a href="
 request parameter at the authorization or token endpoints, depending on
 the grant type used. In turn, the authorization server uses the <code>scope</code>
 response parameter to inform the client of the scope of the access token issued.<a href="#section-1.4.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-5">The value of the scope parameter is expressed as a list of space-
-delimited, case-sensitive strings.  The strings are defined by the
+<p id="section-1.4.1-5">The value of the scope parameter is expressed as a space-
+delimited list of case-sensitive strings.  The strings are defined by the
 authorization server.  If the value contains multiple space-delimited
 strings, their order does not matter, and each string adds an
 additional access range to the requested scope.<a href="#section-1.4.1-5" class="pilcrow">¶</a></p>
@@ -3197,7 +3197,7 @@ browser) and capable of being redirected back to from the authorization server.<
      code for verification.<a href="#section-4.1-9" class="pilcrow">¶</a></p>
 <p id="section-4.1-10">(5)  The authorization server authenticates the client when possible, validates the
      authorization code, validates the code verifier, and ensures that the redirect URI
-     received matches the URI used to redirect the client in
+     received matches the URI used to redirect the user agent to the client in
      step (3).  If valid, the authorization server responds back with
      an access token and, optionally, a refresh token.<a href="#section-4.1-10" class="pilcrow">¶</a></p>
 <div id="authorization-request">
