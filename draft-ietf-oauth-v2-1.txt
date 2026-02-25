@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 23 April 2026                                              Okta
+Expires: 29 August 2026                                             Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                         20 October 2025
+                                                        25 February 2026
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,11 +50,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2026.
+   This Internet-Draft will expire on 29 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -727,7 +727,7 @@ Table of Contents
    authentication, integrity and confidentiality such as Transport-Layer
    Security [RFC8446], to protect the exchange of clear-text credentials
    and tokens either in the content or in header fields from
-   eavesdropping which enables replay (eg. see Section 2.4.1,
+   eavesdropping which enables replay (e.g., see Section 2.4.1,
    Section 7.5.1 and Section 3.2), and Section 1.4.2).
 
    All the OAuth protocol URLs (URLs exposed by the AS, RS and Client)
@@ -1646,7 +1646,7 @@ Table of Contents
       plain.
 
    "redirect_uri":  OPTIONAL if only one redirect URI is registered for
-      this client.  REQUIRED if multiple redirict URIs are registered
+      this client.  REQUIRED if multiple redirect URIs are registered
       for this client.  See Section 2.3.2.
 
    "scope":  OPTIONAL.  The scope of the access request as described by
@@ -2884,7 +2884,7 @@ Table of Contents
    code_verifier parameters were created) was originally designed as a
    mechanism to protect native apps from authorization code exfiltration
    attacks, all kinds of OAuth clients, including web applications and
-   other confidential clients, are susceptible to authorziation code
+   other confidential clients, are susceptible to authorization code
    injection attacks, which are solved by the code_challenge and
    code_verifier mechanism.
 
@@ -2940,7 +2940,7 @@ Table of Contents
    user agent to rewrite the POST request to a GET request and thereby
    drop the form data in the POST request content.
 
-   In HTTP [RFC9110], only the status code 303 unambigously enforces
+   In HTTP [RFC9110], only the status code 303 unambiguously enforces
    rewriting the HTTP POST request to an HTTP GET request.  For all
    other status codes, including the popular 302, user agents can opt
    not to rewrite POST to GET requests and therefore reveal the user
@@ -3178,7 +3178,7 @@ Table of Contents
    confidentiality of the access token between the front-end and back-
    end servers; encryption of the token is one such possible measure.
 
-   See Section 17.2 of [RFC9110] for further informations.
+   See Section 17.2 of [RFC9110] for further information.
 
 7.14.  Authorization Server Mix-Up Mitigation
 
@@ -3890,18 +3890,18 @@ Table of Contents
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-25, 3 July
+              Draft, draft-ietf-oauth-browser-based-apps-26, 3 December
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-25>.
+              oauth-browser-based-apps-26>.
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
               "Updates to OAuth 2.0 JSON Web Token (JWT) Client
               Authentication and Assertion-Based Authorization Grants",
               Work in Progress, Internet-Draft, draft-ietf-oauth-
-              rfc7523bis-03, 7 October 2025,
+              rfc7523bis-05, 12 January 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-03>.
+              rfc7523bis-05>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
