@@ -1266,7 +1266,7 @@ Client authentication is used for:
    of refresh tokens can be challenging, while rotation of a single
    set of client credentials is significantly easier.
 
-### Token Request {#token-request}
+### Token Endpoint Request {#token-request}
 
 The client makes a request to the token endpoint by sending the
 following parameters using the form-encoded serialization
@@ -1294,7 +1294,8 @@ For example, the client makes the following HTTPS request
     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
     Content-Type: application/x-www-form-urlencoded
 
-    grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+    grant_type=authorization_code
+    &code=SplxlOBeZQQYbYS6WxSbIA
     &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
     &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 
@@ -1309,14 +1310,13 @@ Further grant type specific processing rules apply and are specified with the re
 grant type.
 
 
-### Token Response {#token-response}
+### Token Endpoint Response {#token-response}
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and optional refresh
 token.
 
-If the request client
-authentication failed or is invalid, the authorization server returns
+If the client authentication failed or is invalid, the authorization server returns
 an error response as described in {{token-error-response}}.
 
 The authorization server issues an access token and optional refresh
@@ -1380,11 +1380,11 @@ For example:
     Cache-Control: no-store
 
     {
-      "access_token":"2YotnFZFEjr1zCsicMWpAA",
-      "token_type":"Bearer",
-      "expires_in":3600,
-      "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
-      "example_parameter":"example_value"
+      "access_token": "2YotnFZFEjr1zCsicMWpAA",
+      "token_type": "Bearer",
+      "expires_in": 3600,
+      "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
+      "example_parameter": "example_value"
     }
 
 The client MUST ignore unrecognized value names in the response.  The
@@ -1393,7 +1393,7 @@ server are left undefined.  The client should avoid making
 assumptions about value sizes.  The authorization server SHOULD
 document the size of any value it issues.
 
-### Error Response {#token-error-response}
+### Token Endpoint Error Response {#token-error-response}
 
 The authorization server responds with an HTTP 400 (Bad Request)
 status code (unless specified otherwise) and includes the following
@@ -1775,15 +1775,15 @@ Clients MUST prevent injection (replay) of authorization codes into the
 authorization response by attackers. Using `code_challenge` and `code_verifier` prevents injection of authorization codes since the authorization server will reject a token request with a mismatched `code_verifier`. See {{authorization_codes}} for more details.
 
 
-#### Error Response {#authorization-code-error-response}
+#### Authorization Error Response {#authorization-code-error-response}
 
 If the request fails due to a missing, invalid, or mismatching
 redirect URI, or if the client identifier is missing or invalid,
-the authorization server SHOULD inform the resource owner of the
-error and MUST NOT automatically redirect the user agent to the
-invalid redirect URI.
+the authorization server MUST NOT redirect the user agent to the
+invalid redirect URI and SHOULD inform the resource owner of the
+error, for example by displaying a message to the user in their browser.
 
-An AS MUST reject requests without a `code_challenge` from public clients,
+An authorization server MUST reject requests without a `code_challenge` from public clients,
 and MUST reject such requests from other clients unless there is
 reasonable assurance that the client mitigates authorization code injection
 in other ways. See {{authorization_codes}} for details.
@@ -1797,7 +1797,8 @@ algorithm not supported.
 
 If the resource owner denies the access request or if the request
 fails for reasons other than a missing or invalid redirect URI,
-the authorization server informs the client by adding the following
+the authorization server informs the client by redirecting the user agent
+to the redirect URI and adding the following
 parameters to the query component of the redirect URI as described
 by {{query-string-serialization}}:
 
@@ -1867,8 +1868,8 @@ by {{query-string-serialization}}:
 :    OPTIONAL. The identifier of the authorization server. See
      {{authorization-response}} above for details.
 
-For example, the authorization server redirects the user agent by
-sending the following HTTP response:
+For example, the authorization server indicates the request was denied
+by redirecting the user agent with the following HTTP response:
 
     HTTP/1.1 302 Found
     Location: https://client.example.com/cb?error=access_denied
