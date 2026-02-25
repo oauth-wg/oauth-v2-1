@@ -1675,8 +1675,8 @@ Authorization servers MUST support the `code_challenge` and `code_verifier` para
 
 Clients MUST use `code_challenge` and `code_verifier` and
 authorization servers MUST enforce their use except under the conditions
-described in {{authorization_codes}}. In this case, using and enforcing
-`code_challenge` and `code_verifier` as described in the following is still
+described in {{authorization_codes}}. Even in this case, using and enforcing
+`code_challenge` and `code_verifier` as described above is still
 RECOMMENDED.
 
 The `state` and `scope` parameters SHOULD NOT include sensitive
