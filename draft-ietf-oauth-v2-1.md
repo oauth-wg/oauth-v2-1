@@ -2816,7 +2816,7 @@ resource server to distinguish between the two types of access tokens.
 
 Authorization code injection is an attack where the client receives an authorization code from the attacker in its redirect URI instead of the authorization code from the legitimate authorization server. Without protections in place, there is no mechanism by which the client can know that the attack has taken place. Authorization code injection can lead to both the attacker obtaining access to a victim's account, as well as a victim accidentally gaining access to the attacker's account.
 
-### Countermeasures
+#### Countermeasures
 
 To prevent injection of authorization codes into the client, using `code_challenge` and
 `code_verifier` is REQUIRED for clients, and authorization servers MUST enforce
