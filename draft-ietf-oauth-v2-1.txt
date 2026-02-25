@@ -102,9 +102,9 @@ Table of Contents
      3.1.  Authorization Endpoint
      3.2.  Token Endpoint
        3.2.1.  Client Authentication
-       3.2.2.  Token Request
-       3.2.3.  Token Response
-       3.2.4.  Error Response
+       3.2.2.  Token Endpoint Request
+       3.2.3.  Token Endpoint Response
+       3.2.4.  Token Endpoint Error Response
    4.  Grant Types
      4.1.  Authorization Code Grant
        4.1.1.  Authorization Request
@@ -1319,7 +1319,7 @@ Table of Contents
       of refresh tokens can be challenging, while rotation of a single
       set of client credentials is significantly easier.
 
-3.2.2.  Token Request
+3.2.2.  Token Endpoint Request
 
    The client makes a request to the token endpoint by sending the
    following parameters using the form-encoded serialization format per
@@ -1348,7 +1348,8 @@ Table of Contents
  Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
  Content-Type: application/x-www-form-urlencoded
 
- grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+ grant_type=authorization_code
+ &code=SplxlOBeZQQYbYS6WxSbIA
  &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
  &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 
@@ -1362,15 +1363,14 @@ Table of Contents
    Further grant type specific processing rules apply and are specified
    with the respective grant type.
 
-3.2.3.  Token Response
+3.2.3.  Token Endpoint Response
 
    If the access token request is valid and authorized, the
    authorization server issues an access token and optional refresh
    token.
 
-   If the request client authentication failed or is invalid, the
-   authorization server returns an error response as described in
-   Section 3.2.4.
+   If the client authentication failed or is invalid, the authorization
+   server returns an error response as described in Section 3.2.4.
 
    The authorization server issues an access token and optional refresh
    token by creating an HTTP response according to Appendix C.3, using
@@ -1428,11 +1428,11 @@ Table of Contents
    Cache-Control: no-store
 
    {
-     "access_token":"2YotnFZFEjr1zCsicMWpAA",
-     "token_type":"Bearer",
-     "expires_in":3600,
-     "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
-     "example_parameter":"example_value"
+     "access_token": "2YotnFZFEjr1zCsicMWpAA",
+     "token_type": "Bearer",
+     "expires_in": 3600,
+     "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
+     "example_parameter": "example_value"
    }
 
    The client MUST ignore unrecognized value names in the response.  The
@@ -1441,7 +1441,7 @@ Table of Contents
    assumptions about value sizes.  The authorization server SHOULD
    document the size of any value it issues.
 
-3.2.4.  Error Response
+3.2.4.  Token Endpoint Error Response
 
    The authorization server responds with an HTTP 400 (Bad Request)
    status code (unless specified otherwise) and includes the following
@@ -1823,18 +1823,19 @@ Table of Contents
    authorization server will reject a token request with a mismatched
    code_verifier.  See Section 7.5.1 for more details.
 
-4.1.2.1.  Error Response
+4.1.2.1.  Authorization Error Response
 
    If the request fails due to a missing, invalid, or mismatching
    redirect URI, or if the client identifier is missing or invalid, the
-   authorization server SHOULD inform the resource owner of the error
-   and MUST NOT automatically redirect the user agent to the invalid
-   redirect URI.
+   authorization server MUST NOT redirect the user agent to the invalid
+   redirect URI and SHOULD inform the resource owner of the error, for
+   example by displaying a message to the user in their browser.
 
-   An AS MUST reject requests without a code_challenge from public
-   clients, and MUST reject such requests from other clients unless
-   there is reasonable assurance that the client mitigates authorization
-   code injection in other ways.  See Section 7.5.1 for details.
+   An authorization server MUST reject requests without a code_challenge
+   from public clients, and MUST reject such requests from other clients
+   unless there is reasonable assurance that the client mitigates
+   authorization code injection in other ways.  See Section 7.5.1 for
+   details.
 
    If the server does not support the requested code_challenge_method
    transformation, the authorization endpoint MUST return the
@@ -1844,9 +1845,9 @@ Table of Contents
 
    If the resource owner denies the access request or if the request
    fails for reasons other than a missing or invalid redirect URI, the
-   authorization server informs the client by adding the following
-   parameters to the query component of the redirect URI as described by
-   Appendix C.1:
+   authorization server informs the client by redirecting the user agent
+   to the redirect URI and adding the following parameters to the query
+   component of the redirect URI as described by Appendix C.1:
 
    "error":  REQUIRED.  A single ASCII [USASCII] error code from the
       following:
@@ -1901,8 +1902,9 @@ Table of Contents
    "iss":  OPTIONAL.  The identifier of the authorization server.  See
       Section 4.1.2 above for details.
 
-   For example, the authorization server redirects the user agent by
-   sending the following HTTP response:
+   For example, the authorization server indicates the request was
+   denied by redirecting the user agent with the following HTTP
+   response:
 
  HTTP/1.1 302 Found
  Location: https://client.example.com/cb?error=access_denied
