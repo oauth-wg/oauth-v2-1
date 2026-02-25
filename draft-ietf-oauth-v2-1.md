@@ -1190,6 +1190,9 @@ The authorization server MUST ignore unrecognized request parameters sent to the
 
 Request and response parameters
 defined by this specification MUST NOT be included more than once.
+This requirement also applies to parameters defined by extensions
+unless the extension explicitly defines otherwise for a specific
+parameter.
 Parameters sent without a value MUST be treated as if they were
 omitted from the request.
 
@@ -1223,6 +1226,9 @@ The authorization server MUST ignore unrecognized request parameters sent to the
 Parameters sent without a value MUST be treated as if they were
 omitted from the request. Request and response parameters
 defined by this specification MUST NOT be included more than once.
+This requirement also applies to parameters defined by extensions
+unless the extension explicitly defines otherwise for a specific
+parameter.
 
 Authorization servers that wish to support browser-based applications
 (for example, applications running exclusively in client-side JavaScript without
