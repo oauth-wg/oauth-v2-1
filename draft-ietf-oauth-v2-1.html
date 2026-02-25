@@ -5036,9 +5036,9 @@ are described by OWASP <span>[<a href="#owasp_redir" class="cite xref">owasp_red
 <p id="section-7.12.2-1">Just as with clients, attackers could try to utilize a user's trust in
 the authorization server (and its URL in particular) for performing
 phishing attacks. OAuth authorization servers regularly redirect users
-to other web sites (the clients), but must do so in a safe way.<a href="#section-7.12.2-1" class="pilcrow">¶</a></p>
+to other web sites (the clients), but must do so safely.<a href="#section-7.12.2-1" class="pilcrow">¶</a></p>
 <p id="section-7.12.2-2"><a href="#authorization-code-error-response" class="auto internal xref">Section 4.1.2.1</a> already prevents open redirects by
-stating that the AS MUST NOT automatically redirect the user agent in case
+stating that the authorization server MUST NOT automatically redirect the user agent in case
 of an invalid combination of <code>client_id</code> and <code>redirect_uri</code>.<a href="#section-7.12.2-2" class="pilcrow">¶</a></p>
 <p id="section-7.12.2-3">However, an attacker could also utilize a correctly registered
 redirect URI to perform phishing attacks. The attacker could, for
@@ -5047,14 +5047,14 @@ and execute one of the following attacks:<a href="#section-7.12.2-3" class="pilc
 <ol start="1" type="1" class="normal type-1" id="section-7.12.2-4">
 <li id="section-7.12.2-4.1">
               <p id="section-7.12.2-4.1.1">Intentionally send an erroneous authorization request, e.g., by
- using an invalid scope value, thus instructing the AS to redirect the
- user-agent to its phishing site.<a href="#section-7.12.2-4.1.1" class="pilcrow">¶</a></p>
+ using an invalid scope value, thus instructing the authorization server to redirect the
+ user agent to its phishing site.<a href="#section-7.12.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-7.12.2-4.2">
               <p id="section-7.12.2-4.2.1">Intentionally send a valid authorization request with <code>client_id</code>
  and <code>redirect_uri</code> controlled by the attacker. After the user authenticates,
- the AS prompts the user to provide consent to the request. If the user
- notices an issue with the request and declines the request, the AS still
+ the authorization server prompts the user to provide consent to the request. If the user
+ notices an issue with the request and declines the request, the authorization server still
  redirects the user agent to the phishing site. In this case, the user agent
  will be redirected to the phishing site regardless of the action taken by
  the user.<a href="#section-7.12.2-4.2.1" class="pilcrow">¶</a></p>
@@ -5062,19 +5062,19 @@ and execute one of the following attacks:<a href="#section-7.12.2-3" class="pilc
             <li id="section-7.12.2-4.3">
               <p id="section-7.12.2-4.3.1">Intentionally send a valid silent authentication request (<code>prompt=none</code>)
  with <code>client_id</code> and <code>redirect_uri</code> controlled by the attacker. In this case,
- the AS will automatically redirect the user agent to the phishing site.<a href="#section-7.12.2-4.3.1" class="pilcrow">¶</a></p>
+ the authorization server will automatically redirect the user agent to the phishing site.<a href="#section-7.12.2-4.3.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
-<p id="section-7.12.2-5">The AS MUST take precautions to prevent these threats. The AS MUST always
+<p id="section-7.12.2-5">The authorization server MUST take precautions to prevent these threats. The authorization server MUST always
 authenticate the user first and, with the exception of the silent authentication
 use case, prompt the user for credentials when needed, before redirecting the
-user. Based on its risk assessment, the AS needs to decide whether it can trust
-the redirect URI or not. It could take into account  URI analytics done
+user. Based on its risk assessment, the authorization server needs to decide whether it can trust
+the redirect URI or not. It could take into account URI analytics done
 internally or through some external service to evaluate the credibility and
 trustworthiness content behind the URI, and the source of the redirect URI and
 other client data.<a href="#section-7.12.2-5" class="pilcrow">¶</a></p>
-<p id="section-7.12.2-6">The AS SHOULD only automatically redirect the user agent if it trusts the
-redirect URI.  If the URI is not trusted, the AS MAY inform the user and rely on
+<p id="section-7.12.2-6">The authorization server SHOULD only automatically redirect the user agent if it trusts the
+redirect URI.  If the URI is not trusted, the authorization server MAY inform the user and rely on
 the user to make the correct decision.<a href="#section-7.12.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
