@@ -1745,7 +1745,7 @@ needs to evaluate the policies, and only needs to validate the access token.
 This simplification applies when the application is acting on behalf of a resource
 owner, or on behalf of itself.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">OAuth is an authorization protocol, not an authentication protocol, as OAuth does not define the necessary components to achieve user authentication.
-An authentication protocol is necessary if the goal is to authenticate users. An example is OpenID Connect <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span>, which builds on OAuth to provide the security
+An authentication protocol is necessary if the goal is to authenticate users. An example is OpenID Connect <span>[<a href="#OpenID.Connect" class="cite xref">OpenID.Connect</a>]</span>, which builds on OAuth to provide the security
 characteristics and necessary components required of an authentication protocol.<a href="#section-1-7" class="pilcrow">¶</a></p>
 <p id="section-1-8">The
 access token represents the authorization granted to the client. It is a common
@@ -2135,7 +2135,7 @@ The resource server is then responsible for enforcing scopes when presented
 with a limited-scope access token.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.4.1-3">OAuth does not define any scope values, instead scopes are defined by the
 authorization server or by extensions or profiles of OAuth. One such extension
-that defines scopes is <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span>, which defines a set of scopes that provide
+that defines scopes is <span>[<a href="#OpenID.Connect" class="cite xref">OpenID.Connect</a>]</span>, which defines a set of scopes that provide
 granular access to a user's profile information. It is recommended to avoid
 defining custom scopes that conflict with scopes from known extensions.<a href="#section-1.4.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.4.1-4">To request a limited-scope access token, the client uses the <code>scope</code>
@@ -2598,7 +2598,7 @@ form of client authentication meeting its security requirements
 client authentication such as mTLS <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span> or using signed JWTs
 ("Private Key JWT") in accordance with <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span>, <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>,
 and their update <span>[<a href="#I-D.ietf-oauth-rfc7523bis" class="cite xref">I-D.ietf-oauth-rfc7523bis</a>]</span>
-(defined in <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span> as the client authentication method <code>private_key_jwt</code>).
+(defined in <span>[<a href="#OpenID.Connect" class="cite xref">OpenID.Connect</a>]</span> as the client authentication method <code>private_key_jwt</code>).
 When such methods for client authentication are used, authorization
 servers do not need to store sensitive symmetric keys, making these
 methods more robust against a number of attacks.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
@@ -3236,7 +3236,7 @@ the client wants to use the authorization code flow.<a href="#section-4.1.1-4.2.
 values, where the order of values does not matter (e.g., response
 type <code>a b</code> is the same as <code>b a</code>).  The meaning of such composite
 response types is defined by their respective specifications.<a href="#section-4.1.1-5" class="pilcrow">¶</a></p>
-<p id="section-4.1.1-6">Some extension response types are defined by <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span>.<a href="#section-4.1.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.1.1-6">Some extension response types are defined by <span>[<a href="#OpenID.Connect" class="cite xref">OpenID.Connect</a>]</span>.<a href="#section-4.1.1-6" class="pilcrow">¶</a></p>
 <p id="section-4.1.1-7">If an authorization request is missing the <code>response_type</code> parameter,
 or if the response type is not understood, the authorization server
 MUST return an error response as described in <a href="#authorization-code-error-response" class="auto internal xref">Section 4.1.2.1</a>.<a href="#section-4.1.1-7" class="pilcrow">¶</a></p>
@@ -5118,8 +5118,8 @@ correct issuer. Clients MUST ensure that the subsequent access token request,
 if applicable, is sent to the same issuer. The issuer serves, via the associated
 metadata, as an abstract identifier for the combination of the authorization
 endpoint and token endpoint that are to be used in the flow. If an issuer identifier
-is not available, for example, if neither OAuth metadata <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> nor OpenID
-Connect Discovery <span>[<a href="#OpenID.Discovery" class="cite xref">OpenID.Discovery</a>]</span> are used, a different unique identifier
+is not available, for example, if neither OAuth 2.0 Authorization Server Metadata <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span>
+nor OpenID Connect Discovery <span>[<a href="#OpenID.Discovery" class="cite xref">OpenID.Discovery</a>]</span> are used, a different unique identifier
 for this tuple or the tuple itself can be used instead. For brevity of presentation,
 such a deployment-specific identifier will be subsumed under the issuer (or
 issuer identifier) in the following.<a href="#section-7.14-3" class="pilcrow">¶</a></p>
@@ -5658,7 +5658,7 @@ This behavior was indicated by clients using the <code>response_type=token</code
 This value for the <code>response_type</code> parameter is no longer defined in OAuth 2.1.<a href="#section-10.1-2" class="pilcrow">¶</a></p>
 <p id="section-10.1-3">Removal of <code>response_type=token</code> does not have an effect on other extension
 response types returning other artifacts from the authorization endpoint,
-for example, <code>response_type=id_token</code> defined by <span>[<a href="#OpenID" class="cite xref">OpenID</a>]</span>.<a href="#section-10.1-3" class="pilcrow">¶</a></p>
+for example, <code>response_type=id_token</code> defined by <span>[<a href="#OpenID.Connect" class="cite xref">OpenID.Connect</a>]</span>.<a href="#section-10.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="redirect-uri-in-token-request">
@@ -5832,7 +5832,7 @@ work is based upon. No changes to those registries are required by this specific
         <dd>
 <span class="refAuthor">Huff, J.</span>, <span class="refAuthor">Schlacht, D.</span>, <span class="refAuthor">Nadalin, A.</span>, <span class="refAuthor">Simmons, J.</span>, <span class="refAuthor">Rosenberg, P.</span>, <span class="refAuthor">Madsen, P.</span>, <span class="refAuthor">Ace, T.</span>, <span class="refAuthor">Rickelton-Abdi, C.</span>, and <span class="refAuthor">B. Boyer</span>, <span class="refTitle">"Online Multimedia Authorization Protocol: An Industry Standard for Authorized Access to Internet Multimedia Resources"</span>, <time datetime="2012-08" class="refDate">August 2012</time>, <span>&lt;<a href="https://www.svta.org/product/online-multimedia-authorization-protocol/">https://www.svta.org/product/online-multimedia-authorization-protocol/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="OpenID">[OpenID]</dt>
+<dt id="OpenID.Connect">[OpenID.Connect]</dt>
         <dd>
 <span class="refAuthor">Sakimura, N.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">de Medeiros, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"OpenID Connect Core 1.0 incorporating errata set 2"</span>, <time datetime="2023-12" class="refDate">December 2023</time>, <span>&lt;<a href="https://openid.net/specs/openid-connect-core-1_0.html">https://openid.net/specs/openid-connect-core-1_0.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
