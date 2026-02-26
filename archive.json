@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-24T00:19:59.746204+00:00",
+  "timestamp": "2026-02-26T00:17:49.899340+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -122,6 +122,16 @@
       "name": "ietf-124",
       "description": "",
       "color": "82d217"
+    },
+    {
+      "name": "ietf-125",
+      "description": "",
+      "color": "59e7ef"
+    },
+    {
+      "name": "ietf-126",
+      "description": "",
+      "color": "3a7e42"
     }
   ],
   "issues": [
@@ -4382,7 +4392,7 @@
       "labels": [],
       "body": "The following text snippets seem like a `code_challenge` is always required in the authorization request (for authZ code flows).\r\n\r\nDescription of the authZ code flow figure:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1468-L1470\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1485-L1487\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1493-L1494\r\n\r\nSection 4.3.1:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1863-L1865\r\n\r\nWhereas various other places, most prominently Section 7.5.2, state that `code_challenge` is (only) required _unless_ some conditions are met:\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2743-L2750",
       "createdAt": "2024-02-28T09:42:36Z",
-      "updatedAt": "2024-05-21T07:23:16Z",
+      "updatedAt": "2026-02-25T21:17:00Z",
       "closedAt": null,
       "comments": [
         {
@@ -4398,6 +4408,13 @@
           "body": "In that case, my take would be to be very explicit in Section 7.5.2 about this being an edge case. And maybe add some sentence saying ASs are still recommended to require `code_challenge` and `code_verifier` even if these conditions are met.",
           "createdAt": "2024-05-21T07:23:15Z",
           "updatedAt": "2024-05-21T07:23:15Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This comment was written based on draft -10. I believe the text has been improved since then especially in the current editor's draft which will be published as draft -15 shortly:\n\nhttps://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-4.1.1",
+          "createdAt": "2026-02-25T21:17:00Z",
+          "updatedAt": "2026-02-25T21:17:00Z"
         }
       ]
     },
@@ -4773,16 +4790,24 @@
       "id": "I_kwDODkfq5s6Q_rLK",
       "title": "Section 4.1.2.1 Error Response is unclear on how to handle an Invalid Authorization Endpoint request",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/184",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dfcoffin",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "The first paragraph of **Section 4.1.2.1. Error Response** indicates that the authorization server **SHOULD** inform the resource owner if an invalid or malformed request is attempted but does not indicate how this should be done.  It also states the authorization server **MUST NOT** automatically redirect the user-agent to the invalid redirection URI but does not indicate what to respond to the requestor other than in an example at the bottom of the section, which displayed an example of an \"access_denied\" response with \"client.example.com\" as the host value.\r\n\r\nI have seen implementations that send the \"access_denied\" as a 302 response using the redirect_uri value as the host element of the \"Location\" header in place of client.example.com.  They also want to use status code 400 for all other errors based on **Section 5.2. Error Response** of RFC 6749.\r\n\r\nShould the titles of the Error Response sections include the referenced Endpoint?  For example, \"4.1.2.1. Authorization Error Response\" and \"5.2. Token Error Response\"?\r\n\r\nShould the Authorization Endpoint and the Token Endpoint use the same status code for errors (i.e., 400 with the error in the body), which would simplify Error Response and eliminate the possibility of transmitting information to the redirect_uri value?\r\n\r\n",
       "createdAt": "2024-07-26T16:55:54Z",
-      "updatedAt": "2024-07-26T17:06:53Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-25T21:14:59Z",
+      "closedAt": "2026-02-25T21:14:08Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Thank you. I've updated some of the language used as well as the headers as you suggested.\n\nThe authorization endpoint should not use a 400 response code since the authorization endpoint is visited by the browser rather than the OAuth client.",
+          "createdAt": "2026-02-25T21:14:56Z",
+          "updatedAt": "2026-02-25T21:14:56Z"
+        }
+      ]
     },
     {
       "number": 186,
@@ -4964,7 +4989,7 @@
       "id": "I_kwDODkfq5s6iAtMa",
       "title": "rework description of access token ",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/192",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -4973,9 +4998,17 @@
       "labels": [],
       "body": "see 1.4\r\n\r\n> Access tokens represent specific scopes and durations of access, granted by the resource owner, and enforced by the resource server and authorization server.\r\n\r\n- separate out what is done by AS vs RS\r\n- add in expiry language",
       "createdAt": "2024-12-04T15:23:26Z",
-      "updatedAt": "2024-12-04T15:23:27Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-25T20:51:31Z",
+      "closedAt": "2026-02-25T20:51:31Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I believe this has been completed in the commits above",
+          "createdAt": "2026-02-25T20:51:31Z",
+          "updatedAt": "2026-02-25T20:51:31Z"
+        }
+      ]
     },
     {
       "number": 193,
@@ -4998,16 +5031,24 @@
       "id": "I_kwDODkfq5s6jSg1R",
       "title": "Reference Errors in Section 4.1.1",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/194",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mrcaidev",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "There are two reference errors in the following paragraph in [Section 4.1.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-4.1.1):\r\n\r\n> Clients MUST use code_challenge and code_verifier and authorization servers MUST enforce their use except under the conditions described in [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#authorization_codes). In this case, using and enforcing code_challenge and code_verifier as described in the following is still RECOMMENDED.\r\n\r\n## 1. No Exception Condition Given in Section 7.5.1\r\n\r\n> Clients MUST use code_challenge and code_verifier and authorization servers MUST enforce their use except under the conditions described in [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#authorization_codes).\r\n\r\n[Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-12#section-7.5.1) no longer justifies the exception condition, which was only present in [Draft v1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-01#name-authorization-codes):\r\n\r\n> * The client is a confidential client.\r\n>\r\n> * In the specific deployment and the specific request, there is reasonable assurance for authorization server that the client implements the OpenID Connect nonce mechanism properly.\r\n\r\nIf this exception condition was removed on purpose, then code_challenge should be marked as REQUIRED only, not REQUIRED or RECOMMENDED as marked in Section 4.1.1. If this exception was meant to be moved to somewhere else, the reference link should be updated.\r\n\r\n## 2. There is No \"the following\"\r\n\r\n> In this case, using and enforcing code_challenge and code_verifier as described in the following is still RECOMMENDED.\r\n\r\nHowever, \"the following\" no longer describes the generation & transformation process of code_challenge and code_verfier, which was also only present in [v1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-01#name-authorization-request).\r\n\r\nGenerally speaking, there is currently some contradictions about the requirements of code_challenge.\r\n",
       "createdAt": "2024-12-14T03:59:11Z",
-      "updatedAt": "2024-12-14T03:59:11Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-25T20:50:06Z",
+      "closedAt": "2026-02-25T20:49:19Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "The reference to Section 7.5.1 was fixed in 0b5c21b8494af8cd038002f0149b86369b73c89f bringing the recommendations into that section (they were previously in 7.5.2)\n\nThe commit above fixes \"the following\"",
+          "createdAt": "2026-02-25T20:49:57Z",
+          "updatedAt": "2026-02-25T20:49:57Z"
+        }
+      ]
     },
     {
       "number": 200,
@@ -5023,9 +5064,17 @@
       "labels": [],
       "body": "reorganize access token threats section",
       "createdAt": "2024-12-19T15:41:33Z",
-      "updatedAt": "2024-12-19T15:41:35Z",
+      "updatedAt": "2026-02-25T20:44:47Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Did you have an idea for what you wanted to reorganize here?",
+          "createdAt": "2026-02-25T20:44:47Z",
+          "updatedAt": "2026-02-25T20:44:47Z"
+        }
+      ]
     },
     {
       "number": 201,
@@ -5164,16 +5213,24 @@
       "id": "I_kwDODkfq5s608hIL",
       "title": "Refresh Tokens",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/211",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "The draft has extensive reference to access tokens in the security considerations section, but appears silent on refresh tokens. Consider adding a security considerations for Refresh tokens that references the Security BCP (RFC9700). ",
       "createdAt": "2025-05-02T11:08:45Z",
-      "updatedAt": "2025-11-02T22:17:53Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-25T20:43:02Z",
+      "closedAt": "2026-02-25T20:43:02Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "All the refresh token recommendations from RFC9700 were incorporated into the \"Refresh Token Grant\" section https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1#section-4.3\n\n",
+          "createdAt": "2026-02-25T20:43:02Z",
+          "updatedAt": "2026-02-25T20:43:02Z"
+        }
+      ]
     },
     {
       "number": 212,
@@ -5489,7 +5546,7 @@
       "id": "I_kwDODkfq5s7LwjdR",
       "title": "Clarify the PKCE mechanism",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/220",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -5498,8 +5555,8 @@
       "labels": [],
       "body": "intro paragraph in the 4.1.1 (2nd paragraph) define code_verifier and code_challenge and refer to a new section on how it works and reference the exception for OpenID Connect\n\nchange \n\n```code_challenge\":\nREQUIRED or RECOMMENDED (see [Section 7.5.1](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#authorization_codes)). Code challenge.```\n\nto be REQUIRED unless ....  The code_challenge as described in XXX",
       "createdAt": "2025-09-15T15:37:52Z",
-      "updatedAt": "2025-12-05T11:25:27Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-25T20:24:41Z",
+      "closedAt": "2026-02-25T20:24:41Z",
       "comments": [
         {
           "author": "dickhardt",
@@ -5507,6 +5564,13 @@
           "body": "@aaronpk @tlodderstedt  - is there a reason we don't recommend code_challenge_method=S256 ???",
           "createdAt": "2025-12-05T11:25:27Z",
           "updatedAt": "2025-12-05T11:25:27Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This was updated in draft 14 https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1#section-4.1.1\n\nSee #236 for the question of S256 vs plain",
+          "createdAt": "2026-02-25T20:24:41Z",
+          "updatedAt": "2026-02-25T20:24:41Z"
         }
       ]
     },
@@ -5555,16 +5619,24 @@
       "id": "I_kwDODkfq5s7WbmEq",
       "title": "Sender-constrained refresh tokens examples improvement",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/232",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sakimura",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "In section 4.3.1, the current text says: \n\n> Sender-constrained refresh tokens: the authorization server cryptographically binds the refresh token to a certain client instance, e.g., by utilizing DPoP [[RFC9449](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC9449)] or mTLS [[RFC8705](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC8705)].\n\n\nNow, according to RFC 6749 section 10.4 stats: \n\n> The authorization server MUST NOT issue refresh tokens to clients that cannot protect the confidentiality of client credentials\n\nSo, in the case of a confidential client, all refresh tokens are, in fact, sender-constrained. \nI proposed to add this fact to the text. for example, changing e.g. to\n\ne.g., issueing only to a confidential client as in [RFC6749], by utilizing DPoP [[RFC9449](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC9449)] or mTLS [[RFC8705](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-14.html#RFC8705)].",
       "createdAt": "2025-11-06T20:41:45Z",
-      "updatedAt": "2025-11-07T21:12:45Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-02-25T20:21:24Z",
+      "closedAt": "2026-02-25T20:21:24Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Right before that sentence is this:\n\n> Authorization servers MUST utilize one of these methods to detect refresh token replay by malicious actors for public clients\n\nSo this already only applies to public clients. ",
+          "createdAt": "2026-02-25T20:21:24Z",
+          "updatedAt": "2026-02-25T20:21:24Z"
+        }
+      ]
     },
     {
       "number": 233,
@@ -5575,10 +5647,12 @@
       "author": "will-bartlett",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf-125"
+      ],
       "body": "OAuth 2.1 incorporates RFC 9207's issuer parameter optionally. MCP reveals a rapidly growing use case where mitigating this attack is necessary. See discussion in https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1721#issuecomment-3555689564. \n\nOptional security mitigations add complexity compared to mandatory security mitigations. I didn't see any discussion of optional vs mandatory in #46 or the IETF minutes. Can we make this mitigation mandatory in OAuth 2.1?",
       "createdAt": "2025-11-20T05:18:04Z",
-      "updatedAt": "2025-12-18T19:04:23Z",
+      "updatedAt": "2026-02-25T20:17:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -5601,6 +5675,13 @@
           "body": "PKCE affects far more than just native apps... authorization code injection is also possible with server-side confidential clients, it's just that the origins of PKCE was native apps. The text in RFC7636 only talks about authorization code interception because the injection attack wasn't thought of at the time. That has all been fixed in RFC9700 though, which is why PKCE is part of OAuth 2.1.\n\nI do personally agree that a large number of OAuth deployments/ecosystems will benefit from the `iss` response parameter. There was a good presentation at the last OAuth Security Workshop about how broad this problem is. I also agree it is the easier way to solve the problem vs using different redirect URIs per authorization servers. I would be in favor of making it mandatory, I am just trying to describe the challenges I see in doing so.\n\nUltimately this will need some broader feedback from the working group if we want to make it mandatory in 2.1. I'd like to not wait until the March meeting to discuss, so we should either take this to the mailing list or schedule an interim meeting for OAuth 2.1 between now and March.",
           "createdAt": "2025-12-18T19:04:23Z",
           "updatedAt": "2025-12-18T19:04:23Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Well here we are 2 months later and the March meeting is right around the corner, so I'll add it to the list to discuss then.",
+          "createdAt": "2026-02-25T20:17:16Z",
+          "updatedAt": "2026-02-25T20:17:16Z"
         }
       ]
     },
@@ -5609,15 +5690,15 @@
       "id": "I_kwDODkfq5s7cv6uL",
       "title": "Ensure open redirector language from RFC9700 is referenced",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/234",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "https://datatracker.ietf.org/doc/html/rfc9700#section-4.11.2",
       "createdAt": "2025-12-07T14:22:13Z",
-      "updatedAt": "2025-12-07T14:22:13Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-25T20:12:29Z",
+      "closedAt": "2026-02-25T20:12:29Z",
       "comments": []
     },
     {
@@ -5645,10 +5726,12 @@
       "author": "corriganjeff",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf-125"
+      ],
       "body": "I recently noticed that \"plain\" mode is still a supported PKCE type in the OAuth 2.1 draft. I think 2.1 is a good opportunity to deprecate this. I had a sidebar with Aaron on the topic and he recommended creating an issue to open the idea up to further discussion. Here is a more formal description highlighting why PKCE plain mode doesn't make sense to continue supporting in 2.1\n\n\n---\n\n# OAuth 2.1 Issue: Plain Code Challenge Method Creates Unverifiable Downgrade Attack Vector\n\n## Summary\n\nThe current OAuth 2.1 draft (version 14) permits authorization servers to support the `plain` code challenge method for clients that \"cannot support S256 for some technical reason\" (Section 4.1.1). This creates an **unverifiable and exploitable downgrade attack vector** that undermines PKCE security. Additionally, new specifications building on OAuth 2.1 are inheriting this language and perhaps without proper assessment, propagating the vulnerability to emerging protocols or implementations.\n\n**Recommendation:** OAuth 2.1 should **forbid** authorization servers from supporting `plain` code challenge method entirely.\n\n---\n\n## Current State in OAuth 2.1 Draft-14\n\n**Section 4.1.1** states:\n\n> \"If the client is capable of using S256, it MUST use S256, as S256 is Mandatory To Implement (MTI) on the server.\"\n\n> \"Clients are permitted to use `plain` only if they cannot support S256 for some technical reason, for example constrained environments that do not have a hashing function available\"\n\n> \"Clients SHOULD use code challenge methods that do not expose the code_verifier in the authorization request. Otherwise, attackers that can read the authorization request...can break the security provided by this mechanism. Currently, S256 is the only such method.\"\n\n**Analysis:** While the draft discourages `plain` mode and acknowledges its security risks, it still permits authorization servers to support it for \"technically incapable\" clients.\n\n---\n\n## The Problem: Unverifiable Capability Claims Enable Downgrade Attacks\n\n### Attack Vector\n\nThe \"technical capability\" exception is **unverifiable** by the authorization server, creating a downgrade attack surface:\n\n```\n1. Legitimate client initiates authorization with S256\n   \u2192 code_challenge_method=S256\n   \u2192 code_challenge=<SHA256 hash>\n\n2. Network attacker (A4 per RFC 9700) intercepts request\n\n3. Attacker modifies request:\n   \u2192 code_challenge_method=plain\n   \u2192 code_challenge=<original code_verifier>\n\n4. Authorization server receives modified request with plain mode\n\n5. Server cannot verify if client is \"technically incapable\" of S256\n\n6. Server accepts plain mode (spec permits it for constrained clients)\n\n7. PKCE protection is defeated\n```\n\n### Why This Works\n\nThe authorization server has **no mechanism** to verify:\n- Whether the client genuinely lacks SHA-256 capability\n- Whether this request was downgraded by an attacker\n- Whether to reject the plain mode attempt\n\nThe attacker simply claims (via the modified request) that the client is \"technically incapable\" and the server must accept it or risk breaking legitimate constrained devices.\n\n### Attacker Model\n\nThis exploits **Attacker A4** (RFC 9700): an adversary who can read and modify authorization requests. Real-world scenarios include:\n- TLS interception (corporate proxies, compromised CAs, malicious WiFi)\n- Browser extensions or malware\n- Compromised network infrastructure\n- Man-in-the-middle attacks on clients not using certificate pinning\n\n---\n\n## Real-World Impact: Propagation to New Specifications\n\n### Case Study: Model Context Protocol (MCP)\n\nThe [Model Context Protocol (MCP)](https://modelcontextprotocol.io/specification/draft/basic/authorization) is a new specification for AI agent integration. MCP references OAuth 2.1 for authorization and includes language derived from OAuth 2.1 draft:\n\n> \"MCP clients **MUST** use the `S256` code challenge method **when technically capable**, as required by OAuth 2.1 Section 4.1.1.\"\n\n**Problem:** MCP inherited the \"when technically capable\" exception from OAuth 2.1. \n\n**MCP Client Profile:**\n- Developer tools (IDEs like VS Code, CLIs like Claude Code)\n- AI-enabled consumer apps\n- Runs on modern computers/servers/devices\n- Requires contemporary runtime environments (Python 3.10+, Node 18+, Rust, Go)\n- All of these platforms have native SHA-256 support in standard libraries\n\n**Reality:** There are **likely zero legitimate MCP clients** that cannot perform SHA-256. The plain mode exception was inherited by the references in the OAuth 2.1 draft\n\n**Result:** MCP now has an unnecessary downgrade attack vector inherited from OAuth 2.1's permissive language.\n\n### Broader Pattern\n\nOAuth 2.1 is positioned as the \"current best practice\" for OAuth. New specifications will reference OAuth 2.1 and inherit its language, often without deeply analyzing whether exceptions make sense in their specific context. By permitting `plain` mode in OAuth 2.1, we create a template that propagates this vulnerability to future protocols.\n\n---\n\n## Technical Analysis: The \"Constrained Device\" Assumption Is Outdated\n\n### Historical Context\n\nThe `plain` code challenge method was included in RFC 7636 (2015) for devices that might lack cryptographic hashing functions. This was a reasonable assumption in 2015.\n\n### 2026 Reality\n\nAny device capable of implementing OAuth 2.1 authorization code flow should necessarily also support SHA-256:\n\n1. **TLS Requirement:**\n   - OAuth 2.1 requires TLS 1.2+ for all communications\n   - TLS 1.2 requires SHA-256 for certificate validation (RFC 5246)\n   - TLS 1.3 requires SHA-256 for handshake (RFC 8446)\n   - **Conclusion:** If a device can make HTTPS requests, it has SHA-256\n\n2. **Platform Support:**\n   - Python: `hashlib.sha256()` - standard library since 2.5 (2006)\n   - JavaScript: `crypto.subtle.digest('SHA-256')` - Web Crypto API (2015+)\n   - Go: `crypto/sha256` - standard library since 1.0 (2012)\n   - Rust: `sha2` crate - universally available\n   - Java: `MessageDigest.getInstance(\"SHA-256\")` - since Java 1.4 (2002)\n   - C/C++: OpenSSL, mbedTLS - available on all platforms\n\n3. **IoT and Embedded Devices:**\n   - Modern IoT devices have hardware SHA-256 accelerators for TLS\n   - Devices without SHA-256 support cannot implement TLS 1.2+\n   - Such devices are incompatible with OAuth 2.1's TLS requirements\n\n4. **Legacy Devices:**\n   - Devices genuinely lacking SHA-256 (e.g., 2010-era devices with only TLS 1.0/1.1) are already incompatible with OAuth 2.1\n   - Industry precedent: TLS 1.0/1.1 deprecated in 2020, SHA-1 certificates deprecated, 3G networks shutdown\n   - Security requirements evolve; old devices become unsupported\n\n**Conclusion:** The \"constrained environment\" exception has **no contemporary use case** for OAuth 2.1 compliant clients.\n\n---\n\n## Compatibility Considerations\n\n### Impact of Forbidding Plain Mode\n\n**Existing Authorized Sessions:**\n- Refresh tokens do **not** use PKCE\n- Existing logged-in devices continue working (longer term, based on implementation details)\n- Only **new** authorization flows are affected\n\n**Migration Path for Legacy Devices:**\nAuthorization providers concerned about legacy devices have several options outside the OAuth 2.1 specification:\n\n1. **Extended Refresh Tokens:**\n   - Issue longer-lived refresh tokens before deprecation\n   - Most users stay logged in throughout device lifetime\n   - Natural attrition as devices are replaced\n\n2. **Device Authorization Grant (RFC 8628):**\n   - Does not require PKCE at all\n   - Better UX for constrained devices (authenticate on phone/computer)\n   - Industry standard (Netflix, YouTube, Spotify, etc.)\n   - Could require a client firmware update (may not be possible for frozen legacy devices)\n\n3. **Accept Breakage:**\n   - Industry precedent for deprecating insecure protocols\n   - Old devices eventually stop working (acceptable outcome)\n   - User communication: \"Please upgrade your device\"\n\n4. **Out-of-Spec Legacy Support:**\n   - Deployments with specific legacy requirements can run isolated legacy endpoints\n   - Not documented in OAuth 2.1 specification\n   - Each implementor evaluates their own risk/compatibility trade-offs\n   - Avoids standardizing vulnerable patterns\n   -  e.g. continue supporting OAuth 2.0 authorization & token flows for minor subset of known scenarios during a sunset timeframe\n\n### Precedent for Breaking Changes\n\n- **TLS 1.0/1.1:** Deprecated 2020 - old devices stopped working\n- **SHA-1 Certificates:** Deprecated 2017 - old devices can't connect\n- **3G Networks:** Shutdown 2022 - old phones stopped working, connected cars, etc.\n- **Adobe Flash:** End-of-life 2020 - old content inaccessible\n- **SSLv3:** Immediate deprecation after POODLE (security emergency)\n\nSecurity requirements evolve. OAuth 2.1 has an opportunity to establish a strong security baseline rather than carrying forward historical compromises.\n\n---\n\n## Recommendation\n\n### Proposed Specification Change\n(feel free to modify while keeping the intent intact)\n\n**Current Language (OAuth 2.1 Draft-14, Section 4.1.1):**\n\n> \"If the client is capable of using S256, it MUST use S256, as S256 is Mandatory To Implement (MTI) on the server.\"\n>\n> \"Clients are permitted to use `plain` only if they cannot support S256 for some technical reason\"\n\n**Proposed Language:**\n\n> \"Clients MUST use the `S256` code challenge method. Authorization servers MUST support `S256` and MUST NOT support `plain`.\"\n\n**Additional Security Consideration (Section 7):**\n\n> **7.X Plain Code Challenge Method**\n>\n> The `plain` code challenge method, defined in RFC 7636, is explicitly forbidden in OAuth 2.1. The `plain` method offers no protection against authorization code interception by attackers who can read the authorization request (Attacker A4 in RFC 9700), as the code verifier is transmitted in plaintext in the authorization request.\n>\n> Historical arguments for supporting `plain` mode (devices lacking cryptographic hashing capabilities) are obsoleted by OAuth 2.1's requirement for TLS 1.2+, which mandates SHA-256 support for certificate validation. Any device capable of implementing OAuth 2.1 necessarily supports SHA-256.\n>\n> Authorization servers that support `plain` code challenge method create an unverifiable downgrade attack vector, as servers cannot distinguish legitimate constrained clients from attacker-modified requests claiming to be constrained.\n>\n> Deployments with existing clients that cannot support S256 SHOULD issue extended-lifetime refresh tokens before discontinuing support for legacy authorization methods, as the refresh token grant (Section 4.X) does not require PKCE.\n\n---\n\n## Benefits of This Change\n\n1. **Eliminates Downgrade Attack Vector:**\n   - No ambiguity about \"technical capability\"\n   - Authorization servers can safely reject any `plain` requests\n   - Strengthens PKCE protection against A4 attackers\n\n2. **Provides Clear Guidance for New Specifications:**\n   - New protocols (like MCP) referencing OAuth 2.1 inherit secure defaults\n   - No need to evaluate \"constrained device\" exceptions for modern contexts\n   - Reduces spec implementor inheritance of insecure patterns\n\n3. **Simplifies Implementation:**\n   - Authorization servers don't need to implement or maintain `plain` mode support\n   - Reduces code complexity and attack surface\n   \n4. **Future-Proofs the Specification:**\n   - Aligns OAuth 2.1 with contemporary security requirements\n   - Sets strong baseline for next decade of OAuth usage\n   - Avoids lock-in to legacy compromises\n\n5. **Interoperability on Security Posture:**\n   - All OAuth 2.1 compliant servers have same PKCE requirements\n   - No fragmentation between \"strict\" and \"permissive\" implementations\n   - Clear conformance criteria\n\n---\n\n## References\n\n- **OAuth 2.1 Draft-14:** https://datatracker.ietf.org/doc/draft-ietf-oauth-v2-1/14/\n- **RFC 7636 (PKCE):** https://www.rfc-editor.org/rfc/rfc7636.html\n- **RFC 9700 (OAuth Security BCP):** https://www.rfc-editor.org/rfc/rfc9700.html\n- **MCP Authorization Spec:** https://modelcontextprotocol.io/specification/draft/basic/authorization\n- **RFC 8628 (Device Authorization Grant):** https://www.rfc-editor.org/rfc/rfc8628.html\n- **TLS 1.2 (RFC 5246):** https://www.rfc-editor.org/rfc/rfc5246.html\n- **TLS 1.3 (RFC 8446):** https://www.rfc-editor.org/rfc/rfc8446.html\n- **RFC 7568 - Deprecating Secure Sockets Layer Version 3.0]:** (https://datatracker.ietf.org/doc/html/rfc7568)\n",
       "createdAt": "2026-01-13T17:57:32Z",
-      "updatedAt": "2026-01-13T23:08:01Z",
+      "updatedAt": "2026-02-25T20:05:00Z",
       "closedAt": null,
       "comments": [
         {
@@ -10233,24 +10316,26 @@
       "id": "PR_kwDODkfq5s6vnJ9x",
       "title": "Change all references from OpenID to OpenID Connect",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/229",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "adeinega",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Proposed changes for https://github.com/oauth-wg/oauth-v2-1/pull/224#discussion_r2441536553.",
       "createdAt": "2025-10-24T23:06:10Z",
-      "updatedAt": "2025-10-24T23:06:10Z",
+      "updatedAt": "2026-02-25T20:50:22Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
       "headRepository": "adeinega/oauth-v2-1",
       "headRefName": "patch-1",
       "headRefOid": "37395050f4e1c7015f9ca4b1b8c746cdc6ed4abf",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-25T20:01:05Z",
+      "mergedAt": "2026-02-25T20:01:05Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "5589360166252f462f2f899980c87402e4febcda"
+      },
       "comments": [],
       "reviews": []
     },
@@ -10314,24 +10399,26 @@
       "id": "PR_kwDODkfq5s7FcWxU",
       "title": "resolve ambiguity around repeated parameters",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/238",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "panva",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "This updates the authorization and token endpoint \"repeat\" parameter handling as such that recognized repeat parameters are default-prohibited even for extension params but with a caveat that extensions may explicitly allow such\r\n\r\nExhibit a: https://www.rfc-editor.org/rfc/rfc8707.html#section-2-2.2 (resource, token and authorization endpoints, any grant)\r\n\r\n> Multiple resource parameters MAY be used to indicate that the requested token is intended to be used at multiple resources.\r\n\r\nExhibit b: https://www.rfc-editor.org/rfc/rfc8693.html#section-2.1-4.4 (resource, token endpoint, token exchange grant)\r\n\r\n> Multiple resource parameters may be used to indicate that the issued token is intended to be used at the multiple resources listed.\r\n\r\nExhibit c: https://www.rfc-editor.org/rfc/rfc8693.html#section-2.1-4.6 (audience, token endpoint, token exchange grant)\r\n\r\n> Multiple audience parameters may be used to indicate that the issued token is intended to be used at the multiple audiences listed.\r\n\r\nRefs: https://www.rfc-editor.org/errata/eid5708\r\nRefs (thread): https://mailarchive.ietf.org/arch/msg/oauth/l3Yp2W4QXHdCXgO3NVpC6syUMws/\r\n",
       "createdAt": "2026-02-22T10:17:40Z",
-      "updatedAt": "2026-02-23T22:09:33Z",
+      "updatedAt": "2026-02-25T20:50:22Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
       "headRepository": "panva/oauth-v2-1",
       "headRefName": "multi-param-extensions",
       "headRefOid": "c9f2149bfedd2f802912575e15a517cc325ecc07",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-25T19:59:58Z",
+      "mergedAt": "2026-02-25T19:59:58Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "8bd277596c1e81999848add84e54b42e98da1280"
+      },
       "comments": [
         {
           "author": "bc-pi",
@@ -10354,6 +10441,19 @@
           "createdAt": "2026-02-23T22:08:33Z",
           "updatedAt": "2026-02-23T22:08:33Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDODkfq5s7leI1P",
+          "commit": {
+            "abbreviatedOid": "c9f2149"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "\u2705 approved",
+          "createdAt": "2026-02-24T18:44:17Z",
+          "updatedAt": "2026-02-24T18:44:17Z",
+          "comments": []
         }
       ]
     },
@@ -10362,52 +10462,84 @@
       "id": "PR_kwDODkfq5s7FclWq",
       "title": "incorporate EID 3500 and 6613",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/239",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "panva",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Updates to reflect\r\n\r\n- Verified RFC6749 Errata ID 3500 https://www.rfc-editor.org/errata/eid3500\r\n- Verified RFC6749 Errata ID 6613 https://www.rfc-editor.org/errata/eid6613",
       "createdAt": "2026-02-22T10:49:25Z",
-      "updatedAt": "2026-02-22T10:49:43Z",
+      "updatedAt": "2026-02-25T20:50:23Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
       "headRepository": "panva/oauth-v2-1",
       "headRefName": "eid3500-eid6613",
       "headRefOid": "abd3f5785708964f01dd923d187cacbe21431a56",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-25T19:59:27Z",
+      "mergedAt": "2026-02-25T19:59:27Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "befd1a8ca6bae449728c7340f6e37d5d4c65f9b6"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s7leMhY",
+          "commit": {
+            "abbreviatedOid": "abd3f57"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "\u2705 approved",
+          "createdAt": "2026-02-24T18:46:49Z",
+          "updatedAt": "2026-02-24T18:46:49Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 240,
       "id": "PR_kwDODkfq5s7Fc7Zu",
       "title": "fix various typos",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/240",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "panva",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "\r\nBefore | After\r\n-- | --\r\nredirict | redirect\r\nauthorziation | authorization\r\nunambigously | unambiguously\r\ninformations | information\r\n(eg. see | (e.g., see",
       "createdAt": "2026-02-22T11:41:12Z",
-      "updatedAt": "2026-02-22T11:42:01Z",
+      "updatedAt": "2026-02-25T20:50:24Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
       "headRepository": "panva/oauth-v2-1",
       "headRefName": "fix-typos",
       "headRefOid": "65b35b450e0243b338242a8290f70f73d1625abb",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-25T19:57:26Z",
+      "mergedAt": "2026-02-25T19:57:26Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "ec59fc1519b60aaa0f29b83ecb0df0c138fe9616"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s7leJo2",
+          "commit": {
+            "abbreviatedOid": "65b35b4"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "\u2705 approved",
+          "createdAt": "2026-02-24T18:44:50Z",
+          "updatedAt": "2026-02-24T18:44:50Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
