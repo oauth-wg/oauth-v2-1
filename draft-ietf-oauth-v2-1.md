@@ -694,7 +694,7 @@ Transport-Layer Security {{RFC8446}},
 to protect the exchange of clear-text credentials and tokens
 either in the content or in header fields
 from eavesdropping which enables replay
-(e.g., see {{client-secret}}, {{authorization_codes}} and {{token-endpoint}}), and {{bearer-tokens}}).
+(e.g., see {{client-secret}}, {{authorization_codes}}, {{token-endpoint}}, and {{bearer-tokens}}).
 
 All the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the `https` scheme
 except for loopback interface redirect URIs,
@@ -1204,7 +1204,7 @@ Cross-Origin Resource Sharing {{WHATWG.CORS}} MUST NOT be
 supported at the Authorization Endpoint as the client does not access this
 endpoint directly, instead the client redirects the user agent to it.
 
-## Token Endpoint
+## Token Endpoint {#token-endpoint}
 
 The token endpoint is used by the client to obtain an access token using
 a grant such as those described in {{obtaining-authorization}} and
