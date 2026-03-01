@@ -3736,7 +3736,7 @@ The `redirect_uri` element is defined in {{authorization-request}}, and {{code-t
 ## "error" Syntax {#error-syntax}
 
 The `error` element is defined in Sections {{authorization-code-error-response}}, {{token-error-response}},
-7.2, and 8.5:
+and {{error-response}}:
 
      error             = 1*NQSCHAR
 
@@ -3750,7 +3750,7 @@ The `error_description` element is defined in Sections {{authorization-code-erro
 ## "error_uri" Syntax {#error-uri-syntax}
 
 The `error_uri` element is defined in Sections {{authorization-code-error-response}}, {{token-error-response}},
-and 7.2:
+and {{error-response}}:
 
      error-uri         = URI-reference
 
