@@ -4373,6 +4373,22 @@ Appendix F.  Document History
 
    [[ To be removed from the final specification ]]
 
+   -15
+
+   *  add additional context for JWT client authentication and
+      specifically recommend RFC7523bis
+
+   *  editorial clarifications and updates
+
+   *  clarify error responses in authorization endpoint and token
+      endpoint
+
+   *  synced language from RFC9700 for AS open redirect considerations
+
+   *  applied RFC6750 erratas 3500 and 6613
+
+   *  resolved ambiguity around repeated parameters
+
    -14
 
    *  Editorial clarifications
