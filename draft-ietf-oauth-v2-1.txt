@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 29 August 2026                                             Okta
+Expires: 3 September 2026                                           Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                        25 February 2026
+                                                            2 March 2026
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 August 2026.
+   This Internet-Draft will expire on 3 September 2026.
 
 Copyright Notice
 
@@ -728,7 +728,7 @@ Table of Contents
    Security [RFC8446], to protect the exchange of clear-text credentials
    and tokens either in the content or in header fields from
    eavesdropping which enables replay (e.g., see Section 2.4.1,
-   Section 7.5.1 and Section 3.2), and Section 1.4.2).
+   Section 7.5.1, Section 3.2, and Section 1.4.2).
 
    All the OAuth protocol URLs (URLs exposed by the AS, RS and Client)
    MUST use the https scheme except for loopback interface redirect
@@ -4099,7 +4099,7 @@ A.6.  "redirect_uri" Syntax
 A.7.  "error" Syntax
 
    The error element is defined in Sections Section 4.1.2.1,
-   Section 3.2.4, 7.2, and 8.5:
+   Section 3.2.4, and Section 5.3:
 
     error             = 1*NQSCHAR
 
@@ -4113,7 +4113,7 @@ A.8.  "error_description" Syntax
 A.9.  "error_uri" Syntax
 
    The error_uri element is defined in Sections Section 4.1.2.1,
-   Section 3.2.4, and 7.2:
+   Section 3.2.4, and Section 5.3:
 
     error-uri         = URI-reference
 
