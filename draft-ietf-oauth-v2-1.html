@@ -2598,26 +2598,29 @@ and their update <span>[<a href="#I-D.ietf-oauth-rfc7523bis" class="cite xref">I
 (defined in <span>[<a href="#OpenID.Connect" class="cite xref">OpenID.Connect</a>]</span> as the client authentication method <code>private_key_jwt</code>).
 When such methods for client authentication are used, authorization
 servers do not need to store sensitive symmetric keys, making these
-methods more robust against a number of attacks.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
-<p id="section-2.4-4">When client authentication is not possible, the authorization server
+methods more robust against a number of attacks, and enables clients
+to manage their own keys and key rotation.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
+<p id="section-2.4-4">When using JWT-based client authentication, clients and authorization servers
+MUST follow the updated guidance around <code>aud</code> values in <span>[<a href="#I-D.ietf-oauth-rfc7523bis" class="cite xref">I-D.ietf-oauth-rfc7523bis</a>]</span>.<a href="#section-2.4-4" class="pilcrow">¶</a></p>
+<p id="section-2.4-5">When client authentication is not possible, the authorization server
 SHOULD employ other means to validate the client's identity -- for
 example, by requiring the registration of the client redirect URI
 or enlisting the resource owner to confirm identity.  A valid
 redirect URI is not sufficient to verify the client's identity
 when asking for resource owner authorization but can be used to
 prevent delivering credentials to a counterfeit client after
-obtaining resource owner authorization.<a href="#section-2.4-4" class="pilcrow">¶</a></p>
-<p id="section-2.4-5">The client MUST NOT use more than one authentication method in each
+obtaining resource owner authorization.<a href="#section-2.4-5" class="pilcrow">¶</a></p>
+<p id="section-2.4-6">The client MUST NOT use more than one authentication method in each
 request to prevent a conflict of which authentication mechanism is
-authoritative for the request.<a href="#section-2.4-5" class="pilcrow">¶</a></p>
-<p id="section-2.4-6">The authorization server MUST consider the security implications of
+authoritative for the request.<a href="#section-2.4-6" class="pilcrow">¶</a></p>
+<p id="section-2.4-7">The authorization server MUST consider the security implications of
 interacting with unauthenticated clients and take measures to limit
 the potential exposure of tokens issued to such clients,
-(e.g., limiting the lifetime of refresh tokens).<a href="#section-2.4-6" class="pilcrow">¶</a></p>
-<p id="section-2.4-7">The privileges an authorization server associates with a certain
+(e.g., limiting the lifetime of refresh tokens).<a href="#section-2.4-7" class="pilcrow">¶</a></p>
+<p id="section-2.4-8">The privileges an authorization server associates with a certain
 client identity MUST depend on the assessment of the overall process
 for client identification and client credential lifecycle management.
-See <a href="#security-client-authentication" class="auto internal xref">Section 7.2</a> for additional details.<a href="#section-2.4-7" class="pilcrow">¶</a></p>
+See <a href="#security-client-authentication" class="auto internal xref">Section 7.2</a> for additional details.<a href="#section-2.4-8" class="pilcrow">¶</a></p>
 <div id="client-secret">
 <section id="section-2.4.1">
           <h4 id="name-client-secret">

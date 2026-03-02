@@ -1088,7 +1088,12 @@ Table of Contents
    as the client authentication method private_key_jwt).  When such
    methods for client authentication are used, authorization servers do
    not need to store sensitive symmetric keys, making these methods more
-   robust against a number of attacks.
+   robust against a number of attacks, and enables clients to manage
+   their own keys and key rotation.
+
+   When using JWT-based client authentication, clients and authorization
+   servers MUST follow the updated guidance around aud values in
+   [I-D.ietf-oauth-rfc7523bis].
 
    When client authentication is not possible, the authorization server
    SHOULD employ other means to validate the client's identity -- for
