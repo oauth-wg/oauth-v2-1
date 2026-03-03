@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-01T00:21:15.478494+00:00",
+  "timestamp": "2026-03-03T00:20:05.040474+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3191,7 +3191,7 @@
       "id": "I_kwDODkfq5s5NFhpR",
       "title": "Add more security sensitive examples to intro to illustrate suitability",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/122",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tlodderstedt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -3200,8 +3200,8 @@
       "labels": [],
       "body": "A bit about OAuth adoption in scenarios beyond its original scope (e.g. Open Banking). ",
       "createdAt": "2022-07-04T15:07:57Z",
-      "updatedAt": "2024-12-04T15:11:19Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-02T18:44:27Z",
+      "closedAt": "2026-03-02T18:44:27Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -4745,15 +4745,15 @@
       "id": "I_kwDODkfq5s6O0tQj",
       "title": "Clarify `aud` values that should be accepted in `private_key_jwt` at the token (and other) endpoints",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/183",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jogu",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "There's some unfortunate history around the `aud` value that you use in `private_key_jwt` client authentication assertions.\r\n\r\n[RFC7523](https://datatracker.ietf.org/doc/html/rfc7523#section-3) says:\r\n\r\n```\r\n        The JWT MUST contain an \"aud\" (audience) claim containing a\r\n        value that identifies the authorization server as an intended\r\n        audience.  The token endpoint URL of the authorization server\r\n        MAY be used as a value for an \"aud\" element to identify the\r\n        authorization server as an intended audience of the JWT.  The\r\n        authorization server MUST reject any JWT that does not contain\r\n        its own identity as the intended audience\r\n```\r\n\r\nThe WG already tried to be a bit more specific, e.g. in [PAR](https://www.rfc-editor.org/rfc/rfc9126.html#section-2) we say the issuer value 'SHOULD' be used and 'MUST' be accepted:\r\n\r\n> Due to historical reasons, there is potential ambiguity regarding the appropriate audience value to use when employing JWT client assertion-based authentication (defined in [Section 2.2](https://www.rfc-editor.org/rfc/rfc7523#section-2.2) of [[RFC7523](https://www.rfc-editor.org/rfc/rfc9126.html#RFC7523)] with private_key_jwt or client_secret_jwt authentication method names per Section 9 of [[OIDC](https://www.rfc-editor.org/rfc/rfc9126.html#OIDC)]). To address that ambiguity, the issuer identifier URL of the authorization server according to [[RFC8414](https://www.rfc-editor.org/rfc/rfc9126.html#RFC8414)] SHOULD be used as the value of the audience. In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or pushed authorization request endpoint URL as values that identify it as an intended audience.\r\n\r\n\r\nIt seems like we could add something in OAuth 2.1 to try and help people get this working in an interoperable fashion. Somewhere in https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-2.4 would seem like a possible place to offer a clarification. Perhaps something along the lines of:\r\n\r\n> When using `private_key_jwt`, In order to facilitate interoperability, the authorization server MUST accept its issuer identifier, token endpoint URL, or the endpoint URL that the assertion is being presented to as `aud` values that identify it as an intended audience.\r\n",
       "createdAt": "2024-07-08T17:30:06Z",
-      "updatedAt": "2025-11-02T22:18:13Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-02T18:42:32Z",
+      "closedAt": "2026-03-02T18:42:32Z",
       "comments": [
         {
           "author": "bc-pi",
@@ -10330,7 +10330,7 @@
       "labels": [],
       "body": "Proposed changes for https://github.com/oauth-wg/oauth-v2-1/pull/224#discussion_r2441536553.",
       "createdAt": "2025-10-24T23:06:10Z",
-      "updatedAt": "2026-02-25T20:50:22Z",
+      "updatedAt": "2026-03-02T19:04:43Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
@@ -10544,6 +10544,48 @@
           "body": "\u2705 approved",
           "createdAt": "2026-02-24T18:44:50Z",
           "updatedAt": "2026-02-24T18:44:50Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 241,
+      "id": "PR_kwDODkfq5s7HHo-N",
+      "title": "Review some more",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/241",
+      "state": "MERGED",
+      "author": "panva",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "- fix mismatched parentheses in Communication Security section\r\n- add explicit {#token-endpoint} anchor to Token Endpoint heading\r\n- replace hardcoded section numbers with cross-references in ABNF appendix",
+      "createdAt": "2026-03-01T12:20:00Z",
+      "updatedAt": "2026-03-02T18:22:58Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "d833820d771983bb60e2eeb880b182d59bb88f3d",
+      "headRepository": "panva/oauth-v2-1",
+      "headRefName": "filip-review",
+      "headRefOid": "d137400541c2b03e1725dc2ba06ef161ddbd110e",
+      "closedAt": "2026-03-02T18:22:25Z",
+      "mergedAt": "2026-03-02T18:22:25Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "23c927eeb8fa7c6ee2ce17d4f973ca0549550d3e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s7nJDCm",
+          "commit": {
+            "abbreviatedOid": "d137400"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-02T18:22:14Z",
+          "updatedAt": "2026-03-02T18:22:14Z",
           "comments": []
         }
       ]
