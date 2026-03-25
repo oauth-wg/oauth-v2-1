@@ -3185,7 +3185,7 @@ See {{Section 4.4 of RFC9700}} for a detailed description
 of several types of mix-up attacks.
 
 ### Mix-Up Defense via Issuer Identification
-This defense requires that the authorization server sends his issuer identifier
+This defense requires that the authorization server sends its issuer identifier
 in the authorization response to the client. When receiving the authorization
 response, the client MUST compare the received issuer identifier to the stored
 issuer identifier. If there is a mismatch, the client MUST abort the
