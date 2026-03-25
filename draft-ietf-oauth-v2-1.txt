@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 3 September 2026                                           Okta
+Expires: 26 September 2026                                          Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                            2 March 2026
+                                                           25 March 2026
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2026.
+   This Internet-Draft will expire on 26 September 2026.
 
 Copyright Notice
 
@@ -3235,7 +3235,7 @@ Table of Contents
 
 7.14.1.  Mix-Up Defense via Issuer Identification
 
-   This defense requires that the authorization server sends his issuer
+   This defense requires that the authorization server sends its issuer
    identifier in the authorization response to the client.  When
    receiving the authorization response, the client MUST compare the
    received issuer identifier to the stored issuer identifier.  If there
@@ -3898,9 +3898,9 @@ Table of Contents
               Looker, T., Bastian, P., and C. Bormann, "OAuth 2.0
               Attestation-Based Client Authentication", Work in
               Progress, Internet-Draft, draft-ietf-oauth-attestation-
-              based-client-auth-07, 15 September 2025,
+              based-client-auth-08, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              attestation-based-client-auth-07>.
+              attestation-based-client-auth-08>.
 
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
@@ -3914,9 +3914,9 @@ Table of Contents
               "Updates to OAuth 2.0 JSON Web Token (JWT) Client
               Authentication and Assertion-Based Authorization Grants",
               Work in Progress, Internet-Draft, draft-ietf-oauth-
-              rfc7523bis-05, 12 January 2026,
+              rfc7523bis-06, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-05>.
+              rfc7523bis-06>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
