@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-03T00:20:05.040474+00:00",
+  "timestamp": "2026-03-26T00:23:00.561268+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -10586,6 +10586,48 @@
           "body": "",
           "createdAt": "2026-03-02T18:22:14Z",
           "updatedAt": "2026-03-02T18:22:14Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 242,
+      "id": "PR_kwDODkfq5s7NhYWg",
+      "title": "Consistent pronoun usage",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/242",
+      "state": "MERGED",
+      "author": "max-stytch",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Super minor editorial nit - clients, resource servers, and authorization servers use `its` instead of a gendered pronoun in the rest of the spec.",
+      "createdAt": "2026-03-25T23:30:36Z",
+      "updatedAt": "2026-03-25T23:35:15Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "b036ca8ed98fd3ef974d251d3e9eee841098b1c2",
+      "headRepository": "max-stytch/oauth-v2-1",
+      "headRefName": "patch-1",
+      "headRefOid": "6a472829fe88ba8c7ffc8f66bf2e24ee116f8cbd",
+      "closedAt": "2026-03-25T23:35:15Z",
+      "mergedAt": "2026-03-25T23:35:15Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "2e1ffc0192875279b670b0db68642848866cdacd"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s7vC_Sb",
+          "commit": {
+            "abbreviatedOid": "6a47282"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-25T23:34:59Z",
+          "updatedAt": "2026-03-25T23:34:59Z",
           "comments": []
         }
       ]
