@@ -625,8 +625,8 @@ request parameter at the authorization or token endpoints, depending on
 the grant type used. In turn, the authorization server uses the `scope`
 response parameter to inform the client of the scope of the access token issued.
 
-The value of the scope parameter is expressed as a space-
-delimited list of case-sensitive strings.  The strings are defined by the
+The value of the scope parameter is expressed as a space-delimited
+list of case-sensitive strings.  The strings are defined by the
 authorization server.  If the value contains multiple space-delimited
 strings, their order does not matter, and each string adds an
 additional access range to the requested scope.
@@ -909,7 +909,7 @@ client's redirection endpoints previously established with the
 authorization server during the client registration process.
 
 The redirect URI MUST be an absolute URI as defined by
-{{Section 4.3 of RFC3986}}.  The redirect URI MAY include an
+{{Section 4.3 of RFC3986}}.  The redirect URI MAY include a
 query string component ({{query-string-serialization}}), which MUST be retained when adding
 additional query parameters. The redirect URI MUST NOT include a
 fragment component.
@@ -1183,7 +1183,7 @@ but the URL is typically provided in the service documentation,
 or in the authorization server's metadata document {{RFC8414}}.
 
 The authorization endpoint URL MUST NOT include a fragment component,
-and MAY include a query string component {{query-string-serialization}},
+and MAY include a query string component ({{query-string-serialization}}),
 which MUST be retained when adding additional query parameters.
 
 The authorization server MUST support the use of the HTTP `GET`
@@ -1221,7 +1221,7 @@ development of the client, or provided in the authorization server's metadata
 document {{RFC8414}} and fetched programmatically at runtime.
 
 The token endpoint URL MUST NOT include a fragment component,
-and MAY include a query string component {{query-string-serialization}}.
+and MAY include a query string component ({{query-string-serialization}}).
 
 The client MUST use the HTTP `POST` method when making requests to the token endpoint.
 
@@ -2349,7 +2349,7 @@ MUST NOT include characters outside the set %x21 / %x23-5B
 between scope values.  Values for the `error` and `error_description`
 attributes (specified in {{error-syntax}} and {{error-description-syntax}}) MUST
 NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.
-Values for the `error_uri` attribute (specified in {{error-uri-syntax}} of)
+Values for the `error_uri` attribute (specified in {{error-uri-syntax}})
 MUST conform to the URI-reference syntax and thus MUST NOT
 include characters outside the set %x21 / %x23-5B / %x5D-7E.
 
@@ -3760,7 +3760,7 @@ and {{error-response}}:
 
 ## "grant_type" Syntax
 
-The `grant_type` element is defined in Section {{token-request}}:
+The `grant_type` element is defined in {{token-request}}:
 
      grant-type = grant-name / URI-reference
      grant-name = 1*name-char
