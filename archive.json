@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-09T00:19:55.220095+00:00",
+  "timestamp": "2026-04-12T00:25:41.634714+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -4157,7 +4157,7 @@
       ],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#section-3.2.3.1 says that\r\n\r\n> \"**invalid_client**\":  Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported.\r\n\r\nI am not so sure if it's possible to indicate HTTP authentication schemas for _private_key_jwt_ and _client_secret_jwt_ client authentication types.\r\n\r\nThis text also indicates that multiple authentication schemas are supported. Thus, does the authorization server need to specify multiple WWW-Authenticate headers, say \"WWW-Authenticate: Basic\" and \"WWW-Authenticate: Bearer\"?\r\n\r\nIt would be great to clarify these nuances.\r\n",
       "createdAt": "2023-08-04T19:31:16Z",
-      "updatedAt": "2025-11-03T03:26:42Z",
+      "updatedAt": "2026-04-10T10:05:12Z",
       "closedAt": null,
       "comments": [
         {
@@ -4173,6 +4173,13 @@
           "body": "> I wonder if there are any clients that attempt to parse the WWW-Authenticate header and try a different authentication mechanism? The clients I'm aware of all require the client authentication to be explicitly configured.\n\nI concur.",
           "createdAt": "2025-03-24T09:54:56Z",
           "updatedAt": "2025-03-24T09:54:56Z"
+        },
+        {
+          "author": "ylemkimon",
+          "authorAssociation": "NONE",
+          "body": "Doesn't have to go that far; `client_secret_post` is not possible to specifiy in `WWW-Authenticate`.\n\nFurthermore, the next sentence says:\n> If the client attempted to authenticate via the Authorization request header field, the authorization server MUST respond with an HTTP 401 (Unauthorized) status code and include the WWW-Authenticate response header field matching the authentication scheme used by the client.\n\nAFAIK, The `WWW-Authenticate` indicates methods the server supports, i.e., challenges, but it says it should match the one client used. Does this mean if I request with unknown auth scheme:\n```\nPOST /token HTTP/1.1\nAuthorization: NonExistentMethod foobar\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=authorization_code&...\n```\nit should respond like:\n```\nHTTP/1.1 401 Unauthorized\nWWW-Authenticate: NonExistentMethod realm=\"token\"\n```\n?",
+          "createdAt": "2026-04-10T09:59:22Z",
+          "updatedAt": "2026-04-10T10:05:12Z"
         }
       ]
     },
@@ -10365,7 +10372,7 @@
       "labels": [],
       "body": "Added references to OpenID Connect response modes and addressed browser-swapping attack mitigation strategies.",
       "createdAt": "2025-11-04T03:46:38Z",
-      "updatedAt": "2025-12-18T20:36:29Z",
+      "updatedAt": "2026-04-11T11:31:15Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
@@ -10404,6 +10411,41 @@
           "body": "Yes. I sent a mail to the mailing list covering some of this same area (https://mailarchive.ietf.org/arch/msg/oauth/KUUTS7lXFPQ2vLrTYeeaV0eiRTU/). In addition to VPN that blocks a domain, I suspect you could get similar results by using a state parameter that triggers an XSS filter or is too long for the web server. In these scenarios, web servers will often reject requests with a 4xx or 5xx error, before the application code (including authorization code invalidation) has an opportunity to run. ",
           "createdAt": "2025-12-18T20:36:29Z",
           "updatedAt": "2025-12-18T20:36:29Z"
+        },
+        {
+          "author": "ylemkimon",
+          "authorAssociation": "NONE",
+          "body": " I think the best defense would be for user agents (browsers) to detect failed localhost OAuth redirects and remove or prevent copying code parameter from the address bar, just like how it hides username:password from the address bar or prevents pasting javascript: URIs and code to DevTools console. I've opened issues at respective browser issue trackers: http://crbug.com/501331257 and http://bugzil.la/2030930.",
+          "createdAt": "2026-04-10T12:19:55Z",
+          "updatedAt": "2026-04-10T12:23:41Z"
+        },
+        {
+          "author": "will-bartlett",
+          "authorAssociation": "NONE",
+          "body": "> I think the best defense would be for user agents (browsers) to detect failed localhost OAuth redirects and remove or prevent copying code parameter from the address bar, just like how it hides username:password from the address bar or prevents pasting javascript: URIs and code to DevTools console. I've opened issues at respective browser issue trackers: http://crbug.com/501331257 and http://bugzil.la/2030930.\r\n\r\nfwiw, the Edge folks told me they were pretty reluctant to treat particular query string parameters differently. At the HTTP level, \"code\" is no different from \"id\" or \"foobar\". The browser doesn't see an OAuth redirect with an authorization code - it seems a redirect with a query string.\r\n\r\nThere may be a form of this proposal that works, e.g. that browsers should prevent copying the entire query strong on loopback 404s / connection errors, but it probably has to respect layering to some degree. ",
+          "createdAt": "2026-04-10T19:57:59Z",
+          "updatedAt": "2026-04-10T19:57:59Z"
+        },
+        {
+          "author": "ylemkimon",
+          "authorAssociation": "NONE",
+          "body": "> At the HTTP level, \"code\" is no different from \"id\" or \"foobar\". \r\n\r\nYes, but its name is standardized and it has unique characteristics. I think the following heuristics can be used:\r\n\r\n1) the navigation is a redirect initiated from another origin,\r\n2) the hostname is one of localhost, 127.0.0.1, or [::1] and the port is in 1024-66535,\r\n3) the request has failed due to a network error, and\r\n4) it has `code` and `state` parameter.\r\n\r\nIn fact, Chrome already has built-in heuristic for detecting OAuth login flows: https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/login_detection/.\r\n\r\nI don\u2019t think there are real use cases of copying the URL from failed a localhost request besides developers, and they can `copy(location.href)` in the console if needed.\r\n\r\n> it probably has to respect layering to some degree.\r\n\r\nActually, I'm in favor of browsers being a na\u00efve client. However, after seeing many anti-phishing and anti-social-engineering attempts succeed at the browser level, I think the browser is the best place to have these defenses.",
+          "createdAt": "2026-04-10T22:41:31Z",
+          "updatedAt": "2026-04-11T09:54:21Z"
+        },
+        {
+          "author": "randomstuff",
+          "authorAssociation": "NONE",
+          "body": "> the hostname is one of localhost, 127.0.0.1, or [::1] and the port is in 1024-66535,\r\n\r\nA MTIM attacker *could* conduct such attack on non-localhost `https://` targets by blocking the flow to the target server. I think it would be safer to skip this condition. This assumes quite a lot of power from the attacker though.\r\n\r\n***\r\n\r\n> At the HTTP level, \"code\" is no different from \"id\" or \"foobar\". The browser doesn't see an OAuth redirect with an authorization code - it seems a redirect with a query string.\r\n\r\nThe `secret-token:` URI scheme is defined by [RFC 8959](https://datatracker.ietf.org/doc/rfc8959/) in order to explicitly mark secrets. Would it make sense to recommend that ASs use this prefix for authorization codes? Browser could warn/protect the user (eg. by replacing the secret by some placeholder value) if such value is present in a URL copied from the URL bar (arguably, it would make sense to detect JWTs as well) ? This would provide some protection which is independent of OAuth. (And could provide some protection against some authorization code leakage through logs if the logs are filtered to remove these patterns).\r\n\r\n***\r\n\r\n> It appears to me that the only suitable mitigation option for loopback URIs is the use of response_mode=form_post and error for all other response modes.\r\n\r\nIsn't `response_mode=form_post` problematic/cumbersome when redirecting from a non-web application?",
+          "createdAt": "2026-04-11T09:43:08Z",
+          "updatedAt": "2026-04-11T09:56:47Z"
+        },
+        {
+          "author": "randomstuff",
+          "authorAssociation": "NONE",
+          "body": "A possible variant of this attack would be to convince the victim to use screen sharing (eg. helpful help desk) and capture the code directly from the URL bar (possibly using some OCR).",
+          "createdAt": "2026-04-11T11:31:15Z",
+          "updatedAt": "2026-04-11T11:31:15Z"
         }
       ],
       "reviews": []
@@ -10638,6 +10680,58 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 243,
+      "id": "PR_kwDODkfq5s7Ravug",
+      "title": "Update reference for loopback interface redirection",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/243",
+      "state": "OPEN",
+      "author": "ylemkimon",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The linked section is also consolidated on the new spec.",
+      "createdAt": "2026-04-10T10:35:23Z",
+      "updatedAt": "2026-04-10T10:40:03Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "2e1ffc0192875279b670b0db68642848866cdacd",
+      "headRepository": "ylemkimon/oauth-v2-1",
+      "headRefName": "patch-1",
+      "headRefOid": "e9743e7a12e6812c8432867aa9947b8839b80e8d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 244,
+      "id": "PR_kwDODkfq5s7RqDMV",
+      "title": "Fix minor editorial nitpicks",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/244",
+      "state": "OPEN",
+      "author": "ylemkimon",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-04-11T11:31:55Z",
+      "updatedAt": "2026-04-11T11:31:55Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "2e1ffc0192875279b670b0db68642848866cdacd",
+      "headRepository": "ylemkimon/oauth-v2-1",
+      "headRefName": "patch-2",
+      "headRefOid": "dd734b20edd595a3ff31df00d870710c86ecbf23",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
