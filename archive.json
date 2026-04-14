@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-12T00:25:41.634714+00:00",
+  "timestamp": "2026-04-14T00:28:58.766726+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5808,6 +5808,22 @@
           "updatedAt": "2026-02-15T22:17:55Z"
         }
       ]
+    },
+    {
+      "number": 245,
+      "id": "I_kwDODkfq5s79HZkh",
+      "title": "Unclear on how Authorization Sever should accept request parameters",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/245",
+      "state": "OPEN",
+      "author": "ylemkimon",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "> The client constructs the request URI by adding the following parameters to the query component of the authorization endpoint URI as described by [Appendix C.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-15#query-string-serialization)\n\n> The client makes a request to the token endpoint by sending the following parameters using the form-encoded serialization format per [Appendix C.2](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-15#form-serialization) with a character encoding of UTF-8 in the HTTP request content\n\nThere are guidances only on how a client can send request parameters, not on how AS should accept them.\n\nEspecially with the `POST` request to authorization endpoint, it's unclear whether it should accept parameters from the query string as well as the form body. (IMHO, in this case, it should reject the request or accept only the body as most clients would not mix both methods, and this would indicate a foul play.)\n\nFor reference, [OIDC Core](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) has the following text:\n\n> Clients MAY use the HTTP GET or POST methods to send the Authorization Request to the Authorization Server. If using the HTTP GET method, the request parameters are serialized using URI Query String Serialization, per [Section 13.1](https://openid.net/specs/openid-connect-core-1_0.html#QuerySerialization). If using the HTTP POST method, the request parameters are serialized using Form Serialization, per [Section 13.2](https://openid.net/specs/openid-connect-core-1_0.html#FormSerialization).\n\nRelated to #181.",
+      "createdAt": "2026-04-12T04:59:39Z",
+      "updatedAt": "2026-04-12T05:10:35Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -10372,7 +10388,7 @@
       "labels": [],
       "body": "Added references to OpenID Connect response modes and addressed browser-swapping attack mitigation strategies.",
       "createdAt": "2025-11-04T03:46:38Z",
-      "updatedAt": "2026-04-11T11:31:15Z",
+      "updatedAt": "2026-04-12T07:56:32Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
@@ -10429,9 +10445,9 @@
         {
           "author": "ylemkimon",
           "authorAssociation": "NONE",
-          "body": "> At the HTTP level, \"code\" is no different from \"id\" or \"foobar\". \r\n\r\nYes, but its name is standardized and it has unique characteristics. I think the following heuristics can be used:\r\n\r\n1) the navigation is a redirect initiated from another origin,\r\n2) the hostname is one of localhost, 127.0.0.1, or [::1] and the port is in 1024-66535,\r\n3) the request has failed due to a network error, and\r\n4) it has `code` and `state` parameter.\r\n\r\nIn fact, Chrome already has built-in heuristic for detecting OAuth login flows: https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/login_detection/.\r\n\r\nI don\u2019t think there are real use cases of copying the URL from failed a localhost request besides developers, and they can `copy(location.href)` in the console if needed.\r\n\r\n> it probably has to respect layering to some degree.\r\n\r\nActually, I'm in favor of browsers being a na\u00efve client. However, after seeing many anti-phishing and anti-social-engineering attempts succeed at the browser level, I think the browser is the best place to have these defenses.",
+          "body": "> At the HTTP level, \"code\" is no different from \"id\" or \"foobar\". \r\n\r\nYes, but its name is standardized and it has unique characteristics. I think the following heuristics can be used:\r\n\r\n1) the navigation is a redirect initiated from another origin,\r\n2) the hostname is one of localhost, 127.0.0.1, or [::1] and the port is in 1024-66535,\r\n3) the request has failed due to a network error, and\r\n4) it has `code` and `state` parameter.\r\n\r\nIn fact, Chrome already has built-in heuristic for detecting OAuth login flows: https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/login_detection/.\r\n\r\nI don\u2019t think there are real use cases of copying the URL from failed a localhost request besides developers, and they can `copy(location.href)` in the console if needed. Or a \"Copy Full URL\" menu can be added to the context menu, like the Copy Clean Link feature in Firefox:\r\n<img width=\"308\" height=\"206\" alt=\"image\" src=\"https://github.com/user-attachments/assets/201e2709-6956-4d3e-a365-5a6fe0144451\" />\r\n\r\n> it probably has to respect layering to some degree.\r\n\r\nActually, I'm in favor of browsers being a na\u00efve client. However, after seeing many anti-phishing and anti-social-engineering attempts succeed at the browser level, I think the browser is the best place to have these defenses.",
           "createdAt": "2026-04-10T22:41:31Z",
-          "updatedAt": "2026-04-11T09:54:21Z"
+          "updatedAt": "2026-04-12T07:56:32Z"
         },
         {
           "author": "randomstuff",
@@ -10446,6 +10462,13 @@
           "body": "A possible variant of this attack would be to convince the victim to use screen sharing (eg. helpful help desk) and capture the code directly from the URL bar (possibly using some OCR).",
           "createdAt": "2026-04-11T11:31:15Z",
           "updatedAt": "2026-04-11T11:31:15Z"
+        },
+        {
+          "author": "ylemkimon",
+          "authorAssociation": "NONE",
+          "body": "For clients that cannot send or receive `POST` requests, I think a double redirect (two-phase) pattern can be used:\r\n\r\n```mermaid\r\nsequenceDiagram\r\n    participant C as Client\r\n    participant U as User Agent\r\n    participant A as Authorization Server\r\n\r\n    U->>C: 1. GET /login\r\n    C->>U: 2. Location: https://as/authorize?<br/>response_type=none&<br/>state=xyz&...\r\n    U->>A: 3. GET /authorize?...\r\n    A-->A: 4. AuthN & AuthZ\r\n    A->>U: 5. Location: https://client/callback?<br/>state=xyz\r\n    U->>C: 6. GET /callback?...\r\n    C-->C: 7. Verify state\r\n    C->>U: 8. Location: https://as/authorize?<br/>response_type=code&<br/>state=xyz&...\r\n    U->>A: 9. GET /authorize?...\r\n    A-->A: 10. Verify that the request<br/>came from redirect_uri\r\n    A->>U: 11. Location: https://client/callback?<br/>state=xyz&<br/>code=code\r\n    U->>C: 12. GET /callback?...\r\n```\r\n\r\nThis would make the attack two-step and the MitM attack window very small between 8 and 12.\r\n\r\nThe problem is that the second request should not be forgeable by the attacker, but I can't think of a definite way of verifying this (step 10). A few thoughts:\r\n* `Referer`/`Origin` header: might be not set with some privacy settings/extensions and non-web applications\r\n* CSRF token: would be just another `authorization_code`, but can be very short-lived and bound to the session",
+          "createdAt": "2026-04-12T06:58:23Z",
+          "updatedAt": "2026-04-12T07:08:55Z"
         }
       ],
       "reviews": []
@@ -10717,9 +10740,9 @@
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "Few more issues I've noticed\r\n- The example in \"3.2.2. Token Endpoint Request\" includes `redirect_uri` which is removed\r\n- \"A.1. \"client_id\" Syntax\" and \"A.2. \"client_secret\" Syntax\" allow client_id and client_secret to be an empty string (`*VSCHAR`)\r\n- Sections \"7.1.4. Access Token Privilege Restriction\" and \"7.3.2. Access Token Privilege Restriction\" are near-duplicates.",
       "createdAt": "2026-04-11T11:31:55Z",
-      "updatedAt": "2026-04-11T11:31:55Z",
+      "updatedAt": "2026-04-12T07:58:43Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "2e1ffc0192875279b670b0db68642848866cdacd",
