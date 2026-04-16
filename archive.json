@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-14T00:28:58.766726+00:00",
+  "timestamp": "2026-04-16T00:29:26.964250+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -3317,7 +3317,7 @@
       ],
       "body": "499a8f88b70ca00bfa5ef588023c68c1d0277bff removed Appendix B but unlinked references to it are still within the document next to almost every `x-www-form-urlencoded` mention.\r\n\r\n---\r\n\r\nThroughout the years this Appendix was THE resource used over and over to explain why and how the OAuth use of the Basic authorization scheme encodes the username and password tokens.\r\n\r\nIf this Appendix is removed I would propose to add examples of client secret basic with username and password tokens where the client_id and client_secret encoding changes the octets that go into the basic authorization scheme base64 encoding. This is an often overlooked implementation detail that both client and server implementers get wrong and end up inoperable, further driving users to use client secret post which this document marks as NOT RECOMMENDED.",
       "createdAt": "2022-07-25T09:07:39Z",
-      "updatedAt": "2024-05-15T00:00:57Z",
+      "updatedAt": "2026-04-14T20:30:27Z",
       "closedAt": "2024-05-15T00:00:56Z",
       "comments": [
         {
@@ -3473,6 +3473,20 @@
           "body": "As discussed in the May 14 interim:\r\n\r\nResolved to:\r\n\r\n* Remove the \"NOT RECOMMENDED\" paragraph (but leave sentence \"The parameters can only be transmitted in the request content and MUST NOT be included in the request URI.\")\r\n* Change AS requirements to MUST support post body, MAY support HTTP Basic\r\n* Add a note about historic interop problems with HTTP Basic",
           "createdAt": "2024-05-14T17:06:22Z",
           "updatedAt": "2024-05-14T17:06:22Z"
+        },
+        {
+          "author": "ThisIsMissEm",
+          "authorAssociation": "NONE",
+          "body": "This issue just caught me out implementing client_secret_basic in Swift, because we just [do not have](https://github.com/apple/swift-http-types/issues/117) a `application/x-www-form-urlencoded` algorithm implementation. The server implementations I've seen are following HTTP Basic spec and not dealing with decoding `application/x-www-form-urlencoded`, and they avoid the problem by only using ASCII characters in their client IDs and client secrets, which seems like a fairly reasonable approach to me.\n\nIt's probably also worth noting that IANA standardised on WHATWG's algorithm not the one in HTML 4.01.\n\nFor [section 2.4.1](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html#section-2.4.1) I think we could probably just recommend using ASCII character set for `client_id` and `client_secret` with a note that if you choose to use a different character set, you will need to follow `application/x-www-form-urlencoded` encoding. That would remove the hard requirement on always using that encoding algorithm.",
+          "createdAt": "2026-04-14T20:29:16Z",
+          "updatedAt": "2026-04-14T20:29:16Z"
+        },
+        {
+          "author": "ThisIsMissEm",
+          "authorAssociation": "NONE",
+          "body": "Alternatively, could the recommendation not to use client_secret_basic actually be shifted to a deprecation for it?",
+          "createdAt": "2026-04-14T20:30:27Z",
+          "updatedAt": "2026-04-14T20:30:27Z"
         }
       ]
     },
@@ -5822,6 +5836,22 @@
       "body": "> The client constructs the request URI by adding the following parameters to the query component of the authorization endpoint URI as described by [Appendix C.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-15#query-string-serialization)\n\n> The client makes a request to the token endpoint by sending the following parameters using the form-encoded serialization format per [Appendix C.2](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-15#form-serialization) with a character encoding of UTF-8 in the HTTP request content\n\nThere are guidances only on how a client can send request parameters, not on how AS should accept them.\n\nEspecially with the `POST` request to authorization endpoint, it's unclear whether it should accept parameters from the query string as well as the form body. (IMHO, in this case, it should reject the request or accept only the body as most clients would not mix both methods, and this would indicate a foul play.)\n\nFor reference, [OIDC Core](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) has the following text:\n\n> Clients MAY use the HTTP GET or POST methods to send the Authorization Request to the Authorization Server. If using the HTTP GET method, the request parameters are serialized using URI Query String Serialization, per [Section 13.1](https://openid.net/specs/openid-connect-core-1_0.html#QuerySerialization). If using the HTTP POST method, the request parameters are serialized using Form Serialization, per [Section 13.2](https://openid.net/specs/openid-connect-core-1_0.html#FormSerialization).\n\nRelated to #181.",
       "createdAt": "2026-04-12T04:59:39Z",
       "updatedAt": "2026-04-12T05:10:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 246,
+      "id": "I_kwDODkfq5s7-NDAC",
+      "title": "Section 4.1.1 should probably mention Pushed Authorization Requests",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/246",
+      "state": "OPEN",
+      "author": "ThisIsMissEm",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Currently the text in [Section 4.1.1](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html#section-4.1.1) only mentions the parameters you would send to the `authorize` endpoint if you were not using PAR.\n\nI think it'd be a wise to say that PAR replaces these parameters with just `request_uri` and (maybe) `client_id`.",
+      "createdAt": "2026-04-14T21:28:05Z",
+      "updatedAt": "2026-04-14T21:28:05Z",
       "closedAt": null,
       "comments": []
     }
