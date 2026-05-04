@@ -1603,8 +1603,7 @@ MUST return an error response as described in {{authorization-code-error-respons
 :    REQUIRED unless the specific requirements of {{authorization_codes}} are met.  Code challenge derived from the code verifier.
 
 "code_challenge_method":
-:    OPTIONAL, defaults to `plain` if not present in the request.  Code
-     verifier transformation method is `S256` or `plain`.
+:    OPTIONAL, defaults to `S256` if not present in the request.
 
 "redirect_uri":
 :    OPTIONAL if only one redirect URI is registered for this client.
@@ -1635,7 +1634,7 @@ ABNF for `code_verifier` is as follows.
     ALPHA = %x41-5A / %x61-7A
     DIGIT = %x30-39
 
-Clients SHOULD use code challenge methods that
+Clients MUST use code challenge methods that
 do not expose the `code_verifier` in the authorization request.
 Otherwise, attackers that can read the authorization request (cf.
 Attacker A4 in {{RFC9700}}) can break the security provided
@@ -1648,21 +1647,13 @@ sequence.  The octet sequence is then base64url-encoded to produce a
 43-octet URL-safe string to use as the code verifier.
 
 The client then creates a `code_challenge` derived from the code
-verifier by using one of the following transformations on the code
-verifier:
+verifier by transforming the code verifier with a valid transformation method:
 
     S256
       code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
 
-    plain
-      code_challenge = code_verifier
-
-If the client is capable of using `S256`, it MUST use `S256`, as
-`S256` is Mandatory To Implement (MTI) on the server.  Clients are
-permitted to use `plain` only if they cannot support `S256` for some
-technical reason, for example constrained environments that do not have
-a hashing function available, and know via out-of-band configuration or via
-Authorization Server Metadata {{RFC8414}} that the server supports `plain`.
+This specification defines only the `S256` transformation. Future extensions
+may define additional transformation methods.
 
 ABNF for `code_challenge` is as follows.
 
@@ -1673,7 +1664,8 @@ ABNF for `code_challenge` is as follows.
 
 The properties `code_challenge` and `code_verifier` are adopted from the OAuth 2.0 extension
 known as "Proof-Key for Code Exchange", or PKCE {{RFC7636}} where this technique
-was originally developed.
+was originally developed. The `plain` transformation method defined in {{RFC7636}}
+is removed and explicitly prohibited in this specification. See {{pkce-plain}} for additional details.
 
 Authorization servers MUST support the `code_challenge` and `code_verifier` parameters.
 
@@ -2858,6 +2850,28 @@ all kinds of OAuth clients, including web applications and other confidential cl
 are susceptible to authorization code injection attacks, which are solved by
 the `code_challenge` and `code_verifier` mechanism.
 
+### PKCE "plain" Code Challenge Method {#pkce-plain}
+
+The `plain` code challenge method, defined in {{RFC7636}}, is explicitly forbidden
+in OAuth 2.1. The `plain` method offers no protection against authorization code
+interception by attackers who can read the authorization request
+(Attacker A4 in {{RFC9700}}), as the code verifier is transmitted
+in plaintext in the authorization request.
+
+Historical arguments for supporting plain mode (devices lacking cryptographic
+hashing capabilities) are obsoleted by OAuth 2.1's requirement for TLS 1.2+,
+which mandates SHA-256 support for certificate validation. Any device capable
+of implementing OAuth 2.1 necessarily supports SHA-256.
+
+Authorization servers that support `plain` code challenge method create an
+unverifiable downgrade attack vector, as servers cannot distinguish legitimate
+constrained clients from attacker-modified requests claiming to be constrained.
+
+Deployments with existing clients that cannot support S256 SHOULD issue
+extended-lifetime refresh tokens before discontinuing support for legacy
+authorization methods, as the refresh token grant ({{refreshing-an-access-token}})
+does not require PKCE.
+
 ### Reuse of Authorization Codes {#authorization-code-reuse}
 
 Several types of attacks are possible if authorization codes are able to be
@@ -3640,6 +3654,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 * The token endpoint request containing an authorization code no longer contains
   the `redirect_uri` parameter
 * Authorization servers must support client credentials in the request body
+* The PKCE `plain` method is removed
 
 ## Removal of the OAuth 2.0 Implicit grant
 
@@ -3930,6 +3945,10 @@ Discussions around this specification have also occurred at the OAuth Security W
 # Document History
 
 [[ To be removed from the final specification ]]
+
+-16
+
+* Remove PKCE `plain` method
 
 -15
 
