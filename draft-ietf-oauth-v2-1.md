@@ -104,6 +104,7 @@ informative:
   I-D.ietf-oauth-browser-based-apps:
   I-D.ietf-oauth-rfc7523bis:
   I-D.ietf-oauth-attestation-based-client-auth:
+  I-D.ietf-oauth-client-id-metadata-document:
 
   OpenID.Connect:
     title: OpenID Connect Core 1.0 incorporating errata set 2
@@ -2967,6 +2968,52 @@ authorization server.
 
 See {{communication-security}} for further details
 on mitigating the risk of phishing attacks.
+
+
+## Consent Phishing {#consent-phishing}
+
+As authorization servers deploy phishing-resistant authentication
+methods, attackers may pivot to targeting the authorization step
+rather than the authentication step. In a consent phishing attack,
+an attacker registers an attacker-controlled client with the
+authorization server, crafts an authorization request with a `scope`
+value targeting the victim's resources, and delivers the resulting
+authorization endpoint URL to the victim through a phishing message.
+Because the authorization request is processed by the legitimate
+authorization server, the resource owner authenticates normally,
+including through any phishing-resistant factors, and is then
+presented with an authorization prompt that appears trustworthy.
+If the resource owner grants the request, the attacker receives an
+authorization code or access token granting access to the victim's
+resources.
+
+Critically, phishing-resistant authenticators do not protect against
+consent phishing. The resource owner successfully authenticates to
+the legitimate authorization server. The attack exploits the
+subsequent consent step, not the authentication step.
+
+Authorization servers SHOULD consider enforcing controls over client
+registration, including restricting which scopes a given client is
+permitted to request. Where possible, authorization servers SHOULD
+verify the identity of client developers prior to granting access to
+sensitive scopes.
+
+Authorization servers SHOULD present resource owners with clear and
+meaningful information during the authorization prompt, including the
+client name, the developer or organization that registered it, and
+the specific scopes being requested, so that resource owners can make
+an informed decision before granting access. In scenarios where client
+pre-registration is not possible, such as when using Dynamic Client Registration {{RFC7591}},
+or when the client metadata may be provided by an outside party
+such as when using Client ID Metadata Document {{I-D.ietf-oauth-client-id-metadata-document}},
+authorization servers SHOULD take additional measures to verify that the
+user understands the client they are authorizing.
+
+Authorization servers SHOULD allow administrators and resource owners
+to view the set of clients that have been granted access to their
+resources and to revoke those grants (see {{RFC7009}}), thereby
+limiting the window of exposure if a resource owner is deceived into
+approving a malicious authorization request.
 
 
 ## Cross-Site Request Forgery {#csrf_countermeasures}
