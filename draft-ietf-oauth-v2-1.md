@@ -1750,11 +1750,10 @@ redirect URI using the query string serialization described by
      client.
 
 "iss":
-:    OPTIONAL. The identifier of the authorization server which the
+:    REQUIRED. The identifier of the authorization server which the
      client can use to prevent mix-up attacks, if the client interacts
      with more than one authorization server. See {{mix-up}} and {{RFC9207}} for
-     additional details on when this parameter is necessary, and how the
-     client can use it to prevent mix-up attacks.
+     additional details how the client can use it to prevent mix-up attacks.
 
 
 For example, the authorization server redirects the user agent by
@@ -3238,16 +3237,17 @@ See {{Section 4.4 of RFC9700}} for a detailed description
 of several types of mix-up attacks.
 
 ### Mix-Up Defense via Issuer Identification
-This defense requires that the authorization server sends its issuer identifier
-in the authorization response to the client. When receiving the authorization
+
+This defense requires that the client compare the issuer identifier value that
+the authorization server sends in the authorization response to the client. When receiving the authorization
 response, the client MUST compare the received issuer identifier to the stored
 issuer identifier. If there is a mismatch, the client MUST abort the
 interaction.
 
 There are different ways this issuer identifier can be transported to the client:
 
- * The issuer information can be transported, for
-   example, via an optional response parameter `iss` (see {{authorization-response}}).
+ * The issuer information can be transported via the response parameter `iss`
+   (see {{authorization-response}}).
  * When OpenID Connect is used and an ID Token is returned in the authorization
    response, the client can evaluate the `iss` claim in the ID Token.
 
@@ -3988,6 +3988,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 * Mention PAR in the authorization endpoint definition section
 * Added security consideration section about OAuth consent phishing
+* Make `iss` response parameter required to be sent by the AS (let clients choose the mix-up mitigation still)
 
 -15
 
