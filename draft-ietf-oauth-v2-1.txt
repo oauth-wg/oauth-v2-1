@@ -4438,6 +4438,8 @@ Appendix F.  Document History
 
    *  Mention PAR in the authorization endpoint definition section
 
+   *  Added security consideration section about OAuth consent phishing
+
    -15
 
    *  add additional context for JWT client authentication and
