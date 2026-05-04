@@ -151,16 +151,17 @@ Table of Contents
      7.6.  Ensuring Endpoint Authenticity
      7.7.  Credentials-Guessing Attacks
      7.8.  Phishing Attacks
-     7.9.  Cross-Site Request Forgery
-     7.10. Clickjacking
-     7.11. Injection and Input Validation
-     7.12. Open Redirection
-       7.12.1.  Client as Open Redirector
-       7.12.2.  Authorization Server as Open Redirector
-     7.13. Transport Security
-     7.14. Authorization Server Mix-Up Mitigation
-       7.14.1.  Mix-Up Defense via Issuer Identification
-       7.14.2.  Mix-Up Defense via Distinct Redirect URIs
+     7.9.  Consent Phishing
+     7.10. Cross-Site Request Forgery
+     7.11. Clickjacking
+     7.12. Injection and Input Validation
+     7.13. Open Redirection
+       7.13.1.  Client as Open Redirector
+       7.13.2.  Authorization Server as Open Redirector
+     7.14. Transport Security
+     7.15. Authorization Server Mix-Up Mitigation
+       7.15.1.  Mix-Up Defense via Issuer Identification
+       7.15.2.  Mix-Up Defense via Distinct Redirect URIs
    8.  Native Applications
      8.1.  Client Authentication of Native Apps
        8.1.1.  Registration of Native App Clients
@@ -999,7 +1000,7 @@ Table of Contents
 
    Clients MUST NOT expose URLs that forward the user's browser to
    arbitrary URIs obtained from a query parameter ("open redirector"),
-   as described in Section 7.12.  Open redirectors can enable
+   as described in Section 7.13.  Open redirectors can enable
    exfiltration of authorization codes and access tokens.
 
    The client MAY use the state request parameter to achieve per-request
@@ -1008,7 +1009,7 @@ Table of Contents
 
    Without requiring registration of redirect URIs, attackers can use
    the authorization endpoint as an open redirector as described in
-   Section 7.12.
+   Section 7.13.
 
 2.3.2.  Multiple Redirect URIs
 
@@ -1029,7 +1030,7 @@ Table of Contents
    that mechanism.  In OpenID Connect flows, validating the nonce
    parameter provides CSRF protection.  Otherwise, one-time use CSRF
    tokens carried in the state parameter that are securely bound to the
-   user agent MUST be used for CSRF protection (see Section 7.9).
+   user agent MUST be used for CSRF protection (see Section 7.10).
 
 2.3.4.  Preventing Mix-Up Attacks
 
@@ -1041,7 +1042,7 @@ Table of Contents
    the respective request to and from the same user agent this
    authorization request was initiated with.
 
-   See Section 7.14 for a detailed description of two different defenses
+   See Section 7.15 for a detailed description of two different defenses
    against mix-up attacks.
 
 2.3.5.  Invalid Endpoint
@@ -1800,7 +1801,7 @@ Table of Contents
    "iss":  OPTIONAL.  The identifier of the authorization server which
       the client can use to prevent mix-up attacks, if the client
       interacts with more than one authorization server.  See
-      Section 7.14 and [RFC9207] for additional details on when this
+      Section 7.15 and [RFC9207] for additional details on when this
       parameter is necessary, and how the client can use it to prevent
       mix-up attacks.
 
@@ -3011,7 +3012,53 @@ Table of Contents
    See Section 1.5 for further details on mitigating the risk of
    phishing attacks.
 
-7.9.  Cross-Site Request Forgery
+7.9.  Consent Phishing
+
+   As authorization servers deploy phishing-resistant authentication
+   methods, attackers may pivot to targeting the authorization step
+   rather than the authentication step.  In a consent phishing attack,
+   an attacker registers an attacker-controlled client with the
+   authorization server, crafts an authorization request with a scope
+   value targeting the victim's resources, and delivers the resulting
+   authorization endpoint URL to the victim through a phishing message.
+   Because the authorization request is processed by the legitimate
+   authorization server, the resource owner authenticates normally,
+   including through any phishing-resistant factors, and is then
+   presented with an authorization prompt that appears trustworthy.  If
+   the resource owner grants the request, the attacker receives an
+   authorization code or access token granting access to the victim's
+   resources.
+
+   Critically, phishing-resistant authenticators do not protect against
+   consent phishing.  The resource owner successfully authenticates to
+   the legitimate authorization server.  The attack exploits the
+   subsequent consent step, not the authentication step.
+
+   Authorization servers SHOULD consider enforcing controls over client
+   registration, including restricting which scopes a given client is
+   permitted to request.  Where possible, authorization servers SHOULD
+   verify the identity of client developers prior to granting access to
+   sensitive scopes.
+
+   Authorization servers SHOULD present resource owners with clear and
+   meaningful information during the authorization prompt, including the
+   client name, the developer or organization that registered it, and
+   the specific scopes being requested, so that resource owners can make
+   an informed decision before granting access.  In scenarios where
+   client pre-registration is not possible, such as when using Dynamic
+   Client Registration [RFC7591], or when the client metadata may be
+   provided by an outside party such as when using Client ID Metadata
+   Document [I-D.ietf-oauth-client-id-metadata-document], authorization
+   servers SHOULD take additional measures to verify that the user
+   understands the client they are authorizing.
+
+   Authorization servers SHOULD allow administrators and resource owners
+   to view the set of clients that have been granted access to their
+   resources and to revoke those grants (see [RFC7009]), thereby
+   limiting the window of exposure if a resource owner is deceived into
+   approving a malicious authorization request.
+
+7.10.  Cross-Site Request Forgery
 
    An attacker might attempt to inject a request to the redirect URI of
    the legitimate client on the victim's device, e.g., to cause the
@@ -3043,7 +3090,7 @@ Table of Contents
    challenge methods either via AS metadata according to [RFC8414] or
    provide a deployment-specific way to ensure or determine support.
 
-7.10.  Clickjacking
+7.11.  Clickjacking
 
    As described in Section 4.4.1.9 of [RFC6819], the authorization
    request is susceptible to clickjacking attacks, also called user
@@ -3099,7 +3146,7 @@ Table of Contents
    by the authorization server.  Even in such cases, additional
    countermeasures SHOULD still be employed.
 
-7.11.  Injection and Input Validation
+7.12.  Injection and Input Validation
 
    An injection attack occurs when an input or otherwise external
    variable is used by an application unsanitized and causes
@@ -3112,7 +3159,7 @@ Table of Contents
    protections, in particular, the values of the state and redirect_uri
    parameters.
 
-7.12.  Open Redirection
+7.13.  Open Redirection
 
    An open redirector is an endpoint that forwards a user's browser to
    an arbitrary URI obtained from a query parameter.  Such endpoints are
@@ -3124,7 +3171,7 @@ Table of Contents
    The following attacks can occur when an AS or client has an open
    redirector.
 
-7.12.1.  Client as Open Redirector
+7.13.1.  Client as Open Redirector
 
    Clients MUST NOT expose open redirectors.  Attackers may use open
    redirectors to produce URLs pointing to the client and utilize them
@@ -3138,7 +3185,7 @@ Table of Contents
    request can be authenticated.  Countermeasures against open
    redirection are described by OWASP [owasp_redir].
 
-7.12.2.  Authorization Server as Open Redirector
+7.13.2.  Authorization Server as Open Redirector
 
    Just as with clients, attackers could try to utilize a user's trust
    in the authorization server (and its URL in particular) for
@@ -3189,7 +3236,7 @@ Table of Contents
    authorization server MAY inform the user and rely on the user to make
    the correct decision.
 
-7.13.  Transport Security
+7.14.  Transport Security
 
    In some deployments, including those utilizing load balancers, the
    TLS connection to the resource server terminates prior to the actual
@@ -3202,7 +3249,7 @@ Table of Contents
 
    See Section 17.2 of [RFC9110] for further information.
 
-7.14.  Authorization Server Mix-Up Mitigation
+7.15.  Authorization Server Mix-Up Mitigation
 
    Mix-up is an attack on scenarios where an OAuth client interacts with
    two or more authorization servers and at least one authorization
@@ -3240,7 +3287,7 @@ Table of Contents
    See Section 4.4 of [RFC9700] for a detailed description of several
    types of mix-up attacks.
 
-7.14.1.  Mix-Up Defense via Issuer Identification
+7.15.1.  Mix-Up Defense via Issuer Identification
 
    This defense requires that the authorization server sends its issuer
    identifier in the authorization response to the client.  When
@@ -3265,7 +3312,7 @@ Table of Contents
    transport the issuer information, it is a robust and relatively
    simple defense against mix-up.
 
-7.14.2.  Mix-Up Defense via Distinct Redirect URIs
+7.15.2.  Mix-Up Defense via Distinct Redirect URIs
 
    For this defense, clients MUST use a distinct redirect URI for each
    issuer they interact with.
@@ -3915,6 +3962,13 @@ Table of Contents
               Draft, draft-ietf-oauth-browser-based-apps-26, 3 December
               2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
               oauth-browser-based-apps-26>.
+
+   [I-D.ietf-oauth-client-id-metadata-document]
+              Parecki, A. and E. Smith, "OAuth Client ID Metadata
+              Document", Work in Progress, Internet-Draft, draft-ietf-
+              oauth-client-id-metadata-document-01, 1 March 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              client-id-metadata-document-01>.
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
