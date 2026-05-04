@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 26 September 2026                                          Okta
+Expires: 5 November 2026                                            Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                           25 March 2026
+                                                              4 May 2026
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 September 2026.
+   This Internet-Draft will expire on 5 November 2026.
 
 Copyright Notice
 
@@ -653,7 +653,7 @@ Table of Contents
    scope response parameter to inform the client of the scope of the
    access token issued.
 
-   The value of the scope parameter is expressed as a space- delimited
+   The value of the scope parameter is expressed as a space-delimited
    list of case-sensitive strings.  The strings are defined by the
    authorization server.  If the value contains multiple space-delimited
    strings, their order does not matter, and each string adds an
@@ -962,7 +962,7 @@ Table of Contents
    authorization server during the client registration process.
 
    The redirect URI MUST be an absolute URI as defined by Section 4.3 of
-   [RFC3986].  The redirect URI MAY include an query string component
+   [RFC3986].  The redirect URI MAY include a query string component
    (Appendix C.1), which MUST be retained when adding additional query
    parameters.  The redirect URI MUST NOT include a fragment component.
 
@@ -1237,8 +1237,8 @@ Table of Contents
    the authorization server's metadata document [RFC8414].
 
    The authorization endpoint URL MUST NOT include a fragment component,
-   and MAY include a query string component Appendix C.1, which MUST be
-   retained when adding additional query parameters.
+   and MAY include a query string component (Appendix C.1), which MUST
+   be retained when adding additional query parameters.
 
    The authorization server MUST support the use of the HTTP GET method
    Section 9.3.1 of [RFC9110] for the authorization endpoint and MAY
@@ -1273,7 +1273,7 @@ Table of Contents
    metadata document [RFC8414] and fetched programmatically at runtime.
 
    The token endpoint URL MUST NOT include a fragment component, and MAY
-   include a query string component Appendix C.1.
+   include a query string component (Appendix C.1).
 
    The client MUST use the HTTP POST method when making requests to the
    token endpoint.
@@ -2396,9 +2396,9 @@ Table of Contents
    values.  Values for the error and error_description attributes
    (specified in Appendix A.7 and Appendix A.8) MUST NOT include
    characters outside the set %x20-21 / %x23-5B / %x5D-7E.  Values for
-   the error_uri attribute (specified in Appendix A.9 of) MUST conform
-   to the URI-reference syntax and thus MUST NOT include characters
-   outside the set %x21 / %x23-5B / %x5D-7E.
+   the error_uri attribute (specified in Appendix A.9) MUST conform to
+   the URI-reference syntax and thus MUST NOT include characters outside
+   the set %x21 / %x23-5B / %x5D-7E.
 
 5.3.2.  Error Codes
 
@@ -3914,9 +3914,9 @@ Table of Contents
               "Updates to OAuth 2.0 JSON Web Token (JWT) Client
               Authentication and Assertion-Based Authorization Grants",
               Work in Progress, Internet-Draft, draft-ietf-oauth-
-              rfc7523bis-06, 2 March 2026,
+              rfc7523bis-11, 26 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-06>.
+              rfc7523bis-11>.
 
    [NIST800-63]
               Burr, W., Dodson, D., Newton, E., Perlner, R., Polk, T.,
@@ -4124,7 +4124,7 @@ A.9.  "error_uri" Syntax
 
 A.10.  "grant_type" Syntax
 
-   The grant_type element is defined in Section Section 3.2.2:
+   The grant_type element is defined in Section 3.2.2:
 
     grant-type = grant-name / URI-reference
     grant-name = 1*name-char

@@ -17,22 +17,22 @@ application to obtain access on its own behalf.  This
 specification replaces and obsoletes the OAuth 2.0 Authorization
 Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750. 
     " name="description">
-<meta content="xml2rfc 3.32.0" name="generator">
+<meta content="xml2rfc 3.33.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-oauth-v2-1-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.32.0
-    Python 3.12.12
+  xml2rfc 3.33.0
+    Python 3.12.13
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.0.2
-    platformdirs 4.9.4
+    platformdirs 4.9.6
     pycountry 24.6.1
     PyYAML 6.0.3
-    requests 2.32.5
-    wcwidth 0.6.0
+    requests 2.33.1
+    wcwidth 0.7.0
 -->
 <link href="draft-ietf-oauth-v2-1.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1053,11 +1053,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">The OAuth 2.1 Authorization Framework</td>
-<td class="right">March 2026</td>
+<td class="right">May 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hardt, et al.</td>
-<td class="center">Expires 26 September 2026</td>
+<td class="center">Expires 5 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-oauth-v2-1-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-25" class="published">25 March 2026</time>
+<time datetime="2026-05-04" class="published">4 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-26">26 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-05">5 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1134,7 +1134,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2139,8 +2139,8 @@ defining custom scopes that conflict with scopes from known extensions.<a href="
 request parameter at the authorization or token endpoints, depending on
 the grant type used. In turn, the authorization server uses the <code>scope</code>
 response parameter to inform the client of the scope of the access token issued.<a href="#section-1.4.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-5">The value of the scope parameter is expressed as a space-
-delimited list of case-sensitive strings.  The strings are defined by the
+<p id="section-1.4.1-5">The value of the scope parameter is expressed as a space-delimited
+list of case-sensitive strings.  The strings are defined by the
 authorization server.  If the value contains multiple space-delimited
 strings, their order does not matter, and each string adds an
 additional access range to the requested scope.<a href="#section-1.4.1-5" class="pilcrow">¶</a></p>
@@ -2462,7 +2462,7 @@ agent back to after completing its interaction with the resource owner.<a href="
 client's redirection endpoints previously established with the
 authorization server during the client registration process.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <p id="section-2.3-3">The redirect URI MUST be an absolute URI as defined by
-<span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.  The redirect URI MAY include an
+<span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.  The redirect URI MAY include a
 query string component (<a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>), which MUST be retained when adding
 additional query parameters. The redirect URI MUST NOT include a
 fragment component.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
@@ -2766,7 +2766,7 @@ authorization endpoint are beyond the scope of this specification,
 but the URL is typically provided in the service documentation,
 or in the authorization server's metadata document <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span>.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">The authorization endpoint URL MUST NOT include a fragment component,
-and MAY include a query string component <a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>,
+and MAY include a query string component (<a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>),
 which MUST be retained when adding additional query parameters.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <p id="section-3.1-4">The authorization server MUST support the use of the HTTP <code>GET</code>
 method <span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.1" class="relref">Section 9.3.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> for the authorization endpoint and MAY support
@@ -2801,7 +2801,7 @@ is typically provided in the service documentation and configured during
 development of the client, or provided in the authorization server's metadata
 document <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> and fetched programmatically at runtime.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">The token endpoint URL MUST NOT include a fragment component,
-and MAY include a query string component <a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+and MAY include a query string component (<a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>).<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">The client MUST use the HTTP <code>POST</code> method when making requests to the token endpoint.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.2-5">The authorization server MUST ignore unrecognized request parameters sent to the token endpoint.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
 <p id="section-3.2-6">Parameters sent without a value MUST be treated as if they were
@@ -4147,7 +4147,7 @@ MUST NOT include characters outside the set %x21 / %x23-5B
 between scope values.  Values for the <code>error</code> and <code>error_description</code>
 attributes (specified in <a href="#error-syntax" class="auto internal xref">Appendix A.7</a> and <a href="#error-description-syntax" class="auto internal xref">Appendix A.8</a>) MUST
 NOT include characters outside the set %x20-21 / %x23-5B / %x5D-7E.
-Values for the <code>error_uri</code> attribute (specified in <a href="#error-uri-syntax" class="auto internal xref">Appendix A.9</a> of)
+Values for the <code>error_uri</code> attribute (specified in <a href="#error-uri-syntax" class="auto internal xref">Appendix A.9</a>)
 MUST conform to the URI-reference syntax and thus MUST NOT
 include characters outside the set %x21 / %x23-5B / %x5D-7E.<a href="#section-5.3.1-5" class="pilcrow">¶</a></p>
 </section>
@@ -5823,7 +5823,7 @@ work is based upon. No changes to those registries are required by this specific
 <dd class="break"></dd>
 <dt id="I-D.ietf-oauth-rfc7523bis">[I-D.ietf-oauth-rfc7523bis]</dt>
         <dd>
-<span class="refAuthor">Jones, M. B.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Mortimore, C.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"Updates to OAuth 2.0 JSON Web Token (JWT) Client Authentication and Assertion-Based Authorization Grants"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc7523bis-06</span>, <time datetime="2026-03-02" class="refDate">2 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-06">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Jones, M. B.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Mortimore, C.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"Updates to OAuth 2.0 JSON Web Token (JWT) Client Authentication and Assertion-Based Authorization Grants"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc7523bis-11</span>, <time datetime="2026-03-26" class="refDate">26 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-11">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-11</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="NIST800-63">[NIST800-63]</dt>
         <dd>
@@ -6074,7 +6074,7 @@ and <a href="#error-response" class="auto internal xref">Section 5.3</a>:<a href
         <h3 id="name-grant_type-syntax">
 <a href="#appendix-A.10" class="section-number selfRef">A.10. </a><a href="#name-grant_type-syntax" class="section-name selfRef">"grant_type" Syntax</a>
         </h3>
-<p id="appendix-A.10-1">The <code>grant_type</code> element is defined in Section <a href="#token-request" class="auto internal xref">Section 3.2.2</a>:<a href="#appendix-A.10-1" class="pilcrow">¶</a></p>
+<p id="appendix-A.10-1">The <code>grant_type</code> element is defined in <a href="#token-request" class="auto internal xref">Section 3.2.2</a>:<a href="#appendix-A.10-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="appendix-A.10-2">
 <pre>
  grant-type = grant-name / URI-reference
