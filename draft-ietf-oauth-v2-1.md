@@ -1750,7 +1750,7 @@ redirect URI using the query string serialization described by
      client.
 
 "iss":
-:    REQUIRED. The identifier of the authorization server which the
+:    REQUIRED. The issuer identifier of the authorization server which the
      client can use to prevent mix-up attacks, if the client interacts
      with more than one authorization server. See {{mix-up}} and {{RFC9207}} for
      additional details how the client can use it to prevent mix-up attacks.
@@ -3246,7 +3246,7 @@ interaction.
 
 There are different ways this issuer identifier can be transported to the client:
 
- * The issuer information can be transported via the response parameter `iss`
+ * The issuer information is transported via the response parameter `iss`
    (see {{authorization-response}}).
  * When OpenID Connect is used and an ID Token is returned in the authorization
    response, the client can evaluate the `iss` claim in the ID Token.
