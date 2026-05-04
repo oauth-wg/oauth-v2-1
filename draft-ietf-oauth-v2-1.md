@@ -1709,7 +1709,7 @@ redirect URIs previously established during client registration ({{client-regist
 When comparing the two URIs the authorization server MUST ensure that the
 two URIs are equal, see {{Section 6.2.1 of RFC3986}}, Simple String Comparison, for details.
 The only exception is native apps using a localhost URI: In this case, the authorization server
-MUST allow variable port numbers as described in {{Section 7.3 of RFC8252}}.
+MUST allow variable port numbers as described in {{loopback-interface-redirection}}.
 
 If the request is valid,
 the authorization server authenticates the resource owner and obtains
