@@ -1208,6 +1208,12 @@ Cross-Origin Resource Sharing {{WHATWG.CORS}} MUST NOT be
 supported at the Authorization Endpoint as the client does not access this
 endpoint directly, instead the client redirects the user agent to it.
 
+Grant types define the required parameters at the authorization endpoint.
+This specification defines the "Authorization Code Grant" ({{authorization-code-grant}}),
+including the base list of parameters to include in the request. Extensions
+such as Pushed Authorization Requests ({{RFC9126}}) define a different set
+of parameters to use in the request to the authorization endpoint.
+
 ## Token Endpoint {#token-endpoint}
 
 The token endpoint is used by the client to obtain an access token using
@@ -3930,6 +3936,10 @@ Discussions around this specification have also occurred at the OAuth Security W
 # Document History
 
 [[ To be removed from the final specification ]]
+
+-16
+
+* Mention PAR in the authorization endpoint definition section
 
 -15
 
