@@ -3987,6 +3987,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 -16
 
 * Mention PAR in the authorization endpoint definition section
+* Added security consideration section about OAuth consent phishing
 
 -15
 
