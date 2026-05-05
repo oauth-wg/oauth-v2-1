@@ -1875,7 +1875,7 @@ by {{query-string-serialization}}:
      client.
 
 "iss":
-:    OPTIONAL. The identifier of the authorization server. See
+:    REQUIRED. The issuer identifier of the authorization server. See
      {{authorization-response}} above for details.
 
 For example, the authorization server indicates the request was denied
