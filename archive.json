@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-16T00:29:26.964250+00:00",
+  "timestamp": "2026-05-05T00:32:26.529852+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -2146,15 +2146,15 @@
       "id": "MDU6SXNzdWU4NDk3NTg1NDc=",
       "title": "Potential new Security Consideration - Malicious Clients (Consent Phishing)",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/76",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "mpeck12",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Potential new Security Consideration - Malicious Clients, Consent Phishing, or other appropriate term:\r\n\r\nAs service providers adopt stronger user authentication methods, attackers seek additional means to gain access to resources. An attacker may attempt to register an attacker-controlled client with the authorization server, then attempt to trick resource owners into granting the client access to resources through a phishing attack [1][2][3][4]. The access request may not appear malicious to the user as it originates from the legitimate authorization server.\r\n\r\nAuthorization servers should enforce controls over client registration, as well as controls over the scopes that particular clients are allowed to request. Authorization servers should also allow administrators and/or users to view a list of clients that have been granted access to resources and provide the ability to revoke access.\r\n\r\n[1] https://www.trendmicro.com/en_us/research/17/d/pawn-storm-abuses-open-authentication-advanced-social-engineering-attacks.html\r\n[2] https://www.proofpoint.com/us/blog/threat-insight/ta2552-uses-oauth-access-token-phishing-exploit-read-only-risks\r\n[3] https://www.microsoft.com/security/blog/2020/07/08/protecting-remote-workforce-application-attacks-consent-phishing/\r\n[4] https://security.googleblog.com/2017/05/protecting-you-against-phishing.html\r\n",
       "createdAt": "2021-04-03T23:20:09Z",
-      "updatedAt": "2021-04-03T23:20:09Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-04T23:24:16Z",
+      "closedAt": "2026-05-04T23:24:04Z",
       "comments": []
     },
     {
@@ -4413,15 +4413,15 @@
       "id": "I_kwDODkfq5s6AqIab",
       "title": "Ambigious text around whether `code_challenge` is required",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/170",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "SECtim",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "The following text snippets seem like a `code_challenge` is always required in the authorization request (for authZ code flows).\r\n\r\nDescription of the authZ code flow figure:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1468-L1470\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1485-L1487\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1493-L1494\r\n\r\nSection 4.3.1:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1863-L1865\r\n\r\nWhereas various other places, most prominently Section 7.5.2, state that `code_challenge` is (only) required _unless_ some conditions are met:\r\n\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L2743-L2750",
       "createdAt": "2024-02-28T09:42:36Z",
-      "updatedAt": "2026-02-25T21:17:00Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-04T22:58:23Z",
+      "closedAt": "2026-05-04T22:58:23Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -5401,15 +5401,15 @@
       "id": "I_kwDODkfq5s65ioBa",
       "title": "Make PKCE optional when DPoP + PAR are used",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/214",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "matthieusieben",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Section [4.1.2.1. Error Response](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#name-error-response-2) contains:\n\n> An AS MUST reject requests without a code_challenge from public clients, and MUST reject such requests from other clients unless there is reasonable assurance that the client mitigates authorization code injection in other ways. See [Section 7.5.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#authorization_codes) for details.\n\nIn instances where PAR + DPoP (during PAR) are used, it seems that PKCE can be made completely optional. Even for public clients.\n\n[7.5.2. Countermeasures](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-11#section-7.5.2) could also be adapted to make PKCE optional when DPoP is used during PAR.\n\n",
       "createdAt": "2025-06-03T07:50:51Z",
-      "updatedAt": "2025-11-03T07:40:27Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-04T23:01:18Z",
+      "closedAt": "2026-05-04T23:01:18Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -5424,6 +5424,13 @@
           "body": "You are right.\n\nMy point was that it'd be nice if the text allowed to drop PKCE in case DPoP (with unique keys) and PAR are used together. As it stands, PKCE is not optional.\n\nWe've got quite a bit of feedback from devs implementing AT favored OAuth and the main feedback we got was that it is quite hard. We will likely not change our spec but being able to build a strong, yet simpler, OAuth profile might be worth a small extra text in the spec ?",
           "createdAt": "2025-11-03T07:40:27Z",
           "updatedAt": "2025-11-03T07:40:27Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I don't think this optionality is worth the complexity of explaining the specific conditions under which it would be ok. DPoP is quite a bit harder to implement than PKCE, so at the point someone is going to implement DPoP the amount of extra effort to implement PKCE is very small.",
+          "createdAt": "2026-05-04T23:01:18Z",
+          "updatedAt": "2026-05-04T23:01:18Z"
         }
       ]
     },
@@ -5680,7 +5687,7 @@
       ],
       "body": "OAuth 2.1 incorporates RFC 9207's issuer parameter optionally. MCP reveals a rapidly growing use case where mitigating this attack is necessary. See discussion in https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1721#issuecomment-3555689564. \n\nOptional security mitigations add complexity compared to mandatory security mitigations. I didn't see any discussion of optional vs mandatory in #46 or the IETF minutes. Can we make this mitigation mandatory in OAuth 2.1?",
       "createdAt": "2025-11-20T05:18:04Z",
-      "updatedAt": "2026-02-25T20:17:22Z",
+      "updatedAt": "2026-05-04T23:30:30Z",
       "closedAt": null,
       "comments": [
         {
@@ -5710,6 +5717,27 @@
           "body": "Well here we are 2 months later and the March meeting is right around the corner, so I'll add it to the list to discuss then.",
           "createdAt": "2026-02-25T20:17:16Z",
           "updatedAt": "2026-02-25T20:17:16Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This was discussed at IETF 125. I believe the conclusion of the discussion was to not make it an absolute requirement, but instead better describe the situations in which it is required. Unfortunately there were some technical issues with the meeting software in the room during this part of the presentation so I'm not sure we had enough time to fully think this through.\n\nHere is the timestamp to the meeting where one comment was made:\n\nhttps://youtu.be/C72Saxe03tk?t=753\n\n",
+          "createdAt": "2026-05-04T22:46:00Z",
+          "updatedAt": "2026-05-04T22:46:00Z"
+        },
+        {
+          "author": "will-bartlett",
+          "authorAssociation": "NONE",
+          "body": "I wasn't present, but I don't know that the video reflects that conclusion.\n\nThe first speaker (Kashan Lu) begins \"So for the mixup question mandating issuer parameter, my take is that I support it, but I think we might encounter some difficulties for a client to actually use the parameter to mitigate mixup\"\n\nA second speaker (the slides do not show a speaker name) says at 14:55 \"that doesn't necessarily make it required for everywhere\" - but it's not clear to me if that speaker is referring to the server response or the client checking the parameter. \n\nA third speaker (identified as Filip Skokan) describes some problems for the client to use the issuer value around 15:22.\n\nThere are two separate choices here:\n - OAuth Providers\n - OAuth clients\n\nLooking at the email thread, I see:\n - Nick Watson in favor of making issuer mandatory for providers (\"I support making iss mandatory\" - inline quotes removed), with no specific comment for clients\n - Warren Prad in favor of making issuer mandatory for providers (\"The point to suggest that issuer be required in OAuth2.1 is something I am also in favor of.\") with no specific comment for clients.\n - Max Gerber in favor of making issuer mandatory for providers (\"*I am supportive of making this response parameter mandatory in 2.1*.\") with no specific comment for clients.\n - Kaixuan Luo (not sure if this is the same as Kashan Lu - perhaps a transcription issue on youtube) says \"I support making iss\u200b compulsory (i.e., mandating RFC9207) in CIMD use cases\"\n\nSo, for OAuth providers mandating, it seems to be either 6/1/0 or 6/1/1 - in favor / neutral / against - depending on whether Kashan Lu is a mistranscription of Kaixuan Luo or not.\n\nFor OAuth clients mandating, it seems to be 1/4/2 - in favor / neutral / against - with myself as the sole voice in favor.\n\nSo I would have said we have a consensus for making it mandatory for OAuth Providers (\"OAuth Providers MUST return the iss response parameters\") but no consensus for making it mandatory for OAuth clients outside of certain circumstances (\"OAuth clients that [meet certain criteria] SHOULD check the issuer response parameter\").\n",
+          "createdAt": "2026-05-04T23:13:40Z",
+          "updatedAt": "2026-05-04T23:13:40Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Thank you, that is a better summary of the current state of the discussion.\n\nHere is a PR that makes `iss` mandatory for the AS to include in the response, but doesn't change anything about the expectation of the clients:\n\nhttps://github.com/oauth-wg/oauth-v2-1/pull/250",
+          "createdAt": "2026-05-04T23:30:30Z",
+          "updatedAt": "2026-05-04T23:30:30Z"
         }
       ]
     },
@@ -5844,16 +5872,31 @@
       "id": "I_kwDODkfq5s7-NDAC",
       "title": "Section 4.1.1 should probably mention Pushed Authorization Requests",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/246",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ThisIsMissEm",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Currently the text in [Section 4.1.1](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-09.html#section-4.1.1) only mentions the parameters you would send to the `authorize` endpoint if you were not using PAR.\n\nI think it'd be a wise to say that PAR replaces these parameters with just `request_uri` and (maybe) `client_id`.",
       "createdAt": "2026-04-14T21:28:05Z",
-      "updatedAt": "2026-04-14T21:28:05Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-05-04T23:10:57Z",
+      "closedAt": "2026-05-04T23:10:49Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "That's because this section is describing the authorization code flow, not the authorization endpoint itself.\n\nIn #247 I added a mention in the authorization endpoint definition section instead. Does that work?",
+          "createdAt": "2026-05-04T21:28:03Z",
+          "updatedAt": "2026-05-04T21:28:03Z"
+        },
+        {
+          "author": "ThisIsMissEm",
+          "authorAssociation": "NONE",
+          "body": "Sure!",
+          "createdAt": "2026-05-04T23:07:49Z",
+          "updatedAt": "2026-05-04T23:07:49Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -10739,24 +10782,26 @@
       "id": "PR_kwDODkfq5s7Ravug",
       "title": "Update reference for loopback interface redirection",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/243",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "ylemkimon",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The linked section is also consolidated on the new spec.",
       "createdAt": "2026-04-10T10:35:23Z",
-      "updatedAt": "2026-04-10T10:40:03Z",
+      "updatedAt": "2026-05-04T21:06:50Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "2e1ffc0192875279b670b0db68642848866cdacd",
       "headRepository": "ylemkimon/oauth-v2-1",
       "headRefName": "patch-1",
       "headRefOid": "e9743e7a12e6812c8432867aa9947b8839b80e8d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-05-04T21:06:49Z",
+      "mergedAt": "2026-05-04T21:06:49Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "5353e245666bdd602e8911dfb0d57c8a2425408b"
+      },
       "comments": [],
       "reviews": []
     },
@@ -10765,26 +10810,232 @@
       "id": "PR_kwDODkfq5s7RqDMV",
       "title": "Fix minor editorial nitpicks",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/244",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "ylemkimon",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Few more issues I've noticed\r\n- The example in \"3.2.2. Token Endpoint Request\" includes `redirect_uri` which is removed\r\n- \"A.1. \"client_id\" Syntax\" and \"A.2. \"client_secret\" Syntax\" allow client_id and client_secret to be an empty string (`*VSCHAR`)\r\n- Sections \"7.1.4. Access Token Privilege Restriction\" and \"7.3.2. Access Token Privilege Restriction\" are near-duplicates.",
       "createdAt": "2026-04-11T11:31:55Z",
-      "updatedAt": "2026-04-12T07:58:43Z",
+      "updatedAt": "2026-05-04T21:13:27Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "2e1ffc0192875279b670b0db68642848866cdacd",
       "headRepository": "ylemkimon/oauth-v2-1",
       "headRefName": "patch-2",
       "headRefOid": "dd734b20edd595a3ff31df00d870710c86ecbf23",
+      "closedAt": "2026-05-04T20:42:24Z",
+      "mergedAt": "2026-05-04T20:42:24Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "0da83a1193c1c4d0872e6bc661edda5190925513"
+      },
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Thanks, how would you like to be credited in the document?",
+          "createdAt": "2026-05-04T21:13:27Z",
+          "updatedAt": "2026-05-04T21:13:27Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 247,
+      "id": "PR_kwDODkfq5s7YLHmm",
+      "title": "Mention PAR in the authorization endpoint definition section",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/247",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "closes #246",
+      "createdAt": "2026-05-04T21:27:29Z",
+      "updatedAt": "2026-05-04T23:10:51Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "5353e245666bdd602e8911dfb0d57c8a2425408b",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-246",
+      "headRefOid": "3d671c10469eb0d1d569cd3c9a09b3e0717b87a3",
+      "closedAt": "2026-05-04T23:10:48Z",
+      "mergedAt": "2026-05-04T23:10:48Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "0cedad080b8c6bf6e5d283c56781c65352a3b73a"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 248,
+      "id": "PR_kwDODkfq5s7YLa18",
+      "title": "deprecate pkce plain method",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/248",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "closes #236",
+      "createdAt": "2026-05-04T21:43:41Z",
+      "updatedAt": "2026-05-04T21:44:31Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "5353e245666bdd602e8911dfb0d57c8a2425408b",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-236",
+      "headRefOid": "e97dd451ec8e9e12326ae16f324de7d25c45287d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s77wVvq",
+          "commit": {
+            "abbreviatedOid": "e97dd45"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-04T21:44:31Z",
+          "updatedAt": "2026-05-04T21:44:31Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "@panva I'd be curious for your perspective on this change. I wasn't sure whether we wanted to make the parameter required now, or default to the only defined method.",
+              "createdAt": "2026-05-04T21:44:31Z",
+              "updatedAt": "2026-05-04T21:44:31Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 249,
+      "id": "PR_kwDODkfq5s7YM7rX",
+      "title": "add section on consent phishing",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/249",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "closes #76",
+      "createdAt": "2026-05-04T23:22:57Z",
+      "updatedAt": "2026-05-04T23:24:07Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "0cedad080b8c6bf6e5d283c56781c65352a3b73a",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-76",
+      "headRefOid": "47ad5f159c63b87b1a729eb03a12f1379ff9b8c9",
+      "closedAt": "2026-05-04T23:24:03Z",
+      "mergedAt": "2026-05-04T23:24:03Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "1e825d3a1a2fab55850f19e39e129997820e9342"
+      },
+      "comments": [],
       "reviews": []
+    },
+    {
+      "number": 250,
+      "id": "PR_kwDODkfq5s7YNCbt",
+      "title": "Make `iss` response parameter required to be sent by the AS",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/250",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "This does not change the requirements for the client, the client can still choose which mix-up mitigation method to use\r\n\r\ncloses #233",
+      "createdAt": "2026-05-04T23:30:02Z",
+      "updatedAt": "2026-05-04T23:51:17Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "08614f65de99bcfee5f8c201621c8cc1017712a6",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-233",
+      "headRefOid": "dead81c4d8ac88b793fbec6c23334eab71ab9395",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s77yfSx",
+          "commit": {
+            "abbreviatedOid": "9931ab0"
+          },
+          "author": "will-bartlett",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-04T23:42:55Z",
+          "updatedAt": "2026-05-04T23:45:34Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "nit: \"can be\" => \"is\"",
+              "createdAt": "2026-05-04T23:42:55Z",
+              "updatedAt": "2026-05-04T23:45:34Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "Nit: below and in RFC 9207, this parameter is described as \"the issuer identifier of the authorization server\" but here, it is described only as \"the identifier of the authorization server\". I think this should also say \"the issuer identifier\" for consistency",
+              "createdAt": "2026-05-04T23:44:51Z",
+              "updatedAt": "2026-05-04T23:45:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s77ymS_",
+          "commit": {
+            "abbreviatedOid": "9931ab0"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-04T23:50:41Z",
+          "updatedAt": "2026-05-04T23:50:41Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\n:    REQUIRED. The issuer identifier of the authorization server which the\n```",
+              "createdAt": "2026-05-04T23:50:41Z",
+              "updatedAt": "2026-05-04T23:50:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s77ymsx",
+          "commit": {
+            "abbreviatedOid": "9931ab0"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-04T23:51:04Z",
+          "updatedAt": "2026-05-04T23:51:05Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\n * The issuer information is transported via the response parameter `iss`\n```",
+              "createdAt": "2026-05-04T23:51:04Z",
+              "updatedAt": "2026-05-04T23:51:05Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
