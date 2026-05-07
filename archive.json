@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-05T00:32:26.529852+00:00",
+  "timestamp": "2026-05-07T00:33:10.132771+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -10881,7 +10881,7 @@
       "labels": [],
       "body": "closes #236",
       "createdAt": "2026-05-04T21:43:41Z",
-      "updatedAt": "2026-05-04T21:44:31Z",
+      "updatedAt": "2026-05-05T05:21:36Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "5353e245666bdd602e8911dfb0d57c8a2425408b",
@@ -10911,6 +10911,26 @@
               "body": "@panva I'd be curious for your perspective on this change. I wasn't sure whether we wanted to make the parameter required now, or default to the only defined method.",
               "createdAt": "2026-05-04T21:44:31Z",
               "updatedAt": "2026-05-04T21:44:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s77218T",
+          "commit": {
+            "abbreviatedOid": "e97dd45"
+          },
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-05T05:21:35Z",
+          "updatedAt": "2026-05-05T05:21:36Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "@aaronpk It _feels_ like making it required is a breaking change but in light of the original default being unavailable it isn't. I'd make it required rather than introducing variable defaults.",
+              "createdAt": "2026-05-05T05:21:36Z",
+              "updatedAt": "2026-05-05T05:21:36Z"
             }
           ]
         }
@@ -10956,18 +10976,26 @@
       "labels": [],
       "body": "This does not change the requirements for the client, the client can still choose which mix-up mitigation method to use\r\n\r\ncloses #233",
       "createdAt": "2026-05-04T23:30:02Z",
-      "updatedAt": "2026-05-04T23:51:17Z",
+      "updatedAt": "2026-05-05T13:47:07Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "08614f65de99bcfee5f8c201621c8cc1017712a6",
       "headRepository": "oauth-wg/oauth-v2-1",
       "headRefName": "issue-233",
-      "headRefOid": "dead81c4d8ac88b793fbec6c23334eab71ab9395",
+      "headRefOid": "4d983fb07497535748490c3fa19ed213f135dab9",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "body": "OAuth 2.1 does not mandate use of RFC8414 (AS metadata) and this is retrofitting an existing signal from an extension that depends on it for interoperability and client enforcement.\r\n\r\nExisting client software only ensures response `iss` parameter presence in absence of a JARM response or a frontchannel ID Token when the `\"authorization_response_iss_parameter_supported\"` AS metadata is `true`.\r\n\r\nThe metadata's absence can lead to client software thinking \"i've got this requirement covered\" because it implements support for RFC9207 when in fact under this ruleset here the parameter can be stripped down from a response and the client won't complain.",
+          "createdAt": "2026-05-05T05:49:12Z",
+          "updatedAt": "2026-05-05T13:47:07Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDODkfq5s77yfSx",
@@ -11032,6 +11060,98 @@
               "body": "```suggestion\n * The issuer information is transported via the response parameter `iss`\n```",
               "createdAt": "2026-05-04T23:51:04Z",
               "updatedAt": "2026-05-04T23:51:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s77z6o6",
+          "commit": {
+            "abbreviatedOid": "dead81c"
+          },
+          "author": "max-stytch",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-05T01:23:23Z",
+          "updatedAt": "2026-05-05T01:31:02Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\n:    REQUIRED. The issuer identifier of the authorization server. See\n```",
+              "createdAt": "2026-05-05T01:23:23Z",
+              "updatedAt": "2026-05-05T01:31:02Z"
+            },
+            {
+              "originalPosition": 1,
+              "body": "Thoughts on adding a reference to mix-up mitigation here? Or is the reference in the `iss` param description enough already?\n\n\n```suggestion\n\nClients that interact with two or more authorization servers MUST\ntake appropriate steps to prevent mix-up attacks. See {{mix-up}} for more details.\n```",
+              "createdAt": "2026-05-05T01:25:55Z",
+              "updatedAt": "2026-05-05T01:31:02Z"
+            },
+            {
+              "originalPosition": 33,
+              "body": "Now that `iss` is required, is it worth pulling out the OpenID Connect approach entirely? Returning an `id_token` in the front-channel authorization response is not great behavior, and removing the option as a recommendation would simplify mix-up mitigation for client implementors.",
+              "createdAt": "2026-05-05T01:30:13Z",
+              "updatedAt": "2026-05-05T01:31:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s770DGJ",
+          "commit": {
+            "abbreviatedOid": "dead81c"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-05T01:35:59Z",
+          "updatedAt": "2026-05-05T01:35:59Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "oops good catch, thanks!",
+              "createdAt": "2026-05-05T01:35:59Z",
+              "updatedAt": "2026-05-05T01:35:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s770Dkd",
+          "commit": {
+            "abbreviatedOid": "4d983fb"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-05T01:37:04Z",
+          "updatedAt": "2026-05-05T01:37:04Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "I think the reference above in the \"iss\" definition is enough",
+              "createdAt": "2026-05-05T01:37:04Z",
+              "updatedAt": "2026-05-05T01:37:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s770FmR",
+          "commit": {
+            "abbreviatedOid": "4d983fb"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-05T01:39:39Z",
+          "updatedAt": "2026-05-05T01:39:40Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "Since these are client instructions, I wanted to still cover the bases of the options the client has available. Since the consensus was to require servers to send it but not require clients use this particular method to prevent the attack, it seems most appropriate to leave in this sentence.",
+              "createdAt": "2026-05-05T01:39:39Z",
+              "updatedAt": "2026-05-05T01:39:40Z"
             }
           ]
         }
