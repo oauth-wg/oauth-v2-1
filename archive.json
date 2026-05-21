@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-14T00:37:35.774080+00:00",
+  "timestamp": "2026-05-21T00:40:14.989905+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5910,9 +5910,17 @@
       "labels": [],
       "body": "## Business Case and Demand\n\nToday, there is no guidance or pattern for multi-account authorizations in Green Button Connect. While third parties can technically link multiple accounts behind a single subscription ID, Consolidated Edison of New York\u2019s goal is:\n\n* **1 subscription ID per account**: To simplify data management.\n* **Improved performance**: To optimize response times for batch data requests.\n\n**Demand:**\nCustomers and third parties (e.g., *Meltek, Runwise, NuEnergen, and Empowered Buildings*) have requested a simpler way to authorize multiple accounts simultaneously for several years.\n\n---\n\n## Conceptual Design (Opt-in, Backward Compatible)\n\nThe proposal is an opt-in extension of the current OAuth 2.1 authorization code flow.\n\n### 1.  Initiation\nThird parties choose the flow via the `response_type` in the authorization request:\n* `response_type=code` \u2192 Existing single account flow (no change).\n* `response_type=bulkCode` \u2192 New multi-account flow (**opt-in**).\n\n### 2.  Authorization Loop\nIn the multi-account flow (`bulkCode`):\n1.  The user selects one or more accounts to authorize (or \u201cselect all\u201d).\n2.  For each selected account, the data custodian redirects to the third party\u2019s `redirect_uri` with:\n    * A unique `code` for that account.\n    * A `state` parameter containing the original client-supplied state plus metadata.\n\n**State Format:**\n`state = <original_state>|response_code=bulkCode;current=<n>;total=<m>`\n\n> **Example:** If the original state is `123` and there are 2 accounts, the redirect would look like:\n> `redirect_uri?code=abc&state=123|response_code=bulkCode;current=1;total=2`\n\n### 3.  Third-Party Handling\n* **If `current < total`**: The third party redirects the user to its multi-account authorization continuation page.\n    * *URL Example:* `{base_url}/multi-account-authorization?response_code=bulkCode&current=1&total=2&status=Success`\n* **If `current == total`**: The third party redirects the user to its normal post-authorization landing page.\n* **Interruption**: If the loop is interrupted, all completed authorizations remain valid.\n\n---\n\n## Security Considerations\n\n* **State Integrity**: The client must recover the `<original_state>` and validate it exactly to preserve CSRF protection.\n* **Metadata Usage**: Appended metadata is **informational only** and must not be used for security-sensitive decisions.\n* **Implementation**: Clients must implement custom parsing for the state string.  Some OIDC libraries requiring an exact string match for `state` may require customization.\n\n<img width=\"1068\" height=\"601\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6470722c-9c67-4fe9-91fd-1d601e24b87c\" />\n\n<img width=\"1068\" height=\"601\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e93ce5b1-8347-43eb-8a9e-fd2edba4d949\" />\n\nThe [Green Button Alliance](https://www.greenbuttonalliance.org) received the above request from Consolidated Edison of New York.\n\nDonald F. Coffin\nGreen Button Alliance\nTechnical Manager\n\ndcoffin@greenbuttonalliance.org",
       "createdAt": "2026-05-13T16:58:16Z",
-      "updatedAt": "2026-05-13T16:58:16Z",
+      "updatedAt": "2026-05-20T01:48:11Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "There is very likely a much simpler way to achieve this without any change to the protocol. I think you can get the same effect by having the OAuth client start the flow to the first account like normal, and when the flow completes and the browser lands back at the OAuth client, it can immediately start a new flow to the next account. The state management can happen entirely in the OAuth client, no changes needed to the authorization servers or the OAuth protocol.",
+          "createdAt": "2026-05-20T01:48:10Z",
+          "updatedAt": "2026-05-20T01:48:10Z"
+        }
+      ]
     }
   ],
   "pulls": [
