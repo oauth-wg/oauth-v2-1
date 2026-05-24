@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-21T00:40:14.989905+00:00",
+  "timestamp": "2026-05-24T00:38:19.896945+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5910,7 +5910,7 @@
       "labels": [],
       "body": "## Business Case and Demand\n\nToday, there is no guidance or pattern for multi-account authorizations in Green Button Connect. While third parties can technically link multiple accounts behind a single subscription ID, Consolidated Edison of New York\u2019s goal is:\n\n* **1 subscription ID per account**: To simplify data management.\n* **Improved performance**: To optimize response times for batch data requests.\n\n**Demand:**\nCustomers and third parties (e.g., *Meltek, Runwise, NuEnergen, and Empowered Buildings*) have requested a simpler way to authorize multiple accounts simultaneously for several years.\n\n---\n\n## Conceptual Design (Opt-in, Backward Compatible)\n\nThe proposal is an opt-in extension of the current OAuth 2.1 authorization code flow.\n\n### 1.  Initiation\nThird parties choose the flow via the `response_type` in the authorization request:\n* `response_type=code` \u2192 Existing single account flow (no change).\n* `response_type=bulkCode` \u2192 New multi-account flow (**opt-in**).\n\n### 2.  Authorization Loop\nIn the multi-account flow (`bulkCode`):\n1.  The user selects one or more accounts to authorize (or \u201cselect all\u201d).\n2.  For each selected account, the data custodian redirects to the third party\u2019s `redirect_uri` with:\n    * A unique `code` for that account.\n    * A `state` parameter containing the original client-supplied state plus metadata.\n\n**State Format:**\n`state = <original_state>|response_code=bulkCode;current=<n>;total=<m>`\n\n> **Example:** If the original state is `123` and there are 2 accounts, the redirect would look like:\n> `redirect_uri?code=abc&state=123|response_code=bulkCode;current=1;total=2`\n\n### 3.  Third-Party Handling\n* **If `current < total`**: The third party redirects the user to its multi-account authorization continuation page.\n    * *URL Example:* `{base_url}/multi-account-authorization?response_code=bulkCode&current=1&total=2&status=Success`\n* **If `current == total`**: The third party redirects the user to its normal post-authorization landing page.\n* **Interruption**: If the loop is interrupted, all completed authorizations remain valid.\n\n---\n\n## Security Considerations\n\n* **State Integrity**: The client must recover the `<original_state>` and validate it exactly to preserve CSRF protection.\n* **Metadata Usage**: Appended metadata is **informational only** and must not be used for security-sensitive decisions.\n* **Implementation**: Clients must implement custom parsing for the state string.  Some OIDC libraries requiring an exact string match for `state` may require customization.\n\n<img width=\"1068\" height=\"601\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6470722c-9c67-4fe9-91fd-1d601e24b87c\" />\n\n<img width=\"1068\" height=\"601\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e93ce5b1-8347-43eb-8a9e-fd2edba4d949\" />\n\nThe [Green Button Alliance](https://www.greenbuttonalliance.org) received the above request from Consolidated Edison of New York.\n\nDonald F. Coffin\nGreen Button Alliance\nTechnical Manager\n\ndcoffin@greenbuttonalliance.org",
       "createdAt": "2026-05-13T16:58:16Z",
-      "updatedAt": "2026-05-20T01:48:11Z",
+      "updatedAt": "2026-05-21T03:18:47Z",
       "closedAt": null,
       "comments": [
         {
@@ -5919,6 +5919,41 @@
           "body": "There is very likely a much simpler way to achieve this without any change to the protocol. I think you can get the same effect by having the OAuth client start the flow to the first account like normal, and when the flow completes and the browser lands back at the OAuth client, it can immediately start a new flow to the next account. The state management can happen entirely in the OAuth client, no changes needed to the authorization servers or the OAuth protocol.",
           "createdAt": "2026-05-20T01:48:10Z",
           "updatedAt": "2026-05-20T01:48:10Z"
+        },
+        {
+          "author": "dfcoffin",
+          "authorAssociation": "NONE",
+          "body": "@aaronpk Please be more specific about how the OAuth client immediately starts a new flow to the next account.  ",
+          "createdAt": "2026-05-21T02:09:15Z",
+          "updatedAt": "2026-05-21T02:09:15Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "When the browser lands at the redirect URI, the client finishes the first OAuth flow (exchanges the authorization code for the access token), then it proceeds to the next authorization server with a new OAuth request.",
+          "createdAt": "2026-05-21T02:11:59Z",
+          "updatedAt": "2026-05-21T02:11:59Z"
+        },
+        {
+          "author": "dfcoffin",
+          "authorAssociation": "NONE",
+          "body": "@aaronpk Thanks for the quick response.  I have already informed ConEd that the current Authorization Code flow is a one-for-one flow and that multiple user accounts can be assigned to a single OAuth access token.  However, ConEd has not clearly explained why its customers are requesting the ability to generate multiple OAuth access tokens via a single Authorization Code flow.\n\nI am asking them to review and comment on this issue or provide me with additional information.  They are currently developing a POC version using the Authorization Code flow contained in #251 documentation.",
+          "createdAt": "2026-05-21T02:38:49Z",
+          "updatedAt": "2026-05-21T02:38:49Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "For the record, I think that is a terrible idea, and likely fraught with a number of vulnerabilities that are not obvious. \n\nCan you please ask them to clarify the actual end goal? In particular the intended user experience and developer experience. ",
+          "createdAt": "2026-05-21T02:51:28Z",
+          "updatedAt": "2026-05-21T02:51:28Z"
+        },
+        {
+          "author": "dfcoffin",
+          "authorAssociation": "NONE",
+          "body": "@aaronpk I have asked them to comment on this Issue to provide more justification for why their users have requested the capability.",
+          "createdAt": "2026-05-21T03:18:16Z",
+          "updatedAt": "2026-05-21T03:18:47Z"
         }
       ]
     }
