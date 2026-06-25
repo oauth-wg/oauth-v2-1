@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-18T00:46:33.558929+00:00",
+  "timestamp": "2026-06-25T00:41:33.013572+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -11236,6 +11236,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 252,
+      "id": "PR_kwDODkfq5s7qMVN8",
+      "title": "Add GitHub Actions workflow for Makefile CI",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/252",
+      "state": "OPEN",
+      "author": "emmanucheru-sudo",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "            - name: Setup Node.js environment\r\n  uses: actions/setup-node@v6.4.0\r\n  with:\r\n    # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.\r\n    node-version: # optional\r\n    # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.\r\n    node-version-file: # optional\r\n    # Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default.\r\n    architecture: # optional\r\n    # Set this option if you want the action to check for the latest available version that satisfies the version spec.\r\n    check-latest: # optional\r\n    # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.\r\n    registry-url: # optional\r\n    # Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).\r\n    scope: # optional\r\n    # Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.\r\n    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}\r\n    # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.\r\n    cache: # optional\r\n    # Set to false to disable automatic caching. By default, caching is enabled when either devEngines.packageManager or the top-level packageManager field in package.json specifies npm as the package manager.\r\n    package-manager-cache: # optional, default is true\r\n    # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.\r\n    cache-dependency-path: # optional\r\n    # Used to specify an alternative mirror to download Node.js binaries from\r\n    mirror: # optional\r\n    # The token used as Authorization header when fetching from the mirror\r\n    mirror-token: # optional",
+      "createdAt": "2026-06-24T16:11:31Z",
+      "updatedAt": "2026-06-24T16:11:31Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "08614f65de99bcfee5f8c201621c8cc1017712a6",
+      "headRepository": "emmanucheru-sudo/oauth-v2-1",
+      "headRefName": "main",
+      "headRefOid": "4e45728800020eff4591be6a651537d5ea9571bc",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
