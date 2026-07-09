@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-25T00:41:33.013572+00:00",
+  "timestamp": "2026-07-09T00:32:36.292012+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -11056,7 +11056,7 @@
       "labels": [],
       "body": "This does not change the requirements for the client, the client can still choose which mix-up mitigation method to use\r\n\r\ncloses #233",
       "createdAt": "2026-05-04T23:30:02Z",
-      "updatedAt": "2026-05-05T13:47:07Z",
+      "updatedAt": "2026-07-07T21:52:10Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "08614f65de99bcfee5f8c201621c8cc1017712a6",
@@ -11074,6 +11074,13 @@
           "body": "OAuth 2.1 does not mandate use of RFC8414 (AS metadata) and this is retrofitting an existing signal from an extension that depends on it for interoperability and client enforcement.\r\n\r\nExisting client software only ensures response `iss` parameter presence in absence of a JARM response or a frontchannel ID Token when the `\"authorization_response_iss_parameter_supported\"` AS metadata is `true`.\r\n\r\nThe metadata's absence can lead to client software thinking \"i've got this requirement covered\" because it implements support for RFC9207 when in fact under this ruleset here the parameter can be stripped down from a response and the client won't complain.",
           "createdAt": "2026-05-05T05:49:12Z",
           "updatedAt": "2026-05-05T13:47:07Z"
+        },
+        {
+          "author": "will-bartlett",
+          "authorAssociation": "NONE",
+          "body": "@aaronpk - is this waiting on anything? Can we merge this?",
+          "createdAt": "2026-07-07T21:52:10Z",
+          "updatedAt": "2026-07-07T21:52:10Z"
         }
       ],
       "reviews": [
