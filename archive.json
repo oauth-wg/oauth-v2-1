@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-09T00:32:36.292012+00:00",
+  "timestamp": "2026-08-02T00:32:05.233135+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5977,6 +5977,22 @@
           "updatedAt": "2026-05-21T03:18:47Z"
         }
       ]
+    },
+    {
+      "number": 253,
+      "id": "I_kwDODkfq5s8AAAABK1Skcw",
+      "title": "How should an Authorization properly implement section 4.1.2.1. Error Response Error Messages",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/253",
+      "state": "OPEN",
+      "author": "dfcoffin",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I run a certification application that verifies a target application properly handles OAuth Authorization Flow requests by submitting several requests with the following errors:\n\n| `iTestID` | `subLabel` | `testName` | Query string |\n|---|---|---|---|\n| 0 | `case 0: no response_type` | Malformed Authorization Code Request (No response_type field-value pair) | `?client_id=<client_id>&redirect_uri=<redirect_uri>&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 1 | `case 1: no client_id` | Malformed Authorization Code Request (No client_id field-value pair) | `?response_type=code&redirect_uri=<redirect_uri>&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 2 | `case 2: invalid response_type` | Malformed Authorization Code Request (Invalid response_type field-value pair) | `?response_type=badresponsetype&client_id=<client_id>&redirect_uri=<redirect_uri>&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 3 | `case 3: invalid client_id` | Authorization Code Request (Invalid client_id field-value pair) | `?response_type=code&client_id=invalid_third_party&redirect_uri=<redirect_uri>&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 4 | `case 4: invalid redirect_uri` | Authorization Code Request (Invalid redirect_uri field-value pair) | `?response_type=code&client_id=<client_id>&redirect_uri=https://services.greenbuttondata.org&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 5 | `case 5: invalid scope` | Authorization Code Request (Invalid scope field-value pair) | `?response_type=code&client_id=<client_id>&redirect_uri=<redirect_uri>&scope=FB=????&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n\nOmitted for security reasons is the address of the /authorize EndPoint.\n\nBased on Section 4.1.2.1. Error Response, what should be the response sent by the receiving Authorization Server for each test case, and is a 401 response ever considered acceptable?\n\nAdditional issues requiring clarification:\n\n- The IBM Verify product team explicitly states that, due to paragraph RFC 6749 \u00a7 4.1.2.1, explicitly states the server must not automatically redirect when the redirect URI itself is missing or invalid; returning 302/303 to an unvalidated URI risks open redirect vulnerabilities.\n- The IBM Verify product team has indicated the OpenID Foundation certification precedent.  Their official cert test for an invalid redirect URI expects an error page (and they had to submit a screenshot), not a redirect\n- The IBM Verify product team also state the OpenID Connect spec allows ignoring unknown scopes vs. returning \"?error=invalid_scope\"\n\n- We contend RFC 6749 \u00a74.1.2.1 requires error responses to use redirect URIs (302/303) with error= query parameters, not 400-series codes, mirroring the 500/503 pattern shown in the RFC.\n- Since the NAESB ESPI standard does NOT support OpenID Connect, we contend that the fact the OpenID Connect specification allows ignoring unknown scopes is an invalid reason to not support the scope validation portion of RFC 6749 \u00a7 4.1.2.1",
+      "createdAt": "2026-07-30T16:35:17Z",
+      "updatedAt": "2026-08-01T16:19:22Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
