@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-04T00:30:11.061502+00:00",
+  "timestamp": "2026-08-06T00:25:24.823546+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5993,6 +5993,44 @@
       "updatedAt": "2026-08-03T14:22:41Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 254,
+      "id": "I_kwDODkfq5s8AAAABLlwdfg",
+      "title": "Can we add a maximum length to the `state` parameter?",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/254",
+      "state": "OPEN",
+      "author": "ThisIsMissEm",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In the doorkeeper project we've had bug reports come in due to clients sending a massive `state` parameter in their request, which then exceeds the maximum HTTP Header length that nginx or similar reverse proxies will allow.\n\nIt would be good to have some guidance on limiting the size of this parameter to something reasonable, potentially responding with `invalid_request` when the state parameter exceeds that length.\n\nhttps://github.com/doorkeeper-gem/doorkeeper/issues/1554",
+      "createdAt": "2026-08-05T15:54:04Z",
+      "updatedAt": "2026-08-05T18:36:36Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "adeinega",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@ThisIsMissEm, in the wild, I saw multiple clients encoding & encrypting a bunch of stuff in the `state` parameter. It\u2019s very unlikely it will ever be capped.\n\nYou can send an authorization request using a POST method, which is allowed in OpenID Connect 1.0, per https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest. Although, the OAuth 2.1 spec says\n\n> To begin the authorization request, the client builds the authorization request URI by adding parameters to the authorization server's authorization endpoint URI. The client will eventually redirect the user agent to this URI to initiate the request.\n\nimplying it's a GET request and query parameters in it (which, in my view, is a bit misleading).\n\nThe 2nd option would be to use [OAuth 2.0 Pushed Authorization Requests (RFC 9126).](https://datatracker.ietf.org/doc/html/rfc9126)\n\nBoth options have their downsides in my experience.\n\nI also raised the same concern in https://github.com/openid/connect/issues/2139 about the session_state parameter, and at the end of the day, the OpenID Connect WG on their calls decided to do anything with it for the same reasons.\n",
+          "createdAt": "2026-08-05T17:42:53Z",
+          "updatedAt": "2026-08-05T17:42:53Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "well it's not misleading since it is a GET request in OAuth unless you're using PAR.\n\nIt would have been nice if the POST version of the authorization request wasn't defined only in OpenID Connect, but that's just how things went.\n\nIn any case, I'm pretty sure we've had this discussion before and failed to come to any kind of consensus on what a \"reasonable\" length would be that would be broadly applicable.",
+          "createdAt": "2026-08-05T17:46:47Z",
+          "updatedAt": "2026-08-05T17:46:47Z"
+        },
+        {
+          "author": "ThisIsMissEm",
+          "authorAssociation": "NONE",
+          "body": "@aaronpk I'm thinking maybe more the AS advertises a max length for state that it'll accept and then a provision to reject the request with invalid_request if the value exceeds that length.",
+          "createdAt": "2026-08-05T18:36:36Z",
+          "updatedAt": "2026-08-05T18:36:36Z"
+        }
+      ]
     }
   ],
   "pulls": [
