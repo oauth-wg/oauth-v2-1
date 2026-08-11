@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-06T00:25:24.823546+00:00",
+  "timestamp": "2026-08-11T00:15:04.238033+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -6006,7 +6006,7 @@
       "labels": [],
       "body": "In the doorkeeper project we've had bug reports come in due to clients sending a massive `state` parameter in their request, which then exceeds the maximum HTTP Header length that nginx or similar reverse proxies will allow.\n\nIt would be good to have some guidance on limiting the size of this parameter to something reasonable, potentially responding with `invalid_request` when the state parameter exceeds that length.\n\nhttps://github.com/doorkeeper-gem/doorkeeper/issues/1554",
       "createdAt": "2026-08-05T15:54:04Z",
-      "updatedAt": "2026-08-05T18:36:36Z",
+      "updatedAt": "2026-08-10T18:01:34Z",
       "closedAt": null,
       "comments": [
         {
@@ -6029,6 +6029,20 @@
           "body": "@aaronpk I'm thinking maybe more the AS advertises a max length for state that it'll accept and then a provision to reject the request with invalid_request if the value exceeds that length.",
           "createdAt": "2026-08-05T18:36:36Z",
           "updatedAt": "2026-08-05T18:36:36Z"
+        },
+        {
+          "author": "fkj",
+          "authorAssociation": "NONE",
+          "body": "Usually people don't like putting maximum lengths into standards because it leads to problems when technology progresses. What seems incredibly large now can seem tiny in a few years and result in unnecessary constraints.\n\nAs @adeinega said, it's not uncommon to encode application state as a JWT in the `state` parameter, so I think any implementation that wishes to achieve large-scale interoperability should support arbitrarily large `state` parameters.\n\nAs a side-note, RFC 9110 RECOMMENDS that all HTTP senders and recipients support URIs of *at least* 8000 bytes.",
+          "createdAt": "2026-08-10T07:05:11Z",
+          "updatedAt": "2026-08-10T07:05:11Z"
+        },
+        {
+          "author": "adeinega",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@aaronpk, only for the sake of thoroughness\n\n> It would have been nice if the POST version of the authorization request wasn't defined only in OpenID Connect, but that's just how things went.\n\nSection \"3.1. Authorization Endpoint\" indicates that\n\n> The authorization server MUST support the use of the HTTP GET method [Section 9.3.1](https://rfc-editor.org/rfc/rfc9110#section-9.3.1) of [RFC9110] for the authorization endpoint and MAY support the POST method ([Section 9.3.3](https://rfc-editor.org/rfc/rfc9110#section-9.3.3) of [RFC9110]) as well.\n\nSo, it's not only about OpenID Connect. In any case, in my experience, POST requests caused more harm than good.",
+          "createdAt": "2026-08-10T18:01:34Z",
+          "updatedAt": "2026-08-10T18:01:34Z"
         }
       ]
     }
