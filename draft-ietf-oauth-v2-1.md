@@ -1603,7 +1603,7 @@ MUST return an error response as described in {{authorization-code-error-respons
 :    REQUIRED unless the specific requirements of {{authorization_codes}} are met.  Code challenge derived from the code verifier.
 
 "code_challenge_method":
-:    OPTIONAL, defaults to `S256` if not present in the request.
+:    REQUIRED, the value `S256` or a value defined by a future extension
 
 "redirect_uri":
 :    OPTIONAL if only one redirect URI is registered for this client.
