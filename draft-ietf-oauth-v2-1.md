@@ -104,6 +104,7 @@ informative:
   I-D.ietf-oauth-browser-based-apps:
   I-D.ietf-oauth-rfc7523bis:
   I-D.ietf-oauth-attestation-based-client-auth:
+  I-D.ietf-oauth-client-id-metadata-document:
 
   OpenID.Connect:
     title: OpenID Connect Core 1.0 incorporating errata set 2
@@ -1208,6 +1209,12 @@ Cross-Origin Resource Sharing {{WHATWG.CORS}} MUST NOT be
 supported at the Authorization Endpoint as the client does not access this
 endpoint directly, instead the client redirects the user agent to it.
 
+Grant types define the required parameters at the authorization endpoint.
+This specification defines the "Authorization Code Grant" ({{authorization-code-grant}}),
+including the base list of parameters to include in the request. Extensions
+such as Pushed Authorization Requests ({{RFC9126}}) define a different set
+of parameters to use in the request to the authorization endpoint.
+
 ## Token Endpoint {#token-endpoint}
 
 The token endpoint is used by the client to obtain an access token using
@@ -1735,11 +1742,10 @@ redirect URI using the query string serialization described by
      client.
 
 "iss":
-:    OPTIONAL. The identifier of the authorization server which the
+:    REQUIRED. The issuer identifier of the authorization server which the
      client can use to prevent mix-up attacks, if the client interacts
      with more than one authorization server. See {{mix-up}} and {{RFC9207}} for
-     additional details on when this parameter is necessary, and how the
-     client can use it to prevent mix-up attacks.
+     additional details how the client can use it to prevent mix-up attacks.
 
 
 For example, the authorization server redirects the user agent by
@@ -1861,7 +1867,7 @@ by {{query-string-serialization}}:
      client.
 
 "iss":
-:    OPTIONAL. The identifier of the authorization server. See
+:    REQUIRED. The issuer identifier of the authorization server. See
      {{authorization-response}} above for details.
 
 For example, the authorization server indicates the request was denied
@@ -2977,6 +2983,52 @@ See {{communication-security}} for further details
 on mitigating the risk of phishing attacks.
 
 
+## Consent Phishing {#consent-phishing}
+
+As authorization servers deploy phishing-resistant authentication
+methods, attackers may pivot to targeting the authorization step
+rather than the authentication step. In a consent phishing attack,
+an attacker registers an attacker-controlled client with the
+authorization server, crafts an authorization request with a `scope`
+value targeting the victim's resources, and delivers the resulting
+authorization endpoint URL to the victim through a phishing message.
+Because the authorization request is processed by the legitimate
+authorization server, the resource owner authenticates normally,
+including through any phishing-resistant factors, and is then
+presented with an authorization prompt that appears trustworthy.
+If the resource owner grants the request, the attacker receives an
+authorization code or access token granting access to the victim's
+resources.
+
+Critically, phishing-resistant authenticators do not protect against
+consent phishing. The resource owner successfully authenticates to
+the legitimate authorization server. The attack exploits the
+subsequent consent step, not the authentication step.
+
+Authorization servers SHOULD consider enforcing controls over client
+registration, including restricting which scopes a given client is
+permitted to request. Where possible, authorization servers SHOULD
+verify the identity of client developers prior to granting access to
+sensitive scopes.
+
+Authorization servers SHOULD present resource owners with clear and
+meaningful information during the authorization prompt, including the
+client name, the developer or organization that registered it, and
+the specific scopes being requested, so that resource owners can make
+an informed decision before granting access. In scenarios where client
+pre-registration is not possible, such as when using Dynamic Client Registration {{RFC7591}},
+or when the client metadata may be provided by an outside party
+such as when using Client ID Metadata Document {{I-D.ietf-oauth-client-id-metadata-document}},
+authorization servers SHOULD take additional measures to verify that the
+user understands the client they are authorizing.
+
+Authorization servers SHOULD allow administrators and resource owners
+to view the set of clients that have been granted access to their
+resources and to revoke those grants (see {{RFC7009}}), thereby
+limiting the window of exposure if a resource owner is deceived into
+approving a malicious authorization request.
+
+
 ## Cross-Site Request Forgery {#csrf_countermeasures}
 
 An attacker might attempt to inject a request to the redirect URI of
@@ -3199,16 +3251,17 @@ See {{Section 4.4 of RFC9700}} for a detailed description
 of several types of mix-up attacks.
 
 ### Mix-Up Defense via Issuer Identification
-This defense requires that the authorization server sends its issuer identifier
-in the authorization response to the client. When receiving the authorization
+
+This defense requires that the client compare the issuer identifier value that
+the authorization server sends in the authorization response to the client. When receiving the authorization
 response, the client MUST compare the received issuer identifier to the stored
 issuer identifier. If there is a mismatch, the client MUST abort the
 interaction.
 
 There are different ways this issuer identifier can be transported to the client:
 
- * The issuer information can be transported, for
-   example, via an optional response parameter `iss` (see {{authorization-response}}).
+ * The issuer information is transported via the response parameter `iss`
+   (see {{authorization-response}}).
  * When OpenID Connect is used and an ID Token is returned in the authorization
    response, the client can evaluate the `iss` claim in the ID Token.
 
@@ -3949,6 +4002,9 @@ Discussions around this specification have also occurred at the OAuth Security W
 -16
 
 * Remove PKCE `plain` method
+* Mention PAR in the authorization endpoint definition section
+* Added security consideration section about OAuth consent phishing
+* Make `iss` response parameter required to be sent by the AS (let clients choose the mix-up mitigation still)
 
 -15
 
