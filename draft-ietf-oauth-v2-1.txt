@@ -146,8 +146,9 @@ Table of Contents
      7.4.  Client Impersonating Resource Owner
      7.5.  Authorization Code Security Considerations
        7.5.1.  Authorization Code Injection
-       7.5.2.  Reuse of Authorization Codes
-       7.5.3.  HTTP 307 Redirect
+       7.5.2.  PKCE "plain" Code Challenge Method
+       7.5.3.  Reuse of Authorization Codes
+       7.5.4.  HTTP 307 Redirect
      7.6.  Ensuring Endpoint Authenticity
      7.7.  Credentials-Guessing Attacks
      7.8.  Phishing Attacks
@@ -755,7 +756,7 @@ Table of Contents
    specification show the use of the HTTP 302 status code, any other
    method available via the user agent to accomplish this redirection,
    with the exception of HTTP 307, is allowed and is considered to be an
-   implementation detail.  See Section 7.5.3 for details.
+   implementation detail.  See Section 7.5.4 for details.
 
 1.7.  Interoperability
 
@@ -1256,7 +1257,7 @@ Table of Contents
 
    An authorization server that redirects a request potentially
    containing user credentials MUST avoid forwarding these user
-   credentials accidentally (see Section 7.5.3 for details).
+   credentials accidentally (see Section 7.5.4 for details).
 
    Cross-Origin Resource Sharing [WHATWG.CORS] MUST NOT be supported at
    the Authorization Endpoint as the client does not access this
@@ -1659,9 +1660,8 @@ Table of Contents
       Section 7.5.1 are met.  Code challenge derived from the code
       verifier.
 
-   "code_challenge_method":  OPTIONAL, defaults to plain if not present
-      in the request.  Code verifier transformation method is S256 or
-      plain.
+   "code_challenge_method":  REQUIRED, the value S256 or a value defined
+      by a future extension
 
    "redirect_uri":  OPTIONAL if only one redirect URI is registered for
       this client.  REQUIRED if multiple redirect URIs are registered
@@ -1691,7 +1691,7 @@ Table of Contents
    ALPHA = %x41-5A / %x61-7A
    DIGIT = %x30-39
 
-   Clients SHOULD use code challenge methods that do not expose the
+   Clients MUST use code challenge methods that do not expose the
    code_verifier in the authorization request.  Otherwise, attackers
    that can read the authorization request (cf. Attacker A4 in
    [RFC9700]) can break the security provided by this mechanism.
@@ -1704,22 +1704,14 @@ Table of Contents
    43-octet URL-safe string to use as the code verifier.
 
    The client then creates a code_challenge derived from the code
-   verifier by using one of the following transformations on the code
-   verifier:
+   verifier by transforming the code verifier with a valid
+   transformation method:
 
    S256
      code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
 
-   plain
-     code_challenge = code_verifier
-
-   If the client is capable of using S256, it MUST use S256, as S256 is
-   Mandatory To Implement (MTI) on the server.  Clients are permitted to
-   use plain only if they cannot support S256 for some technical reason,
-   for example constrained environments that do not have a hashing
-   function available, and know via out-of-band configuration or via
-   Authorization Server Metadata [RFC8414] that the server supports
-   plain.
+   This specification defines only the S256 transformation.  Future
+   extensions may define additional transformation methods.
 
    ABNF for code_challenge is as follows.
 
@@ -1730,7 +1722,10 @@ Table of Contents
 
    The properties code_challenge and code_verifier are adopted from the
    OAuth 2.0 extension known as "Proof-Key for Code Exchange", or PKCE
-   [RFC7636] where this technique was originally developed.
+   [RFC7636] where this technique was originally developed.  The plain
+   transformation method defined in [RFC7636] is removed and explicitly
+   prohibited in this specification.  See Section 7.5.2 for additional
+   details.
 
    Authorization servers MUST support the code_challenge and
    code_verifier parameters.
@@ -1947,7 +1942,7 @@ Table of Contents
    code as a previously successful token request, the authorization
    server MUST deny the request and SHOULD revoke (when possible) all
    access tokens and refresh tokens previously issued based on that
-   authorization code.  See Section 7.5.2 for further details.
+   authorization code.  See Section 7.5.3 for further details.
 
    For example, the client makes the following HTTPS request (with extra
    line breaks for display purposes only):
@@ -2908,7 +2903,31 @@ Table of Contents
    injection attacks, which are solved by the code_challenge and
    code_verifier mechanism.
 
-7.5.2.  Reuse of Authorization Codes
+7.5.2.  PKCE "plain" Code Challenge Method
+
+   The plain code challenge method, defined in [RFC7636], is explicitly
+   forbidden in OAuth 2.1.  The plain method offers no protection
+   against authorization code interception by attackers who can read the
+   authorization request (Attacker A4 in [RFC9700]), as the code
+   verifier is transmitted in plaintext in the authorization request.
+
+   Historical arguments for supporting plain mode (devices lacking
+   cryptographic hashing capabilities) are obsoleted by OAuth 2.1's
+   requirement for TLS 1.2+, which mandates SHA-256 support for
+   certificate validation.  Any device capable of implementing OAuth 2.1
+   necessarily supports SHA-256.
+
+   Authorization servers that support plain code challenge method create
+   an unverifiable downgrade attack vector, as servers cannot
+   distinguish legitimate constrained clients from attacker-modified
+   requests claiming to be constrained.
+
+   Deployments with existing clients that cannot support S256 SHOULD
+   issue extended-lifetime refresh tokens before discontinuing support
+   for legacy authorization methods, as the refresh token grant
+   (Section 4.3) does not require PKCE.
+
+7.5.3.  Reuse of Authorization Codes
 
    Several types of attacks are possible if authorization codes are able
    to be used more than once.
@@ -2934,7 +2953,7 @@ Table of Contents
    before the legitimate client and thereby revoking the legitimate
    client's tokens once it makes the valid request.
 
-7.5.3.  HTTP 307 Redirect
+7.5.4.  HTTP 307 Redirect
 
    An authorization server which redirects a request that potentially
    contains user credentials MUST NOT use the 307 status code
@@ -3758,6 +3777,8 @@ Table of Contents
    *  Authorization servers must support client credentials in the
       request body
 
+   *  The PKCE plain method is removed
+
 10.1.  Removal of the OAuth 2.0 Implicit grant
 
    The OAuth 2.0 Implicit grant is omitted from OAuth 2.1 as it was
@@ -4435,6 +4456,8 @@ Appendix F.  Document History
    [[ To be removed from the final specification ]]
 
    -16
+
+   *  Remove PKCE plain method
 
    *  Mention PAR in the authorization endpoint definition section
 
