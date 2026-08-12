@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 5 November 2026                                            Okta
+Expires: 13 February 2027                                           Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                              4 May 2026
+                                                          12 August 2026
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 November 2026.
+   This Internet-Draft will expire on 13 February 2027.
 
 Copyright Notice
 
@@ -1798,12 +1798,11 @@ Table of Contents
    "state":  REQUIRED if the state parameter was present in the client
       authorization request.  The exact value received from the client.
 
-   "iss":  OPTIONAL.  The identifier of the authorization server which
-      the client can use to prevent mix-up attacks, if the client
+   "iss":  REQUIRED.  The issuer identifier of the authorization server
+      which the client can use to prevent mix-up attacks, if the client
       interacts with more than one authorization server.  See
-      Section 7.15 and [RFC9207] for additional details on when this
-      parameter is necessary, and how the client can use it to prevent
-      mix-up attacks.
+      Section 7.15 and [RFC9207] for additional details how the client
+      can use it to prevent mix-up attacks.
 
    For example, the authorization server redirects the user agent by
    sending the following HTTP response:
@@ -1912,8 +1911,8 @@ Table of Contents
    "state":  REQUIRED if a state parameter was present in the client
       authorization request.  The exact value received from the client.
 
-   "iss":  OPTIONAL.  The identifier of the authorization server.  See
-      Section 4.1.2 above for details.
+   "iss":  REQUIRED.  The issuer identifier of the authorization server.
+      See Section 4.1.2 above for details.
 
    For example, the authorization server indicates the request was
    denied by redirecting the user agent with the following HTTP
@@ -3289,17 +3288,18 @@ Table of Contents
 
 7.15.1.  Mix-Up Defense via Issuer Identification
 
-   This defense requires that the authorization server sends its issuer
-   identifier in the authorization response to the client.  When
-   receiving the authorization response, the client MUST compare the
-   received issuer identifier to the stored issuer identifier.  If there
-   is a mismatch, the client MUST abort the interaction.
+   This defense requires that the client compare the issuer identifier
+   value that the authorization server sends in the authorization
+   response to the client.  When receiving the authorization response,
+   the client MUST compare the received issuer identifier to the stored
+   issuer identifier.  If there is a mismatch, the client MUST abort the
+   interaction.
 
    There are different ways this issuer identifier can be transported to
    the client:
 
-   *  The issuer information can be transported, for example, via an
-      optional response parameter iss (see Section 4.1.2).
+   *  The issuer information is transported via the response parameter
+      iss (see Section 4.1.2).
 
    *  When OpenID Connect is used and an ID Token is returned in the
       authorization response, the client can evaluate the iss claim in
@@ -3952,30 +3952,30 @@ Table of Contents
               Looker, T., Bastian, P., and C. Bormann, "OAuth 2.0
               Attestation-Based Client Authentication", Work in
               Progress, Internet-Draft, draft-ietf-oauth-attestation-
-              based-client-auth-08, 2 March 2026,
+              based-client-auth-10, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              attestation-based-client-auth-08>.
+              attestation-based-client-auth-10>.
 
    [I-D.ietf-oauth-browser-based-apps]
               Parecki, A., De Ryck, P., and D. Waite, "OAuth 2.0 for
               Browser-Based Applications", Work in Progress, Internet-
-              Draft, draft-ietf-oauth-browser-based-apps-26, 3 December
-              2025, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              oauth-browser-based-apps-26>.
+              Draft, draft-ietf-oauth-browser-based-apps-27, 6 July
+              2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              oauth-browser-based-apps-27>.
 
    [I-D.ietf-oauth-client-id-metadata-document]
               Parecki, A. and E. Smith, "OAuth Client ID Metadata
               Document", Work in Progress, Internet-Draft, draft-ietf-
-              oauth-client-id-metadata-document-01, 1 March 2026,
+              oauth-client-id-metadata-document-02, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              client-id-metadata-document-01>.
+              client-id-metadata-document-02>.
 
    [I-D.ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
               "Updates to OAuth 2.0 JSON Web Token (JWT) Client
               Authentication and Assertion-Based Authorization Grants",
               Work in Progress, Internet-Draft, draft-ietf-oauth-
-              rfc7523bis-11, 26 March 2026,
+              rfc7523bis-11, 28 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
               rfc7523bis-11>.
 
@@ -4439,6 +4439,9 @@ Appendix F.  Document History
    *  Mention PAR in the authorization endpoint definition section
 
    *  Added security consideration section about OAuth consent phishing
+
+   *  Make iss response parameter required to be sent by the AS (let
+      clients choose the mix-up mitigation still)
 
    -15
 
