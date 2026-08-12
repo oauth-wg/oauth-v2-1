@@ -42,7 +42,7 @@ normative:
   RFC8174:
   RFC8252:
   RFC8259:
-  RFC8446:
+  RFC9846:
   RFC9110:
   RFC9111:
   RFC9207:
@@ -691,7 +691,7 @@ refer to {{Section 4.13 of RFC9700}} for further security advice.
 
 Implementations MUST use a mechanism to provide communication
 authentication, integrity and confidentiality such as
-Transport-Layer Security {{RFC8446}},
+Transport-Layer Security {{RFC9846}},
 to protect the exchange of clear-text credentials and tokens
 either in the content or in header fields
 from eavesdropping which enables replay
@@ -703,7 +703,7 @@ which MAY use the `http` scheme.
 When using `https`, TLS certificates MUST be checked
 according to {{Section 4.3.4 of RFC9110}}.
 At the time of this writing,
-TLS version 1.3 {{RFC8446}} is the most recent version.
+TLS version 1.3 {{RFC9846}} is the most recent version.
 
 Implementations MAY also support additional transport-layer security
 mechanisms that meet their security requirements.
@@ -2940,7 +2940,7 @@ most user agents will only show this behaviour for 307 redirects.)
 ## Ensuring Endpoint Authenticity
 
 The risk related to man-in-the-middle attacks is mitigated by the
-mandatory use of channel security mechanisms such as {{RFC8446}}
+mandatory use of channel security mechanisms such as {{RFC9846}}
 for communicating with the Authorization and Token Endpoints.
 See {{communication-security}} for further details.
 
