@@ -1794,9 +1794,9 @@ The authorization server MUST validate the client identifier and redirect
 URI before redirecting an error response to the client. Once both have been
 validated, the authorization server redirects request errors using the error
 codes defined below. In particular, a missing `response_type` results in
-`invalid_request`, an unsupported `response_type` results in
-`unsupported_response_type`, and an invalid, unknown, or malformed `scope`
-results in `invalid_scope`.
+`invalid_request`, and an unsupported `response_type` results in
+`unsupported_response_type`. If the authorization server rejects a requested
+`scope` as invalid, unknown, or malformed, the error code is `invalid_scope`.
 
 An authorization server MUST reject requests without a `code_challenge` from public clients,
 and MUST reject such requests from other clients unless there is
