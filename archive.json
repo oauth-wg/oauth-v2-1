@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-16T00:09:21.168628+00:00",
+  "timestamp": "2026-08-18T00:11:17.823166+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -5990,9 +5990,17 @@
       "labels": [],
       "body": "I run a certification application that verifies a target application properly handles OAuth Authorization Flow requests by submitting several requests with the following errors:\n\n| `iTestID` | `subLabel` | `testName` | Query string |\n|---|---|---|---|\n| 0 | `case 0: no response_type` | Malformed Authorization Code Request (No response_type field-value pair) | `?client_id=<client_id>&redirect_uri=<redirect_uri>&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 1 | `case 1: no client_id` | Malformed Authorization Code Request (No client_id field-value pair) | `?response_type=code&redirect_uri=<redirect_uri>&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 2 | `case 2: invalid response_type` | Malformed Authorization Code Request (Invalid response_type field-value pair) | `?response_type=badresponsetype&client_id=<client_id>&redirect_uri=<redirect_uri>&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 3 | `case 3: invalid client_id` | Authorization Code Request (Invalid client_id field-value pair) | `?response_type=code&client_id=invalid_third_party&redirect_uri=<redirect_uri>&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 4 | `case 4: invalid redirect_uri` | Authorization Code Request (Invalid redirect_uri field-value pair) | `?response_type=code&client_id=<client_id>&redirect_uri=https://services.greenbuttondata.org&scope=<scope>&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n| 5 | `case 5: invalid scope` | Authorization Code Request (Invalid scope field-value pair) | `?response_type=code&client_id=<client_id>&redirect_uri=<redirect_uri>&scope=FB=????&state=ee148ec2-9892-466e-a013-4dedf1eb3018` |\n\nOmitted for security reasons is the address of the /authorize EndPoint.\n\nBased on Section 4.1.2.1. Error Response, what should be the response sent by the receiving Authorization Server for each test case, and is a 401 response ever considered acceptable?\n\nAdditional issues requiring clarification:\n\n- The IBM Verify product team explicitly states that, due to paragraph RFC 6749 \u00a7 4.1.2.1, explicitly stating the server must not automatically redirect when the redirect URI itself is missing or invalid; returning a 302/303 to an unvalidated URI risks open redirect vulnerabilities.\n- The IBM Verify product team has indicated the OpenID Foundation certification takes precedence over RFC 6749.  Their official cert test for an invalid redirect URI expects an error page (and they had to submit a screenshot), not a redirect response.\n- The IBM Verify product team also states the OpenID Connect spec allows ignoring unknown scopes vs. returning a 302/303 response that contains \"?error=invalid_scope\"\n\n- We contend RFC 6749 \u00a74.1.2.1 requires error responses to use redirect URIs (302/303) with error= query parameters, not 400-series codes, mirroring the 500/503 pattern shown in RFC 6749, even when the redirect_uri is invalid or unknown, to the calling URI.\n- Since the NAESB ESPI standard does NOT support OpenID Connect, we contend that the fact that the OpenID Connect specification allows ignoring unknown scopes is an invalid reason to not support the scope validation portion of RFC 6749 \u00a7 4.1.2.1",
       "createdAt": "2026-07-30T16:35:17Z",
-      "updatedAt": "2026-08-03T14:22:41Z",
+      "updatedAt": "2026-08-16T18:37:58Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "goutamadwant",
+          "authorAssociation": "NONE",
+          "body": "Thanks for raising this @dfcoffin. I opened #257 to clarify the authorization endpoint behavior in Section 4.1.2.1.\n\nThe proposed wording makes the validation order and outcomes explicit:\n\n- missing or invalid `client_id`, or an invalid or mismatching `redirect_uri`: do not redirect; the direct response SHOULD use HTTP 400\n- missing `response_type`: redirect to the validated redirect URI with `error=invalid_request`\n- unsupported `response_type`: redirect with `error=unsupported_response_type`\n- invalid, unknown, or malformed `scope`: if rejected, redirect with `error=invalid_scope`; otherwise the authorization server can apply its scope policy\n\nIt also clarifies that HTTP 401 client-authentication handling belongs to the token endpoint and does not apply to these authorization endpoint request errors. When an error is redirected, the existing requirement to return the exact `state` value remains unchanged.",
+          "createdAt": "2026-08-16T18:32:30Z",
+          "updatedAt": "2026-08-16T18:37:58Z"
+        }
+      ]
     },
     {
       "number": 254,
@@ -11407,6 +11415,32 @@
       "headRepository": "cyberstormdotmu/oauth-v2-1",
       "headRefName": "loganaden-patch-bcp14_must",
       "headRefOid": "3e6c00cd7ced68ea29aa2ef1ffb6316cf49a5108",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 257,
+      "id": "PR_kwDODkfq5s7_xr3K",
+      "title": "Clarify authorization endpoint error responses",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/257",
+      "state": "OPEN",
+      "author": "goutamadwant",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #253.\r\n\r\n## Summary\r\n\r\n- Require the client identifier and redirect URI to be validated before redirecting an authorization error response.\r\n- Clarify the error codes for missing or unsupported `response_type` values and rejected `scope` values.\r\n- Recommend HTTP 400 for errors returned directly to the user agent and distinguish them from token endpoint client-authentication errors that can use HTTP 401.\r\n\r\n## Behavior Clarified\r\n\r\n| Request condition | Authorization endpoint behavior |\r\n| --- | --- |\r\n| Missing `response_type` | Redirect to the validated redirect URI with `error=invalid_request`. |\r\n| Missing or invalid `client_id` | Do not redirect; the direct response SHOULD use HTTP 400. |\r\n| Unsupported `response_type` | Redirect to the validated redirect URI with `error=unsupported_response_type`. |\r\n| Invalid or mismatching `redirect_uri` | Do not redirect; the direct response SHOULD use HTTP 400. |\r\n| Invalid, unknown, or malformed `scope` | If the authorization server rejects it, redirect to the validated redirect URI with `error=invalid_scope`; the server can otherwise apply its scope policy. |\r\n\r\nWhen the request contains `state` and an error is redirected, the existing requirement to return the exact `state` value still applies.\r\n\r\n## Rationale\r\n\r\nSection 4.1.2.1 currently says that the authorization server must not redirect when the client identifier is missing or invalid, while a later paragraph only excludes missing or invalid redirect URIs from redirected errors. Requiring both the client identifier and redirect URI to be validated before any error redirect removes that ambiguity and avoids turning the authorization endpoint into an open redirector.\r\n\r\nThe HTTP 401 behavior for client-authentication failures is defined for the token endpoint and does not apply to these authorization endpoint request errors.\r\n\r\nOAuth permits an authorization server to fully or partially ignore requested scope according to its policy or the resource owner's instructions. The proposed `invalid_scope` mapping therefore applies when the authorization server rejects the requested scope.\r\n\r\n## Validation\r\n\r\n- `git diff --check`\r\n- `make`\r\n  - `kramdown-rfc`: OK\r\n  - `xml2rfc-txt`: OK\r\n  - `xml2rfc-html`: OK",
+      "createdAt": "2026-08-16T18:31:25Z",
+      "updatedAt": "2026-08-16T18:37:23Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "b8601c22cfbd4ee26e857f4df96deb824066039c",
+      "headRepository": "goutamadwant/oauth-v2-1",
+      "headRefName": "clarify-authorization-error-responses",
+      "headRefOid": "cf0625389d73352b69a6032571ac2a5b6e2bbe16",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
