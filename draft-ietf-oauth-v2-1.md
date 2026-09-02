@@ -96,6 +96,7 @@ informative:
   RFC8705:
   RFC8707:
   RFC9068:
+  RFC9112:
   RFC9126:
   RFC9396:
   RFC9449:
@@ -744,6 +745,31 @@ Please refer to {{extensions}} for a list of current known extensions at
 the time of this publication.
 
 
+### Value Sizes {#value-sizes}
+
+This specification does not define a maximum length for the
+`client_id`, authorization codes, access tokens, refresh tokens, or
+most other protocol parameters, as the length of these values depends
+on implementation choices made by the party that issues them.  In
+practice, implementations impose their own limits, and a value that
+exceeds the limit of a receiving implementation will cause the request
+to fail.
+
+Implementations MUST NOT assume that a value they receive fits within
+a particular length.  The party that issues a value SHOULD document
+its length, and SHOULD take into account the limits of the components
+that will carry it.  In particular, values returned in a redirect,
+such as the authorization code, are carried in a URI query string, and
+HTTP implementations commonly limit the length of the request line and
+of individual header fields ({{Section 3 of RFC9112}} and
+{{Section 5.4 of RFC9110}}).  Implementations SHOULD support parameter
+values long enough that requests remain within the 8000-octet
+request-line length recommended by {{Section 3 of RFC9112}}.  Resource
+servers in particular should not impose small limits on the length of
+access tokens, as tokens in a structured format, such as those defined
+by {{RFC9068}}, routinely exceed one kilobyte.
+
+
 ## Compatibility with OAuth 2.0
 
 OAuth 2.1 is compatible with OAuth 2.0 with the extensions and restrictions
@@ -888,10 +914,8 @@ secret; it is exposed to the resource owner and MUST NOT be used
 alone for client authentication.  The client identifier is unique in the
 context of an authorization server.
 
-The client identifier is an opaque string whose size is left undefined by this
-specification.  The client should avoid making assumptions about the
-identifier size.  The authorization server SHOULD document the size
-of any identifier it issues.
+The client identifier is an opaque string whose length is left undefined by this
+specification, as described in {{value-sizes}}.
 
 If the authorization server supports clients with client identifiers issued by
 parties other than the authorization server, the authorization server SHOULD
@@ -1399,10 +1423,8 @@ For example:
     }
 
 The client MUST ignore unrecognized value names in the response.  The
-sizes of tokens and other values received from the authorization
-server are left undefined.  The client should avoid making
-assumptions about value sizes.  The authorization server SHOULD
-document the size of any value it issues.
+length of tokens and other values received from the authorization
+server is left undefined, as described in {{value-sizes}}.
 
 ### Token Endpoint Error Response {#token-error-response}
 
@@ -1625,7 +1647,11 @@ MUST return an error response as described in {{authorization-code-error-respons
 :    OPTIONAL.  An opaque value used by the client to maintain
      state between the request and callback.  The authorization
      server includes this value when redirecting the user agent back
-     to the client.
+     to the client.  This value is carried in the query component of
+     the authorization request URI and again in the redirect back to
+     the client, so its length is bounded in practice by the URI and
+     HTTP header field lengths accepted by the authorization server,
+     the user agent, and the client; see {{value-sizes}}.
 
 The `code_verifier` is a unique high-entropy cryptographically random string generated
 for each authorization request, using the unreserved characters `[A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"`,
@@ -1756,10 +1782,8 @@ sending the following HTTP response:
               &state=xyz&iss=https%3A%2F%2Fauthorization-server.example.com
 
 The client MUST ignore unrecognized response parameters.  The
-authorization code string size is left undefined by this
-specification.  The client should avoid making assumptions about code
-value sizes.  The authorization server SHOULD document the size of
-any value it issues.
+length of the authorization code string is left undefined by this
+specification, as described in {{value-sizes}}.
 
 The authorization server MUST associate the `code_challenge` and
 `code_challenge_method` values with the issued authorization code
