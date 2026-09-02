@@ -22,14 +22,14 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.
 <meta content="draft-ietf-oauth-v2-1-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.34.0
-    Python 3.14.5
+    Python 3.14.7
     ConfigArgParse 1.7.5
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.1.1
     natsort 8.4.0
-    platformdirs 4.11.0
+    platformdirs 4.11.5
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
@@ -1049,11 +1049,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">The OAuth 2.1 Authorization Framework</td>
-<td class="right">August 2026</td>
+<td class="right">September 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hardt, et al.</td>
-<td class="center">Expires 13 February 2027</td>
+<td class="center">Expires 6 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-oauth-v2-1-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-08-12" class="published">12 August 2026</time>
+<time datetime="2026-09-02" class="published">2 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-02-13">13 February 2027</time></dd>
+<dd class="expires"><time datetime="2027-03-06">6 March 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1130,7 +1130,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 13 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -3446,123 +3446,132 @@ authorization response by attackers. Using <code>code_challenge</code> and <code
 redirect URI, or if the client identifier is missing or invalid,
 the authorization server MUST NOT redirect the user agent to the
 invalid redirect URI and SHOULD inform the resource owner of the
-error, for example by displaying a message to the user in their browser.<a href="#section-4.1.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.2.1-2">An authorization server MUST reject requests without a <code>code_challenge</code> from public clients,
+error, for example by displaying a message to the user in their browser.
+When returning an error response directly to the user agent, the
+authorization server SHOULD use the HTTP 400 (Bad Request) status code.
+The HTTP 401 (Unauthorized) status code used for client authentication
+errors at the token endpoint does not apply to authorization endpoint
+request errors.<a href="#section-4.1.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1.2.1-2">The authorization server MUST validate the client identifier and redirect
+URI before redirecting an error response to the client. Once both have been
+validated, the authorization server redirects request errors using the error
+codes defined below.<a href="#section-4.1.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1.2.1-3">An authorization server MUST reject requests without a <code>code_challenge</code> from public clients,
 and MUST reject such requests from other clients unless there is
 reasonable assurance that the client mitigates authorization code injection
-in other ways. See <a href="#authorization_codes" class="auto internal xref">Section 7.5.1</a> for details.<a href="#section-4.1.2.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.2.1-3">If the server does not support the requested <code>code_challenge_method</code> transformation,
+in other ways. See <a href="#authorization_codes" class="auto internal xref">Section 7.5.1</a> for details.<a href="#section-4.1.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.1.2.1-4">If the server does not support the requested <code>code_challenge_method</code> transformation,
 the authorization endpoint MUST return the
 authorization error response with <code>error</code> value set to
 <code>invalid_request</code>.  The <code>error_description</code> or the response of
 <code>error_uri</code> SHOULD explain the nature of error, e.g., transform
-algorithm not supported.<a href="#section-4.1.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.1.2.1-4">If the resource owner denies the access request or if the request
-fails for reasons other than a missing or invalid redirect URI,
+algorithm not supported.<a href="#section-4.1.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.1.2.1-5">If the resource owner denies the access request or if the request
+fails after the client identifier and redirect URI have been validated,
 the authorization server informs the client by redirecting the user agent
 to the redirect URI and adding the following
 parameters to the query component of the redirect URI as described
-by <a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>:<a href="#section-4.1.2.1-4" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-4.1.2.1-5">
-              <dt id="section-4.1.2.1-5.1">"error":</dt>
-              <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.2">
-                <p id="section-4.1.2.1-5.2.1">REQUIRED.  A single ASCII <span>[<a href="#USASCII" class="cite xref">USASCII</a>]</span> error code from the
-following:<a href="#section-4.1.2.1-5.2.1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-4.1.2.1-5.2.2">
-                  <dt id="section-4.1.2.1-5.2.2.1">"invalid_request":</dt>
-                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.2.2.2">
-                    <p id="section-4.1.2.1-5.2.2.2.1">The request is missing a required parameter, includes an
+by <a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>:<a href="#section-4.1.2.1-5" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-4.1.2.1-6">
+              <dt id="section-4.1.2.1-6.1">"error":</dt>
+              <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2">
+                <p id="section-4.1.2.1-6.2.1">REQUIRED.  A single ASCII <span>[<a href="#USASCII" class="cite xref">USASCII</a>]</span> error code from the
+following:<a href="#section-4.1.2.1-6.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-4.1.2.1-6.2.2">
+                  <dt id="section-4.1.2.1-6.2.2.1">"invalid_request":</dt>
+                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2.2.2">
+                    <p id="section-4.1.2.1-6.2.2.2.1">The request is missing a required parameter, includes an
 invalid parameter value, includes a parameter more than
-once, or is otherwise malformed.<a href="#section-4.1.2.1-5.2.2.2.1" class="pilcrow">¶</a></p>
+once, or is otherwise malformed.<a href="#section-4.1.2.1-6.2.2.2.1" class="pilcrow">¶</a></p>
 </dd>
                   <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.2.2.3">"unauthorized_client":</dt>
-                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.2.2.4">
-                    <p id="section-4.1.2.1-5.2.2.4.1">The client is not authorized to request an authorization
-code using this method.<a href="#section-4.1.2.1-5.2.2.4.1" class="pilcrow">¶</a></p>
+<dt id="section-4.1.2.1-6.2.2.3">"unauthorized_client":</dt>
+                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2.2.4">
+                    <p id="section-4.1.2.1-6.2.2.4.1">The client is not authorized to request an authorization
+code using this method.<a href="#section-4.1.2.1-6.2.2.4.1" class="pilcrow">¶</a></p>
 </dd>
                   <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.2.2.5">"access_denied":</dt>
-                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.2.2.6">
-                    <p id="section-4.1.2.1-5.2.2.6.1">The resource owner or authorization server denied the
-request.<a href="#section-4.1.2.1-5.2.2.6.1" class="pilcrow">¶</a></p>
+<dt id="section-4.1.2.1-6.2.2.5">"access_denied":</dt>
+                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2.2.6">
+                    <p id="section-4.1.2.1-6.2.2.6.1">The resource owner or authorization server denied the
+request.<a href="#section-4.1.2.1-6.2.2.6.1" class="pilcrow">¶</a></p>
 </dd>
                   <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.2.2.7">"unsupported_response_type":</dt>
-                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.2.2.8">
-                    <p id="section-4.1.2.1-5.2.2.8.1">The authorization server does not support obtaining an
-authorization code using this method.<a href="#section-4.1.2.1-5.2.2.8.1" class="pilcrow">¶</a></p>
+<dt id="section-4.1.2.1-6.2.2.7">"unsupported_response_type":</dt>
+                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2.2.8">
+                    <p id="section-4.1.2.1-6.2.2.8.1">The authorization server does not support obtaining an
+authorization code using this method.<a href="#section-4.1.2.1-6.2.2.8.1" class="pilcrow">¶</a></p>
 </dd>
                   <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.2.2.9">"invalid_scope":</dt>
-                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.2.2.10">
-                    <p id="section-4.1.2.1-5.2.2.10.1">The requested scope is invalid, unknown, or malformed.<a href="#section-4.1.2.1-5.2.2.10.1" class="pilcrow">¶</a></p>
+<dt id="section-4.1.2.1-6.2.2.9">"invalid_scope":</dt>
+                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2.2.10">
+                    <p id="section-4.1.2.1-6.2.2.10.1">The requested scope is invalid, unknown, or malformed.<a href="#section-4.1.2.1-6.2.2.10.1" class="pilcrow">¶</a></p>
 </dd>
                   <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.2.2.11">"server_error":</dt>
-                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.2.2.12">
-                    <p id="section-4.1.2.1-5.2.2.12.1">The authorization server encountered an unexpected
+<dt id="section-4.1.2.1-6.2.2.11">"server_error":</dt>
+                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2.2.12">
+                    <p id="section-4.1.2.1-6.2.2.12.1">The authorization server encountered an unexpected
 condition that prevented it from fulfilling the request.
 (This error code is needed because a 500 Internal Server
 Error HTTP status code cannot be returned to the client
-via an HTTP redirect.)<a href="#section-4.1.2.1-5.2.2.12.1" class="pilcrow">¶</a></p>
+via an HTTP redirect.)<a href="#section-4.1.2.1-6.2.2.12.1" class="pilcrow">¶</a></p>
 </dd>
                   <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.2.2.13">"temporarily_unavailable":</dt>
-                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.2.2.14">
-                    <p id="section-4.1.2.1-5.2.2.14.1">The authorization server is currently unable to handle
+<dt id="section-4.1.2.1-6.2.2.13">"temporarily_unavailable":</dt>
+                  <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2.2.14">
+                    <p id="section-4.1.2.1-6.2.2.14.1">The authorization server is currently unable to handle
 the request due to a temporary overloading or maintenance
 of the server.  (This error code is needed because a 503
 Service Unavailable HTTP status code cannot be returned
-to the client via an HTTP redirect.)<a href="#section-4.1.2.1-5.2.2.14.1" class="pilcrow">¶</a></p>
+to the client via an HTTP redirect.)<a href="#section-4.1.2.1-6.2.2.14.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
-<p id="section-4.1.2.1-5.2.3">Values for the <code>error</code> parameter MUST NOT include characters
-outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-5.2.3" class="pilcrow">¶</a></p>
+<p id="section-4.1.2.1-6.2.3">Values for the <code>error</code> parameter MUST NOT include characters
+outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-6.2.3" class="pilcrow">¶</a></p>
 </dd>
               <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.3">"error_description":</dt>
-              <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.4">
-                <p id="section-4.1.2.1-5.4.1">OPTIONAL.  Human-readable ASCII <span>[<a href="#USASCII" class="cite xref">USASCII</a>]</span> text providing
+<dt id="section-4.1.2.1-6.3">"error_description":</dt>
+              <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.4">
+                <p id="section-4.1.2.1-6.4.1">OPTIONAL.  Human-readable ASCII <span>[<a href="#USASCII" class="cite xref">USASCII</a>]</span> text providing
 additional information, used to assist the client developer in
 understanding the error that occurred.
 Values for the <code>error_description</code> parameter MUST NOT include
-characters outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-5.4.1" class="pilcrow">¶</a></p>
+characters outside the set %x20-21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-6.4.1" class="pilcrow">¶</a></p>
 </dd>
               <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.5">"error_uri":</dt>
-              <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.6">
-                <p id="section-4.1.2.1-5.6.1">OPTIONAL.  A URI identifying a human-readable web page with
+<dt id="section-4.1.2.1-6.5">"error_uri":</dt>
+              <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.6">
+                <p id="section-4.1.2.1-6.6.1">OPTIONAL.  A URI identifying a human-readable web page with
 information about the error, used to provide the client
 developer with additional information about the error.
 Values for the <code>error_uri</code> parameter MUST conform to the
 URI-reference syntax and thus MUST NOT include characters
-outside the set %x21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-5.6.1" class="pilcrow">¶</a></p>
+outside the set %x21 / %x23-5B / %x5D-7E.<a href="#section-4.1.2.1-6.6.1" class="pilcrow">¶</a></p>
 </dd>
               <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.7">"state":</dt>
-              <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.8">
-                <p id="section-4.1.2.1-5.8.1">REQUIRED if a <code>state</code> parameter was present in the client
+<dt id="section-4.1.2.1-6.7">"state":</dt>
+              <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.8">
+                <p id="section-4.1.2.1-6.8.1">REQUIRED if a <code>state</code> parameter was present in the client
 authorization request.  The exact value received from the
-client.<a href="#section-4.1.2.1-5.8.1" class="pilcrow">¶</a></p>
+client.<a href="#section-4.1.2.1-6.8.1" class="pilcrow">¶</a></p>
 </dd>
               <dd class="break"></dd>
-<dt id="section-4.1.2.1-5.9">"iss":</dt>
-              <dd style="margin-left: 1.5em" id="section-4.1.2.1-5.10">
-                <p id="section-4.1.2.1-5.10.1">REQUIRED. The issuer identifier of the authorization server. See
-<a href="#authorization-response" class="auto internal xref">Section 4.1.2</a> above for details.<a href="#section-4.1.2.1-5.10.1" class="pilcrow">¶</a></p>
+<dt id="section-4.1.2.1-6.9">"iss":</dt>
+              <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.10">
+                <p id="section-4.1.2.1-6.10.1">REQUIRED. The issuer identifier of the authorization server. See
+<a href="#authorization-response" class="auto internal xref">Section 4.1.2</a> above for details.<a href="#section-4.1.2.1-6.10.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 </dl>
-<p id="section-4.1.2.1-6">For example, the authorization server indicates the request was denied
-by redirecting the user agent with the following HTTP response:<a href="#section-4.1.2.1-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.1.2.1-7">
+<p id="section-4.1.2.1-7">For example, the authorization server indicates the request was denied
+by redirecting the user agent with the following HTTP response:<a href="#section-4.1.2.1-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.1.2.1-8">
 <pre>
 HTTP/1.1 302 Found
 Location: https://client.example.com/cb?error=access_denied
           &amp;state=xyz&amp;iss=https%3A%2F%2Fauthorization-server.example.com
-</pre><a href="#section-4.1.2.1-7" class="pilcrow">¶</a>
+</pre><a href="#section-4.1.2.1-8" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
