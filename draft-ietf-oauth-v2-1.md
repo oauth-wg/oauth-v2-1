@@ -1784,6 +1784,16 @@ redirect URI, or if the client identifier is missing or invalid,
 the authorization server MUST NOT redirect the user agent to the
 invalid redirect URI and SHOULD inform the resource owner of the
 error, for example by displaying a message to the user in their browser.
+When returning an error response directly to the user agent, the
+authorization server SHOULD use the HTTP 400 (Bad Request) status code.
+The HTTP 401 (Unauthorized) status code used for client authentication
+errors at the token endpoint does not apply to authorization endpoint
+request errors.
+
+The authorization server MUST validate the client identifier and redirect
+URI before redirecting an error response to the client. Once both have been
+validated, the authorization server redirects request errors using the error
+codes defined below.
 
 An authorization server MUST reject requests without a `code_challenge` from public clients,
 and MUST reject such requests from other clients unless there is
@@ -1798,7 +1808,7 @@ authorization error response with `error` value set to
 algorithm not supported.
 
 If the resource owner denies the access request or if the request
-fails for reasons other than a missing or invalid redirect URI,
+fails after the client identifier and redirect URI have been validated,
 the authorization server informs the client by redirecting the user agent
 to the redirect URI and adding the following
 parameters to the query component of the redirect URI as described
