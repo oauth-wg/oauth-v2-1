@@ -82,6 +82,7 @@ Table of Contents
      1.5.  Communication security
      1.6.  HTTP Redirections
      1.7.  Interoperability
+       1.7.1.  Value Sizes
      1.8.  Compatibility with OAuth 2.0
      1.9.  Notational Conventions
    2.  Client Registration
@@ -785,6 +786,30 @@ Table of Contents
    Please refer to Appendix D for a list of current known extensions at
    the time of this publication.
 
+1.7.1.  Value Sizes
+
+   This specification does not define a maximum length for the
+   client_id, authorization codes, access tokens, refresh tokens, or
+   most other protocol parameters, as the length of these values depends
+   on implementation choices made by the party that issues them.  In
+   practice, implementations impose their own limits, and a value that
+   exceeds the limit of a receiving implementation will cause the
+   request to fail.
+
+   Implementations MUST NOT assume that a value they receive fits within
+   a particular length.  The party that issues a value SHOULD document
+   its length, and SHOULD take into account the limits of the components
+   that will carry it.  In particular, values returned in a redirect,
+   such as the authorization code, are carried in a URI query string,
+   and HTTP implementations commonly limit the length of the request
+   line and of individual header fields (Section 3 of [RFC9112] and
+   Section 5.4 of [RFC9110]).  Implementations SHOULD support parameter
+   values long enough that requests remain within the 8000-octet
+   request-line length recommended by Section 3 of [RFC9112].  Resource
+   servers in particular should not impose small limits on the length of
+   access tokens, as tokens in a structured format, such as those
+   defined by [RFC9068], routinely exceed one kilobyte.
+
 1.8.  Compatibility with OAuth 2.0
 
    OAuth 2.1 is compatible with OAuth 2.0 with the extensions and
@@ -942,10 +967,8 @@ Table of Contents
    used alone for client authentication.  The client identifier is
    unique in the context of an authorization server.
 
-   The client identifier is an opaque string whose size is left
-   undefined by this specification.  The client should avoid making
-   assumptions about the identifier size.  The authorization server
-   SHOULD document the size of any identifier it issues.
+   The client identifier is an opaque string whose length is left
+   undefined by this specification, as described in Section 1.7.1.
 
    If the authorization server supports clients with client identifiers
    issued by parties other than the authorization server, the
@@ -1450,10 +1473,8 @@ Table of Contents
    }
 
    The client MUST ignore unrecognized value names in the response.  The
-   sizes of tokens and other values received from the authorization
-   server are left undefined.  The client should avoid making
-   assumptions about value sizes.  The authorization server SHOULD
-   document the size of any value it issues.
+   length of tokens and other values received from the authorization
+   server is left undefined, as described in Section 1.7.1.
 
 3.2.4.  Token Endpoint Error Response
 
@@ -1673,7 +1694,11 @@ Table of Contents
    "state":  OPTIONAL.  An opaque value used by the client to maintain
       state between the request and callback.  The authorization server
       includes this value when redirecting the user agent back to the
-      client.
+      client.  This value is carried in the query component of the
+      authorization request URI and again in the redirect back to the
+      client, so its length is bounded in practice by the URI and HTTP
+      header field lengths accepted by the authorization server, the
+      user agent, and the client; see Section 1.7.1.
 
    The code_verifier is a unique high-entropy cryptographically random
    string generated for each authorization request, using the unreserved
@@ -1806,11 +1831,9 @@ Table of Contents
  Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA
            &state=xyz&iss=https%3A%2F%2Fauthorization-server.example.com
 
-   The client MUST ignore unrecognized response parameters.  The
-   authorization code string size is left undefined by this
-   specification.  The client should avoid making assumptions about code
-   value sizes.  The authorization server SHOULD document the size of
-   any value it issues.
+   The client MUST ignore unrecognized response parameters.  The length
+   of the authorization code string is left undefined by this
+   specification, as described in Section 1.7.1.
 
    The authorization server MUST associate the code_challenge and
    code_challenge_method values with the issued authorization code so
@@ -4109,6 +4132,10 @@ Table of Contents
               Access Tokens", RFC 9068, DOI 10.17487/RFC9068, October
               2021, <https://www.rfc-editor.org/info/rfc9068>.
 
+   [RFC9112]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP/1.1", STD 99, RFC 9112, DOI 10.17487/RFC9112,
+              June 2022, <https://www.rfc-editor.org/info/rfc9112>.
+
    [RFC9126]  Lodderstedt, T., Campbell, B., Sakimura, N., Tonge, D.,
               and F. Skokan, "OAuth 2.0 Pushed Authorization Requests",
               RFC 9126, DOI 10.17487/RFC9126, September 2021,
@@ -4452,9 +4479,9 @@ Appendix E.  Acknowledgements
    their ideas, feedback, corrections, and wording that helped shape
    this version of the specification: Andrii Deinega, Bob Hamburg, Brian
    Campbell, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan,
-   Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Michael
-   Jones, Michael Peck, Roberto Polli, Tim Würtele and Vittorio
-   Bertocci.
+   Goutam Adwant, Joseph Heenan, Justin Richer, Karsten Meyer zu
+   Selhausen, Michael Jones, Michael Peck, Roberto Polli, Tim Würtele
+   and Vittorio Bertocci.
 
    Discussions around this specification have also occurred at the OAuth
    Security Workshop in 2021 and 2022.  The authors thank the organizers
@@ -4476,6 +4503,11 @@ Appendix F.  Document History
 
    *  Make iss response parameter required to be sent by the AS (let
       clients choose the mix-up mitigation still)
+
+   *  Consolidated text about lengths of values into a new "Value Sizes"
+      section
+
+   *  Clarified authorization endpoint error response behavior
 
    -15
 
