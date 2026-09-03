@@ -2713,7 +2713,7 @@ the authorization server associates the access token with the
 respective resource and actions and every resource server is obliged
 to verify, for every request, whether the access token sent with that
 request was meant to be used for that particular action on the
-particular resource.  If not, the resource server must refuse to
+particular resource.  If not, the resource server MUST refuse to
 serve the respective request.  Clients and authorization servers MAY
 utilize the parameter `scope` and
 `authorization_details` as specified in {{RFC9396}} to
