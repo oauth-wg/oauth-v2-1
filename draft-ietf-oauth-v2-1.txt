@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 6 March 2027                                               Okta
+Expires: 7 March 2027                                               Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                        2 September 2026
+                                                        3 September 2026
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 March 2027.
+   This Internet-Draft will expire on 7 March 2027.
 
 Copyright Notice
 
@@ -727,7 +727,7 @@ Table of Contents
 
    Implementations MUST use a mechanism to provide communication
    authentication, integrity and confidentiality such as Transport-Layer
-   Security [RFC8446], to protect the exchange of clear-text credentials
+   Security [RFC9846], to protect the exchange of clear-text credentials
    and tokens either in the content or in header fields from
    eavesdropping which enables replay (e.g., see Section 2.4.1,
    Section 7.5.1, Section 3.2, and Section 1.4.2).
@@ -736,7 +736,7 @@ Table of Contents
    MUST use the https scheme except for loopback interface redirect
    URIs, which MAY use the http scheme.  When using https, TLS
    certificates MUST be checked according to Section 4.3.4 of [RFC9110].
-   At the time of this writing, TLS version 1.3 [RFC8446] is the most
+   At the time of this writing, TLS version 1.3 [RFC9846] is the most
    recent version.
 
    Implementations MAY also support additional transport-layer security
@@ -3000,7 +3000,7 @@ Table of Contents
 7.6.  Ensuring Endpoint Authenticity
 
    The risk related to man-in-the-middle attacks is mitigated by the
-   mandatory use of channel security mechanisms such as [RFC8446] for
+   mandatory use of channel security mechanisms such as [RFC9846] for
    communicating with the Authorization and Token Endpoints.  See
    Section 1.5 for further details.
 
@@ -3926,10 +3926,6 @@ Table of Contents
               DOI 10.17487/RFC8259, December 2017,
               <https://www.rfc-editor.org/info/rfc8259>.
 
-   [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
-              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
-              <https://www.rfc-editor.org/info/rfc8446>.
-
    [RFC9110]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
               Ed., "HTTP Semantics", STD 97, RFC 9110,
               DOI 10.17487/RFC9110, June 2022,
@@ -3949,6 +3945,10 @@ Table of Contents
               "Best Current Practice for OAuth 2.0 Security", BCP 240,
               RFC 9700, DOI 10.17487/RFC9700, January 2025,
               <https://www.rfc-editor.org/info/rfc9700>.
+
+   [RFC9846]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", RFC 9846, DOI 10.17487/RFC9846, July 2026,
+              <https://www.rfc-editor.org/info/rfc9846>.
 
    [USASCII]  Institute, A. N. S., "Coded Character Set -- 7-bit
               American Standard Code for Information Interchange, ANSI
