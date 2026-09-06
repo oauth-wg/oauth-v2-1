@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-03T00:21:41.303795+00:00",
+  "timestamp": "2026-09-06T00:23:09.050412+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -6014,7 +6014,7 @@
       "labels": [],
       "body": "In the doorkeeper project we've had bug reports come in due to clients sending a massive `state` parameter in their request, which then exceeds the maximum HTTP Header length that nginx or similar reverse proxies will allow.\n\nIt would be good to have some guidance on limiting the size of this parameter to something reasonable, potentially responding with `invalid_request` when the state parameter exceeds that length.\n\nhttps://github.com/doorkeeper-gem/doorkeeper/issues/1554",
       "createdAt": "2026-08-05T15:54:04Z",
-      "updatedAt": "2026-09-03T00:09:15Z",
+      "updatedAt": "2026-09-03T00:45:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -6058,6 +6058,13 @@
           "body": "Ultimately we can't make any requirements on lengths, but I did add a new section that discusses lengths of parameters and references things like HTTP header and query string length so at least people will be more aware.\n\nhttps://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#name-value-sizes",
           "createdAt": "2026-09-03T00:09:15Z",
           "updatedAt": "2026-09-03T00:09:15Z"
+        },
+        {
+          "author": "ThisIsMissEm",
+          "authorAssociation": "NONE",
+          "body": "@aaronpk could we maybe extend:\n> such as the authorization code\n\nTo\n> such as the authorization code and state parameters",
+          "createdAt": "2026-09-03T00:44:53Z",
+          "updatedAt": "2026-09-03T00:45:05Z"
         }
       ]
     }
