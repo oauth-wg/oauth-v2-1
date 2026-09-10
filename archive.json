@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-06T00:23:09.050412+00:00",
+  "timestamp": "2026-09-10T00:19:15.741901+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -11548,6 +11548,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 258,
+      "id": "PR_kwDODkfq5s8AAAABCxn2zw",
+      "title": "incorporate normative requirements from RFC10017",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/258",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "> TODO: Bring in the normative text of the browser-based apps BCP when it is finalized.\r\n\r\nThat BCP is now published as RFC 10017 / BCP 212, \"OAuth 2.0 for Browser-Based Applications\" (August 2026).\r\n\r\nOAuth 2.1 already consolidates RFC 8252 (native apps), RFC 7636 (PKCE), and RFC 9700 (Security BCP) into its own body text. RFC 10017 is the last of the four documents listed in # Differences from OAuth 2.0 that is still only pointed at, not incorporated. The goal is for an implementer building a single-page app to find every normative requirement that applies to them inside OAuth 2.1, with RFC 10017 cited for threat models, architecture diagrams, and rationale.\r\n\r\n 1. Client-side requirements + prohibitions only. RFC 10017 \u00a76.1/\u00a76.2 place\r\n    requirements on a BFF or token-mediating backend (cookie flags, CSRF token\r\n    mechanisms, proxy allowlists) that are web-application plumbing rather than OAuth\r\n    protocol behavior. Those stay in RFC 10017; OAuth 2.1 describes the patterns briefly\r\n    and carries only their OAuth-level requirements (confidential client, authorization\r\n    code grant).\r\n 2. Cross-reference, don't restate. Requirements RFC 10017 shares with OAuth 2.1\r\n    core (PKCE, exact redirect URI matching, Implicit/ROPC removal, refresh token\r\n    rotation-or-sender-constraining, redirect URI CSRF defense) are cited by internal\r\n    anchor, not duplicated. Per CLAUDE.md, added language is added ambiguity, and two\r\n    copies of a normative statement can diverge.",
+      "createdAt": "2026-09-09T04:45:26Z",
+      "updatedAt": "2026-09-09T04:45:26Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "d04b368313c8835a930a2e55a68ef547312b7b32",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "aaronpk/rfc10017",
+      "headRefOid": "855d9c1e4be6289b956cd0f0055efe6109b356bd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
