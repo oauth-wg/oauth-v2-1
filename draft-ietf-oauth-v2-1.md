@@ -144,7 +144,7 @@ informative:
     target: https://www.svta.org/product/online-multimedia-authorization-protocol/
 
   NIST800-63:
-    title: "NIST Special Publication 800-63-1, INFORMATION SECURITY"
+    title: "NIST Special Publication 800-63-1, INFORMATION SECURITY (withdrawn)"
     date: December, 2011
     author:
       - ins: W. Burr
@@ -945,7 +945,7 @@ Authorization servers MUST require clients to register their complete
 redirect URI (including the path component). Authorization servers
 MUST reject authorization requests that specify a redirect URI that
 doesn't exactly match one that was registered, with an exception for
-loopback redirects, where an exact match is required except for the
+loopback interface redirect URIs, where an exact match is required except for the
 port URI component, see {{authorization-request}} for details.
 
 The authorization server MAY allow the client to register multiple
@@ -1732,8 +1732,9 @@ In particular, the authorization server MUST validate the `redirect_uri`
 in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration ({{client-registration}}).
 When comparing the two URIs the authorization server MUST ensure that the
-two URIs are equal, see {{Section 6.2.1 of RFC3986}}, Simple String Comparison, for details.
-The only exception is native apps using a localhost URI: In this case, the authorization server
+two URIs are equal using simple string comparison as defined in {{Section 6.2.1 of RFC3986}},
+i.e., a case-sensitive, character-by-character comparison with no normalization applied.
+The only exception is loopback interface redirect URIs used by native apps: In this case, the authorization server
 MUST allow variable port numbers as described in {{loopback-interface-redirection}}.
 
 If the request is valid,
@@ -2578,8 +2579,9 @@ background for the protocol design, is provided by
 ### Security Threats
 
 The following list presents several common threats against protocols
-utilizing some form of tokens.  This list of threats is based on NIST
-Special Publication 800-63 [NIST800-63].
+utilizing some form of tokens.  This list of threats was originally
+derived from NIST Special Publication 800-63-1 [NIST800-63], as
+described in {{RFC6750}}.
 
 #### Access token manufacture/modification
 
@@ -2712,6 +2714,11 @@ or other unsecured locations.
 
 ### Access Token Privilege Restriction
 
+The client SHOULD request access tokens with the minimal scope
+necessary.  The authorization server SHOULD take the client identity
+into account when choosing how to honor the requested scope and MAY
+issue an access token with fewer scopes than requested.
+
 The privileges associated with an access token SHOULD be restricted
 to the minimum required for the particular application or use case.
 This prevents clients from exceeding the privileges authorized by the
@@ -2792,37 +2799,14 @@ previously approved an authorization request for a given client ID --
 unless the identity of the client can be proven, the request SHOULD
 be processed as if no previous request had been approved.
 
-Measures such as claimed `https` scheme redirects MAY be accepted by
-authorization servers as identity proof.  Some operating systems may
-offer alternative platform-specific identity features that MAY be
-accepted, as appropriate.
-
-
-### Access Token Privilege Restriction
-
-The client SHOULD request access tokens with the minimal scope
-necessary.  The authorization server SHOULD take the client identity
-into account when choosing how to honor the requested scope and MAY
-issue an access token with fewer scopes than requested.
-
-The privileges associated with an access token SHOULD be restricted to
-the minimum required for the particular application or use case. This
-prevents clients from exceeding the privileges authorized by the
-resource owner. It also prevents users from exceeding their privileges
-authorized by the respective security policy. Privilege restrictions
-also help to reduce the impact of access token leakage.
-
-In particular, access tokens SHOULD be restricted to certain resource
-servers (audience restriction), preferably to a single resource
-server. To put this into effect, the authorization server associates
-the access token with certain resource servers and every resource
-server is obliged to verify, for every request, whether the access
-token sent with that request was meant to be used for that particular
-resource server. If not, the resource server MUST refuse to serve the
-respective request. Clients and authorization servers MAY utilize the
-parameters `scope` or `resource` as specified in
-{{RFC8707}}, respectively, to determine the
-resource server they want to access.
+Measures such as claimed `https` scheme redirects provide stronger
+assurance than private-use URI schemes that the authorization response
+is delivered to the intended app, and authorization servers MAY take
+this into account when deciding whether to process a repeated
+authorization request automatically. Such measures do not authenticate
+the client, and do not make the client a confidential client. Some
+operating systems may offer alternative platform-specific identity
+features that MAY be used similarly, as appropriate.
 
 
 ## Client Impersonating Resource Owner {#client-impersonating-resource-owner}
@@ -3545,6 +3529,10 @@ time of the request for loopback IP redirect URIs, to accommodate
 clients that obtain an available ephemeral port from the operating
 system at the time of the request.
 
+Loopback interface redirect URIs may be susceptible to interception by
+other apps accessing the same loopback interface on some operating
+systems.
+
 Clients SHOULD NOT assume that the device supports a particular
 version of the Internet Protocol.  It is RECOMMENDED that clients
 attempt to bind to the loopback interface using both IPv4 and IPv6
@@ -4032,6 +4020,14 @@ Discussions around this specification have also occurred at the OAuth Security W
 # Document History
 
 [[ To be removed from the final specification ]]
+
+-17
+
+* Removed duplicate "Access Token Privilege Restriction" section
+* Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology
+* Clarified that claimed `https` scheme redirects do not authenticate the client
+* Restored loopback interception note from RFC 8252
+* Updated attribution of the token threat list to NIST SP 800-63-1
 
 -16
 
