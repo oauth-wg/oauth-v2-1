@@ -651,6 +651,11 @@ request using a pre-defined default value or fail the request
 indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
 
+Whether the scope of a grant is limited to what the resource owner
+approved in the corresponding authorization request, or also includes
+scopes the resource owner previously authorized for the same client,
+is determined by authorization server policy.
+
 ### Bearer Tokens {#bearer-tokens}
 
 A Bearer Token is a security token with the property that any party
@@ -2092,6 +2097,11 @@ In addition to the processing rules in {{token-request}}, the authorization serv
 
 * validate the refresh token
 
+If the authorization associated with the grant has been reduced since
+the refresh token was issued (e.g., the resource owner revoked some scopes),
+the authorization server MAY issue an access token with the reduced scope,
+and includes the `scope` response parameter as described in {{token-response}}.
+
 Authorization servers MUST utilize one of these methods to detect
 refresh token replay by malicious actors for public clients:
 
@@ -2136,7 +2146,8 @@ The authorization server MAY revoke the old
 refresh token after issuing a new refresh token to the client.  If a
 new refresh token is issued, the refresh token scope MUST be
 identical to that of the refresh token included by the client in the
-request.
+request, unless the grant has been reduced as described in
+{{refresh-token-endpoint-extension}}.
 
 Authorization servers MAY revoke refresh tokens automatically in case
 of a security event, such as:
@@ -2150,6 +2161,12 @@ access tokens for some time.  The expiration time is at the
 discretion of the authorization server.  It might be a global value
 or determined based on the client policy or the grant associated with
 the refresh token (and its sensitivity).
+
+When refresh token rotation is used, a failure to deliver the refresh
+token response (e.g., due to a network error) can leave the client
+holding only an invalidated refresh token, forcing a new authorization
+flow. Authorization servers that wish to avoid this failure mode can
+use sender-constrained refresh tokens instead of rotation.
 
 ## Extension Grants {#extension-grants}
 
@@ -4032,6 +4049,11 @@ Discussions around this specification have also occurred at the OAuth Security W
 # Document History
 
 [[ To be removed from the final specification ]]
+
+-17
+
+* Clarified scope of grants and refresh token requests when the resource owner revokes scopes
+* Added note about refresh token rotation and lost responses
 
 -16
 
