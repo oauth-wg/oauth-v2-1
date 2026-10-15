@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-24T00:19:59.817788+00:00",
+  "timestamp": "2026-10-15T00:18:57.433424+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -132,6 +132,11 @@
       "name": "ietf-126",
       "description": "",
       "color": "3a7e42"
+    },
+    {
+      "name": "ietf-127",
+      "description": "",
+      "color": "13b12b"
     }
   ],
   "issues": [
@@ -551,7 +556,7 @@
       ],
       "body": "from Vittorio:\r\n\r\n---\r\n\r\n\u00a71.2\r\n\r\nI always found this part extraordinarily difficult to decipher. I get that this is the first description and doesn\u2019t have to be exhaustive and consider all cases (eg it\u2019s ok if step 3 claims that the client authenticates w the AS even tho that\u2019s only for confidential clients), but I think it could be much clearer than it is today.\r\n\r\nStep 1 says\r\n\r\nThe client requests authorization from the resource owner.  The authorization request can be made directly to the resource owner (as shown), or preferably indirectly via the authorization server as an intermediary.\r\n\r\nBesides the fact that \u201crequests authorization\u201d is a bit vague, this step and the corresponding diagram leg does not correspond at all to what normally happens- to get a code, the client does need to hit the AS and the mention in passing in the text isn\u2019t enough to figure that out. Also, with the omission of ROPG there really isn\u2019t any way of asking anything to the RO directly (the client creds doesn\u2019t involve the RO).\r\n\r\nI would recommend updating that diagram to be more descriptive of the canonical scenario.\r\n\r\nStep 2\r\n\r\nmentions the 2 grants defined in the spec, but only one of them represents the RO\u2019s authorization. Claiming that the client itself is the RO is a formalism that doesn\u2019t meet the reader\u2019s intuition at this point.\r\n\r\nStep 5\r\n\r\nThe language here triggered multiple discussions, in particular on whether the AT can actually be used to ascertain the identity of the client \u2013 that isn\u2019t the case for public clients, for example; besides, that\u2019s not really the highest order bit of the AT. If it is, it seems that the spec should be more explicit about how client identification from the RS by means of an AT works. If it isn\u2019t, perhaps we should change the language to omit authenticate.\r\n\r\nThe last paragraph is emblematic IMO \u2013 if the preferred method is very different from the diagram here, and if the abstraction presented here is not terribly useful (given that we no longer have multiple RO based grants, excluding the extension grants that are still too far at this point to warrant a cognitive downpayment for the reader) I wonder whether we\u2019d be better off doing the authz code diagram directly (and mention that we also have the client creds grant separately).\r\n\r\n ",
       "createdAt": "2021-02-01T23:47:42Z",
-      "updatedAt": "2022-06-28T23:35:41Z",
+      "updatedAt": "2026-10-13T21:33:16Z",
       "closedAt": null,
       "comments": [
         {
@@ -723,7 +728,7 @@
       ],
       "body": "## I expect\r\n\r\nAn updated ref to NIST SP publication.\r\n\r\n## Instead \r\n\r\nThe I-D cites NIST SP 800-63-1 withdrawn in 2013\r\nNote: 800-63-2 was Withdrawn on June 22, 2017. Superseded by SP 800-63-3; SP 800-63C; SP 800-63A; SP 800-63B\r\n",
       "createdAt": "2021-02-16T17:09:59Z",
-      "updatedAt": "2022-06-29T07:24:35Z",
+      "updatedAt": "2026-10-13T22:14:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -739,6 +744,13 @@
           "body": "Good question :)\n\nI need to work on it.\n",
           "createdAt": "2022-06-29T07:24:34Z",
           "updatedAt": "2022-06-29T07:24:34Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "The latest version 800-63-4 replaced the original list with considerations about tokens used in federation, primarily referring to ID Tokens and SAML Assertions: https://pages.nist.gov/800-63-4/sp800-63c.html#security rather than discussing tokens abstractly. I think the best thing will be to keep the reference to the original as a historic note.",
+          "createdAt": "2026-10-13T22:14:15Z",
+          "updatedAt": "2026-10-13T22:14:15Z"
         }
       ]
     },
@@ -1042,7 +1054,7 @@
       ],
       "body": "from Vittorio:\r\n\r\n---\r\n\r\n> The authorization server MUST compare the two URIs using simple\r\n>  string comparison as defined in [RFC3986], Section 6.2.1.\r\n\r\nRFC3986 6.2.1 talks about character by character comparison, but doesn\u2019t mention case sensitivity. I am sure it does elsewhere in the spec, but for clarify and readability I recommend specifying the desired behavior directly here.",
       "createdAt": "2021-03-02T00:44:29Z",
-      "updatedAt": "2024-02-24T01:04:15Z",
+      "updatedAt": "2026-10-13T22:02:21Z",
       "closedAt": null,
       "comments": [
         {
@@ -1420,7 +1432,7 @@
       "labels": [],
       "body": "In a discussion with OAuth implementers the following issue was raised: \r\n\r\nThe first messages of the flow show that the client obtains the grant from the resource owner and passes it the AS. That might work for RO password grant but it does not work that way for code and other grant types.\r\nThe text on step 1 is resolving this issue by stating: \r\n\r\nThe client requests authorization from the resource owner.  The\r\n       authorization request can be made directly to the resource owner\r\n       (as shown), or preferably indirectly via the authorization server\r\n       as an intermediary.\r\n\r\nI would say with OAuth 2.1 the authorization is always captured by the AS. I suggest to modify figure and description accordingly. ",
       "createdAt": "2021-03-04T11:20:17Z",
-      "updatedAt": "2022-06-29T00:03:02Z",
+      "updatedAt": "2026-10-13T21:33:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -1844,7 +1856,7 @@
       ],
       "body": "from Vittorio:\r\n\r\nhttps://tools.ietf.org/html/draft-ietf-oauth-v2-1-00#section-6\r\n\r\n> We might need to be more precise here. Do we mean the scopes consented by the RO in the request that led to the issuance of the RT being used? Just saying consented by the RO for the client does not exclude cases in which there are more instances of the client in operation. Say that I am running uber on phone 1 and I consent to read my google calendar, getting AT1 and RT1. Say that on phone 2 I also run the uber app, and this time I consent to write my google calendar, obtaining AT2 and RT2 on this new device. Now consider the various combinations here. Should RT2 allow me to get calendar:read too, given that it was already consented by RO for this client? Should RT1 allow me to get AT1\u2019 containing calendar:write, given that RO consented for it when using a different instance of the same client? Whatever is the answer you want to the questions above, I think the spec should have language clear enough to unambiguously determine the desired behavior.\r\n",
       "createdAt": "2021-03-16T03:03:00Z",
-      "updatedAt": "2024-01-31T15:11:34Z",
+      "updatedAt": "2026-10-13T21:44:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -1885,7 +1897,7 @@
       ],
       "body": "from Vittorio:\r\n\r\n> On the identical scopes requirement. Say that after obtaining RT1, which includes scopes s1 and s2 for client c1, the RO revokes authorization for c1 to use s2. Should the AS fail the RT redemption, or return an AT with only s1 and a scopes parameter informing the client of the change? As developer I would prefer the latter, to preserve the experience: but if we are adamant about the current language, I think it might be useful to explicitly call out that any changes to the grant on the AS side should result in failure of the RT redemption.\r\n",
       "createdAt": "2021-03-16T03:13:39Z",
-      "updatedAt": "2024-01-31T15:11:41Z",
+      "updatedAt": "2026-10-13T21:44:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -1925,7 +1937,7 @@
       "labels": [],
       "body": "Security considerations should be reserved for implementation details ",
       "createdAt": "2021-03-16T17:44:35Z",
-      "updatedAt": "2021-10-19T10:39:13Z",
+      "updatedAt": "2026-10-13T22:02:12Z",
       "closedAt": null,
       "comments": [
         {
@@ -3788,7 +3800,7 @@
       ],
       "body": "From the \"[Impersonation of native apps](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-07#section-7.3.1)\" security considerations section:\r\n\r\n> Measures such as claimed https scheme redirects MAY be accepted by authorization servers as identity proof. Some operating systems may offer alternative platform-specific identity features that MAY be accepted, as appropriate.\r\n\r\nVittorio: I find this misleading. Client side measures such as claimed schemes, domains etc might work to prevent an app impersonating another app on the same device/OS, but they aren\u2019t guaranteed to be honored on other operating systems. The AS has no way of knowing whether those measures have been enforced on the client, hence it should not accept them as proof.\r\n\r\nAaron: I believe this was intended to allow the AS to skip the consent screen on repeated authorizations if the app is using a claimed https redirect URI vs a custom scheme. Would it be enough to clarify that this only applies to skipping the consent screen or other similar policies at the AS, but doesn't turn it into a confidential client?",
       "createdAt": "2023-03-13T21:39:10Z",
-      "updatedAt": "2024-05-14T17:47:38Z",
+      "updatedAt": "2026-10-13T22:03:05Z",
       "closedAt": null,
       "comments": [
         {
@@ -4687,7 +4699,7 @@
       "labels": [],
       "body": "The current OAuth 2.1 draft mentions that\r\n\r\n> Many environments that support private-use URI schemes do not provide a mechanism to claim a scheme and prevent other parties from using another application's scheme. As such, clients using private-use URI schemes are vulnerable to potential attacks on their redirect URIs, so this option should only be used if the previously mentioned more secure options are not available.\r\n\r\nAFAICT, this paragraph was introduced by [f428704c](https://github.com/oauth-wg/oauth-v2-1/commit/f428704cd469fb350d0f5318f4b4589e3e6d0e5c#diff-c690e6a757ffca99a8affaa2828883974014878ce549391b38be85d4c91862c9R3174-R3179) for the reasons outlined in the [ietf-113 minutes](https://datatracker.ietf.org/meeting/113/materials/minutes-113-oauth-00):\r\n\r\n> George: I am in favor of ordering of best security practive starting with the claimed https URL.\r\n> Aaron: It sounds like we are going to re-order the list, claimed https URL first, loopback second, and private URI schemes. Remove the sentence for the mandatory -implementing all three. Maybe adding text of why you want to have the private URI scheme at all.\r\n\r\nConsidering that any app can listen on the loopback interface and thus create a valid redirect URI that leads to itself, I wonder what makes loopback redirects more secure than private-use URI schemes.\r\n\r\nOne potential advantage of loopback redirects that I can see is that only one app can listen on the specific port. Thus, it's impossible for an attacker to receive a code that was the result of a valid authorization request if the client has already started its loopback HTTP server. However, integrating PKCE into OAuth 2.1 should already prevent this attack. Moreover, using the authorization code grant type already prevents MITM attacks, public clients can't use the client credentials grant type, and the implicit grant type was removed.\r\n\r\nOn the other hand, most operating systems require some sort of installation procedure (installing a `.desktop` file, creating a registry entry, installing an app with a manifest, etc.) before user agents consider an application for the private-use URI scheme. While this is not a \"true\" security feature that protects against redirect code interception, as multiple applications can register themselves for the same scheme, it prevents users with access to the same loopback device but *without* access to the same user account or the system-wide scheme handler registry from intercepting a code. In comparison, any user on the same computer can bind a port on the loopback device and thus obtain a valid redirect URI that points to itself.\r\n\r\n---\r\n\r\nI agree that all native clients should prefer claimed \"https\" schemes where possible, but unless I'm missing something, I would suggest changing the paragraph above to something like\r\n\r\n> Many environments that support private-use URI schemes do not provide a mechanism to claim a scheme and prevent other parties from using another application's scheme. As such, clients using private-use URI schemes are vulnerable to potential attacks on their redirect URIs, so this option should only be used if claimed https schemes are not available.",
       "createdAt": "2024-05-19T17:10:44Z",
-      "updatedAt": "2024-05-20T01:57:33Z",
+      "updatedAt": "2026-10-13T22:03:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -5274,7 +5286,7 @@
       "labels": [],
       "body": "we should provide guidance on the impact of a refresh that fails where the old refresh token is now invalid but the new refresh token did not get to the client because of an error along the way",
       "createdAt": "2025-05-14T21:32:58Z",
-      "updatedAt": "2025-05-16T15:56:01Z",
+      "updatedAt": "2026-10-13T21:46:49Z",
       "closedAt": null,
       "comments": [
         {
@@ -5658,7 +5670,7 @@
       "labels": [],
       "body": "The protocol flow diagram in 1.2 is confusing to readers, and it's not uncommon for a reader to think \"Resource Owner\" is another computer alongside the Authorization Server and Resource Server. This is further confounded by the text:\n\n>  The authorization request can be made directly to the resource owner (as shown),\n\nWith the removal of the password grant, this should be updated both in the diagram and the text to show that the authorization grant is mediated through the AS. Even better, I would argue that this protocol flow is too abstract to be useful in most explanations, and the diagram does more harm than good.",
       "createdAt": "2025-11-04T20:57:26Z",
-      "updatedAt": "2025-11-04T20:59:34Z",
+      "updatedAt": "2026-10-13T21:33:09Z",
       "closedAt": null,
       "comments": [
         {
@@ -11557,11 +11569,13 @@
       "state": "OPEN",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
-      "assignees": [],
+      "assignees": [
+        "dickhardt"
+      ],
       "labels": [],
       "body": "> TODO: Bring in the normative text of the browser-based apps BCP when it is finalized.\r\n\r\nThat BCP is now published as RFC 10017 / BCP 212, \"OAuth 2.0 for Browser-Based Applications\" (August 2026).\r\n\r\nOAuth 2.1 already consolidates RFC 8252 (native apps), RFC 7636 (PKCE), and RFC 9700 (Security BCP) into its own body text. RFC 10017 is the last of the four documents listed in # Differences from OAuth 2.0 that is still only pointed at, not incorporated. The goal is for an implementer building a single-page app to find every normative requirement that applies to them inside OAuth 2.1, with RFC 10017 cited for threat models, architecture diagrams, and rationale.\r\n\r\n 1. Client-side requirements + prohibitions only. RFC 10017 \u00a76.1/\u00a76.2 place\r\n    requirements on a BFF or token-mediating backend (cookie flags, CSRF token\r\n    mechanisms, proxy allowlists) that are web-application plumbing rather than OAuth\r\n    protocol behavior. Those stay in RFC 10017; OAuth 2.1 describes the patterns briefly\r\n    and carries only their OAuth-level requirements (confidential client, authorization\r\n    code grant).\r\n 2. Cross-reference, don't restate. Requirements RFC 10017 shares with OAuth 2.1\r\n    core (PKCE, exact redirect URI matching, Implicit/ROPC removal, refresh token\r\n    rotation-or-sender-constraining, redirect URI CSRF defense) are cited by internal\r\n    anchor, not duplicated. Per CLAUDE.md, added language is added ambiguity, and two\r\n    copies of a normative statement can diverge.",
       "createdAt": "2026-09-09T04:45:26Z",
-      "updatedAt": "2026-09-09T04:45:26Z",
+      "updatedAt": "2026-10-13T21:47:20Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "d04b368313c8835a930a2e55a68ef547312b7b32",
@@ -11595,6 +11609,84 @@
       "headRefName": "main",
       "headRefOid": "523bf69694c70b9a2ba634d373718fe273b97802",
       "closedAt": "2026-09-22T20:57:56Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 260,
+      "id": "PR_kwDODkfq5s8AAAABIRGjSg",
+      "title": "updated abstract protocol diagram",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/260",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request.\n\nCloses #48, #26, and #231",
+      "createdAt": "2026-10-13T21:33:59Z",
+      "updatedAt": "2026-10-13T21:47:12Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "d04b368313c8835a930a2e55a68ef547312b7b32",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "protocol-flow-diagram",
+      "headRefOid": "f5012ebac50eb07328a88865200b6e64dd0aa6dd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 261,
+      "id": "PR_kwDODkfq5s8AAAABIROTnQ",
+      "title": "scope downgrades and refresh token rotation",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/261",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "* Clarified scope of grants and refresh token requests when the resource owner revokes scopes\n* Added note about refresh token rotation and lost responses\n\nCloses #62, #63, #212",
+      "createdAt": "2026-10-13T21:46:59Z",
+      "updatedAt": "2026-10-13T21:47:05Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "d04b368313c8835a930a2e55a68ef547312b7b32",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "refresh-token-scope",
+      "headRefOid": "e9aa823c1ff00e49a4190b664e68879f5975e0ac",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 262,
+      "id": "PR_kwDODkfq5s8AAAABIRegzQ",
+      "title": "security considerations cleanup",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/262",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "* Removed duplicate \"Access Token Privilege Restriction\" section\n* Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology\n* Clarified that claimed `https` scheme redirects do not authenticate the client\n* Restored loopback interception note from RFC 8252\n* Updated attribution of the token threat list to NIST SP 800-63-1\n\nCloses #64, #39, #141, #179, #31",
+      "createdAt": "2026-10-13T22:14:24Z",
+      "updatedAt": "2026-10-13T22:14:25Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "d04b368313c8835a930a2e55a68ef547312b7b32",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "security-considerations-cleanup",
+      "headRefOid": "a85c13bba1c1b6ed367a1577a41fd1c9c21da20b",
+      "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
