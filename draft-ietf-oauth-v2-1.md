@@ -2808,14 +2808,14 @@ authorization servers as identity proof.  Some operating systems may
 offer alternative platform-specific identity features that MAY be
 accepted, as appropriate.
 
-### Impersonation of Browser-Based Apps {#browser-based-app-client-impersonation}
+### Impersonation of Browser-Based Applications {#browser-based-application-impersonation}
 
 Authorization servers restrict redirect URIs to a fixed set of
 URIs, preventing the use of wildcard domains, wildcard
 paths, or wildcard query string components as described in {{registration-requirements}}.
 When a client uses an absolute `https` URI as a redirect URI,
 an exact match MAY be accepted by authorization servers as proof
-of identity of a browser-based app client for the purpose of deciding
+of identity of a browser-based application for the purpose of deciding
 whether to process an authorization request automatically when a previous
 request for the same `client_id` has already been approved.
 
@@ -3725,7 +3725,7 @@ as described in {{loopback-interface-redirection}}.
 
 # Browser-Based Applications {#browser-based-apps}
 
-Browser-based apps are clients that run in a web browser, typically
+Browser-based applications are clients that run in a web browser, typically
 written in JavaScript, also known as "single-page apps". Because the
 application's code is delivered to and executed within the user agent,
 any code running in the application's origin has access to the same
@@ -3733,7 +3733,7 @@ data and APIs as the application itself. These types of apps
 have particular security considerations similar to native apps.
 
 There are three architecture patterns available when building a
-browser-based app that uses OAuth to access protected resources,
+browser-based application that uses OAuth to access protected resources,
 presented here in decreasing order of security:
 
 * the app relies on a backend component to handle all OAuth
@@ -3752,17 +3752,17 @@ simplicity. See {{RFC10017}} for the threat model of malicious
 JavaScript, a detailed analysis of which attacks each pattern does and
 does not withstand, and sequence diagrams of each pattern.
 
-Browser-based apps MUST use the authorization code grant
+Browser-based applications MUST use the authorization code grant
 ({{authorization-code-grant}}) to obtain an access token. The Implicit
 grant and the Resource Owner Password Credentials grant, both of which
-were historically used by browser-based apps, are not defined in this
+were historically used by browser-based applications, are not defined in this
 specification and MUST NOT be used, as described in
 {{oauth-2-0-differences}}.
 
 ## Backend for Frontend {#browser-based-apps-bff}
 
 In this pattern, a backend component becomes the OAuth client for the
-browser-based app. The backend component obtains and manages tokens in
+browser-based application. The backend component obtains and manages tokens in
 the context of a cookie-based session with the browser, and forwards
 every resource request to the resource server after augmenting it with
 the appropriate access token. No tokens are exposed to the browser.
@@ -3774,12 +3774,12 @@ access token.
 
 See {{Section 6.1 of RFC10017}} for the cookie security, Cross-Site
 Request Forgery, and proxy restriction requirements that apply to the
-BFF's interactions with the browser-based app.
+BFF's interactions with the browser-based application.
 
 ## Token-Mediating Backend {#browser-based-apps-token-mediating-backend}
 
 In this pattern, a backend component becomes the OAuth client for the
-browser-based app and manages the refresh token in the context of a
+browser-based application and manages the refresh token in the context of a
 cookie-based session, but passes the access token to the browser-based
 app, which calls resource servers directly.
 
@@ -3789,11 +3789,11 @@ The token-mediating backend MUST act as a confidential client
 
 See {{Section 6.2 of RFC10017}} for the cookie security, Cross-Site
 Request Forgery, and access token scope requirements that apply to the
-token-mediating backend's interactions with the browser-based app.
+token-mediating backend's interactions with the browser-based application.
 
 ## Browser-Based OAuth Clients {#browser-based-oauth-clients}
 
-A browser-based app acting as the OAuth client itself is a public
+A browser-based application acting as the OAuth client itself is a public
 client, as defined in {{client-types}}, and MUST be registered with the
 authorization server as such. In addition to the requirements that apply
 to all clients using the authorization code grant, in particular PKCE
@@ -3802,36 +3802,36 @@ URIs ({{redirection-endpoint}}), and defenses against Cross-Site Request
 Forgery attacks on the redirect URI ({{csrf_countermeasures}}), the
 requirements in this section apply.
 
-### Client Authentication of Browser-Based Apps
+### Client Authentication of Browser-Based Applications
 
-Because a browser-based app's source code is delivered to the end user's
+Because a browser-based application's source code is delivered to the end user's
 browser, it cannot contain provisioned secrets. Secrets that are
-statically included as part of an app distributed to multiple users are
+statically included as part of an application distributed to multiple users are
 not confidential secrets, as one user may inspect their copy and learn the
 shared secret. For this reason, authorization servers MUST NOT require
-client authentication of browser-based app clients using a shared secret,
+client authentication of browser-based applications using a shared secret,
 as this serves no value beyond client identification which is already
 provided by the `client_id` request parameter.
 
 Authorization servers that still require a statically included shared
-secret for browser-based app clients MUST treat the client as a public
+secret for browser-based applications MUST treat the client as a public
 client (as defined in {{client-types}}), and not accept the secret as
 proof of the client's identity. Without additional measures, such clients
 are subject to client impersonation
-(see {{browser-based-app-client-impersonation}}).
+(see {{browser-based-application-impersonation}}).
 
-### Refresh Tokens for Browser-Based Apps
+### Refresh Tokens for Browser-Based Applications
 
-For browser-based apps, the refresh token is a bearer token unless the
+For browser-based applications, the refresh token is a bearer token unless the
 app uses a mechanism such as DPoP {{RFC9449}}. As a result, the risk of a
 leaked refresh token is greater than that of a leaked access token, since
 an attacker may be able to continue using the stolen refresh token to
 obtain new access tokens without being detected by the authorization
 server.
 
-Refresh tokens issued to browser-based apps are subject to the
+Refresh tokens issued to browser-based applications are subject to the
 requirements in {{refresh-token-endpoint-extension}}. In addition,
-authorization servers issuing refresh tokens to browser-based apps:
+authorization servers issuing refresh tokens to browser-based applications:
 
 * MUST either set a maximum lifetime on the refresh token, or expire the
   refresh token if it has not been used within some amount of time
@@ -3848,12 +3848,12 @@ Authorization servers SHOULD link the lifetime of the refresh token to
 the user's authenticated session with the authorization server, so that
 when the user logs out, previously issued refresh tokens become invalid.
 Authorization servers MAY set different policies for refresh token
-issuance, lifetime, and expiration for browser-based apps compared to
+issuance, lifetime, and expiration for browser-based applications compared to
 other public clients.
 
-### In-Browser Communication in Browser-Based Apps
+### In-Browser Communication in Browser-Based Applications
 
-It is common for a browser-based app to execute the OAuth flow in a
+It is common for a browser-based application to execute the OAuth flow in a
 secondary window, such as a pop-up or an iframe, rather than redirecting
 the primary window. If the app and the authorization server are invoked
 in different frames, they use in-browser communication techniques such as
@@ -3868,7 +3868,7 @@ in-browser communication flows and the countermeasures that browser-based
 apps and authorization servers MUST apply to defend against these
 attacks.
 
-### Cross-Origin Requests in Browser-Based Apps
+### Cross-Origin Requests in Browser-Based Applications
 
 A browser-based OAuth client uses browser APIs to send requests to the
 authorization server and the resource server. These requests are
@@ -3878,9 +3878,9 @@ resource server MUST send the necessary CORS {{WHATWG.CORS}} headers to
 enable the app to make these requests, as described in
 {{token-endpoint}}.
 
-## Token Storage in Browser-Based Apps {#browser-based-apps-token-storage}
+## Token Storage in Browser-Based Applications {#browser-based-apps-token-storage}
 
-A browser-based app that handles access tokens or refresh tokens directly
+A browser-based application that handles access tokens or refresh tokens directly
 is responsible for storing them. None of the storage mechanisms available
 in the browser prevent an attacker who is able to execute code in the
 app's origin from obtaining a new set of tokens in the same way the app
@@ -3891,7 +3891,7 @@ available mechanisms.
 
 Storing tokens using the browser's JavaScript Cookie API is NOT
 RECOMMENDED. Because such a cookie is associated with the domain of the
-browser-based app, the browser will also send the token to the server
+browser-based application, the browser will also send the token to the server
 hosting the app on subsequent requests, exposing the token beyond its
 intended recipient. This is different from the use of cookies by a BFF
 ({{browser-based-apps-bff}}), where the cookie is inaccessible to
@@ -3901,28 +3901,28 @@ When a Service Worker {{W3C.service-workers}} or Web Worker is used to
 isolate tokens from the app's execution context, it MUST NOT store those
 tokens in a persistent storage API that is shared with the main window.
 
-## Security Considerations in Browser-Based Apps
+## Security Considerations in Browser-Based Applications
 
-### Sender-Constrained Tokens in Browser-Based Apps
+### Sender-Constrained Tokens in Browser-Based Applications
 
 The use of sender-constrained tokens ({{sender-constrained-tokens}}), for
 example using DPoP {{RFC9449}}, enhances the security of both access
-tokens and refresh tokens issued to browser-based apps, as a stolen token
+tokens and refresh tokens issued to browser-based applications, as a stolen token
 is not usable without the corresponding private key. Note that this
 shifts the challenge of securely storing the token to securely storing
 the private key, and that it does not address an attacker's ability to
 obtain a new set of tokens by running a new flow. See
 {{Section 9.2 of RFC10017}} for further details.
 
-### Reducing the Authority of Tokens in Browser-Based Apps
+### Reducing the Authority of Tokens in Browser-Based Applications
 
-Because tokens in a browser-based app are more exposed than in other
+Because tokens in a browser-based application are more exposed than in other
 architectures, the privilege restrictions described in
 {{access-token-privilege-restriction}} are particularly important. Short
 access token lifetimes, minimal scopes, and restricting an access token to
 a single resource server all reduce the impact of a stolen token.
 
-### Isolating Browser-Based Apps Using Origins
+### Isolating Browser-Based Applications Using Origins
 
 Many of the web's security mechanisms, including the browser's isolation
 of browsing contexts and the CORS restrictions described in
@@ -3933,9 +3933,9 @@ makes security measures such as CORS harder to configure correctly. It is
 therefore a best practice to deploy no more than one application per
 origin.
 
-### Authorization Server Mix-Up in Browser-Based Apps
+### Authorization Server Mix-Up in Browser-Based Applications
 
-Mix-up attacks are a particular threat to browser-based apps that support
+Mix-up attacks are a particular threat to browser-based applications that support
 more than one authorization server. The countermeasures in {{mix-up}}
 apply.
 
@@ -3968,7 +3968,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
   as per {{Section 4.3.2 of RFC9700}}
 * Refresh tokens for public clients must either be sender-constrained or one-time use
   as per {{Section 4.14.2 of RFC9700}}
-* Refresh tokens issued to browser-based apps have additional lifetime constraints
+* Refresh tokens issued to browser-based applications have additional lifetime constraints
   as per {{Section 6.3.2.3 of RFC10017}}
 * The token endpoint request containing an authorization code no longer contains
   the `redirect_uri` parameter
@@ -4254,7 +4254,7 @@ Below is a list of well-established extensions at the time of publication:
 
 # Acknowledgements
 
-This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Apps. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
+This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Applications. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
 
 The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Andrii Deinega, Bob Hamburg, Brian Campbell, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan, Goutam Adwant, Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Michael Jones, Michael Peck, Roberto Polli, Tim Würtele and Vittorio Bertocci.
 
@@ -4268,7 +4268,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 -17
 
 * Filled in the Browser-Based Applications section with the normative requirements from RFC 10017
-* Updated references to OAuth 2.0 for Browser-Based Apps to the published RFC 10017
+* Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017
 
 -16
 
