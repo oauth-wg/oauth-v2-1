@@ -948,7 +948,7 @@ query string component ({{query-string-serialization}}), which MUST be retained 
 additional query parameters. The redirect URI MUST NOT include a
 fragment component.
 
-### Registration Requirements
+### Registration Requirements {#registration-requirements}
 
 Authorization servers MUST require clients to register their complete
 redirect URI (including the path component). Authorization servers
@@ -2810,10 +2810,11 @@ accepted, as appropriate.
 
 ### Impersonation of Browser-Based Apps {#browser-based-app-client-impersonation}
 
-If authorization servers restrict redirect URIs to a fixed set of
-absolute `https` URIs, preventing the use of wildcard domains, wildcard
-paths, or wildcard query string components, this exact match of registered
-absolute `https` URIs MAY be accepted by authorization servers as proof
+Authorization servers restrict redirect URIs to a fixed set of
+URIs, preventing the use of wildcard domains, wildcard
+paths, or wildcard query string components as described in {{registration-requirements}}.
+When a client uses an absolute `https` URI as a redirect URI,
+an exact match MAY be accepted by authorization servers as proof
 of identity of a browser-based app client for the purpose of deciding
 whether to process an authorization request automatically when a previous
 request for the same `client_id` has already been approved.
