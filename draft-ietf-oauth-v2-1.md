@@ -356,22 +356,26 @@ for further details.
 ## Protocol Flow
 
 ~~~~~~~~~~
-     +--------+                               +---------------+
-     |        |--(1)- Authorization Request ->|   Resource    |
-     |        |                               |     Owner     |
-     |        |<-(2)-- Authorization Grant ---|               |
+                                              +---------------+
+                                              |   Resource    |
+                                              |     Owner     |
+                                              +---------------+
+                                                      ^
+                                                      | (2)
+     +--------+                               +-------v-------+
+     |        |--(1)- Authorization Request ->|               |
+     |        |                               |               |
+     |        |<-(3)-- Authorization Grant ---|               |
+     |        |                               | Authorization |
+     |        |--(4)-- Authorization Grant -->|     Server    |
+     | Client |                               |               |
+     |        |<-(5)----- Access Token -------|               |
      |        |                               +---------------+
      |        |
      |        |                               +---------------+
-     |        |--(3)-- Authorization Grant -->| Authorization |
-     | Client |                               |     Server    |
-     |        |<-(4)----- Access Token -------|               |
-     |        |                               +---------------+
-     |        |
-     |        |                               +---------------+
-     |        |--(5)----- Access Token ------>|    Resource   |
+     |        |--(6)----- Access Token ------>|    Resource   |
      |        |                               |     Server    |
-     |        |<-(6)--- Protected Resource ---|               |
+     |        |<-(7)--- Protected Resource ---|               |
      +--------+                               +---------------+
 ~~~~~~~~~~
 {: #fig-protocol-flow title="Abstract Protocol Flow"}
@@ -379,12 +383,13 @@ for further details.
 The abstract OAuth 2.1 flow illustrated in {{fig-protocol-flow}} describes the
 interaction between the four roles and includes the following steps:
 
-1.  The client requests authorization from the resource owner.  The
-    authorization request can be made directly to the resource owner
-    (as shown), or preferably indirectly via the authorization
-    server as an intermediary.
+1.  The client requests authorization from the resource owner via the
+    authorization server, which acts as an intermediary between the client
+    and the resource owner.
 
-2.  The client receives an authorization grant, which is a
+2.  The resource owner approves the request.
+
+3.  The client receives an authorization grant, which is a
     credential representing the resource owner's authorization,
     expressed using one of the authorization grant types defined in this
     specification or using an extension grant type.  The
@@ -392,22 +397,27 @@ interaction between the four roles and includes the following steps:
     client to request authorization and the types supported by the
     authorization server.
 
-3.  The client requests an access token by authenticating with the
+4.  The client requests an access token by authenticating with the
     authorization server and presenting the authorization grant.
 
-4.  The authorization server authenticates the client and validates
+5.  The authorization server authenticates the client and validates
     the authorization grant, and if valid, issues an access token.
 
-5.  The client requests the protected resource from the resource
-    server and authenticates by presenting the access token.
+6.  The client requests the protected resource from the resource
+    server by presenting the access token.
 
-6.  The resource server validates the access token, and if valid,
+7.  The resource server validates the access token, and if valid,
     serves the request.
 
-The preferred method for the client to obtain an authorization grant
-from the resource owner (depicted in steps (1) and (2)) is to use the
-authorization server as an intermediary, which is illustrated in
-{{fig-authorization-code-flow}} in {{authorization-code-grant}}.
+The authorization code grant, which uses the authorization server as
+an intermediary to obtain the resource owner's authorization, is
+illustrated in {{fig-authorization-code-flow}} in {{authorization-code-grant}}.
+
+Some extensions begin with a direct request from the client to the
+authorization server before any interaction with the resource owner,
+such as Pushed Authorization Requests {{RFC9126}} and the Device
+Authorization Grant {{RFC8628}}. See {{extensions}} for these and other
+extensions.
 
 
 ## Authorization Grant
@@ -496,7 +506,7 @@ to resource servers.
 The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 
 1.  The client requests an access token by authenticating with the
-    authorization server and presenting an authorization grant.
+    authorization server and presenting a previously-obtained authorization grant.
 
 2.  The authorization server authenticates the client and validates
     the authorization grant, and if valid, issues an access token
@@ -524,20 +534,14 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
     the refresh token, and if valid, issues a new access token (and,
     optionally, a new refresh token).
 
-Note that there is no need to communicate the lifetime of the refresh
-token to the client, because the client can't do anything different with
-the knowledge of the lifetime. Additionally, the authorization server
+If the refresh token expires, the client's only recourse is to initiate
+a new flow to obtain a new access token and refresh token. The authorization server
 might choose to use dynamic lifetimes (e.g. the refresh token expiry
 is extended as long as the refresh token is used at least once every 7 days),
 or the authorization server might revoke the refresh token before
 its scheduled expiration date for any reason, such as if the user
 revokes the application's access. This means the client already has
 to handle the case of a refresh token expiring at an arbitrary time.
-
-Regardless of why or when the refresh token expires, the client
-has only one path to obtain new tokens, which is to start a new
-OAuth flow from the beginning. For that reason, there is no property
-defined to communicate the expiration of a refresh token to the client.
 
 
 ### Client Credentials
@@ -4267,6 +4271,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 -17
 
+* Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request
 * Filled in the Browser-Based Applications section with the normative requirements from RFC 10017
 * Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017
 
