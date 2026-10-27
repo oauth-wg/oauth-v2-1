@@ -1,6 +1,7 @@
 ---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-ietf-oauth-v2-1-latest
+v: 3
 
 ipr: trust200902
 wg: OAuth Working Group
@@ -19,6 +20,7 @@ author:
     name: Dick Hardt
     email: dick.hardt@gmail.com
   - ins: A. Parecki
+    role: editor
     name: Aaron Parecki
     email: aaron@parecki.com
     organization: Okta
@@ -35,11 +37,9 @@ normative:
   RFC5234:
   RFC6749:
   RFC6750:
-  RFC7235:
   RFC7521:
   RFC7523:
   RFC7595:
-  RFC8174:
   RFC8252:
   RFC8259:
   RFC9846:
@@ -48,12 +48,6 @@ normative:
   RFC9207:
   RFC9700:
   BCP195:
-    title: "Recommendations for Secure Use of Transport Layer Security (TLS)"
-    author:
-      ins: Y. Sheffer
-      ins: R. Holz
-      ins: P. Saint-Andre
-    date: 2015
   USASCII:
     title: "Coded Character Set -- 7-bit American Standard Code for Information Interchange, ANSI X3.4"
     author:
@@ -165,18 +159,6 @@ informative:
       - ins: E. Nabbus
     target: http://csrc.nist.gov/publications/
 
-  OpenID.Messages:
-    title: "OpenID Connect Messages 1.0"
-    author:
-      - ins: N. Sakimura
-      - ins: J. Bradley
-      - ins: M. Jones
-      - ins: B. de Medeiros
-      - ins: C. Mortimore
-      - ins: E. Jay
-    date: June 2012
-    target: http://openid.net/specs/openid-connect-messages-1_0.html
-
   owasp_redir:
     title: "OWASP Cheat Sheet Series - Unvalidated Redirects and Forwards"
     target: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
@@ -208,7 +190,7 @@ by separating the role of the client from that of the resource
 owner. In OAuth, the client requests access to resources controlled
 by the resource owner and hosted by the resource server.
 Instead of using the resource owner's credentials to access protected
-resources, the client obtains an access token - a credential representing
+resources, the client obtains an access token -- a credential representing
 a specific set of access attributes such as scope and lifetime. Access
 tokens are issued to clients by an authorization server with the approval
 of the resource owner. The client uses the access token to access the
@@ -223,7 +205,7 @@ the application.  This creates several problems and limitations:
 
 *  Applications are required to store the resource
    owner's credentials for future use, typically a password in
-   clear-text.
+   cleartext.
 
 *  Servers are required to support password authentication, despite
    the security weaknesses inherent in passwords.
@@ -246,10 +228,10 @@ the application.  This creates several problems and limitations:
    the end-user's password and all of the data protected by that
    password.
 
-An example where OAuth is used is where an end user (resource owner) grants a financial management
+For example, using OAuth, an end-user (resource owner) can grant a financial management
 service (client) access to their sensitive transaction history stored at
-a banking service (resource server), without sharing their username and
-password with the financial management service. Instead, they authenticate
+a banking service (resource server) without sharing their username and
+password with the financial management service. Instead, the end-user authenticates
 directly with their financial institution's server (authorization server),
 which issues the financial management service delegation-specific credentials
 (access token).
@@ -264,8 +246,8 @@ authorization server to manage the user authentication policies and
 even change them in the future without coordinating the changes with applications.
 
 The authorization layer can also simplify how a resource server determines
-if a request is authorized. Traditionally, after authenticating the client,
-each resource server would evaluate policies to compute if the client is authorized
+whether a request is authorized. Traditionally, after authenticating the client,
+each resource server would evaluate policies to determine whether the client is authorized
 on each API call. In a distributed system, the policies need to be synchronized
 to all the resource servers, or the resource server must call a central policy
 server to process each request. In OAuth, evaluation of the policies is performed
@@ -281,11 +263,11 @@ characteristics and necessary components required of an authentication protocol.
 
 The
 access token represents the authorization granted to the client. It is a common
-practice for the client to present the access token to a proprietary API which
-returns a user identifier for the resource owner, and then using the result of
+practice for the client to present the access token to a proprietary API that
+returns a user identifier for the resource owner, and then to use the result of
 the API as a proxy for authenticating the user. This practice is not part of
 the OAuth standard or security considerations, and may not have been considered
-by the resource owner. Implementors should carefully consult the documentation
+by the resource owner. Implementers should carefully consult the documentation
 of the resource server before adopting this practice.
 
 This specification is designed for use with HTTP {{RFC9110}}.  The
@@ -296,7 +278,7 @@ in October 2012, it has been updated by OAuth 2.0 for Native Apps {{RFC8252}},
 OAuth Security Best Current Practice {{RFC9700}},
 and OAuth 2.0 for Browser-Based Applications {{RFC10017}}.
 The OAuth 2.0 Authorization Framework: Bearer Token Usage {{RFC6750}}
-has also been updated with {{RFC9700}}. This
+has also been updated by {{RFC9700}}. This
 Standards Track specification consolidates the information in all of these
 documents and removes features that have been found to be insecure
 in {{RFC9700}}.
@@ -309,7 +291,7 @@ OAuth defines four roles:
 "resource owner":
 :   An entity capable of granting access to a protected resource.
     When the resource owner is a person, it is referred to as an
-    end user. This is sometimes abbreviated as "RO".
+    end-user. This is sometimes abbreviated as "RO".
 
 "resource server":
 :   The server hosting the protected resources, capable of accepting
@@ -330,10 +312,10 @@ OAuth defines four roles:
     This is sometimes abbreviated as "AS".
 
 Most of this specification defines the interaction between the client
-and the authorization server, as well as between the client and resource server.
+and the authorization server, as well as between the client and the resource server.
 
 The interaction between the authorization server and resource server
-is beyond the scope of this specification, however several extensions have
+is beyond the scope of this specification; however, several extensions have
 been defined to provide an option for interoperability between resource
 servers and authorization servers.  The authorization server
 may be the same server as the resource server or a separate entity.
@@ -341,11 +323,11 @@ A single authorization server may issue access tokens accepted by
 multiple resource servers.
 
 The interaction between the resource owner and authorization server
-(e.g. how the end user authenticates themselves at the authorization server)
-is also out of scope of this specification, with some exceptions, such as
-security considerations around prompting the end user for consent.
+(e.g., how the end-user authenticates themselves at the authorization server)
+is also out of scope for this specification, with some exceptions, such as
+security considerations around prompting the end-user for consent.
 
-When the resource owner is the end user, the user will interact with
+When the resource owner is the end-user, the user will interact with
 the client. When the client is a web-based application, the user will
 interact with the client through a user agent (as described in {{Section 3.5 of RFC9110}}).
 When the client is a native application, the user will interact with
@@ -435,7 +417,7 @@ An authorization code is a temporary credential used to obtain an access token.
 Instead of the client
 requesting authorization directly from the resource owner, the client
 directs the resource owner to an authorization server (via its
-user agent) which in turn directs the
+user agent), which in turn directs the
 resource owner back to the client with the authorization code.
 The client can then exchange the authorization code for an access token.
 
@@ -462,8 +444,8 @@ used to obtain a new access token when the current access token
 becomes invalid or expires, or to obtain additional access tokens
 with identical or narrower scope (access tokens may have a shorter
 lifetime and fewer privileges than authorized by the resource
-owner).  Issuing a refresh token is optional at the discretion of the
-authorization server, and may be issued based on properties of the client,
+owner).  Issuing a refresh token is optional and at the discretion of the
+authorization server, which may issue one based on properties of the client,
 properties of the request, policies within the authorization server, or
 any other criteria.  If the authorization server issues a refresh
 token, it is included when issuing an access token (i.e., step (2) in
@@ -519,7 +501,7 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
     serves the request.
 
 5.  Steps (3) and (4) repeat until the access token expires.  If the
-    client knows the access token expired, it skips to step (7);
+    client knows the access token has expired, it skips to step (7);
     otherwise, it makes another protected resource request.
 
 6.  Since the access token is invalid, the resource server returns
@@ -536,7 +518,7 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 
 If the refresh token expires, the client's only recourse is to initiate
 a new flow to obtain a new access token and refresh token. The authorization server
-might choose to use dynamic lifetimes (e.g. the refresh token expiry
+might choose to use dynamic lifetimes (e.g., the refresh token expiry
 is extended as long as the refresh token is used at least once every 7 days),
 or the authorization server might revoke the refresh token before
 its scheduled expiration date for any reason, such as if the user
@@ -569,23 +551,23 @@ consistent access token encoding or format other than what is
 expected by the resource server.
 
 The access granted by the resource owner to the client is represented by
-the Access Token created by the authorization server. Access Tokens are
-short lived to reduce the blast radius of a leaked Access Token. The expiration
-of the Access Token is set by the authorization server.
+the access token created by the authorization server. Access tokens are
+short-lived to limit the impact of a leaked access token. The expiration
+of the access token is set by the authorization server.
 
 Depending on the authorization server implementation,
 the token string may be used by the resource server to retrieve the authorization information,
 or the token may self-contain the authorization information in a verifiable
-manner (i.e., a token string consisting of a signed data payload). One example
+manner (e.g., a token string consisting of a signed data payload). One example
 of a token retrieval mechanism is Token Introspection {{RFC7662}}, in which the
 RS calls an endpoint on the AS to validate the token presented by the client.
-One example of a structured token format is JWT Profile for Access Tokens {{RFC9068}},
+One example of a structured token format is the JWT Profile for Access Tokens {{RFC9068}},
 a method of encoding and signing access token data as a JSON Web Token {{RFC7519}}.
 
 Additional authentication credentials, which are beyond
 the scope of this specification, may be required in order for the
-client to use an access token. This is typically referred to as a sender-constrained
-access token, such as DPoP {{RFC9449}} and
+client to use an access token. Such tokens are typically referred to as sender-constrained
+access tokens; examples include DPoP {{RFC9449}} and
 Mutual TLS Certificate-Bound Access Tokens {{RFC8705}}.
 
 The access token provides an abstraction layer, replacing different
@@ -603,8 +585,8 @@ what is described in this specification.
 
 Access tokens (as well as any confidential access token
 attributes) MUST be kept confidential in transit and storage, and
-only shared among the authorization server, the resource servers the
-access token is valid for, and the client to which the access token is
+only shared among the authorization server, the resource servers for which the
+access token is valid, and the client to which the access token is
 issued.
 
 The authorization server MUST ensure that access tokens cannot be
@@ -613,15 +595,15 @@ unauthorized parties.
 
 ### Access Token Scope {#access-token-scope}
 
-Access tokens are intended to be issued to clients with less privileges
-than the user granting the access has. This is known as a limited "scope"
+Access tokens are intended to be issued to clients with fewer privileges
+than those held by the user granting the access. This is known as a limited "scope"
 access token. The authorization server and resource server can use this
 scope mechanism to limit what types of resources or level of access a particular client
 can have.
 
 For example, a client may only need "read" access to a user's
 resources, but doesn't need to update resources, so the client can request
-the read-only scope defined by the authorization server, and obtain
+the read-only scope defined by the authorization server and obtain
 an access token that cannot be used to update resources. This requires
 coordination between the authorization server, resource server, and client. The
 authorization server provides the client the ability to request specific
@@ -629,7 +611,7 @@ scopes, and associates those scopes with the access token issued to the client.
 The resource server is then responsible for enforcing scopes when presented
 with a limited-scope access token.
 
-OAuth does not define any scope values, instead scopes are defined by the
+OAuth does not define any scope values; instead, scopes are defined by the
 authorization server or by extensions or profiles of OAuth. One such extension
 that defines scopes is {{OpenID.Connect}}, which defines a set of scopes that provide
 granular access to a user's profile information. It is recommended to avoid
@@ -641,7 +623,7 @@ the grant type used. In turn, the authorization server uses the `scope`
 response parameter to inform the client of the scope of the access token issued.
 
 The value of the scope parameter is expressed as a space-delimited
-list of case-sensitive strings.  The strings are defined by the
+set of case-sensitive strings.  The strings are defined by the
 authorization server.  If the value contains multiple space-delimited
 strings, their order does not matter, and each string adds an
 additional access range to the requested scope.
@@ -660,7 +642,7 @@ server MUST include the `scope` response parameter in the token response
 
 If the client omits the scope parameter when requesting
 authorization, the authorization server MUST either process the
-request using a pre-defined default value or fail the request
+request using a predefined default value or fail the request
 indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
 
@@ -671,33 +653,33 @@ is determined by authorization server policy.
 
 ### Bearer Tokens {#bearer-tokens}
 
-A Bearer Token is a security token with the property that any party
+A bearer token is a security token with the property that any party
 in possession of the token (a "bearer") can use the token in any way
-that any other party in possession of it can.  Using a Bearer Token
+that any other party in possession of it can.  Using a bearer token
 does not require a bearer to prove possession of cryptographic key material
 (proof-of-possession).
 
-Bearer Tokens may be enhanced with proof-of-possession specifications such
+Bearer tokens may be enhanced with proof-of-possession specifications such
 as DPoP {{RFC9449}} and mTLS {{RFC8705}} to provide proof-of-possession characteristics.
 
 To protect against access token disclosure, the
-communication interaction between the client and the resource server
+communication between the client and the resource server
 MUST utilize confidentiality and integrity protection as described in
 {{communication-security}}.
 
-There is no requirement on the particular structure or format of a bearer token. If a bearer token is a reference to authorization information, such references MUST be infeasible for an attacker to guess, such as using a sufficiently long cryptographically random string. If a bearer token uses an encoding mechanism to contain the authorization information in the token itself, the access token MUST use integrity protection sufficient to prevent the token from being modified. One example of an encoding and signing mechanism for access tokens is described in JSON Web Token Profile for Access Tokens {{RFC9068}}.
+There is no requirement on the particular structure or format of a bearer token. If a bearer token is a reference to authorization information, such references MUST be infeasible for an attacker to guess, for example, by using a sufficiently long cryptographically random string. If a bearer token uses an encoding mechanism to contain the authorization information in the token itself, the access token MUST use integrity protection sufficient to prevent the token from being modified. One example of an encoding and signing mechanism for access tokens is described in the JSON Web Token Profile for Access Tokens {{RFC9068}}.
 
 ### Sender-Constrained Access Tokens {#sender-constrained-tokens}
 
 A sender-constrained access token binds the use of an
 access token to a specific sender.  This sender is obliged to
-demonstrate knowledge of a certain secret as prerequisite for the
+demonstrate knowledge of a certain secret as a prerequisite for the
 acceptance of that access token at the recipient (e.g., a resource server).
 
 Authorization and resource servers SHOULD use mechanisms for
-sender-constraining access tokens, such as OAuth Demonstration of Proof of Possession (DPoP) {{RFC9449}}
+sender-constraining access tokens, such as OAuth 2.0 Demonstrating Proof of Possession (DPoP) {{RFC9449}}
 or Mutual TLS for OAuth 2.0 {{RFC8705}}.
-See {{Section 4.10.1 of RFC9700}} to prevent misuse of stolen and leaked access tokens.
+See {{Section 4.10.1 of RFC9700}} for guidance on preventing misuse of stolen and leaked access tokens.
 
 It is RECOMMENDED to use end-to-end TLS between the client and the
 resource server. If TLS traffic needs to be terminated at an intermediary,
@@ -706,17 +688,17 @@ refer to {{Section 4.13 of RFC9700}} for further security advice.
 
 
 
-## Communication security {#communication-security}
+## Communication Security {#communication-security}
 
 Implementations MUST use a mechanism to provide communication
-authentication, integrity and confidentiality such as
-Transport-Layer Security {{RFC9846}},
-to protect the exchange of clear-text credentials and tokens
+authentication, integrity, and confidentiality, such as
+Transport Layer Security (TLS) {{RFC9846}},
+to protect the exchange of cleartext credentials and tokens
 either in the content or in header fields
-from eavesdropping which enables replay
+from eavesdropping, which enables replay
 (e.g., see {{client-secret}}, {{authorization_codes}}, {{token-endpoint}}, and {{bearer-tokens}}).
 
-All the OAuth protocol URLs (URLs exposed by the AS, RS and Client) MUST use the `https` scheme
+All OAuth protocol URLs (URLs exposed by the AS, RS, and client) MUST use the `https` scheme
 except for loopback interface redirect URIs,
 which MAY use the `http` scheme.
 When using `https`, TLS certificates MUST be checked
@@ -729,7 +711,7 @@ mechanisms that meet their security requirements.
 
 The identification of the TLS versions and algorithms
 is outside the scope of this specification.
-Refer to {{BCP195}} for up to date recommendations on
+Refer to {{BCP195}} for up-to-date recommendations on
 transport layer security, and to the relevant specifications
 for certificate validation and other security considerations.
 
@@ -752,15 +734,15 @@ security properties.
 This specification leaves a few required components partially or fully
 undefined (e.g., client registration, authorization server capabilities,
 endpoint discovery).  Some of these behaviors are defined in optional
-extensions which implementations can choose to use, such as:
+extensions that implementations can choose to use, such as:
 
 * {{RFC8414}}: Authorization Server Metadata, defining an endpoint clients can use to look up the information needed to interact with a particular OAuth server
 * {{RFC7591}}: Dynamic Client Registration, providing a mechanism for programmatically registering clients with an authorization server
 * {{RFC7592}}: Dynamic Client Management, providing a mechanism for updating dynamically registered client information
 * {{RFC7662}}: Token Introspection, defining a mechanism for resource servers to obtain information about access tokens
 
-Please refer to {{extensions}} for a list of current known extensions at
-the time of this publication.
+Please refer to {{extensions}} for a list of extensions known at
+the time of publication.
 
 
 ### Value Sizes {#value-sizes}
@@ -793,7 +775,7 @@ by {{RFC9068}}, routinely exceed one kilobyte.
 OAuth 2.1 is compatible with OAuth 2.0 with the extensions and restrictions
 from known best current practices applied. Specifically, features not specified
 in OAuth 2.0 core, such as PKCE, are required in OAuth 2.1. Additionally,
-some features available in OAuth 2.0, such as the Implicit or Resource Owner Credentials
+some features available in OAuth 2.0, such as the Implicit or Resource Owner Password Credentials
 grant types, are not specified in OAuth 2.1. Furthermore, some behaviors
 allowed in OAuth 2.0 are restricted in OAuth 2.1, such as the strict string
 matching of redirect URIs required by OAuth 2.1.
@@ -828,9 +810,9 @@ are case sensitive.
 Before initiating the protocol, the client must have established an identifier ({{client-identifier}}) at the
 authorization server. The means through which the client identifier is established
 with the authorization server are beyond the scope of this
-specification, but typically involve the client developer manually registering
+specification, but typically involve either the client developer manually registering
 the client at the authorization server's website (after creating an account and agreeing
-to the service's Terms of Service), or by using Dynamic Client Registration {{RFC7591}}.
+to the service's Terms of Service) or the use of Dynamic Client Registration {{RFC7591}}.
 Extensions may also define other programmatic methods of establishing client registration.
 
 Client registration does not require a direct interaction between the
@@ -863,25 +845,28 @@ OAuth 2.1 defines two client types based on their ability to authenticate secure
 with the authorization server.
 
 "confidential":
-: Clients that have credentials with the AS are designated as "confidential clients"
+: Clients that have credentials with the AS are designated as "confidential clients".
 
 "public":
-: Clients without credentials are called "public clients"
+: Clients without credentials are called "public clients".
 
-Any clients with credentials MUST take precautions to prevent leakage and abuse of their credentials.
+Any client with credentials MUST take precautions to prevent leakage and abuse of its credentials.
 
-Client authentication allows an Authorization Server to ensure it is interacting with a certain client
-(identified by its `client_id`) in an OAuth flow. The Authorization Server might make policy decisions
-about things such as whether to prompt the user for consent on every authorization or only the first
-based on the confidence that the Authorization Server is actually communicating with the legitimate client.
+Client authentication allows an authorization server to ensure it is interacting with a certain client
+(identified by its `client_id`) in an OAuth flow. The authorization server might make policy decisions
+about things such as whether to prompt the user for consent on every authorization or only the first time,
+based on the confidence that the authorization server is actually communicating with the legitimate client.
 
-Whether and how an Authorization Server validates the identity of a client or the party
-providing/operating this client is out of scope of this specification.
+Whether and how an authorization server validates the identity of a client or the party
+providing/operating this client is out of scope for this specification.
 Authorization servers SHOULD consider the level of confidence in a client's identity
-when deciding whether they allow a client access to more sensitive resources and operations
-such as the Client Credentials grant type and how often to prompt the user for consent.
+before allowing that client to perform actions that carry elevated risk, such as:
 
-There is no requirement that an Authorization Server supports a particular client type.
+* accessing sensitive resources or performing sensitive operations,
+* using a non-interactive grant type such as the client credentials grant, or
+* skipping the user consent prompt on subsequent authorizations.
+
+There is no requirement that an authorization server support a particular client type.
 
 A single `client_id` SHOULD NOT be treated as more than one type of client.
 
@@ -898,11 +883,11 @@ This specification has been designed around the following client profiles:
 "browser-based application":
 : A browser-based application is a client in which the
   client code is downloaded from a web server and executes within a
-  user agent (e.g., web browser) on the device used by the resource
+  user agent (e.g., a web browser) on the device used by the resource
   owner.  Protocol data and credentials are easily accessible (and
   often visible) to the resource owner. If such applications wish to use
-  client credentials, it is recommended to utilize the
-  backend for frontend pattern. Since such applications
+  client credentials, it is recommended to use the
+  backend for frontend pattern ({{RFC10017}}). Since such applications
   reside within the user agent, they can make seamless use of the
   user agent capabilities when requesting authorization.
 
@@ -916,8 +901,8 @@ This specification has been designed around the following client profiles:
   receive an acceptable level of protection.  On some platforms, these credentials
   are protected from other applications residing on the same
   device. If such applications wish to use
-  client credentials, it is recommended to utilize the
-  backend for frontend pattern, or issue the credentials at runtime
+  client credentials, it is recommended to use the
+  backend for frontend pattern or to issue the credentials at runtime
   using Dynamic Client Registration {{RFC7591}}.
 
 
@@ -925,9 +910,9 @@ This specification has been designed around the following client profiles:
 
 Every client is identified in the context of an authorization server
 by a client identifier -- a unique string representing the registration
-information provided by the client. While the Authorization Server typically
+information provided by the client. While the authorization server typically
 issues the client identifier itself, it may also serve clients whose client identifier
-was created by a party other than the Authorization Server. The client identifier is not a
+was created by a party other than the authorization server. The client identifier is not a
 secret; it is exposed to the resource owner and MUST NOT be used
 alone for client authentication.  The client identifier is unique in the
 context of an authorization server.
@@ -943,7 +928,7 @@ in {{client-impersonating-resource-owner}}.
 
 ## Client Redirection Endpoint {#redirection-endpoint}
 
-The client redirection endpoint (also referred to as "redirect endpoint")
+The client redirection endpoint (also referred to as the "redirect endpoint")
 is the URI of the client that the authorization server redirects the user
 agent back to after completing its interaction with the resource owner.
 
@@ -964,7 +949,7 @@ redirect URI (including the path component). Authorization servers
 MUST reject authorization requests that specify a redirect URI that
 doesn't exactly match one that was registered, with an exception for
 loopback interface redirect URIs, where an exact match is required except for the
-port URI component, see {{authorization-request}} for details.
+port URI component; see {{authorization-request}} for details.
 
 The authorization server MAY allow the client to register multiple
 redirect URIs.
@@ -975,17 +960,17 @@ runtime, such as in the initial POST in Pushed Authorization Requests {{RFC9126}
 
 For private-use URI scheme-based redirect URIs, authorization servers
 SHOULD enforce the requirement in {{private-use-uri-scheme}} that clients use
-schemes that are reverse domain name based.  At a minimum, any
+schemes that are based on reverse domain names.  At a minimum, any
 private-use URI scheme that doesn't contain a period character (`.`)
 SHOULD be rejected.
 
-In addition to the collision-resistant properties,
-this can help to prove ownership in the event of a dispute where two apps
+In addition to providing collision resistance,
+this requirement can help to prove ownership in the event of a dispute where two apps
 claim the same private-use URI scheme (where one app is acting
-maliciously).  For example, if two apps claimed `com.example.app`,
+maliciously).  For example, if two apps claim `com.example.app`,
 the owner of `example.com` could petition the app store operator to
 remove the counterfeit app.  Such a petition is harder to prove if a
-generic URI scheme was used.
+generic URI scheme is used.
 
 Clients MUST NOT expose URLs that forward the user's browser to
 arbitrary URIs obtained from a query parameter ("open redirector"), as
@@ -1001,22 +986,22 @@ described in {{open-redirectors}}.
 
 ### Multiple Redirect URIs {#multiple-redirect-uris}
 
-If multiple redirect URIs have been registered to a client, the client MUST
+If multiple redirect URIs have been registered for a client, the client MUST
 include a redirect URI with the authorization request using the
 `redirect_uri` request parameter ({{authorization-request}}).
-If only a single redirect URI has been registered to a client,
+If only a single redirect URI has been registered for a client,
 the `redirect_uri` request parameter is optional.
 
 ### Preventing CSRF Attacks
 
 Clients MUST prevent Cross-Site Request Forgery (CSRF) attacks. In this
 context, CSRF refers to requests to the redirection endpoint that do
-not originate at the authorization server, but a malicious third party
+not originate at the authorization server, but at a malicious third party
 (see {{Section 4.4.1.8 of RFC6819}} for details). Clients that have
 ensured that the authorization server supports the `code_challenge` parameter MAY
 rely on the CSRF protection provided by that mechanism. In OpenID Connect flows,
-validating the `nonce` parameter provides CSRF protection. Otherwise, one-time
-use CSRF tokens carried in the `state` parameter that are securely
+validating the `nonce` parameter provides CSRF protection. Otherwise, one-time-use
+CSRF tokens carried in the `state` parameter that are securely
 bound to the user agent MUST be used for CSRF protection (see
 {{csrf_countermeasures}}).
 
@@ -1024,7 +1009,7 @@ bound to the user agent MUST be used for CSRF protection (see
 ### Preventing Mix-Up Attacks
 
 When an OAuth client can only interact with one authorization server, a mix-up defense is not required. In scenarios where an OAuth client interacts with two or more authorization servers, however, clients MUST prevent mix-up attacks.
-In order to prevent mix-up attacks, clients MUST only process redirect responses of the issuer they sent the respective request to and from the same user agent this authorization request was initiated with.
+In order to prevent mix-up attacks, clients MUST only process redirect responses from the issuer to which they sent the respective request, and from the same user agent in which the authorization request was initiated.
 
 See {{mix-up}} for a detailed description of two different defenses against mix-up attacks.
 
@@ -1044,11 +1029,11 @@ response is served directly as the result of the redirection request,
 any script included in the HTML document will execute with full
 access to the redirect URI and the artifacts (e.g., authorization code)
 it contains. Additionally, the request URL containing the authorization code
-may be sent in the HTTP Referer header to any embedded images, stylesheets
+may be sent in the HTTP Referer header field to any embedded images, stylesheets,
 and other elements loaded in the page.
 
-The client SHOULD NOT include any third-party scripts (e.g., third-
-party analytics, social plug-ins, ad networks) in the redirect URI
+The client SHOULD NOT include any third-party scripts (e.g., third-party
+analytics, social plug-ins, ad networks) in the redirect URI
 endpoint response.  Instead, it SHOULD extract the artifacts from
 the URI and redirect the user agent again to another endpoint without
 exposing the artifacts (in the URI or elsewhere).  If third-party
@@ -1069,14 +1054,14 @@ For confidential clients, the authorization server MAY accept any
 form of client authentication meeting its security requirements
 (e.g., client secret, public/private key pair).
 
-It is RECOMMENDED to use asymmetric (public-key based) methods for
-client authentication such as mTLS {{RFC8705}} or using signed JWTs
+It is RECOMMENDED to use asymmetric (public-key-based) methods for
+client authentication, such as mTLS {{RFC8705}} or signed JWTs
 ("Private Key JWT") in accordance with {{RFC7521}}, {{RFC7523}},
 and their update {{I-D.ietf-oauth-rfc7523bis}}
 (defined in {{OpenID.Connect}} as the client authentication method `private_key_jwt`).
 When such methods for client authentication are used, authorization
-servers do not need to store sensitive symmetric keys, making these
-methods more robust against a number of attacks, and enables clients
+servers do not need to store sensitive symmetric keys, which makes these
+methods more robust against a number of attacks and enables clients
 to manage their own keys and key rotation.
 
 When using JWT-based client authentication, clients and authorization servers
@@ -1092,13 +1077,13 @@ prevent delivering credentials to a counterfeit client after
 obtaining resource owner authorization.
 
 The client MUST NOT use more than one authentication method in each
-request to prevent a conflict of which authentication mechanism is
+request to prevent a conflict over which authentication mechanism is
 authoritative for the request.
 
 The authorization server MUST consider the security implications of
 interacting with unauthenticated clients and take measures to limit
-the potential exposure of tokens issued to such clients,
-(e.g., limiting the lifetime of refresh tokens).
+the potential exposure of tokens issued to such clients
+(e.g., by limiting the lifetime of refresh tokens).
 
 The privileges an authorization server associates with a certain
 client identity MUST depend on the assessment of the overall process
@@ -1114,7 +1099,7 @@ parameters:
 
 "client_id":
 :    REQUIRED.  The client identifier issued to the client during
-     the registration process described by {{client-identifier}}.
+     the registration process described in {{client-identifier}}.
 
 "client_secret":
 :    REQUIRED.  The client secret.
@@ -1164,7 +1149,7 @@ interoperable implementations.
 
 Since the client secret authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
-brute force attacks.
+brute-force attacks.
 
 ### Other Authentication Methods
 
@@ -1172,7 +1157,7 @@ The authorization server MAY support any suitable authentication
 scheme matching its security requirements.  When using other
 authentication methods, the authorization server MUST define a
 mapping between the client identifier (registration record) and
-authentication scheme.
+the authentication scheme.
 
 Some additional authentication methods such as mTLS {{RFC8705}}
 and Private Key JWT ({{RFC7523}}, {{I-D.ietf-oauth-rfc7523bis}})
@@ -1206,7 +1191,7 @@ As well as one client endpoint:
 
 *  Redirection endpoint - used by the authorization server to return
    responses containing authorization credentials to the client via
-   the resource owner user agent.
+   the resource owner's user agent.
 
 Not every authorization grant type utilizes both endpoints.
 Extension grant types MAY define additional endpoints as needed.
@@ -1230,7 +1215,7 @@ and MAY include a query string component ({{query-string-serialization}}),
 which MUST be retained when adding additional query parameters.
 
 The authorization server MUST support the use of the HTTP `GET`
-method {{Section 9.3.1 of RFC9110}} for the authorization endpoint and MAY support
+method ({{Section 9.3.1 of RFC9110}}) for the authorization endpoint and MAY support
 the `POST` method ({{Section 9.3.3 of RFC9110}}) as well.
 
 The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.
@@ -1248,8 +1233,8 @@ user credentials MUST avoid forwarding these user credentials accidentally
 (see {{redirect_307}} for details).
 
 Cross-Origin Resource Sharing {{WHATWG.CORS}} MUST NOT be
-supported at the Authorization Endpoint as the client does not access this
-endpoint directly, instead the client redirects the user agent to it.
+supported at the authorization endpoint, as the client does not access this
+endpoint directly; instead, the client redirects the user agent to it.
 
 Grant types define the required parameters at the authorization endpoint.
 This specification defines the "Authorization Code Grant" ({{authorization-code-grant}}),
@@ -1289,9 +1274,9 @@ access to a supporting backend server) MUST ensure the token endpoint
 supports the necessary CORS {{WHATWG.CORS}} headers to allow the responses
 to be visible to the application.
 If the authorization server provides additional endpoints to the application, such
-as metadata URLs, dynamic client registration, revocation, introspection, discovery or
+as metadata URLs, dynamic client registration, revocation, introspection, discovery, or
 user info endpoints, these endpoints may also be accessed by the browser-based
-application, and MUST also send the CORS headers to allow access.
+application and MUST also send the CORS headers to allow access.
 Note that CORS headers are not needed in the case where the browser-based
 application shares an origin with the authorization server.
 See {{browser-based-apps}} and {{RFC10017}} for further details.
@@ -1306,7 +1291,7 @@ authenticate with the authorization server as described in
 Client authentication is used for:
 
 *  Enforcing the binding of refresh tokens and authorization codes to
-   the client they were issued to.  Client authentication adds an
+   the client to which they were issued.  Client authentication adds an
    additional layer of security when an authorization code is transmitted
    to the redirection endpoint over an insecure channel.
 
@@ -1357,24 +1342,24 @@ For example, the client makes the following HTTPS request
 The authorization server MUST:
 
 *  require client authentication for confidential clients
-   (or clients with other authentication requirements),
+   (or clients with other authentication requirements), and
 
-*  authenticate the client if client authentication is included
+*  authenticate the client if client authentication is included.
 
-Further grant type specific processing rules apply and are specified with the respective
+Further grant-type-specific processing rules apply and are specified with the respective
 grant type.
 
 
 ### Token Endpoint Response {#token-response}
 
 If the access token request is valid and authorized, the
-authorization server issues an access token and optional refresh
+authorization server issues an access token and, optionally, a refresh
 token.
 
-If the client authentication failed or is invalid, the authorization server returns
+If client authentication fails or is invalid, the authorization server returns
 an error response as described in {{token-error-response}}.
 
-The authorization server issues an access token and optional refresh
+The authorization server issues an access token and, optionally, a refresh
 token by creating an HTTP response according to {{json-serialization}},
 using the `application/json` media type as defined by {{RFC8259}},
 with the following parameters and an HTTP 200 (OK) status code:
@@ -1384,17 +1369,17 @@ with the following parameters and an HTTP 200 (OK) status code:
 
 "token_type":
 :    REQUIRED.  The type of the access token issued as described in
-     {{access-tokens}}.  Value is case insensitive.
+     {{access-tokens}}.  The value is case insensitive.
 
 "expires_in":
 :    RECOMMENDED.  A JSON number that represents the lifetime
      in seconds of the access token.  For
      example, the value `3600` denotes that the access token will
-     expire in one hour from the time the response was generated.
+     expire one hour from the time the response was generated.
      If omitted, the authorization server SHOULD provide the
      lifetime via other means or document the default value. Note
      that the authorization server may prematurely expire an access
-     token and clients MUST NOT expect an access token to be valid
+     token, and clients MUST NOT expect an access token to be valid
      for the provided lifetime.
 
 "scope":
@@ -1410,14 +1395,14 @@ with the following parameters and an HTTP 200 (OK) status code:
 Authorization servers SHOULD determine, based on a risk assessment
 and their own policies, whether to issue refresh tokens to a certain client.  If the
 authorization server decides not to issue refresh tokens, the client
-MAY obtain new access tokens by starting the OAuth flow over, for example
+MAY obtain new access tokens by starting the OAuth flow over, for example, by
 initiating a new authorization code request.  In such a case, the authorization
 server may utilize cookies and persistent grants to optimize the user
 experience.
 
 If refresh tokens are issued, those refresh tokens MUST be bound to
 the scope and resource servers as consented by the resource owner.
-This is to prevent privilege escalation by the legitimate client and
+This is to prevent privilege escalation by the legitimate client and to
 reduce the impact of refresh token leakage.
 
 The parameters are serialized into a JavaScript Object Notation (JSON)
@@ -1453,7 +1438,7 @@ status code (unless specified otherwise) and includes the following
 parameters with the response:
 
 "error":
-:    REQUIRED.  A single ASCII [USASCII] error code from the following:
+:    REQUIRED.  A single ASCII {{USASCII}} error code from the following:
 
      "invalid_request":
      :     The request is missing a required parameter, includes an
@@ -1499,7 +1484,7 @@ parameters with the response:
      outside the set %x20-21 / %x23-5B / %x5D-7E.
 
 "error_description":
-:    OPTIONAL.  Human-readable ASCII [USASCII] text providing
+:    OPTIONAL.  Human-readable ASCII {{USASCII}} text providing
      additional information, used to assist the client developer in
      understanding the error that occurred.
      Values for the `error_description` parameter MUST NOT include
@@ -1532,7 +1517,7 @@ To request an access token, the client obtains authorization from the
 resource owner. This specification defines the following authorization grant types:
 
 * authorization code
-* client credentials, and
+* client credentials
 * refresh token
 
 It also provides an extension mechanism for defining additional grant types.
@@ -1547,7 +1532,7 @@ interact with the resource owner in order to get consent for resource access.
 
 Since this is a redirect-based flow, the client must be capable of
 initiating the flow with the resource owner's user agent (typically a web
-browser) and capable of being redirected back to from the authorization server.
+browser) and capable of receiving incoming requests (via redirection) from the authorization server.
 
 ~~~~~~~~~~
  +----------+
@@ -1609,7 +1594,7 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 (5)  The authorization server authenticates the client when possible, validates the
      authorization code, validates the code verifier, and ensures that the redirect URI
      received matches the URI used to redirect the user agent to the client in
-     step (3).  If valid, the authorization server responds back with
+     step (3).  If valid, the authorization server responds with
      an access token and, optionally, a refresh token.
 
 ### Authorization Request {#authorization-request}
@@ -1634,7 +1619,7 @@ parameters. The client determines the type of flow by using a certain `response_
 value. This specification defines the value `code`, which must be used to signal that
 the client wants to use the authorization code flow.
 
-Extension response types MAY contain a space-delimited (%x20) list of
+Extension response types MAY contain a space-delimited (%x20) set of
 values, where the order of values does not matter (e.g., response
 type `a b` is the same as `b a`).  The meaning of such composite
 response types is defined by their respective specifications.
@@ -1649,10 +1634,10 @@ MUST return an error response as described in {{authorization-code-error-respons
 :    REQUIRED.  The client identifier as described in {{client-identifier}}.
 
 "code_challenge":
-:    REQUIRED unless the specific requirements of {{authorization_codes}} are met.  Code challenge derived from the code verifier.
+:    REQUIRED unless the specific requirements of {{authorization_codes}} are met.  The code challenge derived from the code verifier.
 
 "code_challenge_method":
-:    REQUIRED, the value `S256` or a value defined by a future extension
+:    REQUIRED.  The code challenge transformation method: either `S256` or a value defined by a future extension.
 
 "redirect_uri":
 :    OPTIONAL if only one redirect URI is registered for this client.
@@ -1673,14 +1658,14 @@ MUST return an error response as described in {{authorization-code-error-respons
      HTTP header field lengths accepted by the authorization server,
      the user agent, and the client; see {{value-sizes}}.
 
-The `code_verifier` is a unique high-entropy cryptographically random string generated
+The `code_verifier` is a unique, high-entropy, cryptographically random string generated
 for each authorization request, using the unreserved characters `[A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"`,
 with a minimum length of 43 characters and a maximum length of 128 characters.
 
-The client stores the `code_verifier` temporarily, and calculates the
-`code_challenge` which it uses in the authorization request.
+The client stores the `code_verifier` temporarily and calculates the
+`code_challenge`, which it uses in the authorization request.
 
-ABNF for `code_verifier` is as follows.
+The ABNF for `code_verifier` is as follows.
 
     code-verifier = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -1708,7 +1693,7 @@ verifier by transforming the code verifier with a valid transformation method:
 This specification defines only the `S256` transformation. Future extensions
 may define additional transformation methods.
 
-ABNF for `code_challenge` is as follows.
+The ABNF for `code_challenge` is as follows.
 
     code-challenge = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -1716,20 +1701,20 @@ ABNF for `code_challenge` is as follows.
     DIGIT = %x30-39
 
 The properties `code_challenge` and `code_verifier` are adopted from the OAuth 2.0 extension
-known as "Proof-Key for Code Exchange", or PKCE {{RFC7636}} where this technique
+known as "Proof Key for Code Exchange", or PKCE {{RFC7636}}, where this technique
 was originally developed. The `plain` transformation method defined in {{RFC7636}}
 is removed and explicitly prohibited in this specification. See {{pkce-plain}} for additional details.
 
 Authorization servers MUST support the `code_challenge` and `code_verifier` parameters.
 
-Clients MUST use `code_challenge` and `code_verifier` and
+Clients MUST use `code_challenge` and `code_verifier`, and
 authorization servers MUST enforce their use except under the conditions
 described in {{authorization_codes}}. Even in this case, using and enforcing
 `code_challenge` and `code_verifier` as described above is still
 RECOMMENDED.
 
 The `state` and `scope` parameters SHOULD NOT include sensitive
-client or resource owner information in plain text, as they can be
+client or resource owner information in cleartext, as they can be
 transmitted over insecure channels or stored insecurely.
 
 The client directs the resource owner to the constructed URI using an
@@ -1754,7 +1739,7 @@ redirect URIs previously established during client registration ({{client-regist
 When comparing the two URIs the authorization server MUST ensure that the
 two URIs are equal using simple string comparison as defined in {{Section 6.2.1 of RFC3986}},
 i.e., a case-sensitive, character-by-character comparison with no normalization applied.
-The only exception is loopback interface redirect URIs used by native apps: In this case, the authorization server
+The only exception is loopback interface redirect URIs used by native apps: in this case, the authorization server
 MUST allow variable port numbers as described in {{loopback-interface-redirection}}.
 
 If the request is valid,
@@ -1781,7 +1766,7 @@ redirect URI using the query string serialization described by
      shortly after it is issued to mitigate the risk of leaks.  A
      maximum authorization code lifetime of 10 minutes is
      RECOMMENDED. The authorization code is bound to
-     the client identifier, code challenge and redirect URI.
+     the client identifier, code challenge, and redirect URI.
 
 "state":
 :    REQUIRED if the `state` parameter was present in the client
@@ -1789,10 +1774,10 @@ redirect URI using the query string serialization described by
      client.
 
 "iss":
-:    REQUIRED. The issuer identifier of the authorization server which the
+:    REQUIRED. The issuer identifier of the authorization server, which the
      client can use to prevent mix-up attacks, if the client interacts
      with more than one authorization server. See {{mix-up}} and {{RFC9207}} for
-     additional details how the client can use it to prevent mix-up attacks.
+     additional details on how the client can use it to prevent mix-up attacks.
 
 
 For example, the authorization server redirects the user agent by
@@ -1828,7 +1813,7 @@ If the request fails due to a missing, invalid, or mismatching
 redirect URI, or if the client identifier is missing or invalid,
 the authorization server MUST NOT redirect the user agent to the
 invalid redirect URI and SHOULD inform the resource owner of the
-error, for example by displaying a message to the user in their browser.
+error, for example, by displaying a message to the user in their browser.
 When returning an error response directly to the user agent, the
 authorization server SHOULD use the HTTP 400 (Bad Request) status code.
 The HTTP 401 (Unauthorized) status code used for client authentication
@@ -1847,10 +1832,10 @@ in other ways. See {{authorization_codes}} for details.
 
 If the server does not support the requested `code_challenge_method` transformation,
 the authorization endpoint MUST return the
-authorization error response with `error` value set to
-`invalid_request`.  The `error_description` or the response of
-`error_uri` SHOULD explain the nature of error, e.g., transform
-algorithm not supported.
+authorization error response with the `error` value set to
+`invalid_request`.  The `error_description` or the resource referenced by
+`error_uri` SHOULD explain the nature of the error (e.g., that the transform
+algorithm is not supported).
 
 If the resource owner denies the access request or if the request
 fails after the client identifier and redirect URI have been validated,
@@ -1860,7 +1845,7 @@ parameters to the query component of the redirect URI as described
 by {{query-string-serialization}}:
 
 "error":
-:    REQUIRED.  A single ASCII [USASCII] error code from the
+:    REQUIRED.  A single ASCII {{USASCII}} error code from the
      following:
 
      "invalid_request":
@@ -1902,7 +1887,7 @@ by {{query-string-serialization}}:
 
 
 "error_description":
-:    OPTIONAL.  Human-readable ASCII [USASCII] text providing
+:    OPTIONAL.  Human-readable ASCII {{USASCII}} text providing
      additional information, used to assist the client developer in
      understanding the error that occurred.
      Values for the `error_description` parameter MUST NOT include
@@ -1925,7 +1910,7 @@ by {{query-string-serialization}}:
 :    REQUIRED. The issuer identifier of the authorization server. See
      {{authorization-response}} above for details.
 
-For example, the authorization server indicates the request was denied
+For example, the authorization server indicates that the request was denied
 by redirecting the user agent with the following HTTP response:
 
     HTTP/1.1 302 Found
@@ -1934,7 +1919,7 @@ by redirecting the user agent with the following HTTP response:
 
 ### Token Endpoint Extension {#code-token-extension}
 
-The authorization grant type is identified at the token endpoint with the `grant_type` value of `authorization_code`.
+The authorization code grant type is identified at the token endpoint with the `grant_type` value of `authorization_code`.
 
 If this value is set, the following additional token request parameters beyond {{token-request}} are supported:
 
@@ -1974,8 +1959,8 @@ For example, the client makes the following HTTPS request
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
 *  ensure that the authorization code was issued to the authenticated
-   confidential client, or if the client is public, ensure that the
-   code was issued to `client_id` in the request,
+   confidential client or, if the client is public, ensure that the
+   code was issued to the `client_id` in the request,
 
 *  verify that the authorization code is valid,
 
@@ -1987,11 +1972,11 @@ In addition to the processing rules in {{token-request}}, the authorization serv
    the previously associated `code_challenge`, after first transforming it
    according to the `code_challenge_method` method specified by the client, and
 
-*  If there was no `code_challenge` in the authorization request associated
-   with the authorization code in the token request, the authorization server MUST
-   reject the token request.
+*  reject the token request if there was no `code_challenge` in the
+   authorization request associated with the authorization code in the
+   token request.
 
-See {{redirect-uri-in-token-request}} for details on backwards compatibility
+See {{redirect-uri-in-token-request}} for details on backward compatibility
 with OAuth 2.0 clients regarding the `redirect_uri` parameter in the token request.
 
 ## Client Credentials Grant
@@ -2051,18 +2036,18 @@ The authorization server MUST authenticate the client.
 
 The refresh token is a credential issued by the authorization server to a client, which can be used
 to obtain new (fresh) access tokens based on an existing grant. The client uses this option either because the previous access
-token has expired or the client previously obtained an access token with a scope more narrow than
+token has expired or the client previously obtained an access token with a scope narrower than that
 approved by the respective grant and later requires an access token with a different scope
 under the same grant.
 
 Refresh tokens MUST be kept confidential in transit and storage, and
-shared only among the authorization server and the client to whom the
+shared only between the authorization server and the client to which the
 refresh tokens were issued.  The authorization server MUST maintain
-the binding between a refresh token and the client to whom it was
+the binding between a refresh token and the client to which it was
 issued.
 
 The authorization server MUST verify the binding between the refresh
-token and client identity whenever the client identity can be
+token and the client identity whenever the client identity can be
 authenticated.  When client authentication is not possible, the
 authorization server SHOULD issue sender-constrained refresh tokens
 or use refresh token rotation as described in {{refresh-token-endpoint-extension}}.
@@ -2084,7 +2069,7 @@ If this value is set, the following additional parameters beyond {{token-request
 "scope":
 :    OPTIONAL.  The scope of the access request as described by
      {{access-token-scope}}. The requested scope MUST NOT include any scope
-     not originally granted by the resource owner, and if omitted is
+     not originally granted by the resource owner and, if omitted, is
      treated as equal to the scope originally granted by the
      resource owner.
 
@@ -2107,11 +2092,11 @@ only):
 
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
-* if client authentication is included in the request, ensure that the refresh token was issued to the authenticated client, OR if a client_id is included in the request, ensure the refresh token was issued to the matching client
+* if client authentication is included in the request, ensure that the refresh token was issued to the authenticated client or, if a `client_id` is included in the request, ensure that the refresh token was issued to the matching client,
 
-* validate that the grant corresponding to this refresh token is still active
+* validate that the grant corresponding to this refresh token is still active, and
 
-* validate the refresh token
+* validate the refresh token.
 
 If the authorization associated with the grant has been reduced since
 the refresh token was issued (e.g., the resource owner revoked some scopes),
@@ -2127,7 +2112,7 @@ refresh token replay by malicious actors for public clients:
 
 * *Refresh token rotation:* the authorization server issues a new
   refresh token with every access token refresh response.  The
-  previous refresh token is invalidated but information about the
+  previous refresh token is invalidated, but information about the
   relationship is retained by the authorization server.  If a
   refresh token is compromised and subsequently used by both the
   attacker and the legitimate client, one of them will present an
@@ -2142,10 +2127,10 @@ refresh token replay by malicious actors for public clients:
 Implementation note: the grant to which a refresh token belongs
 may be encoded into the refresh token itself.  This can enable an
 authorization server to efficiently determine the grant to which a
-refresh token belongs, and by extension, all refresh tokens that
+refresh token belongs and, by extension, all refresh tokens that
 need to be revoked.  Authorization servers MUST ensure the
 integrity of the refresh token value in this case, for example,
-using signatures.
+by using signatures.
 
 ### Refresh Token Response
 
@@ -2205,7 +2190,7 @@ the client makes the following HTTPS request
       &client_id=C409020731
 
 If the access token request is valid and authorized, the
-authorization server issues an access token and optional refresh
+authorization server issues an access token and, optionally, a refresh
 token as described in {{token-response}}.  If the request failed client
 authentication or is invalid, the authorization server returns an
 error response as described in {{token-error-response}}.
@@ -2228,7 +2213,7 @@ or a structured access token format such as a JWT {{RFC9068}}.
 
 ## Bearer Token Requests
 
-This section defines two methods of sending Bearer tokens in resource
+This section defines two methods of sending bearer tokens in resource
 requests to resource servers. Clients MUST use one of the two methods defined below,
 and MUST NOT use more than one method to transmit the token in each request.
 
@@ -2239,7 +2224,7 @@ and resource servers MUST ignore access tokens in a URI query parameter.
 ### Authorization Request Header Field
 
 When sending the access token in the `Authorization` request header
-field defined by HTTP/1.1 {{RFC7235}}, the client uses the `Bearer`
+field defined in {{Section 11.6.2 of RFC9110}}, the client uses the `Bearer`
 scheme to transmit the access token.
 
 For example:
@@ -2249,12 +2234,11 @@ For example:
      Authorization: Bearer mF_9.B5f-4.1JqM
 
 The syntax of the `Authorization` header field for this scheme
-follows the usage of the Basic scheme defined in {{Section 2 of !RFC2617}}.
-Note that, as with Basic, it does not conform to the
-generic syntax defined in {{Section 1.2 of RFC2617}} but is compatible
-with the general authentication framework in HTTP 1.1 Authentication
-{{RFC7235}}, although it does not follow the preferred
-practice outlined therein in order to reflect existing deployments.
+follows the usage of the Basic scheme defined in {{Section 2 of !RFC7617}}.
+As with Basic, the credentials use the `token68` syntax
+({{Section 11.2 of RFC9110}}) rather than the auth-param syntax, in order
+to reflect existing deployments; this syntax is compatible with the
+general authentication framework in {{Section 11 of RFC9110}}.
 The syntax for Bearer credentials is as follows:
 
     token68    = 1*( ALPHA / DIGIT /
@@ -2266,8 +2250,8 @@ the `Authorization` request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
 As described in {{Section 11.1 of RFC9110}}, the string `bearer`
-is case-insensitive. This means all of the following are valid uses
-of the `Authorization` header:
+is case insensitive. This means all of the following are valid uses
+of the `Authorization` header field:
 
 * `Authorization: Bearer mF_9.B5f-4.1JqM`
 * `Authorization: bearer mF_9.B5f-4.1JqM`
@@ -2286,7 +2270,7 @@ all of the following conditions are met:
   field set to `application/x-www-form-urlencoded`.
 
 * The content follows the encoding requirements of the
-  `application/x-www-form-urlencoded` content-type as defined by
+  `application/x-www-form-urlencoded` media type as defined by
   the URL Living Standard {{WHATWG.URL}}.
 
 * The HTTP request content is single-part.
@@ -2321,7 +2305,7 @@ servers MAY support this method.
 ## Access Token Validation
 
 After receiving the access token, the resource server MUST check that
-the access token is not yet expired, is authorized to access the requested
+the access token has not expired, is authorized to access the requested
 resource, was issued with the appropriate scope, and meets other policy
 requirements of the resource server to access the protected resource.
 
@@ -2329,13 +2313,13 @@ Access tokens generally fall into two categories: reference tokens or self-encod
 Reference tokens can be validated by querying the authorization server or
 looking up the token in a token database, whereas self-encoded tokens
 contain the authorization information in an encrypted and/or signed string
-which can be extracted by the resource server.
+that can be extracted by the resource server.
 
 A standardized method to query the authorization server to check the validity
 of an access token is defined in Token Introspection {{RFC7662}}.
 
 A standardized method of encoding information in a token string is
-defined in JWT Profile for Access Tokens {{RFC9068}}.
+defined in the JWT Profile for Access Tokens {{RFC9068}}.
 
 See {{access-token-security-considerations}} for additional considerations
 around creating and validating access tokens.
@@ -2344,8 +2328,8 @@ around creating and validating access tokens.
 ## Error Response {#error-response}
 
 If a resource access request fails, the resource server SHOULD inform
-the client of the error. The details of the error response is determined by the particular token type, such as the
-description of Bearer tokens in {{bearer-token-error-codes}}.
+the client of the error. The details of the error response are determined by the particular token type, such as the
+description of bearer tokens in {{bearer-token-error-codes}}.
 
 ### The WWW-Authenticate Response Header Field
 
@@ -2354,7 +2338,7 @@ credentials or does not contain an access token that enables access
 to the protected resource, the resource server MUST include the HTTP
 `WWW-Authenticate` response header field; it MAY include it in
 response to other conditions as well.  The `WWW-Authenticate` header
-field uses the framework defined by HTTP/1.1 {{RFC7235}}.
+field uses the framework defined in {{Section 11 of RFC9110}}.
 
 All challenges for this token type MUST use the auth-scheme
 value `Bearer`.  This scheme MUST be followed by one or more
@@ -2364,26 +2348,26 @@ attributes MAY be used as well.
 
 "realm":
 : A `realm` attribute MAY be included to indicate the scope of
-  protection in the manner described in HTTP/1.1 {{RFC7235}}.  The
+  protection in the manner described in {{Section 11.5 of RFC9110}}.  The
   `realm` attribute MUST NOT appear more than once.
 
 "scope":
 : The `scope` attribute is defined in {{access-token-scope}}.  The
-  `scope` attribute is a space-delimited list of case-sensitive scope
+  `scope` attribute is a space-delimited set of case-sensitive scope
   values indicating the required scope of the access token for
-  accessing the requested resource. `scope` values are implementation
-  defined; there is no centralized registry for them; allowed values
+  accessing the requested resource. Scope values are implementation
+  defined; there is no centralized registry for them, and allowed values
   are defined by the authorization server.  The order of `scope` values
   is not significant.  In some cases, the `scope` value will be used
   when requesting a new access token with sufficient scope of access to
   utilize the protected resource.  Use of the `scope` attribute is
   OPTIONAL.  The `scope` attribute MUST NOT appear more than once.  The
   `scope` value is intended for programmatic use and is not meant to be
-  displayed to end users.
+  displayed to end-users.
 
   Two example scope values follow; these are taken from the OpenID
-  Connect [OpenID.Messages] and the Open Authentication Technology
-  Committee (OATC) Online Multimedia Authorization Protocol [OMAP]
+  Connect {{OpenID.Connect}} and the Open Authentication Technology
+  Committee (OATC) Online Multimedia Authorization Protocol {{OMAP}}
   OAuth 2.0 use cases, respectively:
 
       scope="openid profile email"
@@ -2398,8 +2382,8 @@ attributes MAY be used as well.
 
 "error_description":
 : The resource server MAY include the
-  `error_description` attribute to provide developers a human-readable
-  explanation that is not meant to be displayed to end users.
+  `error_description` attribute to provide developers with a human-readable
+  explanation that is not meant to be displayed to end-users.
 
 "error_uri":
 : The resource server MAY include the `error_uri` attribute with an absolute URI
@@ -2473,9 +2457,9 @@ authentication attempt using an expired access token:
 
 ## Defining Access Token Types {#defining-access-token-types}
 
-Access token types can be defined in one of two ways: registered in
+Access token types can be defined in one of two ways: by registering them in
 the Access Token Types registry (following the procedures in
-{{Section 11.1 of RFC6749}}), or by using a unique absolute URI as its name.
+{{Section 11.1 of RFC6749}}) or by using a unique absolute URI as the name.
 
 ### Registered Access Token Types
 
@@ -2503,7 +2487,7 @@ specification.
 Type names MUST conform to the
 type-name ABNF.  If the type definition includes a new HTTP
 authentication scheme, the type name SHOULD be identical to the HTTP
-authentication scheme name (as defined by [RFC2617]).  The token type
+authentication scheme name (as defined in {{Section 11.1 of RFC9110}}).  The token type
 `example` is reserved for use in examples.
 
     type-name  = 1*name-char
@@ -2512,7 +2496,7 @@ authentication scheme name (as defined by [RFC2617]).  The token type
 ### Vendor-Specific Access Token Types
 
 Types utilizing a URI name SHOULD be limited to vendor-specific
-implementations that are not commonly applicable, and are specific to
+implementations that are not commonly applicable and are specific to
 the implementation details of the resource server where they are
 used.
 
@@ -2525,7 +2509,7 @@ endpoint or the token endpoint are defined and registered in the
 OAuth Parameters registry following the procedure in {{Section 11.2 of RFC6749}}.
 
 Parameter names MUST conform to the param-name ABNF, and parameter
-values syntax MUST be well-defined (e.g., using ABNF, or a reference
+value syntax MUST be well-defined (e.g., using ABNF or a reference
 to the syntax of an existing parameter).
 
     param-name  = 1*name-char
@@ -2535,7 +2519,7 @@ Unregistered vendor-specific parameter extensions that are not
 commonly applicable and that are specific to the implementation
 details of the authorization server where they are used SHOULD
 utilize a vendor-specific prefix that is not likely to conflict with
-other registered values (e.g., begin with 'companyname_').
+other registered values (e.g., begin with `companyname_`).
 
 
 ## Defining New Authorization Grant Types
@@ -2559,7 +2543,7 @@ names MUST conform to the response-type ABNF.
     response-char  = "_" / DIGIT / ALPHA
 
 If a response type contains one or more space characters (%x20), it
-is compared as a space-delimited list of values in which the order of
+is compared as a space-delimited set of values in which the order of
 values does not matter.  Only one order of values can be registered,
 which covers all other arrangements of the same set of values.
 
@@ -2579,14 +2563,14 @@ resource access error response ({{error-response}}), such error codes MAY be
 defined.
 
 Extension error codes MUST be registered (following the procedures in
-{{Section 11.4 of RFC6749}}) if the extension they are used in conjunction with is a
+{{Section 11.4 of RFC6749}}) if the extension with which they are used is a
 registered access token type, a registered endpoint parameter, or an
 extension grant type.  Error codes used with unregistered extensions
 MAY be registered.
 
 Error codes MUST conform to the error ABNF and SHOULD be prefixed by
 an identifying name when possible.  For example, an error identifying
-an invalid value set to the extension parameter `example` SHOULD be
+an invalid value of the extension parameter `example` SHOULD be
 named `example_invalid`.
 
     error      = 1*error-char
@@ -2612,10 +2596,10 @@ background for the protocol design, is provided by
 
 The following list presents several common threats against protocols
 utilizing some form of tokens.  This list of threats was originally
-derived from NIST Special Publication 800-63-1 [NIST800-63], as
+derived from NIST Special Publication 800-63-1 {{NIST800-63}}, as
 described in {{RFC6750}}.
 
-#### Access token manufacture/modification
+#### Access Token Manufacture/Modification
 
 An attacker may generate a bogus
 access token or modify the token contents (such as the authentication or
@@ -2625,7 +2609,7 @@ an attacker may modify the token to extend the validity period; a
 malicious client may modify the assertion to gain access to
 information that they should not be able to view.
 
-#### Access token information disclosure
+#### Access Token Information Disclosure
 
 Access tokens may contain authentication and attribute
 statements that include sensitive information.
@@ -2637,16 +2621,16 @@ Since cookies are by default transmitted in cleartext, any
 information contained in them is at risk of disclosure:
 Bearer tokens MUST NOT be stored in cookies that can be sent in the
 clear.
-See Section 7 and 8 of {{RFC6265}} for security
+See Sections 7 and 8 of {{RFC6265}} for security
 considerations about cookies.
 
-#### Access token redirect
+#### Access Token Redirect
 
 An attacker uses an access token generated for consumption
 by one resource server to gain access to a different resource
 server that mistakenly believes the token to be for it.
 
-#### Access token replay
+#### Access Token Replay
 
 An attacker attempts to use an access token that has already
 been used with that resource server in the past.
@@ -2654,13 +2638,13 @@ been used with that resource server in the past.
 ### Threat Mitigation
 
 A large range of threats can be mitigated by protecting the contents
-of the access token by using a digital signature, and by following
+of the access token by using a digital signature and by following
 best practices for signing key management such as periodic key rotation.
 
 Alternatively, a bearer token can contain a reference to
 authorization information, rather than encoding the information
 directly.  Using a reference may require an extra interaction between a
-resource server and authorization server to resolve the reference to the
+resource server and an authorization server to resolve the reference to the
 authorization information.  The mechanics of such an interaction are
 not defined by this specification, but one such mechanism is defined
 in Token Introspection {{RFC7662}}.
@@ -2670,7 +2654,7 @@ access token; hence, detailed recommendations about the means of
 guaranteeing access token integrity protection are outside the scope of this
 specification. One example of an encoding and
 signing mechanism for access tokens is described in
-JSON Web Token Profile for Access Tokens {{RFC9068}}.
+the JSON Web Token Profile for Access Tokens {{RFC9068}}.
 
 To deal with access token redirects, it is important for the authorization
 server to include the identity of the intended recipients (the
@@ -2678,36 +2662,36 @@ audience), typically a single resource server (or a list of resource
 servers), in the token.  Restricting the use of the token to a
 specific scope is also RECOMMENDED.
 
-{{communication-security}} provides information to
-protect against access token disclosure and providing
+{{communication-security}} provides information on
+protecting against access token disclosure and on providing
 confidentiality and integrity for the communications
-between client, resource server and authorization server.
+among the client, resource server, and authorization server.
 
 ### Summary of Recommendations
 
-#### Safeguard bearer tokens
+#### Safeguard Bearer Tokens
 
 Client implementations MUST ensure that
-bearer tokens are not leaked to unintended parties, as they will
+bearer tokens are not leaked to unintended parties, as those parties would
 be able to use them to gain access to protected resources.  This
 is the primary security consideration when using bearer tokens and
 underlies all the more specific recommendations that follow.
 
-#### Validate TLS certificate chains
+#### Validate TLS Certificate Chains
 
 The client MUST validate the TLS
 certificate chain when making requests to protected resources.
 Failing to do so may enable DNS hijacking attacks to steal the
 token and gain unintended access.
 
-#### Always use TLS (https)
+#### Always Use TLS (https)
 
 Clients MUST always use TLS
 (https) or equivalent transport security when making requests with
 bearer tokens.  Failing to do so exposes the token to numerous
 attacks that could give attackers unintended access.
 
-#### Don't store bearer tokens in HTTP cookies
+#### Don't Store Bearer Tokens in HTTP Cookies
 
 Implementations MUST NOT store
 bearer tokens within cookies that can be sent in the clear (which
@@ -2715,27 +2699,27 @@ is the default transmission mode for cookies).  Implementations
 that do store bearer tokens in cookies MUST take precautions
 against cross-site request forgery.
 
-#### Issue short-lived bearer tokens
+#### Issue Short-Lived Bearer Tokens
 
 Authorization servers SHOULD issue
 short-lived bearer tokens, particularly when
 issuing tokens to clients that run within a web browser or other
 environments where information leakage may occur.  Using
-short-lived bearer tokens can reduce the impact of them being
-leaked.
+short-lived bearer tokens can reduce the impact of their
+leakage.
 
-#### Issue scoped bearer tokens
+#### Issue Scoped Bearer Tokens
 
 Authorization servers SHOULD issue bearer tokens
 that contain an audience restriction, scoping their use to the
 intended resource server or set of resource servers.
 
-#### Don't pass bearer tokens in page URLs
+#### Don't Pass Bearer Tokens in Page URLs
 
 Bearer tokens MUST NOT be
 passed in page URLs (for example, as query string parameters).
-Instead, bearer tokens SHOULD be passed in HTTP message headers or
-message bodies for which confidentiality measures are taken.
+Instead, bearer tokens SHOULD be passed in HTTP header fields or
+message content for which confidentiality measures are taken.
 Browsers, web servers, and other software may not adequately
 secure URLs in the browser history, web server logs, and other
 data structures.  If bearer tokens are passed in page URLs,
@@ -2761,7 +2745,7 @@ restrictions also help to reduce the impact of access token leakage.
 In particular, access tokens SHOULD be restricted to certain resource
 servers (audience restriction), preferably to a single resource
 server.  To put this into effect, the authorization server associates
-the access token with certain resource servers and every resource
+the access token with certain resource servers, and every resource
 server is obliged to verify, for every request, whether the access
 token sent with that request was meant to be used for that particular
 resource server.  If not, the resource server MUST refuse to serve
@@ -2773,12 +2757,12 @@ determine the resource server they want to access.
 Additionally, access tokens SHOULD be restricted to certain resources
 and actions on resource servers or resources.  To put this into effect,
 the authorization server associates the access token with the
-respective resource and actions and every resource server is obliged
+respective resource and actions, and every resource server is obliged
 to verify, for every request, whether the access token sent with that
 request was meant to be used for that particular action on the
 particular resource.  If not, the resource server MUST refuse to
 serve the respective request.  Clients and authorization servers MAY
-utilize the parameter `scope` and
+utilize the parameters `scope` and
 `authorization_details` as specified in {{RFC9396}} to
 determine those resources and/or actions.
 
@@ -2790,13 +2774,13 @@ lifecycle management, this may affect the confidence an authorization
 server has in a particular client.
 
 For example, authentication of a dynamically registered client does not
-prove the identity of the client, it only ensures that repeated requests
+prove the identity of the client; it only ensures that repeated requests
 to the authorization server were made from the same client instance. Such
 clients may be limited in terms of which scopes they are allowed to request,
 or may have other limitations such as shorter token lifetimes.
 
-In contrast, if there is a registered application whose developer's identity
-was verified, who signed a contract and is issued a client secret
+In contrast, if a registered application's developer has had their identity
+verified and has signed a contract, and the application has been issued a client secret
 that is only used in a secure backend service, the authorization
 server might allow this client to request more sensitive scopes
 or to be issued longer-lasting tokens.
@@ -2860,16 +2844,16 @@ of a client in the client credentials grant. If both options are possible,
 depending on the details of the implementation, a client's identity may be
 mistaken for the identity of a resource owner. For example, if a client is able
 to choose its own `client_id` during registration with the authorization server,
-a malicious client may set it to a value identifying an end user (e.g., a `sub`
+a malicious client may set it to a value identifying an end-user (e.g., a `sub`
 value if OpenID Connect is used). If the resource server cannot properly
 distinguish between access tokens issued to clients and access tokens issued to
-end users, the client may then be able to access resource of the end user.
+end-users, the client may then be able to access resources of the end-user.
 
 If the authorization server has a common namespace for client IDs and user
 identifiers, causing the resource server to be unable to distinguish an access
 token authorized by a resource owner from an access token authorized by a client
 itself, authorization servers SHOULD NOT allow clients to influence their `client_id` or
-any other Claim if that can cause confusion with a genuine resource owner. Where
+any other claim if that can cause confusion with a genuine resource owner. Where
 this cannot be avoided, authorization servers MUST provide other means for the
 resource server to distinguish between the two types of access tokens.
 
@@ -2878,7 +2862,7 @@ resource server to distinguish between the two types of access tokens.
 
 ### Authorization Code Injection {#authorization_codes}
 
-Authorization code injection is an attack where the client receives an authorization code from the attacker in its redirect URI instead of the authorization code from the legitimate authorization server. Without protections in place, there is no mechanism by which the client can know that the attack has taken place. Authorization code injection can lead to both the attacker obtaining access to a victim's account, as well as a victim accidentally gaining access to the attacker's account.
+Authorization code injection is an attack in which the client receives an authorization code from the attacker in its redirect URI instead of the authorization code from the legitimate authorization server. Without protections in place, there is no mechanism by which the client can know that the attack has taken place. Authorization code injection can lead to both the attacker obtaining access to a victim's account and a victim accidentally gaining access to the attacker's account.
 
 #### Countermeasures
 
@@ -2905,16 +2889,16 @@ If an attacker is able to inject an authorization code into a client, the
 client would still exchange the injected authorization code and obtain tokens, and
 would only later reject the ID token after validating the `nonce` and seeing
 that it doesn't match. In contrast, the authorization server enforcing the
-`code_challenge` and `code_verifier` parameters provides a higher security outcome,
+`code_challenge` and `code_verifier` parameters provides stronger security,
 since the authorization server is able to recognize the authorization code
-injection attack pre-emptively and avoid issuing any tokens in the first place.
+injection attack preemptively and avoid issuing any tokens in the first place.
 
-Historic note: Although PKCE {{RFC7636}}
+Historical note: Although PKCE {{RFC7636}}
 (where the `code_challenge` and `code_verifier` parameters were created)
 was originally designed as a mechanism
 to protect native apps from authorization code exfiltration attacks,
 all kinds of OAuth clients, including web applications and other confidential clients,
-are susceptible to authorization code injection attacks, which are solved by
+are susceptible to authorization code injection attacks, which are addressed by
 the `code_challenge` and `code_verifier` mechanism.
 
 ### PKCE "plain" Code Challenge Method {#pkce-plain}
@@ -2925,23 +2909,23 @@ interception by attackers who can read the authorization request
 (Attacker A4 in {{RFC9700}}), as the code verifier is transmitted
 in plaintext in the authorization request.
 
-Historical arguments for supporting plain mode (devices lacking cryptographic
+Historical arguments for supporting the `plain` method (devices lacking cryptographic
 hashing capabilities) are obsoleted by OAuth 2.1's requirement for TLS 1.2+,
 which mandates SHA-256 support for certificate validation. Any device capable
 of implementing OAuth 2.1 necessarily supports SHA-256.
 
-Authorization servers that support `plain` code challenge method create an
+Authorization servers that support the `plain` code challenge method create an
 unverifiable downgrade attack vector, as servers cannot distinguish legitimate
 constrained clients from attacker-modified requests claiming to be constrained.
 
-Deployments with existing clients that cannot support S256 SHOULD issue
+Deployments with existing clients that cannot support `S256` SHOULD issue
 extended-lifetime refresh tokens before discontinuing support for legacy
 authorization methods, as the refresh token grant ({{refreshing-an-access-token}})
 does not require PKCE.
 
 ### Reuse of Authorization Codes {#authorization-code-reuse}
 
-Several types of attacks are possible if authorization codes are able to be
+Several types of attacks are possible if authorization codes can be
 used more than once.
 
 As described in {{code-token-extension}}, the authorization server must reject
@@ -2956,7 +2940,7 @@ However, the authorization server should only revoke issued tokens if the
 request containing the authorization code is also valid, including any other parameters
 such as the `code_verifier` and client authentication. The authorization server
 SHOULD NOT revoke any issued tokens when receiving a replayed authorization code
-that contains invalid parameters. If it were to do so, this would create a denial of service
+that contains invalid parameters. If it were to do so, this would create a denial-of-service
 opportunity for an attacker who is able to obtain an authorization code but
 unable to obtain the client authentication or `code_verifier` by sending an invalid
 authorization code request before the legitimate client and thereby revoking
@@ -2965,11 +2949,11 @@ the legitimate client's tokens once it makes the valid request.
 
 ### HTTP 307 Redirect {#redirect_307}
 
-An authorization server which redirects a request that potentially contains user
+An authorization server that redirects a request that potentially contains user
 credentials MUST NOT use the 307 status code ({{Section 15.4.8 of RFC9110}}) for
 redirection.
 If an HTTP redirection (and not, for example,
-JavaScript) is used for such a request, AS SHOULD use the status
+JavaScript) is used for such a request, the AS SHOULD use the status
 code 303 ("See Other").
 
 At the authorization endpoint, a typical protocol flow is that the AS
@@ -2995,14 +2979,14 @@ unambiguously enforces rewriting the HTTP POST request to an HTTP GET
 request.  For all other status codes, including the popular 302, user
 agents can opt not to rewrite POST to GET requests and therefore
 reveal the user credentials to the client.  (In practice, however,
-most user agents will only show this behaviour for 307 redirects.)
+most user agents will only show this behavior for 307 redirects.)
 
 
 ## Ensuring Endpoint Authenticity
 
 The risk related to man-in-the-middle attacks is mitigated by the
-mandatory use of channel security mechanisms such as {{RFC9846}}
-for communicating with the Authorization and Token Endpoints.
+mandatory use of channel security mechanisms such as TLS {{RFC9846}}
+for communicating with the authorization and token endpoints.
 See {{communication-security}} for further details.
 
 ## Credentials-Guessing Attacks
@@ -3012,32 +2996,32 @@ tokens, authorization codes, refresh tokens, resource owner
 passwords, and client credentials.
 
 The probability of an attacker guessing generated tokens (and other
-credentials not intended for handling by end users) MUST be less than
+credentials not intended for handling by end-users) MUST be less than
 or equal to 2^(-128) and SHOULD be less than or equal to 2^(-160).
 
 The authorization server MUST utilize other means to protect
-credentials intended for end-user usage.
+credentials intended for use by end-users.
 
 
 ## Phishing Attacks
 
-Wide deployment of this and similar protocols may cause end users to
+Wide deployment of this and similar protocols may cause end-users to
 become inured to the practice of being redirected to websites where
-they are asked to enter their passwords.  If end users are not
+they are asked to enter their passwords.  If end-users are not
 careful to verify the authenticity of these websites before entering
 their credentials, it will be possible for attackers to exploit this
-practice to steal resource owners' passwords, and other phishable
-credentials such as OTPs.
+practice to steal resource owners' passwords and other phishable
+credentials, such as OTPs.
 
-Service providers should attempt to educate end users about the risks
+Service providers should attempt to educate end-users about the risks
 phishing attacks pose and should provide mechanisms that make it easy
-for end users to confirm the authenticity of their sites, such as using
-phishing-resistant authenticators, as phishing resistant authenticators
+for end-users to confirm the authenticity of their sites, such as using
+phishing-resistant authenticators, as phishing-resistant authenticators
 will offer a credential to log in to a certain site to the user only if
 the platform has successfully verified the site's origin. Client
 developers should consider the security implications of how they
 interact with the user agent (e.g., external, embedded), and the
-ability of the end user to verify the authenticity of the
+ability of the end-user to verify the authenticity of the
 authorization server.
 
 See {{communication-security}} for further details
@@ -3079,7 +3063,7 @@ the specific scopes being requested, so that resource owners can make
 an informed decision before granting access. In scenarios where client
 pre-registration is not possible, such as when using Dynamic Client Registration {{RFC7591}},
 or when the client metadata may be provided by an outside party
-such as when using Client ID Metadata Document {{I-D.ietf-oauth-client-id-metadata-document}},
+such as when using a Client ID Metadata Document {{I-D.ietf-oauth-client-id-metadata-document}},
 authorization servers SHOULD take additional measures to verify that the
 user understands the client they are authorizing.
 
@@ -3098,8 +3082,8 @@ client to access resources under the attacker's control. This is a
 variant of an attack known as Cross-Site Request Forgery (CSRF).
 
 The traditional countermeasure is that clients pass a random value, also
-known as a CSRF Token, in the `state` parameter that links the request to
-the redirect URI to the user agent session as described. This
+known as a CSRF token, in the `state` parameter that links the request to
+the redirect URI to the user agent session. This
 countermeasure is described in detail in {{Section 5.3.5 of RFC6819}}. The
 same protection is provided by the `code_verifier` parameter or the
 OpenID Connect `nonce` value.
@@ -3111,14 +3095,14 @@ important to note that:
    intended to be used by the client. If an authorization server does not support the requested method,
    `state` or `nonce` MUST be used for CSRF protection instead.
 
- * If `state` is used for carrying application state, and integrity of
+ * If `state` is used for carrying application state, and the integrity of
    its contents is a concern, clients MUST protect `state` against
    tampering and swapping. This can be achieved by binding the
-   contents of state to the browser session and/or signed/encrypted
+   contents of `state` to the browser session and/or using signed or encrypted
    state values {{I-D.bradley-oauth-jwt-encoded-state}}.
 
-AS therefore MUST provide a way to detect their supported code challenge methods
-either via AS metadata according to {{RFC8414}} or provide a
+The AS therefore MUST provide a way to detect its supported code challenge methods,
+either via AS metadata according to {{RFC8414}} or via a
 deployment-specific way to ensure or determine support.
 
 
@@ -3128,14 +3112,14 @@ As described in {{Section 4.4.1.9 of RFC6819}}, the authorization
 request is susceptible to clickjacking attacks, also called user
 interface redressing. In such an attack, an attacker embeds the
 authorization endpoint user interface in an innocuous context.
-A user believing to interact with that context, for example,
-clicking on buttons, inadvertently interacts with the authorization
+A user who believes they are interacting with that context, for example,
+by clicking on buttons, inadvertently interacts with the authorization
 endpoint user interface instead. The opposite can be achieved as
-well: A user believing to interact with the authorization endpoint
+well: a user who believes they are interacting with the authorization endpoint
 might inadvertently type a password into an attacker-provided
-input field overlaid over the original user interface. Clickjacking
+input field overlaid on the original user interface. Clickjacking
 attacks can be designed such that users can hardly notice the attack,
-for example using almost invisible iframes overlaid on top of
+for example, by using almost invisible iframes overlaid on top of
 other elements.
 
 An attacker can use this vector to obtain the user's authentication
@@ -3153,7 +3137,7 @@ if applicable, other endpoints used to authenticate the user and
 authorize the client (e.g., the device authorization endpoint, login
 pages, error pages, etc.). This prevents framing by unauthorized
 origins in user agents that support CSP. The client MAY permit being
-framed by some other origin than the one used in its redirection
+framed by an origin other than the one used in its redirection
 endpoint. For this reason, authorization servers SHOULD allow
 administrators to configure allowed origins for particular clients
 and/or for clients to register these dynamically.
@@ -3186,7 +3170,7 @@ An injection attack occurs when an input or otherwise external
 variable is used by an application unsanitized and causes
 modification to the application logic.  This may allow an attacker to
 gain access to the application device or its data, cause denial of
-service, or introduce a wide range of malicious side-effects.
+service, or introduce a wide range of malicious side effects.
 
 The authorization server and client MUST treat parameters received
 as potentially malicious external input and apply appropriate protections,
@@ -3212,11 +3196,11 @@ redirectors to produce URLs pointing to the client and utilize them to
 exfiltrate authorization codes, as described in
 {{Section 4.1.1 of RFC9700}}.
 Another abuse case is to produce URLs that appear to point to the client.
-This might trick users into trusting the URL and follow it in their browser.
+This might trick users into trusting the URL and following it in their browser.
 This can be abused for phishing.
 
 In order to prevent open redirection, clients should only redirect if
-the target URLs are whitelisted or if the origin and integrity of a
+the target URLs are included in an allowlist or if the origin and integrity of a
 request can be authenticated. Countermeasures against open redirection
 are described by OWASP {{owasp_redir}}.
 
@@ -3225,15 +3209,15 @@ are described by OWASP {{owasp_redir}}.
 Just as with clients, attackers could try to utilize a user's trust in
 the authorization server (and its URL in particular) for performing
 phishing attacks. OAuth authorization servers regularly redirect users
-to other web sites (the clients), but must do so safely.
+to other websites (the clients), but must do so safely.
 
 {{authorization-code-error-response}} already prevents open redirects by
-stating that the authorization server MUST NOT automatically redirect the user agent in case
+stating that the authorization server MUST NOT automatically redirect the user agent in the case
 of an invalid combination of `client_id` and `redirect_uri`.
 
 However, an attacker could also utilize a correctly registered
 redirect URI to perform phishing attacks. The attacker could, for
-example, register a client via dynamic client registration {{RFC7591}}
+example, register a client via Dynamic Client Registration {{RFC7591}}
 and execute one of the following attacks:
 
 1. Intentionally send an erroneous authorization request, e.g., by
@@ -3256,7 +3240,7 @@ use case, prompt the user for credentials when needed, before redirecting the
 user. Based on its risk assessment, the authorization server needs to decide whether it can trust
 the redirect URI or not. It could take into account URI analytics done
 internally or through some external service to evaluate the credibility and
-trustworthiness content behind the URI, and the source of the redirect URI and
+trustworthiness of the content behind the URI, and the source of the redirect URI and
 other client data.
 
 The authorization server SHOULD only automatically redirect the user agent if it trusts the
@@ -3272,8 +3256,8 @@ server that provides the resource. This could leave the token
 unprotected between the front-end server where the TLS connection
 terminates and the back-end server that provides the resource. In
 such deployments, sufficient measures MUST be employed to ensure
-confidentiality of the access token between the front-end and back-
-end servers; encryption of the token is one such possible measure.
+confidentiality of the access token between the front-end and
+back-end servers; encryption of the token is one such possible measure.
 
 See {{Section 17.2 of RFC9110}} for further information.
 
@@ -3283,23 +3267,23 @@ Mix-up is an attack on scenarios where an OAuth client interacts with
 two or more authorization servers and at least one authorization
 server is under the control of the attacker. This can be the case,
 for example, if the attacker uses dynamic registration to register the
-client at his own authorization server or if an authorization server
+client at their own authorization server or if an authorization server
 becomes compromised.
 
 When an OAuth client can only interact with one authorization server, a mix-up
 defense is not required. In scenarios where an OAuth client interacts with two
 or more authorization servers, however, clients MUST prevent mix-up attacks. Two
-different methods are discussed in the following.
+different methods are discussed in the following sections.
 
 For both defenses, clients MUST store, for each authorization request, the
-issuer they sent the authorization request to, bind this information to the
+issuer to which they sent the authorization request, bind this information to the
 user agent, and check that the authorization response was received from the
 correct issuer. Clients MUST ensure that the subsequent access token request,
 if applicable, is sent to the same issuer. The issuer serves, via the associated
 metadata, as an abstract identifier for the combination of the authorization
 endpoint and token endpoint that are to be used in the flow. If an issuer identifier
 is not available, for example, if neither OAuth 2.0 Authorization Server Metadata {{RFC8414}}
-nor OpenID Connect Discovery {{OpenID.Discovery}} are used, a different unique identifier
+nor OpenID Connect Discovery {{OpenID.Discovery}} is used, a different unique identifier
 for this tuple or the tuple itself can be used instead. For brevity of presentation,
 such a deployment-specific identifier will be subsumed under the issuer (or
 issuer identifier) in the following.
@@ -3332,31 +3316,32 @@ While this defense may require using an additional parameter to transport the
 issuer information, it is a robust and relatively simple defense against mix-up.
 
 ### Mix-Up Defense via Distinct Redirect URIs
+
 For this defense, clients MUST use a distinct redirect URI for each issuer
 they interact with.
 
 Clients MUST check that the authorization response was received from the correct
-issuer by comparing the distinct redirect URI for the issuer to the URI where
-the authorization response was received on. If there is a mismatch, the client
+issuer by comparing the distinct redirect URI for the issuer to the URI at which
+the authorization response was received. If there is a mismatch, the client
 MUST abort the flow.
 
 While this defense builds upon existing OAuth functionality, it cannot be used
 in scenarios where clients only register once for the use of many different
-issuers (as in some open banking schemes) and due to the tight integration with
+issuers (as in some open banking schemes), and, due to the tight integration with
 the client registration, it is harder to deploy automatically.
 
 Furthermore, an attacker might be able to circumvent the protection offered by
 this defense by registering a new client with the "honest" AS using the redirect
 URI that the client assigned to the attacker's AS. The attacker could then run
 the attack as described above, replacing the
-client ID with the client ID of his newly created client.
+client ID with the client ID of their newly created client.
 
 This defense SHOULD therefore only be used if other options are not available.
 
 # Native Applications {#native-applications}
 
 Native applications are clients installed and executed on the device
-used by the resource owner (i.e., desktop applications or native mobile
+used by the resource owner (e.g., desktop applications or native mobile
 applications).  Native applications require special consideration
 related to security, platform capabilities, and overall end-user
 experience.
@@ -3365,7 +3350,7 @@ The guidance in this section is primarily in the context of native mobile apps
 as opposed to desktop apps. The native mobile platforms have matured
 more than the desktop platforms in terms of the capabilities provided
 to app developers relevant to the OAuth flows described here. While
-the guidance is primarily focused on mobile apps, much of it generally can
+the guidance is primarily focused on mobile apps, much of it can generally
 apply to desktop apps as well.
 
 The authorization endpoint requires interaction between the client
@@ -3375,13 +3360,13 @@ perform the OAuth authorization request in an external user agent
 one implemented with web-views).
 
 The native application can capture the
-response from the authorization server in several different ways with
-differing security properties of each. For example, using a redirect URI
+response from the authorization server in several different ways, each with
+different security properties. For example, using a redirect URI
 with an "app-claimed URL" or custom URL scheme
 registered with the operating system to invoke the
 client as the handler, manual copy-and-paste of the credentials,
 running a local web server, installing a user agent extension, or
-by providing a redirect URI identifying a server-hosted
+providing a redirect URI identifying a server-hosted
 resource under the client's control, which in turn makes the
 response available to the native application.
 
@@ -3407,7 +3392,7 @@ URIs.  This encompasses URIs that can be used for inter-app
 communication.  Some OAuth server implementations that assume all
 clients are confidential web clients will need to add an
 understanding of public native app clients and the types of redirect
-URIs they use to support this best practice.
+URIs they use to support these recommendations.
 
 ## Client Authentication of Native Apps
 
@@ -3416,12 +3401,12 @@ multiple users are not confidential secrets, as one
 user may inspect their copy and learn the shared secret.  For this
 reason, authorization servers MUST NOT require client
 authentication of native app clients using a shared secret,
-as this serves no value beyond client identification which is
+as doing so serves no purpose beyond client identification, which is
 already provided by the `client_id` request parameter.
 
 Authorization servers that still require a statically included shared
 secret for native app clients MUST treat the client as a public
-client (as defined in {{client-types}}), and not
+client (as defined in {{client-types}}) and not
 accept the secret as proof of the client's identity.  Without
 additional measures, such clients are subject to client impersonation
 (see {{native-app-client-impersonation}}).
@@ -3453,7 +3438,7 @@ the authorization request in the device's browser and return the
 response to the requesting native app.
 
 By adopting the same methods used on the web for OAuth, benefits seen
-in the web context like the usability of a single sign-on session and
+in the web context, such as the usability of a single sign-on session and
 the security of a separate authentication context are likewise gained
 in the native app context.  Reusing the same approach also reduces
 the implementation complexity and increases interoperability by
@@ -3464,7 +3449,7 @@ Native apps MUST use an external
 user agent to perform OAuth authorization requests.  This is achieved
 by opening the authorization request in the browser (detailed in
 {{authorization-request-native-app}}) and using a redirect URI that will return the
-authorization response back to the native app (defined in {{authorization-response-native-app}}).
+authorization response to the native app (defined in {{authorization-response-native-app}}).
 
 ## Initiating the Authorization Request from a Native App {#authorization-request-native-app}
 
@@ -3488,13 +3473,13 @@ is, the application configured for handling `http` and `https` scheme
 URIs on the system; however, different browser selection criteria and
 other categories of external user agents MAY be used.
 
-This best practice focuses on the browser as the RECOMMENDED external
+This specification focuses on the browser as the RECOMMENDED external
 user agent for native apps.  An external user agent designed
 specifically for user authorization and capable of processing
 authorization requests and responses like a browser MAY also be used.
 Other external user agents, such as a native app provided by the
-authorization server may meet the criteria set out in this best
-practice, including using the same redirect URI properties, but
+authorization server, may meet the criteria set out in this
+specification, including using the same redirect URI properties, but
 their use is out of scope for this specification.
 
 Some platforms support a browser feature known as "in-app browser
@@ -3509,7 +3494,7 @@ authorization request.
 
 There are several redirect URI options available to native apps for
 receiving the authorization response from the browser, the
-availability and user experience of which varies by platform.
+availability and user experience of which vary by platform.
 
 ### Claimed "https" Scheme URI Redirection
 
@@ -3520,8 +3505,8 @@ claimed URI, instead of the page being loaded in the browser, the
 native app is launched with the URI supplied as a launch parameter.
 
 Such URIs can be used as redirect URIs by native apps.  They are
-indistinguishable to the authorization server from a regular web-
-based client redirect URI.  An example is:
+indistinguishable to the authorization server from a regular
+web-based client redirect URI.  An example is:
 
     https://app.example.com/oauth2redirect/example-provider
 
@@ -3608,7 +3593,7 @@ reverse order, as recommended by {{Section 3.8 of RFC7595}} for
 private-use URI schemes.
 
 For example, an app that controls the domain name `app.example.com`
-can use `com.example.app` as their scheme.  Some authorization
+can use `com.example.app` as its scheme.  Some authorization
 servers assign client identifiers based on domain names, for example,
 `client1234.usercontent.example.net`, which can also be used as the
 domain name for the scheme when reversed in the same manner.  A
@@ -3644,7 +3629,7 @@ apps.  These embedded user agents are unsafe for use by third parties
 to the authorization server by definition, as the app that hosts the
 embedded user agent can access the user's full authentication
 credentials, not just the OAuth authorization grant that was intended
-for the app. They are also typically sandboxed by the operating system
+for the app. They are also typically sandboxed by the operating system,
 and mechanisms such as WebAuthn that rely on the web origin are disabled.
 
 In typical web-view-based implementations of embedded user agents,
@@ -3671,7 +3656,7 @@ the user to log in for every authorization request, which is often
 considered an inferior user experience.
 
 
-### Fake External User-Agents in Native Apps
+### Fake External User Agents in Native Apps
 
 The native app that is initiating the authorization request has a
 large degree of control over the user interface and can potentially
@@ -3684,9 +3669,9 @@ anyone faking an external user agent is provably bad.  On the other
 hand, if good and bad actors alike are using embedded user agents,
 bad actors don't need to fake anything, making them harder to detect.
 Once a malicious app is detected, it may be possible to use this
-knowledge to blacklist the app's signature in malware scanning
+knowledge to block the app's signature in malware scanning
 software, take removal action (in the case of apps distributed by app
-stores) and other steps to reduce the impact and spread of the
+stores), and take other steps to reduce the impact and spread of the
 malicious app.
 
 Authorization servers can also directly protect against fake external
@@ -3695,12 +3680,12 @@ true external user agents.
 
 Users who are particularly concerned about their security when using
 in-app browser tabs may also take the additional step of opening the
-request in the full browser from the in-app browser tab and complete
+request in the full browser from the in-app browser tab and completing
 the authorization there, as most implementations of the in-app
 browser tab pattern offer such functionality.
 
 
-### Malicious External User-Agents in Native Apps
+### Malicious External User Agents in Native Apps
 
 If a malicious app is able to configure itself as the default handler
 for `https` scheme URIs in the operating system, it will be able to
@@ -3958,11 +3943,11 @@ OAuth 2.0 for Browser-Based Applications {{RFC10017}},
 OAuth Security Best Current Practice {{RFC9700}},
 and Bearer Token Usage {{RFC6750}}.
 
-Where a later draft updates or obsoletes functionality found in the original
+Where a later specification updates or obsoletes functionality found in the original
 {{RFC6749}}, that functionality in this draft is updated with the normative
-changes described in a later draft, or removed entirely.
+changes described in that later specification, or removed entirely.
 
-A non-normative list of changes from OAuth 2.0 is listed below:
+The following is a non-normative list of changes from OAuth 2.0:
 
 * The authorization code grant is extended with the functionality from PKCE {{RFC7636}}
   such that the default method of using the authorization code grant according
@@ -3975,7 +3960,7 @@ A non-normative list of changes from OAuth 2.0 is listed below:
   as per {{Section 2.4 of RFC9700}}
 * Bearer token usage omits the use of bearer tokens in the query string of URIs
   as per {{Section 4.3.2 of RFC9700}}
-* Refresh tokens for public clients must either be sender-constrained or one-time use
+* Refresh tokens for public clients must either be sender-constrained or one-time-use
   as per {{Section 4.14.2 of RFC9700}}
 * Refresh tokens issued to browser-based applications have additional lifetime constraints
   as per {{Section 6.3.2.3 of RFC10017}}
@@ -3984,14 +3969,14 @@ A non-normative list of changes from OAuth 2.0 is listed below:
 * Authorization servers must support client credentials in the request body
 * The PKCE `plain` method is removed
 
-## Removal of the OAuth 2.0 Implicit grant
+## Removal of the OAuth 2.0 Implicit Grant
 
 The OAuth 2.0 Implicit grant is omitted from OAuth 2.1 as it was deprecated in
 {{RFC9700}}.
 
 The intent of removing the Implicit grant is to no longer issue access tokens
 in the authorization response, as such tokens are vulnerable to leakage
-and injection, and are unable to be sender-constrained to a client.
+and injection and cannot be sender-constrained to a client.
 This behavior was indicated by clients using the `response_type=token` parameter.
 This value for the `response_type` parameter is no longer defined in OAuth 2.1.
 
@@ -4001,11 +3986,11 @@ for example, `response_type=id_token` defined by {{OpenID.Connect}}.
 
 ## Redirect URI Parameter in Token Request {#redirect-uri-in-token-request}
 
-In OAuth 2.0, the request to the token endpoint in the authorization code flow ({{Section 4.1.3 of RFC6749}}) contains an optional `redirect_uri` parameter. The parameter was intended to prevent an authorization code injection attack, and was required if the `redirect_uri` parameter was sent in the original authorization request. The authorization request only required the `redirect_uri` parameter if multiple redirect URIs were registered to the specific client. However, in practice, many authorization server implementations required the `redirect_uri` parameter in the authorization request even if only one was registered, leading the `redirect_uri` parameter to be required at the token endpoint as well.
+In OAuth 2.0, the request to the token endpoint in the authorization code flow ({{Section 4.1.3 of RFC6749}}) contains an optional `redirect_uri` parameter. The parameter was intended to prevent an authorization code injection attack and was required if the `redirect_uri` parameter was sent in the original authorization request. The authorization request only required the `redirect_uri` parameter if multiple redirect URIs were registered for the specific client. However, in practice, many authorization server implementations required the `redirect_uri` parameter in the authorization request even if only one was registered, leading the `redirect_uri` parameter to be required at the token endpoint as well.
 
-In OAuth 2.1, authorization code injection is prevented by the `code_challenge` and `code_verifier` parameters, making the inclusion of the `redirect_uri` parameter serve no purpose in the token request. As such, it has been removed.
+In OAuth 2.1, authorization code injection is prevented by the `code_challenge` and `code_verifier` parameters, so including the `redirect_uri` parameter in the token request serves no purpose. As such, it has been removed.
 
-For backwards compatibility of an authorization server wishing to support both OAuth 2.0 and OAuth 2.1 clients, the authorization server MUST allow clients to send the `redirect_uri` parameter in the token request ({{code-token-extension}}), and MUST enforce the parameter as described in {{RFC6749}}. The authorization server can use the `client_id` in the request to determine whether to enforce this behavior for the specific client that it knows will be using the older OAuth 2.0 behavior.
+To provide backward compatibility, an authorization server that supports both OAuth 2.0 and OAuth 2.1 clients MUST allow clients to send the `redirect_uri` parameter in the token request ({{code-token-extension}}), and MUST enforce the parameter as described in {{RFC6749}}. The authorization server can use the `client_id` in the request to determine whether to enforce this behavior for the specific client that it knows will be using the older OAuth 2.0 behavior.
 
 A client following only the OAuth 2.1 recommendations will not send the `redirect_uri` in the token request, and therefore will not be compatible with an authorization server that expects the parameter in the token request.
 
@@ -4014,7 +3999,7 @@ A client following only the OAuth 2.1 recommendations will not send the `redirec
 
 This document does not require any IANA actions.
 
-All referenced registries are defined by [RFC6749] and related documents that this
+All referenced registries are defined by {{RFC6749}} and related documents that this
 work is based upon. No changes to those registries are required by this specification.
 
 
@@ -4076,27 +4061,27 @@ The `state` element is defined in {{authorization-request}}, {{authorization-res
 
 ## "redirect_uri" Syntax
 
-The `redirect_uri` element is defined in {{authorization-request}}, and {{code-token-extension}}:
+The `redirect_uri` element is defined in {{authorization-request}} and {{code-token-extension}}:
 
      redirect-uri      = URI-reference
 
 ## "error" Syntax {#error-syntax}
 
-The `error` element is defined in Sections {{authorization-code-error-response}}, {{token-error-response}},
+The `error` element is defined in {{authorization-code-error-response}}, {{token-error-response}},
 and {{error-response}}:
 
      error             = 1*NQSCHAR
 
 ## "error_description" Syntax {#error-description-syntax}
 
-The `error_description` element is defined in Sections {{authorization-code-error-response}},
+The `error_description` element is defined in {{authorization-code-error-response}},
 {{token-error-response}}, and {{error-response}}:
 
      error-description = 1*NQSCHAR
 
 ## "error_uri" Syntax {#error-uri-syntax}
 
-The `error_uri` element is defined in Sections {{authorization-code-error-response}}, {{token-error-response}},
+The `error_uri` element is defined in {{authorization-code-error-response}}, {{token-error-response}},
 and {{error-response}}:
 
      error-uri         = URI-reference
@@ -4123,7 +4108,7 @@ The `access_token` element is defined in {{token-response}}:
 
 ## "token_type" Syntax
 
-The `token_type` element is defined in {{token-response}}, and {{defining-access-token-types}}:
+The `token_type` element is defined in {{token-response}} and {{defining-access-token-types}}:
 
      token-type = type-name / URI-reference
      type-name  = 1*name-char
@@ -4150,7 +4135,7 @@ The syntax for new endpoint parameters is defined in {{defining-new-endpoint-par
 
 ## "code_verifier" Syntax
 
-ABNF for `code_verifier` is as follows.
+The ABNF for `code_verifier` is as follows.
 
     code-verifier = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -4159,7 +4144,7 @@ ABNF for `code_verifier` is as follows.
 
 ## "code_challenge" Syntax
 
-ABNF for `code_challenge` is as follows.
+The ABNF for `code_challenge` is as follows.
 
     code-challenge = 43*128unreserved
     unreserved = ALPHA / DIGIT / "-" / "." / "_" / "~"
@@ -4174,16 +4159,16 @@ At the time of publication of {{RFC6749}}, the
 Section 17.13.4 of {{W3C.REC-html401-19991224}} but not registered in
 the IANA MIME Media Types registry
 (<http://www.iana.org/assignments/media-types>).  Furthermore, that
-definition is incomplete, as it does not consider non-US-ASCII
+definition is incomplete, as it does not consider non-ASCII
 characters.
 
-To address this shortcoming when generating contents using this media
+To address this shortcoming when generating content using this media
 type, names and values MUST be encoded using the UTF-8 character
 encoding scheme {{RFC3629}} first; the resulting octet sequence then
 needs to be further encoded using the escaping rules defined in
 {{W3C.REC-html401-19991224}}.
 
-When parsing data from a content using this media type, the names and
+When parsing data from content using this media type, the names and
 values resulting from reversing the name/value encoding consequently
 need to be treated as octet sequences, to be decoded using the UTF-8
 character encoding scheme.
@@ -4206,11 +4191,11 @@ Various messages in this specification are serialized using one of the methods d
 
 ## Query String Serialization {#query-string-serialization}
 
-In order to serialize the parameters using the Query String Serialization, the Client constructs the string by adding the parameters and values to the query component of a URL using the application/x-www-form-urlencoded format as defined by {{WHATWG.URL}}. Query String Serialization is typically used in HTTP GET requests.
+In order to serialize the parameters using the Query String Serialization, the client constructs the string by adding the parameters and values to the query component of a URL using the `application/x-www-form-urlencoded` format as defined by {{WHATWG.URL}}. Query String Serialization is typically used in HTTP GET requests.
 
 ## Form-Encoded Serialization {#form-serialization}
 
-Parameters and their values are Form Serialized by adding the parameter names and values to the entity body of the HTTP request using the application/x-www-form-urlencoded format as defined by {{application-x-www-form-urlencoded}}. Form Serialization is typically used in HTTP POST requests.
+Parameters and their values are form-serialized by adding the parameter names and values to the content of the HTTP request using the `application/x-www-form-urlencoded` format as defined in {{application-x-www-form-urlencoded}}. Form-Encoded Serialization is typically used in HTTP POST requests.
 
 ## JSON Serialization {#json-serialization}
 
@@ -4218,7 +4203,7 @@ The parameters are serialized into a JSON {{RFC8259}} object structure by adding
 
 # Extensions {#extensions}
 
-Below is a list of well-established extensions at the time of publication:
+The following is a list of extensions that are well established at the time of publication:
 
 * {{RFC7009}}: Token Revocation
   * The Token Revocation extension defines a mechanism for clients to indicate to the authorization server that an access token is no longer needed.
@@ -4233,13 +4218,13 @@ Below is a list of well-established extensions at the time of publication:
   * Authorization Server Metadata (also known as OAuth Discovery) defines an endpoint clients can use to look up the information needed to interact with a particular OAuth server, such as the location of the authorization and token endpoints and the supported grant types.
 
 * {{RFC8628}}: OAuth 2.0 Device Authorization Grant
-  * The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps, or devices like hardware video encoders that can stream video to a streaming video service.
+  * The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps or devices such as hardware video encoders that can stream video to a streaming video service.
 
 * {{RFC8705}}: Mutual TLS
-  * Mutual TLS describes a mechanism of binding tokens to the clients they were issued to, as well as a client authentication mechanism, via TLS certificate authentication.
+  * Mutual TLS describes a mechanism of binding tokens to the clients to which they were issued, as well as a client authentication mechanism, via TLS certificate authentication.
 
 * {{RFC8707}}: Resource Indicators
-  * Provides a way for the client to explicitly signal to the authorization server where it intends to use the access token it is requesting.
+  * Resource Indicators provide a way for the client to explicitly signal to the authorization server where it intends to use the access token it is requesting.
 
 * {{RFC9068}}: JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
   * This specification defines a profile for issuing OAuth access tokens in JSON Web Token (JWT) format.
@@ -4254,7 +4239,7 @@ Below is a list of well-established extensions at the time of publication:
   * Rich Authorization Requests specifies a new parameter `authorization_details` that is used to carry fine-grained authorization data in the OAuth authorization request.
 
 * {{RFC9449}}: Demonstrating Proof of Possession (DPoP)
-  * DPoP describes a mechanism for sender-constraining OAuth 2.0 tokens via a proof-of-possession mechanism on the application level.
+  * DPoP describes a mechanism for sender-constraining OAuth 2.0 tokens via a proof-of-possession mechanism at the application level.
 
 * {{RFC9470}}: Step-Up Authentication Challenge Protocol
   * Step-Up Auth describes a mechanism that resource servers can use to signal to a client that the authentication event associated with the access token of the current request does not meet its authentication requirements.
@@ -4265,14 +4250,13 @@ Below is a list of well-established extensions at the time of publication:
 
 This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Applications. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
 
-The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Andrii Deinega, Bob Hamburg, Brian Campbell, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan, Goutam Adwant, Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Michael Jones, Michael Peck, Roberto Polli, Tim Würtele and Vittorio Bertocci.
+The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Andrii Deinega, Bob Hamburg, Brian Campbell, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan, Goutam Adwant, Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Michael Jones, Michael Peck, Roberto Polli, Tim Würtele, and Vittorio Bertocci.
 
 Discussions around this specification have also occurred at the OAuth Security Workshop in 2021 and 2022. The authors thank the organizers of the workshop (Guido Schmitz, Steinar Noem, and Daniel Fett) for hosting an event that's conducive to collaboration and community input.
 
 
 # Document History
-
-[[ To be removed from the final specification ]]
+{: removeInRFC="true"}
 
 -17
 
@@ -4286,6 +4270,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request
 * Filled in the Browser-Based Applications section with the normative requirements from RFC 10017
 * Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017
+* Editorial cleanups
 
 -16
 
