@@ -2115,7 +2115,7 @@ In addition to the processing rules in {{token-request}}, the authorization serv
 If the authorization associated with the grant has been reduced since
 the refresh token was issued (e.g., the resource owner revoked some scopes),
 the authorization server MAY issue an access token with the reduced scope,
-and includes the `scope` response parameter as described in {{token-response}}.
+in which case it MUST include the `scope` response parameter as described in {{token-response}}.
 
 Authorization servers MUST utilize one of these methods to detect
 refresh token replay by malicious actors for public clients:
