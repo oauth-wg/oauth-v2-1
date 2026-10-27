@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                              A. Parecki
-Expires: 29 April 2027                                              Okta
+Expires: 30 April 2027                                              Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                         26 October 2026
+                                                         27 October 2026
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 April 2027.
+   This Internet-Draft will expire on 30 April 2027.
 
 Copyright Notice
 
@@ -2173,8 +2173,8 @@ Table of Contents
    If the authorization associated with the grant has been reduced since
    the refresh token was issued (e.g., the resource owner revoked some
    scopes), the authorization server MAY issue an access token with the
-   reduced scope, and includes the scope response parameter as described
-   in Section 3.2.3.
+   reduced scope, in which case it MUST include the scope response
+   parameter as described in Section 3.2.3.
 
    Authorization servers MUST utilize one of these methods to detect
    refresh token replay by malicious actors for public clients:
