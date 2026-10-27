@@ -95,11 +95,20 @@ informative:
   RFC9396:
   RFC9449:
   RFC9470:
-  I-D.bradley-oauth-jwt-encoded-state:
   RFC10017:
+  I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-rfc7523bis:
   I-D.ietf-oauth-attestation-based-client-auth:
   I-D.ietf-oauth-client-id-metadata-document:
+
+  WHATWG.WebMessaging:
+    title: "HTML Living Standard: Cross-document messaging"
+    target: https://html.spec.whatwg.org/multipage/web-messaging.html
+    author:
+      - ins: WHATWG
+    date: 2026
+
+  W3C.service-workers:
 
   OpenID.Connect:
     title: OpenID Connect Core 1.0 incorporating errata set 2
@@ -138,7 +147,7 @@ informative:
     target: https://www.svta.org/product/online-multimedia-authorization-protocol/
 
   NIST800-63:
-    title: "NIST Special Publication 800-63-1, INFORMATION SECURITY"
+    title: "NIST Special Publication 800-63-1, INFORMATION SECURITY (withdrawn)"
     date: December, 2011
     author:
       - ins: W. Burr
@@ -267,7 +276,7 @@ use of OAuth over any protocol other than HTTP is out of scope.
 Since the publication of the OAuth 2.0 Authorization Framework {{RFC6749}}
 in October 2012, it has been updated by OAuth 2.0 for Native Apps {{RFC8252}},
 OAuth Security Best Current Practice {{RFC9700}},
-and OAuth 2.0 for Browser-Based Apps {{RFC10017}}.
+and OAuth 2.0 for Browser-Based Applications {{RFC10017}}.
 The OAuth 2.0 Authorization Framework: Bearer Token Usage {{RFC6750}}
 has also been updated by {{RFC9700}}. This
 Standards Track specification consolidates the information in all of these
@@ -329,22 +338,26 @@ for further details.
 ## Protocol Flow
 
 ~~~~~~~~~~
-     +--------+                               +---------------+
-     |        |--(1)- Authorization Request ->|   Resource    |
-     |        |                               |     Owner     |
-     |        |<-(2)-- Authorization Grant ---|               |
+                                              +---------------+
+                                              |   Resource    |
+                                              |     Owner     |
+                                              +---------------+
+                                                      ^
+                                                      | (2)
+     +--------+                               +-------v-------+
+     |        |--(1)- Authorization Request ->|               |
+     |        |                               |               |
+     |        |<-(3)-- Authorization Grant ---|               |
+     |        |                               | Authorization |
+     |        |--(4)-- Authorization Grant -->|     Server    |
+     | Client |                               |               |
+     |        |<-(5)----- Access Token -------|               |
      |        |                               +---------------+
      |        |
      |        |                               +---------------+
-     |        |--(3)-- Authorization Grant -->| Authorization |
-     | Client |                               |     Server    |
-     |        |<-(4)----- Access Token -------|               |
-     |        |                               +---------------+
-     |        |
-     |        |                               +---------------+
-     |        |--(5)----- Access Token ------>|    Resource   |
+     |        |--(6)----- Access Token ------>|    Resource   |
      |        |                               |     Server    |
-     |        |<-(6)--- Protected Resource ---|               |
+     |        |<-(7)--- Protected Resource ---|               |
      +--------+                               +---------------+
 ~~~~~~~~~~
 {: #fig-protocol-flow title="Abstract Protocol Flow"}
@@ -352,12 +365,13 @@ for further details.
 The abstract OAuth 2.1 flow illustrated in {{fig-protocol-flow}} describes the
 interaction between the four roles and includes the following steps:
 
-1.  The client requests authorization from the resource owner.  The
-    authorization request can be made directly to the resource owner
-    (as shown), or preferably indirectly via the authorization
-    server as an intermediary.
+1.  The client requests authorization from the resource owner via the
+    authorization server, which acts as an intermediary between the client
+    and the resource owner.
 
-2.  The client receives an authorization grant, which is a
+2.  The resource owner approves the request.
+
+3.  The client receives an authorization grant, which is a
     credential representing the resource owner's authorization,
     expressed using one of the authorization grant types defined in this
     specification or using an extension grant type.  The
@@ -365,22 +379,27 @@ interaction between the four roles and includes the following steps:
     client to request authorization and the types supported by the
     authorization server.
 
-3.  The client requests an access token by authenticating with the
+4.  The client requests an access token by authenticating with the
     authorization server and presenting the authorization grant.
 
-4.  The authorization server authenticates the client and validates
+5.  The authorization server authenticates the client and validates
     the authorization grant, and if valid, issues an access token.
 
-5.  The client requests the protected resource from the resource
-    server and authenticates by presenting the access token.
+6.  The client requests the protected resource from the resource
+    server by presenting the access token.
 
-6.  The resource server validates the access token, and if valid,
+7.  The resource server validates the access token, and if valid,
     serves the request.
 
-The preferred method for the client to obtain an authorization grant
-from the resource owner (depicted in steps (1) and (2)) is to use the
-authorization server as an intermediary, which is illustrated in
-{{fig-authorization-code-flow}} in {{authorization-code-grant}}.
+The authorization code grant, which uses the authorization server as
+an intermediary to obtain the resource owner's authorization, is
+illustrated in {{fig-authorization-code-flow}} in {{authorization-code-grant}}.
+
+Some extensions begin with a direct request from the client to the
+authorization server before any interaction with the resource owner,
+such as Pushed Authorization Requests {{RFC9126}} and the Device
+Authorization Grant {{RFC8628}}. See {{extensions}} for these and other
+extensions.
 
 
 ## Authorization Grant
@@ -469,7 +488,7 @@ to resource servers.
 The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
 
 1.  The client requests an access token by authenticating with the
-    authorization server and presenting an authorization grant.
+    authorization server and presenting a previously-obtained authorization grant.
 
 2.  The authorization server authenticates the client and validates
     the authorization grant, and if valid, issues an access token
@@ -497,20 +516,14 @@ The flow illustrated in {{fig-refresh-token-flow}} includes the following steps:
     the refresh token, and if valid, issues a new access token (and,
     optionally, a new refresh token).
 
-Note that there is no need to communicate the lifetime of the refresh
-token to the client, because the client can't do anything different with
-the knowledge of the lifetime. Additionally, the authorization server
+If the refresh token expires, the client's only recourse is to initiate
+a new flow to obtain a new access token and refresh token. The authorization server
 might choose to use dynamic lifetimes (e.g., the refresh token expiry
 is extended as long as the refresh token is used at least once every 7 days),
 or the authorization server might revoke the refresh token before
 its scheduled expiration date for any reason, such as if the user
 revokes the application's access. This means the client already has
 to handle the case of a refresh token expiring at an arbitrary time.
-
-Regardless of why or when the refresh token expires, the client
-has only one path to obtain new tokens, which is to start a new
-OAuth flow from the beginning. For that reason, there is no property
-defined to communicate the expiration of a refresh token to the client.
 
 
 ### Client Credentials
@@ -632,6 +645,11 @@ authorization, the authorization server MUST either process the
 request using a predefined default value or fail the request
 indicating an invalid scope.  The authorization server SHOULD
 document its scope requirements and default value (if defined).
+
+Whether the scope of a grant is limited to what the resource owner
+approved in the corresponding authorization request, or also includes
+scopes the resource owner previously authorized for the same client,
+is determined by authorization server policy.
 
 ### Bearer Tokens {#bearer-tokens}
 
@@ -924,13 +942,13 @@ query string component ({{query-string-serialization}}), which MUST be retained 
 additional query parameters. The redirect URI MUST NOT include a
 fragment component.
 
-### Registration Requirements
+### Registration Requirements {#registration-requirements}
 
 Authorization servers MUST require clients to register their complete
 redirect URI (including the path component). Authorization servers
 MUST reject authorization requests that specify a redirect URI that
 doesn't exactly match one that was registered, with an exception for
-loopback redirects, where an exact match is required except for the
+loopback interface redirect URIs, where an exact match is required except for the
 port URI component; see {{authorization-request}} for details.
 
 The authorization server MAY allow the client to register multiple
@@ -1250,16 +1268,18 @@ This requirement also applies to parameters defined by extensions
 unless the extension explicitly defines otherwise for a specific
 parameter.
 
-Authorization servers that wish to support browser-based applications
+Authorization servers that support browser-based applications
 (for example, applications running exclusively in client-side JavaScript without
-access to a supporting backend server) will need to ensure the token endpoint
+access to a supporting backend server) MUST ensure the token endpoint
 supports the necessary CORS {{WHATWG.CORS}} headers to allow the responses
 to be visible to the application.
 If the authorization server provides additional endpoints to the application, such
 as metadata URLs, dynamic client registration, revocation, introspection, discovery, or
 user info endpoints, these endpoints may also be accessed by the browser-based
-application and will also need to have the CORS headers defined to allow access.
-See {{RFC10017}} for further details.
+application and MUST also send the CORS headers to allow access.
+Note that CORS headers are not needed in the case where the browser-based
+application shares an origin with the authorization server.
+See {{browser-based-apps}} and {{RFC10017}} for further details.
 
 
 ### Client Authentication {#token-endpoint-client-authentication}
@@ -1716,9 +1736,10 @@ required parameters are present and valid.
 In particular, the authorization server MUST validate the `redirect_uri`
 in the request if present, ensuring that it matches one of the registered
 redirect URIs previously established during client registration ({{client-registration}}).
-When comparing the two URIs, the authorization server MUST ensure that the
-two URIs are equal; see {{Section 6.2.1 of RFC3986}}, Simple String Comparison, for details.
-The only exception is native apps using a loopback interface redirect URI: in this case, the authorization server
+When comparing the two URIs the authorization server MUST ensure that the
+two URIs are equal using simple string comparison as defined in {{Section 6.2.1 of RFC3986}},
+i.e., a case-sensitive, character-by-character comparison with no normalization applied.
+The only exception is loopback interface redirect URIs used by native apps: in this case, the authorization server
 MUST allow variable port numbers as described in {{loopback-interface-redirection}}.
 
 If the request is valid,
@@ -2077,6 +2098,11 @@ In addition to the processing rules in {{token-request}}, the authorization serv
 
 * validate the refresh token.
 
+If the authorization associated with the grant has been reduced since
+the refresh token was issued (e.g., the resource owner revoked some scopes),
+the authorization server MAY issue an access token with the reduced scope,
+in which case it MUST include the `scope` response parameter as described in {{token-response}}.
+
 Authorization servers MUST utilize one of these methods to detect
 refresh token replay by malicious actors for public clients:
 
@@ -2121,7 +2147,8 @@ The authorization server MAY revoke the old
 refresh token after issuing a new refresh token to the client.  If a
 new refresh token is issued, the refresh token scope MUST be
 identical to that of the refresh token included by the client in the
-request.
+request, unless the grant has been reduced as described in
+{{refresh-token-endpoint-extension}}.
 
 Authorization servers MAY revoke refresh tokens automatically in case
 of a security event, such as:
@@ -2135,6 +2162,12 @@ access tokens for some time.  The expiration time is at the
 discretion of the authorization server.  It might be a global value
 or determined based on the client policy or the grant associated with
 the refresh token (and its sensitivity).
+
+When refresh token rotation is used, a failure to deliver the refresh
+token response (e.g., due to a network error) can leave the client
+holding only an invalidated refresh token, forcing a new authorization
+flow. Authorization servers that wish to avoid this failure mode can
+use sender-constrained refresh tokens instead of rotation.
 
 ## Extension Grants {#extension-grants}
 
@@ -2562,8 +2595,9 @@ background for the protocol design, is provided by
 ### Security Threats
 
 The following list presents several common threats against protocols
-utilizing some form of tokens.  This list of threats is based on NIST
-Special Publication 800-63 {{NIST800-63}}.
+utilizing some form of tokens.  This list of threats was originally
+derived from NIST Special Publication 800-63-1 {{NIST800-63}}, as
+described in {{RFC6750}}.
 
 #### Access Token Manufacture/Modification
 
@@ -2696,6 +2730,11 @@ or other unsecured locations.
 
 ### Access Token Privilege Restriction
 
+The client SHOULD request access tokens with the minimal scope
+necessary.  The authorization server SHOULD take the client identity
+into account when choosing how to honor the requested scope and MAY
+issue an access token with fewer scopes than requested.
+
 The privileges associated with an access token SHOULD be restricted
 to the minimum required for the particular application or use case.
 This prevents clients from exceeding the privileges authorized by the
@@ -2776,37 +2815,25 @@ previously approved an authorization request for a given client ID --
 unless the identity of the client can be proven, the request SHOULD
 be processed as if no previous request had been approved.
 
-Measures such as claimed `https` scheme redirects MAY be accepted by
-authorization servers as identity proof.  Some operating systems may
-offer alternative platform-specific identity features that MAY be
-accepted, as appropriate.
+Measures such as claimed `https` scheme redirects provide stronger
+assurance than private-use URI schemes that the authorization response
+is delivered to the intended app, and authorization servers MAY take
+this into account when deciding whether to process a repeated
+authorization request automatically. Such measures do not authenticate
+the client, and do not make the client a confidential client. Some
+operating systems may offer alternative platform-specific identity
+features that MAY be used similarly, as appropriate.
 
+### Impersonation of Browser-Based Applications {#browser-based-application-impersonation}
 
-### Access Token Privilege Restriction
-
-The client SHOULD request access tokens with the minimal scope
-necessary.  The authorization server SHOULD take the client identity
-into account when choosing how to honor the requested scope and MAY
-issue an access token with fewer scopes than requested.
-
-The privileges associated with an access token SHOULD be restricted to
-the minimum required for the particular application or use case. This
-prevents clients from exceeding the privileges authorized by the
-resource owner. It also prevents users from exceeding their privileges
-authorized by the respective security policy. Privilege restrictions
-also help to reduce the impact of access token leakage.
-
-In particular, access tokens SHOULD be restricted to certain resource
-servers (audience restriction), preferably to a single resource
-server. To put this into effect, the authorization server associates
-the access token with certain resource servers and every resource
-server is obliged to verify, for every request, whether the access
-token sent with that request was meant to be used for that particular
-resource server. If not, the resource server MUST refuse to serve the
-respective request. Clients and authorization servers MAY utilize the
-parameters `scope` or `resource` as specified in
-{{RFC8707}}, respectively, to determine the
-resource server they want to access.
+Authorization servers restrict redirect URIs to a fixed set of
+URIs, preventing the use of wildcard domains, wildcard
+paths, or wildcard query string components as described in {{registration-requirements}}.
+When a client uses an absolute `https` URI as a redirect URI,
+an exact match MAY be accepted by authorization servers as proof
+of identity of a browser-based application for the purpose of deciding
+whether to process an authorization request automatically when a previous
+request for the same `client_id` has already been approved.
 
 
 ## Client Impersonating Resource Owner {#client-impersonating-resource-owner}
@@ -3530,6 +3557,10 @@ time of the request for loopback IP redirect URIs, to accommodate
 clients that obtain an available ephemeral port from the operating
 system at the time of the request.
 
+Loopback interface redirect URIs may be susceptible to interception by
+other apps accessing the same loopback interface on some operating
+systems.
+
 Clients SHOULD NOT assume that the device supports a particular
 version of the Internet Protocol.  It is RECOMMENDED that clients
 attempt to bind to the loopback interface using both IPv4 and IPv6
@@ -3686,13 +3717,221 @@ as described in {{loopback-interface-redirection}}.
 
 
 
-# Browser-Based Apps
+# Browser-Based Applications {#browser-based-apps}
 
-Browser-based apps are clients that run in a web browser, typically
-written in JavaScript, also known as "single-page apps". These types of apps
+Browser-based applications are clients that run in a web browser, typically
+written in JavaScript, also known as "single-page apps". Because the
+application's code is delivered to and executed within the user agent,
+any code running in the application's origin has access to the same
+data and APIs as the application itself. These types of apps
 have particular security considerations similar to native apps.
 
-TODO: Bring in the normative text of the browser-based apps BCP when it is finalized.
+There are three architecture patterns available when building a
+browser-based application that uses OAuth to access protected resources,
+presented here in decreasing order of security:
+
+* the app relies on a backend component to handle all OAuth
+  responsibilities and forwards all resource requests through that
+  backend component, known as a "Backend for Frontend" or "BFF"
+  ({{browser-based-apps-bff}})
+* the app relies on a backend component to handle all OAuth
+  responsibilities but calls resource servers directly using the access
+  token, known as a "token-mediating backend"
+  ({{browser-based-apps-token-mediating-backend}})
+* the app is itself the OAuth client, handling all OAuth
+  responsibilities in the browser ({{browser-based-oauth-clients}})
+
+Each pattern offers a different trade-off between security and
+simplicity. See {{RFC10017}} for the threat model of malicious
+JavaScript, a detailed analysis of which attacks each pattern does and
+does not withstand, and sequence diagrams of each pattern.
+
+Browser-based applications MUST use the authorization code grant
+({{authorization-code-grant}}) to obtain an access token. The Implicit
+grant and the Resource Owner Password Credentials grant, both of which
+were historically used by browser-based applications, are not defined in this
+specification and MUST NOT be used, as described in
+{{oauth-2-0-differences}}.
+
+## Backend for Frontend {#browser-based-apps-bff}
+
+In this pattern, a backend component becomes the OAuth client for the
+browser-based application. The backend component obtains and manages tokens in
+the context of a cookie-based session with the browser, and forwards
+every resource request to the resource server after augmenting it with
+the appropriate access token. No tokens are exposed to the browser.
+
+The BFF MUST act as a confidential client ({{client-types}}) by
+establishing credentials with the authorization server, and MUST use the
+authorization code grant ({{authorization-code-grant}}) to obtain an
+access token.
+
+See {{Section 6.1 of RFC10017}} for the cookie security, Cross-Site
+Request Forgery, and proxy restriction requirements that apply to the
+BFF's interactions with the browser-based application.
+
+## Token-Mediating Backend {#browser-based-apps-token-mediating-backend}
+
+In this pattern, a backend component becomes the OAuth client for the
+browser-based application and manages the refresh token in the context of a
+cookie-based session, but passes the access token to the browser-based
+app, which calls resource servers directly.
+
+The token-mediating backend MUST act as a confidential client
+({{client-types}}) and MUST use the authorization code grant
+({{authorization-code-grant}}) to obtain an access token.
+
+See {{Section 6.2 of RFC10017}} for the cookie security, Cross-Site
+Request Forgery, and access token scope requirements that apply to the
+token-mediating backend's interactions with the browser-based application.
+
+## Browser-Based OAuth Clients {#browser-based-oauth-clients}
+
+A browser-based application acting as the OAuth client itself is a public
+client, as defined in {{client-types}}, and MUST be registered with the
+authorization server as such. In addition to the requirements that apply
+to all clients using the authorization code grant, in particular PKCE
+({{authorization-code-grant}}), exact matching of registered redirect
+URIs ({{redirection-endpoint}}), and defenses against Cross-Site Request
+Forgery attacks on the redirect URI ({{csrf_countermeasures}}), the
+requirements in this section apply.
+
+### Client Authentication of Browser-Based Applications
+
+Because a browser-based application's source code is delivered to the end user's
+browser, it cannot contain provisioned secrets. Secrets that are
+statically included as part of an application distributed to multiple users are
+not confidential secrets, as one user may inspect their copy and learn the
+shared secret. For this reason, authorization servers MUST NOT require
+client authentication of browser-based applications using a shared secret,
+as this serves no value beyond client identification which is already
+provided by the `client_id` request parameter.
+
+Authorization servers that still require a statically included shared
+secret for browser-based applications MUST treat the client as a public
+client (as defined in {{client-types}}), and not accept the secret as
+proof of the client's identity. Without additional measures, such clients
+are subject to client impersonation
+(see {{browser-based-application-impersonation}}).
+
+### Refresh Tokens for Browser-Based Applications
+
+For browser-based applications, the refresh token is a bearer token unless the
+app uses a mechanism such as DPoP {{RFC9449}}. As a result, the risk of a
+leaked refresh token is greater than that of a leaked access token, since
+an attacker may be able to continue using the stolen refresh token to
+obtain new access tokens without being detected by the authorization
+server.
+
+Refresh tokens issued to browser-based applications are subject to the
+requirements in {{refresh-token-endpoint-extension}}. In addition,
+authorization servers issuing refresh tokens to browser-based applications:
+
+* MUST either set a maximum lifetime on the refresh token, or expire the
+  refresh token if it has not been used within some amount of time
+
+* MUST NOT, when issuing a rotated refresh token, extend the lifetime of
+  the new refresh token beyond the lifetime of the initial refresh token,
+  if the initial refresh token had a pre-established expiration time
+
+Limiting the overall refresh token lifetime to the lifetime of the
+initial refresh token ensures a stolen refresh token cannot be used
+indefinitely. See {{Section 6.3.2.3 of RFC10017}} for a worked example.
+
+Authorization servers SHOULD link the lifetime of the refresh token to
+the user's authenticated session with the authorization server, so that
+when the user logs out, previously issued refresh tokens become invalid.
+Authorization servers MAY set different policies for refresh token
+issuance, lifetime, and expiration for browser-based applications compared to
+other public clients.
+
+### In-Browser Communication in Browser-Based Applications
+
+It is common for a browser-based application to execute the OAuth flow in a
+secondary window, such as a pop-up or an iframe, rather than redirecting
+the primary window. If the app and the authorization server are invoked
+in different frames, they use in-browser communication techniques such as
+the `postMessage` API {{WHATWG.WebMessaging}} instead of top-level
+redirections. To guarantee the confidentiality and authenticity of these
+messages, both the initiator origin and the receiver origin of a
+`postMessage` MUST be verified using the mechanisms provided by the
+`postMessage` API.
+
+See {{Section 4.17 of RFC9700}} for further details about the security of
+in-browser communication flows and the countermeasures that browser-based
+apps and authorization servers MUST apply to defend against these
+attacks.
+
+### Cross-Origin Requests in Browser-Based Applications
+
+A browser-based OAuth client uses browser APIs to send requests to the
+authorization server and the resource server. These requests are
+typically cross-origin requests, and are subject to the browser's
+restrictions on cross-origin communication. The authorization server and
+resource server MUST send the necessary CORS {{WHATWG.CORS}} headers to
+enable the app to make these requests, as described in
+{{token-endpoint}}.
+
+## Token Storage in Browser-Based Applications {#browser-based-apps-token-storage}
+
+A browser-based application that handles access tokens or refresh tokens directly
+is responsible for storing them. None of the storage mechanisms available
+in the browser prevent an attacker who is able to execute code in the
+app's origin from obtaining a new set of tokens in the same way the app
+does, so no storage mechanism can fully mitigate token exfiltration. The
+choice of mechanism does affect the attacker's ability to obtain existing
+tokens from storage. See {{Section 8 of RFC10017}} for a comparison of the
+available mechanisms.
+
+Storing tokens using the browser's JavaScript Cookie API is NOT
+RECOMMENDED. Because such a cookie is associated with the domain of the
+browser-based application, the browser will also send the token to the server
+hosting the app on subsequent requests, exposing the token beyond its
+intended recipient. This is different from the use of cookies by a BFF
+({{browser-based-apps-bff}}), where the cookie is inaccessible to
+JavaScript and is intended to be sent to the backend.
+
+When a Service Worker {{W3C.service-workers}} or Web Worker is used to
+isolate tokens from the app's execution context, it MUST NOT store those
+tokens in a persistent storage API that is shared with the main window.
+
+## Security Considerations in Browser-Based Applications
+
+### Sender-Constrained Tokens in Browser-Based Applications
+
+The use of sender-constrained tokens ({{sender-constrained-tokens}}), for
+example using DPoP {{RFC9449}}, enhances the security of both access
+tokens and refresh tokens issued to browser-based applications, as a stolen token
+is not usable without the corresponding private key. Note that this
+shifts the challenge of securely storing the token to securely storing
+the private key, and that it does not address an attacker's ability to
+obtain a new set of tokens by running a new flow. See
+{{Section 9.2 of RFC10017}} for further details.
+
+### Reducing the Authority of Tokens in Browser-Based Applications
+
+Because tokens in a browser-based application are more exposed than in other
+architectures, the privilege restrictions described in
+{{access-token-privilege-restriction}} are particularly important. Short
+access token lifetimes, minimal scopes, and restricting an access token to
+a single resource server all reduce the impact of a stolen token.
+
+### Isolating Browser-Based Applications Using Origins
+
+Many of the web's security mechanisms, including the browser's isolation
+of browsing contexts and the CORS restrictions described in
+{{token-endpoint}}, rely on origins, defined as the triple of scheme,
+hostname and port. Deploying more than one application in a single origin
+prevents an application from taking advantage of these restrictions, and
+makes security measures such as CORS harder to configure correctly. It is
+therefore a best practice to deploy no more than one application per
+origin.
+
+### Authorization Server Mix-Up in Browser-Based Applications
+
+Mix-up attacks are a particular threat to browser-based applications that support
+more than one authorization server. The countermeasures in {{mix-up}}
+apply.
 
 
 # Differences from OAuth 2.0 {#oauth-2-0-differences}
@@ -3700,7 +3939,7 @@ TODO: Bring in the normative text of the browser-based apps BCP when it is final
 This draft consolidates the functionality in OAuth 2.0 {{RFC6749}},
 OAuth 2.0 for Native Apps {{RFC8252}},
 Proof Key for Code Exchange {{RFC7636}},
-OAuth 2.0 for Browser-Based Apps {{RFC10017}},
+OAuth 2.0 for Browser-Based Applications {{RFC10017}},
 OAuth Security Best Current Practice {{RFC9700}},
 and Bearer Token Usage {{RFC6750}}.
 
@@ -3723,6 +3962,8 @@ The following is a non-normative list of changes from OAuth 2.0:
   as per {{Section 4.3.2 of RFC9700}}
 * Refresh tokens for public clients must either be sender-constrained or one-time-use
   as per {{Section 4.14.2 of RFC9700}}
+* Refresh tokens issued to browser-based applications have additional lifetime constraints
+  as per {{Section 6.3.2.3 of RFC10017}}
 * The token endpoint request containing an authorization code no longer contains
   the `redirect_uri` parameter
 * Authorization servers must support client credentials in the request body
@@ -4007,7 +4248,7 @@ The following is a list of extensions that are well established at the time of p
 
 # Acknowledgements
 
-This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Apps. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
+This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Applications. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
 
 The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Andrii Deinega, Bob Hamburg, Brian Campbell, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan, Goutam Adwant, Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Michael Jones, Michael Peck, Roberto Polli, Tim Würtele, and Vittorio Bertocci.
 
@@ -4016,6 +4257,20 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 # Document History
 {: removeInRFC="true"}
+
+-17
+
+* Removed duplicate "Access Token Privilege Restriction" section
+* Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology
+* Clarified that claimed `https` scheme redirects do not authenticate the client
+* Restored loopback interception note from RFC 8252
+* Updated attribution of the token threat list to NIST SP 800-63-1
+* Clarified scope of grants and refresh token requests when the resource owner revokes scopes
+* Added note about refresh token rotation and lost responses
+* Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request
+* Filled in the Browser-Based Applications section with the normative requirements from RFC 10017
+* Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017
+* Editorial cleanups
 
 -16
 
