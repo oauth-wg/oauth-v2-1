@@ -3298,19 +3298,11 @@ of several types of mix-up attacks.
 ### Mix-Up Defense via Issuer Identification
 
 This defense requires that the client compare the issuer identifier value that
-the authorization server sends in the authorization response to the client. When receiving the authorization
+the authorization server sends in the authorization response to the client in the `iss`
+parameter as described in {{authorization-response}}. When receiving the authorization
 response, the client MUST compare the received issuer identifier to the stored
 issuer identifier. If there is a mismatch, the client MUST abort the
-interaction.
-
-There are different ways this issuer identifier can be transported to the client:
-
- * The issuer information is transported via the response parameter `iss`
-   (see {{authorization-response}}).
- * When OpenID Connect is used and an ID Token is returned in the authorization
-   response, the client can evaluate the `iss` claim in the ID Token.
-
-In both cases, the `iss` value MUST be evaluated according to {{RFC9207}}.
+interaction. The `iss` value MUST be evaluated according to {{RFC9207}}.
 
 While this defense may require using an additional parameter to transport the
 issuer information, it is a robust and relatively simple defense against mix-up.
