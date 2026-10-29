@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-27T00:19:02.640029+00:00",
+  "timestamp": "2026-10-29T00:15:17.623061+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -6113,6 +6113,22 @@
       "updatedAt": "2026-10-26T23:31:24Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 266,
+      "id": "I_kwDODkfq5s8AAAABatmNow",
+      "title": "Define invalid_client for Authorization Error Response",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/266",
+      "state": "OPEN",
+      "author": "ThisIsMissEm",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Currently the IANA registry contents has `invalid_client` as applicable to both token endpoint and authorization endpoint, and cites [RFC 6749](https://www.iana.org/go/rfc6749), however, that RFC does not define `invalid_client` for the Authorization Error Response, meaning the registry is currently incorrect.\n\nAdding `invalid_client` enables supporting CIMD where a client ID is valid, the redirect URI is valid but none of the `token_endpoint_auth_methods_supported` values are supported by the authorization server, currently we'd otherwise need to return `invalid_request`",
+      "createdAt": "2026-10-28T21:14:40Z",
+      "updatedAt": "2026-10-28T21:14:40Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -11942,24 +11958,54 @@
       "id": "PR_kwDODkfq5s8AAAABKHGRXQ",
       "title": "Editorial cleanup and reference updates",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/263",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jricher",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "* Improved grammar, punctuation, and terminology for consistency and alignment with the RFC Editor style guide\n* Described scope values and composite response types as sets instead of lists, since their values are unordered and not repeated\n* Replaced obsolete and superseded references\n* Clean up some syntax\n\nNo normative or substantive changes.\n",
       "createdAt": "2026-10-22T20:13:37Z",
-      "updatedAt": "2026-10-22T20:13:37Z",
+      "updatedAt": "2026-10-27T00:24:12Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
-      "baseRefOid": "d04b368313c8835a930a2e55a68ef547312b7b32",
+      "baseRefOid": "5da68740e70ccd05a7d1b5f6d7f6eb51bac6f2d7",
       "headRepository": "jricher/oauth-v2-1",
       "headRefName": "editorial-grammar",
-      "headRefOid": "370e744feb7ce0950a6099d5fc900e84a1e427f9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "8721cabf8569cdab15596e5e90fbc06b9c75f2fd",
+      "closedAt": "2026-10-27T00:24:12Z",
+      "mergedAt": "2026-10-27T00:24:12Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "4c64b55a46aef12c2d05a012d367d8f0b82d260f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 267,
+      "id": "PR_kwDODkfq5s8AAAABLZCzmQ",
+      "title": "Refine mix-up defense via issuer identification section",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/267",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Refer to new required `iss` in the response",
+      "createdAt": "2026-10-28T23:36:49Z",
+      "updatedAt": "2026-10-28T23:37:42Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "4c64b55a46aef12c2d05a012d367d8f0b82d260f",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "aaronpk-patch-1",
+      "headRefOid": "8ca80a82f8790dcdd4f32596fe02162b5b0f1643",
+      "closedAt": "2026-10-28T23:37:35Z",
+      "mergedAt": "2026-10-28T23:37:35Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "a0b26eec27cbda5a8acc7e76d108505863e0572d"
+      },
       "comments": [],
       "reviews": []
     }
