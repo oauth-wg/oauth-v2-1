@@ -770,7 +770,7 @@ access tokens, as tokens in a structured format, such as those defined
 by {{RFC9068}}, routinely exceed one kilobyte.
 
 
-## Compatibility with OAuth 2.0
+## Compatibility with OAuth 2.0 {#compatibility-with-oauth-2-0}
 
 OAuth 2.1 is compatible with OAuth 2.0 with the extensions and restrictions
 from known best current practices applied. Specifically, features not specified
@@ -779,6 +779,14 @@ some features available in OAuth 2.0, such as the Implicit or Resource Owner Pas
 grant types, are not specified in OAuth 2.1. Furthermore, some behaviors
 allowed in OAuth 2.0 are restricted in OAuth 2.1, such as the strict string
 matching of redirect URIs required by OAuth 2.1.
+
+An authorization server can support both OAuth 2.0 and OAuth 2.1 clients.
+Which rules apply to a given client is determined by the authorization
+server's configuration for that client, for example as part of client
+registration ({{client-registration}}). This allows an authorization server
+to move existing clients to OAuth 2.1 one at a time. This specification does
+not define a way for a client or authorization server to signal which
+version it implements.
 
 See {{oauth-2-0-differences}} for more details on the differences from OAuth 2.0.
 
@@ -3982,7 +3990,7 @@ In OAuth 2.0, the request to the token endpoint in the authorization code flow (
 
 In OAuth 2.1, authorization code injection is prevented by the `code_challenge` and `code_verifier` parameters, so including the `redirect_uri` parameter in the token request serves no purpose. As such, it has been removed.
 
-To provide backward compatibility, an authorization server that supports both OAuth 2.0 and OAuth 2.1 clients MUST allow clients to send the `redirect_uri` parameter in the token request ({{code-token-extension}}), and MUST enforce the parameter as described in {{RFC6749}}. The authorization server can use the `client_id` in the request to determine whether to enforce this behavior for the specific client that it knows will be using the older OAuth 2.0 behavior.
+To provide backward compatibility, an authorization server that supports both OAuth 2.0 and OAuth 2.1 clients MUST allow clients to send the `redirect_uri` parameter in the token request ({{code-token-extension}}), and MUST enforce the parameter as described in {{RFC6749}}. The authorization server can use the `client_id` in the request to determine whether to enforce this behavior for the specific client that it knows will be using the older OAuth 2.0 behavior (see {{compatibility-with-oauth-2-0}}).
 
 A client following only the OAuth 2.1 recommendations will not send the `redirect_uri` in the token request, and therefore will not be compatible with an authorization server that expects the parameter in the token request.
 
@@ -4252,6 +4260,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 -17
 
+* Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client
 * Removed duplicate "Access Token Privilege Restriction" section
 * Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology
 * Clarified that claimed `https` scheme redirects do not authenticate the client
