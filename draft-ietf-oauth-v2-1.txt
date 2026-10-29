@@ -5,10 +5,10 @@
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
 Intended status: Standards Track                         A. Parecki, Ed.
-Expires: 1 May 2027                                                 Okta
+Expires: 2 May 2027                                                 Okta
                                                           T. Lodderstedt
                                                                   SPRIND
-                                                         28 October 2026
+                                                         29 October 2026
 
 
                  The OAuth 2.1 Authorization Framework
@@ -50,7 +50,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 May 2027.
+   This Internet-Draft will expire on 2 May 2027.
 
 Copyright Notice
 
@@ -846,6 +846,14 @@ Table of Contents
    Furthermore, some behaviors allowed in OAuth 2.0 are restricted in
    OAuth 2.1, such as the strict string matching of redirect URIs
    required by OAuth 2.1.
+
+   An authorization server can support both OAuth 2.0 and OAuth 2.1
+   clients.  Which rules apply to a given client is determined by the
+   authorization server's configuration for that client, for example as
+   part of client registration (Section 2).  This allows an
+   authorization server to move existing clients to OAuth 2.1 one at a
+   time.  This specification does not define a way for a client or
+   authorization server to signal which version it implements.
 
    See Section 10 for more details on the differences from OAuth 2.0.
 
@@ -4116,7 +4124,8 @@ Table of Contents
    and MUST enforce the parameter as described in [RFC6749].  The
    authorization server can use the client_id in the request to
    determine whether to enforce this behavior for the specific client
-   that it knows will be using the older OAuth 2.0 behavior.
+   that it knows will be using the older OAuth 2.0 behavior (see
+   Section 1.8).
 
    A client following only the OAuth 2.1 recommendations will not send
    the redirect_uri in the token request, and therefore will not be
@@ -4760,6 +4769,10 @@ Appendix F.  Document History
    This section is to be removed before publishing as an RFC.
 
    -17
+
+   *  Clarified that an authorization server supporting both OAuth 2.0
+      and OAuth 2.1 clients determines which rules apply to each client
+      through its configuration for that client
 
    *  Removed duplicate "Access Token Privilege Restriction" section
 
