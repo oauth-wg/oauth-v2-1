@@ -947,8 +947,9 @@ authorization server during the client registration process.
 The redirect URI MUST be an absolute URI as defined by
 {{Section 4.3 of RFC3986}}.  The redirect URI MAY include a
 query string component ({{query-string-serialization}}), which MUST be retained when adding
-additional query parameters. The redirect URI MUST NOT include a
-fragment component.
+additional query parameters. The query string component MUST NOT include
+any parameters defined for use in the authorization response.
+The redirect URI MUST NOT include a fragment component.
 
 ### Registration Requirements {#registration-requirements}
 
@@ -1221,10 +1222,15 @@ or in the authorization server's metadata document {{RFC8414}}.
 The authorization endpoint URL MUST NOT include a fragment component,
 and MAY include a query string component ({{query-string-serialization}}),
 which MUST be retained when adding additional query parameters.
+The query string component MUST NOT include any parameters defined
+for use in the authorization request.
 
 The authorization server MUST support the use of the HTTP `GET`
 method ({{Section 9.3.1 of RFC9110}}) for the authorization endpoint and MAY support
 the `POST` method ({{Section 9.3.3 of RFC9110}}) as well.
+When using `GET`, the request parameters are serialized using
+{{query-string-serialization}}. When using `POST`, the request parameters
+are serialized using {{form-serialization}}.
 
 The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.
 
@@ -1468,6 +1474,9 @@ parameters with the response:
            respond with an HTTP 401 (Unauthorized) status code and
            include the `WWW-Authenticate` response header field
            matching the authentication scheme used by the client.
+           Client authentication methods that do not use an HTTP
+           authentication scheme have no corresponding
+           `WWW-Authenticate` challenge.
 
      "invalid_grant":
      :     The provided authorization grant (e.g., authorization
@@ -2349,7 +2358,7 @@ response to other conditions as well.  The `WWW-Authenticate` header
 field uses the framework defined in {{Section 11 of RFC9110}}.
 
 All challenges for this token type MUST use the auth-scheme
-value `Bearer`.  This scheme MUST be followed by one or more
+value `Bearer`.  This scheme MAY be followed by one or more
 auth-param values.  The auth-param attributes used or defined by this
 specification for this token type are as follows.  Other auth-param
 attributes MAY be used as well.
@@ -3969,6 +3978,12 @@ The following is a non-normative list of changes from OAuth 2.0:
 * Authorization servers must support client credentials in the request body
 * The PKCE `plain` method is removed
 
+An OAuth 2.0 client that does not use PKCE, relies on redirect URI pattern
+matching, or uses the Implicit or Resource Owner Password Credentials grants
+will not interoperate with an authorization server that enforces the
+requirements of this specification for that client
+(see {{compatibility-with-oauth-2-0}}).
+
 ## Removal of the OAuth 2.0 Implicit Grant
 
 The OAuth 2.0 Implicit grant is omitted from OAuth 2.1 as it was deprecated in
@@ -4271,6 +4286,11 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request
 * Filled in the Browser-Based Applications section with the normative requirements from RFC 10017
 * Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017
+* Made auth-param values optional in the `WWW-Authenticate` Bearer challenge
+* Clarified `WWW-Authenticate` behavior for client authentication methods that do not use an HTTP authentication scheme
+* Clarified that the query component of the redirect URI and authorization endpoint must not include parameters defined for the request or response
+* Clarified serialization of authorization request parameters when using `GET` or `POST`
+* Added note about interoperability with OAuth 2.0 clients
 * Editorial cleanups
 
 -16
