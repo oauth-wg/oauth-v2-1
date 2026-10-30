@@ -2855,6 +2855,17 @@ Table of Contents
    utilize the parameters scope and authorization_details as specified
    in [RFC9396] to determine those resources and/or actions.
 
+   The privileges associated with an access token represent the
+   authorization granted to the client, and are not necessarily the only
+   factor in an access control decision.  A resource server may apply
+   additional authorization logic, such as evaluating the resource
+   owner's own permissions on a particular resource, and may deny a
+   request even when the access token carries the scopes required for
+   it.  Access tokens may also convey authorization information beyond
+   the scope of access delegated to the client, such as roles or
+   entitlements of the resource owner.  Such mechanisms are out of scope
+   for this specification.
+
 7.2.  Client Authentication
 
    Depending on the overall process of client registration and

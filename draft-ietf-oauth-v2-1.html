@@ -4742,6 +4742,16 @@ serve the respective request.  Clients and authorization servers MAY
 utilize the parameters <code>scope</code> and
 <code>authorization_details</code> as specified in <span>[<a href="#RFC9396" class="cite xref">RFC9396</a>]</span> to
 determine those resources and/or actions.<a href="#section-7.1.4-4" class="pilcrow">¶</a></p>
+<p id="section-7.1.4-5">The privileges associated with an access token represent the
+authorization granted to the client, and are not necessarily the only
+factor in an access control decision.  A resource server may apply
+additional authorization logic, such as evaluating the resource
+owner's own permissions on a particular resource, and may deny a
+request even when the access token carries the scopes required for it.
+Access tokens may also convey authorization information beyond the
+scope of access delegated to the client, such as roles or entitlements
+of the resource owner.  Such mechanisms are out of scope for this
+specification.<a href="#section-7.1.4-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
