@@ -1,4 +1,4 @@
----
+F---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-ietf-oauth-v2-1-latest
 v: 3
@@ -759,7 +759,7 @@ Implementations MUST NOT assume that a value they receive fits within
 a particular length.  The party that issues a value SHOULD document
 its length, and SHOULD take into account the limits of the components
 that will carry it.  In particular, values returned in a redirect,
-such as the authorization code, are carried in a URI query string, and
+such as the authorization code and state, are carried in a URI query string, and
 HTTP implementations commonly limit the length of the request line and
 of individual header fields ({{Section 3 of RFC9112}} and
 {{Section 5.4 of RFC9110}}).  Implementations SHOULD support parameter
