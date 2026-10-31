@@ -1428,7 +1428,8 @@ clients that are registered to receive them, only when the client requests
 a particular scope (such as the `offline_access` scope defined in
 {{OpenID.Connect}}), or depending on whether the client is confidential or
 public, and might tie the lifetime of the refresh token to the resource
-owner's session at the authorization server.  If the
+owner's session at the authorization server, as recommended for
+browser-based applications in {{browser-based-apps-refresh-tokens}}.  If the
 authorization server decides not to issue refresh tokens, the client
 MAY obtain new access tokens by starting the OAuth flow over, for example, by
 initiating a new authorization code request.  In such a case, the authorization
@@ -3892,7 +3893,7 @@ proof of the client's identity. Without additional measures, such clients
 are subject to client impersonation
 (see {{browser-based-application-impersonation}}).
 
-### Refresh Tokens for Browser-Based Applications
+### Refresh Tokens for Browser-Based Applications {#browser-based-apps-refresh-tokens}
 
 For browser-based applications, the refresh token is a bearer token unless the
 app uses a mechanism such as DPoP {{RFC9449}}. As a result, the risk of a
