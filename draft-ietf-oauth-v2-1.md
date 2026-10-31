@@ -171,8 +171,6 @@ informative:
     target: https://www.w3.org/TR/CSP2
     date: December 15, 2016
 
-  W3C.REC-html401-19991224:
-
 --- abstract
 
 The OAuth 2.1 authorization framework enables an
@@ -1638,17 +1636,17 @@ The flow illustrated in {{fig-authorization-code-flow}} includes the following s
 ### Authorization Request {#authorization-request}
 
 To begin the authorization request, the client builds the authorization
-request URI by adding parameters to the authorization server's
-authorization endpoint URI. The client will eventually redirect the user agent
-to this URI to initiate the request.
+request URL by adding parameters to the authorization server's
+authorization endpoint URL. The client will eventually redirect the user agent
+to this URL to initiate the request.
 
 Clients use a unique secret, called the "code verifier", per authorization request to protect against authorization code
 injection and CSRF attacks. The client first generates the code verifier, then derives the "code challenge" to include in the authorization request. The client
 uses the code verifier when exchanging the authorization code at the token endpoint to prove that the client using the
 authorization code is the same client that requested it.
 
-The client constructs the request URI by adding the following
-parameters to the query component of the authorization endpoint URI
+The client constructs the request URL by adding the following
+parameters to the query component of the authorization endpoint URL
 as described by {{query-string-serialization}}:
 
 "response_type":
@@ -1691,8 +1689,8 @@ MUST return an error response as described in {{authorization-code-error-respons
      state between the request and callback.  The authorization
      server includes this value when redirecting the user agent back
      to the client.  This value is carried in the query component of
-     the authorization request URI and again in the redirect back to
-     the client, so its length is bounded in practice by the URI and
+     the authorization request URL and again in the redirect back to
+     the client, so its length is bounded in practice by the URL and
      HTTP header field lengths accepted by the authorization server,
      the user agent, and the client; see {{value-sizes}}.
 
@@ -3528,7 +3526,7 @@ authorization response to the native app (defined in {{authorization-response-na
 ## Initiating the Authorization Request from a Native App {#authorization-request-native-app}
 
 Native apps needing user authorization create an authorization
-request URI with the authorization code grant type per {{authorization-code-grant}}
+request URL with the authorization code grant type per {{authorization-code-grant}}
 using a redirect URI capable of being received by the native app.
 
 The function of the redirect URI for a native app authorization
@@ -3540,8 +3538,8 @@ return the authorization response to the native app in different
 platforms are documented in {{authorization-response-native-app}}.  Any redirect URI that allows
 the app to receive the URI and inspect its parameters is viable.
 
-After constructing the authorization request URI, the app uses
-platform-specific APIs to open the URI in an external user agent.
+After constructing the authorization request URL, the app uses
+platform-specific APIs to open the URL in an external user agent.
 Typically, the external user agent used is the default browser, that
 is, the application configured for handling `http` and `https` scheme
 URIs on the system; however, different browser selection criteria and
@@ -4235,19 +4233,14 @@ The ABNF for `code_challenge` is as follows.
 
 # Use of application/x-www-form-urlencoded Media Type {#application-x-www-form-urlencoded}
 
-At the time of publication of {{RFC6749}}, the
-`application/x-www-form-urlencoded` media type was defined in
-Section 17.13.4 of {{W3C.REC-html401-19991224}} but not registered in
-the IANA "Media Types" registry
-(<http://www.iana.org/assignments/media-types>).  Furthermore, that
-definition is incomplete, as it does not consider non-ASCII
-characters.
+The `application/x-www-form-urlencoded` media type is defined by the
+URL Living Standard {{WHATWG.URL}}, and is registered in the IANA
+"Media Types" registry with a reference to that definition.
 
-To address this shortcoming when generating content using this media
-type, names and values MUST be encoded using the UTF-8 character
-encoding scheme {{RFC3629}} first; the resulting octet sequence then
-needs to be further encoded using the escaping rules defined in
-{{W3C.REC-html401-19991224}}.
+When generating content using this media type, names and values MUST
+be encoded using the UTF-8 character encoding scheme {{RFC3629}}
+first; the resulting octet sequence is then percent-encoded as defined
+by the `application/x-www-form-urlencoded` serializer in {{WHATWG.URL}}.
 
 When parsing data from content using this media type, the names and
 values resulting from reversing the name/value encoding consequently
