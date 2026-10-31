@@ -1,4 +1,4 @@
-F---
+---
 title: The OAuth 2.1 Authorization Framework
 docname: draft-ietf-oauth-v2-1-latest
 v: 3
@@ -42,9 +42,9 @@ normative:
   RFC7595:
   RFC8252:
   RFC8259:
-  RFC9846:
-  RFC9110:
-  RFC9111:
+  TLS: RFC9846
+  HTTP: RFC9110
+  HTTP-CACHING: RFC9111
   RFC9207:
   RFC9700:
   BCP195:
@@ -77,9 +77,10 @@ normative:
     date: November 2008
 
 informative:
-  RFC6265:
+  COOKIES: RFC6265
   RFC6819:
   RFC7009:
+  RFC7034:
   RFC7519:
   RFC7591:
   RFC7592:
@@ -91,6 +92,7 @@ informative:
   RFC8707:
   RFC9068:
   RFC9112:
+    display: HTTP/1.1
   RFC9126:
   RFC9396:
   RFC9449:
@@ -270,7 +272,7 @@ the OAuth standard or security considerations, and may not have been considered
 by the resource owner. Implementers should carefully consult the documentation
 of the resource server before adopting this practice.
 
-This specification is designed for use with HTTP {{RFC9110}}.  The
+This specification is designed for use with HTTP {{HTTP}}.  The
 use of OAuth over any protocol other than HTTP is out of scope.
 
 Since the publication of the OAuth 2.0 Authorization Framework {{RFC6749}}
@@ -329,7 +331,7 @@ security considerations around prompting the end-user for consent.
 
 When the resource owner is the end-user, the user will interact with
 the client. When the client is a web-based application, the user will
-interact with the client through a user agent (as described in {{Section 3.5 of RFC9110}}).
+interact with the client through a user agent (as described in {{Section 3.5 of HTTP}}).
 When the client is a native application, the user will interact with
 the client directly through the operating system. See {{client-types}}
 for further details.
@@ -692,7 +694,7 @@ refer to {{Section 4.13 of RFC9700}} for further security advice.
 
 Implementations MUST use a mechanism to provide communication
 authentication, integrity, and confidentiality, such as
-Transport Layer Security (TLS) {{RFC9846}},
+Transport Layer Security (TLS) {{TLS}},
 to protect the exchange of cleartext credentials and tokens
 either in the content or in header fields
 from eavesdropping, which enables replay
@@ -702,9 +704,9 @@ All OAuth protocol URLs (URLs exposed by the AS, RS, and client) MUST use the `h
 except for loopback interface redirect URIs,
 which MAY use the `http` scheme.
 When using `https`, TLS certificates MUST be checked
-according to {{Section 4.3.4 of RFC9110}}.
+according to {{Section 4.3.4 of HTTP}}.
 At the time of this writing,
-TLS version 1.3 {{RFC9846}} is the most recent version.
+TLS version 1.3 {{TLS}} is the most recent version.
 
 Implementations MAY also support additional transport-layer security
 mechanisms that meet their security requirements.
@@ -720,9 +722,9 @@ for certificate validation and other security considerations.
 This specification makes extensive use of HTTP redirections, in which
 the client or the authorization server directs the resource owner's
 user agent to another destination.  While the examples in this
-specification show the use of the HTTP 302 status code, any other
+specification show the use of the 302 (Found) status code, any other
 method available via the user agent to accomplish this redirection,
-with the exception of HTTP 307, is allowed and is considered to be an
+with the exception of the 307 (Temporary Redirect) status code, is allowed and is considered to be an
 implementation detail. See {{redirect_307}} for details.
 
 
@@ -760,9 +762,9 @@ a particular length.  The party that issues a value SHOULD document
 its length, and SHOULD take into account the limits of the components
 that will carry it.  In particular, values returned in a redirect,
 such as the authorization code and state, are carried in a URI query string, and
-HTTP implementations commonly limit the length of the request line and
+HTTP implementations commonly limit the length of the request-line and
 of individual header fields ({{Section 3 of RFC9112}} and
-{{Section 5.4 of RFC9110}}).  Implementations SHOULD support parameter
+{{Section 5.4 of HTTP}}).  Implementations SHOULD support parameter
 values long enough that requests remain within the 8000-octet
 request-line length recommended by {{Section 3 of RFC9112}}.  Resource
 servers in particular should not impose small limits on the length of
@@ -805,9 +807,9 @@ defined in {{RFC4949}}.  These terms include, but are not limited to,
 "confidentiality", "credential", "encryption", "identity", "sign",
 "signature", "trust", "validate", and "verify".
 
-The term "content" is to be interpreted as described in {{Section 6.4 of RFC9110}}.
+The term "content" is to be interpreted as described in {{Section 6.4 of HTTP}}.
 
-The term "user agent" is to be interpreted as described in {{Section 3.5 of RFC9110}}.
+The term "user agent" is to be interpreted as described in {{Section 3.5 of HTTP}}.
 
 Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.
@@ -1038,7 +1040,7 @@ response is served directly as the result of the redirection request,
 any script included in the HTML document will execute with full
 access to the redirect URI and the artifacts (e.g., authorization code)
 it contains. Additionally, the request URL containing the authorization code
-may be sent in the HTTP Referer header field to any embedded images, stylesheets,
+may be sent in the Referer header field ({{Section 10.1.3 of HTTP}}) to any embedded images, stylesheets,
 and other elements loaded in the page.
 
 The client SHOULD NOT include any third-party scripts (e.g., third-party
@@ -1103,7 +1105,7 @@ See {{security-client-authentication}} for additional details.
 
 To support confidential clients in possession of a client secret,
 the authorization server MUST support the client including the
-client credentials in the request body content using the following
+client credentials in the request content using the following
 parameters:
 
 "client_id":
@@ -1114,26 +1116,29 @@ parameters:
 :    REQUIRED.  The client secret.
 
 The parameters can only be transmitted in the request content and MUST NOT
-be included in the request URI.
+be included in the target URI.
 
 This is also known as `client_secret_post` as defined in {{Section 2 of RFC7591}}.
 
 For example, a request to refresh an access token ({{refreshing-an-access-token}}) using
-the content parameters (with extra line breaks for display purposes
-only):
+the content parameters:
 
-    POST /token HTTP/1.1
-    Host: server.example.com
-    Content-Type: application/x-www-form-urlencoded
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
 
-    grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
-    &client_id=s6BhdRkqt3&client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
+POST /token HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA\
+&client_id=s6BhdRkqt3&client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
+~~~
 
 The authorization server MAY support the HTTP Basic
 authentication scheme for authenticating clients that were issued a
 client secret.
 
-When using the HTTP Basic authentication scheme as defined in {{Section 11 of RFC9110}}
+When using the HTTP Basic authentication scheme as defined in {{Section 11 of HTTP}}
 to authenticate with the authorization server, the client identifier is encoded using the
 `application/x-www-form-urlencoded` encoding algorithm per
 {{application-x-www-form-urlencoded}}, and the encoded value is used as the username; the client
@@ -1142,9 +1147,17 @@ password.
 
 This is also known as `client_secret_basic` as defined in {{Section 2 of RFC7591}}.
 
-For example (with extra line breaks for display purposes only):
+For example, the same request to refresh an access token using the HTTP
+Basic authentication scheme:
 
-    Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
+~~~ http-message
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
+~~~
 
 Note: This method of initially form-encoding the client identifier and secret,
 and then using the encoded values as the HTTP Basic authentication username
@@ -1153,7 +1166,7 @@ implementations have missed the encoding step, or decided to only encode
 certain characters, or ignored the encoding requirement when validating the
 credentials, leading to clients having to special-case how they present the
 credentials to individual authorization servers. Including the credentials
-in the request body content avoids the encoding issues and leads to more
+in the request content avoids the encoding issues and leads to more
 interoperable implementations.
 
 Since the client secret authentication method involves a password, the
@@ -1225,11 +1238,11 @@ which MUST be retained when adding additional query parameters.
 The query string component MUST NOT include any parameters defined
 for use in the authorization request.
 
-The authorization server MUST support the use of the HTTP `GET`
-method ({{Section 9.3.1 of RFC9110}}) for the authorization endpoint and MAY support
-the `POST` method ({{Section 9.3.3 of RFC9110}}) as well.
-When using `GET`, the request parameters are serialized using
-{{query-string-serialization}}. When using `POST`, the request parameters
+The authorization server MUST support the use of the HTTP GET
+method ({{Section 9.3.1 of HTTP}}) for the authorization endpoint and MAY support
+the POST method ({{Section 9.3.3 of HTTP}}) as well.
+When using GET, the request parameters are serialized using
+{{query-string-serialization}}. When using POST, the request parameters
 are serialized using {{form-serialization}}.
 
 The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.
@@ -1271,7 +1284,7 @@ document {{RFC8414}} and fetched programmatically at runtime.
 The token endpoint URL MUST NOT include a fragment component,
 and MAY include a query string component ({{query-string-serialization}}).
 
-The client MUST use the HTTP `POST` method when making requests to the token endpoint.
+The client MUST use the HTTP POST method when making requests to the token endpoint.
 
 The authorization server MUST ignore unrecognized request parameters sent to the token endpoint.
 
@@ -1285,13 +1298,13 @@ parameter.
 Authorization servers that support browser-based applications
 (for example, applications running exclusively in client-side JavaScript without
 access to a supporting backend server) MUST ensure the token endpoint
-supports the necessary CORS {{WHATWG.CORS}} headers to allow the responses
+supports the necessary CORS {{WHATWG.CORS}} header fields to allow the responses
 to be visible to the application.
 If the authorization server provides additional endpoints to the application, such
 as metadata URLs, dynamic client registration, revocation, introspection, discovery, or
 user info endpoints, these endpoints may also be accessed by the browser-based
-application and MUST also send the CORS headers to allow access.
-Note that CORS headers are not needed in the case where the browser-based
+application and MUST also send the CORS header fields to allow access.
+Note that CORS header fields are not needed in the case where the browser-based
 application shares an origin with the authorization server.
 See {{browser-based-apps}} and {{RFC10017}} for further details.
 
@@ -1340,18 +1353,22 @@ relies on the parameter is used, or the `grant_type` requires identification of 
 Confidential clients MUST authenticate with the authorization
 server as described in {{token-endpoint-client-authentication}}.
 
-For example, the client makes the following HTTPS request
-(with extra line breaks for display purposes only):
+For example, the client makes the following HTTPS request:
 
-    POST /token HTTP/1.1
-    Host: server.example.com
-    Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-    Content-Type: application/x-www-form-urlencoded
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
 
-    grant_type=authorization_code
-    &code=SplxlOBeZQQYbYS6WxSbIA
-    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
-    &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code\
+&code=SplxlOBeZQQYbYS6WxSbIA\
+&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb\
+&code_verifier=\
+3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
+~~~
 
 The authorization server MUST:
 
@@ -1376,7 +1393,7 @@ an error response as described in {{token-error-response}}.
 The authorization server issues an access token and, optionally, a refresh
 token by creating an HTTP response according to {{json-serialization}},
 using the `application/json` media type as defined by {{RFC8259}},
-with the following parameters and an HTTP 200 (OK) status code:
+with the following parameters and a 200 (OK) status code:
 
 "access_token":
 :    REQUIRED.  The access token issued by the authorization server.
@@ -1422,24 +1439,26 @@ reduce the impact of refresh token leakage.
 The parameters are serialized into a JavaScript Object Notation (JSON)
 structure as described in {{json-serialization}}.
 
-The authorization server MUST include the HTTP `Cache-Control`
-response header field (see {{Section 5.2 of RFC9111}}) with a value of `no-store` in any
+The authorization server MUST include the Cache-Control
+response header field ({{Section 5.2 of HTTP-CACHING}}) with a value of `no-store` in any
 response containing tokens, credentials, or other sensitive
 information.
 
 For example:
 
-    HTTP/1.1 200 OK
-    Content-Type: application/json
-    Cache-Control: no-store
+~~~ http-message
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-store
 
-    {
-      "access_token": "2YotnFZFEjr1zCsicMWpAA",
-      "token_type": "Bearer",
-      "expires_in": 3600,
-      "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
-      "example_parameter": "example_value"
-    }
+{
+  "access_token": "2YotnFZFEjr1zCsicMWpAA",
+  "token_type": "Bearer",
+  "expires_in": 3600,
+  "refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA",
+  "example_parameter": "example_value"
+}
+~~~
 
 The client MUST ignore unrecognized value names in the response.  The
 length of tokens and other values received from the authorization
@@ -1447,7 +1466,7 @@ server is left undefined, as described in {{value-sizes}}.
 
 ### Token Endpoint Error Response {#token-error-response}
 
-The authorization server responds with an HTTP 400 (Bad Request)
+The authorization server responds with a 400 (Bad Request)
 status code (unless specified otherwise) and includes the following
 parameters with the response:
 
@@ -1467,16 +1486,16 @@ parameters with the response:
      :     Client authentication failed (e.g., unknown client, no
            client authentication included, or unsupported
            authentication method).  The authorization server MAY
-           return an HTTP 401 (Unauthorized) status code to indicate
+           return a 401 (Unauthorized) status code to indicate
            which HTTP authentication schemes are supported.  If the
-           client attempted to authenticate via the `Authorization`
-           request header field, the authorization server MUST
-           respond with an HTTP 401 (Unauthorized) status code and
-           include the `WWW-Authenticate` response header field
-           matching the authentication scheme used by the client.
+           client attempted to authenticate via the Authorization
+           request header field ({{Section 11.6.2 of HTTP}}), the authorization server MUST
+           respond with a 401 (Unauthorized) status code and
+           include the WWW-Authenticate response header field
+           ({{Section 11.6.1 of HTTP}}) matching the authentication scheme used by the client.
            Client authentication methods that do not use an HTTP
-           authentication scheme have no corresponding
-           `WWW-Authenticate` challenge.
+           authentication scheme have no corresponding challenge
+           in the WWW-Authenticate header field.
 
      "invalid_grant":
      :     The provided authorization grant (e.g., authorization
@@ -1520,13 +1539,15 @@ using the `application/json` media type as defined in {{json-serialization}}.
 
 For example:
 
-    HTTP/1.1 400 Bad Request
-    Content-Type: application/json
-    Cache-Control: no-store
+~~~ http-message
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+Cache-Control: no-store
 
-    {
-     "error": "invalid_request"
-    }
+{
+  "error": "invalid_request"
+}
+~~~
 
 # Grant Types {#obtaining-authorization}
 
@@ -1738,14 +1759,17 @@ The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.
 
 For example, the client directs the user agent to make the following
-HTTPS request (with extra line breaks for display purposes
-only):
+HTTPS request:
 
-    GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
-        &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
-        &code_challenge=6fdkQaPm51l13DSukcAH3Mdx7_ntecHYd1vi3n0hMZY
-        &code_challenge_method=S256 HTTP/1.1
-    Host: server.example.com
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
+
+GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz\
+    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb\
+    &code_challenge=6fdkQaPm51l13DSukcAH3Mdx7_ntecHYd1vi3n0hMZY\
+    &code_challenge_method=S256 HTTP/1.1
+Host: server.example.com
+~~~
 
 The authorization server validates the request to ensure that all
 required parameters are present and valid.
@@ -1800,9 +1824,13 @@ redirect URI using the query string serialization described by
 For example, the authorization server redirects the user agent by
 sending the following HTTP response:
 
-    HTTP/1.1 302 Found
-    Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA
-              &state=xyz&iss=https%3A%2F%2Fauthorization-server.example.com
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
+
+HTTP/1.1 302 Found
+Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA\
+  &state=xyz&iss=https%3A%2F%2Fauthorization-server.example.com
+~~~
 
 The client MUST ignore unrecognized response parameters.  The
 length of the authorization code string is left undefined by this
@@ -1832,8 +1860,8 @@ the authorization server MUST NOT redirect the user agent to the
 invalid redirect URI and SHOULD inform the resource owner of the
 error, for example, by displaying a message to the user in their browser.
 When returning an error response directly to the user agent, the
-authorization server SHOULD use the HTTP 400 (Bad Request) status code.
-The HTTP 401 (Unauthorized) status code used for client authentication
+authorization server SHOULD use the 400 (Bad Request) status code.
+The 401 (Unauthorized) status code used for client authentication
 errors at the token endpoint does not apply to authorization endpoint
 request errors.
 
@@ -1888,15 +1916,15 @@ by {{query-string-serialization}}:
      "server_error":
      :     The authorization server encountered an unexpected
            condition that prevented it from fulfilling the request.
-           (This error code is needed because a 500 Internal Server
-           Error HTTP status code cannot be returned to the client
+           (This error code is needed because a 500 (Internal Server
+           Error) status code cannot be returned to the client
            via an HTTP redirect.)
 
      "temporarily_unavailable":
      :     The authorization server is currently unable to handle
            the request due to a temporary overloading or maintenance
            of the server.  (This error code is needed because a 503
-           Service Unavailable HTTP status code cannot be returned
+           (Service Unavailable) status code cannot be returned
            to the client via an HTTP redirect.)
 
      Values for the `error` parameter MUST NOT include characters
@@ -1930,9 +1958,13 @@ by {{query-string-serialization}}:
 For example, the authorization server indicates that the request was denied
 by redirecting the user agent with the following HTTP response:
 
-    HTTP/1.1 302 Found
-    Location: https://client.example.com/cb?error=access_denied
-              &state=xyz&iss=https%3A%2F%2Fauthorization-server.example.com
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
+
+HTTP/1.1 302 Found
+Location: https://client.example.com/cb?error=access_denied\
+  &state=xyz&iss=https%3A%2F%2Fauthorization-server.example.com
+~~~
 
 ### Token Endpoint Extension {#code-token-extension}
 
@@ -1961,17 +1993,21 @@ revoke (when possible) all access tokens and refresh tokens
 previously issued based on that authorization code.
 See {{authorization-code-reuse}} for further details.
 
-For example, the client makes the following HTTPS request
-(with extra line breaks for display purposes only):
+For example, the client makes the following HTTPS request:
 
-    POST /token HTTP/1.1
-    Host: server.example.com
-    Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-    Content-Type: application/x-www-form-urlencoded
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
 
-    grant_type=authorization_code
-    &code=SplxlOBeZQQYbYS6WxSbIA
-    &code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code\
+&code=SplxlOBeZQQYbYS6WxSbIA\
+&code_verifier=\
+3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
+~~~
 
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
@@ -2037,15 +2073,16 @@ If this value is set, the following additional token request parameters beyond {
      {{access-token-scope}}.
 
 For example, the client makes the following HTTP request using
-transport-layer security (with extra line breaks for display purposes
-only):
+transport-layer security:
 
-    POST /token HTTP/1.1
-    Host: server.example.com
-    Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-    Content-Type: application/x-www-form-urlencoded
+~~~ http-message
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
 
-    grant_type=client_credentials
+grant_type=client_credentials
+~~~
 
 The authorization server MUST authenticate the client.
 
@@ -2097,15 +2134,16 @@ MUST authenticate with the authorization server as described in
 {{token-endpoint-client-authentication}}.
 
 For example, the client makes the following HTTP request using
-transport-layer security (with extra line breaks for display purposes
-only):
+transport-layer security:
 
-    POST /token HTTP/1.1
-    Host: server.example.com
-    Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-    Content-Type: application/x-www-form-urlencoded
+~~~ http-message
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
 
-    grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
+grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
+~~~
 
 In addition to the processing rules in {{token-request}}, the authorization server MUST:
 
@@ -2195,16 +2233,19 @@ adding any additional parameters necessary.
 
 For example, to request an access token using the Device Authorization Grant
 as defined by {{RFC8628}} after the user has authorized the client on a separate device,
-the client makes the following HTTPS request
-(with extra line breaks for display purposes only):
+the client makes the following HTTPS request:
 
-      POST /token HTTP/1.1
-      Host: server.example.com
-      Content-Type: application/x-www-form-urlencoded
+~~~ http-message
+# NOTE: '\' line wrapping per RFC 8792
 
-      grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code
-      &device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS
-      &client_id=C409020731
+POST /token HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code\
+&device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS\
+&client_id=C409020731
+~~~
 
 If the access token request is valid and authorized, the
 authorization server issues an access token and, optionally, a refresh
@@ -2240,22 +2281,24 @@ and resource servers MUST ignore access tokens in a URI query parameter.
 
 ### Authorization Request Header Field
 
-When sending the access token in the `Authorization` request header
-field defined in {{Section 11.6.2 of RFC9110}}, the client uses the `Bearer`
+When sending the access token in the Authorization request header
+field defined in {{Section 11.6.2 of HTTP}}, the client uses the `Bearer`
 scheme to transmit the access token.
 
 For example:
 
-     GET /resource HTTP/1.1
-     Host: server.example.com
-     Authorization: Bearer mF_9.B5f-4.1JqM
+~~~ http-message
+GET /resource HTTP/1.1
+Host: server.example.com
+Authorization: Bearer mF_9.B5f-4.1JqM
+~~~
 
-The syntax of the `Authorization` header field for this scheme
+The syntax of the Authorization header field for this scheme
 follows the usage of the Basic scheme defined in {{Section 2 of !RFC7617}}.
 As with Basic, the credentials use the `token68` syntax
-({{Section 11.2 of RFC9110}}) rather than the auth-param syntax, in order
+({{Section 11.2 of HTTP}}) rather than the auth-param syntax, in order
 to reflect existing deployments; this syntax is compatible with the
-general authentication framework in {{Section 11 of RFC9110}}.
+general authentication framework in {{Section 11 of HTTP}}.
 The syntax for Bearer credentials is as follows:
 
     token68    = 1*( ALPHA / DIGIT /
@@ -2263,12 +2306,12 @@ The syntax for Bearer credentials is as follows:
     credentials = "bearer" 1*SP token68
 
 Clients SHOULD make authenticated requests with a bearer token using
-the `Authorization` request header field with the `Bearer` HTTP
+the Authorization request header field with the `Bearer` HTTP
 authorization scheme.  Resource servers MUST support this method.
 
-As described in {{Section 11.1 of RFC9110}}, the string `bearer`
+As described in {{Section 11.1 of HTTP}}, the string `bearer`
 is case insensitive. This means all of the following are valid uses
-of the `Authorization` header field:
+of the Authorization header field:
 
 * `Authorization: Bearer mF_9.B5f-4.1JqM`
 * `Authorization: bearer mF_9.B5f-4.1JqM`
@@ -2283,8 +2326,8 @@ client adds the access token to the request content using the
 `access_token` parameter.  The client MUST NOT use this method unless
 all of the following conditions are met:
 
-* The HTTP request includes the `Content-Type` header
-  field set to `application/x-www-form-urlencoded`.
+* The HTTP request includes the Content-Type header
+  field ({{Section 8.3 of HTTP}}) set to `application/x-www-form-urlencoded`.
 
 * The content follows the encoding requirements of the
   `application/x-www-form-urlencoded` media type as defined by
@@ -2296,7 +2339,7 @@ all of the following conditions are met:
   of ASCII {{USASCII}} characters.
 
 * The HTTP request method is one for which the content has
-  defined semantics.  In particular, this means that the `GET`
+  defined semantics.  In particular, this means that the GET
   method MUST NOT be used.
 
 The content MAY include other request-specific parameters, in
@@ -2307,15 +2350,17 @@ code 38).
 For example, the client makes the following HTTP request using
 transport-layer security:
 
-    POST /resource HTTP/1.1
-    Host: server.example.com
-    Content-Type: application/x-www-form-urlencoded
+~~~ http-message
+POST /resource HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
 
-    access_token=mF_9.B5f-4.1JqM
+access_token=mF_9.B5f-4.1JqM
+~~~
 
 The `application/x-www-form-urlencoded` method SHOULD NOT be used
 except in application contexts where participating clients do not
-have access to the `Authorization` request header field.  Resource
+have access to the Authorization request header field.  Resource
 servers MAY support this method.
 
 
@@ -2352,10 +2397,10 @@ description of bearer tokens in {{bearer-token-error-codes}}.
 
 If the protected resource request does not include authentication
 credentials or does not contain an access token that enables access
-to the protected resource, the resource server MUST include the HTTP
-`WWW-Authenticate` response header field; it MAY include it in
-response to other conditions as well.  The `WWW-Authenticate` header
-field uses the framework defined in {{Section 11 of RFC9110}}.
+to the protected resource, the resource server MUST include the
+WWW-Authenticate response header field; it MAY include it in
+response to other conditions as well.  The WWW-Authenticate header
+field uses the framework defined in {{Section 11 of HTTP}}.
 
 All challenges for this token type MUST use the auth-scheme
 value `Bearer`.  This scheme MAY be followed by one or more
@@ -2365,7 +2410,7 @@ attributes MAY be used as well.
 
 "realm":
 : A `realm` attribute MAY be included to indicate the scope of
-  protection in the manner described in {{Section 11.5 of RFC9110}}.  The
+  protection in the manner described in {{Section 11.5 of HTTP}}.  The
   `realm` attribute MUST NOT appear more than once.
 
 "scope":
@@ -2431,19 +2476,19 @@ includes one of the following error codes in the response:
      unsupported parameter or parameter value, repeats the same
      parameter, uses more than one method for including an access
      token, or is otherwise malformed.  The resource server SHOULD
-     respond with the HTTP 400 (Bad Request) status code.
+     respond with the 400 (Bad Request) status code.
 
 "invalid_token":
 :    The access token provided is expired, revoked, malformed, or
      invalid for other reasons.  The resource server SHOULD respond with
-     the HTTP 401 (Unauthorized) status code.  The client MAY
+     the 401 (Unauthorized) status code.  The client MAY
      request a new access token and retry the protected resource
      request.
 
 "insufficient_scope":
 :    The request requires higher privileges (scopes) than provided by the
      scopes granted to the client and represented by the access token.
-     The resource server SHOULD respond with the HTTP
+     The resource server SHOULD respond with the
      403 (Forbidden) status code and MAY include the `scope`
      attribute with the scope necessary to access the protected
      resource.
@@ -2458,16 +2503,20 @@ include an error code or other error information.
 
 For example:
 
-    HTTP/1.1 401 Unauthorized
-    WWW-Authenticate: Bearer realm="example"
+~~~ http-message
+HTTP/1.1 401 Unauthorized
+WWW-Authenticate: Bearer realm="example"
+~~~
 
 And in response to a protected resource request with an
 authentication attempt using an expired access token:
 
-    HTTP/1.1 401 Unauthorized
-    WWW-Authenticate: Bearer realm="example",
-                      error="invalid_token",
-                      error_description="The access token expired"
+~~~ http-message
+HTTP/1.1 401 Unauthorized
+WWW-Authenticate: Bearer realm="example",
+                  error="invalid_token",
+                  error_description="The access token expired"
+~~~
 
 
 # Extensibility
@@ -2475,18 +2524,18 @@ authentication attempt using an expired access token:
 ## Defining Access Token Types {#defining-access-token-types}
 
 Access token types can be defined in one of two ways: by registering them in
-the Access Token Types registry (following the procedures in
+the "OAuth Access Token Types" registry (following the procedures in
 {{Section 11.1 of RFC6749}}) or by using a unique absolute URI as the name.
 
 ### Registered Access Token Types
 
-{{RFC6750}} establishes a common registry in {{Section 11.4 of RFC6749}}
-for error values to be shared among OAuth token authentication schemes.
+{{RFC6750}} establishes a common registry, the "OAuth Extensions Error
+Registry" ({{Section 11.4 of RFC6749}}), for error values to be shared among OAuth token authentication schemes.
 
 New authentication schemes designed primarily for OAuth token
 authentication SHOULD define a mechanism for providing an error
 status code to the client, in which the error values allowed are
-registered in the error registry established by this specification.
+registered in the "OAuth Extensions Error Registry".
 
 Such schemes MAY limit the set of valid error codes to a subset of
 the registered values.  If the error code is returned using a named
@@ -2504,7 +2553,7 @@ specification.
 Type names MUST conform to the
 type-name ABNF.  If the type definition includes a new HTTP
 authentication scheme, the type name SHOULD be identical to the HTTP
-authentication scheme name (as defined in {{Section 11.1 of RFC9110}}).  The token type
+authentication scheme name (as defined in {{Section 11.1 of HTTP}}).  The token type
 `example` is reserved for use in examples.
 
     type-name  = 1*name-char
@@ -2523,7 +2572,7 @@ All other types MUST be registered.
 
 New request or response parameters for use with the authorization
 endpoint or the token endpoint are defined and registered in the
-OAuth Parameters registry following the procedure in {{Section 11.2 of RFC6749}}.
+"OAuth Parameters" registry following the procedure in {{Section 11.2 of RFC6749}}.
 
 Parameter names MUST conform to the param-name ABNF, and parameter
 value syntax MUST be well-defined (e.g., using ABNF or a reference
@@ -2544,15 +2593,15 @@ other registered values (e.g., begin with `companyname_`).
 New authorization grant types can be defined by assigning them a
 unique absolute URI for use with the `grant_type` parameter.  If the
 extension grant type requires additional token endpoint parameters,
-they MUST be registered in the OAuth Parameters registry as described
+they MUST be registered in the "OAuth Parameters" registry as described
 by {{Section 11.2 of RFC6749}}.
 
 
 ## Defining New Authorization Endpoint Response Types {#new-response-types}
 
 New response types for use with the authorization endpoint are
-defined and registered in the Authorization Endpoint Response Types
-registry following the procedure in {{Section 11.3 of RFC6749}}.  Response type
+defined and registered in the "OAuth Authorization Endpoint Response
+Types" registry following the procedure in {{Section 11.3 of RFC6749}}.  Response type
 names MUST conform to the response-type ABNF.
 
     response-type  = response-name *( SP response-name )
@@ -2638,7 +2687,7 @@ Since cookies are by default transmitted in cleartext, any
 information contained in them is at risk of disclosure:
 Bearer tokens MUST NOT be stored in cookies that can be sent in the
 clear.
-See Sections 7 and 8 of {{RFC6265}} for security
+See Sections 7 and 8 of {{COOKIES}} for security
 considerations about cookies.
 
 #### Access Token Redirect
@@ -2975,14 +3024,15 @@ authorization code request before the legitimate client and thereby revoking
 the legitimate client's tokens once it makes the valid request.
 
 
-### HTTP 307 Redirect {#redirect_307}
+### 307 (Temporary Redirect) Status Code {#redirect_307}
 
 An authorization server that redirects a request that potentially contains user
-credentials MUST NOT use the 307 status code ({{Section 15.4.8 of RFC9110}}) for
+credentials MUST NOT use the 307 (Temporary Redirect) status code
+({{Section 15.4.8 of HTTP}}) for
 redirection.
 If an HTTP redirection (and not, for example,
-JavaScript) is used for such a request, the AS SHOULD use the status
-code 303 ("See Other").
+JavaScript) is used for such a request, the AS SHOULD use the 303
+(See Other) status code.
 
 At the authorization endpoint, a typical protocol flow is that the AS
 prompts the user to enter their credentials in a form that is then
@@ -2990,7 +3040,7 @@ submitted (using the POST method) back to the authorization
 server.  The AS checks the credentials and, if successful, redirects
 the user agent to the client's redirect URI.
 
-If the status code 307 were used for redirection, the user agent
+If the 307 status code were used for redirection, the user agent
 would send the user credentials via a POST request to the client.
 
 This discloses the sensitive credentials to the client.  If the
@@ -2998,13 +3048,13 @@ client is malicious, it can use the credentials to impersonate
 the user at the AS.
 
 The behavior might be unexpected for developers, but is defined in
-{{Section 15.4.8 of RFC9110}}.  This status code does not require the user
+{{Section 15.4.8 of HTTP}}.  This status code does not require the user
 agent to rewrite the POST request to a GET request and thereby drop
 the form data in the POST request content.
 
-In HTTP {{RFC9110}}, only the status code 303
+In HTTP {{HTTP}}, only the 303 status code
 unambiguously enforces rewriting the HTTP POST request to an HTTP GET
-request.  For all other status codes, including the popular 302, user
+request.  For all other status codes, including the popular 302 (Found), user
 agents can opt not to rewrite POST to GET requests and therefore
 reveal the user credentials to the client.  (In practice, however,
 most user agents will only show this behavior for 307 redirects.)
@@ -3013,7 +3063,7 @@ most user agents will only show this behavior for 307 redirects.)
 ## Ensuring Endpoint Authenticity
 
 The risk related to man-in-the-middle attacks is mitigated by the
-mandatory use of channel security mechanisms such as TLS {{RFC9846}}
+mandatory use of channel security mechanisms such as TLS ({{TLS}})
 for communicating with the authorization and token endpoints.
 See {{communication-security}} for further details.
 
@@ -3156,7 +3206,7 @@ and potentially access the user's resources.
 
 Authorization servers MUST prevent clickjacking attacks. Multiple
 countermeasures are described in {{RFC6819}}, including the use of the
-`X-Frame-Options` HTTP response header field and frame-busting
+X-Frame-Options response header field {{RFC7034}} and frame-busting
 JavaScript. In addition to those, authorization servers SHOULD also
 use Content Security Policy (CSP) level 2 {{CSP-2}} or greater.
 
@@ -3179,11 +3229,15 @@ together with those that restrict the sources of scripts allowed to
 execute on an HTML page (by using `script-src`). A non-normative
 example of such a policy is shown in the following listing:
 
-    HTTP/1.1 200 OK
-    Content-Security-Policy: frame-ancestors https://ext.example.org:8000
-    Content-Security-Policy: script-src 'self'
-    X-Frame-Options: ALLOW-FROM https://ext.example.org:8000
-    ...
+~~~ http-message
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Security-Policy: frame-ancestors https://ext.example.org:8000
+Content-Security-Policy: script-src 'self'
+X-Frame-Options: ALLOW-FROM https://ext.example.org:8000
+
+[ content ]
+~~~
 
 Because some user agents do not support {{CSP-2}}, this technique
 SHOULD be combined with others, including those described in
@@ -3287,7 +3341,7 @@ such deployments, sufficient measures MUST be employed to ensure
 confidentiality of the access token between the front-end and
 back-end servers; encryption of the token is one such possible measure.
 
-See {{Section 17.2 of RFC9110}} for further information.
+See {{Section 17.2 of HTTP}} for further information.
 
 ## Authorization Server Mix-Up Mitigation {#mix-up}
 
@@ -3519,7 +3573,7 @@ availability and user experience of which vary by platform.
 ### Claimed "https" Scheme URI Redirection
 
 Some operating systems, in particular mobile operating systems, allow apps to claim `https` URIs
-(see {{Section 4.2.2 of RFC9110}})
+(see {{Section 4.2.2 of HTTP}})
 in the domains they control.  When the browser encounters a
 claimed URI, instead of the page being loaded in the browser, the
 native app is launched with the URI supplied as a launch parameter.
@@ -3888,7 +3942,7 @@ A browser-based OAuth client uses browser APIs to send requests to the
 authorization server and the resource server. These requests are
 typically cross-origin requests, and are subject to the browser's
 restrictions on cross-origin communication. The authorization server and
-resource server MUST send the necessary CORS {{WHATWG.CORS}} headers to
+resource server MUST send the necessary CORS {{WHATWG.CORS}} header fields to
 enable the app to make these requests, as described in
 {{token-endpoint}}.
 
@@ -3986,7 +4040,7 @@ The following is a non-normative list of changes from OAuth 2.0:
   as per {{Section 6.3.2.3 of RFC10017}}
 * The token endpoint request containing an authorization code no longer contains
   the `redirect_uri` parameter
-* Authorization servers must support client credentials in the request body
+* Authorization servers must support client credentials in the request content
 * The PKCE `plain` method is removed
 
 An OAuth 2.0 client that does not use PKCE, relies on redirect URI pattern
@@ -4183,7 +4237,7 @@ The ABNF for `code_challenge` is as follows.
 At the time of publication of {{RFC6749}}, the
 `application/x-www-form-urlencoded` media type was defined in
 Section 17.13.4 of {{W3C.REC-html401-19991224}} but not registered in
-the IANA MIME Media Types registry
+the IANA "Media Types" registry
 (<http://www.iana.org/assignments/media-types>).  Furthermore, that
 definition is incomplete, as it does not consider non-ASCII
 characters.
@@ -4286,6 +4340,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 -17
 
+* Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as `http-message` and wrapped per RFC 8792
 * Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client
 * Removed duplicate "Access Token Privilege Restriction" section
 * Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology
