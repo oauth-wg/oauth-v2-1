@@ -3254,7 +3254,7 @@ service, or introduce a wide range of malicious side effects.
 
 The authorization server and client MUST treat parameters received
 as potentially malicious external input and apply appropriate protections,
-in particular, the values of the `state` and `redirect_uri` parameters.
+in particular, the access token, and values of the the `state` and `redirect_uri` parameters.
 
 
 ## Open Redirection {#open-redirectors}
