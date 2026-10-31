@@ -4008,7 +4008,8 @@ Table of Contents
    restrictions on cross-origin communication.  The authorization server
    and resource server MUST send the necessary CORS [WHATWG.CORS] header
    fields to enable the app to make these requests, as described in
-   Section 3.2.
+   Section 3.2.  See Section 6.3.3.4 of [RFC10017] for considerations on
+   choosing a CORS policy.
 
 9.4.  Token Storage in Browser-Based Applications
 
