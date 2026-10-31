@@ -4799,10 +4799,12 @@ Appendix E.  Acknowledgements
    The editors would also like to thank the following individuals for
    their ideas, feedback, corrections, and wording that helped shape
    this version of the specification: Andrii Deinega, Bob Hamburg, Brian
-   Campbell, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan,
-   Goutam Adwant, Joseph Heenan, Justin Richer, Karsten Meyer zu
-   Selhausen, Michael Jones, Michael Peck, Roberto Polli, Tim Würtele,
-   and Vittorio Bertocci.
+   Campbell, Brian Pontarelli, Brock Allen, Daniel Fett, Deng Chao,
+   Emelia Smith, Falko, Filip Skokan, Frederik Krogsdal Jacobsen, George
+   Fletcher, Goutam Adwant, Jeremy Tennant, Johannes Koch, Joseph
+   Heenan, Justin Richer, Karsten Meyer zu Selhausen, Lauritz Holtmann,
+   Max Gerber, Michael Jones, Michael Peck, Nick Watson, Roberto Polli,
+   Shon T.  Urbas, Tim Würtele, and Vittorio Bertocci.
 
    Discussions around this specification have also occurred at the OAuth
    Security Workshop in 2021 and 2022.  The authors thank the organizers
