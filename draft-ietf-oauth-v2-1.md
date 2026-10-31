@@ -1422,7 +1422,7 @@ with the following parameters and a 200 (OK) status code:
      access tokens based on the grant passed in the corresponding
      token request.
 
-Authorization servers SHOULD determine, based on a risk assessment
+Authorization servers MUST determine, based on a risk assessment
 and their own policies, whether to issue refresh tokens to a certain client.
 For example, an authorization server might issue refresh tokens only to
 clients that are registered to receive them, only when the client requests
