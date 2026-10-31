@@ -1496,10 +1496,17 @@ Table of Contents
 
    Authorization servers SHOULD determine, based on a risk assessment
    and their own policies, whether to issue refresh tokens to a certain
-   client.  If the authorization server decides not to issue refresh
-   tokens, the client MAY obtain new access tokens by starting the OAuth
-   flow over, for example, by initiating a new authorization code
-   request.  In such a case, the authorization server may utilize
+   client.  For example, an authorization server might issue refresh
+   tokens only to clients that are registered to receive them, only when
+   the client requests a particular scope (such as the offline_access
+   scope defined in [OpenID.Connect]), or depending on whether the
+   client is confidential or public, and might tie the lifetime of the
+   refresh token to the resource owner's session at the authorization
+   server, as recommended for browser-based applications in
+   Section 9.3.2.  If the authorization server decides not to issue
+   refresh tokens, the client MAY obtain new access tokens by starting
+   the OAuth flow over, for example, by initiating a new authorization
+   code request.  In such a case, the authorization server may utilize
    cookies and persistent grants to optimize the user experience.
 
    If refresh tokens are issued, those refresh tokens MUST be bound to
@@ -4808,6 +4815,9 @@ Appendix F.  Document History
    This section is to be removed before publishing as an RFC.
 
    -17
+
+   *  Added examples of authorization server policies for issuing
+      refresh tokens
 
    *  Editorial alignment with the HTTP WG style guide: named references
       for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code,
