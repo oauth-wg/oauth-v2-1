@@ -553,8 +553,11 @@ expected by the resource server.
 The access token string MUST conform to the `token68` syntax defined in
 {{Section 11.2 of HTTP}}, so that it can be carried in an HTTP
 authentication scheme such as `Bearer` ({{authorization-request-header-field}})
-or `DPoP` ({{RFC9449}}). This restricts the characters used in the
-token, but does not require the token to be base64-encoded.
+or `DPoP` ({{RFC9449}}). This syntax restricts the characters used in
+the token but does not require any particular encoding; it accommodates
+encodings such as base64, base64url, base32, and base16 (hex). For
+example, a JWT {{RFC7519}}, such as one following {{RFC9068}}, conforms
+to this syntax.
 
 The access granted by the resource owner to the client is represented by
 the access token created by the authorization server. Access tokens are
