@@ -2136,8 +2136,11 @@ expected by the resource server.<a href="#section-1.4-2" class="pilcrow">¶</a><
 <p id="section-1.4-3">The access token string MUST conform to the <code>token68</code> syntax defined in
 <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.2" class="relref">Section 11.2</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>, so that it can be carried in an HTTP
 authentication scheme such as <code>Bearer</code> (<a href="#authorization-request-header-field" class="auto internal xref">Section 5.1.1</a>)
-or <code>DPoP</code> (<span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>). This restricts the characters used in the
-token, but does not require the token to be base64-encoded.<a href="#section-1.4-3" class="pilcrow">¶</a></p>
+or <code>DPoP</code> (<span>[<a href="#RFC9449" class="cite xref">RFC9449</a>]</span>). This syntax restricts the characters used in
+the token but does not require any particular encoding; it accommodates
+encodings such as base64, base64url, base32, and base16 (hex). For
+example, a JWT <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span>, such as one following <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>, conforms
+to this syntax.<a href="#section-1.4-3" class="pilcrow">¶</a></p>
 <p id="section-1.4-4">The access granted by the resource owner to the client is represented by
 the access token created by the authorization server. Access tokens are
 short-lived to limit the impact of a leaked access token. The expiration
