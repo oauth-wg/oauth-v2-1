@@ -550,6 +550,12 @@ token value. The authorization server is not required to use a
 consistent access token encoding or format other than what is
 expected by the resource server.
 
+The access token string MUST conform to the `token68` syntax defined in
+{{Section 11.2 of HTTP}}, so that it can be carried in an HTTP
+authentication scheme such as `Bearer` ({{authorization-request-header-field}})
+or `DPoP` ({{RFC9449}}). This restricts the characters used in the
+token, but does not require the token to be base64-encoded.
+
 The access granted by the resource owner to the client is represented by
 the access token created by the authorization server. Access tokens are
 short-lived to limit the impact of a leaked access token. The expiration
@@ -1394,7 +1400,8 @@ using the `application/json` media type as defined by {{RFC8259}},
 with the following parameters and a 200 (OK) status code:
 
 "access_token":
-:    REQUIRED.  The access token issued by the authorization server.
+:    REQUIRED.  The access token issued by the authorization server,
+     conforming to the syntax described in {{access-tokens}}.
 
 "token_type":
 :    REQUIRED.  The type of the access token issued as described in
@@ -4028,6 +4035,9 @@ The following is a non-normative list of changes from OAuth 2.0:
 * Redirect URIs must be compared using exact string matching
   as per {{Section 4.1.3 of RFC9700}}
 * The Implicit grant (`response_type=token`) is omitted from this specification
+* Access token values are restricted to the `token68` syntax, rather than
+  any visible ASCII character, so that they can always be used with
+  HTTP authentication schemes such as `Bearer` and `DPoP`
   as per {{Section 2.1.2 of RFC9700}}
 * The Resource Owner Password Credentials grant is omitted from this specification
   as per {{Section 2.4 of RFC9700}}
@@ -4101,6 +4111,8 @@ Some of the definitions that follow use these common definitions:
     VSCHAR     = %x20-7E
     NQCHAR     = %x21 / %x23-5B / %x5D-7E
     NQSCHAR    = %x20-21 / %x23-5B / %x5D-7E
+    token68    = 1*( ALPHA / DIGIT /
+                     "-" / "." / "_" / "~" / "+" / "/" ) *"="
 
 
 ## "client_id" Syntax
@@ -4181,9 +4193,9 @@ The `code` element is defined in {{code-token-extension}}:
 
 ## "access_token" Syntax
 
-The `access_token` element is defined in {{token-response}}:
+The `access_token` element is defined in {{token-response}} and {{access-tokens}}:
 
-     access-token = 1*VSCHAR
+     access-token = token68
 
 ## "token_type" Syntax
 
@@ -4334,6 +4346,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 -17
 
+* Restricted access token values to the `token68` syntax so they can always be used with HTTP authentication schemes
 * Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as `http-message` and wrapped per RFC 8792
 * Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client
 * Removed duplicate "Access Token Privilege Restriction" section
