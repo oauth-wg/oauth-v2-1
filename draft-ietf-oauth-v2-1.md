@@ -2875,8 +2875,8 @@ If a confidential client has its credentials stolen,
 a malicious client can impersonate the client and obtain access
 to protected resources.
 
-The authorization server SHOULD enforce explicit resource owner
-authentication and provide the resource owner with information about
+The authorization server SHOULD require active resource owner
+interaction and provide the resource owner with information about
 the client and the requested authorization scope and lifetime.  It is
 up to the resource owner to review the information in the context of
 the current client and to authorize or deny the request.
@@ -4341,6 +4341,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 -17
 
+* Clarified that the client impersonation mitigation requires active resource owner interaction rather than explicit re-authentication
 * Added examples of authorization server policies for issuing refresh tokens
 * Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as `http-message` and wrapped per RFC 8792
 * Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client
