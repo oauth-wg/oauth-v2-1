@@ -8,7 +8,7 @@ wg: OAuth Working Group
 kw: Internet-Draft
 cat: std
 area: Security
-obsoletes: 6749
+obsoletes: 6749, 6750
 
 coding: us-ascii
 pi:
