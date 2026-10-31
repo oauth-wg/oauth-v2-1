@@ -3304,8 +3304,8 @@ Table of Contents
 
    The authorization server and client MUST treat parameters received as
    potentially malicious external input and apply appropriate
-   protections, in particular, the values of the state and redirect_uri
-   parameters.
+   protections, in particular, the access token, and values of the the
+   state and redirect_uri parameters.
 
 7.13.  Open Redirection
 
