@@ -3095,7 +3095,8 @@ clients that are registered to receive them, only when the client requests
 a particular scope (such as the <code>offline_access</code> scope defined in
 <span>[<a href="#OpenID.Connect" class="cite xref">OpenID.Connect</a>]</span>), or depending on whether the client is confidential or
 public, and might tie the lifetime of the refresh token to the resource
-owner's session at the authorization server.  If the
+owner's session at the authorization server, as recommended for
+browser-based applications in <a href="#browser-based-apps-refresh-tokens" class="auto internal xref">Section 9.3.2</a>.  If the
 authorization server decides not to issue refresh tokens, the client
 MAY obtain new access tokens by starting the OAuth flow over, for example, by
 initiating a new authorization code request.  In such a case, the authorization
@@ -5917,7 +5918,7 @@ are subject to client impersonation
 (see <a href="#browser-based-application-impersonation" class="auto internal xref">Section 7.3.2</a>).<a href="#section-9.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="refresh-tokens-for-browser-based-applications">
+<div id="browser-based-apps-refresh-tokens">
 <section id="section-9.3.2">
           <h4 id="name-refresh-tokens-for-browser-">
 <a href="#section-9.3.2" class="section-number selfRef">9.3.2. </a><a href="#name-refresh-tokens-for-browser-" class="section-name selfRef">Refresh Tokens for Browser-Based Applications</a>

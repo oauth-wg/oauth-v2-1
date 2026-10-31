@@ -1502,10 +1502,11 @@ Table of Contents
    scope defined in [OpenID.Connect]), or depending on whether the
    client is confidential or public, and might tie the lifetime of the
    refresh token to the resource owner's session at the authorization
-   server.  If the authorization server decides not to issue refresh
-   tokens, the client MAY obtain new access tokens by starting the OAuth
-   flow over, for example, by initiating a new authorization code
-   request.  In such a case, the authorization server may utilize
+   server, as recommended for browser-based applications in
+   Section 9.3.2.  If the authorization server decides not to issue
+   refresh tokens, the client MAY obtain new access tokens by starting
+   the OAuth flow over, for example, by initiating a new authorization
+   code request.  In such a case, the authorization server may utilize
    cookies and persistent grants to optimize the user experience.
 
    If refresh tokens are issued, those refresh tokens MUST be bound to
