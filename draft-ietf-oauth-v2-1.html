@@ -4823,12 +4823,12 @@ unless the identity of the client can be proven, the request SHOULD
 be processed as if no previous request had been approved.<a href="#section-7.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.3.1-2">Measures such as claimed <code>https</code> scheme redirects provide stronger
 assurance than private-use URI schemes that the authorization response
-is delivered to the intended app, and authorization servers MAY take
+is delivered to the intended app, and authorization servers may take
 this into account when deciding whether to process a repeated
 authorization request automatically. Such measures do not authenticate
 the client, and do not make the client a confidential client. Some
 operating systems may offer alternative platform-specific identity
-features that MAY be used similarly, as appropriate.<a href="#section-7.3.1-2" class="pilcrow">¶</a></p>
+features that may be used similarly, as appropriate.<a href="#section-7.3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="browser-based-application-impersonation">
@@ -4840,7 +4840,7 @@ features that MAY be used similarly, as appropriate.<a href="#section-7.3.1-2" c
 URIs, preventing the use of wildcard domains, wildcard
 paths, or wildcard query string components as described in <a href="#registration-requirements" class="auto internal xref">Section 2.3.1</a>.
 When a client uses an absolute <code>https</code> URI as a redirect URI,
-an exact match MAY be accepted by authorization servers as proof
+an exact match may be accepted by authorization servers as proof
 of identity of a browser-based application for the purpose of deciding
 whether to process an authorization request automatically when a previous
 request for the same <code>client_id</code> has already been approved.<a href="#section-7.3.2-1" class="pilcrow">¶</a></p>
