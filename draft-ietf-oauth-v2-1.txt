@@ -4,9 +4,9 @@
 
 OAuth Working Group                                             D. Hardt
 Internet-Draft                                                     Hellō
-Intended status: Standards Track                         A. Parecki, Ed.
-Expires: 4 May 2027                                                 Okta
-                                                          T. Lodderstedt
+Obsoletes: 6749, 6750 (if approved)                      A. Parecki, Ed.
+Intended status: Standards Track                                    Okta
+Expires: 4 May 2027                                       T. Lodderstedt
                                                                   SPRIND
                                                          31 October 2026
 
