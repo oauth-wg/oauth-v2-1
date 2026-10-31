@@ -4358,6 +4358,11 @@ Discussions around this specification have also occurred at the OAuth Security W
 * Clarified that the query component of the redirect URI and authorization endpoint must not include parameters defined for the request or response
 * Clarified serialization of authorization request parameters when using `GET` or `POST`
 * Added note about interoperability with OAuth 2.0 clients
+* Clarified that the privileges in an access token are not necessarily the only factor in a resource server's access control decision
+* Added a reference to RFC 10017 for considerations on choosing a CORS policy
+* Simplified mix-up defense via issuer identification to rely on the required `iss` response parameter
+* Mentioned `state` alongside the authorization code in the Value Sizes section
+* Replaced obsolete and superseded references
 * Editorial cleanups
 
 -16
