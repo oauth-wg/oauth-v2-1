@@ -1422,7 +1422,13 @@ with the following parameters and a 200 (OK) status code:
      token request.
 
 Authorization servers SHOULD determine, based on a risk assessment
-and their own policies, whether to issue refresh tokens to a certain client.  If the
+and their own policies, whether to issue refresh tokens to a certain client.
+For example, an authorization server might issue refresh tokens only to
+clients that are registered to receive them, only when the client requests
+a particular scope (such as the `offline_access` scope defined in
+{{OpenID.Connect}}), or depending on whether the client is confidential or
+public, and might tie the lifetime of the refresh token to the resource
+owner's session at the authorization server.  If the
 authorization server decides not to issue refresh tokens, the client
 MAY obtain new access tokens by starting the OAuth flow over, for example, by
 initiating a new authorization code request.  In such a case, the authorization
@@ -4334,6 +4340,7 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 -17
 
+* Added examples of authorization server policies for issuing refresh tokens
 * Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as `http-message` and wrapped per RFC 8792
 * Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client
 * Removed duplicate "Access Token Privilege Restriction" section
