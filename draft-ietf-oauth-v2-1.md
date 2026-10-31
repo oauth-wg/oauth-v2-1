@@ -3944,7 +3944,8 @@ typically cross-origin requests, and are subject to the browser's
 restrictions on cross-origin communication. The authorization server and
 resource server MUST send the necessary CORS {{WHATWG.CORS}} header fields to
 enable the app to make these requests, as described in
-{{token-endpoint}}.
+{{token-endpoint}}. See {{Section 6.3.3.4 of RFC10017}} for considerations
+on choosing a CORS policy.
 
 ## Token Storage in Browser-Based Applications {#browser-based-apps-token-storage}
 
