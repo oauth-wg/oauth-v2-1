@@ -1053,7 +1053,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hardt, et al.</td>
-<td class="center">Expires 3 May 2027</td>
+<td class="center">Expires 4 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-oauth-v2-1-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-10-30" class="published">30 October 2026</time>
+<time datetime="2026-10-31" class="published">31 October 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-05-03">3 May 2027</time></dd>
+<dd class="expires"><time datetime="2027-05-04">4 May 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1131,7 +1131,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 May 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1444,7 +1444,7 @@ Framework described in RFC 6749 and the Bearer Token Usage in RFC 6750.<a href="
                     <p id="section-toc.1-1.7.2.5.2.3.1"><a href="#section-7.5.3" class="auto internal xref">7.5.3</a>.  <a href="#name-reuse-of-authorization-code" class="internal xref">Reuse of Authorization Codes</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.5.2.4">
-                    <p id="section-toc.1-1.7.2.5.2.4.1"><a href="#section-7.5.4" class="auto internal xref">7.5.4</a>.  <a href="#name-http-307-redirect" class="internal xref">HTTP 307 Redirect</a></p>
+                    <p id="section-toc.1-1.7.2.5.2.4.1"><a href="#section-7.5.4" class="auto internal xref">7.5.4</a>.  <a href="#name-307-temporary-redirect-stat" class="internal xref">307 (Temporary Redirect) Status Code</a></p>
 </li>
                 </ul>
 </li>
@@ -1805,7 +1805,7 @@ the API as a proxy for authenticating the user. This practice is not part of
 the OAuth standard or security considerations, and may not have been considered
 by the resource owner. Implementers should carefully consult the documentation
 of the resource server before adopting this practice.<a href="#section-1-8" class="pilcrow">¶</a></p>
-<p id="section-1-9">This specification is designed for use with HTTP <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.  The
+<p id="section-1-9">This specification is designed for use with HTTP <span>[<a href="#HTTP" class="cite xref">HTTP</a>]</span>.  The
 use of OAuth over any protocol other than HTTP is out of scope.<a href="#section-1-9" class="pilcrow">¶</a></p>
 <p id="section-1-10">Since the publication of the OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>
 in October 2012, it has been updated by OAuth 2.0 for Native Apps <span>[<a href="#RFC8252" class="cite xref">RFC8252</a>]</span>,
@@ -1870,7 +1870,7 @@ is also out of scope for this specification, with some exceptions, such as
 security considerations around prompting the end-user for consent.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 <p id="section-1.1-6">When the resource owner is the end-user, the user will interact with
 the client. When the client is a web-based application, the user will
-interact with the client through a user agent (as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-3.5" class="relref">Section 3.5</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>).
+interact with the client through a user agent (as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-3.5" class="relref">Section 3.5</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>).
 When the client is a native application, the user will interact with
 the client directly through the operating system. See <a href="#client-types" class="auto internal xref">Section 2.1</a>
 for further details.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
@@ -2271,7 +2271,7 @@ refer to <span><a href="https://rfc-editor.org/rfc/rfc9700#section-4.13" class="
         </h3>
 <p id="section-1.5-1">Implementations MUST use a mechanism to provide communication
 authentication, integrity, and confidentiality, such as
-Transport Layer Security (TLS) <span>[<a href="#RFC9846" class="cite xref">RFC9846</a>]</span>,
+Transport Layer Security (TLS) <span>[<a href="#TLS" class="cite xref">TLS</a>]</span>,
 to protect the exchange of cleartext credentials and tokens
 either in the content or in header fields
 from eavesdropping, which enables replay
@@ -2280,9 +2280,9 @@ from eavesdropping, which enables replay
 except for loopback interface redirect URIs,
 which MAY use the <code>http</code> scheme.
 When using <code>https</code>, TLS certificates MUST be checked
-according to <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.3.4" class="relref">Section 4.3.4</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.
+according to <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.3.4" class="relref">Section 4.3.4</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>.
 At the time of this writing,
-TLS version 1.3 <span>[<a href="#RFC9846" class="cite xref">RFC9846</a>]</span> is the most recent version.<a href="#section-1.5-2" class="pilcrow">¶</a></p>
+TLS version 1.3 <span>[<a href="#TLS" class="cite xref">TLS</a>]</span> is the most recent version.<a href="#section-1.5-2" class="pilcrow">¶</a></p>
 <p id="section-1.5-3">Implementations MAY also support additional transport-layer security
 mechanisms that meet their security requirements.<a href="#section-1.5-3" class="pilcrow">¶</a></p>
 <p id="section-1.5-4">The identification of the TLS versions and algorithms
@@ -2300,9 +2300,9 @@ for certificate validation and other security considerations.<a href="#section-1
 <p id="section-1.6-1">This specification makes extensive use of HTTP redirections, in which
 the client or the authorization server directs the resource owner's
 user agent to another destination.  While the examples in this
-specification show the use of the HTTP 302 status code, any other
+specification show the use of the 302 (Found) status code, any other
 method available via the user agent to accomplish this redirection,
-with the exception of HTTP 307, is allowed and is considered to be an
+with the exception of the 307 (Temporary Redirect) status code, is allowed and is considered to be an
 implementation detail. See <a href="#redirect_307" class="auto internal xref">Section 7.5.4</a> for details.<a href="#section-1.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2349,12 +2349,12 @@ to fail.<a href="#section-1.7.1-1" class="pilcrow">¶</a></p>
 a particular length.  The party that issues a value SHOULD document
 its length, and SHOULD take into account the limits of the components
 that will carry it.  In particular, values returned in a redirect,
-such as the authorization code, are carried in a URI query string, and
-HTTP implementations commonly limit the length of the request line and
-of individual header fields (<span><a href="https://rfc-editor.org/rfc/rfc9112#section-3" class="relref">Section 3</a> of [<a href="#RFC9112" class="cite xref">RFC9112</a>]</span> and
-<span><a href="https://rfc-editor.org/rfc/rfc9110#section-5.4" class="relref">Section 5.4</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>).  Implementations SHOULD support parameter
+such as the authorization code and state, are carried in a URI query string, and
+HTTP implementations commonly limit the length of the request-line and
+of individual header fields (<span><a href="https://rfc-editor.org/rfc/rfc9112#section-3" class="relref">Section 3</a> of [<a href="#RFC9112" class="cite xref">HTTP/1.1</a>]</span> and
+<span><a href="https://rfc-editor.org/rfc/rfc9110#section-5.4" class="relref">Section 5.4</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>).  Implementations SHOULD support parameter
 values long enough that requests remain within the 8000-octet
-request-line length recommended by <span><a href="https://rfc-editor.org/rfc/rfc9112#section-3" class="relref">Section 3</a> of [<a href="#RFC9112" class="cite xref">RFC9112</a>]</span>.  Resource
+request-line length recommended by <span><a href="https://rfc-editor.org/rfc/rfc9112#section-3" class="relref">Section 3</a> of [<a href="#RFC9112" class="cite xref">HTTP/1.1</a>]</span>.  Resource
 servers in particular should not impose small limits on the length of
 access tokens, as tokens in a structured format, such as those defined
 by <span>[<a href="#RFC9068" class="cite xref">RFC9068</a>]</span>, routinely exceed one kilobyte.<a href="#section-1.7.1-2" class="pilcrow">¶</a></p>
@@ -2403,8 +2403,8 @@ defined in <span>[<a href="#RFC4949" class="cite xref">RFC4949</a>]</span>.  The
 "attack", "authentication", "authorization", "certificate",
 "confidentiality", "credential", "encryption", "identity", "sign",
 "signature", "trust", "validate", and "verify".<a href="#section-1.9-3" class="pilcrow">¶</a></p>
-<p id="section-1.9-4">The term "content" is to be interpreted as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-6.4" class="relref">Section 6.4</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.<a href="#section-1.9-4" class="pilcrow">¶</a></p>
-<p id="section-1.9-5">The term "user agent" is to be interpreted as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-3.5" class="relref">Section 3.5</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.<a href="#section-1.9-5" class="pilcrow">¶</a></p>
+<p id="section-1.9-4">The term "content" is to be interpreted as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-6.4" class="relref">Section 6.4</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>.<a href="#section-1.9-4" class="pilcrow">¶</a></p>
+<p id="section-1.9-5">The term "user agent" is to be interpreted as described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-3.5" class="relref">Section 3.5</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>.<a href="#section-1.9-5" class="pilcrow">¶</a></p>
 <p id="section-1.9-6">Unless otherwise noted, all the protocol parameter names and values
 are case sensitive.<a href="#section-1.9-6" class="pilcrow">¶</a></p>
 </section>
@@ -2671,7 +2671,7 @@ response is served directly as the result of the redirection request,
 any script included in the HTML document will execute with full
 access to the redirect URI and the artifacts (e.g., authorization code)
 it contains. Additionally, the request URL containing the authorization code
-may be sent in the HTTP Referer header field to any embedded images, stylesheets,
+may be sent in the Referer header field (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-10.1.3" class="relref">Section 10.1.3</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) to any embedded images, stylesheets,
 and other elements loaded in the page.<a href="#section-2.3.6-1" class="pilcrow">¶</a></p>
 <p id="section-2.3.6-2">The client SHOULD NOT include any third-party scripts (e.g., third-party
 analytics, social plug-ins, ad networks) in the redirect URI
@@ -2733,7 +2733,7 @@ See <a href="#security-client-authentication" class="auto internal xref">Section
           </h4>
 <p id="section-2.4.1-1">To support confidential clients in possession of a client secret,
 the authorization server MUST support the client including the
-client credentials in the request body content using the following
+client credentials in the request content using the following
 parameters:<a href="#section-2.4.1-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-2.4.1-2">
             <dt id="section-2.4.1-2.1">"client_id":</dt>
@@ -2749,35 +2749,42 @@ the registration process described in <a href="#client-identifier" class="auto i
           <dd class="break"></dd>
 </dl>
 <p id="section-2.4.1-3">The parameters can only be transmitted in the request content and MUST NOT
-be included in the request URI.<a href="#section-2.4.1-3" class="pilcrow">¶</a></p>
+be included in the target URI.<a href="#section-2.4.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.4.1-4">This is also known as <code>client_secret_post</code> as defined in <span><a href="https://rfc-editor.org/rfc/rfc7591#section-2" class="relref">Section 2</a> of [<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>.<a href="#section-2.4.1-4" class="pilcrow">¶</a></p>
 <p id="section-2.4.1-5">For example, a request to refresh an access token (<a href="#refreshing-an-access-token" class="auto internal xref">Section 4.3</a>) using
-the content parameters (with extra line breaks for display purposes
-only):<a href="#section-2.4.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.4.1-6">
+the content parameters:<a href="#section-2.4.1-5" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-2.4.1-6">
 <pre>
+# NOTE: '\' line wrapping per RFC 8792
+
 POST /token HTTP/1.1
 Host: server.example.com
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
+grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA\
 &amp;client_id=s6BhdRkqt3&amp;client_secret=7Fjfp0ZBr1KtDRbnfVdmIw
 </pre><a href="#section-2.4.1-6" class="pilcrow">¶</a>
 </div>
 <p id="section-2.4.1-7">The authorization server MAY support the HTTP Basic
 authentication scheme for authenticating clients that were issued a
 client secret.<a href="#section-2.4.1-7" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-8">When using the HTTP Basic authentication scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>
+<p id="section-2.4.1-8">When using the HTTP Basic authentication scheme as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>
 to authenticate with the authorization server, the client identifier is encoded using the
 <code>application/x-www-form-urlencoded</code> encoding algorithm per
 <a href="#application-x-www-form-urlencoded" class="auto internal xref">Appendix B</a>, and the encoded value is used as the username; the client
 secret is encoded using the same algorithm and used as the
 password.<a href="#section-2.4.1-8" class="pilcrow">¶</a></p>
 <p id="section-2.4.1-9">This is also known as <code>client_secret_basic</code> as defined in <span><a href="https://rfc-editor.org/rfc/rfc7591#section-2" class="relref">Section 2</a> of [<a href="#RFC7591" class="cite xref">RFC7591</a>]</span>.<a href="#section-2.4.1-9" class="pilcrow">¶</a></p>
-<p id="section-2.4.1-10">For example (with extra line breaks for display purposes only):<a href="#section-2.4.1-10" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-2.4.1-11">
+<p id="section-2.4.1-10">For example, the same request to refresh an access token using the HTTP
+Basic authentication scheme:<a href="#section-2.4.1-10" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-2.4.1-11">
 <pre>
+POST /token HTTP/1.1
+Host: server.example.com
 Authorization: Basic czZCaGRSa3F0Mzo3RmpmcDBaQnIxS3REUmJuZlZkbUl3
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&amp;refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
 </pre><a href="#section-2.4.1-11" class="pilcrow">¶</a>
 </div>
 <p id="section-2.4.1-12">Note: This method of initially form-encoding the client identifier and secret,
@@ -2787,7 +2794,7 @@ implementations have missed the encoding step, or decided to only encode
 certain characters, or ignored the encoding requirement when validating the
 credentials, leading to clients having to special-case how they present the
 credentials to individual authorization servers. Including the credentials
-in the request body content avoids the encoding issues and leads to more
+in the request content avoids the encoding issues and leads to more
 interoperable implementations.<a href="#section-2.4.1-12" class="pilcrow">¶</a></p>
 <p id="section-2.4.1-13">Since the client secret authentication method involves a password, the
 authorization server MUST protect any endpoint utilizing it against
@@ -2875,11 +2882,11 @@ and MAY include a query string component (<a href="#query-string-serialization" 
 which MUST be retained when adding additional query parameters.
 The query string component MUST NOT include any parameters defined
 for use in the authorization request.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">The authorization server MUST support the use of the HTTP <code>GET</code>
-method (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.1" class="relref">Section 9.3.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) for the authorization endpoint and MAY support
-the <code>POST</code> method (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.3" class="relref">Section 9.3.3</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) as well.
-When using <code>GET</code>, the request parameters are serialized using
-<a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>. When using <code>POST</code>, the request parameters
+<p id="section-3.1-4">The authorization server MUST support the use of the HTTP GET
+method (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.1" class="relref">Section 9.3.1</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) for the authorization endpoint and MAY support
+the POST method (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-9.3.3" class="relref">Section 9.3.3</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) as well.
+When using GET, the request parameters are serialized using
+<a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>. When using POST, the request parameters
 are serialized using <a href="#form-serialization" class="auto internal xref">Appendix C.2</a>.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <p id="section-3.1-5">The authorization server MUST ignore unrecognized request parameters sent to the authorization endpoint.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.1-6">Request and response parameters
@@ -2917,7 +2924,7 @@ development of the client, or provided in the authorization server's metadata
 document <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> and fetched programmatically at runtime.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">The token endpoint URL MUST NOT include a fragment component,
 and MAY include a query string component (<a href="#query-string-serialization" class="auto internal xref">Appendix C.1</a>).<a href="#section-3.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2-4">The client MUST use the HTTP <code>POST</code> method when making requests to the token endpoint.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">The client MUST use the HTTP POST method when making requests to the token endpoint.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.2-5">The authorization server MUST ignore unrecognized request parameters sent to the token endpoint.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
 <p id="section-3.2-6">Parameters sent without a value MUST be treated as if they were
 omitted from the request. Request and response parameters
@@ -2928,13 +2935,13 @@ parameter.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
 <p id="section-3.2-7">Authorization servers that support browser-based applications
 (for example, applications running exclusively in client-side JavaScript without
 access to a supporting backend server) MUST ensure the token endpoint
-supports the necessary CORS <span>[<a href="#WHATWG.CORS" class="cite xref">WHATWG.CORS</a>]</span> headers to allow the responses
+supports the necessary CORS <span>[<a href="#WHATWG.CORS" class="cite xref">WHATWG.CORS</a>]</span> header fields to allow the responses
 to be visible to the application.
 If the authorization server provides additional endpoints to the application, such
 as metadata URLs, dynamic client registration, revocation, introspection, discovery, or
 user info endpoints, these endpoints may also be accessed by the browser-based
-application and MUST also send the CORS headers to allow access.
-Note that CORS headers are not needed in the case where the browser-based
+application and MUST also send the CORS header fields to allow access.
+Note that CORS header fields are not needed in the case where the browser-based
 application shares an origin with the authorization server.
 See <a href="#browser-based-apps" class="auto internal xref">Section 9</a> and <span>[<a href="#RFC10017" class="cite xref">RFC10017</a>]</span> for further details.<a href="#section-3.2-7" class="pilcrow">¶</a></p>
 <div id="token-endpoint-client-authentication">
@@ -2996,19 +3003,21 @@ relies on the parameter is used, or the <code>grant_type</code> requires identif
 </dl>
 <p id="section-3.2.2-3">Confidential clients MUST authenticate with the authorization
 server as described in <a href="#token-endpoint-client-authentication" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.2-4">For example, the client makes the following HTTPS request
-(with extra line breaks for display purposes only):<a href="#section-3.2.2-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.2.2-5">
+<p id="section-3.2.2-4">For example, the client makes the following HTTPS request:<a href="#section-3.2.2-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-3.2.2-5">
 <pre>
+# NOTE: '\' line wrapping per RFC 8792
+
 POST /token HTTP/1.1
 Host: server.example.com
 Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=authorization_code
-&amp;code=SplxlOBeZQQYbYS6WxSbIA
-&amp;redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
-&amp;code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
+grant_type=authorization_code\
+&amp;code=SplxlOBeZQQYbYS6WxSbIA\
+&amp;redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb\
+&amp;code_verifier=\
+3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 </pre><a href="#section-3.2.2-5" class="pilcrow">¶</a>
 </div>
 <p id="section-3.2.2-6">The authorization server MUST:<a href="#section-3.2.2-6" class="pilcrow">¶</a></p>
@@ -3038,7 +3047,7 @@ an error response as described in <a href="#token-error-response" class="auto in
 <p id="section-3.2.3-3">The authorization server issues an access token and, optionally, a refresh
 token by creating an HTTP response according to <a href="#json-serialization" class="auto internal xref">Appendix C.3</a>,
 using the <code>application/json</code> media type as defined by <span>[<a href="#RFC8259" class="cite xref">RFC8259</a>]</span>,
-with the following parameters and an HTTP 200 (OK) status code:<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+with the following parameters and a 200 (OK) status code:<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-3.2.3-4">
             <dt id="section-3.2.3-4.1">"access_token":</dt>
             <dd style="margin-left: 1.5em" id="section-3.2.3-4.2">
@@ -3092,12 +3101,12 @@ This is to prevent privilege escalation by the legitimate client and to
 reduce the impact of refresh token leakage.<a href="#section-3.2.3-6" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-7">The parameters are serialized into a JavaScript Object Notation (JSON)
 structure as described in <a href="#json-serialization" class="auto internal xref">Appendix C.3</a>.<a href="#section-3.2.3-7" class="pilcrow">¶</a></p>
-<p id="section-3.2.3-8">The authorization server MUST include the HTTP <code>Cache-Control</code>
-response header field (see <span><a href="https://rfc-editor.org/rfc/rfc9111#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC9111" class="cite xref">RFC9111</a>]</span>) with a value of <code>no-store</code> in any
+<p id="section-3.2.3-8">The authorization server MUST include the Cache-Control
+response header field (<span><a href="https://rfc-editor.org/rfc/rfc9111#section-5.2" class="relref">Section 5.2</a> of [<a href="#HTTP-CACHING" class="cite xref">HTTP-CACHING</a>]</span>) with a value of <code>no-store</code> in any
 response containing tokens, credentials, or other sensitive
 information.<a href="#section-3.2.3-8" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-9">For example:<a href="#section-3.2.3-9" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.2.3-10">
+<div class="lang-http-message sourcecode" id="section-3.2.3-10">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -3122,7 +3131,7 @@ server is left undefined, as described in <a href="#value-sizes" class="auto int
           <h4 id="name-token-endpoint-error-respon">
 <a href="#section-3.2.4" class="section-number selfRef">3.2.4. </a><a href="#name-token-endpoint-error-respon" class="section-name selfRef">Token Endpoint Error Response</a>
           </h4>
-<p id="section-3.2.4-1">The authorization server responds with an HTTP 400 (Bad Request)
+<p id="section-3.2.4-1">The authorization server responds with a 400 (Bad Request)
 status code (unless specified otherwise) and includes the following
 parameters with the response:<a href="#section-3.2.4-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-3.2.4-2">
@@ -3146,16 +3155,16 @@ or is otherwise malformed.<a href="#section-3.2.4-2.2.2.2.1" class="pilcrow">¶<
                   <p id="section-3.2.4-2.2.2.4.1">Client authentication failed (e.g., unknown client, no
 client authentication included, or unsupported
 authentication method).  The authorization server MAY
-return an HTTP 401 (Unauthorized) status code to indicate
+return a 401 (Unauthorized) status code to indicate
 which HTTP authentication schemes are supported.  If the
-client attempted to authenticate via the <code>Authorization</code>
-request header field, the authorization server MUST
-respond with an HTTP 401 (Unauthorized) status code and
-include the <code>WWW-Authenticate</code> response header field
-matching the authentication scheme used by the client.
+client attempted to authenticate via the Authorization
+request header field (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.6.2" class="relref">Section 11.6.2</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>), the authorization server MUST
+respond with a 401 (Unauthorized) status code and
+include the WWW-Authenticate response header field
+(<span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.6.1" class="relref">Section 11.6.1</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) matching the authentication scheme used by the client.
 Client authentication methods that do not use an HTTP
-authentication scheme have no corresponding
-<code>WWW-Authenticate</code> challenge.<a href="#section-3.2.4-2.2.2.4.1" class="pilcrow">¶</a></p>
+authentication scheme have no corresponding challenge
+in the WWW-Authenticate header field.<a href="#section-3.2.4-2.2.2.4.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 <dt id="section-3.2.4-2.2.2.5">"invalid_grant":</dt>
@@ -3213,14 +3222,14 @@ outside the set %x21 / %x23-5B / %x5D-7E.<a href="#section-3.2.4-2.6.1" class="p
 <p id="section-3.2.4-3">The parameters are included in the content of the HTTP response
 using the <code>application/json</code> media type as defined in <a href="#json-serialization" class="auto internal xref">Appendix C.3</a>.<a href="#section-3.2.4-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.4-4">For example:<a href="#section-3.2.4-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.2.4-5">
+<div class="lang-http-message sourcecode" id="section-3.2.4-5">
 <pre>
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
 Cache-Control: no-store
 
 {
- "error": "invalid_request"
+  "error": "invalid_request"
 }
 </pre><a href="#section-3.2.4-5" class="pilcrow">¶</a>
 </div>
@@ -3459,13 +3468,14 @@ transmitted over insecure channels or stored insecurely.<a href="#section-4.1.1-
 <p id="section-4.1.1-24">The client directs the resource owner to the constructed URI using an
 HTTP redirection, or by other means available to it via the user agent.<a href="#section-4.1.1-24" class="pilcrow">¶</a></p>
 <p id="section-4.1.1-25">For example, the client directs the user agent to make the following
-HTTPS request (with extra line breaks for display purposes
-only):<a href="#section-4.1.1-25" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.1.1-26">
+HTTPS request:<a href="#section-4.1.1-25" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-4.1.1-26">
 <pre>
-GET /authorize?response_type=code&amp;client_id=s6BhdRkqt3&amp;state=xyz
-    &amp;redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
-    &amp;code_challenge=6fdkQaPm51l13DSukcAH3Mdx7_ntecHYd1vi3n0hMZY
+# NOTE: '\' line wrapping per RFC 8792
+
+GET /authorize?response_type=code&amp;client_id=s6BhdRkqt3&amp;state=xyz\
+    &amp;redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb\
+    &amp;code_challenge=6fdkQaPm51l13DSukcAH3Mdx7_ntecHYd1vi3n0hMZY\
     &amp;code_challenge_method=S256 HTTP/1.1
 Host: server.example.com
 </pre><a href="#section-4.1.1-26" class="pilcrow">¶</a>
@@ -3529,11 +3539,13 @@ additional details on how the client can use it to prevent mix-up attacks.<a hre
 </dl>
 <p id="section-4.1.2-3">For example, the authorization server redirects the user agent by
 sending the following HTTP response:<a href="#section-4.1.2-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.1.2-4">
+<div class="lang-http-message sourcecode" id="section-4.1.2-4">
 <pre>
+# NOTE: '\' line wrapping per RFC 8792
+
 HTTP/1.1 302 Found
-Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA
-          &amp;state=xyz&amp;iss=https%3A%2F%2Fauthorization-server.example.com
+Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA\
+  &amp;state=xyz&amp;iss=https%3A%2F%2Fauthorization-server.example.com
 </pre><a href="#section-4.1.2-4" class="pilcrow">¶</a>
 </div>
 <p id="section-4.1.2-5">The client MUST ignore unrecognized response parameters.  The
@@ -3562,8 +3574,8 @@ the authorization server MUST NOT redirect the user agent to the
 invalid redirect URI and SHOULD inform the resource owner of the
 error, for example, by displaying a message to the user in their browser.
 When returning an error response directly to the user agent, the
-authorization server SHOULD use the HTTP 400 (Bad Request) status code.
-The HTTP 401 (Unauthorized) status code used for client authentication
+authorization server SHOULD use the 400 (Bad Request) status code.
+The 401 (Unauthorized) status code used for client authentication
 errors at the token endpoint does not apply to authorization endpoint
 request errors.<a href="#section-4.1.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.1.2.1-2">The authorization server MUST validate the client identifier and redirect
@@ -3626,8 +3638,8 @@ authorization code using this method.<a href="#section-4.1.2.1-6.2.2.8.1" class=
                   <dd style="margin-left: 1.5em" id="section-4.1.2.1-6.2.2.12">
                     <p id="section-4.1.2.1-6.2.2.12.1">The authorization server encountered an unexpected
 condition that prevented it from fulfilling the request.
-(This error code is needed because a 500 Internal Server
-Error HTTP status code cannot be returned to the client
+(This error code is needed because a 500 (Internal Server
+Error) status code cannot be returned to the client
 via an HTTP redirect.)<a href="#section-4.1.2.1-6.2.2.12.1" class="pilcrow">¶</a></p>
 </dd>
                   <dd class="break"></dd>
@@ -3636,7 +3648,7 @@ via an HTTP redirect.)<a href="#section-4.1.2.1-6.2.2.12.1" class="pilcrow">¶</
                     <p id="section-4.1.2.1-6.2.2.14.1">The authorization server is currently unable to handle
 the request due to a temporary overloading or maintenance
 of the server.  (This error code is needed because a 503
-Service Unavailable HTTP status code cannot be returned
+(Service Unavailable) status code cannot be returned
 to the client via an HTTP redirect.)<a href="#section-4.1.2.1-6.2.2.14.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
@@ -3680,11 +3692,13 @@ client.<a href="#section-4.1.2.1-6.8.1" class="pilcrow">¶</a></p>
 </dl>
 <p id="section-4.1.2.1-7">For example, the authorization server indicates that the request was denied
 by redirecting the user agent with the following HTTP response:<a href="#section-4.1.2.1-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.1.2.1-8">
+<div class="lang-http-message sourcecode" id="section-4.1.2.1-8">
 <pre>
+# NOTE: '\' line wrapping per RFC 8792
+
 HTTP/1.1 302 Found
-Location: https://client.example.com/cb?error=access_denied
-          &amp;state=xyz&amp;iss=https%3A%2F%2Fauthorization-server.example.com
+Location: https://client.example.com/cb?error=access_denied\
+  &amp;state=xyz&amp;iss=https%3A%2F%2Fauthorization-server.example.com
 </pre><a href="#section-4.1.2.1-8" class="pilcrow">¶</a>
 </div>
 </section>
@@ -3725,18 +3739,20 @@ the authorization server MUST deny the request and SHOULD
 revoke (when possible) all access tokens and refresh tokens
 previously issued based on that authorization code.
 See <a href="#authorization-code-reuse" class="auto internal xref">Section 7.5.3</a> for further details.<a href="#section-4.1.3-5" class="pilcrow">¶</a></p>
-<p id="section-4.1.3-6">For example, the client makes the following HTTPS request
-(with extra line breaks for display purposes only):<a href="#section-4.1.3-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.1.3-7">
+<p id="section-4.1.3-6">For example, the client makes the following HTTPS request:<a href="#section-4.1.3-6" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-4.1.3-7">
 <pre>
+# NOTE: '\' line wrapping per RFC 8792
+
 POST /token HTTP/1.1
 Host: server.example.com
 Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
 Content-Type: application/x-www-form-urlencoded
 
-grant_type=authorization_code
-&amp;code=SplxlOBeZQQYbYS6WxSbIA
-&amp;code_verifier=3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
+grant_type=authorization_code\
+&amp;code=SplxlOBeZQQYbYS6WxSbIA\
+&amp;code_verifier=\
+3641a2d12d66101249cdf7a79c000c1f8c05d2aafcf14bf146497bed
 </pre><a href="#section-4.1.3-7" class="pilcrow">¶</a>
 </div>
 <p id="section-4.1.3-8">In addition to the processing rules in <a href="#token-request" class="auto internal xref">Section 3.2.2</a>, the authorization server MUST:<a href="#section-4.1.3-8" class="pilcrow">¶</a></p>
@@ -3821,9 +3837,8 @@ the scope of this specification).<a href="#section-4.2-1" class="pilcrow">¶</a>
           <dd class="break"></dd>
 </dl>
 <p id="section-4.2.1-4">For example, the client makes the following HTTP request using
-transport-layer security (with extra line breaks for display purposes
-only):<a href="#section-4.2.1-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.2.1-5">
+transport-layer security:<a href="#section-4.2.1-4" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-4.2.1-5">
 <pre>
 POST /token HTTP/1.1
 Host: server.example.com
@@ -3890,9 +3905,8 @@ client to which it was issued. Confidential clients
 MUST authenticate with the authorization server as described in
 <a href="#token-endpoint-client-authentication" class="auto internal xref">Section 3.2.1</a>.<a href="#section-4.3.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.3.1-5">For example, the client makes the following HTTP request using
-transport-layer security (with extra line breaks for display purposes
-only):<a href="#section-4.3.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.3.1-6">
+transport-layer security:<a href="#section-4.3.1-5" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-4.3.1-6">
 <pre>
 POST /token HTTP/1.1
 Host: server.example.com
@@ -4010,17 +4024,18 @@ value of the <code>grant_type</code> parameter of the token endpoint, and by
 adding any additional parameters necessary.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <p id="section-4.4-2">For example, to request an access token using the Device Authorization Grant
 as defined by <span>[<a href="#RFC8628" class="cite xref">RFC8628</a>]</span> after the user has authorized the client on a separate device,
-the client makes the following HTTPS request
-(with extra line breaks for display purposes only):<a href="#section-4.4-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.4-3">
+the client makes the following HTTPS request:<a href="#section-4.4-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-4.4-3">
 <pre>
-  POST /token HTTP/1.1
-  Host: server.example.com
-  Content-Type: application/x-www-form-urlencoded
+# NOTE: '\' line wrapping per RFC 8792
 
-  grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code
-  &amp;device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS
-  &amp;client_id=C409020731
+POST /token HTTP/1.1
+Host: server.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code\
+&amp;device_code=GmRhmhcxhwEzkoEqiMEg_DnyEysNkuNhszIySk9eS\
+&amp;client_id=C409020731
 </pre><a href="#section-4.4-3" class="pilcrow">¶</a>
 </div>
 <p id="section-4.4-4">If the access token request is valid and authorized, the
@@ -4064,23 +4079,23 @@ and resource servers MUST ignore access tokens in a URI query parameter.<a href=
           <h4 id="name-authorization-request-heade">
 <a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-authorization-request-heade" class="section-name selfRef">Authorization Request Header Field</a>
           </h4>
-<p id="section-5.1.1-1">When sending the access token in the <code>Authorization</code> request header
-field defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.6.2" class="relref">Section 11.6.2</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, the client uses the <code>Bearer</code>
+<p id="section-5.1.1-1">When sending the access token in the Authorization request header
+field defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.6.2" class="relref">Section 11.6.2</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>, the client uses the <code>Bearer</code>
 scheme to transmit the access token.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1.1-2">For example:<a href="#section-5.1.1-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.1.1-3">
+<div class="lang-http-message sourcecode" id="section-5.1.1-3">
 <pre>
- GET /resource HTTP/1.1
- Host: server.example.com
- Authorization: Bearer mF_9.B5f-4.1JqM
+GET /resource HTTP/1.1
+Host: server.example.com
+Authorization: Bearer mF_9.B5f-4.1JqM
 </pre><a href="#section-5.1.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-5.1.1-4">The syntax of the <code>Authorization</code> header field for this scheme
+<p id="section-5.1.1-4">The syntax of the Authorization header field for this scheme
 follows the usage of the Basic scheme defined in <span><a href="https://rfc-editor.org/rfc/rfc7617#section-2" class="relref">Section 2</a> of [<a href="#RFC7617" class="cite xref">RFC7617</a>]</span>.
 As with Basic, the credentials use the <code>token68</code> syntax
-(<span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.2" class="relref">Section 11.2</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) rather than the auth-param syntax, in order
+(<span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.2" class="relref">Section 11.2</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) rather than the auth-param syntax, in order
 to reflect existing deployments; this syntax is compatible with the
-general authentication framework in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.
+general authentication framework in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>.
 The syntax for Bearer credentials is as follows:<a href="#section-5.1.1-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5.1.1-5">
 <pre>
@@ -4090,11 +4105,11 @@ credentials = "bearer" 1*SP token68
 </pre><a href="#section-5.1.1-5" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1.1-6">Clients SHOULD make authenticated requests with a bearer token using
-the <code>Authorization</code> request header field with the <code>Bearer</code> HTTP
+the Authorization request header field with the <code>Bearer</code> HTTP
 authorization scheme.  Resource servers MUST support this method.<a href="#section-5.1.1-6" class="pilcrow">¶</a></p>
-<p id="section-5.1.1-7">As described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.1" class="relref">Section 11.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, the string <code>bearer</code>
+<p id="section-5.1.1-7">As described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.1" class="relref">Section 11.1</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>, the string <code>bearer</code>
 is case insensitive. This means all of the following are valid uses
-of the <code>Authorization</code> header field:<a href="#section-5.1.1-7" class="pilcrow">¶</a></p>
+of the Authorization header field:<a href="#section-5.1.1-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1.1-8.1">
               <p id="section-5.1.1-8.1.1"><code>Authorization: Bearer mF_9.B5f-4.1JqM</code><a href="#section-5.1.1-8.1.1" class="pilcrow">¶</a></p>
@@ -4122,8 +4137,8 @@ client adds the access token to the request content using the
 all of the following conditions are met:<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1.2-2.1">
-              <p id="section-5.1.2-2.1.1">The HTTP request includes the <code>Content-Type</code> header
-field set to <code>application/x-www-form-urlencoded</code>.<a href="#section-5.1.2-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-5.1.2-2.1.1">The HTTP request includes the Content-Type header
+field (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-8.3" class="relref">Section 8.3</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) set to <code>application/x-www-form-urlencoded</code>.<a href="#section-5.1.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.2-2.2">
               <p id="section-5.1.2-2.2.1">The content follows the encoding requirements of the
@@ -4139,7 +4154,7 @@ of ASCII <span>[<a href="#USASCII" class="cite xref">USASCII</a>]</span> charact
 </li>
             <li class="normal" id="section-5.1.2-2.5">
               <p id="section-5.1.2-2.5.1">The HTTP request method is one for which the content has
-defined semantics.  In particular, this means that the <code>GET</code>
+defined semantics.  In particular, this means that the GET
 method MUST NOT be used.<a href="#section-5.1.2-2.5.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
@@ -4149,7 +4164,7 @@ from the request-specific parameters using <code>&amp;</code> character(s) (ASCI
 code 38).<a href="#section-5.1.2-3" class="pilcrow">¶</a></p>
 <p id="section-5.1.2-4">For example, the client makes the following HTTP request using
 transport-layer security:<a href="#section-5.1.2-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.1.2-5">
+<div class="lang-http-message sourcecode" id="section-5.1.2-5">
 <pre>
 POST /resource HTTP/1.1
 Host: server.example.com
@@ -4160,7 +4175,7 @@ access_token=mF_9.B5f-4.1JqM
 </div>
 <p id="section-5.1.2-6">The <code>application/x-www-form-urlencoded</code> method SHOULD NOT be used
 except in application contexts where participating clients do not
-have access to the <code>Authorization</code> request header field.  Resource
+have access to the Authorization request header field.  Resource
 servers MAY support this method.<a href="#section-5.1.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -4203,10 +4218,10 @@ description of bearer tokens in <a href="#bearer-token-error-codes" class="auto 
           </h4>
 <p id="section-5.3.1-1">If the protected resource request does not include authentication
 credentials or does not contain an access token that enables access
-to the protected resource, the resource server MUST include the HTTP
-<code>WWW-Authenticate</code> response header field; it MAY include it in
-response to other conditions as well.  The <code>WWW-Authenticate</code> header
-field uses the framework defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.<a href="#section-5.3.1-1" class="pilcrow">¶</a></p>
+to the protected resource, the resource server MUST include the
+WWW-Authenticate response header field; it MAY include it in
+response to other conditions as well.  The WWW-Authenticate header
+field uses the framework defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11" class="relref">Section 11</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>.<a href="#section-5.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.3.1-2">All challenges for this token type MUST use the auth-scheme
 value <code>Bearer</code>.  This scheme MAY be followed by one or more
 auth-param values.  The auth-param attributes used or defined by this
@@ -4216,7 +4231,7 @@ attributes MAY be used as well.<a href="#section-5.3.1-2" class="pilcrow">¶</a>
             <dt id="section-5.3.1-3.1">"realm":</dt>
             <dd style="margin-left: 1.5em" id="section-5.3.1-3.2">
               <p id="section-5.3.1-3.2.1">A <code>realm</code> attribute MAY be included to indicate the scope of
-protection in the manner described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.5" class="relref">Section 11.5</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.  The
+protection in the manner described in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.5" class="relref">Section 11.5</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>.  The
 <code>realm</code> attribute MUST NOT appear more than once.<a href="#section-5.3.1-3.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
@@ -4297,14 +4312,14 @@ includes one of the following error codes in the response:<a href="#section-5.3.
 unsupported parameter or parameter value, repeats the same
 parameter, uses more than one method for including an access
 token, or is otherwise malformed.  The resource server SHOULD
-respond with the HTTP 400 (Bad Request) status code.<a href="#section-5.3.2-2.2.1" class="pilcrow">¶</a></p>
+respond with the 400 (Bad Request) status code.<a href="#section-5.3.2-2.2.1" class="pilcrow">¶</a></p>
 </dd>
             <dd class="break"></dd>
 <dt id="section-5.3.2-2.3">"invalid_token":</dt>
             <dd style="margin-left: 1.5em" id="section-5.3.2-2.4">
               <p id="section-5.3.2-2.4.1">The access token provided is expired, revoked, malformed, or
 invalid for other reasons.  The resource server SHOULD respond with
-the HTTP 401 (Unauthorized) status code.  The client MAY
+the 401 (Unauthorized) status code.  The client MAY
 request a new access token and retry the protected resource
 request.<a href="#section-5.3.2-2.4.1" class="pilcrow">¶</a></p>
 </dd>
@@ -4313,7 +4328,7 @@ request.<a href="#section-5.3.2-2.4.1" class="pilcrow">¶</a></p>
             <dd style="margin-left: 1.5em" id="section-5.3.2-2.6">
               <p id="section-5.3.2-2.6.1">The request requires higher privileges (scopes) than provided by the
 scopes granted to the client and represented by the access token.
-The resource server SHOULD respond with the HTTP
+The resource server SHOULD respond with the
 403 (Forbidden) status code and MAY include the <code>scope</code>
 attribute with the scope necessary to access the protected
 resource.<a href="#section-5.3.2-2.6.1" class="pilcrow">¶</a></p>
@@ -4327,7 +4342,7 @@ was unaware that authentication is necessary or attempted using an
 unsupported authentication method), the resource server SHOULD NOT
 include an error code or other error information.<a href="#section-5.3.2-4" class="pilcrow">¶</a></p>
 <p id="section-5.3.2-5">For example:<a href="#section-5.3.2-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.3.2-6">
+<div class="lang-http-message sourcecode" id="section-5.3.2-6">
 <pre>
 HTTP/1.1 401 Unauthorized
 WWW-Authenticate: Bearer realm="example"
@@ -4335,7 +4350,7 @@ WWW-Authenticate: Bearer realm="example"
 </div>
 <p id="section-5.3.2-7">And in response to a protected resource request with an
 authentication attempt using an expired access token:<a href="#section-5.3.2-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-5.3.2-8">
+<div class="lang-http-message sourcecode" id="section-5.3.2-8">
 <pre>
 HTTP/1.1 401 Unauthorized
 WWW-Authenticate: Bearer realm="example",
@@ -4360,19 +4375,19 @@ WWW-Authenticate: Bearer realm="example",
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-defining-access-token-types" class="section-name selfRef">Defining Access Token Types</a>
         </h3>
 <p id="section-6.1-1">Access token types can be defined in one of two ways: by registering them in
-the Access Token Types registry (following the procedures in
+the "OAuth Access Token Types" registry (following the procedures in
 <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.1" class="relref">Section 11.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) or by using a unique absolute URI as the name.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <div id="registered-access-token-types">
 <section id="section-6.1.1">
           <h4 id="name-registered-access-token-typ">
 <a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-registered-access-token-typ" class="section-name selfRef">Registered Access Token Types</a>
           </h4>
-<p id="section-6.1.1-1"><span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span> establishes a common registry in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.4" class="relref">Section 11.4</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>
-for error values to be shared among OAuth token authentication schemes.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1.1-1"><span>[<a href="#RFC6750" class="cite xref">RFC6750</a>]</span> establishes a common registry, the "OAuth Extensions Error
+Registry" (<span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.4" class="relref">Section 11.4</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>), for error values to be shared among OAuth token authentication schemes.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1.1-2">New authentication schemes designed primarily for OAuth token
 authentication SHOULD define a mechanism for providing an error
 status code to the client, in which the error values allowed are
-registered in the error registry established by this specification.<a href="#section-6.1.1-2" class="pilcrow">¶</a></p>
+registered in the "OAuth Extensions Error Registry".<a href="#section-6.1.1-2" class="pilcrow">¶</a></p>
 <p id="section-6.1.1-3">Such schemes MAY limit the set of valid error codes to a subset of
 the registered values.  If the error code is returned using a named
 parameter, the parameter name SHOULD be <code>error</code>.<a href="#section-6.1.1-3" class="pilcrow">¶</a></p>
@@ -4386,7 +4401,7 @@ specification.<a href="#section-6.1.1-5" class="pilcrow">¶</a></p>
 <p id="section-6.1.1-6">Type names MUST conform to the
 type-name ABNF.  If the type definition includes a new HTTP
 authentication scheme, the type name SHOULD be identical to the HTTP
-authentication scheme name (as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.1" class="relref">Section 11.1</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>).  The token type
+authentication scheme name (as defined in <span><a href="https://rfc-editor.org/rfc/rfc9110#section-11.1" class="relref">Section 11.1</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>).  The token type
 <code>example</code> is reserved for use in examples.<a href="#section-6.1.1-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1.1-7">
 <pre>
@@ -4417,7 +4432,7 @@ used.<a href="#section-6.1.2-1" class="pilcrow">¶</a></p>
         </h3>
 <p id="section-6.2-1">New request or response parameters for use with the authorization
 endpoint or the token endpoint are defined and registered in the
-OAuth Parameters registry following the procedure in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.2" class="relref">Section 11.2</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+"OAuth Parameters" registry following the procedure in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.2" class="relref">Section 11.2</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.2-2">Parameter names MUST conform to the param-name ABNF, and parameter
 value syntax MUST be well-defined (e.g., using ABNF or a reference
 to the syntax of an existing parameter).<a href="#section-6.2-2" class="pilcrow">¶</a></p>
@@ -4442,7 +4457,7 @@ other registered values (e.g., begin with <code>companyname_</code>).<a href="#s
 <p id="section-6.3-1">New authorization grant types can be defined by assigning them a
 unique absolute URI for use with the <code>grant_type</code> parameter.  If the
 extension grant type requires additional token endpoint parameters,
-they MUST be registered in the OAuth Parameters registry as described
+they MUST be registered in the "OAuth Parameters" registry as described
 by <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.2" class="relref">Section 11.2</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -4452,8 +4467,8 @@ by <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.2" class="relref
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-defining-new-authorization-e" class="section-name selfRef">Defining New Authorization Endpoint Response Types</a>
         </h3>
 <p id="section-6.4-1">New response types for use with the authorization endpoint are
-defined and registered in the Authorization Endpoint Response Types
-registry following the procedure in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.3" class="relref">Section 11.3</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.  Response type
+defined and registered in the "OAuth Authorization Endpoint Response
+Types" registry following the procedure in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-11.3" class="relref">Section 11.3</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.  Response type
 names MUST conform to the response-type ABNF.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.4-2">
 <pre>
@@ -4556,7 +4571,7 @@ content encryption MUST be applied.<a href="#section-7.1.1.2-2" class="pilcrow">
 information contained in them is at risk of disclosure:
 Bearer tokens MUST NOT be stored in cookies that can be sent in the
 clear.
-See Sections 7 and 8 of <span>[<a href="#RFC6265" class="cite xref">RFC6265</a>]</span> for security
+See Sections 7 and 8 of <span>[<a href="#COOKIES" class="cite xref">COOKIES</a>]</span> for security
 considerations about cookies.<a href="#section-7.1.1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -4962,32 +4977,33 @@ the legitimate client's tokens once it makes the valid request.<a href="#section
 </div>
 <div id="redirect_307">
 <section id="section-7.5.4">
-          <h4 id="name-http-307-redirect">
-<a href="#section-7.5.4" class="section-number selfRef">7.5.4. </a><a href="#name-http-307-redirect" class="section-name selfRef">HTTP 307 Redirect</a>
+          <h4 id="name-307-temporary-redirect-stat">
+<a href="#section-7.5.4" class="section-number selfRef">7.5.4. </a><a href="#name-307-temporary-redirect-stat" class="section-name selfRef">307 (Temporary Redirect) Status Code</a>
           </h4>
 <p id="section-7.5.4-1">An authorization server that redirects a request that potentially contains user
-credentials MUST NOT use the 307 status code (<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4.8" class="relref">Section 15.4.8</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>) for
+credentials MUST NOT use the 307 (Temporary Redirect) status code
+(<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4.8" class="relref">Section 15.4.8</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) for
 redirection.
 If an HTTP redirection (and not, for example,
-JavaScript) is used for such a request, the AS SHOULD use the status
-code 303 ("See Other").<a href="#section-7.5.4-1" class="pilcrow">¶</a></p>
+JavaScript) is used for such a request, the AS SHOULD use the 303
+(See Other) status code.<a href="#section-7.5.4-1" class="pilcrow">¶</a></p>
 <p id="section-7.5.4-2">At the authorization endpoint, a typical protocol flow is that the AS
 prompts the user to enter their credentials in a form that is then
 submitted (using the POST method) back to the authorization
 server.  The AS checks the credentials and, if successful, redirects
 the user agent to the client's redirect URI.<a href="#section-7.5.4-2" class="pilcrow">¶</a></p>
-<p id="section-7.5.4-3">If the status code 307 were used for redirection, the user agent
+<p id="section-7.5.4-3">If the 307 status code were used for redirection, the user agent
 would send the user credentials via a POST request to the client.<a href="#section-7.5.4-3" class="pilcrow">¶</a></p>
 <p id="section-7.5.4-4">This discloses the sensitive credentials to the client.  If the
 client is malicious, it can use the credentials to impersonate
 the user at the AS.<a href="#section-7.5.4-4" class="pilcrow">¶</a></p>
 <p id="section-7.5.4-5">The behavior might be unexpected for developers, but is defined in
-<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4.8" class="relref">Section 15.4.8</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>.  This status code does not require the user
+<span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.4.8" class="relref">Section 15.4.8</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>.  This status code does not require the user
 agent to rewrite the POST request to a GET request and thereby drop
 the form data in the POST request content.<a href="#section-7.5.4-5" class="pilcrow">¶</a></p>
-<p id="section-7.5.4-6">In HTTP <span>[<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>, only the status code 303
+<p id="section-7.5.4-6">In HTTP <span>[<a href="#HTTP" class="cite xref">HTTP</a>]</span>, only the 303 status code
 unambiguously enforces rewriting the HTTP POST request to an HTTP GET
-request.  For all other status codes, including the popular 302, user
+request.  For all other status codes, including the popular 302 (Found), user
 agents can opt not to rewrite POST to GET requests and therefore
 reveal the user credentials to the client.  (In practice, however,
 most user agents will only show this behavior for 307 redirects.)<a href="#section-7.5.4-6" class="pilcrow">¶</a></p>
@@ -5001,7 +5017,7 @@ most user agents will only show this behavior for 307 redirects.)<a href="#secti
 <a href="#section-7.6" class="section-number selfRef">7.6. </a><a href="#name-ensuring-endpoint-authentic" class="section-name selfRef">Ensuring Endpoint Authenticity</a>
         </h3>
 <p id="section-7.6-1">The risk related to man-in-the-middle attacks is mitigated by the
-mandatory use of channel security mechanisms such as TLS <span>[<a href="#RFC9846" class="cite xref">RFC9846</a>]</span>
+mandatory use of channel security mechanisms such as TLS (<span>[<a href="#TLS" class="cite xref">TLS</a>]</span>)
 for communicating with the authorization and token endpoints.
 See <a href="#communication-security" class="auto internal xref">Section 1.5</a> for further details.<a href="#section-7.6-1" class="pilcrow">¶</a></p>
 </section>
@@ -5151,7 +5167,7 @@ credentials, change the scope of access granted to the client,
 and potentially access the user's resources.<a href="#section-7.11-2" class="pilcrow">¶</a></p>
 <p id="section-7.11-3">Authorization servers MUST prevent clickjacking attacks. Multiple
 countermeasures are described in <span>[<a href="#RFC6819" class="cite xref">RFC6819</a>]</span>, including the use of the
-<code>X-Frame-Options</code> HTTP response header field and frame-busting
+X-Frame-Options response header field <span>[<a href="#RFC7034" class="cite xref">RFC7034</a>]</span> and frame-busting
 JavaScript. In addition to those, authorization servers SHOULD also
 use Content Security Policy (CSP) level 2 <span>[<a href="#CSP-2" class="cite xref">CSP-2</a>]</span> or greater.<a href="#section-7.11-3" class="pilcrow">¶</a></p>
 <p id="section-7.11-4">To be effective, CSP must be used on the authorization endpoint and,
@@ -5171,13 +5187,15 @@ policies that restrict the origin of frames (using <code>frame-ancestors</code>)
 together with those that restrict the sources of scripts allowed to
 execute on an HTML page (by using <code>script-src</code>). A non-normative
 example of such a policy is shown in the following listing:<a href="#section-7.11-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7.11-6">
+<div class="lang-http-message sourcecode" id="section-7.11-6">
 <pre>
 HTTP/1.1 200 OK
+Content-Type: text/html
 Content-Security-Policy: frame-ancestors https://ext.example.org:8000
 Content-Security-Policy: script-src 'self'
 X-Frame-Options: ALLOW-FROM https://ext.example.org:8000
-...
+
+[ content ]
 </pre><a href="#section-7.11-6" class="pilcrow">¶</a>
 </div>
 <p id="section-7.11-7">Because some user agents do not support <span>[<a href="#CSP-2" class="cite xref">CSP-2</a>]</span>, this technique
@@ -5298,7 +5316,7 @@ terminates and the back-end server that provides the resource. In
 such deployments, sufficient measures MUST be employed to ensure
 confidentiality of the access token between the front-end and
 back-end servers; encryption of the token is one such possible measure.<a href="#section-7.14-1" class="pilcrow">¶</a></p>
-<p id="section-7.14-2">See <span><a href="https://rfc-editor.org/rfc/rfc9110#section-17.2" class="relref">Section 17.2</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span> for further information.<a href="#section-7.14-2" class="pilcrow">¶</a></p>
+<p id="section-7.14-2">See <span><a href="https://rfc-editor.org/rfc/rfc9110#section-17.2" class="relref">Section 17.2</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span> for further information.<a href="#section-7.14-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mix-up">
@@ -5550,7 +5568,7 @@ availability and user experience of which vary by platform.<a href="#section-8.4
 <a href="#section-8.4.1" class="section-number selfRef">8.4.1. </a><a href="#name-claimed-https-scheme-uri-re" class="section-name selfRef">Claimed "https" Scheme URI Redirection</a>
           </h4>
 <p id="section-8.4.1-1">Some operating systems, in particular mobile operating systems, allow apps to claim <code>https</code> URIs
-(see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.2.2" class="relref">Section 4.2.2</a> of [<a href="#RFC9110" class="cite xref">RFC9110</a>]</span>)
+(see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.2.2" class="relref">Section 4.2.2</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>)
 in the domains they control.  When the browser encounters a
 claimed URI, instead of the page being loaded in the browser, the
 native app is launched with the URI supplied as a launch parameter.<a href="#section-8.4.1-1" class="pilcrow">¶</a></p>
@@ -5958,7 +5976,7 @@ attacks.<a href="#section-9.3.3-2" class="pilcrow">¶</a></p>
 authorization server and the resource server. These requests are
 typically cross-origin requests, and are subject to the browser's
 restrictions on cross-origin communication. The authorization server and
-resource server MUST send the necessary CORS <span>[<a href="#WHATWG.CORS" class="cite xref">WHATWG.CORS</a>]</span> headers to
+resource server MUST send the necessary CORS <span>[<a href="#WHATWG.CORS" class="cite xref">WHATWG.CORS</a>]</span> header fields to
 enable the app to make these requests, as described in
 <a href="#token-endpoint" class="auto internal xref">Section 3.2</a>.<a href="#section-9.3.4-1" class="pilcrow">¶</a></p>
 </section>
@@ -6101,7 +6119,7 @@ as per <span><a href="https://rfc-editor.org/rfc/rfc10017#section-6.3.2.3" class
 the <code>redirect_uri</code> parameter<a href="#section-10-4.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-10-4.9">
-          <p id="section-10-4.9.1">Authorization servers must support client credentials in the request body<a href="#section-10-4.9.1" class="pilcrow">¶</a></p>
+          <p id="section-10-4.9.1">Authorization servers must support client credentials in the request content<a href="#section-10-4.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-10-4.10">
           <p id="section-10-4.10.1">The PKCE <code>plain</code> method is removed<a href="#section-10-4.10.1" class="pilcrow">¶</a></p>
@@ -6173,6 +6191,14 @@ work is based upon. No changes to those registries are required by this specific
             <span class="refAuthor">Sheffer, Y.</span>, <span class="refAuthor">Saint-Andre, P.</span>, and <span class="refAuthor">T. Fossati</span>, <span class="refTitle">"Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)"</span>, <span class="seriesInfo">BCP 195</span>, <span class="seriesInfo">RFC 9325</span>, <span class="seriesInfo">DOI 10.17487/RFC9325</span>, <time datetime="2022-11" class="refDate">November 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9325">https://www.rfc-editor.org/info/rfc9325</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
+<dt id="HTTP">[HTTP]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="HTTP-CACHING">[HTTP-CACHING]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9111">https://www.rfc-editor.org/rfc/rfc9111</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -6229,14 +6255,6 @@ work is based upon. No changes to those registries are required by this specific
         <dd>
 <span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">STD 90</span>, <span class="seriesInfo">RFC 8259</span>, <span class="seriesInfo">DOI 10.17487/RFC8259</span>, <time datetime="2017-12" class="refDate">December 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8259">https://www.rfc-editor.org/rfc/rfc8259</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9110">[RFC9110]</dt>
-        <dd>
-<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9111">[RFC9111]</dt>
-        <dd>
-<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9111">https://www.rfc-editor.org/rfc/rfc9111</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC9207">[RFC9207]</dt>
         <dd>
 <span class="refAuthor">Meyer zu Selhausen, K.</span> and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Issuer Identification"</span>, <span class="seriesInfo">RFC 9207</span>, <span class="seriesInfo">DOI 10.17487/RFC9207</span>, <time datetime="2022-03" class="refDate">March 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9207">https://www.rfc-editor.org/rfc/rfc9207</a>&gt;</span>. </dd>
@@ -6245,7 +6263,7 @@ work is based upon. No changes to those registries are required by this specific
         <dd>
 <span class="refAuthor">Lodderstedt, T.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Labunets, A.</span>, and <span class="refAuthor">D. Fett</span>, <span class="refTitle">"Best Current Practice for OAuth 2.0 Security"</span>, <span class="seriesInfo">BCP 240</span>, <span class="seriesInfo">RFC 9700</span>, <span class="seriesInfo">DOI 10.17487/RFC9700</span>, <time datetime="2025-01" class="refDate">January 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9700">https://www.rfc-editor.org/rfc/rfc9700</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9846">[RFC9846]</dt>
+<dt id="TLS">[TLS]</dt>
         <dd>
 <span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 9846</span>, <span class="seriesInfo">DOI 10.17487/RFC9846</span>, <time datetime="2026-07" class="refDate">July 2026</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9846">https://www.rfc-editor.org/rfc/rfc9846</a>&gt;</span>. </dd>
 <dd class="break"></dd>
@@ -6274,9 +6292,17 @@ work is based upon. No changes to those registries are required by this specific
 <a href="#section-12.2" class="section-number selfRef">12.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="COOKIES">[COOKIES]</dt>
+        <dd>
+<span class="refAuthor">Barth, A.</span>, <span class="refTitle">"HTTP State Management Mechanism"</span>, <span class="seriesInfo">RFC 6265</span>, <span class="seriesInfo">DOI 10.17487/RFC6265</span>, <time datetime="2011-04" class="refDate">April 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6265">https://www.rfc-editor.org/rfc/rfc6265</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="CSP-2">[CSP-2]</dt>
         <dd>
 <span class="refTitle">"Content Security Policy Level 2"</span>, <time datetime="2016-12" class="refDate">December 2016</time>, <span>&lt;<a href="https://www.w3.org/TR/CSP2">https://www.w3.org/TR/CSP2</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9112">[HTTP/1.1]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP/1.1"</span>, <span class="seriesInfo">STD 99</span>, <span class="seriesInfo">RFC 9112</span>, <span class="seriesInfo">DOI 10.17487/RFC9112</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9112">https://www.rfc-editor.org/rfc/rfc9112</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bradley-oauth-jwt-encoded-state">[I-D.bradley-oauth-jwt-encoded-state]</dt>
         <dd>
@@ -6314,10 +6340,6 @@ work is based upon. No changes to those registries are required by this specific
         <dd>
 <span class="refTitle">"OWASP Cheat Sheet Series - Unvalidated Redirects and Forwards"</span>, <time datetime="2020" class="refDate">2020</time>, <span>&lt;<a href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC6265">[RFC6265]</dt>
-        <dd>
-<span class="refAuthor">Barth, A.</span>, <span class="refTitle">"HTTP State Management Mechanism"</span>, <span class="seriesInfo">RFC 6265</span>, <span class="seriesInfo">DOI 10.17487/RFC6265</span>, <time datetime="2011-04" class="refDate">April 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6265">https://www.rfc-editor.org/rfc/rfc6265</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC6819">[RFC6819]</dt>
         <dd>
 <span class="refAuthor">Lodderstedt, T., Ed.</span>, <span class="refAuthor">McGloin, M.</span>, and <span class="refAuthor">P. Hunt</span>, <span class="refTitle">"OAuth 2.0 Threat Model and Security Considerations"</span>, <span class="seriesInfo">RFC 6819</span>, <span class="seriesInfo">DOI 10.17487/RFC6819</span>, <time datetime="2013-01" class="refDate">January 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6819">https://www.rfc-editor.org/rfc/rfc6819</a>&gt;</span>. </dd>
@@ -6325,6 +6347,10 @@ work is based upon. No changes to those registries are required by this specific
 <dt id="RFC7009">[RFC7009]</dt>
         <dd>
 <span class="refAuthor">Lodderstedt, T., Ed.</span>, <span class="refAuthor">Dronia, S.</span>, and <span class="refAuthor">M. Scurtescu</span>, <span class="refTitle">"OAuth 2.0 Token Revocation"</span>, <span class="seriesInfo">RFC 7009</span>, <span class="seriesInfo">DOI 10.17487/RFC7009</span>, <time datetime="2013-08" class="refDate">August 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7009">https://www.rfc-editor.org/rfc/rfc7009</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7034">[RFC7034]</dt>
+        <dd>
+<span class="refAuthor">Ross, D.</span> and <span class="refAuthor">T. Gondrom</span>, <span class="refTitle">"HTTP Header Field X-Frame-Options"</span>, <span class="seriesInfo">RFC 7034</span>, <span class="seriesInfo">DOI 10.17487/RFC7034</span>, <time datetime="2013-10" class="refDate">October 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7034">https://www.rfc-editor.org/rfc/rfc7034</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7519">[RFC7519]</dt>
         <dd>
@@ -6365,10 +6391,6 @@ work is based upon. No changes to those registries are required by this specific
 <dt id="RFC9068">[RFC9068]</dt>
         <dd>
 <span class="refAuthor">Bertocci, V.</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens"</span>, <span class="seriesInfo">RFC 9068</span>, <span class="seriesInfo">DOI 10.17487/RFC9068</span>, <time datetime="2021-10" class="refDate">October 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9068">https://www.rfc-editor.org/rfc/rfc9068</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9112">[RFC9112]</dt>
-        <dd>
-<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP/1.1"</span>, <span class="seriesInfo">STD 99</span>, <span class="seriesInfo">RFC 9112</span>, <span class="seriesInfo">DOI 10.17487/RFC9112</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9112">https://www.rfc-editor.org/rfc/rfc9112</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9126">[RFC9126]</dt>
         <dd>
@@ -6688,7 +6710,7 @@ DIGIT = %x30-39
 <p id="appendix-B-1">At the time of publication of <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>, the
 <code>application/x-www-form-urlencoded</code> media type was defined in
 Section 17.13.4 of <span>[<a href="#W3C.REC-html401-19991224" class="cite xref">W3C.REC-html401-19991224</a>]</span> but not registered in
-the IANA MIME Media Types registry
+the IANA "Media Types" registry
 (<a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>).  Furthermore, that
 definition is incomplete, as it does not consider non-ASCII
 characters.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
@@ -6884,55 +6906,58 @@ into the octet sequence below (using hexadecimal notation):<a href="#appendix-B-
 <p id="appendix-F-2">-17<a href="#appendix-F-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-3.1">
-          <p id="appendix-F-3.1.1">Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client<a href="#appendix-F-3.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.1.1">Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as <code>http-message</code> and wrapped per RFC 8792<a href="#appendix-F-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.2">
-          <p id="appendix-F-3.2.1">Removed duplicate "Access Token Privilege Restriction" section<a href="#appendix-F-3.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.2.1">Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client<a href="#appendix-F-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.3">
-          <p id="appendix-F-3.3.1">Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology<a href="#appendix-F-3.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.3.1">Removed duplicate "Access Token Privilege Restriction" section<a href="#appendix-F-3.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.4">
-          <p id="appendix-F-3.4.1">Clarified that claimed <code>https</code> scheme redirects do not authenticate the client<a href="#appendix-F-3.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.4.1">Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology<a href="#appendix-F-3.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.5">
-          <p id="appendix-F-3.5.1">Restored loopback interception note from RFC 8252<a href="#appendix-F-3.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.5.1">Clarified that claimed <code>https</code> scheme redirects do not authenticate the client<a href="#appendix-F-3.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.6">
-          <p id="appendix-F-3.6.1">Updated attribution of the token threat list to NIST SP 800-63-1<a href="#appendix-F-3.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.6.1">Restored loopback interception note from RFC 8252<a href="#appendix-F-3.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.7">
-          <p id="appendix-F-3.7.1">Clarified scope of grants and refresh token requests when the resource owner revokes scopes<a href="#appendix-F-3.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.7.1">Updated attribution of the token threat list to NIST SP 800-63-1<a href="#appendix-F-3.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.8">
-          <p id="appendix-F-3.8.1">Added note about refresh token rotation and lost responses<a href="#appendix-F-3.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.8.1">Clarified scope of grants and refresh token requests when the resource owner revokes scopes<a href="#appendix-F-3.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.9">
-          <p id="appendix-F-3.9.1">Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request<a href="#appendix-F-3.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.9.1">Added note about refresh token rotation and lost responses<a href="#appendix-F-3.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.10">
-          <p id="appendix-F-3.10.1">Filled in the Browser-Based Applications section with the normative requirements from RFC 10017<a href="#appendix-F-3.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.10.1">Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request<a href="#appendix-F-3.10.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.11">
-          <p id="appendix-F-3.11.1">Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017<a href="#appendix-F-3.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.11.1">Filled in the Browser-Based Applications section with the normative requirements from RFC 10017<a href="#appendix-F-3.11.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.12">
-          <p id="appendix-F-3.12.1">Made auth-param values optional in the <code>WWW-Authenticate</code> Bearer challenge<a href="#appendix-F-3.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.12.1">Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017<a href="#appendix-F-3.12.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.13">
-          <p id="appendix-F-3.13.1">Clarified <code>WWW-Authenticate</code> behavior for client authentication methods that do not use an HTTP authentication scheme<a href="#appendix-F-3.13.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.13.1">Made auth-param values optional in the <code>WWW-Authenticate</code> Bearer challenge<a href="#appendix-F-3.13.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.14">
-          <p id="appendix-F-3.14.1">Clarified that the query component of the redirect URI and authorization endpoint must not include parameters defined for the request or response<a href="#appendix-F-3.14.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.14.1">Clarified <code>WWW-Authenticate</code> behavior for client authentication methods that do not use an HTTP authentication scheme<a href="#appendix-F-3.14.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.15">
-          <p id="appendix-F-3.15.1">Clarified serialization of authorization request parameters when using <code>GET</code> or <code>POST</code><a href="#appendix-F-3.15.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.15.1">Clarified that the query component of the redirect URI and authorization endpoint must not include parameters defined for the request or response<a href="#appendix-F-3.15.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.16">
-          <p id="appendix-F-3.16.1">Added note about interoperability with OAuth 2.0 clients<a href="#appendix-F-3.16.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.16.1">Clarified serialization of authorization request parameters when using <code>GET</code> or <code>POST</code><a href="#appendix-F-3.16.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.17">
-          <p id="appendix-F-3.17.1">Editorial cleanups<a href="#appendix-F-3.17.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.17.1">Added note about interoperability with OAuth 2.0 clients<a href="#appendix-F-3.17.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-3.18">
+          <p id="appendix-F-3.18.1">Editorial cleanups<a href="#appendix-F-3.18.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-F-4">-16<a href="#appendix-F-4" class="pilcrow">¶</a></p>
