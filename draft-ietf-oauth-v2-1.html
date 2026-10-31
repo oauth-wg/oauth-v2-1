@@ -4806,8 +4806,8 @@ or to be issued longer-lasting tokens.<a href="#section-7.2-3" class="pilcrow">�
 <p id="section-7.3-1">If a confidential client has its credentials stolen,
 a malicious client can impersonate the client and obtain access
 to protected resources.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
-<p id="section-7.3-2">The authorization server SHOULD enforce explicit resource owner
-authentication and provide the resource owner with information about
+<p id="section-7.3-2">The authorization server SHOULD require active resource owner
+interaction and provide the resource owner with information about
 the client and the requested authorization scope and lifetime.  It is
 up to the resource owner to review the information in the context of
 the current client and to authorize or deny the request.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
@@ -6905,76 +6905,79 @@ into the octet sequence below (using hexadecimal notation):<a href="#appendix-B-
 <p id="appendix-F-2">-17<a href="#appendix-F-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-F-3.1">
-          <p id="appendix-F-3.1.1">Added examples of authorization server policies for issuing refresh tokens<a href="#appendix-F-3.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.1.1">Clarified that the client impersonation mitigation requires active resource owner interaction rather than explicit re-authentication<a href="#appendix-F-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.2">
-          <p id="appendix-F-3.2.1">Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as <code>http-message</code> and wrapped per RFC 8792<a href="#appendix-F-3.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.2.1">Added examples of authorization server policies for issuing refresh tokens<a href="#appendix-F-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.3">
-          <p id="appendix-F-3.3.1">Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client<a href="#appendix-F-3.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.3.1">Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as <code>http-message</code> and wrapped per RFC 8792<a href="#appendix-F-3.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.4">
-          <p id="appendix-F-3.4.1">Removed duplicate "Access Token Privilege Restriction" section<a href="#appendix-F-3.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.4.1">Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client<a href="#appendix-F-3.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.5">
-          <p id="appendix-F-3.5.1">Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology<a href="#appendix-F-3.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.5.1">Removed duplicate "Access Token Privilege Restriction" section<a href="#appendix-F-3.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.6">
-          <p id="appendix-F-3.6.1">Clarified that claimed <code>https</code> scheme redirects do not authenticate the client<a href="#appendix-F-3.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.6.1">Clarified that redirect URI comparison is case-sensitive and aligned loopback redirect URI terminology<a href="#appendix-F-3.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.7">
-          <p id="appendix-F-3.7.1">Restored loopback interception note from RFC 8252<a href="#appendix-F-3.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.7.1">Clarified that claimed <code>https</code> scheme redirects do not authenticate the client<a href="#appendix-F-3.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.8">
-          <p id="appendix-F-3.8.1">Updated attribution of the token threat list to NIST SP 800-63-1<a href="#appendix-F-3.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.8.1">Restored loopback interception note from RFC 8252<a href="#appendix-F-3.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.9">
-          <p id="appendix-F-3.9.1">Clarified scope of grants and refresh token requests when the resource owner revokes scopes<a href="#appendix-F-3.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.9.1">Updated attribution of the token threat list to NIST SP 800-63-1<a href="#appendix-F-3.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.10">
-          <p id="appendix-F-3.10.1">Added note about refresh token rotation and lost responses<a href="#appendix-F-3.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.10.1">Clarified scope of grants and refresh token requests when the resource owner revokes scopes<a href="#appendix-F-3.10.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.11">
-          <p id="appendix-F-3.11.1">Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request<a href="#appendix-F-3.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.11.1">Added note about refresh token rotation and lost responses<a href="#appendix-F-3.11.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.12">
-          <p id="appendix-F-3.12.1">Filled in the Browser-Based Applications section with the normative requirements from RFC 10017<a href="#appendix-F-3.12.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.12.1">Updated abstract protocol flow diagram and description to show the authorization server as the intermediary for the authorization request<a href="#appendix-F-3.12.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.13">
-          <p id="appendix-F-3.13.1">Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017<a href="#appendix-F-3.13.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.13.1">Filled in the Browser-Based Applications section with the normative requirements from RFC 10017<a href="#appendix-F-3.13.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.14">
-          <p id="appendix-F-3.14.1">Made auth-param values optional in the <code>WWW-Authenticate</code> Bearer challenge<a href="#appendix-F-3.14.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.14.1">Updated references to OAuth 2.0 for Browser-Based Applications to the published RFC 10017<a href="#appendix-F-3.14.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.15">
-          <p id="appendix-F-3.15.1">Clarified <code>WWW-Authenticate</code> behavior for client authentication methods that do not use an HTTP authentication scheme<a href="#appendix-F-3.15.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.15.1">Made auth-param values optional in the <code>WWW-Authenticate</code> Bearer challenge<a href="#appendix-F-3.15.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.16">
-          <p id="appendix-F-3.16.1">Clarified that the query component of the redirect URI and authorization endpoint must not include parameters defined for the request or response<a href="#appendix-F-3.16.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.16.1">Clarified <code>WWW-Authenticate</code> behavior for client authentication methods that do not use an HTTP authentication scheme<a href="#appendix-F-3.16.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.17">
-          <p id="appendix-F-3.17.1">Clarified serialization of authorization request parameters when using <code>GET</code> or <code>POST</code><a href="#appendix-F-3.17.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.17.1">Clarified that the query component of the redirect URI and authorization endpoint must not include parameters defined for the request or response<a href="#appendix-F-3.17.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.18">
-          <p id="appendix-F-3.18.1">Added note about interoperability with OAuth 2.0 clients<a href="#appendix-F-3.18.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.18.1">Clarified serialization of authorization request parameters when using <code>GET</code> or <code>POST</code><a href="#appendix-F-3.18.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.19">
-          <p id="appendix-F-3.19.1">Clarified that the privileges in an access token are not necessarily the only factor in a resource server's access control decision<a href="#appendix-F-3.19.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.19.1">Added note about interoperability with OAuth 2.0 clients<a href="#appendix-F-3.19.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.20">
-          <p id="appendix-F-3.20.1">Added a reference to RFC 10017 for considerations on choosing a CORS policy<a href="#appendix-F-3.20.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.20.1">Clarified that the privileges in an access token are not necessarily the only factor in a resource server's access control decision<a href="#appendix-F-3.20.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.21">
-          <p id="appendix-F-3.21.1">Simplified mix-up defense via issuer identification to rely on the required <code>iss</code> response parameter<a href="#appendix-F-3.21.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.21.1">Added a reference to RFC 10017 for considerations on choosing a CORS policy<a href="#appendix-F-3.21.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.22">
-          <p id="appendix-F-3.22.1">Mentioned <code>state</code> alongside the authorization code in the Value Sizes section<a href="#appendix-F-3.22.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.22.1">Simplified mix-up defense via issuer identification to rely on the required <code>iss</code> response parameter<a href="#appendix-F-3.22.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.23">
-          <p id="appendix-F-3.23.1">Replaced obsolete and superseded references<a href="#appendix-F-3.23.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.23.1">Mentioned <code>state</code> alongside the authorization code in the Value Sizes section<a href="#appendix-F-3.23.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-F-3.24">
-          <p id="appendix-F-3.24.1">Editorial cleanups<a href="#appendix-F-3.24.1" class="pilcrow">¶</a></p>
+          <p id="appendix-F-3.24.1">Replaced obsolete and superseded references<a href="#appendix-F-3.24.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-F-3.25">
+          <p id="appendix-F-3.25.1">Editorial cleanups<a href="#appendix-F-3.25.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-F-4">-16<a href="#appendix-F-4" class="pilcrow">¶</a></p>

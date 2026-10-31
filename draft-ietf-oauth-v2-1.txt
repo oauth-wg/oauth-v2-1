@@ -2914,11 +2914,11 @@ Table of Contents
    client can impersonate the client and obtain access to protected
    resources.
 
-   The authorization server SHOULD enforce explicit resource owner
-   authentication and provide the resource owner with information about
-   the client and the requested authorization scope and lifetime.  It is
-   up to the resource owner to review the information in the context of
-   the current client and to authorize or deny the request.
+   The authorization server SHOULD require active resource owner
+   interaction and provide the resource owner with information about the
+   client and the requested authorization scope and lifetime.  It is up
+   to the resource owner to review the information in the context of the
+   current client and to authorize or deny the request.
 
    The authorization server SHOULD NOT process repeated authorization
    requests automatically (without active resource owner interaction)
@@ -4815,6 +4815,9 @@ Appendix F.  Document History
    This section is to be removed before publishing as an RFC.
 
    -17
+
+   *  Clarified that the client impersonation mitigation requires active
+      resource owner interaction rather than explicit re-authentication
 
    *  Added examples of authorization server policies for issuing
       refresh tokens
