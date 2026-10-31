@@ -2892,12 +2892,12 @@ be processed as if no previous request had been approved.
 
 Measures such as claimed `https` scheme redirects provide stronger
 assurance than private-use URI schemes that the authorization response
-is delivered to the intended app, and authorization servers MAY take
+is delivered to the intended app, and authorization servers may take
 this into account when deciding whether to process a repeated
 authorization request automatically. Such measures do not authenticate
 the client, and do not make the client a confidential client. Some
 operating systems may offer alternative platform-specific identity
-features that MAY be used similarly, as appropriate.
+features that may be used similarly, as appropriate.
 
 ### Impersonation of Browser-Based Applications {#browser-based-application-impersonation}
 
@@ -2905,7 +2905,7 @@ Authorization servers restrict redirect URIs to a fixed set of
 URIs, preventing the use of wildcard domains, wildcard
 paths, or wildcard query string components as described in {{registration-requirements}}.
 When a client uses an absolute `https` URI as a redirect URI,
-an exact match MAY be accepted by authorization servers as proof
+an exact match may be accepted by authorization servers as proof
 of identity of a browser-based application for the purpose of deciding
 whether to process an authorization request automatically when a previous
 request for the same `client_id` has already been approved.
