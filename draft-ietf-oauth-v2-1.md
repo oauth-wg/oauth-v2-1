@@ -8,6 +8,7 @@ wg: OAuth Working Group
 kw: Internet-Draft
 cat: std
 area: Security
+obsoletes: 6749, 6750
 
 pi:
   toc: yes
@@ -1432,7 +1433,14 @@ with the following parameters and a 200 (OK) status code:
      token request.
 
 Authorization servers SHOULD determine, based on a risk assessment
-and their own policies, whether to issue refresh tokens to a certain client.  If the
+and their own policies, whether to issue refresh tokens to a certain client.
+For example, an authorization server might issue refresh tokens only to
+clients that are registered to receive them, only when the client requests
+a particular scope (such as the `offline_access` scope defined in
+{{OpenID.Connect}}), or depending on whether the client is confidential or
+public, and might tie the lifetime of the refresh token to the resource
+owner's session at the authorization server, as recommended for
+browser-based applications in {{browser-based-apps-refresh-tokens}}.  If the
 authorization server decides not to issue refresh tokens, the client
 MAY obtain new access tokens by starting the OAuth flow over, for example, by
 initiating a new authorization code request.  In such a case, the authorization
@@ -2878,8 +2886,8 @@ If a confidential client has its credentials stolen,
 a malicious client can impersonate the client and obtain access
 to protected resources.
 
-The authorization server SHOULD enforce explicit resource owner
-authentication and provide the resource owner with information about
+The authorization server SHOULD require active resource owner
+interaction and provide the resource owner with information about
 the client and the requested authorization scope and lifetime.  It is
 up to the resource owner to review the information in the context of
 the current client and to authorize or deny the request.
@@ -2902,12 +2910,12 @@ be processed as if no previous request had been approved.
 
 Measures such as claimed `https` scheme redirects provide stronger
 assurance than private-use URI schemes that the authorization response
-is delivered to the intended app, and authorization servers MAY take
+is delivered to the intended app, and authorization servers may take
 this into account when deciding whether to process a repeated
 authorization request automatically. Such measures do not authenticate
 the client, and do not make the client a confidential client. Some
 operating systems may offer alternative platform-specific identity
-features that MAY be used similarly, as appropriate.
+features that may be used similarly, as appropriate.
 
 ### Impersonation of Browser-Based Applications {#browser-based-application-impersonation}
 
@@ -2915,7 +2923,7 @@ Authorization servers restrict redirect URIs to a fixed set of
 URIs, preventing the use of wildcard domains, wildcard
 paths, or wildcard query string components as described in {{registration-requirements}}.
 When a client uses an absolute `https` URI as a redirect URI,
-an exact match MAY be accepted by authorization servers as proof
+an exact match may be accepted by authorization servers as proof
 of identity of a browser-based application for the purpose of deciding
 whether to process an authorization request automatically when a previous
 request for the same `client_id` has already been approved.
@@ -3896,7 +3904,7 @@ proof of the client's identity. Without additional measures, such clients
 are subject to client impersonation
 (see {{browser-based-application-impersonation}}).
 
-### Refresh Tokens for Browser-Based Applications
+### Refresh Tokens for Browser-Based Applications {#browser-based-apps-refresh-tokens}
 
 For browser-based applications, the refresh token is a bearer token unless the
 app uses a mechanism such as DPoP {{RFC9449}}. As a result, the risk of a
@@ -4339,7 +4347,7 @@ The following is a list of extensions that are well established at the time of p
 
 This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Applications. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
 
-The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Andrii Deinega, Bob Hamburg, Brian Campbell, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan, Goutam Adwant, Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Michael Jones, Michael Peck, Roberto Polli, Tim Würtele, and Vittorio Bertocci.
+The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Andrii Deinega, Bob Hamburg, Brian Campbell, Brian Pontarelli, Brock Allen, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan, Frederik Krogsdal Jacobsen, George Fletcher, Goutam Adwant, Jeremy Tennant, Johannes Koch, Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Lauritz Holtmann, Max Gerber, Michael Jones, Michael Peck, Nick Watson, Roberto Polli, Shon T. Urbas, Tim Würtele, and Vittorio Bertocci.
 
 Discussions around this specification have also occurred at the OAuth Security Workshop in 2021 and 2022. The authors thank the organizers of the workshop (Guido Schmitz, Steinar Noem, and Daniel Fett) for hosting an event that's conducive to collaboration and community input.
 
@@ -4347,9 +4355,18 @@ Discussions around this specification have also occurred at the OAuth Security W
 # Document History
 {: removeInRFC="true"}
 
--17
+-18
 
 * Restricted access token values to the `token68` syntax so they can always be used with HTTP authentication schemes
+
+-17
+
+* Added `obsoletes: 6749, 6750` to the document metadata
+* Added `access_token` to the parameters called out in Injection and Input Validation
+* Changed "MAY" to "may" in the client impersonation subsections, since they describe inputs to a decision made only by the authorization server
+* Updated the `application/x-www-form-urlencoded` appendix to reference the WHATWG URL Standard and its IANA registration, and used "URL" consistently for the authorization endpoint and authorization request
+* Clarified that the client impersonation mitigation requires active resource owner interaction rather than explicit re-authentication
+* Added examples of authorization server policies for issuing refresh tokens
 * Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as `http-message` and wrapped per RFC 8792
 * Clarified that an authorization server supporting both OAuth 2.0 and OAuth 2.1 clients determines which rules apply to each client through its configuration for that client
 * Removed duplicate "Access Token Privilege Restriction" section
