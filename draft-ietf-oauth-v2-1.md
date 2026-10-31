@@ -4342,6 +4342,10 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 -17
 
+* Added `obsoletes: 6749, 6750` to the document metadata
+* Added `access_token` to the parameters called out in Injection and Input Validation
+* Changed "MAY" to "may" in the client impersonation subsections, since they describe inputs to a decision made only by the authorization server
+* Updated the `application/x-www-form-urlencoded` appendix to reference the WHATWG URL Standard and its IANA registration, and used "URL" consistently for the authorization endpoint and authorization request
 * Clarified that the client impersonation mitigation requires active resource owner interaction rather than explicit re-authentication
 * Added examples of authorization server policies for issuing refresh tokens
 * Editorial alignment with the HTTP WG style guide: named references for HTTP, HTTP caching, HTTP/1.1, TLS, and cookies; status code, field, and method formatting; quoted registry names; HTTP examples labeled as `http-message` and wrapped per RFC 8792
