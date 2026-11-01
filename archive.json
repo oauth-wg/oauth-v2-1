@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-29T00:15:17.623061+00:00",
+  "timestamp": "2026-11-01T00:15:55.958995+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -634,11 +634,12 @@
       "assignees": [],
       "labels": [
         "draft-00-feedback",
-        "ietf-process"
+        "ietf-process",
+        "ietf-127"
       ],
       "body": "We need to figure out exactly what and how this draft replaces and obsoletes according to the IETF processes. Given the number of drafts that it's rolling up we need to make sure the references are in the right place and it's done properly.",
       "createdAt": "2021-02-02T01:12:03Z",
-      "updatedAt": "2022-06-28T23:40:06Z",
+      "updatedAt": "2026-10-31T03:40:45Z",
       "closedAt": null,
       "comments": [
         {
@@ -668,6 +669,13 @@
           "body": "any news?",
           "createdAt": "2022-06-10T06:30:52Z",
           "updatedAt": "2022-06-10T06:30:52Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@aaronpk @ioggstream \n\nHave we gotten guidance from the AD on this? I can ask if not.\n",
+          "createdAt": "2026-10-29T03:21:04Z",
+          "updatedAt": "2026-10-29T03:21:04Z"
         }
       ]
     },
@@ -1692,7 +1700,7 @@
       "id": "MDU6SXNzdWU4MzIzNTM1NjA=",
       "title": "Clarify differences in refresh token responses",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/58",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1704,8 +1712,8 @@
       ],
       "body": "Section 5.1\r\n\r\nFrom Vittorio:\r\n\r\n> On the refresh_token parameter. The lack of details in how OAuth2 describes how/when an AS returns refresh tokens led to today\u2019s complicated situation in which many implementations issue RTs only when OIDC\u2019s offline_access is received in the scopes, as it was the only mention in public specs describing a concrete behavior. See the associated online_access discussion on the OIDC list, as RTs gain importance as session artifacts of sort for SPAs now that implicit is dead and ITP makes iframe renewals problematic.\r\n> Unfortunately it is too late to be prescriptive here, as we cannot break compatibility with whatever choices existing AS implementations made. However we can be more descriptive and give the reader a better idea of what\u2019s the range of possibilities. Some nonnormative examples of how existing AS determine whether to issue an RT or not (eg as an option determined at client registration time, or any other heuristic you guys encountered in the wild) might help people to better understand their options and the intent of the specification here.\r\n",
       "createdAt": "2021-03-16T02:35:37Z",
-      "updatedAt": "2024-01-31T15:11:00Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:27:52Z",
+      "closedAt": "2026-10-31T03:27:52Z",
       "comments": [
         {
           "author": "tlodderstedt",
@@ -2114,7 +2122,7 @@
       "id": "MDU6SXNzdWU4MzY0MjQ3ODQ=",
       "title": "Incorporate editorial feedback from Justin and Vittorio's reviews",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/70",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -2125,8 +2133,8 @@
       ],
       "body": "Sections 7-13 are remaining\r\n\r\n* Vittorio: https://mailarchive.ietf.org/arch/msg/oauth/RP71xU8P4WLLIx0NcQMnw4gHScQ/\r\n* Justin: https://mailarchive.ietf.org/arch/msg/oauth/Ex2eSkHBAKnmP0cFIyzEywLzeDk/\r\n",
       "createdAt": "2021-03-19T22:32:15Z",
-      "updatedAt": "2022-03-19T17:46:32Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-30T23:07:36Z",
+      "closedAt": "2026-10-30T23:07:36Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -2134,6 +2142,13 @@
           "body": "Section 7 is done, either changes made or issues filed.",
           "createdAt": "2021-09-08T02:56:34Z",
           "updatedAt": "2021-09-08T02:56:34Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This is all either done or moved into other issues now.",
+          "createdAt": "2026-10-30T23:07:36Z",
+          "updatedAt": "2026-10-30T23:07:36Z"
         }
       ]
     },
@@ -2463,18 +2478,17 @@
       "id": "MDU6SXNzdWU5OTA2MTA1NTk=",
       "title": "What happens to the registries defined by 6749 and 6750 when this supersedes them?",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/86",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [
-        "question",
         "draft-00-feedback"
       ],
       "body": "Some comments from Vittorio about that here:\r\n\r\nhttps://mailarchive.ietf.org/arch/msg/oauth/RP71xU8P4WLLIx0NcQMnw4gHScQ/",
       "createdAt": "2021-09-08T02:28:06Z",
-      "updatedAt": "2022-07-15T19:51:40Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-30T23:04:06Z",
+      "closedAt": "2026-10-30T23:04:06Z",
       "comments": [
         {
           "author": "dickhardt",
@@ -2482,6 +2496,13 @@
           "body": "No change unless we are changing what is in registry -- are there any registry changes?",
           "createdAt": "2022-07-15T19:51:39Z",
           "updatedAt": "2022-07-15T19:51:39Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "The registries will stay defined by 6749 and 6750. I've seen this happen in other updated specs now a couple times.",
+          "createdAt": "2026-10-30T23:04:06Z",
+          "updatedAt": "2026-10-30T23:04:06Z"
         }
       ]
     },
@@ -2490,7 +2511,7 @@
       "id": "MDU6SXNzdWU5OTA2MTM5MDk=",
       "title": "Add something in Access Token Privilege Restriction about the first-party use case",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/87",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -2500,8 +2521,8 @@
       ],
       "body": "From Vittorio:\r\n\r\n---\r\n\r\n[\u00a77.4.5](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-00#section-7.4.5)\r\n\r\nAlong the same lines of the comments about delegated authorization earlier for \u00a77.2.3. I think it would be useful to acknowledge here that ATs might carry, and RSs might expect, authorization information that go beyond the delegated authorization for 3rd party API case that is core to OAuth- and remind the reader that those mechanisms are out of scope for oauth hence they shouldn\u2019t expect those aspects to be addressed/handled/regulated by this specification. ",
       "createdAt": "2021-09-08T02:30:45Z",
-      "updatedAt": "2021-09-28T18:17:08Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:22Z",
+      "closedAt": "2026-10-30T23:02:24Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -2587,7 +2608,7 @@
       "id": "MDU6SXNzdWU5OTE1Mzk2NzA=",
       "title": "Rewrite \"Protocol Flow\" section to address/acknowledge alternative flows",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/91",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -2596,9 +2617,17 @@
       ],
       "body": "Some flows and extensions work differently from the core authorization code flow, such as PAR and the device flow which start out with a POST request to the authorization server. These should be clarified in the Protocol Flow section so that people know this is a possibility and where to go for further reading.",
       "createdAt": "2021-09-08T21:17:58Z",
-      "updatedAt": "2022-03-19T17:43:30Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-10-31T03:21:05Z",
+      "closedAt": "2026-10-31T03:21:00Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Addressed by #260 ",
+          "createdAt": "2026-10-31T03:21:00Z",
+          "updatedAt": "2026-10-31T03:21:00Z"
+        }
+      ]
     },
     {
       "number": 92,
@@ -2685,7 +2714,7 @@
       "id": "I_kwDODkfq5s49H4Qe",
       "title": "Expand differences from OAuth 2.0 section 10",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/97",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -2694,8 +2723,8 @@
       "labels": [],
       "body": "Document each change and when there is a breaking change note for which role it breaks.\r\n\r\ne.g.\r\n\r\nA 2.1 client trying to work with a 2.0 server that uses PKCE would break if the redirect_uri is not sent to the token endpoint if the client is configured with more than one redirect_uri.\r\n",
       "createdAt": "2021-10-13T16:45:42Z",
-      "updatedAt": "2024-01-31T15:11:48Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:21Z",
+      "closedAt": "2026-10-30T22:18:02Z",
       "comments": []
     },
     {
@@ -2703,15 +2732,15 @@
       "id": "I_kwDODkfq5s4_tWcS",
       "title": "Authorization Request Header Field: CRLF Injections",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/100",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "lauritzh",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "In [Section 5.2.1.1.](https://github.com/aaronpk/oauth-v2-1/blob/main/draft-ietf-oauth-v2-1.md#authorization-request-header-field) the syntax of `access_token` values that are used in the context of HTTP headers is explicitly outlined as follows:\r\n\r\n```\r\nb64token    = 1*( ALPHA / DIGIT /\r\n                 \"-\" / \".\" / \"_\" / \"~\" / \"+\" / \"/\" ) *\"=\"\r\ncredentials = \"Bearer\" 1*SP b64token\r\n```\r\n\r\nI think it is a good thing that this description was moved from [rfc6750](https://datatracker.ietf.org/doc/html/rfc6750#section-2.1) to the \"core\". \ud83d\ude42\r\n\r\nOne particular issue I observed in the wild are CRLF injection issues caused by `access_token` values being used without any sanitisation. Examples for this can for instance be found in my [master's thesis](https://www.nds.ruhr-uni-bochum.de/media/nds/arbeiten/2020/11/30/Masterarbeit_Lauritz_Holtmann_Single_Sign-On_Security.pdf) (section 5.4.3.1) and on [my blog](https://security.lauritz-holtmann.de/post/sso-security-crlf-injection/).\r\n\r\nA CRLF injection via the bearer token could have significant impact, as the IdP may be also in the position to directly make the SP to perform requests to a chosen destination (e.g. \"malicious Endpoint Attack\" via UserInfo request in OIDC). Cloud providers tend to implement mitigations against SSRF to the internal network using [special HTTP headers](https://cloud.google.com/compute/docs/metadata/overview#parts-of-a-request). This mitigation could be bypassed using this type of injection issue.\r\n\r\nTherefore, I would like to propose to add a recommendation to carefully sanitise the bearer tokens before using them in the context of HTTP headers.",
       "createdAt": "2021-12-01T20:45:04Z",
-      "updatedAt": "2022-11-08T14:00:16Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T02:48:35Z",
+      "closedAt": "2026-10-31T02:48:19Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -2900,15 +2929,15 @@
       "id": "I_kwDODkfq5s5GtscV",
       "title": "Should auth-param in WWW-Authenticate be optional?",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/108",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "johakoch",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "In https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-07 section 5.2.3 (The WWW-Authenticate Response Header Field):\r\n\r\n>    All challenges for this token type MUST use the auth-scheme value\r\n>    Bearer.  This scheme MUST be followed by one or more auth-param\r\n>    values.\r\n\r\nWhy is at least one `auth-param` required? It makes\r\n```\r\nWWW-Authenticate: Bearer\r\n```\r\n\r\nin response to a request lacking any authentication information (thus without an `error` auth-param attribute) non-compliant. The optional `scope` attribute is not useful in this case. The optional `realm` attribute may not be necessary (e.g. if there is only one realm). So to be compliant, you would have to add a non-meaningful auth-param like `foo=bar`.\r\n\r\nNote: While in [rfc2617](https://datatracker.ietf.org/doc/html/rfc2617#section-1.2) `challenge` was defined as\r\n```\r\n  challenge   = auth-scheme 1*SP 1#auth-param\r\n```\r\n(requiring at least one `auth-param`), [rfc9110](https://www.rfc-editor.org/rfc/rfc9110#section-11.3) does not have this requirement (neither did [rfc7235](https://www.rfc-editor.org/rfc/rfc7235#section-2.1)):\r\n```\r\n  challenge   = auth-scheme [ 1*SP ( token68 / #auth-param ) ]\r\n```\r\n",
       "createdAt": "2022-03-30T12:26:19Z",
-      "updatedAt": "2026-02-26T16:22:03Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:20Z",
+      "closedAt": "2026-10-30T22:18:00Z",
       "comments": [
         {
           "author": "johakoch",
@@ -3034,16 +3063,24 @@
       "id": "I_kwDODkfq5s5Lhksg",
       "title": "Use HTTP style guide",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/114",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "## I suggest\r\n\r\n- to align to the https://httpwg.org/admin/editors/style-guide for editorial consistency with HTTP specification",
       "createdAt": "2022-06-10T06:20:53Z",
-      "updatedAt": "2022-06-10T06:20:53Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-10-31T03:49:19Z",
+      "closedAt": "2026-10-31T01:46:49Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Done in https://github.com/oauth-wg/oauth-v2-1/pull/270",
+          "createdAt": "2026-10-31T01:46:49Z",
+          "updatedAt": "2026-10-31T01:46:49Z"
+        }
+      ]
     },
     {
       "number": 115,
@@ -3100,18 +3137,18 @@
       "id": "I_kwDODkfq5s5LiV1X",
       "title": "application/x-www-form-urlencoded is a media type",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/119",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "## I expect\r\n\r\n- application/x-www-form-urlencoded is a media type\r\n- IANA registration points to https://url.spec.whatwg.org/#application/x-www-form-urlencoded",
       "createdAt": "2022-06-10T09:26:38Z",
-      "updatedAt": "2023-07-11T15:02:21Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:17Z",
+      "closedAt": "2026-10-31T01:46:15Z",
       "comments": [
         {
-          "author": "YataoFeng",
+          "author": "fenzel999",
           "authorAssociation": "NONE",
           "body": "Why can't we use application/json?",
           "createdAt": "2023-07-11T14:46:12Z",
@@ -3131,7 +3168,7 @@
       "id": "I_kwDODkfq5s5M6lfr",
       "title": "How can an AS support both 2.0 and 2.1 clients concurrently",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/120",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -3142,8 +3179,8 @@
       ],
       "body": "We may need some additional client registration metadata parameters in order to enforce some of the non-optional things in 2.1 while allowing 2.0 clients to still treat them as optional.\r\n\r\nRelated to #97 ",
       "createdAt": "2022-06-30T17:13:04Z",
-      "updatedAt": "2025-10-17T21:42:42Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:16Z",
+      "closedAt": "2026-10-29T19:46:08Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -3294,15 +3331,15 @@
       "id": "I_kwDODkfq5s5OOVuc",
       "title": "Clean up references to URL vs URI vs application/x-www-form-urlencoded",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/126",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "There are still some references to old URI specs like RFC3986, which have since been replaced by various IETF specs as well as the WHATWG URL spec.",
       "createdAt": "2022-07-21T02:36:36Z",
-      "updatedAt": "2024-01-31T15:11:54Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:15Z",
+      "closedAt": "2026-10-31T01:46:16Z",
       "comments": [
         {
           "author": "ioggstream",
@@ -3737,18 +3774,17 @@
       "id": "I_kwDODkfq5s5gsg6E",
       "title": "Define \"explicit RO authentication\"",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/139",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [
-        "draft-00-feedback",
-        "ietf-116"
+        "draft-00-feedback"
       ],
       "body": "From RFC6749 Security Considerations\r\n\r\n> The authorization server SHOULD enforce explicit resource owner authentication and provide the resource owner with information about the client and the requested authorization scope and lifetime. It is up to the resource owner to review the information in the context of the current client and to authorize or deny the request.\r\n\r\nWhat does this mean in practice?\r\n* Is it a full credential prompt regardless of whether one session already exists? \r\n* A selection between existing sessions, if present?\r\n",
       "createdAt": "2023-03-13T21:20:11Z",
-      "updatedAt": "2023-03-13T21:20:11Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:39:57Z",
+      "closedAt": "2026-10-31T03:39:51Z",
       "comments": []
     },
     {
@@ -3756,18 +3792,17 @@
       "id": "I_kwDODkfq5s5gshzl",
       "title": "Repeated authorization requests",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/140",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [
-        "draft-00-feedback",
-        "ietf-116"
+        "draft-00-feedback"
       ],
       "body": "From RFC6749 Security Considerations\r\n\r\n> The authorization server SHOULD NOT process repeated authorization\r\n> requests automatically (without active resource owner interaction)\r\n> without authenticating the client or relying on other measures to\r\n> ensure that the repeated request comes from the original client and\r\n> not an impersonator.\r\n\r\n(Vittorio) This is unclear. As it currently reads it seems to prohibit things like getting a new authz code silently via iframe (and prompt=none or equivalent UX suppressing mechanism, please ignore the ITP complications for the sake of argument). \r\n",
       "createdAt": "2023-03-13T21:23:02Z",
-      "updatedAt": "2023-07-14T16:47:29Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:24Z",
+      "closedAt": "2026-10-30T23:05:40Z",
       "comments": [
         {
           "author": "tlodderstedt",
@@ -3782,6 +3817,13 @@
           "body": "In OAuth 2.0, registration of the redirect URI was not required, which is why this paragraph is in here.\r\n\r\nNow that registration is required in OAuth 2.1, the concern of being redirected to arbitrary redirect URIs silently without user interaction is much less.",
           "createdAt": "2023-07-14T16:47:28Z",
           "updatedAt": "2023-07-14T16:47:28Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This is addressed directly by the new \"Impersonation of Browser-Based Applications\" section https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#section-7.3.2",
+          "createdAt": "2026-10-30T23:05:40Z",
+          "updatedAt": "2026-10-30T23:05:40Z"
         }
       ]
     },
@@ -4033,9 +4075,17 @@
       "labels": [],
       "body": "",
       "createdAt": "2023-07-21T22:28:16Z",
-      "updatedAt": "2024-11-04T12:12:51Z",
+      "updatedAt": "2026-10-29T02:32:10Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@aaronpk @tlodderstedt \n\nI'll post to http the next version ",
+          "createdAt": "2026-10-29T02:32:10Z",
+          "updatedAt": "2026-10-29T02:32:10Z"
+        }
+      ]
     },
     {
       "number": 157,
@@ -4112,15 +4162,15 @@
       "id": "I_kwDODkfq5s5syuu_",
       "title": "Strengthen \"Authorization server SHOULD NOT process repeated authorization requests automatically\" for public clients",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/160",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "hickford",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#name-client-impersonation\r\n\r\n> The authorization server SHOULD NOT process repeated authorization requests automatically (without active resource owner interaction) without authenticating the client or relying on other measures to ensure that the repeated request comes from the original client and not an impersonator.\r\n\r\nHow about strengthening this for public clients to MUST NOT? ",
       "createdAt": "2023-07-27T21:12:18Z",
-      "updatedAt": "2023-07-27T21:13:52Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:12:09Z",
+      "closedAt": "2026-10-31T03:12:09Z",
       "comments": [
         {
           "author": "hickford",
@@ -4128,6 +4178,13 @@
           "body": "Mailing list discussion https://mailarchive.ietf.org/arch/msg/oauth/P3snfqtO2Seb8iAYX8rRRu-16Aw/\r\n\r\n> Does anyone know why this is only SHOULD NOT? For public clients, how about strengthening it to MUST NOT?  How else can the authorization server ensure the request comes from the original client, not an impersonator?\r\n",
           "createdAt": "2023-07-27T21:13:43Z",
           "updatedAt": "2023-07-27T21:13:52Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Ultimately this is a policy decision of the AS, not an interoperability concern, so I don't think we can make any requirement on this.",
+          "createdAt": "2026-10-31T03:12:09Z",
+          "updatedAt": "2026-10-31T03:12:09Z"
         }
       ]
     },
@@ -4174,7 +4231,7 @@
       "id": "I_kwDODkfq5s5tghbb",
       "title": "the invalid_client error and HTTP authentication schemas",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/162",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "adeinega",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -4183,8 +4240,8 @@
       ],
       "body": "https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-09#section-3.2.3.1 says that\r\n\r\n> \"**invalid_client**\":  Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method). The authorization server MAY return an HTTP 401 (Unauthorized) status code to indicate which HTTP authentication schemes are supported.\r\n\r\nI am not so sure if it's possible to indicate HTTP authentication schemas for _private_key_jwt_ and _client_secret_jwt_ client authentication types.\r\n\r\nThis text also indicates that multiple authentication schemas are supported. Thus, does the authorization server need to specify multiple WWW-Authenticate headers, say \"WWW-Authenticate: Basic\" and \"WWW-Authenticate: Bearer\"?\r\n\r\nIt would be great to clarify these nuances.\r\n",
       "createdAt": "2023-08-04T19:31:16Z",
-      "updatedAt": "2026-04-10T10:05:12Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:14Z",
+      "closedAt": "2026-10-30T22:18:01Z",
       "comments": [
         {
           "author": "jogu",
@@ -4202,7 +4259,7 @@
         },
         {
           "author": "ylemkimon",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Doesn't have to go that far; `client_secret_post` is not possible to specifiy in `WWW-Authenticate`.\n\nFurthermore, the next sentence says:\n> If the client attempted to authenticate via the Authorization request header field, the authorization server MUST respond with an HTTP 401 (Unauthorized) status code and include the WWW-Authenticate response header field matching the authentication scheme used by the client.\n\nAFAIK, The `WWW-Authenticate` indicates methods the server supports, i.e., challenges, but it says it should match the one client used. Does this mean if I request with unknown auth scheme:\n```\nPOST /token HTTP/1.1\nAuthorization: NonExistentMethod foobar\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=authorization_code&...\n```\nit should respond like:\n```\nHTTP/1.1 401 Unauthorized\nWWW-Authenticate: NonExistentMethod realm=\"token\"\n```\n?",
           "createdAt": "2026-04-10T09:59:22Z",
           "updatedAt": "2026-04-10T10:05:12Z"
@@ -4335,7 +4392,7 @@
       "id": "I_kwDODkfq5s58166G",
       "title": "Character encoding for the application/x-www-form-urlencoded format",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/167",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "adeinega",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -4344,8 +4401,8 @@
       ],
       "body": "Section 3.2.2 Tokens states that\r\n\r\n> The client makes a request to the token endpoint by sending the\r\n> following parameters using the application/x-www-form-urlencoded\r\n> format per Appendix B with a character encoding of UTF-8 in the HTTP\r\n> request content:\r\n\r\nHowever, the following example does not include UTF-8 as character encoding\r\n\r\n> POST /token HTTP/1.1\r\n> Host: server.example.com\r\n> Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW\r\n> Content-Type: application/x-www-form-urlencoded\r\n\r\nit should look like as\r\n\r\n> POST /token HTTP/1.1\r\n> Host: server.example.com\r\n> Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW\r\n> Content-Type: application/x-www-form-urlencoded; charset=UTF-8; \r\n\r\nthe same applies for all other similar examples in the spec.\r\n\r\nHow is this important? In some (rare) cases, it can lead to interoperability issues as app servers & frameworks that run an AS do not necessarily use \"UTF-8\" as a default encoding character, as an example, Java Servlets use \"ISO-8859-1\". So, it is better for a client to always specify the character explicitly. \r\n",
       "createdAt": "2024-01-22T18:32:47Z",
-      "updatedAt": "2024-11-15T15:45:40Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-30T22:33:08Z",
+      "closedAt": "2026-10-30T22:33:08Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -4463,7 +4520,7 @@
       "id": "I_kwDODkfq5s6AqOxG",
       "title": "Handling of colliding URI query parameter names",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/171",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "SECtim",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -4472,8 +4529,8 @@
       ],
       "body": "The URIs for the **redirect** and **authorization** endpoints may contain additional query parameters that must be retained when adding more parameters:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L860-L865\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1118-L1121\r\n\r\nFurthermore, query parameters must only appear once (this text appears in the description of the authorization and token endpoints, but is not explicitly mentioned for the redirection endpoint - nevertheless, the cited text already applies to all parameters defined by this spec):\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1129-L1130\r\n\r\nThis becomes a problem in (I admit, somewhat esoteric) cases where the endpoint URIs contain parameters such as `code` in a redirect URI, in that example, the AS would not be allowed to add its `code` parameter in the authorization response. But at the same time, the AS is required to do so:\r\nhttps://github.com/oauth-wg/oauth-v2-1/blob/f79f58841f717b0e6050da663c4a858bc100fda1/draft-ietf-oauth-v2-1.md?plain=1#L1657-L1664\r\n\r\nI guess this is just a case of adding something like \"redirect URI MUST NOT contain the parameters...\".",
       "createdAt": "2024-02-28T09:54:55Z",
-      "updatedAt": "2025-11-02T22:17:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:12Z",
+      "closedAt": "2026-10-30T22:18:01Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -4699,7 +4756,7 @@
       "labels": [],
       "body": "The current OAuth 2.1 draft mentions that\r\n\r\n> Many environments that support private-use URI schemes do not provide a mechanism to claim a scheme and prevent other parties from using another application's scheme. As such, clients using private-use URI schemes are vulnerable to potential attacks on their redirect URIs, so this option should only be used if the previously mentioned more secure options are not available.\r\n\r\nAFAICT, this paragraph was introduced by [f428704c](https://github.com/oauth-wg/oauth-v2-1/commit/f428704cd469fb350d0f5318f4b4589e3e6d0e5c#diff-c690e6a757ffca99a8affaa2828883974014878ce549391b38be85d4c91862c9R3174-R3179) for the reasons outlined in the [ietf-113 minutes](https://datatracker.ietf.org/meeting/113/materials/minutes-113-oauth-00):\r\n\r\n> George: I am in favor of ordering of best security practive starting with the claimed https URL.\r\n> Aaron: It sounds like we are going to re-order the list, claimed https URL first, loopback second, and private URI schemes. Remove the sentence for the mandatory -implementing all three. Maybe adding text of why you want to have the private URI scheme at all.\r\n\r\nConsidering that any app can listen on the loopback interface and thus create a valid redirect URI that leads to itself, I wonder what makes loopback redirects more secure than private-use URI schemes.\r\n\r\nOne potential advantage of loopback redirects that I can see is that only one app can listen on the specific port. Thus, it's impossible for an attacker to receive a code that was the result of a valid authorization request if the client has already started its loopback HTTP server. However, integrating PKCE into OAuth 2.1 should already prevent this attack. Moreover, using the authorization code grant type already prevents MITM attacks, public clients can't use the client credentials grant type, and the implicit grant type was removed.\r\n\r\nOn the other hand, most operating systems require some sort of installation procedure (installing a `.desktop` file, creating a registry entry, installing an app with a manifest, etc.) before user agents consider an application for the private-use URI scheme. While this is not a \"true\" security feature that protects against redirect code interception, as multiple applications can register themselves for the same scheme, it prevents users with access to the same loopback device but *without* access to the same user account or the system-wide scheme handler registry from intercepting a code. In comparison, any user on the same computer can bind a port on the loopback device and thus obtain a valid redirect URI that points to itself.\r\n\r\n---\r\n\r\nI agree that all native clients should prefer claimed \"https\" schemes where possible, but unless I'm missing something, I would suggest changing the paragraph above to something like\r\n\r\n> Many environments that support private-use URI schemes do not provide a mechanism to claim a scheme and prevent other parties from using another application's scheme. As such, clients using private-use URI schemes are vulnerable to potential attacks on their redirect URIs, so this option should only be used if claimed https schemes are not available.",
       "createdAt": "2024-05-19T17:10:44Z",
-      "updatedAt": "2026-10-27T00:14:35Z",
+      "updatedAt": "2026-10-31T13:57:00Z",
       "closedAt": "2026-10-27T00:14:35Z",
       "comments": [
         {
@@ -4715,6 +4772,20 @@
           "body": "> @archer-321 are you suggesting dropping loopback?\r\n\r\nNo, I believe loopback is still essential for many native client implementations, and there would be no reason to drop this well-established redirect type. I was merely suggesting rephrasing the private-use redirect URI scheme section I quoted, as I didn't see the security advantages of loopback over private-use URI schemes mentioned.\r\n\r\n> I think loopback is preferable to private schemes in that you can't MITM it. A malicious app does not know when a protocol is happening. In contrast, if an malicious app registers a private scheme, then it could be intercepting the protocol.\r\n\r\nConsidering the only grant type available to public clients in OAuth 2.1 is the authorization code grant, how could an attacker MITM the authorization \"ceremony\"? If they manage to intercept the authorization code, it would either be useless when the legitimate client has obtained an access token, or the legitimate client would encounter an error while trying to retrieve an access token after the attacker has already used the code.\r\n\r\nOne aspect you mentioned that I didn't consider is that attackers are more likely to notice that an authorization ceremony is happening. However, this could also be established by watching all processes until an instance of the client application binds a port on the loopback interface, so I'm unsure how much security the protocol gets here.\r\n\r\nThe primary reason I prefer private-use redirect URIs over loopback is that some services incorrectly implement the user-interaction part of the authorization endpoint. E.g., GitHub doesn't seem to ask for interaction if the user has previously authorized the application. If the application uses a loopback redirect URI, even a process running as another user could create a loopback HTTP server. The only thing a malicious client would have to do in this case to get access to the protected resource is redirect the user to the authorization endpoint somehow (e.g. by sending the user a link or by putting the link on a website the attacker controls - even adding the link to the description of a pull request would work).\r\n\r\nWith private-use URI schemes, the attacker would have to get a system administrator to install it as a scheme handler. Alternatively, the attacker would need access to the user configuration to set up the scheme handler for a single user. Again, I wouldn't count this as a foolproof security feature, but in my head, it makes attacks more complex, at least.\r\n\r\n> Mobile platforms generally support claimed https and pretty much any app can claim a private scheme. On desktop, the loopback is generally preferable. A common use case are CLI tools that launch the browser -- claiming an https endpoint, or registering a private scheme are not really practical.\r\n\r\nI agree that mobile apps (and apps on other systems with the feature) should prefer claimed \"https\" schemes over both loopback redirect URIs and private-use URI schemes. I also agree that CLI tools that ship as a single binary without any installer or package should be able to use loopback. My main concern is that, in my opinion, the quoted paragraph of the specification \"unfairly\" treats private-use URI schemes as less secure than loopback redirects (\"[...] this option should only be used if the previously mentioned more secure options are not available\"). This wording might make future implementing services not consider support for private-use URI schemes while instead forcing apps to use loopback.",
           "createdAt": "2024-05-20T01:57:32Z",
           "updatedAt": "2024-05-20T01:57:32Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "@archer-321 We'd like to credit you in the acknowledgements. How would you like your name to appear?",
+          "createdAt": "2026-10-31T04:04:39Z",
+          "updatedAt": "2026-10-31T04:04:39Z"
+        },
+        {
+          "author": "archer-321",
+          "authorAssociation": "NONE",
+          "body": "> We'd like to credit you in the acknowledgements. How would you like your name to appear?\n\n@aaronpk, thank you! If possible, please list my name as \"Christian Bartz\".",
+          "createdAt": "2026-10-31T13:56:59Z",
+          "updatedAt": "2026-10-31T13:56:59Z"
         }
       ]
     },
@@ -5095,7 +5166,7 @@
       "id": "I_kwDODkfq5s6j9NPD",
       "title": "Reorganize section 7.1.1",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/200",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tlodderstedt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -5104,8 +5175,8 @@
       "labels": [],
       "body": "reorganize access token threats section",
       "createdAt": "2024-12-19T15:41:33Z",
-      "updatedAt": "2026-02-25T20:44:47Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-30T23:07:05Z",
+      "closedAt": "2026-10-30T23:07:05Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -5113,6 +5184,13 @@
           "body": "Did you have an idea for what you wanted to reorganize here?",
           "createdAt": "2026-02-25T20:44:47Z",
           "updatedAt": "2026-02-25T20:44:47Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "I don't remember what we were going to do here, so closing this.",
+          "createdAt": "2026-10-30T23:07:05Z",
+          "updatedAt": "2026-10-30T23:07:05Z"
         }
       ]
     },
@@ -5310,7 +5388,7 @@
       "id": "I_kwDODkfq5s62phJT",
       "title": "guidance on issues of using personal oauth flows for a service to get long term access and then refresh fails and then service does not have access",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/213",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -5319,8 +5397,8 @@
       "labels": [],
       "body": "feedback from AuthCon ",
       "createdAt": "2025-05-14T21:41:04Z",
-      "updatedAt": "2025-05-22T22:13:03Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:23Z",
+      "closedAt": "2026-10-29T01:04:50Z",
       "comments": [
         {
           "author": "voidmain",
@@ -5405,6 +5483,13 @@
           "body": "Even with a MUST -- your implementation can do whatever it wants!",
           "createdAt": "2025-05-22T22:13:02Z",
           "updatedAt": "2025-05-22T22:13:02Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Addressed by #261, which added a note to the refresh token section: when rotation is used, a lost refresh token response can leave the client with only an invalidated refresh token, and an AS that wants to avoid this can use sender-constrained refresh tokens instead of rotation.",
+          "createdAt": "2026-10-29T01:04:50Z",
+          "updatedAt": "2026-10-29T01:04:50Z"
         }
       ]
     },
@@ -5455,10 +5540,12 @@
       "author": "mcguinness",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf-127"
+      ],
       "body": "A client currently has no way to detect whether an authorization server supports the [RFC 8707 Resource Indicators for OAuth 2.0](https://www.rfc-editor.org/rfc/rfc8707.html) extension.  An authorization server that implements support for RFC 8707 would process a requested `resource` and audience-restrict the issued access token if the resource was valid or return an `invalid_target` error code if the requested `resource` is not valid for the authorization server.  If the authorization server doesn't support RFC 8707 it would silently ignore the `resource` parameter and issue an access token to its default audience for the request (e.g  client+scopes requested).  \n\nSince the `access_token` in the token response is opaque to the client, the client has no way to know the value of the issued token's audience.  This is especially problematic when using metadata to dynamically discover an authorization server such as with [OAuth 2.0 Protected Resource Metadata  (RFC 9728)](https://www.rfc-editor.org/rfc/rfc9728.html). \n\nFor example `resource.example` could publish `https://resource.example` as the `resource` identifier but specify `https://accounts.google.com/o/oauth2/v2/auth` as the authorization server as a phishing attack.  A client would then attempt to obtain an access token from the specified authorization server with the dynamically discovered `resource`  \n\n`https://accounts.google.com/o/oauth2/v2/auth?client_id=...&scope=...&resource=https://resource.example`. \n\nIf the authorization doesn't support RFC 8707 then it would just process this as a normal authorization request, ignore the invalid resource, and issue a default access token (assuming user consented).   This is the [exact scenario that Model Context Protocol (MCP](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/284#discussion_r2068009348)) project is vulnerable to which has taken a dependency on OAuth 2.1\n\nWhile this security risk is explicitly called out in the security considerations of RFC 9728, the interoperability gap still exists for an OAuth 2.1.\n\n> Secure determination of appropriate authorization servers to use with a protected resource for all use cases is out of scope for this specification. This specification assumes that the client has a means of determining appropriate authorization servers to use with a protected resource and that the client is using the correct metadata for each protected resource. Implementers need to be aware that if an inappropriate authorization server is used by the client, an attacker may be able to act as an adversary-in-the-middle proxy to a valid authorization server without it being detected by the authorization server or the client.\n\nIf OAuth 2.1 included the [RFC 8707 Resource Indicators for OAuth 2.0](https://www.rfc-editor.org/rfc/rfc8707.html) extension, clients could expect an authorization server to process the `resource` or return `invalid_target` error code.  This would help projects like MCP mitigate risks of using metadata based discovery.   **An authorization doesn't need to support `resource` indicators to be complaint.  It just needs to return `invalid_target` if a `resource` is specified.** .  This is small lift for an authorization (support an error code) has a ton a value for dynamic discovery scenarios.\n\nAlternatively, OAuth 2.1 could specify a new token response field for `audience`.  This would push validation to the client to ensure the that issued token was for an audience it wanted and prevent forwarding a token to a resource server with a mismatched audience.   Since audience doesn't need to be 1:1 to a resource's url this is problematic but could be profiled. ",
       "createdAt": "2025-06-11T05:18:11Z",
-      "updatedAt": "2026-06-16T07:32:03Z",
+      "updatedAt": "2026-10-31T02:40:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -5551,6 +5638,13 @@
           "body": "> echo back the required resource in the token response as a confirmation.\n\nDid you see https://datatracker.ietf.org/doc/draft-mcguinness-oauth-resource-token-resp/",
           "createdAt": "2026-06-15T22:43:57Z",
           "updatedAt": "2026-06-15T22:44:06Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "Any solution to this is going to involve defining new behavior not already described in an RFC, which is out of scope for OAuth 2.1. Karl already posted a draft above to define what's needed. I'm tagging this with IETF 127 so I don't forget to bring this up in the discussion, but this won't be solved in OAuth 2.1. If the working group happens to adopt the above draft before publishing OAuth 2.1, we can add a reference to it.",
+          "createdAt": "2026-10-31T02:40:46Z",
+          "updatedAt": "2026-10-31T02:40:46Z"
         }
       ]
     },
@@ -5795,16 +5889,24 @@
       "id": "I_kwDODkfq5s7f7l3-",
       "title": "CORS Origin Validation for Token Endpoint",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/235",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tennantje",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "## Problem\nThe OAuth 2.1 spec mentions CORS support for token endpoints (Section 3.2) but doesn't specify how authorization servers should validate the Origin header in CORS requests.\n\n## Context\nRelated to #133 which addressed broader CORS recommendations. While that issue covered which endpoints need CORS support, the specific implementation approach for origin validation wasn't addressed.\n\n## Current Implementation Gap\nMost implementations likely extract origins from registered redirect URIs (e.g., https://myapp.com/callback \u2192 allow https://myapp.com), but this approach isn't documented in the spec.\n\n## Question\nShould the spec recommend:\n1. Extract origins from redirect URIs (covers 90% of use cases)\n2. Separate \"allowed origins\" registration (handles edge cases like microservices)\n3. Both approaches with guidance on when to use each\n\n## Example Scenario\n- Client registers redirect URI: https://myapp.com/oauth/callback\n- Token request comes from origin: https://myapp.com\n- Should this be automatically allowed, or require separate origin registration?",
       "createdAt": "2025-12-23T10:47:51Z",
-      "updatedAt": "2025-12-23T10:47:51Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-10-31T03:49:11Z",
+      "closedAt": "2026-10-31T00:11:42Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "RFC 10017 (Section 6.3.3.4) intentionally does not prescribe a CORS policy: it allows either a wildcard origin or a more restrictive configuration, and notes that an AS can check the origin against a client's pre-registered origins on the actual token request (but not during the preflight, where the client ID isn't available). OAuth 2.1 follows that approach.\n\nIt's also worth noting that origin restriction at the token endpoint isn't a client authentication mechanism. Token requests don't carry ambient credentials, and non-browser callers can send any Origin value, so the security of the code exchange comes from PKCE and redirect URI registration, not from the CORS policy. Deriving allowed origins from registered redirect URIs is a reasonable implementation choice, as is a separate registration or a wildcard.\n\n#271 adds a sentence referring to RFC 10017 to point readers in the right direction.",
+          "createdAt": "2026-10-31T00:11:42Z",
+          "updatedAt": "2026-10-31T00:11:42Z"
+        }
+      ]
     },
     {
       "number": 236,
@@ -5889,16 +5991,24 @@
       "id": "I_kwDODkfq5s79HZkh",
       "title": "Unclear on how Authorization Sever should accept request parameters",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/245",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ylemkimon",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "> The client constructs the request URI by adding the following parameters to the query component of the authorization endpoint URI as described by [Appendix C.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-15#query-string-serialization)\n\n> The client makes a request to the token endpoint by sending the following parameters using the form-encoded serialization format per [Appendix C.2](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-15#form-serialization) with a character encoding of UTF-8 in the HTTP request content\n\nThere are guidances only on how a client can send request parameters, not on how AS should accept them.\n\nEspecially with the `POST` request to authorization endpoint, it's unclear whether it should accept parameters from the query string as well as the form body. (IMHO, in this case, it should reject the request or accept only the body as most clients would not mix both methods, and this would indicate a foul play.)\n\nFor reference, [OIDC Core](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) has the following text:\n\n> Clients MAY use the HTTP GET or POST methods to send the Authorization Request to the Authorization Server. If using the HTTP GET method, the request parameters are serialized using URI Query String Serialization, per [Section 13.1](https://openid.net/specs/openid-connect-core-1_0.html#QuerySerialization). If using the HTTP POST method, the request parameters are serialized using Form Serialization, per [Section 13.2](https://openid.net/specs/openid-connect-core-1_0.html#FormSerialization).\n\nRelated to #181.",
       "createdAt": "2026-04-12T04:59:39Z",
-      "updatedAt": "2026-04-12T05:10:35Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-10-31T04:01:31Z",
+      "closedAt": "2026-10-30T22:18:02Z",
+      "comments": [
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "@ylemkimon We'd like to credit you in the acknowledgements. How would you like your name to appear?",
+          "createdAt": "2026-10-31T04:01:31Z",
+          "updatedAt": "2026-10-31T04:01:31Z"
+        }
+      ]
     },
     {
       "number": 246,
@@ -5936,15 +6046,15 @@
       "id": "I_kwDODkfq5s8AAAABCKDqZQ",
       "title": "Request for a multi-account Authorization Code flow that generates unique access tokens per account",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/251",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dfcoffin",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "## Business Case and Demand\n\nToday, there is no guidance or pattern for multi-account authorizations in Green Button Connect. While third parties can technically link multiple accounts behind a single subscription ID, Consolidated Edison of New York\u2019s goal is:\n\n* **1 subscription ID per account**: To simplify data management.\n* **Improved performance**: To optimize response times for batch data requests.\n\n**Demand:**\nCustomers and third parties (e.g., *Meltek, Runwise, NuEnergen, and Empowered Buildings*) have requested a simpler way to authorize multiple accounts simultaneously for several years.\n\n---\n\n## Conceptual Design (Opt-in, Backward Compatible)\n\nThe proposal is an opt-in extension of the current OAuth 2.1 authorization code flow.\n\n### 1.  Initiation\nThird parties choose the flow via the `response_type` in the authorization request:\n* `response_type=code` \u2192 Existing single account flow (no change).\n* `response_type=bulkCode` \u2192 New multi-account flow (**opt-in**).\n\n### 2.  Authorization Loop\nIn the multi-account flow (`bulkCode`):\n1.  The user selects one or more accounts to authorize (or \u201cselect all\u201d).\n2.  For each selected account, the data custodian redirects to the third party\u2019s `redirect_uri` with:\n    * A unique `code` for that account.\n    * A `state` parameter containing the original client-supplied state plus metadata.\n\n**State Format:**\n`state = <original_state>|response_code=bulkCode;current=<n>;total=<m>`\n\n> **Example:** If the original state is `123` and there are 2 accounts, the redirect would look like:\n> `redirect_uri?code=abc&state=123|response_code=bulkCode;current=1;total=2`\n\n### 3.  Third-Party Handling\n* **If `current < total`**: The third party redirects the user to its multi-account authorization continuation page.\n    * *URL Example:* `{base_url}/multi-account-authorization?response_code=bulkCode&current=1&total=2&status=Success`\n* **If `current == total`**: The third party redirects the user to its normal post-authorization landing page.\n* **Interruption**: If the loop is interrupted, all completed authorizations remain valid.\n\n---\n\n## Security Considerations\n\n* **State Integrity**: The client must recover the `<original_state>` and validate it exactly to preserve CSRF protection.\n* **Metadata Usage**: Appended metadata is **informational only** and must not be used for security-sensitive decisions.\n* **Implementation**: Clients must implement custom parsing for the state string.  Some OIDC libraries requiring an exact string match for `state` may require customization.\n\n<img width=\"1068\" height=\"601\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6470722c-9c67-4fe9-91fd-1d601e24b87c\" />\n\n<img width=\"1068\" height=\"601\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e93ce5b1-8347-43eb-8a9e-fd2edba4d949\" />\n\nThe [Green Button Alliance](https://www.greenbuttonalliance.org) received the above request from Consolidated Edison of New York.\n\nDonald F. Coffin\nGreen Button Alliance\nTechnical Manager\n\ndcoffin@greenbuttonalliance.org",
       "createdAt": "2026-05-13T16:58:16Z",
-      "updatedAt": "2026-05-21T03:18:47Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-29T22:26:36Z",
+      "closedAt": "2026-10-29T22:26:36Z",
       "comments": [
         {
           "author": "aaronpk",
@@ -5987,6 +6097,13 @@
           "body": "@aaronpk I have asked them to comment on this Issue to provide more justification for why their users have requested the capability.",
           "createdAt": "2026-05-21T03:18:16Z",
           "updatedAt": "2026-05-21T03:18:47Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "In any case, a feature like this is definitely out of scope for OAuth 2.1. If this is still something you want to pursue, it would be best to write it up and submit it as a new draft.",
+          "createdAt": "2026-10-29T22:26:36Z",
+          "updatedAt": "2026-10-29T22:26:36Z"
         }
       ]
     },
@@ -6019,15 +6136,15 @@
       "id": "I_kwDODkfq5s8AAAABLlwdfg",
       "title": "Can we add a maximum length to the `state` parameter?",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/254",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ThisIsMissEm",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "In the doorkeeper project we've had bug reports come in due to clients sending a massive `state` parameter in their request, which then exceeds the maximum HTTP Header length that nginx or similar reverse proxies will allow.\n\nIt would be good to have some guidance on limiting the size of this parameter to something reasonable, potentially responding with `invalid_request` when the state parameter exceeds that length.\n\nhttps://github.com/doorkeeper-gem/doorkeeper/issues/1554",
       "createdAt": "2026-08-05T15:54:04Z",
-      "updatedAt": "2026-09-03T00:45:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:49:09Z",
+      "closedAt": "2026-10-30T23:51:53Z",
       "comments": [
         {
           "author": "adeinega",
@@ -6085,15 +6202,15 @@
       "id": "I_kwDODkfq5s8AAAABaJqi6A",
       "title": "Consider dropping \"MAY\" from client impersonation section",
       "url": "https://github.com/oauth-wg/oauth-v2-1/issues/264",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "aaronpk",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Pulling this out from Justin's review of the RFC10017 incorporation:\n\nhttps://github.com/oauth-wg/oauth-v2-1/pull/258/changes#r4303779929\n\n> This doesn't feel like a particularly normative requirement, more like advice. Perhaps drop the MAY?\n\nThis would also apply to the MAY in the native apps section above, which is why I'm pulling it out into this issue to discuss separately.\n\nhttps://drafts.oauth.net/oauth-v2-1/aaronpk/rfc10017/draft-ietf-oauth-v2-1.html#section-7.3\n\n",
       "createdAt": "2026-10-26T23:23:30Z",
-      "updatedAt": "2026-10-26T23:23:30Z",
-      "closedAt": null,
+      "updatedAt": "2026-10-31T03:18:29Z",
+      "closedAt": "2026-10-31T03:18:14Z",
       "comments": []
     },
     {
@@ -6106,11 +6223,12 @@
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [
-        "editorial"
+        "editorial",
+        "ietf-127"
       ],
       "body": "RFC8252 \"OAuth 2.0 for Native Apps\" uses \"apps\" instead of \"appliations\" in most places, despite RFC6749 never using the term \"apps\". Some of the \"apps\" language was also brought in in the merge of RFC10017, although RFC10017 itself uses \"applications\".\n\nSo the question is whether we should change the \"apps\" language that was brought in from the Native Apps BCP.",
       "createdAt": "2026-10-26T23:31:19Z",
-      "updatedAt": "2026-10-26T23:31:24Z",
+      "updatedAt": "2026-10-30T23:44:45Z",
       "closedAt": null,
       "comments": []
     },
@@ -6123,10 +6241,102 @@
       "author": "ThisIsMissEm",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf-127"
+      ],
       "body": "Currently the IANA registry contents has `invalid_client` as applicable to both token endpoint and authorization endpoint, and cites [RFC 6749](https://www.iana.org/go/rfc6749), however, that RFC does not define `invalid_client` for the Authorization Error Response, meaning the registry is currently incorrect.\n\nAdding `invalid_client` enables supporting CIMD where a client ID is valid, the redirect URI is valid but none of the `token_endpoint_auth_methods_supported` values are supported by the authorization server, currently we'd otherwise need to return `invalid_request`",
       "createdAt": "2026-10-28T21:14:40Z",
-      "updatedAt": "2026-10-28T21:14:40Z",
+      "updatedAt": "2026-10-31T00:12:00Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 274,
+      "id": "I_kwDODkfq5s8AAAABbWeHiQ",
+      "title": "access_token syntax (VSCHAR) allows values that can't be sent with the Bearer scheme (token68)",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/274",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "ietf-127"
+      ],
+      "body": "Currently two different syntaxes are defined for access tokens, and they are in conflict with each other. (This is also a problem in OAuth 2.0 fwiw.)\n\nThe token response allows any visible ASCII character, plus space (\"access_token\" Syntax in the [ABNF appendix](https://drafts.oauth.net/oauth-v2-1/draft-ietf-oauth-v2-1.html#appendix-A.12)):\n\n```\naccess-token = 1*VSCHAR\nVSCHAR       = %x20-7E\n```\n\nThe Authorization header field for the Bearer scheme uses the much narrower token68 syntax ([Section 11.2 of RFC 9110](https://www.rfc-editor.org/info/rfc9110/#section-11.2)):\n\n```\ntoken68     = 1*( ALPHA / DIGIT /\n                  \"-\" / \".\" / \"_\" / \"~\" / \"+\" / \"/\" ) *\"=\"\ncredentials = \"bearer\" 1*SP token68\n```\n\nSo an authorization server can issue an access token that's valid in the token response but can't legally go in an Authorization: Bearer header. Examples are tokens containing a space, `\"`, `,`, `;`, `:`, `%`, or `=` anywhere other than at the end. Clients SHOULD use the header method and resource servers MUST support it, so the mismatch affects the primary way bearer tokens are used. Form-encoded content can carry any VSCHAR value, so that method isn't affected.\n\nThis was inherited from OAuth 2.0: RFC 6749 Appendix A.12 defines access_token as 1*VSCHAR, while RFC 6750 Section 2.1 defines b64token, now renamed token68. In practice almost every deployment issues token68-compatible values (opaque hex or base64url strings, or JWTs), so this is mostly a spec consistency problem.\n\nDPoP also declares the DPoP scheme uses the token68 syntax ([Section 4.1 of RFC 9449](https://datatracker.ietf.org/doc/html/rfc9449#section-4.1)).\n\nI think the simplest solution is to recognize that most/all implementations have already settled on using the narrower character set for access tokens defined as token68, and that the VSCHAR definition was unintentionally too broad. \n\nPR #273 proposes text to address this.\n",
+      "createdAt": "2026-10-31T03:11:00Z",
+      "updatedAt": "2026-10-31T03:11:00Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 278,
+      "id": "I_kwDODkfq5s8AAAABbceNEw",
+      "title": "\u00a74.1.3 does not account for the PKCE exemption in \u00a77.5.1.1",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/278",
+      "state": "OPEN",
+      "author": "rifmj",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "These comments concern draft-ietf-oauth-v2-1-17.\n\nSection 4.1.1 marks code_challenge as \"REQUIRED unless the specific requirements of Section 7.5.1 are met\", and\nSection 7.5.1.1 lets a confidential client skip it when, in the specific deployment and request, there is\n\"reasonable assurance by the authorization server that the client implements the OpenID Connect nonce mechanism\nproperly\".\n\nThe last bullet of Section 4.1.3 says the authorization server MUST:\n\n> reject the token request if there was no code_challenge in the authorization request associated with the\n> authorization code in the token request.\n\nRead literally, this requires rejection even when the client meets the exemption and sends neither code_challenge\nnor code_verifier. A client that uses the exemption receives a code, but the token request for it must be\nrejected. The exemption then has no successful outcome.\n\nRFC 9700 (Sections 2.1.1 and 4.8.2) has a narrower condition: it rejects a token request containing a\ncode_verifier when the authorization request contained no code_challenge. The third bullet of 4.1.3 already covers\nthat case: \"verify that the code_verifier parameter is present if and only if a code_challenge parameter was\npresent in the authorization request\".\n\nSuggested fix: delete the last bullet of 4.1.3, and change the end of the bullet before it from \"method specified\nby the client, and\" to \"method specified by the client.\".\n\nRelated discussions about the PKCE exemption: #170, #194, #214 and #220. As far as we can see, they concern the\nauthorization request side, not this bullet.\n\n---\n\nWe compared the draft section by section with RFC 6749, 6750, 7636, 8252, 9207 and 9700, rechecked this point against draft-17 and the main branch, and checked the issues and pull requests of this repository and the RFC errata.\nFor this issue we also wrote the two rules as a small rule model; it shows both rules apply to the same request. The model encodes our reading of the text, so it illustrates the point and does not prove it.\n\nAI models did the first reading, the cross-checks and the drafting under my direction.\n\nRifat Jumagulov\n",
+      "createdAt": "2026-10-31T15:49:08Z",
+      "updatedAt": "2026-10-31T15:49:08Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 279,
+      "id": "I_kwDODkfq5s8AAAABbceN_Q",
+      "title": "Make the private-use redirect URI exception explicit in \u00a71.5",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/279",
+      "state": "OPEN",
+      "author": "rifmj",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "These comments concern draft-ietf-oauth-v2-1-17.\n\nSection 1.5:\n\n> All OAuth protocol URLs (URLs exposed by the AS, RS, and client) MUST use the https scheme except for loopback\n> interface redirect URIs, which MAY use the http scheme.\n\nSection 8.4.3 describes private-use URI scheme redirect URIs such as com.example.app:/oauth2redirect/example-provider,\nand Section 2.3.1 tells the authorization server how to check them. Read literally, 1.5 does not allow them. The\n-05 entry of the document history says \"Require TLS on redirect URIs except for localhost/custom URL scheme\", but\nthe current text has only the loopback exception.\n\nRFC 9700, Section 2.6, states the rule as a prohibition instead: \"authorization servers MUST NOT allow redirection\nURIs that use the http scheme except for native clients that use loopback interface redirection\". A private-use\nscheme is allowed under that wording.\n\nSuggested fix, one of:\n\n- \"All OAuth protocol URLs (URLs exposed by the AS, RS, and client) MUST use the https scheme, except for loopback\n  interface redirect URIs and private-use URI scheme redirect URIs of native apps (Section 8.4.3). Loopback\n  interface redirect URIs MAY use the http scheme (Section 8.4.2).\"\n- or state the redirect URI part as in RFC 9700, Section 2.6.\n\n---\n\nWe compared the draft section by section with RFC 6749, 6750, 7636, 8252, 9207 and 9700, rechecked this point against draft-17 and the main branch, and checked the issues and pull requests of this repository and the RFC errata.\n\nAI models did the first reading, the cross-checks and the drafting under my direction.\n\nRifat Jumagulov\n",
+      "createdAt": "2026-10-31T15:49:10Z",
+      "updatedAt": "2026-10-31T15:49:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 280,
+      "id": "I_kwDODkfq5s8AAAABbceOqw",
+      "title": "Is SHOULD in \u00a73.2.3 intended? RFC 9700 \u00a74.14.2 uses MUST",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/280",
+      "state": "OPEN",
+      "author": "rifmj",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "These comments concern draft-ietf-oauth-v2-1-17.\n\nRFC 9700, Section 4.14.2: \"Authorization servers MUST determine, based on a risk assessment, whether to issue\nrefresh tokens to a certain client.\" Section 3.2.3 of the draft: \"Authorization servers SHOULD determine, based on\na risk assessment and their own policies, whether to issue refresh tokens to a certain client.\"\n\nIs the lower level intended? If not, 3.2.3 could use MUST. If it is, a short note would help readers who implement\nboth documents. The -05 entry of the document history says the refresh token guidance was updated to match the\nsecurity BCP; -17 added examples of policies after this sentence but kept SHOULD.\n\n---\n\nWe compared the draft section by section with RFC 6749, 6750, 7636, 8252, 9207 and 9700, rechecked this point against draft-17 and the main branch, and checked the issues and pull requests of this repository and the RFC errata.\n\nAI models did the first reading, the cross-checks and the drafting under my direction.\n\nRifat Jumagulov\n",
+      "createdAt": "2026-10-31T15:49:11Z",
+      "updatedAt": "2026-10-31T16:06:32Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "max-stytch",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "It looks like the original text was brought over in 2020: https://github.com/oauth-wg/oauth-v2-1/commit/e77107978b559466a79cda812da07e9d83332360, while the BCP was still a draft.\n\nThat SHOULD turned into a MUST in the BCP in late 2023: https://github.com/oauthstuff/draft-ietf-oauth-security-topics/commit/8455d7a31f1de6effb9bfadba0fae504fbbbd829\n\nSeems like a straightforward fix.",
+          "createdAt": "2026-10-31T16:06:31Z",
+          "updatedAt": "2026-10-31T16:06:31Z"
+        }
+      ]
+    },
+    {
+      "number": 281,
+      "id": "I_kwDODkfq5s8AAAABbceP2A",
+      "title": "Two small editorial points",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/281",
+      "state": "OPEN",
+      "author": "rifmj",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "These comments concern draft-ietf-oauth-v2-1-17.\n\n- Section 6.1.1 says \"[RFC6750] establishes a common registry, the \"OAuth Extensions Error Registry\" (Section 11.4\n  of [RFC6749])\". The registry was established by RFC 6749 (Section 11.4); RFC 6750 registers values in it.\n  Suggested text: \"Section 11.4 of [RFC6749] establishes a common registry, the \"OAuth Extensions Error Registry\",\n  for error values to be shared among OAuth token authentication schemes.\"\n- The token request example in Section 3.2.2 still sends redirect_uri\n  (&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb), while the example in 4.1.3 and Section 10.2 say the\n  parameter is no longer part of this request. PR #244 noted this in April 2026 (merged in May); the line is still in -17. Section\n  10.2 covers OAuth 2.0 clients that still send it, so the line can be removed from this example.\n\n---\n\nWe compared the draft section by section with RFC 6749, 6750, 7636, 8252, 9207 and 9700, rechecked this point against draft-17 and the main branch, and checked the issues and pull requests of this repository and the RFC errata.\n\nAI models did the first reading, the cross-checks and the drafting under my direction.\n\nRifat Jumagulov\n",
+      "createdAt": "2026-10-31T15:49:12Z",
+      "updatedAt": "2026-10-31T15:49:12Z",
       "closedAt": null,
       "comments": []
     }
@@ -6788,24 +6998,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NTg4MzE5MDAx",
       "title": "Reference obsoleted/impacted specs. See #28",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/49",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "## This PR\r\n\r\nobsoletes OAuth 2.0\r\n\r\nNB: consider adding other specs obsoleted or updated by this one. \r\n\r\nRelated to #28\r\n\r\n\r\ncc: @aaronpk ",
       "createdAt": "2021-03-09T17:17:52Z",
-      "updatedAt": "2025-08-12T19:27:49Z",
+      "updatedAt": "2026-10-31T03:49:34Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e87857efde941ce8e06274615ec669aec995d892",
       "headRepository": "ioggstream/oauth-v2-1",
       "headRefName": "patch-2",
-      "headRefOid": "0c125e1ce776a744a845320c8903d7ceb63e1015",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "774ac55bbea92047873b27cec14da1bf020a30c6",
+      "closedAt": "2026-10-31T03:45:04Z",
+      "mergedAt": "2026-10-31T03:45:04Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "3c3663a94e4ab6c502bce49e6b5464e47e3dd8c1"
+      },
       "comments": [
         {
           "author": "aaronpk",
@@ -6815,7 +7027,28 @@
           "updatedAt": "2021-09-21T19:09:55Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s8AAAABVP969g",
+          "commit": {
+            "abbreviatedOid": "0c125e1"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-31T03:44:40Z",
+          "updatedAt": "2026-10-31T03:44:40Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\nobsoletes: 6749, 6750\n```",
+              "createdAt": "2026-10-31T03:44:40Z",
+              "updatedAt": "2026-10-31T03:44:40Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 50,
@@ -8107,25 +8340,40 @@
       "id": "PR_kwDODkfq5s45c_et",
       "title": "Clarify redirection proposal. See #117.",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/118",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "## This draft PR\r\n\r\n- clarifies redirection and request/response terminology",
       "createdAt": "2022-06-10T09:18:57Z",
-      "updatedAt": "2025-08-12T19:28:09Z",
+      "updatedAt": "2026-10-30T23:58:34Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "aeb4be4b8eac83cf873d06a53e081bdd292ff7d7",
       "headRepository": "ioggstream/oauth-v2-1",
       "headRefName": "ioggstream-117",
       "headRefOid": "03d5c0934d87fd29c3b37d15f8294c45781de306",
-      "closedAt": null,
+      "closedAt": "2026-10-30T23:58:34Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@ioggstream @aaronpk  -- can this be closed?",
+          "createdAt": "2026-10-29T03:30:52Z",
+          "updatedAt": "2026-10-29T03:30:52Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @ioggstream. Closing, as most of this has been incorporated into the current draft:\n\n- The authorization server \"MUST first authenticate the resource owner\".\n- The authorization endpoint is referred to by its URL rather than its location.\n- The fragment and query string rules for the authorization endpoint URL have been reworded.\n- Unrecognized request parameters are ignored when \"sent to the authorization endpoint\".\n\nThe rewording of \"HTTP Redirections\" was not adopted. The requirement to not expose user credentials when redirecting is in \"HTTP 307 Redirect\", which prohibits 307 and recommends 303.",
+          "createdAt": "2026-10-30T23:58:33Z",
+          "updatedAt": "2026-10-30T23:58:33Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDODkfq5s47wN6l",
@@ -8992,25 +9240,40 @@
       "id": "PR_kwDODkfq5s472Fu6",
       "title": "Token encryption cannot replace TLS. See #64",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/127",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "## This PR\r\n\r\n- token encryption can't replace TLS unless similar requirements are implemented (integrity, privacy, authenticity) ;\r\n- suggest using TLS along the way, even when using TLS terminators;\r\n- MUST does not define here a specific requirement \r\n\r\n## Note\r\n\r\nSome mitigation measure express strict requirements (e.g. MUST NIT store in insecure cookies). IMHO that's ok, but in this case it's more than mitigation, since an implementation that does not respect these is non conformant.",
       "createdAt": "2022-07-21T11:02:41Z",
-      "updatedAt": "2025-08-12T19:28:27Z",
+      "updatedAt": "2026-10-30T23:58:36Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "aeb4be4b8eac83cf873d06a53e081bdd292ff7d7",
       "headRepository": "ioggstream/oauth-v2-1",
       "headRefName": "ioggstream-64-quater",
       "headRefOid": "9e62313f0cc55ad23e1812c3aa299109cc30f636",
-      "closedAt": null,
+      "closedAt": "2026-10-30T23:58:36Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@aaronpk @ioggstream has this been addressed in the latest version now?",
+          "createdAt": "2026-10-29T03:31:47Z",
+          "updatedAt": "2026-10-29T03:31:47Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks @ioggstream. Closing, as the concern is now covered by reference to RFC 9700.\n\n\"Sender-Constrained Access Tokens\" recommends end-to-end TLS between the client and the resource server. When TLS is terminated at an intermediary, it refers to Section 4.13 of RFC 9700 (TLS Terminating Reverse Proxies). That section requires reverse proxies to sanitize forwarded headers, and requires that the link between the proxy and the application server be protected against eavesdropping, injection, and replay.",
+          "createdAt": "2026-10-30T23:58:35Z",
+          "updatedAt": "2026-10-30T23:58:35Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDODkfq5s6V49y7",
@@ -10103,21 +10366,21 @@
       "id": "PR_kwDODkfq5s6Gwawe",
       "title": "Oauth versions",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/205",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-05T18:11:46Z",
-      "updatedAt": "2025-01-09T17:53:11Z",
+      "updatedAt": "2026-10-29T01:04:53Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "20ee21646ba7ebb39439a2bfefb253a99f3e5276",
       "headRepository": "dickhardt/oauth-v2-1",
       "headRefName": "oauth-versions",
       "headRefOid": "90cd4e8b4e02fa975ce805b8d5079ebb9fa0641f",
-      "closedAt": null,
+      "closedAt": "2026-10-29T01:04:53Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -10128,6 +10391,13 @@
           "body": "We're going to rethink this and bring it up on the mailing list and/or IETF 122",
           "createdAt": "2025-01-09T17:53:10Z",
           "updatedAt": "2025-01-09T17:53:10Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Closing. Per #120, which version's rules apply to a given client is AS configuration for that client, so no new metadata is needed.",
+          "createdAt": "2026-10-29T01:04:52Z",
+          "updatedAt": "2026-10-29T01:04:52Z"
         }
       ],
       "reviews": [
@@ -10686,21 +10956,21 @@
       "id": "PR_kwDODkfq5s6xUait",
       "title": "Browser-Swapping",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/230",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "JonasPrimbs",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Added references to OpenID Connect response modes and addressed browser-swapping attack mitigation strategies.",
       "createdAt": "2025-11-04T03:46:38Z",
-      "updatedAt": "2026-04-12T07:56:32Z",
+      "updatedAt": "2026-10-31T03:47:03Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e98dfa59e16055463b6c712a0743f8aaf85de1c3",
       "headRepository": "JonasPrimbs/oauth-v2-1",
       "headRefName": "patch-1",
       "headRefOid": "191d5e7a8e60a853e5b9c7fd0e05ad24d4412d9e",
-      "closedAt": null,
+      "closedAt": "2026-10-31T03:47:03Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -10735,7 +11005,7 @@
         },
         {
           "author": "ylemkimon",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": " I think the best defense would be for user agents (browsers) to detect failed localhost OAuth redirects and remove or prevent copying code parameter from the address bar, just like how it hides username:password from the address bar or prevents pasting javascript: URIs and code to DevTools console. I've opened issues at respective browser issue trackers: http://crbug.com/501331257 and http://bugzil.la/2030930.",
           "createdAt": "2026-04-10T12:19:55Z",
           "updatedAt": "2026-04-10T12:23:41Z"
@@ -10749,7 +11019,7 @@
         },
         {
           "author": "ylemkimon",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> At the HTTP level, \"code\" is no different from \"id\" or \"foobar\". \r\n\r\nYes, but its name is standardized and it has unique characteristics. I think the following heuristics can be used:\r\n\r\n1) the navigation is a redirect initiated from another origin,\r\n2) the hostname is one of localhost, 127.0.0.1, or [::1] and the port is in 1024-66535,\r\n3) the request has failed due to a network error, and\r\n4) it has `code` and `state` parameter.\r\n\r\nIn fact, Chrome already has built-in heuristic for detecting OAuth login flows: https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/login_detection/.\r\n\r\nI don\u2019t think there are real use cases of copying the URL from failed a localhost request besides developers, and they can `copy(location.href)` in the console if needed. Or a \"Copy Full URL\" menu can be added to the context menu, like the Copy Clean Link feature in Firefox:\r\n<img width=\"308\" height=\"206\" alt=\"image\" src=\"https://github.com/user-attachments/assets/201e2709-6956-4d3e-a365-5a6fe0144451\" />\r\n\r\n> it probably has to respect layering to some degree.\r\n\r\nActually, I'm in favor of browsers being a na\u00efve client. However, after seeing many anti-phishing and anti-social-engineering attempts succeed at the browser level, I think the browser is the best place to have these defenses.",
           "createdAt": "2026-04-10T22:41:31Z",
           "updatedAt": "2026-04-12T07:56:32Z"
@@ -10770,10 +11040,17 @@
         },
         {
           "author": "ylemkimon",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "For clients that cannot send or receive `POST` requests, I think a double redirect (two-phase) pattern can be used:\r\n\r\n```mermaid\r\nsequenceDiagram\r\n    participant C as Client\r\n    participant U as User Agent\r\n    participant A as Authorization Server\r\n\r\n    U->>C: 1. GET /login\r\n    C->>U: 2. Location: https://as/authorize?<br/>response_type=none&<br/>state=xyz&...\r\n    U->>A: 3. GET /authorize?...\r\n    A-->A: 4. AuthN & AuthZ\r\n    A->>U: 5. Location: https://client/callback?<br/>state=xyz\r\n    U->>C: 6. GET /callback?...\r\n    C-->C: 7. Verify state\r\n    C->>U: 8. Location: https://as/authorize?<br/>response_type=code&<br/>state=xyz&...\r\n    U->>A: 9. GET /authorize?...\r\n    A-->A: 10. Verify that the request<br/>came from redirect_uri\r\n    A->>U: 11. Location: https://client/callback?<br/>state=xyz&<br/>code=code\r\n    U->>C: 12. GET /callback?...\r\n```\r\n\r\nThis would make the attack two-step and the MitM attack window very small between 8 and 12.\r\n\r\nThe problem is that the second request should not be forgeable by the attacker, but I can't think of a definite way of verifying this (step 10). A few thoughts:\r\n* `Referer`/`Origin` header: might be not set with some privacy settings/extensions and non-web applications\r\n* CSRF token: would be just another `authorization_code`, but can be very short-lived and bound to the session",
           "createdAt": "2026-04-12T06:58:23Z",
           "updatedAt": "2026-04-12T07:08:55Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "This is too much to add here. Please suggest adding this to the next Security BCP now that it has been adopted\r\n\r\nhttps://datatracker.ietf.org/doc/draft-ietf-oauth-security-topics-update/",
+          "createdAt": "2026-10-31T03:47:03Z",
+          "updatedAt": "2026-10-31T03:47:03Z"
         }
       ],
       "reviews": []
@@ -11425,21 +11702,21 @@
       "id": "PR_kwDODkfq5s7qMVN8",
       "title": "Add GitHub Actions workflow for Makefile CI",
       "url": "https://github.com/oauth-wg/oauth-v2-1/pull/252",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "emmanucheru-sudo",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "            - name: Setup Node.js environment\r\n  uses: actions/setup-node@v6.4.0\r\n  with:\r\n    # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.\r\n    node-version: # optional\r\n    # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.\r\n    node-version-file: # optional\r\n    # Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default.\r\n    architecture: # optional\r\n    # Set this option if you want the action to check for the latest available version that satisfies the version spec.\r\n    check-latest: # optional\r\n    # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.\r\n    registry-url: # optional\r\n    # Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).\r\n    scope: # optional\r\n    # Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.\r\n    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}\r\n    # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.\r\n    cache: # optional\r\n    # Set to false to disable automatic caching. By default, caching is enabled when either devEngines.packageManager or the top-level packageManager field in package.json specifies npm as the package manager.\r\n    package-manager-cache: # optional, default is true\r\n    # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.\r\n    cache-dependency-path: # optional\r\n    # Used to specify an alternative mirror to download Node.js binaries from\r\n    mirror: # optional\r\n    # The token used as Authorization header when fetching from the mirror\r\n    mirror-token: # optional",
       "createdAt": "2026-06-24T16:11:31Z",
-      "updatedAt": "2026-06-24T16:11:31Z",
+      "updatedAt": "2026-10-31T03:43:01Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "08614f65de99bcfee5f8c201621c8cc1017712a6",
-      "headRepository": "emmanucheru-sudo/oauth-v2-1",
+      "headRepository": "Smarthomes-Property-Services/oauth-v2-1",
       "headRefName": "main",
       "headRefOid": "4e45728800020eff4591be6a651537d5ea9571bc",
-      "closedAt": null,
+      "closedAt": "2026-10-31T03:43:01Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -11828,7 +12105,7 @@
       "labels": [],
       "body": "* Clarified scope of grants and refresh token requests when the resource owner revokes scopes\r\n* Added note about refresh token rotation and lost responses\r\n\r\nCloses #62, closes #63, closes #212",
       "createdAt": "2026-10-13T21:46:59Z",
-      "updatedAt": "2026-10-27T00:08:10Z",
+      "updatedAt": "2026-10-29T22:19:22Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "e819b63100dd24b93ebc52dbf62c1435d5d2da74",
@@ -11849,7 +12126,7 @@
             "abbreviatedOid": "e9aa823"
           },
           "author": "jricher",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "Text seems fine, but see comments -- if these are already addressed within the document elsewhere, that's fine, but the context made them look more limiting than we likely want.",
           "createdAt": "2026-10-17T17:37:46Z",
@@ -11965,7 +12242,7 @@
       "labels": [],
       "body": "* Improved grammar, punctuation, and terminology for consistency and alignment with the RFC Editor style guide\n* Described scope values and composite response types as sets instead of lists, since their values are unordered and not repeated\n* Replaced obsolete and superseded references\n* Clean up some syntax\n\nNo normative or substantive changes.\n",
       "createdAt": "2026-10-22T20:13:37Z",
-      "updatedAt": "2026-10-27T00:24:12Z",
+      "updatedAt": "2026-10-31T03:49:25Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "5da68740e70ccd05a7d1b5f6d7f6eb51bac6f2d7",
@@ -11993,7 +12270,7 @@
       "labels": [],
       "body": "Refer to new required `iss` in the response",
       "createdAt": "2026-10-28T23:36:49Z",
-      "updatedAt": "2026-10-28T23:37:42Z",
+      "updatedAt": "2026-10-31T03:49:27Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "4c64b55a46aef12c2d05a012d367d8f0b82d260f",
@@ -12006,6 +12283,284 @@
       "mergeCommit": {
         "oid": "a0b26eec27cbda5a8acc7e76d108505863e0572d"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 268,
+      "id": "PR_kwDODkfq5s8AAAABLZ3mvQ",
+      "title": "Supporting OAuth 2.0 and OAuth 2.1 clients concurrently",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/268",
+      "state": "MERGED",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #120.\n\nAdds a paragraph to \"Compatibility with OAuth 2.0\" stating that an authorization server can support both OAuth 2.0 and OAuth 2.1 clients, and that which rules apply to a given client is determined by the AS's configuration for that client (e.g., at registration). No version signaling is defined.\n\nThe existing `redirect_uri` backward-compatibility paragraph in the differences appendix now references this section, and the -17 changelog has an entry.\n\nReplaces the metadata approach in #205 (closed).\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n\nhttps://claude.ai/code/session_01B91Dro4EJiTq9E6aNvUvje",
+      "createdAt": "2026-10-29T01:07:28Z",
+      "updatedAt": "2026-10-31T03:49:28Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "a0b26eec27cbda5a8acc7e76d108505863e0572d",
+      "headRepository": "dickhardt/oauth-v2-1",
+      "headRefName": "issue-120",
+      "headRefOid": "87acf407f659cf95c56d66511d922034ebee8ad9",
+      "closedAt": "2026-10-29T19:46:07Z",
+      "mergedAt": "2026-10-29T19:46:07Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "950340b854d30a35c98932672816d787a5c5f883"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 269,
+      "id": "PR_kwDODkfq5s8AAAABL4Psyw",
+      "title": "Note that access token privileges are not the only factor in access control",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/269",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses Vittorio's review comment on Access Token Privilege Restriction (#87).\n\nAdds a non-normative paragraph clarifying that:\n\n- the privileges in an access token reflect what was granted to the client, and are not necessarily the only factor in an access control decision\n- a resource server may apply its own authorization logic (e.g. the resource owner's permissions on a specific resource) and may deny a request even when the required scopes are present\n- access tokens may carry authorization information beyond delegated scopes (e.g. roles or entitlements), and such mechanisms are out of scope for this specification\n\nThis follows from Vittorio's related comments on `insufficient_scope` and on the security considerations, both in his [review](https://mailarchive.ietf.org/arch/msg/oauth/RP71xU8P4WLLIx0NcQMnw4gHScQ/).\n\nCloses #87\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
+      "createdAt": "2026-10-30T23:00:37Z",
+      "updatedAt": "2026-10-31T03:49:29Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "8b34df5e17decb208908c8bd1ac8ba6e0ac5561b",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-87",
+      "headRefOid": "0309571660ae891a6a50276281bade32250f9d15",
+      "closedAt": "2026-10-30T23:02:22Z",
+      "mergedAt": "2026-10-30T23:02:22Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "a924d9d87a6a1440660b144f0b7537f84c30d023"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 270,
+      "id": "PR_kwDODkfq5s8AAAABL4tGlg",
+      "title": "Align with the HTTP WG editorial style guide",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/270",
+      "state": "MERGED",
+      "author": "dickhardt",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Editorial pass against the [HTTP WG editorial style guide](https://httpwg.org/admin/editors/style-guide). No normative changes.\n\n**References**\n- Named references: `HTTP` (RFC 9110), `HTTP-CACHING` (RFC 9111), `HTTP/1.1` (RFC 9112), `TLS` (RFC 9846), `COOKIES` (RFC 6265)\n\n**Content**\n- \"request body content\" / \"request body\" \u2192 \"request content\"\n\n**Status codes**\n- Number plus reason phrase, without the \"HTTP\" prefix: \"a 400 (Bad Request) status code\", \"500 (Internal Server Error)\", \"303 (See Other)\", \"302 (Found)\", \"307 (Temporary Redirect)\"\n- Section heading \"HTTP 307 Redirect\" \u2192 \"307 (Temporary Redirect) Status Code\" (anchor unchanged)\n\n**Fields**\n- Field names unquoted (no backticks) and followed by \"header field\": Authorization, WWW-Authenticate, Content-Type, Cache-Control, X-Frame-Options\n- References on first use: Authorization (\u00a711.6.2 of HTTP), WWW-Authenticate (\u00a711.6.1), Content-Type (\u00a78.3), Referer (\u00a710.1.3), X-Frame-Options (RFC 7034, added as informative)\n- \"CORS headers\" \u2192 \"CORS header fields\"\n\n**Methods**\n- Bare method names: GET, POST (no backticks)\n\n**Registries**\n- Quoted names: \"OAuth Access Token Types\", \"OAuth Parameters\", \"OAuth Authorization Endpoint Response Types\", \"OAuth Extensions Error Registry\", \"Media Types\"\n- \"the error registry established by this specification\" \u2192 \"the \"OAuth Extensions Error Registry\"\". This document does not establish it; RFC 6749 does.\n\n**Examples**\n- All HTTP examples are now fenced `~~~ http-message` blocks, so [rfc-http-validate](https://github.com/mnot/rfc-http-validate) can check them\n- Long lines use RFC 8792 `\\` wrapping instead of \"(with extra line breaks for display purposes only)\"\n- The `client_secret_basic` example was a bare `Authorization:` line. It is now the full refresh request, matching the `client_secret_post` example (same client credentials).\n- The CSP example ended in `...`. It now has `Content-Type` and a `[ content ]` placeholder.\n\n**Terminology**\n- \"request URI\" \u2192 \"target URI\" (HTTP request sense only; the OAuth \"authorization request URI\" is unchanged)\n- \"request line\" \u2192 \"request-line\"\n\n**Build fix (separate commit)**\n- 74d32a7 added a stray `F` before the YAML front matter, which breaks the build. Removed.\n\n**Verification**\n- kramdown-rfc + xml2rfc build. Only the existing warnings remain (protocol flow diagram width; submissionType). This replaces four existing \"artwork too wide\" warnings on examples.\n- rfc-http-validate passes all 17 examples except the existing `X-Frame-Options: ALLOW-FROM https://...` value. ALLOW-FROM is obsolete and ignored by current browsers. That is a content question, so it is left for a separate change.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n\nhttps://claude.ai/code/session_01B91Dro4EJiTq9E6aNvUvje\n",
+      "createdAt": "2026-10-30T23:58:35Z",
+      "updatedAt": "2026-10-31T03:49:31Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "54800f464fab93134c748983796f673ef3652327",
+      "headRepository": "dickhardt/oauth-v2-1",
+      "headRefName": "http-style-guide",
+      "headRefOid": "9229c8c35bbe6e5b4b06b0b570e322ce41101195",
+      "closedAt": "2026-10-31T00:05:00Z",
+      "mergedAt": "2026-10-31T00:05:00Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "f05966b309878b5e297af63127891b1c6a922141"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 271,
+      "id": "PR_kwDODkfq5s8AAAABL4yrsQ",
+      "title": "Reference RFC 10017 for choosing a CORS policy",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/271",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Point to Section 6.3.3.4 of RFC 10017, which discusses wildcard versus restrictive CORS configurations and checking a client's pre-registered origins on the token request.\n\nRelated to #235",
+      "createdAt": "2026-10-31T00:10:29Z",
+      "updatedAt": "2026-10-31T04:10:19Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "f05966b309878b5e297af63127891b1c6a922141",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-235",
+      "headRefOid": "ebb2176253d105a8d462c343634572ba2e520592",
+      "closedAt": "2026-10-31T00:11:01Z",
+      "mergedAt": "2026-10-31T00:11:01Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "00c878a92025f89ae7e2009749b0ec83e6737f00"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 272,
+      "id": "PR_kwDODkfq5s8AAAABL5al5g",
+      "title": "Clean up URL vs URI terminology and form-urlencoded references",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/272",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "- Use \"URL\" consistently for the authorization endpoint and the authorization request built from it, matching the other endpoint references and avoiding confusion with the PAR request_uri parameter\n- Rewrite the application/x-www-form-urlencoded appendix to cite the WHATWG URL Standard definition and its IANA registration, replacing the outdated HTML 4.01 text\n- Remove the now-unused HTML 4.01 reference\n\nCloses #119, closes #126",
+      "createdAt": "2026-10-31T01:44:48Z",
+      "updatedAt": "2026-10-31T03:49:33Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "1d84c347e8794827f7eb8371a6ff6da7f4ff058c",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-126",
+      "headRefOid": "82e6d09c16ef4fc64f8049a23740170f981659c4",
+      "closedAt": "2026-10-31T01:46:13Z",
+      "mergedAt": "2026-10-31T01:46:13Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "a94ef4b539a5f2644a74019dc9d3aaf22880594f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 273,
+      "id": "PR_kwDODkfq5s8AAAABL5-iEw",
+      "title": "Restrict access token values to the token68 syntax",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/273",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "ietf-127"
+      ],
+      "body": "The token response allowed any VSCHAR in `access_token`, while the Bearer and DPoP authentication schemes require token68, so an authorization server could issue a token that cannot be sent in an Authorization header field. Require access tokens of all types to conform to token68.\n\n- Add the requirement to the Access Token section\n- Reference it from the `access_token` token response parameter\n- Change the `access_token` ABNF to token68\n\nRefresh tokens, authorization codes, and state are unchanged.",
+      "createdAt": "2026-10-31T03:10:43Z",
+      "updatedAt": "2026-10-31T04:12:42Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "48136c10137b6256dcdaae94649a621980776519",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "access-token-token68",
+      "headRefOid": "cc21d7902416297d90dcf067235d25ce76deefc6",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 275,
+      "id": "PR_kwDODkfq5s8AAAABL6GPLw",
+      "title": "Add examples of refresh token issuance policies",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/275",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Give non-normative examples of how authorization servers decide whether to issue refresh tokens, including the OpenID Connect offline_access scope, as requested in Vittorio's review.\n\nCloses #58\n",
+      "createdAt": "2026-10-31T03:26:37Z",
+      "updatedAt": "2026-10-31T03:27:56Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "1ad31a560a783090f774f8433e388e746af8dc56",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-58",
+      "headRefOid": "564edb65009776a811538b17daf57899871bab4e",
+      "closedAt": "2026-10-31T03:27:51Z",
+      "mergedAt": "2026-10-31T03:27:51Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "e29d2fcd14beded6118054268d38b211eb76f30b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 276,
+      "id": "PR_kwDODkfq5s8AAAABL6L-2g",
+      "title": "Clarify resource owner interaction in client impersonation mitigation",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/276",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "The resource owner is already required to be authenticated at the authorization endpoint. ([Section 3.1.1](https://www.ietf.org/archive/id/draft-ietf-oauth-v2-1-16.html#section-3.1-1)) This sentence is about the resource owner being actively involved in approving the request, not re-authenticating, so align its wording with the following paragraph.\n\nCloses #139",
+      "createdAt": "2026-10-31T03:39:38Z",
+      "updatedAt": "2026-10-31T04:10:21Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "e29d2fcd14beded6118054268d38b211eb76f30b",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "issue-139",
+      "headRefOid": "606de6258ec657ec6da06e4fccc5895f929bdb61",
+      "closedAt": "2026-10-31T03:39:49Z",
+      "mergedAt": "2026-10-31T03:39:49Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "63540cee5385bdecc58ae8848eb2f93543b74ce7"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 277,
+      "id": "PR_kwDODkfq5s8AAAABL6XQnA",
+      "title": "Add -17 contributors to the acknowledgements",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/277",
+      "state": "MERGED",
+      "author": "aaronpk",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Adds the people who contributed to issues and PRs in the Version -17 milestone and were not yet listed in the acknowledgements. The list is kept in alphabetical order.\n\n| Name | GitHub | Contribution |\n|---|---|---|\n| Brian Pontarelli | `voidmain` | #213, refresh token rotation failures |\n| Brock Allen | `brockallen` | #212, refresh token rotation |\n| Frederik Krogsdal Jacobsen | `fkj` | #254, `state` length |\n| George Fletcher | `gffletch` | #120, supporting 2.0 and 2.1 clients |\n| Jeremy Tennant | `tennantje` | filed #235, CORS origin validation |\n| Johannes Koch | `johakoch` | filed #108, optional auth-param |\n| Lauritz Holtmann | `lauritzh` | filed #100, CRLF injection |\n| Max Gerber | `max-stytch` | #258 review; suggestion became the browser app impersonation fix |\n| Nick Watson | `njwatson32` | #120 and #213 |\n| Shon T. Urbas | `surbas` | #212, refresh token rotation |\n\nTwo other contributors (#179 and #245) have only a handle on GitHub. They are not included yet; they'll be asked on those issues whether and how they would like to be acknowledged.\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)",
+      "createdAt": "2026-10-31T04:05:41Z",
+      "updatedAt": "2026-10-31T04:07:13Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "a6682953a1ede0393330fe52fd4119b4baf99531",
+      "headRepository": "oauth-wg/oauth-v2-1",
+      "headRefName": "acknowledgements-17",
+      "headRefOid": "0eb80a02cca9ab8f04956dad72c6ee81d1e23c21",
+      "closedAt": "2026-10-31T04:07:09Z",
+      "mergedAt": "2026-10-31T04:07:09Z",
+      "mergedBy": "aaronpk",
+      "mergeCommit": {
+        "oid": "48136c10137b6256dcdaae94649a621980776519"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 282,
+      "id": "PR_kwDODkfq5s8AAAABL_CAPg",
+      "title": "Change refresh token risk assessment requirement to MUST",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/282",
+      "state": "OPEN",
+      "author": "max-stytch",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Copies SHOULD -> MUST upgrade from BCP introduced in https://github.com/oauthstuff/draft-ietf-oauth-security-topics/commit/8455d7a31f1de6effb9bfadba0fae504fbbbd829\r\n\r\nCloses #280",
+      "createdAt": "2026-10-31T16:09:59Z",
+      "updatedAt": "2026-10-31T16:10:08Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "9a96888caa5aaaa1a863ff05ac958e6dbe854f59",
+      "headRepository": "max-stytch/oauth-v2-1",
+      "headRefName": "patch-2",
+      "headRefOid": "a5284244b9bca71422dc4500e2dfea749750c6e9",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
