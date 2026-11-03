@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-01T00:15:55.958995+00:00",
+  "timestamp": "2026-11-03T00:12:11.349018+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -12440,7 +12440,7 @@
       ],
       "body": "The token response allowed any VSCHAR in `access_token`, while the Bearer and DPoP authentication schemes require token68, so an authorization server could issue a token that cannot be sent in an Authorization header field. Require access tokens of all types to conform to token68.\n\n- Add the requirement to the Access Token section\n- Reference it from the `access_token` token response parameter\n- Change the `access_token` ABNF to token68\n\nRefresh tokens, authorization codes, and state are unchanged.",
       "createdAt": "2026-10-31T03:10:43Z",
-      "updatedAt": "2026-10-31T04:12:42Z",
+      "updatedAt": "2026-11-01T01:01:19Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "48136c10137b6256dcdaae94649a621980776519",
@@ -12451,7 +12451,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "mooreds",
+          "authorAssociation": "NONE",
+          "body": "Makes sense to me. \ud83d\udc4d ",
+          "createdAt": "2026-11-01T01:01:19Z",
+          "updatedAt": "2026-11-01T01:01:19Z"
+        }
+      ],
       "reviews": []
     },
     {
