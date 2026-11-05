@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-03T00:12:11.349018+00:00",
+  "timestamp": "2026-11-05T00:12:26.879412+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -12298,7 +12298,7 @@
       "labels": [],
       "body": "Closes #120.\n\nAdds a paragraph to \"Compatibility with OAuth 2.0\" stating that an authorization server can support both OAuth 2.0 and OAuth 2.1 clients, and that which rules apply to a given client is determined by the AS's configuration for that client (e.g., at registration). No version signaling is defined.\n\nThe existing `redirect_uri` backward-compatibility paragraph in the differences appendix now references this section, and the -17 changelog has an entry.\n\nReplaces the metadata approach in #205 (closed).\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n\nhttps://claude.ai/code/session_01B91Dro4EJiTq9E6aNvUvje",
       "createdAt": "2026-10-29T01:07:28Z",
-      "updatedAt": "2026-10-31T03:49:28Z",
+      "updatedAt": "2026-11-04T23:50:15Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "a0b26eec27cbda5a8acc7e76d108505863e0572d",
@@ -12311,7 +12311,15 @@
       "mergeCommit": {
         "oid": "950340b854d30a35c98932672816d787a5c5f883"
       },
-      "comments": [],
+      "comments": [
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "Doing this as part of client configuration doesn't give existing clients any way to safely switch over.\r\n\r\n* Clients cannot flip a bit on their metadata without risking an instantaneous global outage.\r\n* Clients cannot use a new `client_id` without invalidating all of their existing grants.\r\n\r\nAuthorization servers _could_ provide some canned rollout strategies for clients, e.g. a custom client metadata field `enable_oauth_21_fraction`, but that has drawbacks:\r\n\r\n* not interoperable\r\n* a lot of work on every AS (that cares about reliability)\r\n* not guaranteed to work for every client (e.g. some clients might want a rollout sticky on user, or a highly custom regionalized rollout)",
+          "createdAt": "2026-11-04T23:50:15Z",
+          "updatedAt": "2026-11-04T23:50:15Z"
+        }
+      ],
       "reviews": []
     },
     {
