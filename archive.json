@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-05T00:12:26.879412+00:00",
+  "timestamp": "2026-11-08T00:14:10.322273+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -12298,7 +12298,7 @@
       "labels": [],
       "body": "Closes #120.\n\nAdds a paragraph to \"Compatibility with OAuth 2.0\" stating that an authorization server can support both OAuth 2.0 and OAuth 2.1 clients, and that which rules apply to a given client is determined by the AS's configuration for that client (e.g., at registration). No version signaling is defined.\n\nThe existing `redirect_uri` backward-compatibility paragraph in the differences appendix now references this section, and the -17 changelog has an entry.\n\nReplaces the metadata approach in #205 (closed).\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n\nhttps://claude.ai/code/session_01B91Dro4EJiTq9E6aNvUvje",
       "createdAt": "2026-10-29T01:07:28Z",
-      "updatedAt": "2026-11-04T23:50:15Z",
+      "updatedAt": "2026-11-05T22:36:53Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "a0b26eec27cbda5a8acc7e76d108505863e0572d",
@@ -12318,6 +12318,20 @@
           "body": "Doing this as part of client configuration doesn't give existing clients any way to safely switch over.\r\n\r\n* Clients cannot flip a bit on their metadata without risking an instantaneous global outage.\r\n* Clients cannot use a new `client_id` without invalidating all of their existing grants.\r\n\r\nAuthorization servers _could_ provide some canned rollout strategies for clients, e.g. a custom client metadata field `enable_oauth_21_fraction`, but that has drawbacks:\r\n\r\n* not interoperable\r\n* a lot of work on every AS (that cares about reliability)\r\n* not guaranteed to work for every client (e.g. some clients might want a rollout sticky on user, or a highly custom regionalized rollout)",
           "createdAt": "2026-11-04T23:50:15Z",
           "updatedAt": "2026-11-04T23:50:15Z"
+        },
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I think a developer can update all their clients to be OAuth 2.1 compatible and still work with an OAuth 2.0 AS -- they could then update their config at the AS to enforce OAuth 2.1 \r\n\r\n@njwatson32  What OAuth 2.1 compliance at the client will break with an OAuth 2.0 AS? \r\n",
+          "createdAt": "2026-11-05T17:29:48Z",
+          "updatedAt": "2026-11-05T17:29:48Z"
+        },
+        {
+          "author": "njwatson32",
+          "authorAssociation": "NONE",
+          "body": "Agree the wire protocol is compatible; a 2.1 client works against a 2.0 AS.\r\n\r\nThe problem with a per-client_id switch is that a single installed-app client_id spans many app versions in the wild, and the long tail of un-updated instances can persist for years. A developer can't turn on 2.1 enforcement for their client until essentially every instance has updated, or they accept breaking some fraction of users. In practice, large deployments won't take that trade, so they'll never be able to claim 2.1.\r\n\r\nEven for server-side clients that can fully update their deployment, it's still a pretty scary change to flip a global config that could 100% break your whole deployment if you (or the AS!) has a bug, even if only for a few minutes til you notice and undo it. (I know that would not fly at Google anyway. We already find plenty of ways to break stuff even with slow rollouts. :P)\r\n\r\nThat's why I think we need some sort of per-request indicator. This is a new version of the protocol, after all, and if it were any other API a per-request indicator (path component, header, parameter, etc) would be assumed. \r\n\r\nI know 2.1 aims to add nothing new, and I agree with that goal. But a version signal isn't a new OAuth feature. Every rule a 2.1 endpoint would enforce is already in the draft; the signal only tells the AS which version's rules apply to a given request. It's about adopting 2.1, not extending it.",
+          "createdAt": "2026-11-05T22:36:53Z",
+          "updatedAt": "2026-11-05T22:36:53Z"
         }
       ],
       "reviews": []
