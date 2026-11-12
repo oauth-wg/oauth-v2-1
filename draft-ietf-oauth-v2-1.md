@@ -16,20 +16,12 @@ pi:
   symrefs: yes
 
 author:
-  - ins: D. Hardt
-    organization: Hellō
-    name: Dick Hardt
-    email: dick.hardt@gmail.com
   - ins: A. Parecki
     role: editor
     name: Aaron Parecki
     email: aaron@parecki.com
     organization: Okta
     uri: https://aaronparecki.com
-  - ins: T. Lodderstedt
-    name: Torsten Lodderstedt
-    email: torsten@lodderstedt.net
-    organization: SPRIND
 
 normative:
   RFC3629:
@@ -4332,7 +4324,7 @@ The following is a list of extensions that are well established at the time of p
 
 This specification is the work of the OAuth Working Group, and its starting point was based on the contents of the following specifications: OAuth 2.0 Authorization Framework (RFC 6749), OAuth 2.0 for Native Apps (RFC 8252), OAuth Security Best Current Practice, and OAuth 2.0 for Browser-Based Applications. The editors would like to thank everyone involved in the creation of those specifications upon which this is built.
 
-The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Andrii Deinega, Bob Hamburg, Brian Campbell, Brian Pontarelli, Brock Allen, Christian Bartz, Daniel Fett, Deng Chao, Emelia Smith, Falko, Filip Skokan, Frederik Krogsdal Jacobsen, George Fletcher, Goutam Adwant, Jeremy Tennant, Johannes Koch, Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Lauritz Holtmann, Max Gerber, Michael Jones, Michael Peck, Nick Watson, Roberto Polli, Shon T. Urbas, Tim Würtele, and Vittorio Bertocci.
+The editors would also like to thank the following individuals for their ideas, feedback, corrections, and wording that helped shape this version of the specification: Andrii Deinega, Bob Hamburg, Brian Campbell, Brian Pontarelli, Brock Allen, Christian Bartz, Daniel Fett, Deng Chao, Dick Hardt, Emelia Smith, Falko, Filip Skokan, Frederik Krogsdal Jacobsen, George Fletcher, Goutam Adwant, Jeremy Tennant, Johannes Koch, Joseph Heenan, Justin Richer, Karsten Meyer zu Selhausen, Lauritz Holtmann, Max Gerber, Michael Jones, Michael Peck, Nick Watson, Roberto Polli, Shon T. Urbas, Tim Würtele, Torsten Lodderstedt, and Vittorio Bertocci.
 
 Discussions around this specification have also occurred at the OAuth Security Workshop in 2021 and 2022. The authors thank the organizers of the workshop (Guido Schmitz, Steinar Noem, and Daniel Fett) for hosting an event that's conducive to collaboration and community input.
 
