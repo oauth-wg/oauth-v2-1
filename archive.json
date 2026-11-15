@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-08T00:14:10.322273+00:00",
+  "timestamp": "2026-11-15T00:13:46.091188+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -12462,7 +12462,7 @@
       ],
       "body": "The token response allowed any VSCHAR in `access_token`, while the Bearer and DPoP authentication schemes require token68, so an authorization server could issue a token that cannot be sent in an Authorization header field. Require access tokens of all types to conform to token68.\n\n- Add the requirement to the Access Token section\n- Reference it from the `access_token` token response parameter\n- Change the `access_token` ABNF to token68\n\nRefresh tokens, authorization codes, and state are unchanged.",
       "createdAt": "2026-10-31T03:10:43Z",
-      "updatedAt": "2026-11-01T01:01:19Z",
+      "updatedAt": "2026-11-14T19:17:08Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "48136c10137b6256dcdaae94649a621980776519",
@@ -12480,9 +12480,37 @@
           "body": "Makes sense to me. \ud83d\udc4d ",
           "createdAt": "2026-11-01T01:01:19Z",
           "updatedAt": "2026-11-01T01:01:19Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "\u2705 ",
+          "createdAt": "2026-11-12T18:25:37Z",
+          "updatedAt": "2026-11-12T18:25:37Z"
+        },
+        {
+          "author": "jricher",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think this makes sense. An alternative _could_ be to allow encoding for characters in VSCHAR and not in token68 but I honestly can't think of why that would be worthwhile or needed.",
+          "createdAt": "2026-11-14T19:16:59Z",
+          "updatedAt": "2026-11-14T19:16:59Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s8AAAABYBCSBw",
+          "commit": {
+            "abbreviatedOid": "cc21d79"
+          },
+          "author": "jricher",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-11-14T19:17:08Z",
+          "updatedAt": "2026-11-14T19:17:08Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 275,
@@ -12580,7 +12608,7 @@
       "labels": [],
       "body": "Copies SHOULD -> MUST upgrade from BCP introduced in https://github.com/oauthstuff/draft-ietf-oauth-security-topics/commit/8455d7a31f1de6effb9bfadba0fae504fbbbd829\r\n\r\nCloses #280",
       "createdAt": "2026-10-31T16:09:59Z",
-      "updatedAt": "2026-10-31T16:10:08Z",
+      "updatedAt": "2026-11-14T19:20:40Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "9a96888caa5aaaa1a863ff05ac958e6dbe854f59",
@@ -12592,7 +12620,88 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s8AAAABXombYQ",
+          "commit": {
+            "abbreviatedOid": "a528424"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-12T19:50:25Z",
+          "updatedAt": "2026-11-12T19:50:25Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "seems like maybe a place that would be better served with a regular word https://datatracker.ietf.org/doc/statement-iesg-statement-on-clarifying-the-use-of-bcp-14-key-words/ \n```suggestion\nAuthorization servers must determine, based on a risk assessment\n```\n\n",
+              "createdAt": "2026-11-12T19:50:25Z",
+              "updatedAt": "2026-11-12T19:50:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s8AAAABYBDVzg",
+          "commit": {
+            "abbreviatedOid": "a528424"
+          },
+          "author": "jricher",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-14T19:20:40Z",
+          "updatedAt": "2026-11-14T19:20:40Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I think it all comes down to what the requirement and the expectations are. Is this about the \"determine\" verb here? then that's a MUST. If it's about the risk assessment and policy detail, that's more of a \"must\" (or \"need to\").\n\nThat said, the BCP does literally have a MUST here:\n\n> Authorization servers MUST determine, based on a risk assessment, whether to issue refresh tokens to a certain client.",
+              "createdAt": "2026-11-14T19:20:40Z",
+              "updatedAt": "2026-11-14T19:20:40Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 283,
+      "id": "PR_kwDODkfq5s8AAAABOuCzkQ",
+      "title": "move Dick and Torsten to the acknowledgements",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/283",
+      "state": "OPEN",
+      "author": "bc-pi",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Regardless of how you measure it (one imperfect but instructive example below), Aaron has done orders of magnitude more on this document that anyone else. The attribution in the document itself should be more representative of that fact.  \n\n<img width=\"913\" height=\"1178\" alt=\"Screenshot 2026-11-12 at 10 31 45\u202fAM\" src=\"https://github.com/user-attachments/assets/41d8d8cf-dd4e-4a14-bb59-1fcb18172c12\" />\n",
+      "createdAt": "2026-11-12T18:13:32Z",
+      "updatedAt": "2026-11-13T11:49:17Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "9a96888caa5aaaa1a863ff05ac958e6dbe854f59",
+      "headRepository": "bc-pi/oauth-v2-1",
+      "headRefName": "patch-2",
+      "headRefOid": "1803a633c0c47f44b0d549c0afd5a43f6d56ac67",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDODkfq5s8AAAABXxjd2A",
+          "commit": {
+            "abbreviatedOid": "1803a63"
+          },
+          "author": "jricher",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-11-13T11:49:17Z",
+          "updatedAt": "2026-11-13T11:49:17Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
