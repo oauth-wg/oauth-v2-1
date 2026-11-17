@@ -1137,7 +1137,7 @@ The authorization server MAY support the HTTP Basic
 authentication scheme for authenticating clients that were issued a
 client secret.
 
-When using the HTTP Basic authentication scheme as defined in {{Section 11 of HTTP}}
+When using the HTTP Basic authentication scheme as defined in {{Section 2 of RFC7617}}
 to authenticate with the authorization server, the client identifier is encoded using the
 `application/x-www-form-urlencoded` encoding algorithm per
 {{application-x-www-form-urlencoded}}, and the encoded value is used as the username; the client
