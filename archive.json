@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-15T00:13:46.091188+00:00",
+  "timestamp": "2026-11-17T00:12:11.702255+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -12673,9 +12673,9 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "Regardless of how you measure it (one imperfect but instructive example below), Aaron has done orders of magnitude more on this document that anyone else. The attribution in the document itself should be more representative of that fact.  \n\n<img width=\"913\" height=\"1178\" alt=\"Screenshot 2026-11-12 at 10 31 45\u202fAM\" src=\"https://github.com/user-attachments/assets/41d8d8cf-dd4e-4a14-bb59-1fcb18172c12\" />\n",
+      "body": "Regardless of how you measure it (one imperfect but instructive example below), Aaron has done orders of magnitude more on this document than **_anyone_** else. The attribution in the document itself should be more representative of that fact.  \n\n<img width=\"913\" height=\"1178\" alt=\"Screenshot 2026-11-12 at 10 31 45\u202fAM\" src=\"https://github.com/user-attachments/assets/41d8d8cf-dd4e-4a14-bb59-1fcb18172c12\" />\n",
       "createdAt": "2026-11-12T18:13:32Z",
-      "updatedAt": "2026-11-13T11:49:17Z",
+      "updatedAt": "2026-11-16T23:29:56Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "9a96888caa5aaaa1a863ff05ac958e6dbe854f59",
@@ -12686,7 +12686,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "dickhardt",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For context on my recent work on this draft: on Oct 29\u201330 I worked with Aaron on -17. The screenshot of our DMs is attached, posted with Aaron\u2019s OK. Some of that work changed the text: #268, and #270, which also included 9229c8c to fix the build break from 74d32a7. The rest was triage: reviewing old PRs and my assigned issues so they could be closed. That produced no commits, so it doesn\u2019t appear in the contributor graph.\r\n\r\n<img width=\"2066\" height=\"2347\" alt=\"slack-conversation-merged\" src=\"https://github.com/user-attachments/assets/52658c83-aed5-4bb2-b959-d8207f3655cc\" />\r\n",
+          "createdAt": "2026-11-16T00:23:04Z",
+          "updatedAt": "2026-11-16T00:23:04Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDODkfq5s8AAAABXxjd2A",
