@@ -99,6 +99,7 @@ informative:
   RFC9449:
   RFC9470:
   RFC10017:
+  RFC10027:
   I-D.bradley-oauth-jwt-encoded-state:
   I-D.ietf-oauth-rfc7523bis:
   I-D.ietf-oauth-attestation-based-client-auth:
@@ -2661,6 +2662,8 @@ A comprehensive OAuth security model and analysis, as well as
 background for the protocol design, is provided by
 {{RFC6819}} and {{RFC9700}}.
 
+Security of cross-device flows, such as the Device Authorization Grant
+{{RFC8628}}, is addressed in {{RFC10027}}.
 
 ## Access Token Security Considerations {#access-token-security-considerations}
 
@@ -3157,6 +3160,11 @@ resources and to revoke those grants (see {{RFC7009}}), thereby
 limiting the window of exposure if a resource owner is deceived into
 approving a malicious authorization request.
 
+Cross-device flows, such as the Device Authorization Grant {{RFC8628}},
+are particularly susceptible to consent phishing, since an attacker can
+initiate the flow on their own device and induce the resource owner to
+complete authorization on another device. See {{RFC10027}} for threats
+and mitigations specific to cross-device flows.
 
 ## Cross-Site Request Forgery {#csrf_countermeasures}
 
@@ -4300,7 +4308,7 @@ The following is a list of extensions that are well established at the time of p
   * Authorization Server Metadata (also known as OAuth Discovery) defines an endpoint clients can use to look up the information needed to interact with a particular OAuth server, such as the location of the authorization and token endpoints and the supported grant types.
 
 * {{RFC8628}}: OAuth 2.0 Device Authorization Grant
-  * The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps or devices such as hardware video encoders that can stream video to a streaming video service.
+  * The Device Authorization Grant (formerly known as the Device Flow) is an extension that enables devices with no browser or limited input capability to obtain an access token. This is commonly used by smart TV apps or devices such as hardware video encoders that can stream video to a streaming video service. Security considerations for this and other cross-device flows are described in {{RFC10027}}.
 
 * {{RFC8705}}: Mutual TLS
   * Mutual TLS describes a mechanism of binding tokens to the clients to which they were issued, as well as a client authentication mechanism, via TLS certificate authentication.
@@ -4339,6 +4347,10 @@ Discussions around this specification have also occurred at the OAuth Security W
 
 # Document History
 {: removeInRFC="true"}
+
+-18
+
+* Add reference to RFC 10027 in the context of consent phishing (see https://github.com/oauth-wg/oauth-v2-1/issues/285)
 
 -17
 
