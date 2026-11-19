@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-17T00:12:11.702255+00:00",
+  "timestamp": "2026-11-19T00:12:23.838444+00:00",
   "repo": "oauth-wg/oauth-v2-1",
   "labels": [
     {
@@ -6246,9 +6246,24 @@
       ],
       "body": "Currently the IANA registry contents has `invalid_client` as applicable to both token endpoint and authorization endpoint, and cites [RFC 6749](https://www.iana.org/go/rfc6749), however, that RFC does not define `invalid_client` for the Authorization Error Response, meaning the registry is currently incorrect.\n\nAdding `invalid_client` enables supporting CIMD where a client ID is valid, the redirect URI is valid but none of the `token_endpoint_auth_methods_supported` values are supported by the authorization server, currently we'd otherwise need to return `invalid_request`",
       "createdAt": "2026-10-28T21:14:40Z",
-      "updatedAt": "2026-10-31T00:12:00Z",
+      "updatedAt": "2026-11-18T18:09:46Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "jricher",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The underlying issue is that you usually can't trust the redirect uri if the client ID is invalid. As long as we link to strong advice on trusting the redirect uri, and only returning the error when you can trust it, this is reasonable. ",
+          "createdAt": "2026-11-18T17:27:54Z",
+          "updatedAt": "2026-11-18T17:27:54Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "MEMBER",
+          "body": "A particular situation where this would occur is:\n\n* An AS supports only public clients `\"token_endpoint_auth_methods_supported\": [\"none\"]`\n* A client publishes `\"token_endpoint_auth_methods_supported\": [\"private_key_jwt\"]`\n* The client starts a request\n\nThe client ID and redirect URI are valid, the AS just can't process the request because it doesn't support `private_key_jwt`.",
+          "createdAt": "2026-11-18T18:09:40Z",
+          "updatedAt": "2026-11-18T18:09:46Z"
+        }
+      ]
     },
     {
       "number": 274,
@@ -6337,6 +6352,22 @@
       "body": "These comments concern draft-ietf-oauth-v2-1-17.\n\n- Section 6.1.1 says \"[RFC6750] establishes a common registry, the \"OAuth Extensions Error Registry\" (Section 11.4\n  of [RFC6749])\". The registry was established by RFC 6749 (Section 11.4); RFC 6750 registers values in it.\n  Suggested text: \"Section 11.4 of [RFC6749] establishes a common registry, the \"OAuth Extensions Error Registry\",\n  for error values to be shared among OAuth token authentication schemes.\"\n- The token request example in Section 3.2.2 still sends redirect_uri\n  (&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb), while the example in 4.1.3 and Section 10.2 say the\n  parameter is no longer part of this request. PR #244 noted this in April 2026 (merged in May); the line is still in -17. Section\n  10.2 covers OAuth 2.0 clients that still send it, so the line can be removed from this example.\n\n---\n\nWe compared the draft section by section with RFC 6749, 6750, 7636, 8252, 9207 and 9700, rechecked this point against draft-17 and the main branch, and checked the issues and pull requests of this repository and the RFC errata.\n\nAI models did the first reading, the cross-checks and the drafting under my direction.\n\nRifat Jumagulov\n",
       "createdAt": "2026-10-31T15:49:12Z",
       "updatedAt": "2026-10-31T15:49:12Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 285,
+      "id": "I_kwDODkfq5s8AAAABgdUNNw",
+      "title": "Add reference to RFC 10027",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/issues/285",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "RFC 10027 (BCP 247) covers security risks in cross-device flows, which RFC 9700 doesn\u2019t address. OAuth 2.1 mentions the Device Authorization Grant but never points readers to this guidance. Proposal is to add an informative reference to RFC 10027 in the Consent Phishing section and the Extensions appendix.",
+      "createdAt": "2026-11-18T17:43:54Z",
+      "updatedAt": "2026-11-18T17:43:54Z",
       "closedAt": null,
       "comments": []
     }
@@ -12295,10 +12326,12 @@
       "author": "dickhardt",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "ietf-127"
+      ],
       "body": "Closes #120.\n\nAdds a paragraph to \"Compatibility with OAuth 2.0\" stating that an authorization server can support both OAuth 2.0 and OAuth 2.1 clients, and that which rules apply to a given client is determined by the AS's configuration for that client (e.g., at registration). No version signaling is defined.\n\nThe existing `redirect_uri` backward-compatibility paragraph in the differences appendix now references this section, and the -17 changelog has an entry.\n\nReplaces the metadata approach in #205 (closed).\n\n\ud83e\udd16 Generated with [Claude Code](https://claude.com/claude-code)\n\nhttps://claude.ai/code/session_01B91Dro4EJiTq9E6aNvUvje",
       "createdAt": "2026-10-29T01:07:28Z",
-      "updatedAt": "2026-11-05T22:36:53Z",
+      "updatedAt": "2026-11-17T07:24:42Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "a0b26eec27cbda5a8acc7e76d108505863e0572d",
@@ -12462,7 +12495,7 @@
       ],
       "body": "The token response allowed any VSCHAR in `access_token`, while the Bearer and DPoP authentication schemes require token68, so an authorization server could issue a token that cannot be sent in an Authorization header field. Require access tokens of all types to conform to token68.\n\n- Add the requirement to the Access Token section\n- Reference it from the `access_token` token response parameter\n- Change the `access_token` ABNF to token68\n\nRefresh tokens, authorization codes, and state are unchanged.",
       "createdAt": "2026-10-31T03:10:43Z",
-      "updatedAt": "2026-11-14T19:17:08Z",
+      "updatedAt": "2026-11-18T19:43:34Z",
       "baseRepository": "oauth-wg/oauth-v2-1",
       "baseRefName": "main",
       "baseRefOid": "48136c10137b6256dcdaae94649a621980776519",
@@ -12494,6 +12527,13 @@
           "body": "I think this makes sense. An alternative _could_ be to allow encoding for characters in VSCHAR and not in token68 but I honestly can't think of why that would be worthwhile or needed.",
           "createdAt": "2026-11-14T19:16:59Z",
           "updatedAt": "2026-11-14T19:16:59Z"
+        },
+        {
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "what token means in token68 in the context of access tokens has always confused me but this isn't going to fix any of that ",
+          "createdAt": "2026-11-18T19:41:56Z",
+          "updatedAt": "2026-11-18T19:41:56Z"
         }
       ],
       "reviews": [
@@ -12509,6 +12549,72 @@
           "createdAt": "2026-11-14T19:17:08Z",
           "updatedAt": "2026-11-14T19:17:08Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDODkfq5s8AAAABY1jXXQ",
+          "commit": {
+            "abbreviatedOid": "cc21d79"
+          },
+          "author": "panva",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2026-11-18T17:24:26Z",
+          "updatedAt": "2026-11-18T17:24:26Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDODkfq5s8AAAABY2R6EA",
+          "commit": {
+            "abbreviatedOid": "cc21d79"
+          },
+          "author": "jogu",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-18T18:16:12Z",
+          "updatedAt": "2026-11-18T18:16:13Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "The new bullet has been inserted in the middle of the existing bullet, this will fix it:\n\n```suggestion\n* The Implicit grant (`response_type=token`) is omitted from this specification\n  as per {{Section 2.1.2 of RFC9700}}\n* Access token values are restricted to the `token68` syntax, rather than\n  any visible ASCII character, so that they can always be used with\n  HTTP authentication schemes such as `Bearer` and `DPoP`\n```",
+              "createdAt": "2026-11-18T18:16:12Z",
+              "updatedAt": "2026-11-18T18:16:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDODkfq5s8AAAABY2TFSw",
+          "commit": {
+            "abbreviatedOid": "cc21d79"
+          },
+          "author": "jogu",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "Assuming my suggested editorial fix gets applied, LGTM, thanks!",
+          "createdAt": "2026-11-18T18:17:28Z",
+          "updatedAt": "2026-11-18T18:17:28Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDODkfq5s8AAAABY3hvRQ",
+          "commit": {
+            "abbreviatedOid": "cc21d79"
+          },
+          "author": "bc-pi",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-11-18T19:43:33Z",
+          "updatedAt": "2026-11-18T19:43:34Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "I do believe Mr. Heenan is correct ",
+              "createdAt": "2026-11-18T19:43:33Z",
+              "updatedAt": "2026-11-18T19:43:34Z"
+            }
+          ]
         }
       ]
     },
@@ -12710,6 +12816,58 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 284,
+      "id": "PR_kwDODkfq5s8AAAABPyuRcw",
+      "title": "Cite RFC 7617 for the Basic authentication scheme",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/284",
+      "state": "OPEN",
+      "author": "shlee1223",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hi!\n\nSection 2.4.1 says the Basic scheme is \"defined in Section 11 of HTTP\", but [Section 11 of RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#section-11) is the general authentication framework. The Basic scheme is defined in [Section 2 of RFC 7617](https://www.rfc-editor.org/rfc/rfc7617#section-2), which the document already cites in the Bearer section. This changes the reference.",
+      "createdAt": "2026-11-17T10:06:57Z",
+      "updatedAt": "2026-11-17T10:06:57Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "9a96888caa5aaaa1a863ff05ac958e6dbe854f59",
+      "headRepository": "shlee1223/oauth-v2-1",
+      "headRefName": "basic-scheme-reference",
+      "headRefOid": "39620739a4494e5b688980df0ad8e7956221cf25",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 286,
+      "id": "PR_kwDODkfq5s8AAAABQL4S6Q",
+      "title": "Add RFC 10027 references and update security sections",
+      "url": "https://github.com/oauth-wg/oauth-v2-1/pull/286",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Added references to RFC 10027 regarding consent phishing and cross-device flows. Updated security considerations for the Device Authorization Grant. Se issue #285",
+      "createdAt": "2026-11-18T17:48:38Z",
+      "updatedAt": "2026-11-18T21:42:02Z",
+      "baseRepository": "oauth-wg/oauth-v2-1",
+      "baseRefName": "main",
+      "baseRefOid": "9a96888caa5aaaa1a863ff05ac958e6dbe854f59",
+      "headRepository": "PieterKas/oauth-v2-1",
+      "headRefName": "patch-1",
+      "headRefOid": "0bd0a34d69f955da298bbb96b8c91bad9b6ba8ca",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
